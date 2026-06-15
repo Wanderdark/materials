@@ -89,6 +89,37 @@ const RGBKeyboard = (() => {
 .rgb-kb-key.kb-submit.kb-sure{animation:rgbKbSurePulse .65s ease-in-out infinite!important;background:rgba(20,14,1,.95)!important;color:#facc15!important;letter-spacing:.22em}
 `;
 
+  /* ── Audio ──────────────────────────────────────────────────────── */
+  let _audioCtx = null;
+
+  function _getAudioCtx() {
+    if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return _audioCtx;
+  }
+
+  function _playKeyTone(freq) {
+    try {
+      const ctx = _getAudioCtx();
+      const _doPlay = () => {
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(1.0, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.13);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.15);
+      };
+      if (ctx.state === 'suspended') {
+        ctx.resume().then(_doPlay);
+      } else {
+        _doPlay();
+      }
+    } catch(e) {}
+  }
+
   /* ── Internal state ─────────────────────────────────────────────── */
   let _submitBtn = null;
   let _cssInjected = false;
@@ -149,15 +180,25 @@ const RGBKeyboard = (() => {
         if (k === 'SUBMIT'){ btn.classList.add('kb-submit'); _submitBtn = btn; }
 
         // Rainbow wave delay — letter/space keys only (DEL & SUBMIT have own animations)
-        if (k !== '⌫' && k !== 'SUBMIT') {
+        // Also compute per-key pitch: colPos 0→10 maps to 600Hz→2000Hz (exponential)
+        let _keyFreq;
+        if (k === '⌫') {
+          _keyFreq = 480;
+        } else if (k === 'SUBMIT') {
+          _keyFreq = 1047;
+        } else {
           const colPos = k === ' ' ? 4.5 : (rowColOffset[ri] + ci);
           btn.style.setProperty('--kd', (-(colPos / waveSpan) * wavePeriod).toFixed(2) + 's');
+          // 600 * (3.33 ^ (colPos/10)) → ~600Hz at left, ~2000Hz at right
+          _keyFreq = Math.round(600 * Math.pow(3.33, colPos / waveSpan));
         }
+        btn.dataset.kfreq = _keyFreq;
 
-        // Lit flash on press
+        // Lit flash + tone on press
         btn.addEventListener('pointerdown', () => {
           btn.classList.add('kb-lit');
           setTimeout(() => btn.classList.remove('kb-lit'), 200);
+          _playKeyTone(parseFloat(btn.dataset.kfreq) || 880);
         });
 
         btn.addEventListener('click', () => onKey(k));

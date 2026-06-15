@@ -4987,7 +4987,7 @@ function stopAllMusic() {
 
 /* ── MUTE / FULLSCREEN ── */
 let isMuted = false;
-const VOLS = { mainMenu: 0.6, timer: 1.0, answer: 1.0, diff: 0.6 };
+const VOLS = { mainMenu: 0.3, timer: 0.3, answer: 0.3, diff: 0.3 };
 
 function applyMuteToAll(mute) {
   if(mainMenuAudio) mainMenuAudio.volume = mute ? 0 : VOLS.mainMenu;
