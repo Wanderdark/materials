@@ -29,6 +29,6 @@ const AVATARS = [
   {src:'avatars/AV_Anime_Orion.webp', dmgSrc:'avatars/AV_Anime_Orion_dmg.webp', facesRight:false},
   {src:'avatars/AV_Anime_Pixie.webp', dmgSrc:'avatars/AV_Anime_Pixie_dmg.webp', facesRight:false},
   {src:'avatars/AV_Anime_Rex.webp',   dmgSrc:'avatars/AV_Anime_Rex_dmg.webp',   facesRight:false},
-  {src:'avatars/AV_Anime_Terra.webp', dmgSrc:'avatars/AV_Anime_Terra_dmg.webp', facesRight:true},
+  {src:'avatars/AV_Anime_Terra.webp', dmgSrc:'avatars/AV_Anime_Terra_dmg.webp', facesRight:false},
   // buraya ekle ↓
 ];

@@ -29,6 +29,6 @@ const AVATARS = [
   {src:'avatars/AV_Anime_Orion.webp',  facesRight:false},
   {src:'avatars/AV_Anime_Pixie.webp',  facesRight:false},
   {src:'avatars/AV_Anime_Rex.webp',    facesRight:false},
-  {src:'avatars/AV_Anime_Terra.webp',  facesRight:true},
+  {src:'avatars/AV_Anime_Terra.webp',  facesRight:false},
   // buraya ekle ↓
 ];

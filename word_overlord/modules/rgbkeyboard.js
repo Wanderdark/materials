@@ -92,6 +92,37 @@ const RGBKeyboard = (() => {
   /* ── Internal state ─────────────────────────────────────────────── */
   let _submitBtn = null;
   let _cssInjected = false;
+  let _audioCtx = null;
+
+  const _KEY_FREQ = {
+    Q:784,W:831,E:880,R:932,T:988,Y:1047,U:1109,I:1175,O:1245,P:1319,'⌫':622,
+    A:740,S:784,D:831,F:880,G:932,H:988,J:1047,K:1109,L:1175,'SUBMIT':1397,
+    Z:698,X:740,C:784,V:831,B:880,N:932,M:988,' ':659
+  };
+
+  function _playKeyPing(k) {
+    try {
+      if (!_audioCtx || _audioCtx.state === 'closed')
+        _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = _audioCtx;
+      const go = () => {
+        const now = ctx.currentTime;
+        const freq = _KEY_FREQ[k] || 880;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.28, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.11);
+      };
+      if (ctx.state === 'suspended') ctx.resume().then(go).catch(() => {});
+      else go();
+    } catch(e) {}
+  }
 
   function _injectCSS() {
     if (_cssInjected) return;
@@ -154,10 +185,11 @@ const RGBKeyboard = (() => {
           btn.style.setProperty('--kd', (-(colPos / waveSpan) * wavePeriod).toFixed(2) + 's');
         }
 
-        // Lit flash on press
+        // Lit flash + key ping on press
         btn.addEventListener('pointerdown', () => {
           btn.classList.add('kb-lit');
           setTimeout(() => btn.classList.remove('kb-lit'), 200);
+          _playKeyPing(k);
         });
 
         btn.addEventListener('click', () => onKey(k));

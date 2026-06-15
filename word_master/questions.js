@@ -406,7 +406,7 @@ const QUESTIONS = [
   ["Almost never.","Neredeyse hiç.","RARELY",6,3,1,"../images/6/1/13.webp"],
   ["Not at any time.","Hiçbir zaman.","NEVER",6,2,1,"../images/6/1/14.webp"],
   ["Happening each day.","Her gün gerçekleşen.","EVERY DAY",6,2,1,"../images/6/1/15.webp"],
-  ["One time.","Bir kez.","ONCE",6,12,1,"../images/6/1/16.webp"],
+  ["One time.","Bir kez.","ONCE",6,2,1,"../images/6/1/16.webp"],
   ["Two times.","İki kez.","TWICE",6,2,1,"../images/6/1/17.webp"],
   ["Asking about the frequency of something.","Bir şeyin ne sıklıkla yapıldığını sormak.","HOW OFTEN",6,2,1,"../images/6/1/18.webp"],
   ["The early part of the day.","Günün erken saatleri.","MORNING",6,1,1,"../images/6/1/19.webp"],

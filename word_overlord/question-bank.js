@@ -51,13 +51,12 @@
       !usedIds.has(question.id) && !usedAnswers.has(question.answer)
     );
 
-    const lengths = [targetLength, targetLength - 1, targetLength + 1, targetLength - 2, targetLength + 2];
-    for (const length of lengths) {
-      const matches = available.filter(question =>
-        question.difficulty === targetDifficulty && question.letterCount === length
-      );
-      if (matches.length) return shuffled(matches, random)[0];
-    }
+    const pool = available.filter(question =>
+      question.difficulty === targetDifficulty &&
+      question.letterCount >= targetLength &&
+      question.letterCount <= targetLength + 2
+    );
+    if (pool.length) return shuffled(pool, random)[0];
 
     const sameDifficulty = available
       .filter(question => question.difficulty === targetDifficulty)

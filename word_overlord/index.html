@@ -294,14 +294,25 @@
   #q-overlay {
     position: fixed; inset: 0; z-index: 500;
     background: rgba(12,2,0,0.62);
-    backdrop-filter: blur(4px);
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 60px 20px 16px;
+    padding: 90px 20px 16px;
     gap: 16px;
     overflow: hidden;
+  }
+  #q-overlay::before {
+    content: '';
+    position: absolute; inset: 0;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    pointer-events: none;
+    z-index: -1;
+  }
+  body.lite-mode #q-overlay::before {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   #q-overlay.open { display: flex; }
 
@@ -342,8 +353,8 @@
   /* ── Visual hint panel (right of definition) ── */
   #q-visual-panel {
     flex-shrink: 0;
-    width: clamp(120px, 16vw, 220px);
-    height: clamp(90px, 12vw, 165px);
+    align-self: stretch;
+    aspect-ratio: 1 / 1;
     border: 2px solid rgba(255,215,0,0.45);
     border-radius: 14px;
     background: rgba(255,215,0,0.05);
@@ -1215,21 +1226,6 @@
   .winner-scores .winner-row { color: var(--gold); font-weight: 700; font-size: 22px; }
 
 
-  #toast {
-    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(160px);
-    background: rgba(60,12,0,.9); border: 1px solid var(--gold);
-    border-radius: 12px; padding: 12px 28px;
-    font-family: 'Barlow Condensed', sans-serif; font-size: 18px; letter-spacing: .08em;
-    color: var(--white); backdrop-filter: blur(8px);
-    transition: transform .4s cubic-bezier(.175,.885,.32,1.275);
-    z-index: 9800; pointer-events: none; white-space: nowrap;
-  }
-  #toast.show { transform: translateX(-50%) translateY(0) !important; }
-  #toast.warn {
-    background: rgba(100,0,0,.95); border-color: #f87171;
-    color: #fca5a5; font-size: 20px; letter-spacing: .12em;
-    font-family: 'Bebas Neue', sans-serif;
-  }
 
   .score-flash {
     position: fixed; font-family: 'Bebas Neue', sans-serif;
@@ -2957,8 +2953,8 @@
 
 <div id="correct-img-overlay" class="img-flash-overlay"><img id="correct-img" src="" alt=""></div>
 <div id="wrong-img-overlay" class="img-flash-overlay"><img id="wrong-img" src="" alt=""></div>
-<div id="toast"></div>
 
+<script src="modules/toast.js"></script>
 <script src="modules/rgbkeyboard.js"></script>
 <script src="modules/finalscreen.js"></script>
 <script src="names.js" onerror="void 0"></script>
@@ -3570,6 +3566,7 @@ let currentGroup = 0;
 let currentQ = null;
 let currentPts = 0;
 let timeLeft = 0;
+window.getWOTimeLeft = () => timeLeft;
 let timerId = null;
 let questionShown = false;
 let isLocked = false;
@@ -4336,8 +4333,8 @@ function onTimeUp() {
 
 /* ── ANSWER NOW ── */
 function answerNow() {
-  const typingTimeLeft = timeLeft + 15;
-  const typingTimerMax = timerMax + 15;
+  const typingTimeLeft = timeLeft + 5;
+  const typingTimerMax = timerMax + 5;
   stopTimer();
   stopFlash();
   playAnswerMusic();
@@ -4558,7 +4555,7 @@ function playJokerCoinSound() {
     o.frequency.setValueAtTime(660, t);
     o.frequency.exponentialRampToValueAtTime(1100, t + 0.07);
     o.frequency.exponentialRampToValueAtTime(880,  t + 0.18);
-    gain.gain.setValueAtTime(isMuted ? 0 : 0.30, t);
+    gain.gain.setValueAtTime(0.30, t);
     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.40);
     o.start(t);
     o.stop(t + 0.40);
@@ -4670,7 +4667,7 @@ function playJokerLoseSound() {
     o.type = 'sawtooth';
     o.frequency.setValueAtTime(400, t);
     o.frequency.exponentialRampToValueAtTime(120, t + 0.35);
-    g.gain.setValueAtTime(isMuted ? 0 : 0.18, t);
+    g.gain.setValueAtTime(0.18, t);
     g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
     o.start(t); o.stop(t + 0.4);
   } catch(e) {}
@@ -4901,16 +4898,19 @@ function spawnScoreFloat(text, positive, groupIdx, isHtml) {
   requestAnimationFrame(step);
 }
 
-/* ── TOAST ── */
-let toastTimer;
-function showToast(msg, duration, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.toggle('warn', type === 'warn');
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.classList.remove('show'); t.classList.remove('warn'); }, duration || 3000);
+/* ── TTS ── */
+function _speakWord(word) {
+  if(!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(word.toLowerCase());
+  utt.lang = 'en-US';
+  utt.rate = 0.82;
+  utt.pitch = 1.05;
+  speechSynthesis.speak(utt);
 }
+
+/* ── TOAST ── */
+function showToast(msg, duration, type) { ToastManager.show(msg, type); }
 
 /* ══════════════════════════════
    WEB AUDIO ENGINE
@@ -4989,7 +4989,7 @@ function stopAllMusic() {
 
 /* ── MUTE / FULLSCREEN ── */
 let isMuted = false;
-const VOLS = { mainMenu: 0.6, timer: 1.0, answer: 1.0, diff: 0.6 };
+const VOLS = { mainMenu: 1.0, timer: 1.0, answer: 1.0, diff: 1.0 };
 
 function getConfiguredMusicVolume(baseVolume) {
   const multiplier = typeof window.getWordOverlordMusicVolume === 'function'
@@ -5157,7 +5157,6 @@ function playTimerMusic() {}
 function stopTimerMusic() {}
 
 function sfxTick(urgent) {
-  if(isMuted) return;
   const ac = getAC();
   const t  = ac.currentTime;
   const freq = urgent ? 1050 : 720;
@@ -6329,7 +6328,9 @@ function _scheduleHexTyping() {
 function handleKbKey(key) {
   if(!_inTypingPhase) return;
   if(key === 'SUBMIT') {
-    if(_typedAnswer.trim() === '' && !_kbSureMode) {
+    const _ans = answers[currentQ] || '';
+    const _maxT = _ans.split('').filter(c => c !== ' ').length - revealedIndices.size;
+    if(_typedAnswer.length < _maxT && !_kbSureMode) {
       _kbSureMode = true;
       RGBKeyboard.setSure(true);
     } else {
@@ -6426,8 +6427,14 @@ function checkTypedAnswer() {
   showAnswerStamp(correct);
   if(correct) {
     sfxCorrect();
-    revealAllHex(answer, true);
-    setTimeout(() => { resolveQuestion(true); closeQOverlay(); }, 2600);
+    const _hintImg = questionHints[currentQ] || '';
+    if(_hintImg) showVisualHint(_hintImg);
+    setTimeout(() => {
+      _speakWord(answer);
+      revealAllHex(answer, true);
+      setTimeout(() => _speakWord(answer), 1500);
+      setTimeout(() => { resolveQuestion(true); closeQOverlay(); }, 3200);
+    }, 500);
   } else {
     sfxWrong();
     setTimeout(showRevealButton, 1200);
@@ -6713,8 +6720,6 @@ function spinWheel() {
   const spinBtn = document.getElementById('wheel-spin-btn');
   if(spinBtn) spinBtn.disabled = true;
 
-  playWheelSpinSound();
-
   // Kazanacak segment rastgele belirlenir
   const winIdx   = Math.floor(Math.random() * WF_SEGMENTS.length);
   const sliceDeg = 360 / WF_SEGMENTS.length;
@@ -6732,6 +6737,7 @@ function spinWheel() {
   const finalAngle   = _wfAngle + delta + 6 * 360;
 
   const duration = 4800;
+  playWheelSpinSound(finalAngle - _wfAngle, duration);
   const t0       = performance.now();
   const fromAngle = _wfAngle;
 
@@ -7044,17 +7050,24 @@ function answerWfChallenge(chosen, correct, optEl) {
 }
 
 // ── Ses efektleri ──
-function playWheelSpinSound() {
+function playWheelSpinSound(totalDelta, duration) {
   try {
-    const ctx = getAC(); let t = ctx.currentTime;
-    for(let i = 0; i < 10; i++) {
+    const ctx = getAC();
+    const t0 = ctx.currentTime;
+    const tickDeg = 360 / WF_SEGMENTS.length;
+    const freq = 820;
+    for(let k = 1; k * tickDeg <= totalDelta; k++) {
+      const frac = (k * tickDeg) / totalDelta;
+      if(frac >= 1) break;
+      // Inverse of easeOut(p) = 1-(1-p)^4  →  p = 1-(1-frac)^0.25
+      const p = 1 - Math.pow(1 - frac, 0.25);
+      const at = t0 + p * duration / 1000;
       const o = ctx.createOscillator(); const g = ctx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      g.gain.setValueAtTime(0.14, at);
+      g.gain.exponentialRampToValueAtTime(0.001, at + 0.035);
       o.connect(g); g.connect(ctx.destination);
-      o.type = 'triangle';
-      o.frequency.value = 180 + i * 45;
-      g.gain.setValueAtTime(isMuted ? 0 : 0.07, t + i * 0.07);
-      g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.07 + 0.06);
-      o.start(t + i * 0.07); o.stop(t + i * 0.07 + 0.06);
+      o.start(at); o.stop(at + 0.04);
     }
   } catch(e) {}
 }
@@ -7066,7 +7079,7 @@ function playWheelResultSound() {
       const o = ctx.createOscillator(); const g = ctx.createGain();
       o.connect(g); g.connect(ctx.destination);
       o.type = 'sine'; o.frequency.value = freq;
-      g.gain.setValueAtTime(isMuted ? 0 : 0.18, t + i * 0.11);
+      g.gain.setValueAtTime(0.18, t + i * 0.11);
       g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.11 + 0.28);
       o.start(t + i * 0.11); o.stop(t + i * 0.11 + 0.28);
     });
@@ -7079,7 +7092,7 @@ function playWheelWrongSound() {
     const o = ctx.createOscillator(); const g = ctx.createGain();
     o.connect(g); g.connect(ctx.destination);
     o.type = 'sawtooth'; o.frequency.value = 120;
-    g.gain.setValueAtTime(isMuted ? 0 : 0.2, t);
+    g.gain.setValueAtTime(0.2, t);
     g.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
     o.start(t); o.stop(t + 0.45);
   } catch(e) {}
@@ -7091,6 +7104,7 @@ window.addEventListener('orientationchange', scheduleHexRowFit);
 window.addEventListener('DOMContentLoaded', startGame);
 </script>
 <script src="prototype.js"></script>
+<script>ToastManager.init({ top: '80px', position: 'left' });</script>
 
 </body>
 </html>
