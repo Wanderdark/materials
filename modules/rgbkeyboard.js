@@ -89,6 +89,38 @@ const RGBKeyboard = (() => {
 .rgb-kb-key.kb-submit.kb-sure{animation:rgbKbSurePulse .65s ease-in-out infinite!important;background:rgba(20,14,1,.95)!important;color:#facc15!important;letter-spacing:.22em}
 `;
 
+  /* ── Key pitch map (keyboard position: top-left=low, bottom-right=high) ── */
+  const _KEY_FREQS = {
+    'Q':261.6,'W':277.2,'E':293.7,'R':311.1,'T':329.6,'Y':349.2,'U':369.9,'I':392.0,'O':415.3,'P':440.0,
+    'A':466.2,'S':493.9,'D':523.3,'F':554.4,'G':587.3,'H':622.3,'J':659.3,'K':698.5,'L':739.9,
+    'Z':784.0,'X':830.6,'C':880.0,'V':932.3,'B':987.8,'N':1046.5,'M':1108.7,
+    ' ':349.2, '⌫':196.0, 'SUBMIT':1318.5,
+  };
+  let _audioCtx = null;
+  function _getCtx() {
+    if (!_audioCtx || _audioCtx.state === 'closed') {
+      try { _audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+    }
+    if (_audioCtx && _audioCtx.state === 'suspended') _audioCtx.resume().catch(() => {});
+    return _audioCtx;
+  }
+  function _playTone(key) {
+    const ctx = _getCtx();
+    if (!ctx) return;
+    try {
+      const freq = _KEY_FREQS[key] || 440;
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.16);
+    } catch(e) {}
+  }
+
   /* ── Internal state ─────────────────────────────────────────────── */
   let _submitBtn = null;
   let _cssInjected = false;
@@ -154,10 +186,11 @@ const RGBKeyboard = (() => {
           btn.style.setProperty('--kd', (-(colPos / waveSpan) * wavePeriod).toFixed(2) + 's');
         }
 
-        // Lit flash on press
+        // Lit flash + pitch sound on press
         btn.addEventListener('pointerdown', () => {
           btn.classList.add('kb-lit');
           setTimeout(() => btn.classList.remove('kb-lit'), 200);
+          _playTone(k);
         });
 
         btn.addEventListener('click', () => onKey(k));
