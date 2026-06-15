@@ -353,7 +353,7 @@
   /* ── Visual hint panel (right of definition) ── */
   #q-visual-panel {
     flex-shrink: 0;
-    align-self: stretch;
+    width: clamp(120px, 14vw, 200px); /* JS overrides per-question */
     aspect-ratio: 1 / 1;
     border: 2px solid rgba(255,215,0,0.45);
     border-radius: 14px;
@@ -3837,6 +3837,13 @@ function flashWord(definition) {
   defDiv.textContent = definition;
   el.appendChild(defDiv);
   el.classList.add('pulsing');
+  // Lock visual panel to q-word height after layout settles (breaks CSS circular dependency)
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const vhp = document.getElementById('q-visual-panel');
+    if(!vhp) return;
+    const h = el.getBoundingClientRect().height;
+    if(h > 0) { vhp.style.height = h + 'px'; vhp.style.width = h + 'px'; }
+  }));
 }
 
 function stopFlash() {
@@ -6313,7 +6320,7 @@ function closeQOverlay() {
   // Görsel hint panelini sıfırla
   const vhp = document.getElementById('q-visual-panel');
   const vhi = document.getElementById('q-visual-img');
-  if(vhp) { vhp.classList.remove('has-image', 'zoomed'); vhp.onclick = null; }
+  if(vhp) { vhp.classList.remove('has-image', 'zoomed'); vhp.onclick = null; vhp.style.height = ''; vhp.style.width = ''; }
   if(vhi) { vhi.onerror = null; vhi.src = ''; vhi.style.display = ''; }
   const vhl = document.getElementById('q-visual-label');
   if(vhl) { vhl.style.color = ''; vhl.textContent = '🖼 VISUAL HINT'; vhl.style.display = ''; }
