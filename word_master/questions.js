@@ -1404,6 +1404,18 @@ const QUESTIONS = [
   ["Small green or black fruits people eat.","İnsanların yediği küçük yeşil veya siyah meyveler.","OLIVES",0,1,12,"../images/6/2/28.webp"],
   ["A sweet white thing used in food and drinks.","Yiyecek ve içeceklerde kullanılan tatlı beyaz şey.","SUGAR",0,1,12,"../images/6/2/29.webp"],
   ["A white powder that gives food flavor.","Yiyeceklere lezzet katan beyaz toz.","SALT",0,1,12,"../images/6/2/30.webp"],
+  ['A large green fruit with red flesh', 'Kırmızı iç kısmı olan büyük yeşil bir meyve', 'WATERMELON',0,2,12,'../images/sp/12/1.webp', 
+  ['Small round fruit that grows in clusters', 'Salkımlar halinde büyüyen küçük yuvarlak bir meyve', 'GRAPE',0,2,12, '../images/sp/12/2.webp',
+  ['A small round red stone fruit', 'Küçük, yuvarlak, kırmızı çekirdekli bir meyve', 'CHERRY',0,1,12,'../images/sp/12/3.webp', 
+  ['A round flat bread topped with cheese and tomato', 'Üstünde Peynir,domates,mantar gibi malzemeleri olan yuvarlak bir pişmiş hamur', 'PIZZA',0,1,12, '../images/sp/12/4.webp',
+  ['A bun filled with a meat patty', 'İçinde et köftesi bulunan bir sandviç ekmeği', 'HAMBURGER',0,1,12, '../images/sp/12/5.webp', 
+  ['Bread filled with various ingredients', 'Çeşitli malzemelerle doldurulmuş ekmek', 'SANDWICH',0,1,12,'../images/sp/12/6.webp',
+  ['A liquid dish made by cooking vegetables or meat', 'Sebze veya et pişirilerek yapılan sıvı bir yemek', 'SOUP',0,3,12, '../images/sp/12/7.webp', 
+  ['A dish of raw vegetables', 'Çiğ sebzelerden oluşan genellikle yemeklerle birlikte yenen bir yiyecek', 'SALAD',0,2,12, '../images/sp/12/8.webp', 
+  ['A thick creamy dairy product', 'Koyu kıvamlı ve kremamsı bir süt ürünü', 'YOGHURT',0,2,12, '../images/sp/12/9.webp', ['YOGURT']],
+  ['A fungus used in cooking', 'Doğadan toplanan verya kültür olarak yetiştirilen bir sebze türü', 'MUSHROOM',0,3,12, '../images/sp/12/10.webp', 
+
+
  
  // ═══════════════════════════════════════════════════════════════════════
   // 🏷️  CATEGORY 13 — Appearance & Personality  (grade=0, cat=13)
@@ -1499,6 +1511,13 @@ const QUESTIONS = [
   ["Racing cars or motorcycles on a track.","Piste araba veya motorsikletle yarışmak.","MOTOR RACING",0,3,14,"../images/8/6/7.webp",["POCKET BIKE RACING"]],
   ["Climbing up steep rock faces using hands and feet.","El ve ayak kullanarak dik kaya yüzlerine tırmanmak.","ROCK CLIMBING",0,3,14,"../images/8/6/20.webp",["CLIMBING"]],
   ["Riding a board with wheels on streets and ramps.","Sokaklarda ve rampada tekerlekli tahta üzerinde sürüş.","SKATEBOARDING",0,3,14,"../images/8/6/21.webp"],
+  ['Moving through water using your arms and legs', 'Kollarınızı ve bacaklarınızı kullanarak suda hareket etme', 'SWIMMING',0,1,14, '../images/sp/14/5.webp', []],
+  ['Moving fast on foot in a race', 'Bir yarışta ayakla hızlı hareket etme', 'RUNNING',0,1,14, '../images/sp/14/6.webp', [JOGGING]],
+  ['Riding a two-wheeled vehicle', 'İki tekerlekli bir araç sürme', 'CYCLING',0,1,14, '../images/sp/14/7.webp', [RIDE BIKE]],
+  ['Tennis played on a small table with a small bat', 'Küçük bir masada ve küçük bir raketle oynanan tenis', 'TABLE TENNIS',0,2,14,'../images/sp/14/10.webp', ['PING PONG']],
+ ['A sport where you lift heavy weights', 'Ağırlıkların kaldırıldığı bir spor', 'WEIGHTLIFTING',0,2,14, '../images/sp/14/13.webp', [LIFT WEIGHTS]],
+ ['A sport played on ice or grass with a stick and puck', 'Bir sopa ve disk ile buzda veya çimde oynanan spor', 'HOCKEY',0,3,14, '../images/sp/14/19.webp', ['ICE HOCKEY']],
+
 
   // ═══════════════════════════════════════════════════════════════════════
   // 🏙️  CATEGORY 15 — Places in Town  (grade=0, cat=15)
@@ -1548,6 +1567,12 @@ const QUESTIONS = [
   ["A quiet area where dead people are buried.","Ölülerin gömüldüğü sessiz alan.","CEMETERY",0,3,15,"../images/8/7/18.webp"],
   ["A structure built over water so people or vehicles can cross.","İnsanların veya araçların geçmesi için su üzerine yapılan yapı.","BRIDGE",0,3,15,"../images/8/7/19.webp"],
   ["A building where Christians gather to pray and worship.","Hristiyanların ibadet etmek için toplandığı bina.","CHURCH",0,3,15,"../images/8/7/20.webp"],
+  ['A large arena where sports events are held', 'Spor etkinliklerinin düzenlendiği büyük bir arena', 'STADIUM',0,2,15, '../images/sp/15/1.webp', []],
+  ['A building where children go to learn', 'Çocukların öğrenmek için gittiği bir bina', 'SCHOOL',0,1,15, '../images/sp/15/2.webp', []],
+  ['A place where you keep and borrow money', 'Paranızı sakladığınız ve çektiğiniz bir yer', 'BANK',0,2,15, '../images/sp/15/3.webp', []],
+  ['A place where passengers wait for a bus', 'Yolcuların otobüs beklediği bir yer', 'BUS STOP',0,1,15, '../images/sp/15/4.webp', []],
+  ['A place where you send letters and parcels', 'Mektup ve paket gönderdiğiniz bir yer', 'POST OFFICE',0,1,15, '../images/sp/15/5.webp', []],
+
 
   // ═══════════════════════════════════════════════════════════════════════
   // 💼  CATEGORY 16 — Occupations  (grade=0, cat=16)
@@ -1582,6 +1607,25 @@ const QUESTIONS = [
   ["A person who examines and treats sick people.","Hasta insanları muayene eden ve tedavi eden kişi.","DOCTOR",0,1,16,"../images/6/6/28.webp"],
   ["A person who owns or runs a business.","Bir işletmenin sahibi olan veya onu yöneten kişi.","BUSINESSMAN",0,2,16,"../images/6/6/29.webp"],
   ["A person who designs or builds machines and structures.","Makine ve yapılar tasarlayan veya inşa eden kişi.","ENGINEER",0,2,16,"../images/7/7/27.webp"], 
+  ['A person who flies an aircraft', 'Uçak kullanan bir kişi', 'PILOT',0,1,16, '../images/sp/16/1.webp', []],
+  ['A person who enforces the law', 'Suçluları yakalayan kişi', 'POLICEMAN',0,1,16, '../images/sp/16/2.webp', ['POLICE OFFICER']],
+  ['A person who makes decisions in a court of law', 'Mahkemede karar veren kişi', 'JUDGE',0,3,16, '../images/sp/16/3.webp', []],
+  ['A person who writes news for a newspaper', 'Gazete için haber yazan kişi', 'JOURNALIST',0,3,16, '../images/sp/16/4.webp', ['REPORTER']],
+  ['A person who serves in the military', 'Orduda görev yapan bir kişi', 'SOLDIER',0,2,16, '../images/sp/16/8.webp', []],
+  ['A person who looks after a garden', 'Bir bahçeyle ilgilenen bir kişi', 'GARDENER',0,2,16, '../images/sp/16/9.webp', []],
+  ['A person who paints pictures or walls', 'Resim yapan kişi', 'PAINTER',0,3,16, '../images/sp/16/10.webp', []],
+ ['A person who installs and repairs electrical systems', 'Elektrik sistemlerini kuran ve tamir eden bir kişi', 'ELECTRICIAN',0,3,16, '../images/sp/16/12.webp', []],
+  ['A person who travels to space', 'Uzaya seyahat eden bir kişi', 'ASTRONAUT',0,2,16, '../images/sp/16/13.webp', []],
+  ['A man who serves food in a restaurant', 'Bir restoranda yemek servisi yapan bir erkek', 'WAITER',0,1,16, '../images/sp/16/14.webp', []],
+  ['A person who delivers letters', 'Mektup dağıtan bir kişi', 'POSTMAN',0,1,16, '../images/sp/16/15.webp', ['MAILMAN']],
+  ['A person who makes and repairs clothes', 'Kıyafet diken ve tamir eden bir kişi', 'TAILOR',0,2,16, '../images/sp/16/16.webp', []],
+  ['A man who performs in films or theatre', 'Film veya tiyatroda rol alan bir erkek', 'ACTOR',0,1,16, '../images/sp/16/17.webp', []],
+  ['A person who plays a musical instrument', 'Bir müzik aleti çalan bir kişi', 'MUSICIAN',0,2,16, '../images/sp/16/18.webp', []],
+  ['A person who manages financial records', 'Mali kayıtları yöneten bir kişi', 'ACCOUNTANT',0,3,16, '../images/sp/16/19.webp', []],
+  ['A person who works in a library', 'Bir kütüphanede çalışan bir kişi', 'LIBRARIAN',0,2,16, '../images/sp/16/21.webp', []],
+  ['A person who prepares and sells medicines', 'İlaç hazırlayan ve satan bir kişi', 'PHARMACIST',0,3,16, '../images/sp/16/22.webp', []],
+
+
 
 ];
 

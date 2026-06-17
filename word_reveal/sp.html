@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORD REVEAL SP — by Adil Fırat Oktav</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#FFD700;--gold-dark:#C8A500;--gold-glow:rgba(255,215,0,0.35);
+  --bg-deep:#0d0a1a;--bg-mid:#1a1030;--accent:#7c3aed;--accent2:#a855f7;
+  --red:#E8213A;--green:#1DB954;--white:#F8F4FF;--muted:rgba(220,200,255,0.55);
+  --panel-bg:rgba(20,10,50,0.7);--panel-border:rgba(168,85,247,0.25);
+  --tile1:#1e1040;--tile2:#2a1555;--tile3:#150d35;
+}
+html,body{height:100%;font-family:'Barlow',sans-serif;background:var(--bg-deep);color:var(--white);overflow:hidden;user-select:none;-webkit-user-select:none}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.05) 2px,rgba(0,0,0,0.05) 4px);pointer-events:none;z-index:9999}
+
+/* ══════════ MAIN MENU ══════════ */
+#main-menu{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:transparent}
+.mm-banner{width:min(94vw,800px);background:linear-gradient(145deg,#1a0a40,#0d0620);border:3px solid var(--gold);box-shadow:inset 0 0 0 2px #3d1a8a,0 0 60px rgba(168,85,247,.25);border-radius:20px;padding:clamp(28px,5vh,60px) clamp(18px,3vw,36px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.5vh,26px)}
+.mm-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,6vw,86px);letter-spacing:.12em;color:var(--gold);text-shadow:0 0 40px rgba(255,215,0,.5);line-height:1}
+.mm-sp-badge{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,2.4vw,30px);letter-spacing:.35em;color:var(--accent2);background:rgba(168,85,247,.15);border:1.5px solid rgba(168,85,247,.4);border-radius:8px;padding:4px 18px}
+.mm-sub{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.8vw,22px);font-weight:700;letter-spacing:.28em;color:rgba(168,85,247,.8);text-transform:uppercase}
+.mm-credit{font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,1.4vw,17px);font-weight:700;letter-spacing:.18em;color:rgba(255,215,0,.45);text-transform:uppercase}
+.mm-divider{width:min(70%,360px);height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,0,.4),transparent)}
+.mm-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.mm-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2.2vw,22px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:16px 48px;border-radius:14px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.mm-btn:hover{transform:translateY(-3px)}.mm-btn:active{transform:scale(.96)}
+.mm-start-btn{background:linear-gradient(135deg,#1DB954,#15803d);color:#fff;border:3px solid #0a4020;box-shadow:0 6px 28px rgba(29,185,84,.5);animation:mmPulse 2.4s ease-in-out infinite}
+@keyframes mmPulse{0%,100%{box-shadow:0 6px 28px rgba(29,185,84,.45)}50%{box-shadow:0 8px 48px rgba(29,185,84,.8),0 0 70px rgba(29,185,84,.2)}}
+.mm-settings-btn{background:rgba(20,10,50,.9);color:var(--gold);border:3px solid var(--gold);box-shadow:0 4px 16px rgba(124,58,237,.35)}
+.mm-settings-btn:hover{background:rgba(40,20,80,1);box-shadow:0 6px 24px rgba(124,58,237,.5),0 0 18px rgba(255,215,0,.2)}
+.mm-disabled-btn{background:rgba(20,10,50,.5);color:rgba(168,85,247,.3);border:2px solid rgba(168,85,247,.15);box-shadow:none;cursor:not-allowed;font-size:clamp(13px,1.6vw,18px);padding:12px 32px;opacity:.5}
+.mm-newgame-btn{background:linear-gradient(135deg,#b45309,#92400e);color:#fff;border:3px solid #78350f;box-shadow:0 6px 28px rgba(180,83,9,.4)}
+.mm-newgame-btn:hover{box-shadow:0 8px 36px rgba(180,83,9,.65)}
+#sp-newgame-confirm{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.78)}
+#sp-newgame-confirm.open{display:flex}
+.sp-ngc-box{background:linear-gradient(145deg,#1a0a40,#0d0620);border:3px solid #ef4444;box-shadow:0 0 60px rgba(239,68,68,.3);border-radius:20px;padding:40px 48px;max-width:480px;width:90%;text-align:center;display:flex;flex-direction:column;gap:22px}
+.sp-ngc-title{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:.1em;color:#ef4444}
+.sp-ngc-text{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;letter-spacing:.06em;color:rgba(255,255,255,.8);line-height:1.6}
+.sp-ngc-btns{display:flex;gap:16px;justify-content:center}
+.sp-ngc-yes{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.12em;padding:14px 44px;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;border:2px solid #7f1d1d;box-shadow:0 4px 18px rgba(220,38,38,.4)}
+.sp-ngc-yes:hover{box-shadow:0 6px 28px rgba(220,38,38,.65)}
+.sp-ngc-no{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.12em;padding:14px 44px;border-radius:12px;cursor:pointer;background:rgba(20,10,50,.9);color:var(--gold);border:2px solid var(--gold);box-shadow:0 4px 16px rgba(124,58,237,.3)}
+.sp-ngc-no:hover{box-shadow:0 6px 24px rgba(124,58,237,.5)}
+.mm-disabled-btn:hover{transform:none}
+.mm-secondary-btns{margin-top:-4px}
+
+
+/* ══════════ GAME AREA ══════════ */
+#game-area{position:fixed;inset:0;display:none;flex-direction:column;padding:10px 14px 12px;gap:8px}
+
+/* ── SP HUD (WO-style, bire bir kopya) ── */
+#sp-header{display:flex;align-items:center;gap:10px;flex-shrink:0;height:68px;padding:8px 14px;border:1px solid rgba(255,215,0,.4);border-radius:14px;background:rgba(3,9,35,.92)}
+#sp-hud-avatar{width:48px;height:48px;object-fit:cover;border-radius:50%;border:2px solid #FFD700;flex-shrink:0}
+.sp-hud-cell{min-width:80px;text-align:center;flex-shrink:0}
+.sp-hud-value{font:27px/1 'Bebas Neue',sans-serif;color:#FFD700}
+.sp-hud-label{font:700 9px/1 'Barlow Condensed',sans-serif;letter-spacing:.15em;color:#93c5fd;text-transform:uppercase}
+.wo-progress{flex:1;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.wo-progress-track{position:relative;height:9px;background:rgba(255,255,255,.1);border-radius:8px;overflow:hidden}
+.wo-progress-fill{height:100%;background:linear-gradient(90deg,#2563eb,#60a5fa);transition:width .65s cubic-bezier(.4,0,.2,1)}
+.wo-progress-fill.s1{background:linear-gradient(90deg,#1d4ed8,#eab308)}
+.wo-progress-fill.s2{background:linear-gradient(90deg,#1d4ed8,#FFD700)}
+.wo-progress-fill.s3{background:linear-gradient(90deg,#1d4ed8,#FFD700);box-shadow:0 0 10px rgba(255,215,0,.55)}
+.wo-pmark{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.35);z-index:2}
+.wo-progress-stars-row{display:flex;position:relative;height:11px}
+.wo-pstar{position:absolute;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,.2);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.04em;line-height:1;transition:color .25s,text-shadow .25s}
+.wo-pstar.lit{color:#FFD700;text-shadow:0 0 7px rgba(255,215,0,.75)}
+@keyframes wo-star-burst{0%,100%{transform:translateX(-50%) scale(1)}16%{transform:translateX(-50%) scale(2.4)}33%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.9)}66%{transform:translateX(-50%) scale(1)}83%{transform:translateX(-50%) scale(1.5)}}
+.wo-pstar.pulsing{animation:wo-star-burst .78s ease-in-out forwards;color:#fff!important;text-shadow:0 0 18px #FFD700,0 0 10px #FFD700!important;transition:none!important;z-index:10}
+#sp-controls{display:flex;gap:4px;flex-shrink:0}
+.ctrl-btn{font-size:15px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:rgba(20,10,50,.8);border:1px solid rgba(255,255,255,.18);border-radius:8px;cursor:pointer;color:var(--white);transition:all .12s;padding:0}
+.ctrl-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
+.ctrl-btn.muted{border-color:rgba(248,113,113,.5);color:#f87171}
+#lite-btn{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;height:34px;width:44px;border-radius:8px;border:1.5px solid;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(5,14,44,.82);border-color:rgba(124,58,237,.8);color:#c4b5fd;transition:all .15s}
+#lite-btn.active{color:#f87171}
+#menu-controls{position:fixed;top:10px;right:12px;z-index:9101;display:flex;gap:6px}
+#menu-controls .ctrl-btn{width:36px;height:36px;border-radius:9px;font-size:16px}
+body.game-active #menu-controls{display:none}
+
+/* ── REVEAL AREA ── */
+#reveal-area{flex:1;display:flex;align-items:center;justify-content:center;gap:16px;min-height:0;position:relative}
+#reveal-left{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;flex-shrink:0;width:min(200px,17vw)}
+#score-counter-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+#score-counter-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.2vw,14px);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+#score-counter{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,8vw,108px);color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(255,215,0,.6);transition:color .3s}
+#score-counter.low{color:#f97316;text-shadow:0 0 30px rgba(249,115,22,.6)}
+#score-counter.min{color:#ef4444;text-shadow:0 0 30px rgba(239,68,68,.6)}
+#score-pts-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,1.2vw,14px);letter-spacing:.12em;color:var(--muted)}
+#cat-hint{display:none;flex-direction:column;align-items:center;gap:5px;margin-top:10px}
+#cat-hint img.ch-img{width:min(140px,13vw);aspect-ratio:3/2;object-fit:cover;border-radius:8px;border:1.5px solid rgba(96,165,250,.4);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+#cat-hint .ch-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(9px,1vw,12px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(96,165,250,.9);text-align:center;line-height:1.2}
+#tr-hint{display:none;font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,1.1vw,15px);font-weight:700;letter-spacing:.06em;color:rgba(251,191,36,.95);text-align:center;margin-top:6px;padding:5px 8px;border:1px solid rgba(251,191,36,.35);border-radius:6px;line-height:1.4;width:min(150px,13vw);word-break:break-word;white-space:normal}
+#streak-counter{display:none;flex-direction:column;align-items:center;gap:3px;margin-top:8px}
+#streak-counter .streak-fire{font-size:clamp(16px,2vw,24px)}
+#streak-counter .streak-val{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,1.5vw,18px);color:#fb923c;letter-spacing:.1em}
+
+/* ── IMAGE CONTAINER ── */
+#image-container{position:relative;width:min(500px,56vw,58vh);aspect-ratio:1/1;flex-shrink:0;box-shadow:0 0 0 2px rgba(168,85,247,.3)}
+#reveal-img{width:100%;height:100%;object-fit:cover;border-radius:18px;display:block}
+#tile-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(10,1fr);border-radius:18px;overflow:hidden}
+.tile{transition:opacity .35s ease;border:1px solid rgba(0,0,0,.25)}
+.tile.revealed{opacity:0;pointer-events:none}
+#tile-grid.resetting .tile{transition:none!important;opacity:1!important}
+
+/* ── READY OVERLAY ── */
+#ready-overlay{position:absolute;inset:0;z-index:20;display:none;align-items:center;justify-content:center;background:rgba(4,2,16,.6);border-radius:18px}
+#ready-btn{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4.5vw,60px);letter-spacing:.22em;padding:clamp(14px,2.5vh,28px) clamp(42px,8vw,100px);background:linear-gradient(135deg,#15803d,#22c55e);border:3px solid rgba(74,222,128,.65);border-radius:20px;color:#fff;cursor:pointer;position:relative;box-shadow:0 0 30px rgba(34,197,94,.35);transition:transform .12s}
+#ready-btn::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 0 80px rgba(34,197,94,.9),0 0 120px rgba(34,197,94,.2);animation:readyPulse 1.8s ease-in-out infinite}
+@keyframes readyPulse{0%,100%{opacity:.4}50%{opacity:1}}
+#ready-btn:hover{transform:scale(1.07)}
+#ready-btn:active{transform:scale(.96)}
+
+/* ── REVEAL BAR ── */
+#reveal-bar{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:22;display:none}
+#reveal-btn{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.8vw,38px);letter-spacing:.18em;padding:clamp(10px,1.8vh,20px) clamp(30px,5.5vw,72px);background:linear-gradient(135deg,#6d28d9,#a855f7);border:2px solid rgba(168,85,247,.6);border-radius:16px;color:#fff;cursor:pointer;position:relative;box-shadow:0 0 18px rgba(168,85,247,.4)}
+#reveal-btn::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 0 52px rgba(168,85,247,.95),0 0 90px rgba(168,85,247,.3);animation:revealBtnPulse 1.1s ease-in-out infinite}
+@keyframes revealBtnPulse{0%,100%{opacity:.35}50%{opacity:1}}
+
+/* ── ANSWER DISPLAY ── */
+#answer-display{position:absolute;bottom:0;left:0;right:0;z-index:22;display:none;background:linear-gradient(0deg,rgba(4,2,16,.97) 55%,transparent);border-radius:0 0 18px 18px;padding:22px 12px 14px;font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,4vw,54px);color:var(--gold);letter-spacing:.12em;text-align:center;text-shadow:0 0 26px rgba(255,215,0,.75)}
+
+/* ── JOKER PANEL ── */
+#joker-panel{position:absolute;inset:0;z-index:25;background:rgba(8,6,30,.97);border:1.5px solid rgba(96,165,250,.4);border-radius:18px;padding:24px;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+#joker-panel-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:.2em;color:rgba(148,163,184,.7);text-align:center;text-transform:uppercase;margin-bottom:2px}
+.joker-option{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.4vw,28px);letter-spacing:.1em;border-radius:12px;border:1.5px solid;color:#fff;cursor:pointer;padding:10px 18px;text-align:left;display:flex;align-items:center;gap:10px;transition:transform .1s,opacity .1s;width:100%}
+.joker-option:hover:not(:disabled){transform:scale(1.03)}
+.joker-option:disabled{opacity:.3;cursor:not-allowed}
+.joker-option.shatter{background:rgba(124,58,237,.25);border-color:rgba(167,139,250,.5)}
+.joker-option.xray{background:rgba(6,78,59,.25);border-color:rgba(52,211,153,.5)}
+.joker-option.cathint{background:rgba(30,64,175,.25);border-color:rgba(96,165,250,.5)}
+.joker-option .jo-desc{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.06em;opacity:.65;font-weight:400;display:block;margin-top:1px}
+
+/* ── CROSSHAIR ── */
+#fl-crosshair{position:absolute;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:30;display:none;transition:transform .22s cubic-bezier(.4,0,.2,1)}
+#fl-crosshair::before,#fl-crosshair::after{content:'';position:absolute;background:rgba(251,191,36,.9);box-shadow:0 0 8px rgba(251,191,36,.8)}
+#fl-crosshair::before{left:50%;top:0;width:2px;height:100%;transform:translateX(-50%)}
+#fl-crosshair::after{top:50%;left:0;height:2px;width:100%;transform:translateY(-50%)}
+.fl-circle{position:absolute;top:50%;left:50%;width:28px;height:28px;border:2px solid rgba(251,191,36,.9);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px rgba(251,191,36,.6)}
+
+/* ── SCREEN SHAKE ── */
+@keyframes screenShake{0%,100%{transform:translate(0,0)}15%{transform:translate(-6px,4px)}30%{transform:translate(5px,-5px)}45%{transform:translate(-4px,3px)}60%{transform:translate(3px,-3px)}75%{transform:translate(-2px,2px)}90%{transform:translate(2px,-1px)}}
+#image-container.shaking{animation:screenShake .4s ease}
+
+/* ── TILE SHATTER ── */
+.tile-shatter{position:fixed;pointer-events:none;border-radius:3px;z-index:999;will-change:transform,opacity}
+
+/* ── BOTTOM BAR ── */
+#bottom-bar{display:flex;align-items:center;justify-content:center;gap:18px;flex-shrink:0;padding:0 8px}
+#stop-btn{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,4vw,52px);letter-spacing:.14em;background:linear-gradient(135deg,#991b1b,#ef4444);border:none;border-radius:18px;color:#fff;cursor:pointer;padding:clamp(12px,2vh,20px) clamp(28px,5vw,64px);position:relative;box-shadow:0 6px 32px rgba(239,68,68,.4);transition:transform .12s}
+#stop-btn::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:0 8px 56px rgba(239,68,68,.9),0 0 80px rgba(239,68,68,.2);animation:stopPulse 2s ease-in-out infinite}
+@keyframes stopPulse{0%,100%{opacity:.45}50%{opacity:1}}
+#stop-btn:hover{transform:scale(1.06)}
+#stop-btn:active{transform:scale(0.97)}
+#stop-btn:disabled{opacity:.35;cursor:not-allowed}
+#stop-btn:disabled::after{animation:none;opacity:0}
+#joker-btn{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.8vw,38px);letter-spacing:.12em;background:linear-gradient(135deg,#1e3a8a,#3b82f6);border:2px solid rgba(96,165,250,.6);border-radius:14px;color:#fff;cursor:pointer;padding:clamp(10px,1.6vh,18px) clamp(20px,3.5vw,48px);box-shadow:0 4px 24px rgba(59,130,246,.45);transition:transform .12s,box-shadow .15s;display:none}
+#joker-btn:hover{transform:scale(1.06);box-shadow:0 8px 36px rgba(59,130,246,.8)}
+#joker-btn:active{transform:scale(.97)}
+#joker-btn:disabled{opacity:.35;cursor:not-allowed}
+
+/* ── ARC FLOAT ── */
+@keyframes scoreArcUp{0%{opacity:0;transform:translate(-50%,-50%) scale(0.3)}10%{opacity:1;transform:translate(-50%,-50%) scale(2.2)}50%{opacity:1;transform:translate(-50%,calc(-50% - 65px)) scale(1.6)}100%{opacity:0;transform:translate(-50%,calc(-50% - 160px)) scale(0.85)}}
+.score-arc-float{position:fixed;font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,78px);color:#4ade80;text-shadow:0 0 32px rgba(74,222,128,.9),0 0 70px rgba(74,222,128,.4);pointer-events:none;z-index:8000;white-space:nowrap;letter-spacing:.06em;animation:scoreArcUp 2.1s ease forwards}
+
+/* ── SCORE FLOAT ── */
+.score-float{position:fixed;font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3vw,44px);pointer-events:none;z-index:9000;white-space:nowrap;letter-spacing:.06em;animation:scoreFloat 1.1s ease-out forwards}
+@keyframes scoreFloat{0%{opacity:1;transform:translate(-50%,0) scale(1.3)}100%{opacity:0;transform:translate(-50%,-80px) scale(0.8)}}
+
+/* ══════════ CHOICE OVERLAY ══════════ */
+#choice-overlay{position:fixed;inset:0;z-index:500;background:rgba(4,2,16,.88);display:none;align-items:center;justify-content:center}
+#choice-overlay.open{display:flex}
+.choice-modal{background:linear-gradient(145deg,#1e0d4e,#0f0628);border:2px solid var(--gold);border-radius:28px;padding:40px 52px 36px;text-align:center;max-width:520px;width:90%;box-shadow:0 0 100px rgba(255,215,0,.12);animation:modalIn .35s cubic-bezier(.175,.885,.32,1.275)}
+@keyframes modalIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.choice-score-row{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.5vw,17px);color:var(--muted);letter-spacing:.1em;margin-bottom:24px}
+.choice-score-row strong{color:var(--gold);font-size:1.2em}
+.choice-btns{display:flex;flex-direction:column;gap:12px}
+.choice-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,28px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:16px;padding:20px 28px;cursor:pointer;transition:transform .15s,box-shadow .15s;display:flex;align-items:center;justify-content:center;gap:12px}
+.choice-btn:hover{transform:translateY(-3px)}
+.choice-btn:active{transform:scale(.97)}
+.choice-type{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;box-shadow:0 4px 24px rgba(59,130,246,.45)}
+.choice-type:hover{box-shadow:0 8px 40px rgba(59,130,246,.7)}
+.choice-mc{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 4px 24px rgba(168,85,247,.45)}
+.choice-mc:hover{box-shadow:0 8px 40px rgba(168,85,247,.7)}
+.choice-cancel{background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.22)!important;color:rgba(255,255,255,.75)}
+.choice-cancel:hover{background:rgba(255,255,255,.12);color:#fff}
+.choice-btn .ch-sub{font-size:.55em;opacity:.75;letter-spacing:.06em;font-weight:400}
+
+/* ══════════ TYPE OVERLAY ══════════ */
+#type-overlay{position:fixed;inset:0;z-index:600;background:rgba(4,2,16,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
+#type-overlay.open{display:flex}
+#type-header{display:flex;align-items:center;gap:16px;flex-shrink:0}
+#type-score-badge{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.2vw,28px);color:#4ade80;background:rgba(74,222,128,.1);border:1.5px solid rgba(74,222,128,.4);border-radius:12px;padding:6px 16px;letter-spacing:.08em}
+#type-score-badge.double{color:#fbbf24;border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.1)}
+#typed-display{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,56px);color:var(--gold);letter-spacing:.14em;height:clamp(50px,7vw,78px);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,215,0,.35);border-radius:16px;width:min(640px,90vw);padding:0 24px;flex-shrink:0;text-align:center}
+#type-kb-wrap{width:100%;max-width:860px;flex-shrink:0}
+.lev-wrong{color:#ef4444;text-decoration:line-through;display:inline-block}
+.lev-fuzzy{color:#f97316;display:inline-block}
+@keyframes levJump{0%{transform:translateY(-16px) scale(1.45);opacity:0}60%{transform:translateY(2px) scale(.95);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+.lev-correct{color:#fff;display:inline-block;animation:levJump .42s cubic-bezier(.34,1.56,.64,1)}
+
+/* ══════════ MC OVERLAY ══════════ */
+#mc-overlay{position:fixed;inset:0;z-index:600;background:rgba(4,2,16,.92);display:none;align-items:center;justify-content:center}
+#mc-overlay.open{display:flex}
+.mc-modal{background:linear-gradient(145deg,#1e0d4e,#0f0628);border:2px solid rgba(168,85,247,.5);border-radius:28px;padding:36px 44px;text-align:center;max-width:640px;width:94%;box-shadow:0 0 80px rgba(168,85,247,.15);animation:modalIn .3s cubic-bezier(.175,.885,.32,1.275)}
+.mc-score-row{font-family:'Barlow Condensed',sans-serif;font-size:clamp(12px,1.4vw,16px);color:var(--muted);letter-spacing:.1em;margin-bottom:20px}
+.mc-score-row strong{color:var(--gold)}
+.mc-options{display:flex;flex-direction:column;gap:10px}
+.mc-btn{font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,2.3vw,26px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.06);border:1.5px solid rgba(168,85,247,.3);border-radius:14px;color:var(--white);padding:16px 24px;cursor:pointer;transition:transform .15s,background .15s,border-color .15s;text-align:left;display:flex;align-items:center;gap:14px}
+.mc-btn:hover{background:rgba(168,85,247,.18);border-color:var(--accent2);transform:translateX(4px)}
+.mc-btn:active{transform:scale(.98)}
+.mc-btn.correct{background:rgba(34,197,94,.2);border-color:#22c55e;color:#4ade80;animation:mcCorrect .5s ease}
+.mc-btn.wrong{background:rgba(239,68,68,.2);border-color:#ef4444;color:#f87171}
+.mc-btn:disabled{cursor:not-allowed}
+@keyframes mcCorrect{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.mc-num{font-family:'Bebas Neue',sans-serif;font-size:1.4em;color:var(--accent2);min-width:28px}
+
+/* ══════════ RESULT STAMP ══════════ */
+#result-overlay{position:fixed;inset:0;z-index:700;display:none;align-items:center;justify-content:center;pointer-events:none}
+.result-stamp{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,12vw,120px);letter-spacing:.1em;border:7px solid;border-radius:12px;padding:8px 28px;opacity:0;transform:scale(1.6) rotate(-12deg);animation:stampDrop .55s cubic-bezier(.2,.85,.4,1.1) forwards}
+.result-stamp.correct{color:rgba(74,222,128,.92);border-color:rgba(74,222,128,.85);text-shadow:0 0 40px rgba(74,222,128,.6)}
+.result-stamp.wrong{color:rgba(248,113,113,.92);border-color:rgba(248,113,113,.85);text-shadow:0 0 40px rgba(248,113,113,.6)}
+.result-stamp.streak{color:rgba(96,165,250,.97);border-color:rgba(96,165,250,.88);text-shadow:0 0 40px rgba(96,165,250,.75),0 0 80px rgba(96,165,250,.35)}
+@keyframes stampDrop{0%{opacity:0;transform:scale(1.6) rotate(-12deg)}35%{opacity:1;transform:scale(.95) rotate(-6deg)}60%{transform:scale(1.04) rotate(-6deg)}100%{opacity:1;transform:scale(1) rotate(-6deg)}}
+
+/* ══════════ FINAL SCREEN ══════════ */
+#final-overlay{position:fixed;inset:0;z-index:800;background:rgba(4,2,16,.98);display:none;align-items:center;justify-content:center}
+#final-overlay.open{display:flex}
+.final-wrapper{width:min(96vw,900px);max-height:92vh;display:flex;gap:16px;animation:modalIn .5s cubic-bezier(.175,.885,.32,1.275)}
+.final-left{width:220px;flex-shrink:0;background:linear-gradient(145deg,#1a0a50,#0d062a);border:1.5px solid var(--gold);border-radius:20px;padding:26px 18px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;box-shadow:0 0 60px rgba(255,215,0,.15)}
+.final-trophy{font-size:54px;animation:trophyBounce 1.4s ease-in-out infinite}
+@keyframes trophyBounce{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.2) translateY(-8px)}}
+.final-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.5vw,40px);color:var(--gold);text-shadow:0 0 30px var(--gold-glow);letter-spacing:.08em}
+.final-score-big{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,80px);color:var(--gold);line-height:1;text-shadow:0 0 40px rgba(255,215,0,.7)}
+.final-score-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,215,0,.55)}
+.final-stars{font-size:clamp(22px,3vw,32px);letter-spacing:4px;margin:4px 0}
+.final-correct-row{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.6vw,18px);color:var(--muted);letter-spacing:.08em}
+.final-correct-row strong{color:#4ade80}
+.final-btn{width:100%;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border:none;border-radius:12px;cursor:pointer;transition:transform .15s;margin-top:4px}
+.final-play-again{background:linear-gradient(135deg,#1B4FD8,#4A8AF4);color:#fff;box-shadow:0 4px 20px rgba(27,79,216,.4)}
+.final-play-again:hover{transform:translateY(-2px)}
+.final-exit{background:transparent;border:1.5px solid rgba(248,113,113,.4);color:rgba(248,113,113,.8)}
+.final-exit:hover{background:rgba(185,28,28,.2);border-color:#f87171;color:#f87171}
+.final-home{background:transparent;border:1.5px solid rgba(148,163,184,.3);color:rgba(148,163,184,.7)}
+.final-home:hover{background:rgba(148,163,184,.1);border-color:rgba(148,163,184,.7);color:#cbd5e1}
+.final-right{flex:1;min-width:0;background:rgba(255,255,255,.03);border:1px solid rgba(255,215,0,.18);border-radius:16px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.final-right-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);flex-shrink:0}
+#final-word-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:5px}
+#final-word-list::-webkit-scrollbar{width:4px}
+#final-word-list::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+#final-word-list::-webkit-scrollbar-thumb{background:rgba(255,215,0,.3);border-radius:2px}
+.fw-row{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.fw-row.fw-correct{border-color:rgba(74,222,128,.25);background:rgba(74,222,128,.05)}
+.fw-row.fw-wrong{border-color:rgba(248,113,113,.2)}
+.fw-num{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--muted);width:22px;text-align:center;flex-shrink:0}
+.fw-icon{font-size:14px;flex-shrink:0;width:18px;text-align:center}
+.fw-word{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;flex:1;color:var(--white);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fw-correct .fw-word{color:#4ade80}
+.fw-type{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.08em;color:var(--muted);flex-shrink:0}
+.fw-pts{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);flex-shrink:0;min-width:50px;text-align:right}
+
+/* ══════════ LITE MODE ══════════ */
+body.lite-mode *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.lite-mode::before{display:none!important}
+body.lite-mode .rgb-kb-key{animation:none!important;border-color:rgba(255,255,255,.14)!important;box-shadow:none!important}
+body.lite-mode .rgb-kb-key.kb-del{animation:none!important;border-color:rgba(232,33,58,.45)!important;box-shadow:none!important}
+body.lite-mode .rgb-kb-key.kb-submit{animation:none!important;border-color:rgba(34,197,94,.45)!important;box-shadow:none!important}
+body.lite-mode .rgb-kb-key.kb-sure{animation:none!important;border-color:rgba(234,179,8,.45)!important;box-shadow:none!important}
+body.lite-mode .rgb-kb-key:active{transform:translateY(3px)!important;filter:brightness(2.2)!important;box-shadow:0 1px 0 rgba(0,0,0,.75)!important}
+body.lite-mode .rgb-kb-key.kb-lit{animation:rgbKbFlash .18s ease-out forwards!important}
+body.lite-mode #stop-btn,body.lite-mode #reveal-btn,body.lite-mode #ready-btn{animation:none!important;box-shadow:none!important}
+body.lite-mode #stop-btn::after,body.lite-mode #reveal-btn::after,body.lite-mode #ready-btn::after{animation:none!important;opacity:0!important}
+body.lite-mode .result-stamp{text-shadow:none!important}
+body.lite-mode #score-counter{text-shadow:none!important}
+body.lite-mode .score-arc-float{text-shadow:none!important}
+body.lite-mode .choice-btn{box-shadow:none!important}
+body.lite-mode .final-play-again{box-shadow:none!important}
+body.lite-mode .final-trophy{animation:none!important}
+
+
+@media(max-width:1100px){#image-container{width:min(420px,56vw,58vh)}}
+@media(max-width:800px),(max-height:700px){#image-container{width:min(320px,52vw,52vh)}.choice-modal{padding:28px 28px 24px}.mc-modal{padding:24px 20px}}
+
+/* ══════════════════════════════════════════════════════
+   SP CAMPAIGN SYSTEM — WO stili inline
+══════════════════════════════════════════════════════ */
+.sp-screen{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 15%,rgba(30,64,175,.4),rgba(2,6,24,.96) 55%)}.sp-screen.open{display:flex}
+.wo-panel{width:min(1100px,96vw);max-height:94vh;overflow:auto;padding:28px;border:1.5px solid rgba(255,215,0,.4);border-radius:24px;background:linear-gradient(145deg,rgba(10,24,80,.97),rgba(3,9,35,.98));box-shadow:0 24px 80px rgba(0,0,0,.65),0 0 40px rgba(59,130,246,.13)}
+.wo-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,8vw,88px);letter-spacing:.12em;color:#FFD700;text-align:center;text-shadow:0 0 28px rgba(255,215,0,.5)}
+.wo-btn{position:relative;padding:14px 20px;border:1px solid rgba(255,215,0,.4);border-radius:13px;cursor:pointer;background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:23px;letter-spacing:.13em}.wo-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(59,130,246,.35)}.wo-btn:disabled{opacity:.35;cursor:not-allowed}.wo-btn.gold{background:linear-gradient(135deg,#a16207,#eab308)}.wo-btn.ghost{background:rgba(255,255,255,.04);color:#bfdbfe;border-color:rgba(255,255,255,.2)}
+.wo-label{display:block;margin-bottom:7px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.14em;color:#bfdbfe}.wo-name-input{width:100%;padding:13px 15px;border:1px solid rgba(147,197,253,.45);border-radius:11px;background:rgba(0,0,0,.3);color:#fff;font:700 18px 'Barlow Condensed',sans-serif;text-transform:uppercase}
+.wo-choice-row{display:flex;gap:10px;flex-wrap:wrap}.wo-choice{flex:1;min-width:90px;padding:11px;border:1px solid rgba(147,197,253,.35);border-radius:10px;background:rgba(30,58,138,.25);color:#bfdbfe;cursor:pointer;font:700 17px 'Barlow Condensed',sans-serif}.wo-choice.active{border-color:#FFD700;color:#fff;background:rgba(161,98,7,.35)}
+.wo-warning{min-height:20px;color:#fca5a5;text-align:center;font:700 14px 'Barlow Condensed',sans-serif}
+.wo-form{display:grid;gap:18px}
+.wo-avatar-grid{display:grid;grid-template-columns:repeat(5,minmax(70px,1fr));gap:10px}.wo-avatar{padding:7px;border:1px solid rgba(147,197,253,.3);border-radius:12px;background:rgba(0,0,0,.22);cursor:pointer;color:#dbeafe;text-align:center;font:700 11px 'Barlow Condensed',sans-serif}.wo-avatar img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px;display:block;margin-bottom:4px}.wo-avatar.active{border-color:#FFD700;box-shadow:0 0 18px rgba(255,215,0,.25)}.wo-head-flip{transform:scaleX(-1)}
+.wo-new-panel{width:min(900px,94vw);padding:20px 24px}.wo-new-title{font-size:46px!important;line-height:1;margin-bottom:8px}.wo-new-layout{display:grid;grid-template-columns:minmax(240px,38%) 1fr;gap:22px;align-items:center}.wo-new-panel .wo-form{gap:12px}.wo-new-panel .wo-avatar-grid{grid-template-columns:repeat(5,minmax(52px,1fr));gap:6px}.wo-new-panel .wo-avatar{padding:4px;font-size:10px}.wo-new-panel .wo-label{margin-bottom:4px}.wo-avatar-preview{height:min(46vh,500px);min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;border:1px solid rgba(255,215,0,.22);border-radius:18px;background:radial-gradient(circle at 50% 45%,rgba(59,130,246,.22),rgba(2,6,24,.12) 65%);overflow:hidden}.wo-avatar-preview img{height:calc(100% - 40px);max-width:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 12px 20px rgba(0,0,0,.55))}.wo-avatar-preview div{height:40px;font:26px 'Bebas Neue',sans-serif;letter-spacing:.15em;color:#FFD700}
+.wo-campaigns-panel{max-width:1140px}.wo-campaigns-head{display:flex;align-items:center;justify-content:space-between;gap:20px}.wo-achievements-score{min-width:140px;padding:12px 18px;border:1px solid rgba(255,215,0,.45);border-radius:14px;background:rgba(161,98,7,.2);text-align:center}.wo-achievements-score span{display:block;font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#fde68a}.wo-achievements-score strong{font:40px 'Bebas Neue',sans-serif;color:#FFD700}
+.wo-campaign-card{position:relative;padding:0;height:360px;border:1.5px solid rgba(255,215,0,.45);border-radius:20px;overflow:hidden;cursor:pointer;background-color:#020617;color:#fff;text-align:left;box-shadow:0 12px 35px rgba(0,0,0,.42);transition:.22s}.wo-campaign-card::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(2,6,24,.05),rgba(2,6,24,.08) 66%,rgba(2,6,24,.82) 84%,rgba(2,6,24,.98))}.wo-campaign-card:hover:not(:disabled){transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.55)}.wo-campaign-card>*{position:relative;z-index:2}.wo-campaign-card-tag{position:absolute;top:10px;left:10px;padding:4px 8px;border-radius:6px;background:rgba(2,6,24,.72);font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.14em;color:#dbeafe}.wo-campaign-card-info{position:absolute;left:0;right:0;bottom:0;display:grid;gap:5px;padding:36px 16px 14px;background:linear-gradient(180deg,rgba(2,6,24,0),rgba(2,6,24,.9) 42%,rgba(2,6,24,.98))}.wo-campaign-card-desc{font:700 13px/1.3 'Barlow Condensed',sans-serif;letter-spacing:.07em;color:#dbeafe}.wo-campaign-card-progress{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.06em;color:#bfdbfe;margin-top:2px}.wo-campaign-card-enter{font:20px 'Bebas Neue',sans-serif;letter-spacing:.12em;color:#FFD700}.wo-campaign-lock-badge{display:none;position:absolute;top:10px;right:10px;padding:7px 10px;border-radius:8px;background:rgba(2,6,24,.86);border:1px solid rgba(255,255,255,.2);font:700 10px 'Barlow Condensed',sans-serif;letter-spacing:.1em;color:#e2e8f0;white-space:nowrap;z-index:2;text-align:center;line-height:1.25}.wo-campaign-card.locked{filter:grayscale(1);opacity:.72;cursor:not-allowed}.wo-campaign-card.locked:hover{transform:none}.wo-campaign-card.locked .wo-campaign-lock-badge{display:block}
+.wo-campaign-menu-actions{display:flex;justify-content:center;gap:12px;margin-top:20px}.wo-campaign-menu-actions .wo-btn{min-width:170px}
+.sp-camp-thumb{position:absolute;top:0;left:0;width:100%;height:calc(100% - 92px);object-fit:contain;object-position:center top;z-index:0;border-radius:inherit;background:#020617}
+.wo-levels-panel{width:min(1250px,97vw)}.wo-levels-layout{display:grid;grid-template-columns:240px 1fr;gap:20px;align-items:stretch}.wo-campaign-profile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:320px;overflow:hidden;border:1px solid rgba(255,215,0,.3);border-radius:16px;background:radial-gradient(circle at 50% 42%,rgba(59,130,246,.25),rgba(2,6,24,.18) 65%)}.wo-campaign-profile img{position:absolute;inset:40px 0 65px;width:100%;height:calc(100% - 105px);object-fit:contain;object-position:center bottom}.wo-campaign-name{position:absolute;z-index:1;top:10px;font:28px 'Bebas Neue',sans-serif;letter-spacing:.13em;color:#FFD700;text-shadow:0 2px 10px #000}.wo-campaign-score-label{position:relative;z-index:1;font:700 10px 'Barlow Condensed',sans-serif;letter-spacing:.15em;color:#bfdbfe}.wo-campaign-score{position:relative;z-index:1;margin-bottom:8px;font:36px 'Bebas Neue',sans-serif;color:#FFD700;line-height:1}
+.wo-level-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.wo-level{position:relative;min-height:130px;padding:14px;border:1px solid rgba(147,197,253,.35);border-radius:14px;background:linear-gradient(145deg,rgba(30,58,138,.38),rgba(2,6,23,.7));color:#fff;cursor:pointer;text-align:left;transition:.18s}.wo-level:hover:not(:disabled){transform:translateY(-3px);border-color:#93c5fd}.wo-level.locked{opacity:.3;cursor:not-allowed;filter:grayscale(1)}.wo-level-num{font:36px 'Bebas Neue',sans-serif;color:#FFD700}.wo-level-stars{font-size:20px;letter-spacing:.07em;color:#FFD700}.wo-level-score{margin-top:6px;font:700 11px 'Barlow Condensed',sans-serif;color:#93c5fd}.wo-level.three-star{border-color:#fbbf24;background:linear-gradient(145deg,rgba(120,53,15,.52),rgba(30,20,5,.78));box-shadow:0 0 0 1px rgba(251,191,36,.28),0 0 16px rgba(251,191,36,.35)}
+.wo-level-footer{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}.wo-level-action{position:relative;padding:9px 14px;border:1px solid rgba(147,197,253,.35);border-radius:10px;cursor:pointer;background:rgba(30,58,138,.28);color:#bfdbfe;font:18px 'Bebas Neue',sans-serif;letter-spacing:.1em}.wo-level-action:hover:not(:disabled){transform:translateY(-2px);border-color:#93c5fd}.wo-level-action:disabled{opacity:.35;cursor:not-allowed}.wo-level-action.gold{border-color:rgba(255,215,0,.45);color:#FFD700}
+.wo-ready-panel{max-width:740px}.wo-ready-subtitle{text-align:center;font:700 14px 'Barlow Condensed',sans-serif;letter-spacing:.12em;color:#bfdbfe;margin-bottom:20px}.wo-ready-stars{display:grid;gap:11px;margin-bottom:16px}.wo-ready-star{position:relative;display:grid;grid-template-columns:140px 1fr;align-items:center;padding:13px 65px 13px 16px;border:1px solid rgba(255,215,0,.3);border-radius:13px;background:linear-gradient(135deg,rgba(30,58,138,.36),rgba(0,0,0,.22))}.wo-ready-star span{grid-row:span 2;font-size:29px;letter-spacing:.07em;color:#FFD700}.wo-ready-star strong{font:27px 'Bebas Neue',sans-serif;letter-spacing:.07em;color:#fff}.wo-ready-star small{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.09em;color:#93c5fd}.wo-ready-star.completed{border-color:rgba(74,222,128,.7);background:linear-gradient(135deg,rgba(22,101,52,.72),rgba(3,45,35,.74))}.wo-ready-star.completed span,.wo-ready-star.completed strong{color:#86efac}.wo-ready-check{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:2px solid #86efac;border-radius:50%;background:rgba(20,83,45,.8);color:#dcfce7;font:24px 'Bebas Neue',sans-serif}.wo-ready-best{text-align:center;margin-bottom:18px;font:700 16px 'Barlow Condensed',sans-serif;letter-spacing:.11em;color:#FFD700}.wo-ready-actions{justify-content:center;margin-top:4px}.wo-ready-actions .wo-btn{min-width:180px}
+.wo-result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:20px 0}.wo-result-stat{padding:12px;border:1px solid rgba(147,197,253,.25);border-radius:11px;background:rgba(0,0,0,.2);text-align:center}.wo-result-stat strong{display:block;font:28px 'Bebas Neue',sans-serif;color:#FFD700}.wo-result-stat span{font:700 9px 'Barlow Condensed',sans-serif;letter-spacing:.11em;color:#93c5fd}.wo-result-joker-bonus{border-color:rgba(74,222,128,.35);background:rgba(20,83,45,.25)}.wo-result-joker-bonus strong{color:#4ade80}.wo-result-life-bonus{border-color:rgba(248,113,113,.35);background:rgba(69,10,10,.3)}.wo-result-life-bonus strong{color:#f87171}.wo-result-stars{font-size:52px;text-align:center;color:#FFD700;letter-spacing:.1em;margin:8px 0}.wo-result-actions{justify-content:center;gap:12px;margin-top:4px}.wo-result-actions .wo-btn{min-width:180px}
+
+/* SP Campaign kart renkleri (görsel yokken gradient arka plan) */
+.sp-camp-grid{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:16px;margin:20px auto 0;justify-content:center}
+.wo-campaign-card.animals{background:linear-gradient(155deg,rgba(4,65,38,.95),rgba(2,40,22,.98));border-color:rgba(74,222,128,.55)}.wo-campaign-card.animals .wo-campaign-card-enter{color:#86efac}
+.wo-campaign-card.food{background:linear-gradient(155deg,rgba(92,38,4,.95),rgba(60,25,2,.98));border-color:rgba(251,146,60,.55)}.wo-campaign-card.food .wo-campaign-card-enter{color:#fdba74}
+.wo-campaign-card.appearance{background:linear-gradient(155deg,rgba(50,4,92,.95),rgba(35,2,60,.98));border-color:rgba(167,139,250,.55)}.wo-campaign-card.appearance .wo-campaign-card-enter{color:#c4b5fd}
+.wo-campaign-card.sports{background:linear-gradient(155deg,rgba(4,38,92,.95),rgba(2,25,60,.98));border-color:rgba(96,165,250,.55)}.wo-campaign-card.sports .wo-campaign-card-enter{color:#93c5fd}
+.wo-campaign-card.places{background:linear-gradient(155deg,rgba(80,42,4,.95),rgba(55,28,2,.98));border-color:rgba(251,191,36,.55)}.wo-campaign-card.places .wo-campaign-card-enter{color:#fcd34d}
+.wo-campaign-card.occupations{background:linear-gradient(155deg,rgba(20,20,35,.95),rgba(10,10,22,.98));border-color:rgba(148,163,184,.45)}.wo-campaign-card.occupations .wo-campaign-card-enter{color:#cbd5e1}
+
+/* SP Level panel temaları */
+.sp-lvls-panel{width:min(1100px,97vw)}
+.sp-lvls-panel.animals-theme{border-color:rgba(74,222,128,.55);background:linear-gradient(145deg,rgba(4,50,30,.97),rgba(2,22,15,.98))}.sp-lvls-panel.animals-theme .wo-title,.sp-lvls-panel.animals-theme .wo-level-num{color:#86efac;text-shadow:0 0 22px rgba(74,222,128,.38)}.sp-lvls-panel.animals-theme .wo-level{background:linear-gradient(145deg,rgba(22,101,52,.45),rgba(2,44,28,.75))}
+
+/* ── PROFİL SİSTEMİ (WO bire bir kopya) ── */
+.wo-profile-panel{position:relative;width:min(980px,96vw)}.wo-rank-display{position:absolute;top:55px;right:100px;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}.wo-rank-display img{width:135px;height:135px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,215,0,.45))}.wo-rank-display span{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.14em;color:#93c5fd;text-align:center;max-width:135px;line-height:1.25}.wo-profile-hero{display:grid;grid-template-columns:170px 1fr;gap:24px;align-items:center;padding:18px;border:1px solid rgba(255,215,0,.3);border-radius:20px;background:radial-gradient(circle at 15% 50%,rgba(59,130,246,.35),rgba(2,6,24,.15) 55%)}.wo-profile-hero img{width:150px;height:150px;object-fit:cover;border:3px solid #FFD700;border-radius:50%;background:#020617;box-shadow:0 0 28px rgba(255,215,0,.22)}.wo-profile-grade{font:700 14px 'Barlow Condensed',sans-serif;letter-spacing:.16em;color:#93c5fd}.wo-profile-score-label{margin-top:12px;font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.18em;color:#fde68a}.wo-profile-score{font:55px 'Bebas Neue',sans-serif;color:#FFD700;line-height:1}.wo-profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}.wo-profile-stats div{padding:14px;border:1px solid rgba(147,197,253,.25);border-radius:13px;background:rgba(0,0,0,.2);text-align:center}.wo-profile-stats strong{display:block;font:32px 'Bebas Neue',sans-serif;color:#fff}.wo-profile-stats span{font:700 10px 'Barlow Condensed',sans-serif;letter-spacing:.12em;color:#93c5fd}.wo-profile-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.wo-profile-info{position:relative;padding:14px 55px 14px 16px;border:1px solid rgba(255,215,0,.35);border-radius:13px;background:rgba(161,98,7,.17);color:#fff;cursor:pointer;text-align:left}.wo-profile-info.disabled{opacity:.55;cursor:not-allowed}.wo-profile-info span{display:block;font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.13em;color:#fde68a}.wo-profile-info strong{font:30px 'Bebas Neue',sans-serif;color:#fff}.wo-profile-info b{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:30px;height:30px;border:1px solid #FFD700;border-radius:50%;color:#FFD700;font:22px 'Bebas Neue',sans-serif}.wo-completed-panel{width:min(900px,95vw)}.wo-completed-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.wo-completed-card{position:relative;min-height:200px;border:1px solid rgba(255,215,0,.4);border-radius:18px;background:linear-gradient(145deg,rgba(30,58,138,.4),rgba(2,6,24,.9));box-shadow:0 14px 30px rgba(0,0,0,.35)}.wo-completed-card span{position:absolute;left:0;right:0;bottom:0;padding:11px;border-radius:0 0 17px 17px;background:rgba(2,6,24,.9);text-align:center;font:23px 'Bebas Neue',sans-serif;letter-spacing:.12em;color:#FFD700}.wo-completed-empty{grid-column:1/-1;padding:60px 20px;text-align:center;font:30px 'Bebas Neue',sans-serif;letter-spacing:.12em;color:#93c5fd}
+@media(max-width:800px){.wo-profile-hero{grid-template-columns:110px 1fr}.wo-profile-hero img{width:100px;height:100px}.wo-profile-stats{grid-template-columns:repeat(2,1fr)}.wo-profile-actions{grid-template-columns:1fr}}
+/* ── LEADERBOARD ── */
+.wo-lb-panel{width:min(820px,96vw)}.wo-lb-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.wo-lb-myrank{padding:10px 20px;border:1.5px solid rgba(255,215,0,.55);border-radius:12px;background:rgba(161,98,7,.22);font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:.13em;color:#FFD700;text-align:center;min-width:240px}.wo-lb-list{display:grid;gap:8px;max-height:58vh;overflow-y:auto;padding-right:6px}.wo-lb-row{display:grid;grid-template-columns:48px 1fr 1fr auto;align-items:center;gap:12px;padding:11px 14px;border:1px solid rgba(147,197,253,.22);border-radius:12px;background:rgba(0,0,0,.2)}.wo-lb-me{border-color:#FFD700;background:rgba(161,98,7,.28);box-shadow:0 0 18px rgba(255,215,0,.2)}.wo-lb-num{font:28px 'Bebas Neue',sans-serif;color:#93c5fd;text-align:center}.wo-lb-me .wo-lb-num{color:#FFD700}.wo-lb-name{font:700 17px 'Barlow Condensed',sans-serif;letter-spacing:.08em;color:#fff}.wo-lb-me .wo-lb-name{color:#FFD700}.wo-lb-rnk{font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.1em;color:#93c5fd}.wo-lb-score{font:26px 'Bebas Neue',sans-serif;color:#FFD700;text-align:right;white-space:nowrap}.wo-lb-loading,.wo-lb-empty,.wo-lb-error{padding:60px 20px;text-align:center;font:700 18px 'Barlow Condensed',sans-serif;letter-spacing:.14em;color:#93c5fd}.wo-lb-error{color:#f87171}
+
+/* ── ACHİEVEMENT SİSTEMİ (WO bire bir kopya) ── */
+.wo-achievements-panel{width:min(1050px,96vw)}.wo-achievements-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px}.wo-achievements-sub{font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.15em;color:#93c5fd}
+.wo-achievements-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.wo-achievement{display:grid;grid-template-columns:62px 1fr 105px;gap:13px;align-items:center;padding:14px;border:1px solid rgba(147,197,253,.25);border-radius:15px;background:linear-gradient(135deg,rgba(30,58,138,.28),rgba(0,0,0,.2))}.wo-achievement.in-progress{opacity:.82}.wo-achievement.prereq-locked{opacity:.38;filter:saturate(.25)}.wo-achievement.prereq-locked .wo-achievement-copy h3::before{content:'🔒 ';font-size:.8em}.wo-achievement.unlocked{border-color:#facc15;box-shadow:0 0 22px rgba(250,204,21,.2)}.wo-achievement.claimed{border-color:rgba(74,222,128,.55);background:linear-gradient(135deg,rgba(22,101,52,.42),rgba(2,44,34,.3))}.wo-achievement-icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border:1px solid rgba(255,215,0,.38);border-radius:50%;background:rgba(0,0,0,.22);font-size:30px;color:#FFD700}.wo-achievement-copy h3{margin:0;font:25px 'Bebas Neue',sans-serif;letter-spacing:.09em;color:#fff}.wo-achievement-copy p{margin:2px 0 7px;font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.05em;color:#bfdbfe}.wo-achievement-copy small{font:700 10px 'Barlow Condensed',sans-serif;color:#93c5fd}.wo-achievement-progress{height:5px;overflow:hidden;border-radius:5px;background:rgba(255,255,255,.1)}.wo-achievement-progress i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#facc15)}.wo-achievement-reward{text-align:center}.wo-achievement-reward strong{display:block;font:27px 'Bebas Neue',sans-serif;color:#FFD700}.wo-achievement-reward span{display:block;margin-top:-5px;font:700 9px 'Barlow Condensed',sans-serif;letter-spacing:.12em;color:#fde68a}.wo-achievement-reward button{width:100%;margin-top:7px;padding:7px;border:1px solid #facc15;border-radius:8px;background:linear-gradient(135deg,#a16207,#eab308);color:#fff;cursor:pointer;font:18px 'Bebas Neue',sans-serif;letter-spacing:.08em}.wo-achievement-reward button:disabled{border-color:rgba(147,197,253,.25);background:rgba(30,58,138,.25);color:#93c5fd;cursor:default}.wo-achievement.claimed .wo-achievement-reward button:disabled{border-color:rgba(74,222,128,.45);color:#86efac;background:rgba(22,101,52,.35)}
+.wo-badge-reveal{position:fixed;inset:0;z-index:9600;display:none;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(30,64,175,.88),rgba(2,6,24,.97) 65%)}.wo-badge-reveal.open{display:flex}.wo-badge-reveal-panel{display:flex;flex-direction:column;align-items:center;gap:14px;padding:44px 56px;border:1.5px solid rgba(255,215,0,.5);border-radius:28px;background:linear-gradient(145deg,rgba(10,24,80,.98),rgba(3,9,35,.99));box-shadow:0 0 80px rgba(255,215,0,.22),0 24px 80px rgba(0,0,0,.7)}.wo-badge-reveal-label{font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.28em;color:#93c5fd}.wo-badge-reveal-img{width:180px;height:180px;object-fit:contain;animation:woBadgePop .65s cubic-bezier(.22,1,.36,1) both}@keyframes woBadgePop{from{opacity:0;transform:scale(.35) rotate(-15deg)}to{opacity:1;transform:scale(1) rotate(0)}}.wo-badges-panel{max-width:860px}.wo-badges-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:22px}.wo-badge-item{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 12px;border:1px solid rgba(255,215,0,.3);border-radius:16px;background:rgba(0,0,0,.2)}.wo-badge-item img{width:88px;height:88px;object-fit:contain}.wo-badge-item span{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:.1em;color:#fde68a;text-align:center}.wo-badges-empty{grid-column:1/-1;padding:60px 20px;text-align:center;font:30px 'Bebas Neue',sans-serif;letter-spacing:.12em;color:#93c5fd}
+.wo-achievement-new{animation:woAchReveal .65s cubic-bezier(.22,1,.36,1) both}@keyframes woAchReveal{from{opacity:0;transform:translateY(18px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.wo-ach-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;padding-top:14px}.wo-ach-tab{position:relative;padding:8px 14px;border:1px solid rgba(147,197,253,.35);border-radius:9px;background:rgba(30,58,138,.22);color:#bfdbfe;cursor:pointer;font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.1em;transition:.18s;overflow:visible}.wo-ach-tab.active{border-color:#FFD700;color:#FFD700;background:rgba(161,98,7,.3);box-shadow:0 0 14px rgba(255,215,0,.18)}.wo-ach-tab:hover:not(.active){border-color:#93c5fd;color:#dbeafe}.wo-ach-tab-new{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#ef4444;color:#fff;font:900 7.5px 'Barlow Condensed',sans-serif;letter-spacing:.1em;width:32px;height:32px;display:flex;align-items:center;justify-content:center;clip-path:polygon(50% 0%,56% 26%,76% 5%,69% 32%,100% 40%,75% 52%,90% 78%,65% 67%,62% 100%,52% 76%,32% 96%,40% 67%,2% 60%,28% 52%,18% 10%,38% 30%);pointer-events:none;z-index:5;animation:wo-new-badge 1.5s ease-in-out infinite}@keyframes wo-new-badge{0%,100%{transform:translateX(-50%) scale(1) rotate(-4deg)}50%{transform:translateX(-50%) scale(1.15) rotate(5deg)}}
+@media(max-width:800px){.wo-achievements-grid{grid-template-columns:1fr}.wo-achievement{grid-template-columns:48px 1fr 88px;gap:10px}.wo-badges-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+
+<div id="menu-controls">
+  <button class="ctrl-btn" id="menu-mute-btn" onclick="toggleMute()" title="Müzik">🔊</button>
+  <button class="ctrl-btn" id="menu-fs-btn" onclick="toggleFullscreen()" title="Tam Ekran">⛶</button>
+</div>
+
+<!-- ═══════════ NEW GAME CONFIRM ═══════════ -->
+<div id="sp-newgame-confirm">
+  <div class="sp-ngc-box">
+    <div class="sp-ngc-title">⚠ NEW GAME</div>
+    <div class="sp-ngc-text">This will permanently delete all your progress —<br>rank, score, achievements, and campaign data.<br><strong style="color:#ef4444">This cannot be undone.</strong></div>
+    <div class="sp-ngc-btns">
+      <button class="sp-ngc-yes" onclick="spDoNewGame()">YES, RESET ALL</button>
+      <button class="sp-ngc-no" onclick="spCancelNewGame()">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN MENU ═══════════ -->
+<div id="main-menu">
+  <div class="mm-banner">
+    <div class="mm-title">WORD REVEAL</div>
+    <div class="mm-sp-badge">SINGLE PLAYER</div>
+    <div class="mm-divider"></div>
+    <div class="mm-credit">Designed by ADİL FIRAT OKTAV</div>
+    <div class="mm-divider"></div>
+    <div class="mm-btns">
+      <button class="mm-btn mm-start-btn" onclick="menuContinue()">▶ CONTINUE</button>
+      <button class="mm-btn mm-newgame-btn" onclick="menuNewGame()">✦ NEW GAME</button>
+    </div>
+    <div class="mm-btns mm-secondary-btns">
+      <button class="mm-btn" onclick="spLeaderboard('menu')" style="background:linear-gradient(135deg,#FFD700,#f59e0b);color:#1a1a3a;border-color:#b8860b;box-shadow:0 6px 28px rgba(255,215,0,.4)">🏆 LEADERBOARD</button>
+      <button class="mm-btn mm-settings-btn" onclick="spProfile()">👤 PROFILE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ GAME AREA ═══════════ -->
+<div id="game-area">
+  <div id="sp-header">
+    <img id="sp-hud-avatar" src="" alt="">
+    <div class="sp-hud-cell">
+      <div id="sp-hud-level" class="sp-hud-value">1</div>
+      <div class="sp-hud-label">LEVEL</div>
+    </div>
+    <div class="sp-hud-cell">
+      <div id="sp-hud-q" class="sp-hud-value">1/10</div>
+      <div class="sp-hud-label">QUESTION</div>
+    </div>
+    <div class="sp-hud-cell">
+      <div id="sp-hud-score" class="sp-hud-value">0</div>
+      <div class="sp-hud-label">LEVEL SCORE</div>
+    </div>
+    <div class="wo-progress">
+      <div class="wo-progress-track">
+        <div id="wo-hud-progress" class="wo-progress-fill"></div>
+        <div id="wo-pmark-1" class="wo-pmark"></div>
+        <div id="wo-pmark-2" class="wo-pmark"></div>
+        <div id="wo-pmark-3" class="wo-pmark"></div>
+      </div>
+      <div class="wo-progress-stars-row">
+        <span id="wo-pstar-1" class="wo-pstar">★</span>
+        <span id="wo-pstar-2" class="wo-pstar">★★</span>
+        <span id="wo-pstar-3" class="wo-pstar">★★★</span>
+      </div>
+    </div>
+    <div class="sp-hud-cell">
+      <div id="sp-hud-lives" class="sp-hud-value"></div>
+      <div class="sp-hud-label">LIVES</div>
+    </div>
+    <div class="sp-hud-cell">
+      <div id="sp-hud-streak" class="sp-hud-value">0</div>
+      <div class="sp-hud-label">STREAK</div>
+    </div>
+    <div id="sp-controls">
+      <button id="lite-btn" onclick="toggleLiteMode()">LITE</button>
+      <button class="ctrl-btn" id="mute-btn" onclick="toggleMute()">🔊</button>
+      <button class="ctrl-btn" id="fs-btn" onclick="toggleFullscreen()">⛶</button>
+    </div>
+  </div>
+
+  <div id="reveal-area">
+    <div id="reveal-left">
+      <div id="score-counter-wrap">
+        <div id="score-counter-label">PUAN</div>
+        <div id="score-counter">100</div>
+        <div id="score-pts-label">pts</div>
+        <div id="cat-hint"></div>
+        <div id="tr-hint"></div>
+      </div>
+      <div id="streak-counter">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-val" id="streak-val">0× STREAK</div>
+      </div>
+    </div>
+
+    <div id="image-container">
+      <img id="reveal-img" src="" alt="" />
+      <div id="tile-grid"></div>
+      <div id="ready-overlay">
+        <button id="ready-btn" onclick="onReadyPressed()">▶ HAZIR!</button>
+      </div>
+      <div id="reveal-bar">
+        <button id="reveal-btn" onclick="onRevealPressed()">👁 REVEAL</button>
+      </div>
+      <div id="answer-display"></div>
+      <div id="joker-panel">
+        <div id="joker-panel-title">Joker Seç</div>
+        <button class="joker-option shatter" onclick="onJokerSelected('SHATTER')">
+          💥 SHATTER<span class="jo-desc">Crosshair bölgesini parçala</span>
+        </button>
+        <button class="joker-option xray" onclick="onJokerSelected('XRAY')">
+          ☢ X-RAY<span class="jo-desc">Resmi 1 sn inverted göster</span>
+        </button>
+        <button class="joker-option cathint" onclick="onJokerSelected('TRHINT')" id="jo-trhint">
+          💬 HINT<span class="jo-desc" id="jo-trhint-desc">İpucunu göster</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-bar">
+    <button id="joker-btn" onclick="onJokerPressed()">💠 JOKER <span id="joker-count"></span></button>
+    <button id="stop-btn" onclick="onStopPressed()" disabled>🛑 STOP!</button>
+  </div>
+  <div id="fl-crosshair"><div class="fl-circle"></div></div>
+</div>
+
+<!-- ═══════════ CHOICE OVERLAY ═══════════ -->
+<div id="choice-overlay">
+  <div class="choice-modal">
+    <div class="choice-score-row">Mevcut puan: <strong id="choice-score-val">100</strong></div>
+    <div class="choice-btns">
+      <button id="choice-cancel-btn" class="choice-btn choice-cancel" onclick="cancelStop()" style="display:none">
+        ↩ VAZGEÇ <span class="ch-sub">Devam et</span>
+      </button>
+      <button class="choice-btn choice-type" onclick="chooseType()">
+        ⌨ YAZACAĞIM <span class="ch-sub">2× PUAN</span>
+      </button>
+      <button class="choice-btn choice-mc" onclick="chooseMC()">
+        ✓ SEÇECEĞİM <span class="ch-sub">1× PUAN</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TYPE OVERLAY ═══════════ -->
+<div id="type-overlay">
+  <div id="type-header">
+    <div id="type-score-badge"></div>
+  </div>
+  <div id="typed-display">_</div>
+  <div id="type-kb-wrap"></div>
+</div>
+
+<!-- ═══════════ MC OVERLAY ═══════════ -->
+<div id="mc-overlay">
+  <div class="mc-modal">
+    <div class="mc-score-row">Puan: <strong id="mc-score-val">100</strong></div>
+    <div class="mc-options" id="mc-options"></div>
+  </div>
+</div>
+
+<!-- ═══════════ RESULT STAMP ═══════════ -->
+<div id="result-overlay"></div>
+
+<!-- ═══════════ FINAL SCREEN ═══════════ -->
+<div id="final-overlay">
+  <div class="final-wrapper">
+    <div class="final-left">
+      <div class="final-trophy">🏆</div>
+      <div class="final-title">SONUÇ</div>
+      <div class="final-score-big" id="final-total">0</div>
+      <div class="final-score-label">TOPLAM PUAN</div>
+      <div class="final-stars" id="final-stars">⭐⭐⭐</div>
+      <div class="final-correct-row" id="final-correct-row"></div>
+      <button class="final-btn final-play-again" onclick="playAgain()">🔄 Tekrar Oyna</button>
+      <button class="final-btn final-exit" onclick="exitGame()">⚙ Yeni Oyun</button>
+      <button class="final-btn final-home" onclick="location.href='../index.html'">🏠 Ana Sayfa</button>
+    </div>
+    <div class="final-right">
+      <div class="final-right-title">📋 KELİMELER</div>
+      <div id="final-word-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — KARAKTER OLUŞTUR
+════════════════════════════════════════════════════ -->
+<div id="sp-char" class="sp-screen">
+  <div class="wo-panel wo-new-panel">
+    <div class="wo-title wo-new-title">CREATE YOUR SOLDIER</div>
+    <div class="wo-new-layout">
+      <div class="wo-avatar-preview">
+        <img id="sp-char-prev" alt="">
+        <div id="sp-char-prev-name"></div>
+      </div>
+      <div class="wo-form">
+        <div>
+          <label class="wo-label">PLAYER NAME</label>
+          <input id="sp-char-name" class="wo-name-input" maxlength="16" placeholder="ENTER YOUR NAME">
+        </div>
+        <div>
+          <label class="wo-label">AVATAR</label>
+          <div class="wo-avatar-grid" id="sp-char-avatars"></div>
+        </div>
+        <div id="sp-char-warn" class="wo-warning"></div>
+        <div class="wo-choice-row">
+          <button class="wo-btn ghost" onclick="spBackToMenu()">BACK</button>
+          <button class="wo-btn gold" onclick="spConfirmNew()">BEGIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — CAMPAIGN SEÇİMİ
+════════════════════════════════════════════════════ -->
+<div id="sp-camp" class="sp-screen">
+  <div class="wo-panel wo-campaigns-panel">
+    <div class="wo-campaigns-head">
+      <div class="wo-title" style="font-size:58px;text-align:left">SELECT CAMPAIGN</div>
+      <div class="wo-achievements-score"><span>SCORE</span><strong id="sp-camp-score">0</strong></div>
+    </div>
+    <div class="sp-camp-grid">
+      <button class="wo-campaign-card animals" data-id="animals" onclick="spEnterCampaign('animals')">
+        <img class="sp-camp-thumb" src="thumbnails/animals.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 01</div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">MASTER THE ANIMAL KINGDOM · GRADES 6–7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-animals"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+      <button class="wo-campaign-card food locked" data-id="food" disabled>
+        <img class="sp-camp-thumb" src="thumbnails/foodanddrinks.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 02</div>
+        <div class="wo-campaign-lock-badge"></div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">FOOD & DRINKS · GRADES 6–7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-food"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+      <button class="wo-campaign-card appearance locked" data-id="appearance" disabled>
+        <img class="sp-camp-thumb" src="thumbnails/appandpers.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 03</div>
+        <div class="wo-campaign-lock-badge"></div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">APPEARANCE & PERSONALITY · GRADES 7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-appearance"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+      <button class="wo-campaign-card sports locked" data-id="sports" disabled>
+        <img class="sp-camp-thumb" src="thumbnails/sportsequip.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 04</div>
+        <div class="wo-campaign-lock-badge"></div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">SPORTS & EQUIPMENT · GRADES 6–7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-sports"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+      <button class="wo-campaign-card places locked" data-id="places" disabled>
+        <img class="sp-camp-thumb" src="thumbnails/places.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 05</div>
+        <div class="wo-campaign-lock-badge"></div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">PLACES IN TOWN · GRADES 6–7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-places"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+      <button class="wo-campaign-card occupations locked" data-id="occupations" disabled>
+        <img class="sp-camp-thumb" src="thumbnails/jobs.webp" alt="">
+        <div class="wo-campaign-card-tag">CAMPAIGN 06</div>
+        <div class="wo-campaign-lock-badge"></div>
+        <div class="wo-campaign-card-info">
+          <div class="wo-campaign-card-desc">OCCUPATIONS · GRADES 6–7–8</div>
+          <div class="wo-campaign-card-progress" id="sp-prog-occupations"></div>
+          <div class="wo-campaign-card-enter">ENTER CAMPAIGN →</div>
+        </div>
+      </button>
+    </div>
+    <div class="wo-campaign-menu-actions">
+      <button class="wo-btn ghost" onclick="spBackToMenu()">MAIN MENU</button>
+      <button class="wo-btn" onclick="spProfile()">PROFILE</button>
+      <button class="wo-btn gold" onclick="spAchievements('campaigns')">🏆 ACHIEVEMENTS</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — LEVEL SEÇİMİ
+════════════════════════════════════════════════════ -->
+<div id="sp-lvls" class="sp-screen">
+  <div id="sp-lvls-panel" class="wo-panel sp-lvls-panel">
+    <div id="sp-lvls-title" class="wo-title" style="font-size:54px"></div>
+    <div class="wo-levels-layout">
+      <aside class="wo-campaign-profile">
+        <div id="sp-lvls-pname" class="wo-campaign-name"></div>
+        <img id="sp-lvls-pavatar" alt="">
+        <div class="wo-campaign-score-label">SCORE</div>
+        <div id="sp-lvls-pscore" class="wo-campaign-score">0</div>
+      </aside>
+      <div id="sp-lvl-grid" class="wo-level-grid"></div>
+    </div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spShowCampaigns()">↩ CAMPAIGNS</button>
+      <button class="wo-level-action gold" onclick="spAchievements('levels')">🏆 ACHIEVEMENTS</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — LEVEL HAZIR
+════════════════════════════════════════════════════ -->
+<div id="sp-lvl-ready" class="sp-screen">
+  <div class="wo-panel wo-ready-panel">
+    <div id="sp-ready-title" class="wo-title" style="font-size:46px"></div>
+    <div id="sp-ready-sub" class="wo-ready-subtitle"></div>
+    <div id="sp-ready-stars" class="wo-ready-stars"></div>
+    <div id="sp-ready-best" class="wo-ready-best"></div>
+    <div class="wo-choice-row wo-ready-actions">
+      <button class="wo-btn ghost" onclick="spShowLevels()">BACK</button>
+      <button class="wo-btn gold" onclick="spBeginLevel()">START LEVEL</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — SONUÇ EKRANI
+════════════════════════════════════════════════════ -->
+<div id="sp-result" class="sp-screen">
+  <div class="wo-panel" style="max-width:680px">
+    <div id="sp-res-title" class="wo-title" style="font-size:54px"></div>
+    <div id="sp-res-stars" class="wo-result-stars"></div>
+    <div id="sp-res-stats" class="wo-result-stats"></div>
+    <div class="wo-choice-row wo-result-actions">
+      <button class="wo-btn ghost" onclick="spBeginLevel()">RETRY</button>
+      <button class="wo-btn" onclick="spShowLevels()">BACK TO LEVELS</button>
+      <button class="wo-btn" onclick="spLeaderboard('result')" style="background:linear-gradient(135deg,#FFD700,#f59e0b);color:#1a1a3a;border-color:#b8860b;box-shadow:0 6px 28px rgba(255,215,0,.4)">🌍 LEADERBOARD</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — ACHİEVEMENT EKRANI
+════════════════════════════════════════════════════ -->
+<div id="sp-achievements" class="sp-screen">
+  <div class="wo-panel wo-achievements-panel">
+    <div class="wo-achievements-head">
+      <div>
+        <div class="wo-title" style="font-size:58px;text-align:left">ACHIEVEMENTS</div>
+        <div class="wo-achievements-sub">COMPLETE CHALLENGES AND CLAIM SCORE REWARDS</div>
+      </div>
+      <div class="wo-achievements-score"><span>SCORE</span><strong id="sp-achievements-score"></strong></div>
+    </div>
+    <div id="sp-ach-tabs" class="wo-ach-tabs"></div>
+    <div id="sp-ach-grid" class="wo-achievements-grid"></div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spCloseAchievements()">↩ BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — BADGE EKRANI
+════════════════════════════════════════════════════ -->
+<div id="sp-badges" class="sp-screen">
+  <div class="wo-panel wo-badges-panel">
+    <div class="wo-title" style="font-size:58px">ACHIEVEMENT BADGES</div>
+    <div id="sp-badges-grid" class="wo-badges-grid"></div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spProfile()">↩ BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- BADGE REVEAL OVERLAY -->
+<div id="sp-badge-reveal" class="wo-badge-reveal">
+  <div class="wo-badge-reveal-panel">
+    <div class="wo-badge-reveal-label">BADGE UNLOCKED</div>
+    <img id="sp-badge-reveal-img" class="wo-badge-reveal-img" alt="">
+    <button class="wo-btn gold" style="margin-top:24px;min-width:200px" onclick="spCloseBadgeReveal()">COOL!</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — PROFİL
+════════════════════════════════════════════════════ -->
+<div id="sp-profile" class="sp-screen">
+  <div class="wo-panel wo-profile-panel">
+    <div id="sp-rank-display" class="wo-rank-display">
+      <img id="sp-rank-img" src="" alt="">
+      <span id="sp-rank-name"></span>
+    </div>
+    <div class="wo-profile-hero">
+      <img id="sp-profile-avatar">
+      <div>
+        <div id="sp-profile-name" class="wo-title" style="font-size:58px;text-align:left"></div>
+        <div id="sp-profile-grade" class="wo-profile-grade"></div>
+        <div class="wo-profile-score-label">SCORE</div>
+        <div id="sp-profile-score" class="wo-profile-score"></div>
+      </div>
+    </div>
+    <div id="sp-profile-stats" class="wo-profile-stats"></div>
+    <div class="wo-profile-actions">
+      <button class="wo-profile-info" onclick="spEarnedBadges()">
+        <span>ACHIEVEMENT BADGES</span>
+        <strong id="sp-profile-achievements">—</strong>
+        <b>?</b>
+      </button>
+      <button class="wo-profile-info" onclick="spCompletedCampaigns()">
+        <span>CAMPAIGNS COMPLETED</span>
+        <strong id="sp-profile-campaigns">0</strong>
+        <b>?</b>
+      </button>
+    </div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spShowCampaigns()">↩ BACK</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SP — TAMAMLANAN KAMPANYALAR
+════════════════════════════════════════════════════ -->
+<div id="sp-completed-campaigns" class="sp-screen">
+  <div class="wo-panel wo-completed-panel">
+    <div class="wo-title" style="font-size:58px">COMPLETED CAMPAIGNS</div>
+    <div id="sp-completed-grid" class="wo-completed-grid"></div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spProfile()">↩ BACK</button>
+    </div>
+  </div>
+</div>
+
+<div id="sp-leaderboard" class="sp-screen">
+  <div class="wo-panel wo-lb-panel">
+    <div class="wo-lb-head">
+      <div class="wo-title" style="font-size:52px">🌍 LEADERBOARD</div>
+      <div id="sp-lb-myrank" class="wo-lb-myrank"></div>
+    </div>
+    <div id="sp-lb-list" class="wo-lb-list"></div>
+    <div class="wo-level-footer">
+      <button class="wo-level-action" onclick="spLeaderboardBack()">↩ BACK</button>
+    </div>
+  </div>
+</div>
+
+<script src="../modules/rgbkeyboard.js"></script>
+<script src="../word_master/questions.js"></script>
+<script src="words.js"></script>
+<script src="sp_questions.js"></script>
+<script src="sp_campaigns.js"></script>
+<script>
+'use strict';
+
+// ── CONSTANTS ──
+const TOTAL_TILES  = 100; // 10×10
+const SCORE_MAX    = 100;
+const SCORE_MIN    = 10;
+const TILE_COLORS  = ['#1e1040','#221255','#191038','#2a1660','#17102e','#241450','#1a0e3a','#20134a'];
+const SAVE_KEY     = 'wr_sp_settings';
+
+// ── SETTINGS ──
+let selectedGrade      = 7;
+let _hintLang          = 'TR';
+let selectedCategories = new Set([11,12,13,14,15]);
+let revealTimerSec     = 30;
+let totalWordCount     = 10;
+let _liteMode          = false;
+
+// ── GAME STATE ──
+let pool            = [];
+let usedIndices     = new Set();
+let currentWord     = null;
+let currentScore    = SCORE_MAX;
+let lockedScore     = SCORE_MAX;
+let revealInterval  = null;
+let tilesRevealed   = 0;
+let tileOrder       = [];
+let gameActive      = false;
+let wordsDone       = 0;
+let totalScore      = 0;
+let _streak         = 0;
+let _revealStartTime= 0;
+let _revealAnswer   = '';
+
+// ── JOKER STATE ──
+let _jokerCount         = 2;
+let _flashlightActive   = false;
+let _crosshairRectCache = null;
+let _crosshairResizeHandler = null;
+let _flashlightMoveTimer    = null;
+let _flashlightGridPos      = {col:0,row:0};
+let _tiles              = [];
+let _tilePoolBuilt      = false;
+
+// ── HISTORY ──
+let _gameHistory = []; // [{word, correct, pts, type}]
+
+// ── SPAM ──
+let _clickLog   = [];
+let _spamLocked = false;
+function _detectSpam() {
+  const now = Date.now();
+  _clickLog.push(now);
+  _clickLog = _clickLog.filter(t => now - t < 700);
+  if(_clickLog.length >= 3) {
+    _clickLog = [];
+    _spamLocked = true;
+    showToast('🚫 SPAM KİLİDİ!','warn');
+    setTimeout(() => { _spamLocked = false; }, 2500);
+    return true;
+  }
+  return false;
+}
+
+// ── AUDIO ──
+let _muted    = false;
+let _bgAudio  = null;
+const BG_VOL_NORMAL = 0.45;
+const BG_VOL_REVEAL = 0.06;
+const SOUNDS = {
+  correct: '../word_master/sounds/correct.wav',
+  wrong:   '../word_master/sounds/wrong.wav',
+  main:    ['../word_master/sounds/main1.mp3','../word_master/sounds/main2.mp3',
+            '../word_master/sounds/main3.mp3','../word_master/sounds/main4.mp3'],
+};
+const _audioBufferCache = {};
+function _playFx(src, vol=0.7) {
+  const ctx = _getAudioCtx();
+  if(ctx && _audioBufferCache[src] instanceof AudioBuffer) {
+    try {
+      const bs = ctx.createBufferSource();
+      bs.buffer = _audioBufferCache[src];
+      const gain = ctx.createGain();
+      gain.gain.value = vol;
+      bs.connect(gain); gain.connect(ctx.destination);
+      bs.start(); return;
+    } catch(e){}
+  }
+  try { const a=new Audio(src); a.volume=vol; a.play().catch(()=>{}); } catch(e){}
+  if(ctx && !_audioBufferCache[src]) {
+    _audioBufferCache[src]='loading';
+    fetch(src).then(r=>r.arrayBuffer()).then(ab=>ctx.decodeAudioData(ab))
+      .then(buf=>{ _audioBufferCache[src]=buf; }).catch(()=>{ delete _audioBufferCache[src]; });
+  }
+}
+
+let _audioCtx   = null;
+let _activeTicks = 0;
+let _activeWheelTicks = 0;
+
+function _getAudioCtx() {
+  if(!_audioCtx || _audioCtx.state==='closed') {
+    try { _audioCtx=new(window.AudioContext||window.webkitAudioContext)(); } catch(e){}
+  }
+  if(_audioCtx && _audioCtx.state==='suspended') _audioCtx.resume().catch(()=>{});
+  return _audioCtx;
+}
+
+function _playTick(tileIdx) {
+  if(_activeTicks >= 4) return;
+  const ctx = _getAudioCtx();
+  if(!ctx) return;
+  _activeTicks++;
+  try {
+    const osc=ctx.createOscillator(), gain=ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    const t = tileIdx / TOTAL_TILES;
+    osc.frequency.value = 420 + Math.pow(t,1.4)*730;
+    osc.type = t>0.55?'square':'sine';
+    gain.gain.setValueAtTime(0.07,ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.09);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime+0.09);
+    osc.onended=()=>{ _activeTicks=Math.max(0,_activeTicks-1); };
+  } catch(e){ _activeTicks=Math.max(0,_activeTicks-1); }
+}
+
+function _speakWord(word) {
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US'; u.rate=0.88; u.pitch=1;
+  window.speechSynthesis.speak(u);
+}
+function _speakWordTwice(word) {
+  _speakWord(word);
+  setTimeout(()=>_speakWord(word), 1500);
+}
+
+function playBg() {
+  if(_bgAudio){ _bgAudio.pause(); _bgAudio=null; }
+  if(_muted) return;
+  const src=SOUNDS.main[Math.floor(Math.random()*SOUNDS.main.length)];
+  try { _bgAudio=new Audio(src); _bgAudio.volume=BG_VOL_NORMAL; _bgAudio.loop=true; _bgAudio.play().catch(()=>{}); } catch(e){}
+}
+
+function toggleMute() {
+  _muted=!_muted;
+  ['mute-btn','menu-mute-btn'].forEach(id=>{
+    const btn=document.getElementById(id);
+    if(!btn) return;
+    btn.classList.toggle('muted',_muted);
+    btn.textContent=_muted?'🔇':'🔊';
+  });
+  if(_bgAudio) _bgAudio.muted=_muted;
+}
+
+function toggleLiteMode() {
+  _liteMode=!_liteMode;
+  document.body.classList.toggle('lite-mode',_liteMode);
+  document.getElementById('lite-btn').classList.toggle('active',_liteMode);
+}
+
+function toggleFullscreen() {
+  if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+document.addEventListener('fullscreenchange',()=>{
+  const icon=document.fullscreenElement?'⊡':'⛶';
+  ['fs-btn','menu-fs-btn'].forEach(id=>{ const btn=document.getElementById(id); if(btn) btn.textContent=icon; });
+});
+
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('dragstart',e=>e.preventDefault());
+
+// ── TOAST (WO ToastManager — birebir kopya) ──
+const ToastManager = (() => {
+  const CSS = `
+#wo-toast-stack{position:fixed;z-index:9800;display:flex;flex-direction:column;gap:10px;pointer-events:none;width:370px}
+.wo-toast{border-radius:10px;padding:13px 18px 13px 15px;font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:.08em;pointer-events:all;cursor:pointer;white-space:normal;word-break:break-word;opacity:0;transition:transform .38s cubic-bezier(.175,.885,.32,1.275),opacity .3s}
+#wo-toast-stack.left .wo-toast{transform:translateX(calc(-100% - 30px))}
+#wo-toast-stack.right .wo-toast{transform:translateX(calc(100% + 30px))}
+#wo-toast-stack.left .wo-toast.show{transform:translateX(0);opacity:1}
+#wo-toast-stack.right .wo-toast.show{transform:translateX(0);opacity:1}
+#wo-toast-stack.left .wo-toast.hiding{transform:translateX(calc(-100% - 30px));opacity:0}
+#wo-toast-stack.right .wo-toast.hiding{transform:translateX(calc(100% + 30px));opacity:0}
+.wo-toast.wt-navy{background:#0d1b4b;border:1px solid #f5c518;border-left:4px solid #f5c518;color:#f5c518}
+.wo-toast.wt-red{background:#7a0c0c;border:1px solid #f5c518;border-left:4px solid #f5c518;color:#f5c518}
+.wo-toast.wt-black{background:#111;border:1px solid #aaa;border-left:4px solid #aaa;color:#fff}
+.wo-toast.wt-green{background:#0a4a1f;border:1px solid #4ade80;border-left:4px solid #4ade80;color:#fff}
+.wo-toast.warn{background:rgba(60,0,0,.97);border:1px solid #f87171;border-left:4px solid #f87171;color:#fca5a5;font-size:19px;letter-spacing:.12em;font-family:'Bebas Neue',sans-serif}
+`;
+  let _stack=null,_cssInjected=false,_defaultDuration=10000,_lastThemeIdx=-1;
+  const _THEMES=['wt-navy','wt-red','wt-black','wt-green'];
+  function _injectCSS(){if(_cssInjected)return;const s=document.createElement('style');s.textContent=CSS;document.head.appendChild(s);_cssInjected=true;}
+  function _ensureStack(position,top){if(_stack&&document.contains(_stack))return;_stack=document.createElement('div');_stack.id='wo-toast-stack';_stack.className=position==='right'?'right':'left';_stack.style.top=top||'80px';if(position==='right')_stack.style.right='20px';else _stack.style.left='20px';document.body.appendChild(_stack);}
+  function _pickTheme(){let idx;do{idx=Math.floor(Math.random()*_THEMES.length);}while(idx===_lastThemeIdx);_lastThemeIdx=idx;return _THEMES[idx];}
+  function init(opts={}){_injectCSS();_defaultDuration=opts.duration??10000;_ensureStack(opts.position,opts.top);if(opts.global)window.showToast=(msg,duration,type)=>show(msg,type,duration);}
+  function show(msg,type,duration){if(!_stack){_injectCSS();_ensureStack('left','80px');}const t=document.createElement('div');t.className='wo-toast '+(type==='warn'?'warn':_pickTheme());t.textContent=msg;_stack.appendChild(t);requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));function dismiss(){t.classList.add('hiding');t.classList.remove('show');setTimeout(()=>t.remove(),400);}const timer=setTimeout(dismiss,duration??_defaultDuration);t.addEventListener('click',()=>{clearTimeout(timer);dismiss();},{once:true});}
+  return {init,show};
+})();
+
+// Eski showToast çağrılarıyla uyumlu imza: (msg, type, dur)
+ToastManager.init({ top: '80px', duration: 2200 });
+function showToast(msg, type, dur) { ToastManager.show(msg, type, dur); }
+
+// ── CATEGORY HINT ──
+function _setCatHint(catId) {
+  const el=document.getElementById('cat-hint');
+  if(!el) return;
+  const _names=(spRun&&window.SP_CATEGORY_NAMES)?window.SP_CATEGORY_NAMES:CATEGORY_NAMES;
+  const _thumbs=(spRun&&window.SP_CATEGORY_THUMBS)?window.SP_CATEGORY_THUMBS:CATEGORY_THUMBS;
+  const name=_names[catId]||('Kategori '+catId);
+  const thumb=_thumbs[catId];
+  el.innerHTML=thumb
+    ?`<img class="ch-img" src="thumbnails/${thumb}" alt="${name}">`
+    :`<span class="ch-label">${name}</span>`;
+  el.style.display='flex';
+}
+
+// ── POOL ──
+function gradeMaxLevel() {
+  return selectedGrade===6?1:selectedGrade===7?2:3;
+}
+function buildPool() {
+  if(typeof WORDS==='undefined'||!WORDS.length) return [];
+  const maxLv=gradeMaxLevel();
+  return WORDS.filter(w=>w[5]&&w[5].trim()&&w[3]<=maxLv&&selectedCategories.has(w[4]));
+}
+function getDistractors(correct,categoryId,count=3) {
+  const _src = (spRun && window.SP_WORDS) ? window.SP_WORDS : (typeof WORDS!=='undefined' ? WORDS : []);
+  let cands=_src.filter(w=>w[4]===categoryId&&w[2].toUpperCase()!==correct.toUpperCase()&&w[2].trim()).map(w=>w[2]);
+  cands=[...new Set(cands)];
+  if(cands.length<count) {
+    const extra=WORDS.filter(w=>w[2].toUpperCase()!==correct.toUpperCase()&&!cands.includes(w[2])&&w[2].trim()).map(w=>w[2]);
+    cands=[...cands,...[...new Set(extra)]];
+  }
+  for(let i=cands.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cands[i],cands[j]]=[cands[j],cands[i]];}
+  return cands.slice(0,count);
+}
+
+// ── MENU ──
+function menuStart() {
+  if(!_bgAudio) playBg();
+  if(!spSave.profile) { spShowCharCreate(); return; }
+  spShowCampaigns();
+}
+function menuContinue() {
+  if(!_bgAudio) playBg();
+  if(!spSave.profile) { spShowCharCreate(); return; }
+  spShowCampaigns();
+}
+function menuNewGame() {
+  if(!_bgAudio) playBg();
+  document.getElementById('sp-newgame-confirm').classList.add('open');
+}
+function spCancelNewGame() {
+  document.getElementById('sp-newgame-confirm').classList.remove('open');
+}
+function spDoNewGame() {
+  document.getElementById('sp-newgame-confirm').classList.remove('open');
+  localStorage.removeItem(SP_KEY);
+  spSave = spFresh();
+  spShowCharCreate();
+}
+
+// ── GAME START ──
+function startGame() {
+  pool=buildPool();
+  usedIndices.clear();
+  if(!pool.length) { showToast('⚠ Havuzda soru yok! Ayarlara gidin.','warn',3500); document.getElementById('main-menu').style.display='flex'; return; }
+  wordsDone=0; totalScore=0; _streak=0; _gameHistory=[];
+  _jokerCount=2;
+  _clickLog=[]; _spamLocked=false;
+  _spStarTriggered=[false,false,false];
+  gameActive=true;
+  document.getElementById('game-area').style.display='flex';
+  document.body.classList.add('game-active');
+  document.getElementById('main-menu').style.display='none';
+  updateHeader();
+  beginTurn();
+}
+
+// ── TILE GRID ──
+function _buildTilePool() {
+  const grid=document.getElementById('tile-grid');
+  if(!grid||_tilePoolBuilt) return;
+  _tilePoolBuilt=true;
+  _tiles=new Array(TOTAL_TILES);
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<TOTAL_TILES;i++) {
+    const tile=document.createElement('div');
+    tile.className='tile'; tile.id='tile-'+i;
+    tile.style.background=TILE_COLORS[i%TILE_COLORS.length];
+    _tiles[i]=tile; frag.appendChild(tile);
+  }
+  grid.appendChild(frag);
+}
+function buildTileGrid() {
+  const grid=document.getElementById('tile-grid');
+  if(!grid) return;
+  _buildTilePool();
+  grid.style.gridTemplateColumns='repeat(10,1fr)';
+  grid.style.gridTemplateRows='repeat(10,1fr)';
+  grid.classList.add('resetting');
+  for(let i=0;i<TOTAL_TILES;i++) {
+    _tiles[i].className='tile';
+    _tiles[i].style.display='';
+  }
+  tileOrder=shuffle([...Array(TOTAL_TILES).keys()]);
+  tilesRevealed=0;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>grid.classList.remove('resetting')));
+}
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
+function revealNextTile() {
+  if(tilesRevealed>=TOTAL_TILES){onAllTilesRevealed();return;}
+  const idx=tileOrder[tilesRevealed];
+  const tile=_tiles[idx];
+  if(tile) tile.classList.add('revealed');
+  tilesRevealed++;
+  _playTick(tilesRevealed);
+  currentScore=Math.max(SCORE_MIN,Math.round(SCORE_MAX-(tilesRevealed/TOTAL_TILES)*(SCORE_MAX-SCORE_MIN)));
+  updateScoreCounter();
+  if(tilesRevealed>=TOTAL_TILES) onAllTilesRevealed();
+}
+
+function revealAllTiles() {
+  const unrevealed=[];
+  for(let i=0;i<TOTAL_TILES;i++){const t=_tiles[i];if(t&&!t.classList.contains('revealed'))unrevealed.push(t);}
+  if(!unrevealed.length) return;
+  let ui=0;
+  function sweep(){ const end=Math.min(ui+2,unrevealed.length); while(ui<end)unrevealed[ui++].classList.add('revealed'); if(ui<unrevealed.length)requestAnimationFrame(sweep); }
+  requestAnimationFrame(sweep);
+}
+
+function updateScoreCounter() {
+  const el=document.getElementById('score-counter');
+  if(!el) return;
+  el.textContent=currentScore;
+  el.className=currentScore>60?'':currentScore>25?'low':'min';
+}
+
+function onAllTilesRevealed() {
+  stopReveal();
+  lockedScore=currentScore;
+  document.getElementById('stop-btn').disabled=true;
+  showChoice();
+}
+
+function startReveal() {
+  _revealStartTime=Date.now();
+  const ms=(revealTimerSec*1000)/TOTAL_TILES;
+  revealInterval=setInterval(revealNextTile,ms);
+}
+function stopReveal() {
+  if(revealInterval){clearInterval(revealInterval);revealInterval=null;}
+}
+
+// ── SP HUD UPDATE (WO hud() birebir kopyası) ──
+let _spStarTriggered = [false, false, false];
+
+function _triggerStarPulse(elId) {
+  try { const _sa = new Audio('sounds/star.mp3'); _sa.volume = 0.8; _sa.play().catch(()=>{}); } catch(e) {}
+  const el = document.getElementById(elId);
+  if(!el) return;
+  el.classList.remove('pulsing');
+  void el.offsetWidth;
+  el.classList.add('pulsing');
+  setTimeout(() => el.classList.remove('pulsing'), 850);
+}
+
+function updateHeader() {
+  // Avatar
+  const av = document.getElementById('sp-hud-avatar');
+  if(av && spSave?.profile?.avatar) av.src = spAv(spSave.profile.avatar);
+
+  // Question counter
+  const qEl = document.getElementById('sp-hud-q');
+  if(qEl) qEl.textContent = `${Math.min(wordsDone+1, totalWordCount)}/${totalWordCount}`;
+
+  // Score
+  const scoreEl = document.getElementById('sp-hud-score');
+  if(scoreEl) scoreEl.textContent = totalScore;
+
+  // Streak
+  const streakEl = document.getElementById('sp-hud-streak');
+  if(streakEl) streakEl.textContent = _streak;
+
+  const fill = document.getElementById('wo-hud-progress');
+
+  if(spRun) {
+    // Level
+    const lvlEl = document.getElementById('sp-hud-level');
+    if(lvlEl) lvlEl.textContent = spSelLevelIdx + 1;
+
+    // Lives
+    const livesEl = document.getElementById('sp-hud-lives');
+    if(livesEl) livesEl.textContent = '♥'.repeat(Math.max(0, spRun.lives));
+
+    // Star bar
+    const c = (window.SP_CAMPAIGNS||[]).find(x => x.id === spRun.campaignId);
+    if(c) {
+      const max = window.SP_calcTheoreticalMax
+        ? window.SP_calcTheoreticalMax(spRun.campaignId, spRun.levelIdx)
+        : c.wordsPerLevel * 200;
+      const [th1, th2, th3] = c.starThresholds;
+      const t1 = Math.round(max * th1);
+      const t2 = Math.round(max * th2);
+      const t3 = Math.round(max * th3);
+      const s1 = totalScore >= t1;
+      const s2 = totalScore >= t2;
+      const s3 = totalScore >= t3;
+
+      // Bar 100% = t3 skoru (WO mantığı)
+      if(fill) {
+        const fillPct = Math.min(100, t3 > 0 ? totalScore / t3 * 100 : 0);
+        fill.style.width = fillPct + '%';
+        fill.className = 'wo-progress-fill' + (s3 ? ' s3' : s2 ? ' s2' : s1 ? ' s1' : '');
+      }
+
+      // Stars lit
+      ['wo-pstar-1','wo-pstar-2','wo-pstar-3'].forEach((id, i) => {
+        const el = document.getElementById(id);
+        if(el) el.classList.toggle('lit', [s1, s2, s3][i]);
+      });
+
+      // Star pulse — ilk kez eşiğe ulaşıldığında
+      if(s1 && !_spStarTriggered[0]) { _spStarTriggered[0]=true; _triggerStarPulse('wo-pstar-1'); showToast('⭐ 1 STAR REACHED'); }
+      if(s2 && !_spStarTriggered[1]) { _spStarTriggered[1]=true; _triggerStarPulse('wo-pstar-2'); showToast('⭐⭐ 2 STARS REACHED'); }
+      if(s3 && !_spStarTriggered[2]) { _spStarTriggered[2]=true; _triggerStarPulse('wo-pstar-3'); showToast('⭐⭐⭐ 3 STARS REACHED'); }
+
+      // Mark ve star konumları (WO: p1 = th1/th3, p2 = th2/th3, p3 = 100%)
+      const p1 = Math.round(th1/th3 * 1000) / 10;
+      const p2 = Math.round(th2/th3 * 1000) / 10;
+      const m1=document.getElementById('wo-pmark-1'), m2=document.getElementById('wo-pmark-2'), m3=document.getElementById('wo-pmark-3');
+      if(m1) m1.style.left=p1+'%'; if(m2) m2.style.left=p2+'%'; if(m3) m3.style.left='100%';
+      const ps1=document.getElementById('wo-pstar-1'), ps2=document.getElementById('wo-pstar-2'), ps3=document.getElementById('wo-pstar-3');
+      if(ps1) ps1.style.left=p1+'%'; if(ps2) ps2.style.left=p2+'%'; if(ps3) ps3.style.left='100%';
+    }
+
+  } else {
+    // Free play: basit kelime ilerleme barı
+    if(fill) {
+      fill.style.width = (totalWordCount > 0 ? wordsDone / totalWordCount * 100 : 0) + '%';
+      fill.className = 'wo-progress-fill';
+    }
+    const livesEl = document.getElementById('sp-hud-lives');
+    if(livesEl) livesEl.textContent = '';
+    // Marks/stars görünmez
+    ['wo-pmark-1','wo-pmark-2','wo-pmark-3','wo-pstar-1','wo-pstar-2','wo-pstar-3'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.style.left = '-999px';
+    });
+  }
+
+  // streak-counter (yan panel — varsa)
+  const sc = document.getElementById('streak-counter');
+  const sv = document.getElementById('streak-val');
+  if(sc && sv) {
+    if(_streak >= 2) { sc.style.display='flex'; sv.textContent=_streak+'× STREAK'; }
+    else sc.style.display='none';
+  }
+  _updateJokerBtn();
+}
+
+// ── TURN ──
+function beginTurn() {
+  if(!gameActive) return;
+  // pick word
+  let available=pool.map((_,i)=>i).filter(i=>!usedIndices.has(i));
+  if(!available.length){usedIndices.clear();available=pool.map((_,i)=>i);}
+  const pick=available[Math.floor(Math.random()*available.length)];
+  usedIndices.add(pick);
+  currentWord=pool[pick];
+
+  currentScore=SCORE_MAX;
+  _setCatHint(currentWord[4]);
+
+  const img=document.getElementById('reveal-img');
+  if(img){img.src='';img.style.display='none';}
+
+  updateScoreCounter();
+  buildTileGrid();
+
+  if(img){
+    img.src=currentWord[5];
+    img.onerror=()=>{img.style.display='none';};
+    img.onload=()=>{img.style.display='block';};
+  }
+
+  // reset per-turn UI
+  const ansDisp=document.getElementById('answer-display');
+  if(ansDisp) ansDisp.style.display='none';
+  const revBar=document.getElementById('reveal-bar');
+  if(revBar) revBar.style.display='none';
+  const ro=document.getElementById('result-overlay');
+  if(ro){ro.style.display='none';ro.innerHTML='';}
+  const trHint=document.getElementById('tr-hint');
+  if(trHint){trHint.textContent='';trHint.style.display='none';}
+  const jPanel=document.getElementById('joker-panel');
+  if(jPanel) jPanel.style.display='none';
+  const sb=document.getElementById('stop-btn');
+  if(sb) sb.disabled=true;
+
+  updateHeader();
+
+  if(_bgAudio&&!_muted) _bgAudio.volume=BG_VOL_NORMAL;
+
+  document.getElementById('ready-overlay').style.display='flex';
+}
+
+function onReadyPressed() {
+  document.getElementById('ready-overlay').style.display='none';
+  document.getElementById('stop-btn').disabled=false;
+  if(_bgAudio&&!_muted) _bgAudio.volume=BG_VOL_REVEAL;
+  startReveal();
+  _updateJokerBtn();
+}
+
+function onStopPressed() {
+  if(_spamLocked) return;
+  if(_detectSpam()) return;
+  if(_flashlightActive){ _deactivateFlashlight(true); return; }
+  stopReveal();
+  _playFx('sounds/clash.mp3',0.6);
+  document.getElementById('stop-btn').disabled=true;
+  lockedScore=currentScore;
+  const canCancel=(Date.now()-_revealStartTime)<2000;
+  showChoice(canCancel);
+}
+
+// ── REVEAL AREA VISIBILITY ──
+function hideGameBoard(){document.getElementById('reveal-area').style.display='none';document.getElementById('bottom-bar').style.display='none';}
+function showGameBoard(){document.getElementById('reveal-area').style.display='';document.getElementById('bottom-bar').style.display='';}
+
+// ── CHOICE ──
+function showChoice(showCancel=false) {
+  hideGameBoard();
+  document.getElementById('choice-score-val').textContent=lockedScore;
+  const cancelBtn=document.getElementById('choice-cancel-btn');
+  if(cancelBtn) cancelBtn.style.display=showCancel?'flex':'none';
+  document.getElementById('choice-overlay').classList.add('open');
+}
+function cancelStop(){
+  document.getElementById('choice-cancel-btn').style.display='none';
+  document.getElementById('choice-overlay').classList.remove('open');
+  showGameBoard();
+  document.getElementById('stop-btn').disabled=false;
+  startReveal();
+}
+function chooseType(){document.getElementById('choice-overlay').classList.remove('open');showTypeOverlay();}
+function chooseMC(){document.getElementById('choice-overlay').classList.remove('open');showMCOverlay();}
+
+// ── TYPE OVERLAY ──
+let _typedAnswer='';
+let _kbSureMode=false;
+
+function showTypeOverlay() {
+  document.getElementById('type-score-badge').textContent=`${lockedScore} × 2 = ${lockedScore*2} pts`;
+  document.getElementById('type-score-badge').className='double';
+  _typedAnswer=''; _kbSureMode=false;
+  document.getElementById('typed-display').textContent='_';
+  document.getElementById('type-overlay').classList.add('open');
+  const wrap=document.getElementById('type-kb-wrap');
+  if(wrap&&typeof RGBKeyboard!=='undefined'){wrap.innerHTML='';RGBKeyboard.build('type-kb-wrap',onTypeKey);}
+}
+
+function onTypeKey(k) {
+  if(k==='SUBMIT'){
+    if(!_typedAnswer.trim()){
+      if(!_kbSureMode){_kbSureMode=true;RGBKeyboard.setSure(true);return;}
+      else{_kbSureMode=false;RGBKeyboard.setSure(false);submitTypedAnswer();return;}
+    }
+    submitTypedAnswer(); return;
+  }
+  _kbSureMode=false;
+  if(typeof RGBKeyboard!=='undefined') RGBKeyboard.setSure(false);
+  if(k==='⌫') _typedAnswer=_typedAnswer.slice(0,-1);
+  else if(k===' ') _typedAnswer+=' ';
+  else _typedAnswer+=k;
+  document.getElementById('typed-display').textContent=_typedAnswer||'_';
+}
+
+function normalise(s){return(s||'').toUpperCase().replace(/\s+/g,'');}
+
+function showLevenshteinFeedback(t,c,callback) {
+  const disp=document.getElementById('typed-display');
+  if(!disp){callback();return;}
+  const kb=document.getElementById('type-kb-wrap');
+  if(kb) kb.style.pointerEvents='none';
+  let html='';
+  if(t.length===c.length){
+    for(let i=0;i<t.length;i++) html+=(t[i]!==c[i])?`<span class="lev-wrong">${t[i]}</span>`:t[i];
+  } else { html=`<span class="lev-fuzzy">${t}</span>`; }
+  disp.innerHTML=html;
+  setTimeout(()=>{
+    disp.innerHTML=`<span class="lev-correct">${c}</span>`;
+    setTimeout(()=>{ if(kb) kb.style.pointerEvents=''; callback(); },480);
+  },1000);
+}
+
+function submitTypedAnswer() {
+  const correct=currentWord[2];
+  const alts=currentWord[6]||[];
+  const t=normalise(_typedAnswer);
+  const c=normalise(correct);
+  const isCorrect=isAcceptable(_typedAnswer,correct,alts);
+  const pts=isCorrect?lockedScore*2:0;
+  const exactOrPlural=(t===c)||(t===c+'S')||(c===t+'S')||(t===c+'ES')||(c===t+'ES');
+  const matchedAltExact=alts.some(a=>{const na=normalise(a);return(t===na)||(t===na+'S')||(na===t+'S')||(t===na+'ES')||(na===t+'ES');});
+  const isLevMatch=isCorrect&&!exactOrPlural&&!matchedAltExact;
+  if(isLevMatch){
+    showLevenshteinFeedback(t,c,()=>{
+      document.getElementById('type-overlay').classList.remove('open');
+      showResult(true,pts,correct,'type');
+    });
+  } else {
+    document.getElementById('type-overlay').classList.remove('open');
+    showResult(isCorrect,pts,correct,'type');
+  }
+}
+
+// ── MC OVERLAY ──
+function showMCOverlay() {
+  document.getElementById('mc-score-val').textContent=lockedScore;
+  const correct=currentWord[2];
+  const distractors=getDistractors(correct,currentWord[4],3);
+  const options=shuffle([correct,...distractors.slice(0,3)]);
+  const container=document.getElementById('mc-options');
+  container.innerHTML='';
+  options.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='mc-btn';
+    btn.innerHTML=`<span class="mc-num">${i+1}</span>${opt}`;
+    btn.onclick=()=>onMCAnswer(opt,correct,btn,container);
+    container.appendChild(btn);
+  });
+  document.getElementById('mc-overlay').classList.add('open');
+}
+
+function onMCAnswer(chosen,correct,btn,container) {
+  container.querySelectorAll('.mc-btn').forEach(b=>b.disabled=true);
+  const isCorrect=normalise(chosen)===normalise(correct);
+  btn.classList.add(isCorrect?'correct':'wrong');
+  const pts=isCorrect?lockedScore:0;
+  setTimeout(()=>{
+    document.getElementById('mc-overlay').classList.remove('open');
+    showResult(isCorrect,pts,correct,'mc');
+  },isCorrect?900:420);
+}
+
+// ── FUZZY ──
+function levenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n;if(!n)return m;
+  const prev=Array.from({length:n+1},(_,i)=>i);
+  const curr=new Array(n+1);
+  for(let i=1;i<=m;i++){curr[0]=i;for(let j=1;j<=n;j++)curr[j]=a[i-1]===b[j-1]?prev[j-1]:1+Math.min(prev[j],curr[j-1],prev[j-1]);prev.splice(0,n+1,...curr);}
+  return prev[n];
+}
+function _matchWord(t,c){
+  if(!t||!c) return false;
+  if(t===c) return true;
+  if(t===c+'S'||c===t+'S') return true;
+  if(t===c+'ES'||c===t+'ES') return true;
+  if(c.length>=7&&levenshtein(t,c)<=1) return true;
+  return false;
+}
+function isAcceptable(typed,correct,alts){
+  const t=normalise(typed);
+  if(!t) return false;
+  if(_matchWord(t,normalise(correct))) return true;
+  if(alts&&alts.length){for(const a of alts){if(_matchWord(t,normalise(a)))return true;}}
+  return false;
+}
+
+// ── RESULT ──
+function showResult(isCorrect,pts,correctAnswer,guessType) {
+  // SP can sistemi
+  if(spRun) {
+    if(isCorrect) {
+      spRun.correct++;
+      spRun.streak++;
+      spRun.bestStreak=Math.max(spRun.bestStreak,spRun.streak);
+    } else {
+      spRun.lives=Math.max(0,spRun.lives-1);
+      spRun.wrong++;
+      spRun.streak=0;
+      if(spRun.lives<=0) wordsDone=totalWordCount-1; // mevcut kelimeden sonra bitir
+    }
+  }
+  _playFx(isCorrect?SOUNDS.correct:SOUNDS.wrong);
+  showGameBoard();
+
+  let stampText=isCorrect?'CORRECT':'WRONG';
+  let stampClass=isCorrect?'correct':'wrong';
+  let streakBonus=0;
+
+  if(isCorrect){
+    _streak++;
+    if(_streak===3||_streak===5){
+      streakBonus=100;
+      stampText=_streak+'× STREAK!';
+      stampClass='correct streak';
+      if(_streak===5) _streak=0;
+    }
+  } else { _streak=0; }
+
+  // Record history
+  _gameHistory.push({word:correctAnswer,correct:isCorrect,pts:pts+streakBonus,type:guessType||'mc'});
+  if(isCorrect) totalScore+=pts+streakBonus;
+
+  const overlay=document.getElementById('result-overlay');
+  overlay.style.display='flex';
+  const stamp=document.createElement('div');
+  stamp.className='result-stamp '+stampClass;
+  stamp.textContent=stampText;
+  overlay.innerHTML=''; overlay.appendChild(stamp);
+
+  if(isCorrect){
+    revealAllTiles();
+    const ansDisp=document.getElementById('answer-display');
+    if(ansDisp){ansDisp.textContent=correctAnswer;ansDisp.style.display='block';}
+    _speakWordTwice(correctAnswer);
+    if(pts>0) spawnArcFloat('+'+pts+' pts');
+    if(streakBonus>0) setTimeout(()=>spawnStreakFloat(streakBonus),380);
+    setTimeout(()=>{overlay.style.display='none';overlay.innerHTML='';},1000);
+    setTimeout(()=>{if(ansDisp)ansDisp.style.display='none'; advanceTurn();},3800);
+  } else {
+    setTimeout(()=>{overlay.style.display='none';overlay.innerHTML='';showRevealBar(correctAnswer);},1400);
+  }
+}
+
+function showRevealBar(answer){
+  _revealAnswer=answer;
+  const bar=document.getElementById('reveal-bar');
+  if(bar) bar.style.display='block';
+}
+
+function onRevealPressed(){
+  const bar=document.getElementById('reveal-bar');
+  if(bar) bar.style.display='none';
+  revealAllTiles();
+  const disp=document.getElementById('answer-display');
+  if(disp){disp.textContent=_revealAnswer;disp.style.display='block';}
+  _speakWordTwice(_revealAnswer);
+  setTimeout(()=>{if(disp)disp.style.display='none';advanceTurn();},3200);
+}
+
+function spawnArcFloat(text) {
+  const ic=document.getElementById('image-container');
+  if(!ic) return;
+  const ir=ic.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='score-arc-float';
+  el.textContent=text;
+  el.style.cssText=`position:fixed;pointer-events:none;z-index:8000;animation:none;font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,6vw,78px);color:#4ade80;text-shadow:0 0 32px rgba(74,222,128,.9);white-space:nowrap;letter-spacing:.06em;will-change:transform,opacity;opacity:0;left:${ir.left+ir.width/2}px;top:${ir.top+ir.height/2}px`;
+  document.body.appendChild(el);
+  const t0=performance.now(),duration=1800;
+  (function step(now){
+    const t=Math.min(1,(now-t0)/duration);
+    const ease=t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    const dy=-140*ease;
+    const sc=1.9-ease*0.9;
+    const op=t<0.08?t/0.08:t>0.78?(1-t)/0.22:1;
+    el.style.transform=`translate3d(-50%,${dy.toFixed(1)}px,0) scale(${sc.toFixed(3)})`;
+    el.style.opacity=op.toFixed(3);
+    if(t<1) requestAnimationFrame(step);
+    else{el.style.willChange='auto';el.remove();}
+  })(t0);
+}
+
+function spawnStreakFloat(bonus) {
+  const el=document.createElement('div');
+  el.className='score-float';
+  el.textContent=`🔥 +${bonus} STREAK BONUS`;
+  el.style.cssText=`left:50%;top:40%;color:#60a5fa;text-shadow:0 0 18px rgba(96,165,250,.9);font-size:clamp(13px,1.8vw,22px);`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1200);
+}
+
+// ── ADVANCE TURN ──
+function advanceTurn() {
+  if(!gameActive) return;
+  if(_flashlightActive) _deactivateFlashlight(false);
+  wordsDone++;
+  if(wordsDone>=totalWordCount){showFinalScreen();return;}
+  beginTurn();
+}
+
+// ── JOKER SYSTEM ──
+function _updateJokerBtn() {
+  const btn=document.getElementById('joker-btn');
+  const cnt=document.getElementById('joker-count');
+  if(!btn) return;
+  const sb=document.getElementById('stop-btn');
+  const visible=sb&&!sb.disabled&&_jokerCount>0&&!_flashlightActive;
+  btn.style.display=visible?'inline-block':'none';
+  if(cnt) cnt.textContent=_jokerCount>1?'x'+_jokerCount:'';
+}
+
+function onJokerPressed() {
+  if(_flashlightActive||!_jokerCount) return;
+  stopReveal();
+  const hintDesc=document.getElementById('jo-trhint-desc');
+  if(hintDesc) hintDesc.textContent=_hintLang==='EN'?'English hint göster':'Türkçe ipucunu göster';
+  const panel=document.getElementById('joker-panel');
+  if(panel) panel.style.display='flex';
+  _updateJokerBtn();
+}
+
+function onJokerSelected(type) {
+  const panel=document.getElementById('joker-panel');
+  if(panel) panel.style.display='none';
+  _jokerCount--;
+  _updateJokerBtn();
+  if(type==='SHATTER') _activateShatterJoker();
+  else if(type==='XRAY') _activateXRayJoker();
+  else if(type==='TRHINT') _activateTurkishHintJoker();
+}
+
+function _activateShatterJoker() {
+  _flashlightActive=true;
+  _updateJokerBtn();
+  _startSlowReveal();
+  _startCrosshair();
+  const ic=document.getElementById('image-container');
+  if(ic) setTimeout(()=>ic.addEventListener('click',_onFlashlightClick,{once:true}),0);
+}
+
+function _activateTurkishHintJoker() {
+  const hint=currentWord?(_hintLang==='EN'?currentWord[0]:currentWord[1]):'';
+  const el=document.getElementById('tr-hint');
+  if(el){el.textContent=hint||'—';el.style.display='block';}
+  startReveal(); _updateJokerBtn();
+}
+
+function _activateXRayJoker() {
+  stopReveal();
+  const ic=document.getElementById('image-container');
+  const grid=document.getElementById('tile-grid');
+  if(grid) grid.classList.add('xray-hide');
+  if(ic) ic.classList.add('xray-active');
+  // add temporary CSS
+  if(!document.getElementById('xray-style')){
+    const s=document.createElement('style');
+    s.id='xray-style';
+    s.textContent='#image-container.xray-active #reveal-img{filter:invert(1) grayscale(1) contrast(1.4) brightness(0.2)}#tile-grid.xray-hide .tile:not(.revealed){opacity:0;transition:opacity .15s}#tile-grid.xray-snap .tile:not(.revealed){opacity:1;transition:none}';
+    document.head.appendChild(s);
+  }
+  setTimeout(()=>{
+    if(grid){grid.classList.remove('xray-hide');grid.classList.add('xray-snap');}
+    requestAnimationFrame(()=>{
+      if(ic) ic.classList.remove('xray-active');
+      if(grid) grid.classList.remove('xray-snap');
+      startReveal(); _updateJokerBtn();
+    });
+  },1000);
+}
+
+function _startSlowReveal() {
+  const ms=((revealTimerSec*1000)/TOTAL_TILES)*2;
+  revealInterval=setInterval(revealNextTile,ms);
+}
+
+function _startCrosshair() {
+  const ic=document.getElementById('image-container');
+  const ch=document.getElementById('fl-crosshair');
+  if(!ic||!ch) return;
+  const _cacheRect=()=>{
+    const r=ic.getBoundingClientRect();
+    _crosshairRectCache={left:r.left,top:r.top,tw:r.width/10,th:r.height/10};
+  };
+  _cacheRect();
+  _crosshairResizeHandler=_cacheRect;
+  window.addEventListener('resize',_crosshairResizeHandler);
+  const randPos=()=>({col:2+Math.floor(Math.random()*6),row:2+Math.floor(Math.random()*6)});
+  _flashlightGridPos=randPos();
+  _positionCrosshair();
+  ch.style.display='block';
+  _flashlightMoveTimer=setInterval(()=>{_flashlightGridPos=randPos();_positionCrosshair();},460);
+}
+
+function _positionCrosshair() {
+  const ch=document.getElementById('fl-crosshair');
+  if(!ch||!_crosshairRectCache) return;
+  const {left,top,tw,th}=_crosshairRectCache;
+  const px=left+(_flashlightGridPos.col+0.5)*tw;
+  const py=top+(_flashlightGridPos.row+0.5)*th;
+  ch.style.transform=`translate3d(${px.toFixed(1)}px,${py.toFixed(1)}px,0) translate(-50%,-50%)`;
+}
+
+function _onFlashlightClick(){if(!_flashlightActive)return;_deactivateFlashlight(true);}
+
+function _deactivateFlashlight(doShatter) {
+  _flashlightActive=false;
+  if(_flashlightMoveTimer){clearInterval(_flashlightMoveTimer);_flashlightMoveTimer=null;}
+  if(_crosshairResizeHandler){window.removeEventListener('resize',_crosshairResizeHandler);_crosshairResizeHandler=null;}
+  _crosshairRectCache=null;
+  const ch=document.getElementById('fl-crosshair');
+  if(ch) ch.style.display='none';
+  const ic=document.getElementById('image-container');
+  if(ic) ic.removeEventListener('click',_onFlashlightClick);
+  if(doShatter){
+    if(ic){ic.classList.add('shaking');setTimeout(()=>ic.classList.remove('shaking'),420);}
+    _shatterTiles();
+  }
+  stopReveal(); startReveal(); _updateJokerBtn();
+}
+
+function _shatterTiles() {
+  const {col,row}=_flashlightGridPos;
+  const ic=document.getElementById('image-container');
+  if(!ic) return;
+  const icR=ic.getBoundingClientRect();
+  const tw=icR.width/10,th=icR.height/10;
+  for(let dr=-1;dr<=2;dr++){for(let dc=-1;dc<=2;dc++){
+    const c=col+dc,r=row+dr;
+    if(c<0||c>=10||r<0||r>=10) continue;
+    const idx=r*10+c;
+    const tile=document.getElementById('tile-'+idx);
+    if(!tile||tile.classList.contains('revealed')) continue;
+    const tr2=tile.getBoundingClientRect();
+    const shard=document.createElement('div');
+    shard.className='tile-shatter';
+    const bg=TILE_COLORS[idx%TILE_COLORS.length]||'rgba(30,20,60,0.9)';
+    shard.style.cssText=`left:${tr2.left}px;top:${tr2.top}px;width:${tr2.width}px;height:${tr2.height}px;background:${bg};transition:transform .55s ease-out,opacity .45s ease-in`;
+    document.body.appendChild(shard);
+    const angle=Math.atan2(dr,dc)+(Math.random()-.5)*1.2;
+    const dist=60+Math.random()*80;
+    const tx=Math.cos(angle)*dist,ty=Math.sin(angle)*dist;
+    const rot=(Math.random()-.5)*180;
+    requestAnimationFrame(()=>{shard.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(.2)`;shard.style.opacity='0';});
+    setTimeout(()=>shard.remove(),600);
+    tile.classList.add('revealed');
+    tilesRevealed=Math.min(tilesRevealed+1,TOTAL_TILES);
+  }}
+  currentScore=Math.max(SCORE_MIN,Math.round(SCORE_MAX-(tilesRevealed/TOTAL_TILES)*(SCORE_MAX-SCORE_MIN)));
+  updateScoreCounter();
+  _playFx('sounds/xray.mp3',0.8);
+}
+
+// ── FINAL SCREEN ──
+function showFinalScreen() {
+  if(spRun) { spFinishLevel(); return; }
+  gameActive=false;
+  document.getElementById('game-area').style.display='none';
+  document.body.classList.remove('game-active');
+
+  // Update progress bar to 100%
+  const bar=document.getElementById('wo-hud-progress');
+  if(bar) bar.style.width='100%';
+
+  // Fill final overlay
+  document.getElementById('final-total').textContent=totalScore;
+
+  const correctCount=_gameHistory.filter(h=>h.correct).length;
+  const pct=correctCount/totalWordCount;
+  const stars=pct>=0.9?'⭐⭐⭐':pct>=0.6?'⭐⭐':pct>=0.3?'⭐':'';
+  document.getElementById('final-stars').textContent=stars||'—';
+  document.getElementById('final-correct-row').innerHTML=`Doğru: <strong>${correctCount}</strong> / ${totalWordCount}`;
+
+  const list=document.getElementById('final-word-list');
+  list.innerHTML='';
+  _gameHistory.forEach((h,i)=>{
+    const row=document.createElement('div');
+    row.className='fw-row '+(h.correct?'fw-correct':'fw-wrong');
+    const typeLabel=h.type==='type'?'TYPE':'MC';
+    row.innerHTML=`<span class="fw-num">${i+1}</span><span class="fw-icon">${h.correct?'✓':'✗'}</span><span class="fw-word">${h.word}</span><span class="fw-type">${typeLabel}</span><span class="fw-pts">${h.pts>0?'+'+h.pts:'0'}</span>`;
+    list.appendChild(row);
+  });
+
+  document.getElementById('final-overlay').classList.add('open');
+}
+
+function playAgain() {
+  document.getElementById('final-overlay').classList.remove('open');
+  document.getElementById('game-area').style.display='flex';
+  document.body.classList.add('game-active');
+  startGame();
+}
+
+function exitGame() {
+  document.getElementById('final-overlay').classList.remove('open');
+  document.getElementById('main-menu').style.display='flex';
+}
+
+// ════════════════════════════════════════════════════════
+// SP CAMPAIGN SİSTEMİ
+// ════════════════════════════════════════════════════════
+
+const SP_KEY    = 'word_reveal_sp_v1';
+const SP_WO_BASE = '../word_overlord/';
+const SP_AV     = ['Blaze','Frost','Grace','Louis','Mara','Nova','Orion','Pixie','Rex','Terra'];
+
+let spSave, spRun = null, spDraft = {name:'',avatar:'Blaze'};
+let spSelCampaignId = null, spSelLevelIdx = 0;
+
+function spFresh() {
+  return {
+    version:1, profile:null, campaignData:{},
+    achievementScore:0, unlockedAchievements:[], claimedAchievements:[],
+    chainStartStats:{},
+    stats:{bestStreak:0,runsCompleted:0,totalCorrect:0,totalWrong:0,lifePerfectLevels:0,jokerFreeLevels:0,campaignWinsCount:{}},
+    rank:0
+  };
+}
+function spLoad() {
+  try {
+    const d={...spFresh(),...JSON.parse(localStorage.getItem(SP_KEY)||'{}')};
+    if(!d.campaignData) d.campaignData={};
+    if(!d.stats) d.stats=spFresh().stats;
+    if(!d.stats.campaignWinsCount) d.stats.campaignWinsCount={};
+    if(!d.chainStartStats) d.chainStartStats={};
+    if(!d.unlockedAchievements) d.unlockedAchievements=[];
+    if(!d.claimedAchievements) d.claimedAchievements=[];
+    return d;
+  } catch(e){return spFresh();}
+}
+function spStore(){localStorage.setItem(SP_KEY,JSON.stringify(spSave));}
+
+function spAv(name,s='head'){return SP_WO_BASE+'avatars/AV_Anime_'+name+(s?'_'+s:'')+'.webp';}
+
+function spPlayerScore(){
+  let t=0;
+  Object.values(spSave.campaignData||{}).forEach(cd=>Object.values(cd.bestScores||{}).forEach(s=>t+=Number(s)||0));
+  return t+(Number(spSave.achievementScore)||0);
+}
+
+function spEmptyCD(){return{stars:{},bestScores:{},unlockedLevel:0};}
+function spGetCD(id){if(!spSave.campaignData[id])spSave.campaignData[id]=spEmptyCD();return spSave.campaignData[id];}
+
+// ── EKRAN KONTROLÜ ──
+function spShow(id){
+  document.querySelectorAll('.sp-screen').forEach(x=>x.classList.remove('open'));
+  document.getElementById('main-menu').style.display='none';
+  document.getElementById('final-overlay').classList.remove('open');
+  document.getElementById('game-area').style.display='none';
+  document.body.classList.remove('game-active');
+  if(id) document.getElementById(id).classList.add('open');
+}
+function spBackToMenu(){
+  document.querySelectorAll('.sp-screen').forEach(x=>x.classList.remove('open'));
+  document.getElementById('main-menu').style.display='flex';
+}
+
+// ── KARAKTER OLUŞTUR ──
+function spShowCharCreate(){
+  spDraft=spSave.profile?{...spSave.profile}:{name:'',avatar:'Blaze'};
+  document.getElementById('sp-char-name').value=spDraft.name;
+  spRenderAvatarGrid();
+  spShow('sp-char');
+}
+function spRenderAvatarGrid(){
+  const g=document.getElementById('sp-char-avatars');
+  if(!g) return;
+  g.innerHTML=SP_AV.map(a=>`<button class="wo-avatar${spDraft.avatar===a?' active':''}" onclick="spPickAvatar('${a}')"><img src="${spAv(a)}" class="${(a==='Nova'||a==='Terra')?'wo-head-flip':''}">${a.toUpperCase()}</button>`).join('');
+  const p=document.getElementById('sp-char-prev');
+  if(p) p.src=spAv(spDraft.avatar,'');
+  const pn=document.getElementById('sp-char-prev-name');
+  if(pn) pn.textContent=spDraft.avatar.toUpperCase();
+}
+function spPickAvatar(a){spDraft.avatar=a;spRenderAvatarGrid();}
+
+const _SP_BAD=['FUCK','SHIT','BITCH','CUNT','COCK','DICK','PUSSY','ASS','NIGGER','FAGGOT','WHORE','SLUT','PORN','SEX','NUDE','NAKED','PENIS','VAGINA','BOOB','TITS','RAPE','MOTHERFUCKER','MOTHERFUCK','MF','MFKR','BASTARD','SONOFABITCH','SOB','CUM','CUMSHOT','BLOWJOB','BJ','HANDJOB','HJ','WANKER','TWAT','PRICK','DOUCHE','DOUCHEBAG','JACKASS','ASSHOLE','RETARD','FAG','FAGOT','FAGG','HORNY','MILF','BDSM','XXX','HENTAI','ERECT','BONER','OROSPU','OROSPUCOCUGU','OROSB','YARRAK','YARRAM','YARRAGIM','SIK','SIKIM','SIKERIM','SIKTIM','SIKTIR','SIKTIRGI','AMINA','AMK','AMKK','AMQ','AQ','AQQ','MQ','MK','SG','SGT','GOTVEREN','GOTLEK','GOTOGLANI','GOTLALESI','GOTU','GOTUNU','AMCIK','AMCIGI','BOK','BOKTAN','OTUZBIR','DALYARAK','SAKSO','SAKSOCU','YALAMA','IBNE','GAVAT','KAHPE','KALTAK','DOSEK','SURUK','FAHISE','FUHUS','PEZEVENK','PEZO','SEREFSIZ','SRFSZ','ANANI','ANASINI','AVRADINI','AVRAD','YAVSAK','PIC','PICKURUSU','OC','TOP','YOSMA','ZINA','MEME','DURZU','DALLAMA','KEZBAN'];
+function spBadName(raw){const n=raw.toUpperCase().replace(/4/g,'A').replace(/3/g,'E').replace(/0/g,'O').replace(/1/g,'I').replace(/5/g,'S').replace(/7/g,'T').replace(/\$/g,'S').replace(/\@/g,'A').replace(/İ/g,'I').replace(/Ş/g,'S').replace(/Ğ/g,'G').replace(/Ü/g,'U').replace(/Ö/g,'O').replace(/Ç/g,'C').replace(/[^A-Z]/g,'');return _SP_BAD.some(w=>n.includes(w));}
+
+function spConfirmNew(){
+  const inp=document.getElementById('sp-char-name');
+  spDraft.name=(inp.value||'').trim().toUpperCase();
+  const warn=document.getElementById('sp-char-warn');
+  if(!spDraft.name){warn.textContent='ENTER A PLAYER NAME';return;}
+  if(spBadName(spDraft.name)){warn.textContent='INAPPROPRIATE NAME — CHOOSE ANOTHER';return;}
+  warn.textContent='';
+  spSave={...spFresh(),profile:{...spDraft}};
+  spStore();
+  spShowCampaigns();
+}
+
+// ── CAMPAIGNS ──
+function spShowCampaigns(){
+  if(!spSave.profile){spShowCharCreate();return;}
+  document.getElementById('sp-camp-score').textContent=spPlayerScore();
+  (window.SP_CAMPAIGNS||[]).forEach(c=>{
+    const cd=spGetCD(c.id);
+    const totalStars=Object.values(cd.stars||{}).reduce((a,b)=>a+b,0);
+    const done=Object.keys(cd.stars||{}).length;
+    const isLocked=!!(c.unlockRequires&&!spIsCampComplete(c.unlockRequires));
+    const card=document.querySelector(`.wo-campaign-card[data-id="${c.id}"]`);
+    if(card){
+      card.disabled=isLocked;
+      card.classList.toggle('locked',isLocked);
+      const badge=card.querySelector('.wo-campaign-lock-badge');
+      if(badge){
+        if(isLocked){
+          const req=(window.SP_CAMPAIGNS||[]).find(x=>x.id===c.unlockRequires);
+          const reqName=req?req.name.replace(/^\S+\s*/,'').toUpperCase():c.unlockRequires.toUpperCase();
+          badge.innerHTML=`🔒 COMPLETE<br>${reqName}<br>TO UNLOCK`;
+          badge.style.display='';
+        } else {
+          badge.style.display='none';
+        }
+      }
+    }
+    const prog=document.getElementById('sp-prog-'+c.id);
+    if(prog) prog.textContent=isLocked?'':`${done}/${c.levels.length} LEVELS · ${totalStars} ★`;
+  });
+  spShow('sp-camp');
+}
+function spIsCampComplete(id){
+  const c=(window.SP_CAMPAIGNS||[]).find(x=>x.id===id);
+  if(!c) return false;
+  const cd=spGetCD(id);
+  return c.levels.every((_,i)=>(cd.stars[i]||0)>=1);
+}
+function spEnterCampaign(id){spSelCampaignId=id;spShowLevels();}
+
+// ── LEVELS ──
+function spShowLevels(){
+  const c=(window.SP_CAMPAIGNS||[]).find(x=>x.id===spSelCampaignId);
+  if(!c) return;
+  const cd=spGetCD(c.id);
+  document.getElementById('sp-lvls-title').textContent=c.name;
+  const panel=document.getElementById('sp-lvls-panel');
+  if(panel) panel.className='wo-panel sp-lvls-panel '+c.id+'-theme';
+  document.getElementById('sp-lvls-pname').textContent=spSave.profile.name;
+  document.getElementById('sp-lvls-pavatar').src=spAv(spSave.profile.avatar,'');
+  document.getElementById('sp-lvls-pscore').textContent=spPlayerScore();
+  const grid=document.getElementById('sp-lvl-grid');
+  if(!grid) return;
+  grid.innerHTML=c.levels.map((lvl,i)=>{
+    const locked=i>cd.unlockedLevel;
+    const stars=cd.stars[i]||0;
+    const best=cd.bestScores[i]||0;
+    const max=window.SP_calcTheoreticalMax?window.SP_calcTheoreticalMax(c.id,i):c.wordsPerLevel*200;
+    const th1=Math.round(max*c.starThresholds[0]);
+    return `<button class="wo-level${locked?' locked':''}${stars===3&&!locked?' three-star':''}" ${locked?'disabled':''} onclick="spSelectLevel(${i})">
+      <div class="wo-level-num">LEVEL ${i+1}</div>
+      <div class="wo-level-stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+      <div class="wo-level-score">BEST ${best} · 1★ ${th1}</div>
+      <div style="font:700 10px 'Barlow Condensed',sans-serif;letter-spacing:.08em;color:#7dd3fc;margin-top:4px">⏱ ${lvl.revealTime}s · 🃏 ×${lvl.jokers} · ❤️ ×${lvl.lives}</div>
+    </button>`;
+  }).join('');
+  spShow('sp-lvls');
+}
+function spSelectLevel(idx){spSelLevelIdx=idx;spShowLevelReady();}
+
+// ── LEVEL HAZIR ──
+function spShowLevelReady(){
+  const c=(window.SP_CAMPAIGNS||[]).find(x=>x.id===spSelCampaignId);
+  if(!c) return;
+  const lvl=c.levels[spSelLevelIdx];
+  const cd=spGetCD(c.id);
+  const max=window.SP_calcTheoreticalMax?window.SP_calcTheoreticalMax(c.id,spSelLevelIdx):c.wordsPerLevel*200;
+  const [t1,t2,t3]=c.starThresholds;
+  const earned=cd.stars[spSelLevelIdx]||0;
+  document.getElementById('sp-ready-title').textContent=c.name+' — LEVEL '+(spSelLevelIdx+1);
+  document.getElementById('sp-ready-sub').textContent=`${c.wordsPerLevel} WORDS · ❤️ ${lvl.lives} LIVES · 🃏 ${lvl.jokers} JOKERS · ⏱ ${lvl.revealTime}s`;
+  document.getElementById('sp-ready-stars').innerHTML=[
+    [1,Math.round(max*t1),'COMPLETE THE LEVEL'],
+    [2,Math.round(max*t2),'GOOD PERFORMANCE'],
+    [3,Math.round(max*t3),'PERFECT — MAX 1 WRONG']
+  ].map(([n,pts,desc])=>`<div class="wo-ready-star${earned>=n?' completed':''}"><span>${'★'.repeat(n)}${'☆'.repeat(3-n)}</span><strong>${pts} PTS</strong><small>${desc}</small>${earned>=n?'<b class="wo-ready-check">✓</b>':''}</div>`).join('');
+  document.getElementById('sp-ready-best').textContent='YOUR BEST: '+(cd.bestScores[spSelLevelIdx]||0)+' POINTS';
+  spShow('sp-lvl-ready');
+}
+
+// ── LEVEL BAŞLAT ──
+function spBeginLevel(){
+  const c=(window.SP_CAMPAIGNS||[]).find(x=>x.id===spSelCampaignId);
+  if(!c) return;
+  const lvl=c.levels[spSelLevelIdx];
+  const words=window.SP_getWordsForLevel?window.SP_getWordsForLevel(spSelCampaignId,spSelLevelIdx):[];
+  if(!words.length){showToast('⚠ Kelime bulunamadı!','warn');return;}
+
+  spRun={
+    campaignId:spSelCampaignId, levelIdx:spSelLevelIdx,
+    score:0, lives:lvl.lives, startLives:lvl.lives,
+    correct:0, wrong:0, streak:0, bestStreak:0,
+    jokersStart:lvl.jokers
+  };
+
+  // sp.html oyun değişkenlerini ayarla
+  pool=words;
+  totalWordCount=c.wordsPerLevel;
+  wordsDone=0; totalScore=0; _streak=0; _gameHistory=[];
+  _jokerCount=lvl.jokers;
+  revealTimerSec=lvl.revealTime;
+  usedIndices.clear();
+  gameActive=true;
+  _clickLog=[]; _spamLocked=false;
+  _spStarTriggered=[false,false,false];
+
+  // Ekranı aç
+  document.querySelectorAll('.sp-screen').forEach(x=>x.classList.remove('open'));
+  document.getElementById('game-area').style.display='flex';
+  document.body.classList.add('game-active');
+  updateHeader();
+  beginTurn();
+  if(!_bgAudio) playBg();
+}
+
+// ── LEVEL BİTİŞ ──
+function spFinishLevel(){
+  const c=(window.SP_CAMPAIGNS||[]).find(x=>x.id===spRun.campaignId);
+  if(!c){spRun=null;return;}
+
+  const max=window.SP_calcTheoreticalMax?window.SP_calcTheoreticalMax(spRun.campaignId,spRun.levelIdx):c.wordsPerLevel*200;
+  const [t1,t2,t3]=c.starThresholds;
+  const score=totalScore;
+  const wrong=spRun.wrong;
+
+  let stars=0;
+  if(score>=Math.round(max*t3)&&wrong<=1) stars=3;
+  else if(score>=Math.round(max*t2)) stars=2;
+  else if(score>=Math.round(max*t1)) stars=1;
+
+  // Joker + can bonusu achievementScore'a gider
+  const jBonus=_jokerCount*200;
+  const lBonus=spRun.lives*300;
+  if(jBonus>0) spSave.achievementScore=(Number(spSave.achievementScore)||0)+jBonus;
+  if(lBonus>0) spSave.achievementScore=(Number(spSave.achievementScore)||0)+lBonus;
+
+  // Progress kaydet
+  const cd=spGetCD(spRun.campaignId);
+  if(stars>0){
+    cd.stars[spRun.levelIdx]=Math.max(cd.stars[spRun.levelIdx]||0,stars);
+    cd.bestScores[spRun.levelIdx]=Math.max(cd.bestScores[spRun.levelIdx]||0,score);
+    if(spRun.levelIdx<c.levels.length-1) cd.unlockedLevel=Math.max(cd.unlockedLevel,spRun.levelIdx+1);
+    if(spRun.lives===spRun.startLives) spSave.stats.lifePerfectLevels=(spSave.stats.lifePerfectLevels||0)+1;
+    if(_jokerCount===spRun.jokersStart) spSave.stats.jokerFreeLevels=(spSave.stats.jokerFreeLevels||0)+1;
+    // Campaign win tracking: all levels passed with ≥1 star
+    if(c.levels.every((_,i)=>(cd.stars[i]||0)>=1)){
+      spSave.stats.campaignWinsCount=spSave.stats.campaignWinsCount||{};
+      spSave.stats.campaignWinsCount[spRun.campaignId]=(spSave.stats.campaignWinsCount[spRun.campaignId]||0)+1;
+    }
+  }
+  spSave.stats.runsCompleted=(spSave.stats.runsCompleted||0)+1;
+  spSave.stats.totalCorrect=(spSave.stats.totalCorrect||0)+(spRun.correct||0);
+  spSave.stats.totalWrong=(spSave.stats.totalWrong||0)+(spRun.wrong||0);
+  spSave.stats.bestStreak=Math.max(spSave.stats.bestStreak||0,spRun.bestStreak||0);
+  spUnlockAchievements();
+  spCheckRankUp();
+  spStore();
+  _spEnsureUUID();_spSubmitScore();
+
+  // Oyun durumu kapat
+  gameActive=false;
+  document.getElementById('game-area').style.display='none';
+  document.body.classList.remove('game-active');
+
+  // Sonuç ekranını doldur
+  document.getElementById('sp-res-title').textContent=stars?'LEVEL COMPLETE':'LEVEL FAILED';
+  document.getElementById('sp-res-stars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);
+  document.getElementById('sp-res-stats').innerHTML=`
+    <div class="wo-result-stat"><strong>${score}</strong><span>LEVEL SCORE</span></div>
+    ${lBonus>0?`<div class="wo-result-stat wo-result-life-bonus"><strong>+${lBonus}</strong><span>LIVES SAVED</span></div>`:''}
+    ${jBonus>0?`<div class="wo-result-stat wo-result-joker-bonus"><strong>+${jBonus}</strong><span>JOKERS SAVED</span></div>`:''}
+    <div class="wo-result-stat"><strong>${spRun.correct}</strong><span>CORRECT</span></div>
+    <div class="wo-result-stat"><strong>${spRun.wrong}</strong><span>WRONG</span></div>
+    <div class="wo-result-stat"><strong>${spRun.bestStreak}</strong><span>BEST STREAK</span></div>
+  `;
+
+  const _savedRun={...spRun}; spRun=null;
+  if(stars>0&&!_muted){try{const a=new Audio('sounds/levelcomplete.mp3');a.volume=.6;a.play().catch(()=>{});}catch(e){}}
+  spShow('sp-result');
+}
+
+// ── ACHİEVEMENT SİSTEMİ (WO bire bir kopya) ──
+const SP_ACHIEVEMENTS=[
+  {id:'first_step',icon:'⚔',name:'FIRST STEP',desc:'Complete your first level.',reward:500,test:s=>s.completedLevels>=1,progress:s=>[s.completedLevels,1],chain:'next_step'},
+  {id:'next_step',icon:'⚔',name:'NEXT STEP',desc:'Complete 20 levels.',reward:1500,test:s=>s.completedLevels>=20,progress:s=>[s.completedLevels,20],chain:'final_step'},
+  {id:'final_step',icon:'⚔',name:'FINAL STEP',desc:'Complete 50 levels.',reward:3000,test:s=>s.completedLevels>=50,progress:s=>[s.completedLevels,50],badge:'finalstep'},
+  {id:'star_student',icon:'★',name:'STAR STUDENT',desc:'Collect 5 stars.',reward:1000,test:s=>s.totalStars>=5,progress:s=>[s.totalStars,5],chain:'star_lord'},
+  {id:'star_lord',icon:'✦',name:'STAR LORD',desc:'Collect 25 stars.',reward:2500,test:s=>s.totalStars>=25,progress:s=>[s.totalStars,25],chain:'star_overlord'},
+  {id:'star_overlord',icon:'✦',name:'STAR OVERLORD',desc:'Collect 100 stars.',reward:5000,test:s=>s.totalStars>=100,progress:s=>[s.totalStars,100],badge:'star'},
+  {id:'perfection',icon:'◆',name:'3-STAR ACHIEVER',desc:'Earn 3 stars on a level.',reward:1500,test:s=>s.threeStarLevels>=1,progress:s=>[s.threeStarLevels,1],chain:'three_star_addiction'},
+  {id:'three_star_addiction',icon:'◆',name:'3-STAR ADDICTION',desc:'Earn 3 stars on a level 5 times.',reward:5000,test:s=>s.threeStarLevels>=5,progress:s=>[s.threeStarLevels,5],chain:'three_star_obsession'},
+  {id:'three_star_obsession',icon:'◆',name:'3-STAR OBSESSION',desc:'Earn 3 stars on a level 15 times.',reward:10000,test:s=>s.threeStarLevels>=15,progress:s=>[s.threeStarLevels,15],badge:'perfection'},
+  {id:'streak_beginner',icon:'⚡',name:'STREAK BEGINNER',desc:'Reach a streak of 5 consecutive correct answers.',reward:1250,test:s=>s.bestStreak>=5,progress:s=>[s.bestStreak,5],chain:'streak_apprentice'},
+  {id:'streak_apprentice',icon:'⚡',name:'STREAK APPRENTICE',desc:'Reach a streak of 10 consecutive correct answers.',reward:2500,test:s=>s.bestStreak>=10,progress:s=>[s.bestStreak,10],chain:'streak_master'},
+  {id:'streak_master',icon:'⚡',name:'STREAK MASTER',desc:'Reach a streak of 20 consecutive correct answers.',reward:5000,test:s=>s.bestStreak>=20,progress:s=>[s.bestStreak,20],badge:'streak'},
+
+  {id:'wild_scholar',icon:'🐾',name:'WILD SCHOLAR',desc:'Complete 5 ANIMALS levels.',reward:1000,test:s=>(s.completedByCampaign.animals||0)>=5,progress:s=>[s.completedByCampaign.animals||0,5],chain:'wild_professor'},
+  {id:'wild_professor',icon:'🐾',name:'WILD PROFESSOR',desc:'Complete the ANIMALS campaign.',reward:2500,test:s=>(s.campaignWinsCount.animals||0)>=1,progress:s=>[(s.campaignWinsCount.animals||0),1],chain:'wild_sage'},
+  {id:'wild_sage',icon:'🐾',name:'WILD SAGE',desc:'Complete the ANIMALS campaign 5 times.',reward:5000,test:s=>(s.campaignWinsCount.animals||0)>=5,progress:s=>[(s.campaignWinsCount.animals||0),5],badge:'zoologist'},
+  {id:'world_traveler',icon:'🧳',name:'TRAVELER',desc:'Complete 5 FOOD levels.',reward:2000,test:s=>(s.completedByCampaign.food||0)>=5,progress:s=>[s.completedByCampaign.food||0,5],chain:'explorer'},
+  {id:'explorer',icon:'🧳',name:'EXPLORER',desc:'Complete the FOOD campaign.',reward:2500,test:s=>(s.campaignWinsCount.food||0)>=1,progress:s=>[(s.campaignWinsCount.food||0),1],chain:'adventurer'},
+  {id:'adventurer',icon:'🧳',name:'ADVENTURER',desc:'Complete the FOOD campaign 3 times.',reward:5000,test:s=>(s.campaignWinsCount.food||0)>=3,progress:s=>[(s.campaignWinsCount.food||0),3],badge:'adventurer'},
+  {id:'campaign_conqueror',icon:'♛',name:'CONQUEROR',desc:'Complete an entire campaign.',reward:5000,test:s=>s.completedCampaigns>=1,progress:s=>[s.completedCampaigns,1],chain:'champion'},
+  {id:'champion',icon:'♛',name:'CHAMPION',desc:'Complete 3 campaigns.',reward:10000,test:s=>s.totalCampaignCompletions>=3,progress:s=>[s.totalCampaignCompletions,3],chain:'emperor'},
+  {id:'emperor',icon:'♛',name:'EMPEROR',desc:'Complete 10 campaigns.',reward:15000,test:s=>s.totalCampaignCompletions>=10,progress:s=>[s.totalCampaignCompletions,10],badge:'conquest'},
+  {id:'rising_star',icon:'✶',name:'RISING STAR',desc:'Accumulate a total score of 10,000.',reward:1500,test:s=>s.score>=10000,progress:s=>[Math.min(s.score,10000),10000],chain:'score_baron'},
+  {id:'score_baron',icon:'✶',name:'SCORE BARON',desc:'Accumulate a total score of 50,000.',reward:3000,test:s=>s.score>=50000,progress:s=>[Math.min(s.score,50000),50000],chain:'word_overlord_score'},
+  {id:'word_overlord_score',icon:'♚',name:'WORD OVERLORD',desc:'Accumulate a total score of 100,000.',reward:8000,test:s=>s.score>=100000,progress:s=>[Math.min(s.score,100000),100000],badge:'overlord'},
+  {id:'persistent',icon:'◈',name:'PERSISTENT',desc:'Complete 10 runs.',reward:2000,test:s=>s.runsCompleted>=10,progress:s=>[s.runsCompleted,10]},
+  {id:'answer_machine',icon:'◈',name:'ANSWER MACHINE',desc:'Give 100 correct answers.',reward:1500,test:s=>s.totalCorrect>=100,progress:s=>[s.totalCorrect,100],chain:'quiz_master'},
+  {id:'quiz_master',icon:'◈',name:'QUIZ MASTER',desc:'Give 250 correct answers.',reward:5000,test:s=>s.totalCorrect>=250,progress:s=>[s.totalCorrect,250],chain:'trivia_legend'},
+  {id:'trivia_legend',icon:'◈',name:'TRIVIA LEGEND',desc:'Give 500 correct answers.',reward:10000,test:s=>s.totalCorrect>=500,progress:s=>[s.totalCorrect,500],badge:'quizmaster'},
+  {id:'iron_guard',icon:'◉',name:'IRON GUARD',desc:'Complete a level without losing a life.',reward:1500,test:s=>s.lifePerfectLevels>=1,progress:s=>[s.lifePerfectLevels,1],chain:'steel_guardian'},
+  {id:'steel_guardian',icon:'◉',name:'STEEL GUARDIAN',desc:'Complete 5 levels without losing a life.',reward:10000,test:s=>s.lifePerfectLevels>=5,progress:s=>[s.lifePerfectLevels,5],chain:'sentinel'},
+  {id:'sentinel',icon:'◉',name:'SENTINEL',desc:'Complete 10 levels without losing a life.',reward:15000,test:s=>s.lifePerfectLevels>=10,progress:s=>[s.lifePerfectLevels,10],badge:'sentinel'},
+  {id:'joker_free',icon:'◉',name:'JOKER FREE',desc:'Complete a level without using any jokers.',reward:1500,test:s=>s.jokerFreeLevels>=1,progress:s=>[s.jokerFreeLevels,1],chain:'really_hate_jokers'},
+  {id:'really_hate_jokers',icon:'◉',name:'REALLY HATE JOKERS',desc:'Complete 5 levels without using any jokers.',reward:5000,test:s=>s.jokerFreeLevels>=5,progress:s=>[s.jokerFreeLevels,5],chain:'joker_hater'},
+  {id:'joker_hater',icon:'◉',name:'JOKER HATER',desc:'Complete 15 levels without using any jokers.',reward:10000,test:s=>s.jokerFreeLevels>=15,progress:s=>[s.jokerFreeLevels,15],badge:'nojoker'},
+];
+const SP_ACHIEVEMENT_GROUPS=[
+  {id:'milestones',icon:'⚔',label:'MILESTONES',ids:['first_step','next_step','final_step']},
+  {id:'star_collection',icon:'★',label:'STAR COLLECTION',ids:['star_student','star_lord','star_overlord','perfection','three_star_addiction','three_star_obsession']},
+  {id:'streak',icon:'⚡',label:'STREAK MASTER',ids:['streak_beginner','streak_apprentice','streak_master']},
+  {id:'campaign_master',icon:'♛',label:'CAMPAIGN MASTER',ids:['campaign_conqueror','champion','emperor','wild_scholar','wild_professor','wild_sage','world_traveler','explorer','adventurer']},
+  {id:'score_hunter',icon:'✶',label:'SCORE HUNTER',ids:['rising_star','score_baron','word_overlord_score']},
+  {id:'dedication',icon:'◈',label:'DEDICATION',ids:['persistent','answer_machine','quiz_master','trivia_legend']},
+  {id:'perfect_run',icon:'◉',label:'PERFECT RUN',ids:['iron_guard','steel_guardian','sentinel','joker_free','really_hate_jokers','joker_hater']},
+];
+let spAchReturn='campaigns', spAchGroup=null, spNewlyRevealedId=null, _spAchDirty=false;
+
+function spAchievementStats(){
+  const allCD=spSave.campaignData||{};
+  const allStars=Object.values(allCD).flatMap(cd=>Object.values(cd.stars||{}));
+  const totalStars=allStars.reduce((a,b)=>a+(Number(b)||0),0);
+  const threeStarLevels=allStars.filter(x=>Number(x)>=3).length;
+  const completedByCampaign={};
+  (window.SP_CAMPAIGNS||[]).forEach(c=>{completedByCampaign[c.id]=Object.keys(spGetCD(c.id).stars||{}).length;});
+  const completedLevels=Object.values(completedByCampaign).reduce((a,b)=>a+b,0);
+  const completedCampaigns=(window.SP_CAMPAIGNS||[]).filter(c=>{
+    const cd=spGetCD(c.id);return c.levels&&c.levels.every((_,i)=>(cd.stars[i]||0)>=1);
+  }).length;
+  const s=spSave.stats||{};
+  const cwc=s.campaignWinsCount||{};
+  return{completedByCampaign,completedLevels,completedCampaigns,totalCampaignCompletions:Object.values(cwc).reduce((a,b)=>a+b,0),totalStars,threeStarLevels,bestStreak:Number(s.bestStreak)||0,lifePerfectLevels:Number(s.lifePerfectLevels)||0,jokerFreeLevels:Number(s.jokerFreeLevels)||0,runsCompleted:Number(s.runsCompleted)||0,totalCorrect:Number(s.totalCorrect)||0,campaignWinsCount:cwc,score:spPlayerScore()};
+}
+function spAchievementStatsFor(a){
+  const stats=spAchievementStats(),baseline=(spSave.chainStartStats||{})[a.id];
+  if(!baseline) return stats;
+  const adj={...stats};
+  for(let k in baseline){if(typeof adj[k]==='number'&&typeof baseline[k]==='number')adj[k]=Math.max(0,adj[k]-baseline[k]);}
+  return adj;
+}
+function spIsVisible(a){const pred=SP_ACHIEVEMENTS.find(x=>x.chain===a.id);return!pred||(spSave.claimedAchievements||[]).includes(pred.id);}
+function spUnlockAchievements(){
+  const prev=new Set(spSave.unlockedAchievements||[]),claimed=new Set(spSave.claimedAchievements||[]),unlocked=new Set(prev);
+  SP_ACHIEVEMENTS.forEach(a=>{if(spIsVisible(a)&&a.test(spAchievementStatsFor(a)))unlocked.add(a.id);});
+  spSave.unlockedAchievements=[...unlocked];
+  [...unlocked].filter(id=>!prev.has(id)&&!claimed.has(id)).forEach((id,i)=>{
+    const a=SP_ACHIEVEMENTS.find(x=>x.id===id);
+    if(a) setTimeout(()=>showToast(`🏆 ${a.name} · READY TO CLAIM`,3500),i*600);
+  });
+}
+function spRenderAchievementGrid(){
+  const rid=spNewlyRevealedId; spNewlyRevealedId=null;
+  const g=SP_ACHIEVEMENT_GROUPS.find(x=>x.id===spAchGroup),ids=new Set(g?.ids||[]);
+  const unlocked=new Set(spSave.unlockedAchievements||[]),claimed=new Set(spSave.claimedAchievements||[]);
+  document.getElementById('sp-ach-tabs').innerHTML=SP_ACHIEVEMENT_GROUPS.map(x=>{
+    const _hn=x.ids.some(id=>unlocked.has(id)&&!claimed.has(id));
+    return`<button class="wo-ach-tab${spAchGroup===x.id?' active':''}" onclick="spFilterAchievements('${x.id}')">${_hn?'<span class="wo-ach-tab-new">NEW</span>':''}${x.icon} ${x.label}</button>`;
+  }).join('');
+  document.getElementById('sp-ach-grid').innerHTML=SP_ACHIEVEMENTS.filter(a=>ids.has(a.id)).map(a=>{
+    const ready=unlocked.has(a.id),done=claimed.has(a.id),visible=spIsVisible(a);
+    const _as=spAchievementStatsFor(a),[value,target]=a.progress(_as);
+    const pct=ready?100:!visible?0:Math.min(100,Math.round(value/target*100));
+    const isNew=a.id===rid,stateClass=done?'claimed':ready?'unlocked':visible?'in-progress':'prereq-locked';
+    return`<article data-id="${a.id}" class="wo-achievement ${stateClass}${isNew?' wo-achievement-new':''}"><div class="wo-achievement-icon">${a.icon}</div><div class="wo-achievement-copy"><h3>${a.name}</h3><p>${a.desc}</p><div class="wo-achievement-progress"><i style="width:${pct}%"></i></div><small>${ready?target:Math.min(value,target)}/${target}</small></div><div class="wo-achievement-reward"><strong>+${a.reward}</strong><span>SCORE</span>${done?'<button disabled>CLAIMED ✓</button>':ready?`<button onclick="spClaimAchievement('${a.id}')">CLAIM</button>`:visible?'<button disabled>IN PROGRESS</button>':'<button disabled>LOCKED</button>'}</div></article>`;
+  }).join('');
+}
+function spFilterAchievements(id){spAchGroup=id;spRenderAchievementGrid();}
+function spAchievements(from='campaigns'){
+  spAchReturn=from;
+  if(!spAchGroup) spAchGroup=SP_ACHIEVEMENT_GROUPS[0].id;
+  spUnlockAchievements();spStore();
+  document.getElementById('sp-achievements-score').textContent=spPlayerScore();
+  spRenderAchievementGrid();
+  spShow('sp-achievements');
+}
+function spCloseAchievements(){
+  _spAchDirty=false;
+  if(spAchReturn==='profile') spProfile();
+  else if(spAchReturn==='levels') spShowLevels();
+  else spShowCampaigns();
+}
+function spClaimAchievement(id){
+  spUnlockAchievements();
+  const a=SP_ACHIEVEMENTS.find(x=>x.id===id);
+  if(!a||(spSave.claimedAchievements||[]).includes(id)||!(spSave.unlockedAchievements||[]).includes(id)) return;
+  spSave.claimedAchievements=[...(spSave.claimedAchievements||[]),id];
+  spSave.achievementScore=(Number(spSave.achievementScore)||0)+a.reward;
+  _spAchDirty=true;
+  spCheckRankUp();
+  if(a.chain){
+    spSave.chainStartStats=spSave.chainStartStats||{};
+    spSave.chainStartStats[a.chain]=spAchievementStats();
+    spNewlyRevealedId=a.chain;
+  }
+  spStore();
+  _playFx('sounds/correct.wav',0.7);
+  showToast(`ACHIEVEMENT CLAIMED · +${a.reward} SCORE`,1800);
+  if(a.badge) spShowBadgeReveal(a); else spAchievements(spAchReturn);
+}
+function spShowBadgeReveal(a){document.getElementById('sp-badge-reveal-img').src=SP_WO_BASE+'badges/'+a.badge+'.webp';document.getElementById('sp-badge-reveal').classList.add('open');}
+function spCloseBadgeReveal(){document.getElementById('sp-badge-reveal').classList.remove('open');spAchievements(spAchReturn);}
+function spEarnedBadges(){
+  const claimed=spSave.claimedAchievements||[];
+  const earned=SP_ACHIEVEMENTS.filter(a=>a.badge&&claimed.includes(a.id));
+  document.getElementById('sp-badges-grid').innerHTML=earned.length
+    ?earned.map(a=>`<div class="wo-badge-item"><img src="${SP_WO_BASE}badges/${a.badge}.webp" alt="${a.name}"><span>${a.name}</span></div>`).join('')
+    :'<div class="wo-badges-empty">NO BADGES YET</div>';
+  spShow('sp-badges');
+}
+
+// ── RANK SİSTEMİ (WO bire bir kopya) ──
+const SP_RANKS=[
+  {name:'SECOND LIEUTENANT', tr:'Asteğmen',  min:0,       img:'second_lieutenant'},
+  {name:'LIEUTENANT',        tr:'Teğmen',     min:10000,   img:'lieutenant'},
+  {name:'FIRST LIEUTENANT',  tr:'Üsteğmen',   min:30000,   img:'firstlieutenant'},
+  {name:'CAPTAIN',           tr:'Yüzbaşı',    min:80000,   img:'captain'},
+  {name:'MAJOR',             tr:'Binbaşı',    min:160000,  img:'major'},
+  {name:'LIEUTENANT COLONEL',tr:'Yarbay',     min:290000,  img:'lieutenant_colonel'},
+  {name:'COLONEL',           tr:'Albay',      min:450000,  img:'colonel'},
+  {name:'BRIGADIER GENERAL', tr:'Tuğgeneral', min:630000,  img:'lieutenant_general'},
+  {name:'MAJOR GENERAL',     tr:'Tümgeneral', min:830000,  img:'major_general'},
+  {name:'LIEUTENANT GENERAL',tr:'Korgeneral', min:1100000, img:'full_general'},
+  {name:'FULL GENERAL',      tr:'Orgeneral',  min:1500000, img:'marshall'},
+];
+function spGetRank(score){return SP_RANKS.reduce((r,x)=>score>=x.min?x:r,SP_RANKS[0]);}
+function spCheckRankUp(){
+  const score=spPlayerScore(),newIdx=SP_RANKS.reduce((idx,r,i)=>score>=r.min?i:idx,0),prevIdx=spSave.rank??0;
+  if(newIdx>prevIdx){spSave.rank=newIdx;spSave.pendingRankUp=true;spStore();showToast(`⭐ NEW RANK : ${SP_RANKS[newIdx].name}`,3500);}
+}
+
+// ── PROFİL (WO profile() bire bir kopya) ──
+function spProfile(){
+  if(!spSave.profile){spShowCharCreate();return;}
+  spCheckRankUp();spSave.pendingRankUp=false;spStore();
+  const _r=spGetRank(spPlayerScore());
+  const _ri=document.getElementById('sp-rank-img'),_rn=document.getElementById('sp-rank-name');
+  if(_ri) _ri.src=SP_WO_BASE+'ranks/'+_r.img+'.webp';
+  if(_rn){
+    const _ridx=SP_RANKS.indexOf(_r),_rnext=SP_RANKS[_ridx+1];
+    _rn.innerHTML=_r.name+(_r.tr?` <span style="font-size:.7em;opacity:.75">(${_r.tr})</span>`:'')+(_rnext?`<br><span style="font-size:.62em;opacity:.65;letter-spacing:.04em">(NEXT RANK AT ${_rnext.min.toLocaleString()})</span>`:'');
+  }
+  const img=document.getElementById('sp-profile-avatar');
+  if(img){img.src=spAv(spSave.profile.avatar);img.classList.toggle('wo-head-flip',spSave.profile.avatar==='Nova'||spSave.profile.avatar==='Terra');}
+  document.getElementById('sp-profile-name').textContent=spSave.profile.name;
+  document.getElementById('sp-profile-grade').textContent='WORD REVEAL · SINGLE PLAYER';
+  document.getElementById('sp-profile-score').textContent=spPlayerScore();
+  const completedCamps=(window.SP_CAMPAIGNS||[]).filter(c=>{
+    const cd=spGetCD(c.id);return c.levels&&c.levels.every((_,i)=>(cd.stars[i]||0)>=1);
+  }).length;
+  document.getElementById('sp-profile-campaigns').textContent=completedCamps;
+  const earnedBadges=(spSave.claimedAchievements||[]).filter(id=>SP_ACHIEVEMENTS.find(a=>a.id===id&&a.badge)).length;
+  document.getElementById('sp-profile-achievements').textContent=`${earnedBadges}/${SP_ACHIEVEMENTS.filter(a=>a.badge).length}`;
+  const s=spSave.stats||{};
+  const allStars=Object.values(spSave.campaignData||{}).flatMap(cd=>Object.values(cd.stars||{}));
+  const totalStars=allStars.reduce((a,b)=>a+(Number(b)||0),0);
+  const threeStarLevels=allStars.filter(x=>Number(x)>=3).length;
+  const completedLevels=Object.values(spSave.campaignData||{}).reduce((a,cd)=>a+Object.keys(cd.stars||{}).length,0);
+  const items=[
+    ['BEST STREAK',s.bestStreak||0],['TOTAL STARS',totalStars],
+    ['LEVELS COMPLETED',completedLevels],['3-STAR LEVELS',threeStarLevels],
+    ['RUNS COMPLETED',s.runsCompleted||0],['CORRECT ANSWERS',s.totalCorrect||0],
+    ['WRONG ANSWERS',s.totalWrong||0],['PERFECT LIFE LEVELS',s.lifePerfectLevels||0],
+  ];
+  document.getElementById('sp-profile-stats').innerHTML=items.map(([label,value])=>`<div><strong>${value}</strong><span>${label}</span></div>`).join('');
+  spShow('sp-profile');
+}
+
+function spCompletedCampaigns(){
+  const camps=(window.SP_CAMPAIGNS||[]).filter(c=>{
+    const cd=spGetCD(c.id);return c.levels&&c.levels.every((_,i)=>(cd.stars[i]||0)>=1);
+  });
+  document.getElementById('sp-completed-grid').innerHTML=camps.length
+    ?camps.map(c=>`<article class="wo-completed-card"><span>${c.name}</span></article>`).join('')
+    :'<div class="wo-completed-empty">NO CAMPAIGNS COMPLETED YET</div>';
+  spShow('sp-completed-campaigns');
+}
+
+// ── FIREBASE LEADERBOARD ──────────────────────────────────────────────────
+const _SP_FB_URL='https://word-overlord-default-rtdb.europe-west1.firebasedatabase.app';
+
+function _spGenUUID(){return'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&0x3|0x8)).toString(16)});}
+
+function _spEnsureUUID(){
+  if(!spSave.uuid){spSave.uuid=_spGenUUID();spStore();}
+  return spSave.uuid;
+}
+
+function _spSubmitScore(){
+  if(!spSave.profile||!spSave.uuid) return;
+  fetch(_SP_FB_URL+'/scores/word_reveal/'+spSave.uuid+'.json',{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:spSave.profile.name,score:spPlayerScore(),updatedAt:Date.now()})
+  }).catch(()=>{});
+}
+
+let _spLbReturn='menu';
+async function spLeaderboard(from='menu'){
+  _spLbReturn=from;
+  _spEnsureUUID();
+  spShow('sp-leaderboard');
+  const lb=document.getElementById('sp-lb-list');
+  lb.innerHTML='<div class="wo-lb-loading">LOADING...</div>';
+  try{
+    const res=await fetch(_SP_FB_URL+'/scores/word_reveal.json');
+    const data=await res.json();
+    if(!data){lb.innerHTML='<div class="wo-lb-empty">NO SCORES YET — BE THE FIRST!</div>';return;}
+    const entries=Object.entries(data)
+      .map(([uid,v])=>({uid,name:v.name,score:v.score}))
+      .filter(e=>e.name&&typeof e.score==='number')
+      .sort((a,b)=>b.score-a.score);
+    const myUid=spSave.uuid;
+    const myIdx=entries.findIndex(e=>e.uid===myUid);
+    const myRankEl=document.getElementById('sp-lb-myrank');
+    if(myRankEl) myRankEl.textContent=myIdx>=0?`YOUR RANK: #${myIdx+1} OF ${entries.length}`:'NOT ON BOARD YET';
+    lb.innerHTML=entries.slice(0,50).map((e,i)=>{
+      const rk=spGetRank(e.score);
+      const isMe=e.uid===myUid;
+      return`<div class="wo-lb-row${isMe?' wo-lb-me':''}"><span class="wo-lb-num">#${i+1}</span><span class="wo-lb-name">${e.name}</span><span class="wo-lb-rnk">${rk.name}</span><span class="wo-lb-score">${e.score.toLocaleString()}</span></div>`;
+    }).join('');
+  }catch(err){lb.innerHTML='<div class="wo-lb-error">⚠ CONNECTION ERROR</div>';}
+}
+
+function spLeaderboardBack(){
+  if(_spLbReturn==='result') spShow('sp-result');
+  else if(_spLbReturn==='profile') spProfile();
+  else if(_spLbReturn==='campaigns') spShowCampaigns();
+  else spBackToMenu();
+}
+
+spSave=spLoad();
+if(!spSave.uuid){spSave.uuid=_spGenUUID();spStore();}
+</script>
+</body>
+</html>
