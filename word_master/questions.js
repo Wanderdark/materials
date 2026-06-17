@@ -1512,10 +1512,10 @@ const QUESTIONS = [
   ["Climbing up steep rock faces using hands and feet.","El ve ayak kullanarak dik kaya yüzlerine tırmanmak.","ROCK CLIMBING",0,3,14,"../images/8/6/20.webp",["CLIMBING"]],
   ["Riding a board with wheels on streets and ramps.","Sokaklarda ve rampada tekerlekli tahta üzerinde sürüş.","SKATEBOARDING",0,3,14,"../images/8/6/21.webp"],
   ['Moving through water using your arms and legs', 'Kollarınızı ve bacaklarınızı kullanarak suda hareket etme', 'SWIMMING',0,1,14, '../images/sp/14/5.webp', []],
-  ['Moving fast on foot in a race', 'Bir yarışta ayakla hızlı hareket etme', 'RUNNING',0,1,14, '../images/sp/14/6.webp', [JOGGING]],
-  ['Riding a two-wheeled vehicle', 'İki tekerlekli bir araç sürme', 'CYCLING',0,1,14, '../images/sp/14/7.webp', [RIDE BIKE]],
+  ['Moving fast on foot in a race', 'Bir yarışta ayakla hızlı hareket etme', 'RUNNING',0,1,14, '../images/sp/14/6.webp', ['JOGGING']],
+  ['Riding a two-wheeled vehicle', 'İki tekerlekli bir araç sürme', 'CYCLING',0,1,14, '../images/sp/14/7.webp', ['RIDE BIKE']],
   ['Tennis played on a small table with a small bat', 'Küçük bir masada ve küçük bir raketle oynanan tenis', 'TABLE TENNIS',0,2,14,'../images/sp/14/10.webp', ['PING PONG']],
- ['A sport where you lift heavy weights', 'Ağırlıkların kaldırıldığı bir spor', 'WEIGHTLIFTING',0,2,14, '../images/sp/14/13.webp', [LIFT WEIGHTS]],
+  ['A sport where you lift heavy weights', 'Ağırlıkların kaldırıldığı bir spor', 'WEIGHTLIFTING',0,2,14, '../images/sp/14/13.webp', ['LIFT WEIGHTS']],
  ['A sport played on ice or grass with a stick and puck', 'Bir sopa ve disk ile buzda veya çimde oynanan spor', 'HOCKEY',0,3,14, '../images/sp/14/19.webp', ['ICE HOCKEY']],
 
 

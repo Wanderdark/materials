@@ -44,7 +44,7 @@ const SP_WORDS = [
   // NOT: 0/11/ klasöründe 4.webp ve 14.webp yoktur — diğerleri atlayarak devam eder.
   ['A large bird of prey', 'Büyük bir yırtıcı kuş', 'EAGLE', 1, 11, '../images/0/11/1.webp', []],
   ['The largest land animal', 'Karadaki en büyük hayvan', 'ELEPHANT', 1, 11, '../images/0/11/2.webp', []],
-  ['A reptile with no legs', 'Yılan', 'Bacağı olmayan bir sürüngen', 1, 11, '../images/0/11/3.webp', []],
+  ['A reptile with no legs', 'Yılan', 'SNAKE', 1, 11, '../images/0/11/3.webp', []],
   ['The tallest animal', 'En uzun boylu hayvan', 'GIRAFFE', 1, 11, '../images/0/11/5.webp', []],
   ['A colourful talking bird', 'Renkli ve konuşabilen bir kuş', 'PARROT', 1, 11, '../images/0/11/6.webp', []],
   ['The king of the jungle', 'Ormanların kralı', 'LION', 1, 11, '../images/0/11/7.webp', []],

@@ -996,7 +996,7 @@ const ToastManager = (() => {
 })();
 
 // Eski showToast çağrılarıyla uyumlu imza: (msg, type, dur)
-ToastManager.init({ top: '80px', duration: 2200 });
+ToastManager.init({ top: '80px', duration: 10000 });
 function showToast(msg, type, dur) { ToastManager.show(msg, type, dur); }
 
 // ── CATEGORY HINT ──
@@ -1063,7 +1063,7 @@ function spDoNewGame() {
 function startGame() {
   pool=buildPool();
   usedIndices.clear();
-  if(!pool.length) { showToast('⚠ Havuzda soru yok! Ayarlara gidin.','warn',3500); document.getElementById('main-menu').style.display='flex'; return; }
+  if(!pool.length) { showToast('⚠ Havuzda soru yok! Ayarlara gidin.','warn'); document.getElementById('main-menu').style.display='flex'; return; }
   wordsDone=0; totalScore=0; _streak=0; _gameHistory=[];
   _jokerCount=2;
   _clickLog=[]; _spamLocked=false;
@@ -2142,7 +2142,7 @@ function spUnlockAchievements(){
   spSave.unlockedAchievements=[...unlocked];
   [...unlocked].filter(id=>!prev.has(id)&&!claimed.has(id)).forEach((id,i)=>{
     const a=SP_ACHIEVEMENTS.find(x=>x.id===id);
-    if(a) setTimeout(()=>showToast(`🏆 ${a.name} · READY TO CLAIM`,3500),i*600);
+    if(a) setTimeout(()=>showToast(`🏆 ${a.name} · READY TO CLAIM`),i*600);
   });
 }
 function spRenderAchievementGrid(){
@@ -2171,7 +2171,8 @@ function spAchievements(from='campaigns'){
   spShow('sp-achievements');
 }
 function spCloseAchievements(){
-  _spAchDirty=false;
+  if(_spAchDirty){_spAchDirty=false;_spEnsureUUID();_spSubmitScore();}
+  else{_spAchDirty=false;}
   if(spAchReturn==='profile') spProfile();
   else if(spAchReturn==='levels') spShowLevels();
   else spShowCampaigns();
@@ -2190,9 +2191,9 @@ function spClaimAchievement(id){
     spNewlyRevealedId=a.chain;
   }
   spStore();
-  _playFx('sounds/correct.wav',0.7);
-  showToast(`ACHIEVEMENT CLAIMED · +${a.reward} SCORE`,1800);
-  if(a.badge) spShowBadgeReveal(a); else spAchievements(spAchReturn);
+  try{const _sa=new Audio('sounds/star.mp3');_sa.volume=0.8;_sa.play().catch(()=>{});}catch(e){}
+  showToast(`ACHIEVEMENT CLAIMED · +${a.reward} SCORE`);
+  spAchievements(spAchReturn);
 }
 function spShowBadgeReveal(a){document.getElementById('sp-badge-reveal-img').src=SP_WO_BASE+'badges/'+a.badge+'.webp';document.getElementById('sp-badge-reveal').classList.add('open');}
 function spCloseBadgeReveal(){document.getElementById('sp-badge-reveal').classList.remove('open');spAchievements(spAchReturn);}
@@ -2222,7 +2223,7 @@ const SP_RANKS=[
 function spGetRank(score){return SP_RANKS.reduce((r,x)=>score>=x.min?x:r,SP_RANKS[0]);}
 function spCheckRankUp(){
   const score=spPlayerScore(),newIdx=SP_RANKS.reduce((idx,r,i)=>score>=r.min?i:idx,0),prevIdx=spSave.rank??0;
-  if(newIdx>prevIdx){spSave.rank=newIdx;spSave.pendingRankUp=true;spStore();showToast(`⭐ NEW RANK : ${SP_RANKS[newIdx].name}`,3500);}
+  if(newIdx>prevIdx){spSave.rank=newIdx;spSave.pendingRankUp=true;spStore();showToast(`⭐ NEW RANK : ${SP_RANKS[newIdx].name}`);}
 }
 
 // ── PROFİL (WO profile() bire bir kopya) ──
