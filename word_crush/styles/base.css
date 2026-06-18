@@ -1,0 +1,1708 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(8, 10, 18, 0.52), rgba(12, 8, 8, 0.66)),
+    url("../images/background.webp") center / cover no-repeat fixed,
+    #151515;
+  color: #f9fafb;
+  font-family: "Barlow", Arial, sans-serif;
+  user-select: none;
+}
+
+button {
+  font: inherit;
+}
+
+#app {
+  min-height: 100%;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+}
+
+.screen.open {
+  display: flex;
+}
+
+.primary-btn,
+.secondary-btn,
+.hud-action,
+.hud-icon {
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.primary-btn {
+  min-width: 180px;
+  padding: 15px 36px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #22c55e, #15803d);
+  box-shadow: 0 8px 0 #064e3b, 0 18px 36px rgba(0, 0, 0, 0.32);
+}
+
+.secondary-btn {
+  min-width: 160px;
+  padding: 13px 30px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #475569, #1f2937);
+  box-shadow: 0 7px 0 #111827;
+}
+
+.secondary-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.hud-action:active,
+.hud-icon:active {
+  transform: translateY(3px);
+}
+
+.result-shell {
+  width: min(720px, calc(100vw - 32px));
+  margin: auto;
+  padding: 42px 30px;
+  border: 3px solid #d6b36a;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(37, 22, 15, 0.96), rgba(18, 13, 11, 0.98));
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08), 0 24px 70px rgba(0, 0, 0, 0.48);
+  text-align: center;
+}
+
+.result-shell h2 {
+  margin: 0;
+  color: #f8d874;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(58px, 9vw, 118px);
+  letter-spacing: 0.08em;
+  line-height: 0.92;
+  text-shadow: 0 5px 0 #3b1b0f, 0 0 32px rgba(248, 216, 116, 0.28);
+}
+
+#menu-screen,
+#hub-screen {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 34px);
+}
+
+.main-menu-controls {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+}
+
+.main-menu-controls #menu-lite-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 36px;
+  border: 1.5px solid rgba(124, 58, 237, 0.8);
+  border-radius: 8px;
+  background: rgba(5, 14, 44, 0.82);
+  color: #c4b5fd;
+  cursor: pointer;
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.main-menu-controls #menu-lite-btn.active {
+  color: #f87171;
+}
+
+.main-menu-shell {
+  width: min(760px, calc(100vw - 32px));
+  margin: auto;
+  padding: clamp(34px, 5vw, 58px) clamp(24px, 5vw, 54px);
+  border: 3px solid #d6b36a;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(37, 22, 15, 0.96), rgba(18, 13, 11, 0.98));
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08), 0 24px 70px rgba(0, 0, 0, 0.48);
+  text-align: center;
+}
+
+.menu-logo {
+  max-height: clamp(80px, 14vw, 160px);
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.main-menu-shell h1 {
+  margin: 0 0 30px;
+  color: #f8d874;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(64px, 10vw, 132px);
+  letter-spacing: 0.08em;
+  line-height: 0.9;
+  text-shadow: 0 5px 0 #3b1b0f, 0 0 32px rgba(248, 216, 116, 0.28);
+}
+
+.main-menu-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  justify-items: center;
+}
+
+.menu-hub {
+  position: relative;
+  width: min(1380px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 34px);
+  padding-bottom: clamp(46px, 6vh, 72px);
+}
+
+.menu-hub-head {
+  text-align: center;
+}
+
+.hub-logo {
+  max-height: clamp(72px, 10vw, 140px);
+  width: auto;
+  object-fit: contain;
+}
+
+.menu-hub-head h1 {
+  margin: 0;
+  color: #f8d874;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(58px, 8.4vw, 128px);
+  letter-spacing: 0.08em;
+  line-height: 0.88;
+  text-shadow: 0 5px 0 #3b1b0f, 0 0 32px rgba(248, 216, 116, 0.28);
+}
+
+.menu-hub-head p {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mode-chart-row {
+  --chart-gap: clamp(6px, 0.8vw, 12px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--chart-gap);
+  align-items: stretch;
+}
+
+.mode-chart {
+  position: relative;
+  flex: 0 0 calc((100% - (3 * var(--chart-gap))) / 4);
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+  color: #f8d874;
+  cursor: pointer;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.mode-chart::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: url("../images/border.webp") center / 100% 100% no-repeat;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.38));
+}
+
+.mode-chart:hover:not(.disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-5px);
+}
+
+.mode-chart:active:not(.disabled) {
+  transform: translateY(-2px);
+}
+
+.mode-chart img {
+  position: absolute;
+  top: 10%;
+  right: 10.5%;
+  bottom: 11.5%;
+  left: 10.5%;
+  z-index: 1;
+  width: 79%;
+  height: 78.5%;
+  object-fit: cover;
+  background: #050505;
+}
+
+.profile-chart-score {
+  position: absolute;
+  top: 42%;
+  left: 37%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  color: #1a0e00;
+  font: 800 clamp(10px, 1.4vw, 18px) "Barlow Condensed", sans-serif;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+#profile-btn .profile-chart-avatar {
+  position: absolute;
+  top: 46%;
+  left: 59.2%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  background: transparent;
+  pointer-events: none;
+}
+
+.mode-chart span {
+  position: absolute;
+  top: 10%;
+  right: 10.5%;
+  bottom: 11.5%;
+  left: 10.5%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(12, 7, 4, 0.9), rgba(2, 2, 2, 0.96));
+  color: #f8d874;
+  font: clamp(22px, 2.1vw, 36px) "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-shadow: 0 3px 0 #1f1009, 0 0 18px rgba(0, 0, 0, 0.75);
+}
+
+.mode-chart img + span {
+  opacity: 0;
+}
+
+.mode-chart img:not([src]),
+.mode-chart img[src=""] {
+  display: none;
+}
+
+.mode-chart.disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.45) brightness(0.62);
+}
+
+.mode-chart.disabled::after {
+  content: "LOCKED";
+  position: absolute;
+  right: 11%;
+  bottom: 13%;
+  z-index: 3;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.42);
+  color: rgba(255, 255, 255, 0.78);
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.hub-main-menu-btn {
+  position: fixed;
+  left: clamp(200px, 21vw, 340px);
+  bottom: 24px;
+  z-index: 4;
+  width: clamp(280px, 24vw, 340px);
+  aspect-ratio: 3.1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 22px;
+  border: 0;
+  background: url("../images/blankpapyrus.webp") center / 100% 100% no-repeat;
+  color: #2b1405;
+  cursor: pointer;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.42));
+  transition: transform 0.14s ease, filter 0.14s ease;
+}
+
+.hub-main-menu-btn:hover {
+  transform: translateY(-3px) scale(1.025);
+  filter: brightness(1.08) drop-shadow(0 13px 18px rgba(0, 0, 0, 0.5));
+}
+
+.hub-main-menu-btn:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.hub-main-menu-btn span {
+  font: 34px/1 "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 0 rgba(255, 244, 190, 0.65);
+  white-space: nowrap;
+}
+
+.mode-chart[data-daily-progress]::after {
+  content: attr(data-daily-progress);
+  position: absolute;
+  right: 11%;
+  bottom: 13%;
+  z-index: 3;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.42);
+  color: rgba(255, 255, 255, 0.84);
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.mode-chart.daily-claimed {
+  filter: grayscale(0.45) brightness(0.74);
+}
+
+@media (max-width: 1080px) and (min-width: 721px) {
+  .mode-chart {
+    flex-basis: calc((100% - var(--chart-gap)) / 2);
+  }
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 8, 30, 0.82);
+  backdrop-filter: blur(10px);
+}
+
+.confirm-overlay.open {
+  display: flex;
+}
+
+.confirm-box {
+  width: min(460px, 94vw);
+  padding: 28px;
+  border: 1.5px solid rgba(255, 215, 0, 0.38);
+  border-radius: 14px;
+  background: rgba(3, 9, 35, 0.96);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+.confirm-box h2 {
+  margin: 0;
+  color: #ffd700;
+  font: 48px/1 "Bebas Neue", sans-serif;
+  letter-spacing: 0.1em;
+}
+
+.confirm-box p {
+  margin: 12px 0 22px;
+  color: rgba(255, 255, 255, 0.72);
+  font: 800 17px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.final-score {
+  margin: 10px 0;
+  color: #facc15;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: clamp(70px, 11vw, 140px);
+  line-height: 1;
+}
+
+.final-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 18px 0 26px;
+}
+
+.final-stats div {
+  padding: 13px;
+  border: 1px solid rgba(214, 179, 106, 0.36);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.final-stats strong {
+  display: block;
+  color: #fff;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  font-size: 36px;
+}
+
+.final-stats span {
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.wo-panel {
+  width: min(900px, 94vw);
+  margin: auto;
+  padding: 22px 24px;
+  border: 1px solid rgba(255, 215, 0, 0.28);
+  border-radius: 18px;
+  background: rgba(3, 9, 35, 0.94);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.wo-title {
+  color: #ffd700;
+  font-family: "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.09em;
+  text-align: center;
+  text-shadow: 0 0 24px rgba(255, 215, 0, 0.42);
+}
+
+.wo-new-title {
+  margin-bottom: 12px;
+  font-size: clamp(42px, 7vw, 64px);
+  line-height: 1;
+}
+
+.wo-new-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 38%) 1fr;
+  gap: 22px;
+  align-items: center;
+}
+
+.wo-avatar-preview {
+  height: min(46vh, 500px);
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 45%, rgba(59, 130, 246, 0.22), rgba(2, 6, 24, 0.12) 65%);
+}
+
+.wo-avatar-preview img {
+  height: calc(100% - 40px);
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.55));
+}
+
+.wo-avatar-preview div {
+  height: 40px;
+  color: #ffd700;
+  font: 26px "Bebas Neue", sans-serif;
+  letter-spacing: 0.15em;
+}
+
+.wo-profile-panel {
+  position: relative;
+  width: min(980px, 96vw);
+}
+
+.wo-rank-display {
+  position: absolute;
+  top: 55px;
+  right: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.wc-rank-img {
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+}
+
+.wo-rank-display span {
+  max-width: 135px;
+  color: #93c5fd;
+  font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.14em;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.wo-profile-hero {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  background: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.35), rgba(2, 6, 24, 0.15) 55%);
+}
+
+.wo-profile-hero img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #ffd700;
+  border-radius: 50%;
+  background: #020617;
+  box-shadow: 0 0 28px rgba(255, 215, 0, 0.22);
+}
+
+.profile-title {
+  font-size: 58px;
+  text-align: left;
+}
+
+.wo-profile-grade {
+  color: #93c5fd;
+  font: 800 14px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.16em;
+}
+
+.wo-profile-score-label {
+  margin-top: 12px;
+  color: #fde68a;
+  font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.18em;
+}
+
+.wo-profile-score {
+  color: #ffd700;
+  font: 55px/1 "Bebas Neue", sans-serif;
+}
+
+.wo-profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.wo-profile-stats div {
+  padding: 14px;
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  border-radius: 13px;
+  background: rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.wo-profile-stats strong {
+  display: block;
+  color: #fff;
+  font: 32px "Bebas Neue", sans-serif;
+}
+
+.wo-profile-stats span {
+  color: #93c5fd;
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.wo-profile-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.wo-profile-info {
+  position: relative;
+  padding: 14px 55px 14px 16px;
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 13px;
+  background: rgba(161, 98, 7, 0.17);
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.wo-profile-info.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.wo-profile-info span {
+  display: block;
+  color: #fde68a;
+  font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.13em;
+}
+
+.wo-profile-info strong {
+  color: #fff;
+  font: 30px "Bebas Neue", sans-serif;
+}
+
+.wo-profile-info b {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ffd700;
+  border-radius: 50%;
+  color: #ffd700;
+  font: 22px "Bebas Neue", sans-serif;
+}
+
+.wo-level-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.wo-level-action {
+  min-width: 160px;
+  padding: 11px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  font: 800 15px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.campaign-panel {
+  width: min(1180px, 96vw);
+}
+
+.campaign-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.campaign-title {
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 0.9;
+  text-align: left;
+}
+
+.campaign-subtitle {
+  color: #93c5fd;
+  font: 800 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.16em;
+}
+
+.campaign-level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.campaign-level-card {
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 16px 14px;
+  border: 1.5px solid rgba(255, 215, 0, 0.34);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(30, 58, 138, 0.35), rgba(2, 6, 24, 0.86));
+  color: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.14s ease, border-color 0.14s ease, filter 0.14s ease;
+}
+
+.campaign-level-card:hover:not(.locked) {
+  border-color: rgba(255, 215, 0, 0.82);
+  filter: brightness(1.08);
+  transform: translateY(-4px);
+}
+
+.campaign-level-card.completed {
+  border-color: rgba(74, 222, 128, 0.72);
+  background: linear-gradient(145deg, rgba(21, 128, 61, 0.5), rgba(2, 44, 34, 0.9));
+}
+
+.campaign-level-card.perfect {
+  border-color: rgba(255, 215, 0, 0.95);
+  box-shadow:
+    0 0 0 2px rgba(255, 215, 0, 0.28),
+    0 0 28px rgba(255, 215, 0, 0.58),
+    inset 0 0 20px rgba(255, 215, 0, 0.18);
+}
+
+.campaign-level-card.locked {
+  cursor: not-allowed;
+  filter: grayscale(0.45) brightness(0.55);
+}
+
+.campaign-level-card strong {
+  color: #ffd700;
+  font: 36px/1 "Bebas Neue", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.campaign-level-card span,
+.campaign-level-card small,
+.campaign-level-card b {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.campaign-level-card span {
+  color: #bfdbfe;
+  font-size: 15px;
+}
+
+.campaign-level-card small {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+}
+
+.campaign-level-card em {
+  color: #ffd700;
+  font-style: normal;
+  font-size: 23px;
+  letter-spacing: 0.04em;
+}
+
+.campaign-level-card b {
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 13px;
+}
+
+.daily-panel {
+  width: min(760px, 95vw);
+}
+
+.daily-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.daily-title {
+  font-size: clamp(42px, 6vw, 58px);
+  line-height: 0.95;
+  text-align: left;
+}
+
+.daily-subtitle {
+  color: #93c5fd;
+  font: 800 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.16em;
+}
+
+.daily-reward {
+  min-width: 118px;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 215, 0, 0.34);
+  border-radius: 10px;
+  background: rgba(2, 6, 24, 0.44);
+  text-align: center;
+}
+
+.daily-reward span {
+  display: block;
+  color: #bfdbfe;
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.16em;
+}
+
+.daily-reward strong {
+  color: #ffd700;
+  font: 38px/1 "Bebas Neue", sans-serif;
+}
+
+.daily-board {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.daily-row {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.3), rgba(0, 0, 0, 0.22));
+}
+
+.daily-row.easy {
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+.daily-row.medium {
+  border-color: rgba(250, 204, 21, 0.45);
+}
+
+.daily-row.hard {
+  border-color: rgba(248, 113, 113, 0.5);
+}
+
+.daily-row.done {
+  border-color: rgba(74, 222, 128, 0.8);
+  background: linear-gradient(135deg, rgba(22, 101, 52, 0.45), rgba(0, 0, 0, 0.24));
+}
+
+.daily-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: auto;
+  border: 2px solid rgba(147, 197, 253, 0.45);
+  border-radius: 12px;
+  background: rgba(2, 6, 24, 0.42);
+  color: transparent;
+  font: 34px/1 "Bebas Neue", sans-serif;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.22);
+}
+
+.daily-row.done .daily-check {
+  border-color: #86efac;
+  background: linear-gradient(135deg, #166534, #22c55e);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.35);
+}
+
+.daily-main strong {
+  color: #fff;
+  font: 24px "Bebas Neue", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.daily-main span {
+  display: block;
+  margin-top: 5px;
+  color: #bfdbfe;
+  font: 700 12px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.daily-progress {
+  height: 8px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.daily-progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #ffd700);
+}
+
+.daily-row.done .daily-progress i {
+  background: linear-gradient(90deg, #16a34a, #86efac);
+}
+
+#daily-claim-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.25);
+}
+
+#daily-claim-btn.countdown {
+  border-color: rgba(147, 197, 253, 0.35);
+  background: rgba(30, 58, 138, 0.25);
+  color: #bfdbfe;
+  filter: grayscale(0.25);
+}
+
+.wo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wo-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #93c5fd;
+  font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.wo-name-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(147, 197, 253, 0.28);
+  border-radius: 10px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.26);
+  color: #fff;
+  font: 800 22px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wo-avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(52px, 1fr));
+  gap: 7px;
+}
+
+.wo-avatar {
+  padding: 5px;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #dbeafe;
+  cursor: pointer;
+  font: 800 10px "Barlow Condensed", sans-serif;
+  text-align: center;
+}
+
+.wo-avatar img {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  object-fit: cover;
+  margin-bottom: 4px;
+  border-radius: 8px;
+}
+
+.wo-avatar.active {
+  border-color: #ffd700;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+}
+
+.wo-grade-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.wo-grade {
+  padding: 11px 10px;
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #dbeafe;
+  cursor: pointer;
+  font: 800 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.wo-grade.active {
+  border-color: #ffd700;
+  background: linear-gradient(135deg, rgba(180, 83, 9, 0.9), rgba(250, 204, 21, 0.32));
+  color: #fff;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.2);
+}
+
+.wo-head-flip {
+  transform: scaleX(-1);
+}
+
+.wo-warning,
+.sc-warn {
+  min-height: 17px;
+  color: #f87171;
+  font: 800 12px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.wo-choice-row {
+  display: flex;
+  gap: 10px;
+}
+
+.wo-btn {
+  flex: 1;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font: 800 16px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wo-btn.gold {
+  background: linear-gradient(180deg, #facc15, #b45309);
+  box-shadow: 0 6px 0 #713f12;
+}
+
+.wo-btn.ghost {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sc-modal {
+  width: min(96vw, 620px);
+  max-height: 90vh;
+  margin: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px 26px;
+  border: 1.5px solid rgba(255, 140, 0, 0.25);
+  border-radius: 18px;
+  background: rgba(3, 9, 35, 0.95);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.sc-title {
+  color: #ffd700;
+  font: clamp(30px, 5vw, 44px) "Bebas Neue", sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-shadow: 0 0 24px rgba(255, 140, 0, 0.5);
+}
+
+.sc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sc-section-head {
+  display: flex;
+  align-items: center;
+}
+
+.sc-section-label {
+  color: rgba(255, 255, 255, 0.62);
+  font: 800 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.sc-section-label span {
+  font-size: 0.75em;
+  opacity: 0.65;
+  letter-spacing: 0.05em;
+}
+
+.sc-class-grid,
+.sc-unit-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.sc-class-btn,
+.sc-unit-btn {
+  padding: 7px 14px;
+  border: 1.5px solid rgba(255, 140, 0, 0.22);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.62);
+  cursor: pointer;
+  font: 800 15px "Barlow Condensed", sans-serif;
+  white-space: nowrap;
+}
+
+.sc-class-btn.active,
+.sc-unit-btn.active {
+  border-color: #4ade80;
+  background: linear-gradient(135deg, #15803d, #22c55e);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(29, 185, 84, 0.35);
+}
+
+.sc-unit-btn small {
+  margin-left: 4px;
+  font-size: 10px;
+  opacity: 0.65;
+}
+
+.sc-clear-btn {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(248, 113, 113, 0.8);
+  cursor: pointer;
+  font: 800 10px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.sc-word-count {
+  padding: 4px 0;
+  color: rgba(255, 255, 255, 0.62);
+  font: 800 14px "Barlow Condensed", sans-serif;
+  text-align: center;
+}
+
+.sc-word-count.sc-warn-low {
+  color: #f87171;
+}
+
+.sc-save-btn {
+  flex: 1;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #15803d, #22c55e);
+  color: #fff;
+  cursor: pointer;
+  font: 800 17px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#cat-preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 8, 30, 0.96);
+  backdrop-filter: blur(12px);
+}
+
+#cat-preview-overlay.open {
+  display: flex;
+}
+
+.cp-modal {
+  width: min(95vw, 640px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px;
+  border: 1.5px solid rgba(255, 140, 0, 0.3);
+  border-radius: 18px;
+  background: rgba(3, 9, 35, 0.97);
+}
+
+.cp-title {
+  color: #ffd700;
+  font: clamp(20px, 3vw, 30px) "Bebas Neue", sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.cp-grid {
+  max-height: 60vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 4px;
+  border: 1px solid rgba(255, 140, 0, 0.15);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cp-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.cp-card-word {
+  color: #fff;
+  font: 800 12px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.cp-card-grade {
+  color: rgba(255, 255, 255, 0.55);
+  font: 700 10px "Barlow Condensed", sans-serif;
+  text-align: center;
+}
+
+.cp-close {
+  align-self: center;
+  padding: 7px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  font: 800 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 720px) {
+  .wo-new-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .wo-avatar-preview {
+    min-height: 260px;
+    height: 34vh;
+  }
+
+  .mode-chart-row {
+    display: flex;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding-right: 4px;
+  }
+
+  .mode-chart {
+    flex-basis: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .hub-main-menu-btn {
+    left: 50%;
+    bottom: 12px;
+    width: min(210px, 58vw);
+    transform: translateX(-50%);
+  }
+
+  .hub-main-menu-btn:hover {
+    transform: translateX(-50%) translateY(-3px) scale(1.025);
+  }
+
+  .wo-rank-display {
+    display: none;
+  }
+
+  .wo-profile-hero {
+    grid-template-columns: 110px 1fr;
+  }
+
+  .wo-profile-hero img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-title {
+    font-size: 42px;
+  }
+
+  .wo-profile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wo-profile-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .campaign-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .campaign-level-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    max-height: 66vh;
+    overflow-y: auto;
+  }
+}
+
+/* ── HUB CHART GLOW — claimable achievement / complete daily ── */
+.hub-chart-glow {
+  animation: hub-glow-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes hub-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.85), 0 18px 38px rgba(0, 0, 0, 0.36); }
+  50%       { box-shadow: 0 0 0 4px rgba(96, 165, 250, 1), 0 0 28px 10px rgba(59, 130, 246, 0.55), 0 18px 38px rgba(0, 0, 0, 0.36); }
+}
+
+/* ── ACHİEVEMENT SİSTEMİ (word_reveal sp.html'den birebir kopya) ── */
+
+#wc-achievements,
+#wc-badges {
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.wo-achievements-panel {
+  width: min(1050px, 96vw);
+  max-height: none;
+}
+
+.wo-achievements-score {
+  min-width: 140px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  border-radius: 14px;
+  background: rgba(161, 98, 7, 0.2);
+  text-align: center;
+}
+
+.wo-achievements-score span {
+  display: block;
+  color: #fde68a;
+  font: 700 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.18em;
+}
+
+.wo-achievements-score strong {
+  color: #ffd700;
+  font: 40px "Bebas Neue", sans-serif;
+}
+
+.wo-achievements-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.wo-achievements-sub {
+  color: #93c5fd;
+  font: 700 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.15em;
+}
+
+.wo-achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.wo-achievement {
+  display: grid;
+  grid-template-columns: 62px 1fr 105px;
+  gap: 13px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(147, 197, 253, 0.25);
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.28), rgba(0, 0, 0, 0.2));
+}
+
+.wo-achievement.in-progress { opacity: 0.82; }
+
+.wo-achievement.prereq-locked {
+  opacity: 0.38;
+  filter: saturate(0.25);
+}
+
+.wo-achievement.prereq-locked .wo-achievement-copy h3::before {
+  content: '🔒 ';
+  font-size: 0.8em;
+}
+
+.wo-achievement.unlocked {
+  border-color: #facc15;
+  box-shadow: 0 0 22px rgba(250, 204, 21, 0.2);
+}
+
+.wo-achievement.claimed {
+  border-color: rgba(74, 222, 128, 0.55);
+  background: linear-gradient(135deg, rgba(22, 101, 52, 0.42), rgba(2, 44, 34, 0.3));
+}
+
+.wo-achievement-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(255, 215, 0, 0.38);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.22);
+  color: #ffd700;
+  font-size: 30px;
+}
+
+.wo-achievement-copy h3 {
+  margin: 0;
+  color: #fff;
+  font: 25px "Bebas Neue", sans-serif;
+  letter-spacing: 0.09em;
+}
+
+.wo-achievement-copy p {
+  margin: 2px 0 7px;
+  color: #bfdbfe;
+  font: 700 12px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.wo-achievement-copy small {
+  color: #93c5fd;
+  font: 700 10px "Barlow Condensed", sans-serif;
+}
+
+.wo-achievement-progress {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wo-achievement-progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #2563eb, #facc15);
+}
+
+.wo-achievement-reward { text-align: center; }
+
+.wo-achievement-reward strong {
+  display: block;
+  color: #ffd700;
+  font: 27px "Bebas Neue", sans-serif;
+}
+
+.wo-achievement-reward span {
+  display: block;
+  margin-top: -5px;
+  color: #fde68a;
+  font: 700 9px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.wo-achievement-reward button {
+  width: 100%;
+  margin-top: 7px;
+  padding: 7px;
+  border: 1px solid #facc15;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #a16207, #eab308);
+  color: #fff;
+  cursor: pointer;
+  font: 18px "Bebas Neue", sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.wo-achievement-reward button:disabled {
+  border-color: rgba(147, 197, 253, 0.25);
+  background: rgba(30, 58, 138, 0.25);
+  color: #93c5fd;
+  cursor: default;
+}
+
+.wo-achievement.claimed .wo-achievement-reward button:disabled {
+  border-color: rgba(74, 222, 128, 0.45);
+  background: rgba(22, 101, 52, 0.35);
+  color: #86efac;
+}
+
+/* tabs */
+.wo-ach-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  padding-top: 14px;
+}
+
+.wo-ach-tab {
+  position: relative;
+  padding: 8px 14px;
+  border: 1px solid rgba(147, 197, 253, 0.35);
+  border-radius: 9px;
+  background: rgba(30, 58, 138, 0.22);
+  color: #bfdbfe;
+  cursor: pointer;
+  font: 700 13px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.1em;
+  transition: border-color 0.18s, color 0.18s;
+  overflow: visible;
+}
+
+.wo-ach-tab.active {
+  border-color: #ffd700;
+  background: rgba(161, 98, 7, 0.3);
+  color: #ffd700;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.18);
+}
+
+.wo-ach-tab:hover:not(.active) {
+  border-color: #93c5fd;
+  color: #dbeafe;
+}
+
+.wo-ach-tab-new {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: #ef4444;
+  color: #fff;
+  font: 900 7.5px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.1em;
+  clip-path: polygon(50% 0%,56% 26%,76% 5%,69% 32%,100% 40%,75% 52%,90% 78%,65% 67%,62% 100%,52% 76%,32% 96%,40% 67%,2% 60%,28% 52%,18% 10%,38% 30%);
+  pointer-events: none;
+  animation: wc-new-badge 1.5s ease-in-out infinite;
+}
+
+@keyframes wc-new-badge {
+  0%, 100% { transform: translateX(-50%) scale(1) rotate(-4deg); }
+  50%       { transform: translateX(-50%) scale(1.15) rotate(5deg); }
+}
+
+/* badge reveal overlay */
+.wo-badge-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 9600;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(30, 64, 175, 0.88), rgba(2, 6, 24, 0.97) 65%);
+}
+
+.wo-badge-reveal.open { display: flex; }
+
+.wo-badge-reveal-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 44px 56px;
+  border: 1.5px solid rgba(255, 215, 0, 0.5);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(10, 24, 80, 0.98), rgba(3, 9, 35, 0.99));
+  box-shadow: 0 0 80px rgba(255, 215, 0, 0.22), 0 24px 80px rgba(0, 0, 0, 0.7);
+}
+
+.wo-badge-reveal-label {
+  color: #93c5fd;
+  font: 700 12px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.28em;
+}
+
+.wo-badge-reveal-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  animation: woBadgePop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes woBadgePop {
+  from { opacity: 0; transform: scale(0.35) rotate(-15deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* badges screen */
+.wo-badges-panel { max-width: 860px; }
+
+.wo-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.wo-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.wo-badge-item img {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+}
+
+.wo-badge-item span {
+  color: #fde68a;
+  font: 700 11px "Barlow Condensed", sans-serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.wo-badges-empty {
+  grid-column: 1 / -1;
+  padding: 60px 20px;
+  text-align: center;
+  color: #93c5fd;
+  font: 30px "Bebas Neue", sans-serif;
+  letter-spacing: 0.12em;
+}
+
+/* reveal animation for newly unlocked chain step */
+.wo-achievement-new {
+  animation: woAchReveal 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes woAchReveal {
+  from { opacity: 0; transform: translateY(18px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 800px) {
+  .wo-achievements-grid { grid-template-columns: 1fr; }
+  .wo-achievement { grid-template-columns: 48px 1fr 88px; gap: 10px; }
+  .wo-badges-grid { grid-template-columns: repeat(3, 1fr); }
+}

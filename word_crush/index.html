@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORD GEMORIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+  <main id="app">
+    <section id="menu-screen" class="screen open">
+      <div class="main-menu-controls">
+        <button id="menu-lite-btn">LITE</button>
+        <button class="ctrl-btn" id="menu-mute-btn" title="Sound">🔊</button>
+        <button class="ctrl-btn" id="menu-fs-btn" title="Fullscreen">⛶</button>
+      </div>
+      <div class="main-menu-shell">
+        <img src="images/wordcrushmain2.webp" alt="WORD GEMORIA" class="menu-logo" onerror="this.style.display='none';this.nextElementSibling.style.display=''">
+        <h1 style="display:none">WORD GEMORIA</h1>
+        <div class="main-menu-actions">
+          <button id="new-game-btn" class="primary-btn">NEW GAME</button>
+          <button id="continue-btn" class="primary-btn">CONTINUE</button>
+          <button class="secondary-btn" disabled>SETTINGS</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="hub-screen" class="screen">
+      <div class="menu-hub">
+        <header class="menu-hub-head">
+          <img src="images/wordcrushmain.webp" alt="WORD GEMORIA" class="hub-logo" onerror="this.style.display='none';this.nextElementSibling.style.display=''">
+          <h1 style="display:none">WORD GEMORIA</h1>
+        </header>
+        <div class="mode-chart-row" aria-label="Game modes">
+          <button id="quick-game-btn" class="mode-chart" type="button">
+            <img src="images/quickgame.webp" alt="QUICK GAME" onerror="this.remove()">
+            <span>QUICK GAME</span>
+          </button>
+          <button id="campaign-btn" class="mode-chart" type="button">
+            <img src="images/campaign.webp" alt="CAMPAIGN" onerror="this.remove()">
+            <span>CAMPAIGN</span>
+          </button>
+          <button id="daily-board-btn" class="mode-chart" type="button">
+            <img src="images/dailyboard.webp" alt="DAILY BOARD" onerror="this.remove()">
+            <span>DAILY BOARD</span>
+          </button>
+          <button class="mode-chart disabled" type="button" data-disabled-mode="ADVENTURE RUN" disabled>
+            <img src="images/adventurerun.webp" alt="ADVENTURE RUN" onerror="this.remove()">
+            <span>ADVENTURE RUN</span>
+          </button>
+          <button class="mode-chart disabled" type="button" data-disabled-mode="LEADERBOARD" disabled>
+            <img src="images/leaderboard.webp" alt="LEADERBOARD" onerror="this.remove()">
+            <span>LEADERBOARD</span>
+          </button>
+          <button id="achievements-btn" class="mode-chart" type="button">
+            <img src="images/achievements.webp" alt="ACHIEVEMENTS" onerror="this.remove()">
+            <span>ACHIEVEMENTS</span>
+          </button>
+          <button id="profile-btn" class="mode-chart" type="button">
+            <img src="images/profile.webp" alt="PROFILE" onerror="this.remove()">
+            <span>PROFILE</span>
+            <div id="profile-chart-score" class="profile-chart-score"></div>
+            <img id="sp-hud-avatar-chart" src="../word_overlord/avatars/AV_Anime_Blaze_head.webp" alt="" class="profile-chart-avatar">
+          </button>
+        </div>
+        <button class="hub-main-menu-btn" type="button" onclick="WordCrushScreens.showScreen('menu-screen')">
+          <span>MAIN MENU</span>
+        </button>
+      </div>
+    </section>
+
+    <div id="new-game-confirm" class="confirm-overlay">
+      <div class="confirm-box">
+        <h2>NEW GAME</h2>
+        <p>All local Word Gemoria progress will be reset.</p>
+        <div class="wo-choice-row">
+          <button id="cancel-new-game-btn" class="wo-btn ghost">CANCEL</button>
+          <button id="confirm-new-game-btn" class="wo-btn gold">CONFIRM</button>
+        </div>
+      </div>
+    </div>
+
+    <section id="sp-char" class="screen">
+      <div class="wo-panel wo-new-panel">
+        <div class="wo-title wo-new-title">CREATE YOUR SOLDIER</div>
+        <div class="wo-new-layout">
+          <div class="wo-avatar-preview">
+            <img id="sp-char-prev" alt="">
+            <div id="sp-char-prev-name"></div>
+          </div>
+          <div class="wo-form">
+            <div>
+              <label class="wo-label">PLAYER NAME</label>
+              <input id="sp-char-name" class="wo-name-input" maxlength="16" placeholder="ENTER YOUR NAME">
+            </div>
+            <div>
+              <label class="wo-label">AVATAR</label>
+              <div class="wo-avatar-grid" id="sp-char-avatars"></div>
+            </div>
+            <div>
+              <label class="wo-label">GRADE</label>
+              <div class="wo-grade-grid" id="sp-char-grades"></div>
+            </div>
+            <div id="sp-char-warn" class="wo-warning"></div>
+            <div class="wo-choice-row">
+              <button class="wo-btn ghost" onclick="spBackToMenu()">BACK</button>
+              <button class="wo-btn gold" onclick="spConfirmNew()">BEGIN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="campaign-screen" class="screen">
+      <div class="wo-panel campaign-panel">
+        <div class="campaign-head">
+          <div>
+            <div class="wo-title campaign-title">CAMPAIGN 1</div>
+            <div id="campaign-subtitle" class="campaign-subtitle">GRADE 6 - UNITS 1-10</div>
+          </div>
+          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+        </div>
+        <div id="campaign-level-grid" class="campaign-level-grid"></div>
+      </div>
+    </section>
+
+    <section id="daily-screen" class="screen">
+      <div class="wo-panel daily-panel">
+        <div class="daily-head">
+          <div>
+            <div class="wo-title daily-title">DAILY QUESTS</div>
+            <div id="daily-date" class="daily-subtitle"></div>
+          </div>
+          <div class="daily-reward">
+            <span>REWARD</span>
+            <strong id="daily-reward">+0</strong>
+          </div>
+        </div>
+        <div id="daily-board" class="daily-board"></div>
+        <div class="wo-choice-row">
+          <button id="daily-claim-btn" class="wo-btn gold">IN PROGRESS</button>
+          <button class="wo-btn ghost" onclick="WordCrushDaily.closeDailyBoard()">BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sp-profile" class="screen">
+      <div class="wo-panel wo-profile-panel">
+        <div id="sp-rank-display" class="wo-rank-display">
+          <img id="sp-rank-img" class="wc-rank-img" src="" alt="">
+          <span id="sp-rank-name">SPARK</span>
+        </div>
+        <div class="wo-profile-hero">
+          <img id="sp-profile-avatar" alt="">
+          <div>
+            <div id="sp-profile-name" class="wo-title profile-title"></div>
+            <div id="sp-profile-grade" class="wo-profile-grade"></div>
+            <div class="wo-profile-score-label">SCORE</div>
+            <div id="sp-profile-score" class="wo-profile-score"></div>
+          </div>
+        </div>
+        <div id="sp-profile-stats" class="wo-profile-stats"></div>
+        <div class="wo-profile-actions">
+          <button class="wo-profile-info" type="button" onclick="WCAchievements.earnedBadges()">
+            <span>ACHIEVEMENT BADGES</span>
+            <strong id="sp-profile-achievements">0/0</strong>
+            <b>?</b>
+          </button>
+          <button class="wo-profile-info" type="button" onclick="WCAchievements.show('profile')">
+            <span>ACHIEVEMENTS</span>
+            <strong id="sp-profile-ach-score">0</strong>
+            <b>?</b>
+          </button>
+        </div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup-screen" class="screen">
+      <div class="sc-modal">
+        <div class="sc-title">WORD SETUP</div>
+        <div class="sc-section" id="sc-class-section">
+          <div class="sc-section-head">
+            <div class="sc-section-label">SINIF</div>
+            <button class="sc-clear-btn" onclick="_scClearAll()">CLEAR ALL</button>
+          </div>
+          <div class="sc-class-grid" id="sc-class-grid"></div>
+          <div class="sc-warn" id="sc-class-warn"></div>
+        </div>
+        <div class="sc-section">
+          <div class="sc-section-label">UNITE</div>
+          <div class="sc-unit-grid" id="sc-unit-grid"></div>
+          <div class="sc-warn" id="sc-unit-warn"></div>
+        </div>
+        <div class="sc-section" id="sc-cat-section" style="display:none">
+          <div class="sc-section-label">KATEGORILER <span>(unite bagimsiz)</span></div>
+          <div class="sc-unit-grid" id="sc-cat-grid"></div>
+        </div>
+        <div class="sc-word-count" id="sc-word-count"></div>
+        <div class="wo-choice-row">
+          <button class="wo-btn ghost" onclick="WordCrushProfile.showHub()">BACK</button>
+          <button class="sc-save-btn" onclick="WordCrushSetup.startSelectedGame()">START LEVEL</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="cat-preview-overlay" onclick="if(event.target===this)_closeCatPreview()">
+      <div class="cp-modal">
+        <div class="cp-title" id="cp-title">KATEGORI</div>
+        <div class="cp-grid" id="cp-grid"></div>
+        <button class="cp-close" onclick="_closeCatPreview()">KAPAT</button>
+      </div>
+    </div>
+
+    <section id="game-screen" class="screen">
+      <header id="sp-header">
+        <img id="sp-hud-avatar" src="../word_overlord/avatars/AV_Anime_Blaze_head.webp" alt="">
+        <div id="sp-hud-mode-cell" class="sp-hud-cell">
+          <div id="sp-hud-q" class="sp-hud-value">0/15</div>
+          <div id="sp-hud-mode-label" class="sp-hud-label">MODE</div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-score" class="sp-hud-value">0</div>
+          <div class="sp-hud-label">LEVEL SCORE</div>
+        </div>
+        <div class="wo-progress">
+          <div class="wo-progress-track">
+            <div id="wo-hud-progress" class="wo-progress-fill"></div>
+            <div id="wo-pmark-1" class="wo-pmark"></div>
+            <div id="wo-pmark-2" class="wo-pmark"></div>
+            <div id="wo-pmark-3" class="wo-pmark"></div>
+          </div>
+          <div class="wo-progress-stars-row">
+            <span id="wo-pstar-1" class="wo-pstar">★</span>
+            <span id="wo-pstar-2" class="wo-pstar">★★</span>
+            <span id="wo-pstar-3" class="wo-pstar">★★★</span>
+          </div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-lives" class="sp-hud-value">03:00</div>
+          <div class="sp-hud-label">TIME</div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-streak" class="sp-hud-value">0</div>
+          <div class="sp-hud-label">STREAK</div>
+        </div>
+        <div id="sp-controls">
+          <button id="lite-btn">LITE</button>
+          <button class="ctrl-btn" id="mute-btn" title="Sound">🔊</button>
+          <button class="ctrl-btn" id="fs-btn" title="Fullscreen">⛶</button>
+          <button class="ctrl-btn" id="pause-btn" title="Pause">Ⅱ</button>
+        </div>
+      </header>
+
+      <section class="play-stage">
+        <div class="board-panel english-panel">
+          <div id="english-board" class="english-board"></div>
+        </div>
+
+        <div class="board-panel turkish-panel">
+          <div id="turkish-board" class="turkish-board"></div>
+        </div>
+      </section>
+
+      <div id="message-line" class="message-line"></div>
+      <div id="float-layer" class="float-layer"></div>
+    </section>
+
+    <!-- ═══════════ ACHİEVEMENTS ═══════════ -->
+    <section id="wc-achievements" class="screen">
+      <div class="wo-panel wo-achievements-panel">
+        <div class="wo-achievements-head">
+          <div>
+            <div class="wo-title" style="font-size:58px;text-align:left">ACHIEVEMENTS</div>
+            <div class="wo-achievements-sub">COMPLETE CHALLENGES AND CLAIM SCORE REWARDS</div>
+          </div>
+          <div class="wo-achievements-score"><span>SCORE</span><strong id="wc-ach-score"></strong></div>
+        </div>
+        <div id="wc-ach-tabs" class="wo-ach-tabs"></div>
+        <div id="wc-ach-grid" class="wo-achievements-grid"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WCAchievements.close()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ACHİEVEMENT BADGES ═══════════ -->
+    <section id="wc-badges" class="screen">
+      <div class="wo-panel wo-badges-panel">
+        <div class="wo-title" style="font-size:58px">ACHIEVEMENT BADGES</div>
+        <div id="wc-badges-grid" class="wo-badges-grid"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushProfile.showProfile()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BADGE REVEAL OVERLAY -->
+    <div id="wc-badge-reveal" class="wo-badge-reveal">
+      <div class="wo-badge-reveal-panel">
+        <div class="wo-badge-reveal-label">BADGE UNLOCKED</div>
+        <img id="wc-badge-reveal-img" class="wo-badge-reveal-img" alt="">
+        <button class="wo-btn gold" style="margin-top:24px;min-width:200px" onclick="WCAchievements.closeBadgeReveal()">COOL!</button>
+      </div>
+    </div>
+
+    <section id="result-screen" class="screen">
+      <div class="result-shell">
+        <h2>GAME OVER</h2>
+        <div id="final-score" class="final-score">0</div>
+        <div id="final-stats" class="final-stats"></div>
+        <button id="result-back-btn" class="primary-btn">BACK</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../word_contest/words.js?v=all-cards-single-line-1"></script>
+  <script src="../word_master/questions.js?v=all-cards-single-line-1"></script>
+  <script src="daily.js?v=all-cards-single-line-1"></script>
+  <script src="core/adapter.js?v=all-cards-single-line-1"></script>
+  <script src="core/audio.js?v=all-cards-single-line-1"></script>
+  <script src="core/game-state.js?v=all-cards-single-line-1"></script>
+  <script src="ui/toast.js?v=all-cards-single-line-1"></script>
+  <script src="ui/screens.js?v=all-cards-single-line-1"></script>
+  <script src="ui/game-board.js?v=all-cards-single-line-1"></script>
+  <script src="core/profile.js?v=all-cards-single-line-1"></script>
+  <script src="core/campaign.js?v=all-cards-single-line-1"></script>
+  <script src="core/daily-board.js?v=all-cards-single-line-1"></script>
+  <script src="ui/setup-screen.js?v=all-cards-single-line-1"></script>
+  <script src="core/game-loop.js?v=all-cards-single-line-1"></script>
+  <script src="core/achievements.js?v=all-cards-single-line-1"></script>
+  <script src="main.js?v=all-cards-single-line-1"></script>
+</body>
+</html>
