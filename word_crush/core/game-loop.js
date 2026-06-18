@@ -8,9 +8,13 @@
   let timerId = null;
   let nextTileId = 1;
   let lastResultRoute = "hub";
+  let introRunId = 0;
+  const INTRO_DURATION = 2000;
 
   function startGame(options = {}) {
     stopTimer();
+    introRunId += 1;
+    const runId = introRunId;
     nextTileId = 1;
     state = State.createInitialState();
     const sourceWords = normalizeSourceWords(options.words || window.WordCrushAdapter?.buildWordPool?.() || window.WORD_CRUSH_WORDS || []);
@@ -25,15 +29,16 @@
     state.englishGrid = buildInitialEnglishGrid(state.activeWords);
     state.turkishCards = shuffle(state.activeWords.map((word) => ({ word })));
     state.boardSize = state.turkishCards.length;
+    applyIntroMotion();
 
     if (options.profile && window.WordCrushProfile) {
       window.WordCrushProfile.applyProfileToHud();
     }
 
     Screens.showScreen("game-screen");
-    Screens.setMessage("Match English gems with Turkish cards.");
+    Screens.setMessage(isLiteMode() ? "Match English gems with Turkish cards." : "Get ready.");
     render();
-    startTimer();
+    beginAfterIntro(runId);
   }
 
   function togglePause() {
@@ -59,6 +64,9 @@
     stopTimer();
     if (window.WordCrushProfile) {
       window.WordCrushProfile.recordRun(state);
+    }
+    if (state.runType === 'quick' && (state.turkishCards || []).length === 0) {
+      window.WordCrushFirebase?.submitScore();
     }
     if (window.WordCrushCampaign) {
       window.WordCrushCampaign.recordResult(state);
@@ -413,6 +421,74 @@
       isNew: Boolean(options.isNew),
       spawnDistance: options.isNew ? State.ROWS : 0
     };
+  }
+
+  async function beginAfterIntro(runId) {
+    if (!isLiteMode()) {
+      state.isResolving = true;
+      await sleep(INTRO_DURATION);
+      if (runId !== introRunId) return;
+      state.isResolving = false;
+      clearIntroMotion();
+      render();
+    }
+
+    if (runId !== introRunId) return;
+    Screens.setMessage("Match English gems with Turkish cards.");
+    startTimer();
+  }
+
+  function applyIntroMotion() {
+    if (isLiteMode()) return;
+
+    const rowStep = 280;
+    state.englishGrid.forEach((tile, index) => {
+      if (!tile) return;
+      const row = Math.floor(index / State.COLS);
+      const delay = (State.ROWS - 1 - row) * rowStep;
+      tile.intro = true;
+      tile.introDelay = delay;
+    });
+
+    const entrances = [
+      [-90, -42, -5],
+      [0, -82, 2],
+      [90, -42, 5],
+      [-110, 0, 4],
+      [110, 0, -4],
+      [-90, 54, -5],
+      [0, 88, 3],
+      [90, 54, 5]
+    ];
+    const cardStep = Math.max(70, Math.floor(INTRO_DURATION / Math.max(1, state.turkishCards.length + 4)));
+    state.turkishCards.forEach((card, index) => {
+      const [x, y, rot] = entrances[index % entrances.length];
+      card.intro = true;
+      card.introDelay = index * cardStep;
+      card.introX = x;
+      card.introY = y;
+      card.introRot = rot;
+    });
+  }
+
+  function clearIntroMotion() {
+    state.englishGrid.forEach((tile) => {
+      if (tile) {
+        tile.intro = false;
+        tile.introDelay = 0;
+      }
+    });
+    state.turkishCards.forEach((card) => {
+      card.intro = false;
+      card.introDelay = 0;
+      card.introX = 0;
+      card.introY = 0;
+      card.introRot = 0;
+    });
+  }
+
+  function isLiteMode() {
+    return document.body.classList.contains("lite-mode");
   }
 
   function chooseControlledColor(index, options = {}) {

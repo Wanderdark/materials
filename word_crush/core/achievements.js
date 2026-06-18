@@ -39,6 +39,11 @@
     { id: 'daily_starter', icon: '📅', name: 'DAILY STARTER', desc: 'Complete your first Daily Board.', reward: 500, test: s => s.dailyBoardsCompleted >= 1, progress: s => [s.dailyBoardsCompleted, 1], chain: 'daily_devotee' },
     { id: 'daily_devotee', icon: '📅', name: 'DAILY DEVOTEE', desc: 'Complete 7 Daily Boards.', reward: 2000, test: s => s.dailyBoardsCompleted >= 7, progress: s => [s.dailyBoardsCompleted, 7], chain: 'daily_legend' },
     { id: 'daily_legend', icon: '🗓️', name: 'DAILY LEGEND', desc: 'Complete 30 Daily Boards.', reward: 5000, test: s => s.dailyBoardsCompleted >= 30, progress: s => [s.dailyBoardsCompleted, 30], badge: 'daily' },
+
+    // ── QUICK RUNNER
+    { id: 'quick_runner', icon: '▶', name: 'QUICK RUNNER', desc: 'Complete 5 Quick games.', reward: 2500, test: s => s.quickRuns >= 5, progress: s => [Math.min(s.quickRuns, 5), 5], chain: 'speed_charger' },
+    { id: 'speed_charger', icon: '▶', name: 'SPEED CHARGER', desc: 'Complete 15 Quick games.', reward: 5000, test: s => s.quickRuns >= 15, progress: s => [Math.min(s.quickRuns, 15), 15], chain: 'speed_legend' },
+    { id: 'speed_legend', icon: '▶', name: 'SPEED LEGEND', desc: 'Complete 30 Quick games.', reward: 10000, test: s => s.quickRuns >= 30, progress: s => [Math.min(s.quickRuns, 30), 30], badge: 'speedy' },
   ];
 
   const WC_ACHIEVEMENT_GROUPS = [
@@ -49,6 +54,7 @@
     { id: 'dedication', icon: '◈', label: 'DEDICATION', ids: ['answer_machine', 'quiz_master', 'trivia_legend'] },
     { id: 'perfect_run', icon: '◉', label: 'PERFECT CLEAR', ids: ['clean_sweep', 'iron_crusher', 'crystal_crusher'] },
     { id: 'daily_board', icon: '📅', label: 'DAILY BOARD', ids: ['daily_starter', 'daily_devotee', 'daily_legend'] },
+    { id: 'quick_runner', icon: '▶', label: 'QUICK RUNNER', ids: ['quick_runner', 'speed_charger', 'speed_legend'] },
   ];
 
   let _achGroup = null;
@@ -71,6 +77,7 @@
       totalCorrect: Number(stats.totalCorrect) || 0,
       perfectRuns: Number(stats.perfectRuns) || 0,
       dailyBoardsCompleted: Number(stats.dailyBoardsCompleted) || 0,
+      quickRuns: Number(stats.quickRunsCompleted) || 0,
     };
   }
 
@@ -174,7 +181,7 @@
   }
 
   function close() {
-    _dirty = false;
+    if (_dirty) { _dirty = false; window.WordCrushFirebase?.submitScore(); }
     if (_achReturn === 'profile') window.WordCrushProfile.showProfile();
     else window.WordCrushProfile.showHub();
   }

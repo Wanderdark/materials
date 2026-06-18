@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/base.css">
-  <link rel="stylesheet" href="styles/game.css">
+  <link rel="stylesheet" href="styles/base.css?v=campaign-ready-1">
+  <link rel="stylesheet" href="styles/game.css?v=campaign-ready-1">
 </head>
 <body>
   <main id="app">
@@ -24,7 +24,7 @@
         <div class="main-menu-actions">
           <button id="new-game-btn" class="primary-btn">NEW GAME</button>
           <button id="continue-btn" class="primary-btn">CONTINUE</button>
-          <button class="secondary-btn" disabled>SETTINGS</button>
+          <button id="settings-btn" class="secondary-btn">SETTINGS</button>
         </div>
       </div>
     </section>
@@ -52,7 +52,7 @@
             <img src="images/adventurerun.webp" alt="ADVENTURE RUN" onerror="this.remove()">
             <span>ADVENTURE RUN</span>
           </button>
-          <button class="mode-chart disabled" type="button" data-disabled-mode="LEADERBOARD" disabled>
+          <button id="leaderboard-btn" class="mode-chart" type="button">
             <img src="images/leaderboard.webp" alt="LEADERBOARD" onerror="this.remove()">
             <span>LEADERBOARD</span>
           </button>
@@ -128,6 +128,19 @@
       </div>
     </section>
 
+    <section id="campaign-ready-screen" class="screen">
+      <div class="wo-panel campaign-ready-panel">
+        <div id="campaign-ready-title" class="wo-title campaign-ready-title">LEVEL 1</div>
+        <div id="campaign-ready-subtitle" class="campaign-ready-subtitle"></div>
+        <div id="campaign-ready-stars" class="campaign-ready-stars"></div>
+        <div id="campaign-ready-best" class="campaign-ready-best"></div>
+        <div class="wo-level-footer campaign-ready-actions">
+          <button class="wo-level-action" type="button" onclick="WordCrushCampaign.showCampaign()">BACK</button>
+          <button id="campaign-ready-start" class="wo-level-action gold" type="button" onclick="WordCrushCampaign.startSelectedLevel()">START LEVEL</button>
+        </div>
+      </div>
+    </section>
+
     <section id="daily-screen" class="screen">
       <div class="wo-panel daily-panel">
         <div class="daily-head">
@@ -142,6 +155,7 @@
         </div>
         <div id="daily-board" class="daily-board"></div>
         <div class="wo-choice-row">
+          <div id="daily-countdown-line" class="daily-countdown-line"></div>
           <button id="daily-claim-btn" class="wo-btn gold">IN PROGRESS</button>
           <button class="wo-btn ghost" onclick="WordCrushDaily.closeDailyBoard()">BACK</button>
         </div>
@@ -301,6 +315,51 @@
       </div>
     </section>
 
+    <!-- ═══════════ SETTINGS ═══════════ -->
+    <section id="settings-screen" class="screen">
+      <div class="wo-panel wc-settings-panel">
+        <div class="wo-title" style="font-size:58px">SETTINGS</div>
+
+        <div class="wc-settings-row">
+          <label class="wc-settings-label">MUSIC VOLUME</label>
+          <div class="wc-vol-wrap">
+            <input id="wc-music-vol-slider" type="range" min="0" max="100" step="1" class="wc-vol-slider">
+            <span id="wc-music-vol-val" class="wc-vol-val">30</span>
+          </div>
+          <div id="wc-music-mute-badge" class="wc-mute-badge" style="display:none">MUSIC MUTE</div>
+        </div>
+
+        <div class="wc-settings-row">
+          <label class="wc-settings-label">LITE MODE</label>
+          <div class="wc-toggle-wrap">
+            <button id="wc-lite-on-btn" class="wc-toggle-btn" onclick="wcSetLite(true)">ON</button>
+            <button id="wc-lite-off-btn" class="wc-toggle-btn" onclick="wcSetLite(false)">OFF</button>
+          </div>
+        </div>
+
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushScreens.showScreen('menu-screen')">↩ EXIT</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ LEADERBOARD ═══════════ -->
+    <section id="wc-leaderboard" class="screen">
+      <div class="wo-panel wo-leaderboard-panel">
+        <div class="wo-achievements-head">
+          <div>
+            <div class="wo-title" style="font-size:58px;text-align:left">LEADERBOARD</div>
+            <div class="wo-achievements-sub">TOP 50 PLAYERS — WORD GEMORIA</div>
+          </div>
+          <div id="wc-lb-myrank" class="wo-lb-myrank"></div>
+        </div>
+        <div id="wc-lb-list" class="wo-lb-list"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushFirebase.leaderboardBack()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
     <!-- BADGE REVEAL OVERLAY -->
     <div id="wc-badge-reveal" class="wo-badge-reveal">
       <div class="wo-badge-reveal-panel">
@@ -320,21 +379,22 @@
     </section>
   </main>
 
-  <script src="../word_contest/words.js?v=all-cards-single-line-1"></script>
-  <script src="../word_master/questions.js?v=all-cards-single-line-1"></script>
-  <script src="daily.js?v=all-cards-single-line-1"></script>
-  <script src="core/adapter.js?v=all-cards-single-line-1"></script>
-  <script src="core/audio.js?v=all-cards-single-line-1"></script>
-  <script src="core/game-state.js?v=all-cards-single-line-1"></script>
-  <script src="ui/toast.js?v=all-cards-single-line-1"></script>
-  <script src="ui/screens.js?v=all-cards-single-line-1"></script>
-  <script src="ui/game-board.js?v=all-cards-single-line-1"></script>
-  <script src="core/profile.js?v=all-cards-single-line-1"></script>
-  <script src="core/campaign.js?v=all-cards-single-line-1"></script>
-  <script src="core/daily-board.js?v=all-cards-single-line-1"></script>
-  <script src="ui/setup-screen.js?v=all-cards-single-line-1"></script>
-  <script src="core/game-loop.js?v=all-cards-single-line-1"></script>
-  <script src="core/achievements.js?v=all-cards-single-line-1"></script>
-  <script src="main.js?v=all-cards-single-line-1"></script>
+  <script src="../word_contest/words.js?v=campaign-ready-1"></script>
+  <script src="../word_master/questions.js?v=campaign-ready-1"></script>
+  <script src="daily.js?v=campaign-ready-1"></script>
+  <script src="core/adapter.js?v=campaign-ready-1"></script>
+  <script src="core/audio.js?v=campaign-ready-1"></script>
+  <script src="core/game-state.js?v=campaign-ready-1"></script>
+  <script src="ui/toast.js?v=campaign-ready-1"></script>
+  <script src="ui/screens.js?v=campaign-ready-1"></script>
+  <script src="ui/game-board.js?v=campaign-ready-1"></script>
+  <script src="core/profile.js?v=campaign-ready-1"></script>
+  <script src="core/campaign.js?v=campaign-ready-1"></script>
+  <script src="core/daily-board.js?v=campaign-ready-1"></script>
+  <script src="ui/setup-screen.js?v=campaign-ready-1"></script>
+  <script src="core/game-loop.js?v=campaign-ready-1"></script>
+  <script src="core/achievements.js?v=campaign-ready-1"></script>
+  <script src="core/firebase.js?v=1"></script>
+  <script src="main.js?v=campaign-ready-1"></script>
 </body>
 </html>

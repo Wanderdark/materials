@@ -11,7 +11,8 @@
     { level: 9, units: [1, 2, 3, 4, 5, 6, 7, 8, 9], target: { 1: 2, 2: 6, 3: 7 } },
     { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target: { 1: 2, 2: 5, 3: 8 } }
   ];
-  const STAR_THRESHOLDS = [2500, 5000, 7500];
+  const STAR_THRESHOLDS = [2000, 4000, 6500];
+  let selectedLevelNumber = 1;
 
   function showCampaign() {
     const profile = window.WordCrushProfile.getProfile();
@@ -46,12 +47,56 @@
       button.innerHTML = `
         <strong>LEVEL ${config.level}</strong>
         <span>UNITS ${config.units[0]}-${config.units[config.units.length - 1]}</span>
-        <em>${starsText(saved.stars || 0)}</em>
+        <em>${starText(saved.stars || 0)}</em>
         <b>BEST ${saved.bestScore || 0}</b>
       `;
-      button.addEventListener("click", () => startLevel(config.level));
+      button.addEventListener("click", () => showLevelReady(config.level));
       grid.appendChild(button);
     });
+  }
+
+  function showLevelReady(levelNumber) {
+    const config = LEVELS.find((level) => level.level === levelNumber);
+    const progress = window.WordCrushProfile.getCampaignProgress();
+    const saved = progress.levels[String(levelNumber)] || {};
+    const locked = !config || levelNumber > (progress.unlockedLevel || 1);
+    if (locked) return;
+
+    selectedLevelNumber = levelNumber;
+    setText("campaign-ready-title", `CAMPAIGN 1 - LEVEL ${levelNumber}`);
+    setText("campaign-ready-subtitle", `UNITS ${config.units[0]}-${config.units[config.units.length - 1]} - ${window.WordCrushAdapter.BOARD_WORD_COUNT} WORDS`);
+    setText("campaign-ready-best", `YOUR BEST: ${Number(saved.bestScore) || 0} POINTS`);
+
+    const earnedStars = Math.max(0, Math.min(3, Number(saved.stars) || 0));
+    const starRows = document.getElementById("campaign-ready-stars");
+    if (starRows) {
+      starRows.innerHTML = [
+        [1, STAR_THRESHOLDS[0], "COMPLETE THE LEVEL"],
+        [2, STAR_THRESHOLDS[1], "GOOD PERFORMANCE"],
+        [3, STAR_THRESHOLDS[2], "MASTER PERFORMANCE"]
+      ].map(([stars, points, description]) => {
+        const completed = earnedStars >= stars;
+        return `
+          <div class="campaign-ready-star${completed ? " completed" : ""}">
+            <span>${starText(stars)}</span>
+            <strong>${points} PTS</strong>
+            <small>${description}</small>
+            ${completed ? '<b class="campaign-ready-check">&check;</b>' : ""}
+          </div>
+        `;
+      }).join("");
+    }
+
+    const startButton = document.getElementById("campaign-ready-start");
+    if (startButton) {
+      startButton.textContent = saved.completed ? "REPLAY LEVEL" : "START LEVEL";
+    }
+
+    window.WordCrushScreens.showScreen("campaign-ready-screen");
+  }
+
+  function startSelectedLevel() {
+    startLevel(selectedLevelNumber);
   }
 
   function startLevel(levelNumber) {
@@ -127,6 +172,7 @@
     const completed = (state.turkishCards || []).length === 0;
     const stars = completed ? starsForScore(state.score) : 0;
     window.WordCrushProfile.updateCampaignProgress(level, state.score, stars, completed);
+    if (stars >= 1) window.WordCrushFirebase?.submitScore();
   }
 
   function starsForScore(score) {
@@ -136,6 +182,18 @@
   function starsText(stars) {
     const safeStars = Math.max(0, Math.min(3, Number(stars) || 0));
     return "⭐".repeat(safeStars) + "☆".repeat(3 - safeStars);
+  }
+
+  function starText(stars) {
+    const safeStars = Math.max(0, Math.min(3, Number(stars) || 0));
+    return "\u2605".repeat(safeStars) + "\u2606".repeat(3 - safeStars);
+  }
+
+  function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = text;
+    }
   }
 
   function conflictsWith(word, usedTerms) {
@@ -168,7 +226,9 @@
     LEVELS,
     showCampaign,
     renderCampaign,
+    showLevelReady,
     startLevel,
+    startSelectedLevel,
     buildLevelWords,
     recordResult,
     starsForScore

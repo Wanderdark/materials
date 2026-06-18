@@ -21,11 +21,13 @@
       button.className = `gem ${tile.color}`;
       button.classList.toggle("falling", Number(tile.fallDistance) > 0);
       button.classList.toggle("new-gem", Boolean(tile.isNew));
+      button.classList.toggle("intro-gem", Boolean(tile.intro));
       button.dataset.tileId = tile.id;
       button.dataset.wordId = tile.word.id;
       button.dataset.index = String(index);
       button.style.setProperty("--fall-distance", String(tile.fallDistance || 0));
       button.style.setProperty("--spawn-distance", String(tile.spawnDistance || 0));
+      button.style.setProperty("--intro-delay", `${tile.introDelay || 0}ms`);
       button.appendChild(createLabel(tile.word.en));
       button.classList.toggle("selected", state.selectedEnglishId === tile.id);
       button.disabled = state.isResolving || state.isPaused;
@@ -38,10 +40,16 @@
     const board = document.getElementById("turkish-board");
     board.innerHTML = "";
 
-    state.turkishCards.forEach((card) => {
+    state.turkishCards.forEach((card, index) => {
       const button = document.createElement("button");
       button.className = "paper-card";
+      button.classList.toggle("intro-card", Boolean(card.intro));
       button.dataset.wordId = card.word.id;
+      button.style.setProperty("--intro-delay", `${card.introDelay || 0}ms`);
+      button.style.setProperty("--intro-x", `${card.introX || 0}px`);
+      button.style.setProperty("--intro-y", `${card.introY || 0}px`);
+      button.style.setProperty("--intro-rot", `${card.introRot || 0}deg`);
+      button.style.setProperty("--intro-index", String(index));
       button.appendChild(createLabel(card.word.tr));
       button.classList.toggle("selected", state.selectedTurkishId === card.word.id);
       button.classList.toggle("locked", state.lockedTurkishId === card.word.id);

@@ -14,7 +14,7 @@
 
   function updateHud(state) {
     const totalWords = state.boardSize || 15;
-    const starThresholds = [2500, 5000, 7500];
+    const starThresholds = [2000, 4000, 6500];
     const starMessages = ["⭐ 1 STAR REACHED", "⭐⭐ 2 STARS REACHED", "⭐⭐⭐ 3 STARS REACHED"];
     const maxScore = starThresholds[2];
     const progressPct = Math.min(100, Math.round((state.score / maxScore) * 1000) / 10);

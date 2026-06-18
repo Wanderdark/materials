@@ -1,5 +1,6 @@
 (function () {
   const TIERS = ["easy", "medium", "hard"];
+  const DAILY_RULE_VERSION = 2;
   let returnScreen = "hub";
   let countdownTimer = null;
 
@@ -27,13 +28,18 @@
   function render() {
     const daily = ensureDaily();
     if (!daily) return;
+    startCountdown();
     const date = document.getElementById("daily-date");
     const reward = document.getElementById("daily-reward");
     const board = document.getElementById("daily-board");
     const claim = document.getElementById("daily-claim-btn");
+    const countdown = document.getElementById("daily-countdown-line");
+    const complete = dailyComplete();
+    const timeText = countdownText(complete);
 
     if (date) date.textContent = `TODAY - ${daily.date}`;
     if (reward) reward.textContent = `+${dailyReward()}`;
+    if (countdown) countdown.textContent = timeText;
     if (board) {
       board.innerHTML = TIERS.map((tier) => {
         const quest = dailyQuest(tier);
@@ -54,11 +60,11 @@
     }
 
     if (claim) {
-      claim.disabled = !dailyComplete() || daily.claimed;
+      claim.disabled = !complete || daily.claimed;
       claim.classList.toggle("countdown", Boolean(daily.claimed));
       claim.textContent = daily.claimed
-        ? `CHECK BACK IN ${dailyCountdown()}`
-        : dailyComplete()
+        ? "CLAIMED"
+        : complete
           ? `CLAIM +${dailyReward()} SCORE`
           : "IN PROGRESS";
     }
@@ -100,6 +106,7 @@
     daily.claimed = true;
     window.WordCrushProfile.setDailyProgress(daily);
     window.WordCrushProfile.claimDailyReward(reward);
+    window.WordCrushFirebase?.submitScore();
     if (window.WordCrushAudio) window.WordCrushAudio.play("star");
     if (window.ToastManager) window.ToastManager.show(`DAILY QUESTS CLAIMED +${reward} SCORE`);
     render();
@@ -109,13 +116,19 @@
     if (!window.WordCrushProfile.getProfile()) return null;
     const date = dailyDateKey();
     let daily = window.WordCrushProfile.getDailyProgress();
-    if (!daily || daily.date !== date) {
+    if (!daily || daily.date !== date || daily.ruleVersion !== DAILY_RULE_VERSION) {
       const ids = {};
+      const usedRows = new Set();
       TIERS.forEach((tier) => {
-        const quest = pickDailyQuest(tier, date);
-        if (quest) ids[tier] = quest.id;
+        const quest = pickDailyQuest(tier, date, usedRows);
+        if (quest) {
+          ids[tier] = quest.id;
+          if (quest.row !== undefined && quest.row !== null) {
+            usedRows.add(Number(quest.row));
+          }
+        }
       });
-      daily = { date, ids, progress: {}, claimed: false };
+      daily = { date, ruleVersion: DAILY_RULE_VERSION, ids, progress: {}, claimed: false };
       Object.values(ids).forEach((id) => {
         daily.progress[id] = 0;
       });
@@ -159,13 +172,16 @@
 
   function dailyCountdown() {
     const now = new Date();
-    const end = new Date(now);
-    end.setHours(24, 0, 0, 0);
+    const end = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0, 0));
     const ms = Math.max(0, end - now);
     const h = Math.floor(ms / 3600000);
     const m = Math.floor((ms % 3600000) / 60000);
     const s = Math.floor((ms % 60000) / 1000);
     return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+
+  function countdownText(complete = dailyComplete()) {
+    return `${complete ? "REFRESH IN" : "ENDS IN"} ${dailyCountdown()}`;
   }
 
   function addDaily(type, value, mode = "add") {
@@ -178,11 +194,13 @@
     window.WordCrushProfile.setDailyProgress(daily);
   }
 
-  function pickDailyQuest(tier, date) {
-    const pool = dailyPool()[tier] || [];
-    if (!pool.length) return null;
-    const index = Math.abs(hash(`${date}-${tier}`)) % pool.length;
-    return pool[index];
+  function pickDailyQuest(tier, date, usedRows = new Set()) {
+    const fullPool = dailyPool()[tier] || [];
+    const pool = fullPool.filter((quest) => !usedRows.has(Number(quest.row)));
+    const source = pool.length ? pool : fullPool;
+    if (!source.length) return null;
+    const index = Math.abs(hash(`${date}-${tier}`)) % source.length;
+    return source[index];
   }
 
   function dailyPool() {
@@ -191,11 +209,11 @@
 
   function dailyDateKey() {
     const date = new Date();
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
   }
 
   function starsForScore(score) {
-    return [2500, 5000, 7500].reduce((stars, threshold) => Number(score) >= threshold ? stars + 1 : stars, 0);
+    return [2000, 4000, 6500].reduce((stars, threshold) => Number(score) >= threshold ? stars + 1 : stars, 0);
   }
 
   function hash(text) {
@@ -207,9 +225,10 @@
     if (!button) return;
     const daily = ensureDaily();
     if (!daily) return;
-    button.classList.toggle("daily-claimed", Boolean(daily.claimed));
-    button.dataset.dailyProgress = daily.claimed ? "DONE" : `${dailyCompletedCount()}/3`;
-    button.classList.toggle("hub-chart-glow", dailyComplete() && !daily.claimed);
+    const complete = dailyComplete();
+    button.classList.toggle("daily-claimed", complete);
+    button.dataset.dailyProgress = countdownText(complete);
+    button.classList.toggle("hub-chart-glow", complete && !daily.claimed);
   }
 
   function renderIfVisible() {
@@ -219,11 +238,11 @@
   }
 
   function startCountdown() {
+    if (countdownTimer) return;
     window.clearInterval(countdownTimer);
     countdownTimer = window.setInterval(() => {
       const daily = ensureDaily();
       if (!daily) return;
-      if (!daily.claimed) return;
       renderIfVisible();
     }, 1000);
   }

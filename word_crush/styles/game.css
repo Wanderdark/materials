@@ -391,6 +391,23 @@ body:not(.lite-mode) .gem.cyan {
   animation: gemDropIn 0.72s cubic-bezier(0.16, 0.9, 0.24, 1.08) both;
 }
 
+.gem.intro-gem {
+  animation: introGemDrop 0.54s cubic-bezier(0.17, 0.86, 0.25, 1.08) both;
+  animation-delay: var(--intro-delay, 0ms);
+  pointer-events: none;
+}
+
+.paper-card.intro-card {
+  animation: introCardIn 0.52s cubic-bezier(0.16, 0.86, 0.23, 1) both;
+  animation-delay: var(--intro-delay, 0ms);
+  pointer-events: none;
+}
+
+body.lite-mode .gem.intro-gem,
+body.lite-mode .paper-card.intro-card {
+  animation: none;
+}
+
 .gem.crushing,
 .paper-card.crushing {
   pointer-events: none;
@@ -550,6 +567,40 @@ body:not(.lite-mode) .gem.cyan {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes introGemDrop {
+  from {
+    opacity: 0;
+    transform: translateY(-260%) scale(0.96);
+  }
+  18% {
+    opacity: 1;
+  }
+  78% {
+    transform: translateY(7%) scale(1.01);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes introCardIn {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--intro-x, 0px), var(--intro-y, 0px), 0) rotate(var(--intro-rot, 0deg)) scale(0.88);
+  }
+  30% {
+    opacity: 1;
+  }
+  82% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   }
 }
 

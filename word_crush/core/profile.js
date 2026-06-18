@@ -38,7 +38,8 @@
         totalWrong: 0,
         bestStreak: 0,
         perfectRuns: 0,
-        dailyBoardsCompleted: 0
+        dailyBoardsCompleted: 0,
+        quickRunsCompleted: 0
       },
       campaign: {
         unlockedLevel: 1,
@@ -48,7 +49,8 @@
       achievementScore: 0,
       unlockedAchievements: [],
       claimedAchievements: [],
-      chainStartStats: {}
+      chainStartStats: {},
+      uuid: null
     };
   }
 
@@ -230,6 +232,9 @@
     stats.bestStreak = Math.max(stats.bestStreak, Number(gameState.comboBest) || 0);
     if ((Number(gameState.wrongs) || 0) === 0 && (Number(gameState.matches) || 0) >= (gameState.boardSize || 15)) {
       stats.perfectRuns += 1;
+    }
+    if (gameState.runType === 'quick') {
+      stats.quickRunsCompleted = (stats.quickRunsCompleted || 0) + 1;
     }
     save.stats = stats;
     store();
@@ -425,6 +430,7 @@
     playerScore,
     getRawSave,
     setAchievementField,
+    getRank,
     store
   };
 

@@ -36,6 +36,22 @@
       window.WCAchievements.show('hub');
     });
 
+    document.getElementById("leaderboard-btn").addEventListener("click", () => {
+      window.WordCrushFirebase.showLeaderboard('hub');
+    });
+
+    document.getElementById("settings-btn").addEventListener("click", openSettings);
+
+    const volSlider = document.getElementById("wc-music-vol-slider");
+    if (volSlider) {
+      volSlider.addEventListener("input", () => {
+        const v = Number(volSlider.value);
+        window.WordCrushAudio?.setMusicVolume(v);
+        document.getElementById("wc-music-vol-val").textContent = v;
+        document.getElementById("wc-music-mute-badge").style.display = v === 0 ? "" : "none";
+      });
+    }
+
     document.getElementById("profile-btn").addEventListener("click", () => {
       window.WordCrushProfile.showProfile();
     });
@@ -70,6 +86,29 @@
     window.WordCrushProfile.applyProfileToHud();
     window.WordCrushSetup.show();
   }
+
+  function openSettings() {
+    const vol = window.WordCrushAudio?.getMusicVolume() ?? 30;
+    const slider = document.getElementById("wc-music-vol-slider");
+    const valEl = document.getElementById("wc-music-vol-val");
+    const badge = document.getElementById("wc-music-mute-badge");
+    if (slider) slider.value = vol;
+    if (valEl) valEl.textContent = vol;
+    if (badge) badge.style.display = vol === 0 ? "" : "none";
+    const isLite = document.body.classList.contains("lite-mode");
+    document.getElementById("wc-lite-on-btn")?.classList.toggle("active", isLite);
+    document.getElementById("wc-lite-off-btn")?.classList.toggle("active", !isLite);
+    window.WordCrushScreens.showScreen("settings-screen");
+  }
+
+  window.wcSetLite = function (on) {
+    document.body.classList.toggle("lite-mode", on);
+    document.getElementById("wc-lite-on-btn")?.classList.toggle("active", on);
+    document.getElementById("wc-lite-off-btn")?.classList.toggle("active", !on);
+    ["lite-btn", "menu-lite-btn"].forEach(id => {
+      document.getElementById(id)?.classList.toggle("active", on);
+    });
+  };
 
   function toggleLite() {
     document.body.classList.toggle("lite-mode");
@@ -115,9 +154,10 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bind);
+    document.addEventListener("DOMContentLoaded", () => { bind(); window.WordCrushFirebase?.ensureUUID(); });
   } else {
     bind();
+    window.WordCrushFirebase?.ensureUUID();
   }
 
   document.addEventListener("pointerdown", startMusicOnce);
