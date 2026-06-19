@@ -272,18 +272,19 @@ const WORD_BANK = [
   { en:'SECRETARY', tr:'SEKRETER', grade:6, diff:2, unit:6, img:'../images/6/6/2.webp' }, // EKLENDI
   { en:'BAKER', tr:'FIRINICI', grade:6, diff:2, unit:6, img:'../images/6/6/3.webp' }, // EKLENDI
   { en:'COOK', tr:'AŞÇI', grade:6, diff:1, unit:6, img:'../images/6/6/4.webp' }, // EKLENDI
-  { en:'CHEF', tr:'ŞEF AŞÇI', grade:6, diff:1, unit:6, img:'../images/6/6/4.webp' }, // EKLENDI
+  { en:'CHEF', tr:'AŞÇI', grade:6, diff:1, unit:6, img:'../images/6/6/4.webp' }, // EKLENDI
   { en:'MANAGER', tr:'YÖNETİCİ', grade:6, diff:2, unit:6, img:'../images/6/6/5.webp' }, // EKLENDI
   { en:'DIRECTOR', tr:'DİREKTÖR', grade:6, diff:2, unit:6, img:'../images/6/6/5.webp' }, // EKLENDI
   { en:'SCIENTIST', tr:'BİLİM İNSANI', grade:6, diff:2, unit:6, img:'../images/6/6/6.webp' }, // EKLENDI
   { en:'DENTIST', tr:'DİŞ HEKİMİ', grade:6, diff:1, unit:6, img:'../images/6/6/7.webp' }, // EKLENDI
   { en:'MECHANIC', tr:'TAMİRCİ', grade:6, diff:2, unit:6, img:'../images/6/6/8.webp' }, // EKLENDI
-  { en:'HOUSEWIFE', tr:'EV KADINI', grade:6, diff:2, unit:6, img:'../images/6/6/9.webp' }, // EKLENDI
+  { en:'HOUSEWIFE', tr:'EV HANIMI', grade:6, diff:2, unit:6, img:'../images/6/6/9.webp' }, // EKLENDI
   { en:'DRIVER', tr:'ŞOFÖR', grade:6, diff:1, unit:6, img:'../images/6/6/10.webp' }, // EKLENDI
   { en:'SALESWOMAN', tr:'SATIŞ ELEMANI', grade:6, diff:3, unit:6, img:'../images/6/6/11.webp' }, // EKLENDI
   { en:'RETIRED', tr:'EMEKLİ', grade:6, diff:3, unit:6, img:'../images/6/6/12.webp' }, // EKLENDI
   { en:'ENGINEER', tr:'MÜHENDİS', grade:6, diff:2, unit:6, img:'../images/6/6/13.webp' }, // EKLENDI
-  { en:'WAITRESS', tr:'GARSON', grade:6, diff:2, unit:6, img:'../images/6/6/14.webp' }, // EKLENDI
+  { en:'WAITER', tr:'ERKEK GARSON', grade:6, diff:2, unit:6, img:'../images/sp/16/14.webp' }, // EKLENDI
+  { en:'WAITRESS', tr:'KADIN GARSON', grade:6, diff:2, unit:6, img:'../images/6/6/14.webp' }, // EKLENDI
   { en:'FIREFIGHTER', tr:'İTFAİYECİ', grade:6, diff:2, unit:6, img:'../images/6/6/15.webp' }, // EKLENDI
   { en:'FARMER', tr:'ÇİFTÇİ', grade:6, diff:1, unit:6, img:'../images/6/6/16.webp' }, // EKLENDI
   { en:'WORKER', tr:'İŞÇİ', grade:6, diff:2, unit:6, img:'../images/6/6/17.webp' }, // EKLENDI

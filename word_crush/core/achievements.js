@@ -44,6 +44,30 @@
     { id: 'quick_runner', icon: '▶', name: 'QUICK RUNNER', desc: 'Complete 5 Quick games.', reward: 2500, test: s => s.quickRuns >= 5, progress: s => [Math.min(s.quickRuns, 5), 5], chain: 'speed_charger' },
     { id: 'speed_charger', icon: '▶', name: 'SPEED CHARGER', desc: 'Complete 15 Quick games.', reward: 5000, test: s => s.quickRuns >= 15, progress: s => [Math.min(s.quickRuns, 15), 15], chain: 'speed_legend' },
     { id: 'speed_legend', icon: '▶', name: 'SPEED LEGEND', desc: 'Complete 30 Quick games.', reward: 10000, test: s => s.quickRuns >= 30, progress: s => [Math.min(s.quickRuns, 30), 30], badge: 'speedy' },
+
+    // ── ADVENTURE: EXPLORER
+    { id: 'adv_crawler',  icon: '🗺', name: 'DUNGEON CRAWLER', desc: 'Complete 5 adventure nodes.',  reward: 1000,  test: s => s.adventureNodes >= 5,  progress: s => [Math.min(s.adventureNodes, 5),  5],  chain: 'adv_caving_vet' },
+    { id: 'adv_caving_vet', icon: '🗺', name: 'CAVING VETERAN', desc: 'Complete 15 adventure nodes.', reward: 3000, test: s => s.adventureNodes >= 15, progress: s => [Math.min(s.adventureNodes, 15), 15], chain: 'adv_dungeon_master' },
+    { id: 'adv_dungeon_master', icon: '🗺', name: 'DUNGEON MASTER', desc: 'Complete 50 adventure nodes.', reward: 10000, test: s => s.adventureNodes >= 50, progress: s => [Math.min(s.adventureNodes, 50), 50], badge: 'dungeonmaster' },
+
+    // ── ADVENTURE: CONQUEROR
+    { id: 'adv_first_conquest', icon: '👑', name: 'FIRST CONQUEST', desc: 'Defeat the boss and complete your first adventure run.', reward: 3000, test: s => s.adventureRuns >= 1, progress: s => [Math.min(s.adventureRuns, 1), 1], chain: 'adv_invader' },
+    { id: 'adv_invader', icon: '👑', name: 'DUNGEON INVADER', desc: 'Complete 3 adventure runs.', reward: 7000, test: s => s.adventureRuns >= 3, progress: s => [Math.min(s.adventureRuns, 3), 3], chain: 'adv_conqueror' },
+    { id: 'adv_conqueror', icon: '👑', name: 'CONQUEROR', desc: 'Complete 10 adventure runs.', reward: 20000, test: s => s.adventureRuns >= 10, progress: s => [Math.min(s.adventureRuns, 10), 10], badge: 'conqueror' },
+
+    // ── ADVENTURE: ELITE HUNTER
+    { id: 'adv_elite_hunter', icon: '💀', name: 'ELITE HUNTER', desc: 'Defeat 5 elite enemies.', reward: 2000, test: s => s.adventureElites >= 5, progress: s => [Math.min(s.adventureElites, 5), 5], chain: 'adv_elite_slayer' },
+    { id: 'adv_elite_slayer', icon: '💀', name: 'ELITE SLAYER', desc: 'Defeat 15 elite enemies.', reward: 5000, test: s => s.adventureElites >= 15, progress: s => [Math.min(s.adventureElites, 15), 15], chain: 'adv_elites_bane' },
+    { id: 'adv_elites_bane', icon: '💀', name: "ELITE'S BANE", desc: 'Defeat 30 elite enemies.', reward: 12000, test: s => s.adventureElites >= 30, progress: s => [Math.min(s.adventureElites, 30), 30], badge: 'elitebane' },
+
+    // ── ADVENTURE: MISER
+    { id: 'adv_miser', icon: '🪙', name: 'HUMBLE', desc: 'Complete an adventure run without spending any gold in the shop.', reward: 5000, test: s => s.adventureMiserRuns >= 1, progress: s => [Math.min(s.adventureMiserRuns, 1), 1], badge: 'miser' },
+
+    // ── ADVENTURE: JOKER HATER
+    { id: 'adv_joker_hater', icon: '🚫', name: 'RAW TALENT', desc: 'Complete an adventure run without using a single joker.', reward: 5000, test: s => s.adventureJokerFreeRuns >= 1, progress: s => [Math.min(s.adventureJokerFreeRuns, 1), 1], badge: 'jokerhater' },
+
+    // ── ADVENTURE: UNTOUCHABLE
+    { id: 'adv_untouchable', icon: '🛡', name: 'UNTOUCHABLE', desc: 'Complete an adventure run without losing a single life.', reward: 10000, test: s => s.adventurePerfectRuns >= 1, progress: s => [Math.min(s.adventurePerfectRuns, 1), 1], badge: 'untouchable' },
   ];
 
   const WC_ACHIEVEMENT_GROUPS = [
@@ -55,6 +79,7 @@
     { id: 'perfect_run', icon: '◉', label: 'PERFECT CLEAR', ids: ['clean_sweep', 'iron_crusher', 'crystal_crusher'] },
     { id: 'daily_board', icon: '📅', label: 'DAILY BOARD', ids: ['daily_starter', 'daily_devotee', 'daily_legend'] },
     { id: 'quick_runner', icon: '▶', label: 'QUICK RUNNER', ids: ['quick_runner', 'speed_charger', 'speed_legend'] },
+    { id: 'adventure', icon: '🗺', label: 'ADVENTURE', ids: ['adv_crawler', 'adv_caving_vet', 'adv_dungeon_master', 'adv_first_conquest', 'adv_invader', 'adv_conqueror', 'adv_elite_hunter', 'adv_elite_slayer', 'adv_elites_bane', 'adv_miser', 'adv_joker_hater', 'adv_untouchable'] },
   ];
 
   let _achGroup = null;
@@ -77,7 +102,13 @@
       totalCorrect: Number(stats.totalCorrect) || 0,
       perfectRuns: Number(stats.perfectRuns) || 0,
       dailyBoardsCompleted: Number(stats.dailyBoardsCompleted) || 0,
-      quickRuns: Number(stats.quickRunsCompleted) || 0,
+      quickRuns:              Number(stats.quickRunsCompleted)   || 0,
+      adventureNodes:         Number(stats.adventureNodes)        || 0,
+      adventureRuns:          Number(stats.adventureRuns)         || 0,
+      adventureElites:        Number(stats.adventureElites)       || 0,
+      adventureMiserRuns:     Number(stats.adventureMiserRuns)    || 0,
+      adventureJokerFreeRuns: Number(stats.adventureJokerFreeRuns)|| 0,
+      adventurePerfectRuns:   Number(stats.adventurePerfectRuns)  || 0,
     };
   }
 

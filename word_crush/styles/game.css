@@ -215,6 +215,7 @@
 }
 
 .board-panel {
+  position: relative;
   min-width: 0;
   min-height: 0;
   padding: clamp(12px, 1.6vw, 22px);
@@ -227,6 +228,7 @@
 }
 
 .english-board {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(5, minmax(0, 1fr));
@@ -602,6 +604,51 @@ body.lite-mode .paper-card.intro-card {
     opacity: 1;
     transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   }
+}
+
+.paper-card.new-card {
+  animation: newCardIn 0.35s cubic-bezier(0.22, 0.88, 0.36, 1) both;
+}
+body.lite-mode .paper-card.new-card { animation: none; }
+
+@keyframes newCardIn {
+  from { opacity: 0; transform: translateX(40px) scale(0.9); }
+  to   { opacity: 1; transform: translateX(0)    scale(1);   }
+}
+
+/* ── BLAST CURSOR ── */
+.blast-cursor {
+  display: none;
+  position: absolute;
+  width: 66.67%;
+  height: 40%;
+  border: 3px solid #f97316;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(249,115,22,.8), inset 0 0 8px rgba(249,115,22,.25);
+  pointer-events: none;
+  z-index: 20;
+  transition: left .4s cubic-bezier(.4,0,.2,1), top .4s cubic-bezier(.4,0,.2,1);
+}
+.blast-cursor.active {
+  display: block;
+  pointer-events: auto;
+  cursor: crosshair;
+}
+body.lite-mode .blast-cursor { transition: none; }
+@keyframes blastPulse {
+  0%,100% { box-shadow: 0 0 10px rgba(249,115,22,.7), inset 0 0 6px rgba(249,115,22,.2); }
+  50%      { box-shadow: 0 0 22px rgba(249,115,22,1),  inset 0 0 14px rgba(249,115,22,.4); }
+}
+.blast-cursor.active { animation: blastPulse 1s ease-in-out infinite; }
+body.lite-mode .blast-cursor.active { animation: none; }
+
+/* ── JOKER REVEAL HIGHLIGHT ── */
+.gem.joker-revealed,
+.paper-card.joker-revealed {
+  outline: 3px solid #a78bfa;
+  outline-offset: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(167,139,250,.8);
 }
 
 @keyframes scoreFloat {

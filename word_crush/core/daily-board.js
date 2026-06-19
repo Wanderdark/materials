@@ -1,6 +1,6 @@
 (function () {
   const TIERS = ["easy", "medium", "hard"];
-  const DAILY_RULE_VERSION = 2;
+  const DAILY_RULE_VERSION = 3;
   let returnScreen = "hub";
   let countdownTimer = null;
 
@@ -76,18 +76,23 @@
     if (!state || state.dailyRecorded || !window.WordCrushProfile.getProfile()) return;
     state.dailyRecorded = true;
 
-    const completed = (state.turkishCards || []).length === 0;
+    const adventureCompleted = state.runType === "adventure" && Number(state.advEnemyHp) <= 0;
+    const boardCompleted = (state.turkishCards || []).length === 0;
+    const completed = state.runType === "adventure" ? adventureCompleted : boardCompleted;
     const stars = starsForScore(state.score);
     const before = dailyCompletedCount();
 
     addDaily("correctAnswers", Number(state.matches) || 0);
     addDaily("runScore", Number(state.score) || 0, "max");
     addDaily("bestStreak", Number(state.comboBest) || 0, "max");
-    if (completed) addDaily("completedLevels", 1);
+    if (completed && state.runType !== "adventure") addDaily("completedLevels", 1);
     if (completed && state.runType === "campaign") addDaily("campaignLevels", 1);
-    if (completed && stars > 0) addDaily("stars", stars);
-    if (completed && stars >= 3) addDaily("threeStarLevels", 1);
-    if (completed && Number(state.wrongs) === 0) addDaily("noMistakeLevels", 1);
+    if (adventureCompleted) addDaily("adventureNodes", 1);
+    if (adventureCompleted && state.advNodeType === "elite") addDaily("adventureElites", 1);
+    if (adventureCompleted && state.advNodeType === "boss") addDaily("adventureRuns", 1);
+    if (completed && state.runType !== "adventure" && stars > 0) addDaily("stars", stars);
+    if (completed && state.runType !== "adventure" && stars >= 3) addDaily("threeStarLevels", 1);
+    if (completed && state.runType !== "adventure" && Number(state.wrongs) === 0) addDaily("noMistakeLevels", 1);
 
     const gained = dailyCompletedCount() - before;
     if (gained > 0 && window.ToastManager) {

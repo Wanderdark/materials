@@ -39,7 +39,13 @@
         bestStreak: 0,
         perfectRuns: 0,
         dailyBoardsCompleted: 0,
-        quickRunsCompleted: 0
+        quickRunsCompleted: 0,
+        adventureNodes:        0,
+        adventureRuns:         0,
+        adventureElites:       0,
+        adventureMiserRuns:     0,
+        adventureJokerFreeRuns: 0,
+        adventurePerfectRuns:   0
       },
       campaign: {
         unlockedLevel: 1,
@@ -274,6 +280,20 @@
     store();
   }
 
+  function addAdventureReward({ score, nodes, run, elite, miser, jokerFree, perfectRun }) {
+    const stats = { ...fresh().stats, ...(save.stats || {}) };
+    stats.totalScore            += Number(score)  || 0;
+    stats.adventureNodes        += Number(nodes)  || 0;
+    stats.adventureRuns         += Number(run)    || 0;
+    stats.adventureElites       += Number(elite)  || 0;
+    stats.adventureMiserRuns    += miser       ? 1 : 0;
+    stats.adventureJokerFreeRuns+= jokerFree   ? 1 : 0;
+    stats.adventurePerfectRuns  += perfectRun  ? 1 : 0;
+    save.stats = stats;
+    store();
+    setTimeout(() => window.WCAchievements?.checkAndNotify?.(), 400);
+  }
+
   function claimDailyReward(reward) {
     const stats = { ...fresh().stats, ...(save.stats || {}) };
     stats.totalScore += Number(reward) || 0;
@@ -426,6 +446,7 @@
     getDailyProgress,
     setDailyProgress,
     claimDailyReward,
+    addAdventureReward,
     avatarPath,
     playerScore,
     getRawSave,

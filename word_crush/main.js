@@ -42,6 +42,10 @@
 
     document.getElementById("settings-btn").addEventListener("click", openSettings);
 
+    document.getElementById("adv-run-btn").addEventListener("click", () => {
+      window.AdvRun.startRun();
+    });
+
     const volSlider = document.getElementById("wc-music-vol-slider");
     if (volSlider) {
       volSlider.addEventListener("input", () => {
@@ -57,19 +61,19 @@
     });
 
     document.getElementById("result-back-btn").addEventListener("click", () => {
-      if (window.WordCrushGame?.getLastResultRoute?.() === "campaign" && window.WordCrushCampaign) {
+      const route = window.WordCrushGame?.getLastResultRoute?.();
+      if (route === "campaign" && window.WordCrushCampaign) {
         window.WordCrushCampaign.showCampaign();
         return;
       }
-
+      if (route === "adventure" && window.AdvRun) {
+        window.AdvRun.returnToMap();
+        return;
+      }
       window.WordCrushProfile.showHub();
     });
 
-    document.getElementById("pause-btn").addEventListener("click", () => {
-      window.WordCrushGame.togglePause();
-    });
-
-    document.getElementById("mute-btn").addEventListener("click", toggleMute);
+document.getElementById("mute-btn").addEventListener("click", toggleMute);
     document.getElementById("menu-mute-btn").addEventListener("click", toggleMute);
     document.getElementById("lite-btn").addEventListener("click", toggleLite);
     document.getElementById("menu-lite-btn").addEventListener("click", toggleLite);
@@ -135,7 +139,7 @@
     ["mute-btn", "menu-mute-btn"].forEach((id) => {
       const button = document.getElementById(id);
       if (!button) return;
-      button.textContent = muted ? "Mute" : "Sound";
+      button.textContent = muted ? "🔇" : "🔊";
       button.classList.toggle("muted", muted);
     });
   }

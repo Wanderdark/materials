@@ -12,6 +12,9 @@
   const INTRO_DURATION = 2000;
 
   function startGame(options = {}) {
+    if (_blastTimer) { clearInterval(_blastTimer); _blastTimer = null; }
+    const _bc = document.getElementById('blast-cursor');
+    if (_bc) { _bc.classList.remove('active'); _bc.onclick = null; }
     stopTimer();
     introRunId += 1;
     const runId = introRunId;
@@ -20,12 +23,26 @@
     const sourceWords = normalizeSourceWords(options.words || window.WordCrushAdapter?.buildWordPool?.() || window.WORD_CRUSH_WORDS || []);
     state.wordBank = shuffle([...sourceWords]);
     state.isRunning = true;
-    state.runType = options.runType || "quick";
+    state.runType     = options.runType || "quick";
+    state.advNodeId     = options.advNodeId || null;
+    state.advNodeType   = options.advNodeType || null;
+    state.advGoldReward = options.advGoldReward || 0;
+    state.advLives      = options.advLives    != null ? options.advLives    : null;
+    state.advMaxLives   = options.advMaxLives != null ? options.advMaxLives : (options.advLives != null ? options.advLives : null);
+    state.advEnemyHp    = options.advEnemyHp  != null ? options.advEnemyHp  : null;
+    state.advEnemyMaxHp = options.advEnemyHp  != null ? options.advEnemyHp  : null;
+    state.advWordPool   = options.advWordPool  || null;
+    state.advUsedIds    = new Set();
+    if (options.advTimeOverride != null) state.secondsLeft = options.advTimeOverride;
+    else if (options.advTimeMod) state.secondsLeft = Math.max(30, state.secondsLeft + options.advTimeMod);
     state.campaignId = options.campaignId || null;
     state.campaignLevel = options.campaignLevel || null;
     state.campaignTotalLevels = options.campaignTotalLevels || window.WordCrushCampaign?.LEVELS?.length || 10;
     state.levelNumber = options.levelNumber || 1;
     state.activeWords = drawWords(State.BOARD_SIZE, new Set());
+    if (state.runType === 'adventure') {
+      state.activeWords.forEach(word => state.advUsedIds.add(word.id));
+    }
     state.englishGrid = buildInitialEnglishGrid(state.activeWords);
     state.turkishCards = shuffle(state.activeWords.map((word) => ({ word })));
     state.boardSize = state.turkishCards.length;
@@ -61,6 +78,9 @@
     state.isRunning = false;
     state.isPaused = false;
     state.isResolving = false;
+    if (_blastTimer) { clearInterval(_blastTimer); _blastTimer = null; }
+    const _bc2 = document.getElementById('blast-cursor');
+    if (_bc2) { _bc2.classList.remove('active'); _bc2.onclick = null; }
     stopTimer();
     if (window.WordCrushProfile) {
       window.WordCrushProfile.recordRun(state);
@@ -74,8 +94,75 @@
     if (window.WordCrushDaily) {
       window.WordCrushDaily.recordRun(state);
     }
-    lastResultRoute = state.runType === "campaign" ? "campaign" : "hub";
+    if (window.AdvRun) {
+      window.AdvRun.recordResult(state);
+    }
+    lastResultRoute = state.runType === "campaign" ? "campaign"
+                    : state.runType === "adventure" ? "adventure"
+                    : "hub";
     Screens.showResult(state);
+  }
+
+  function _drawOneAdventureWord() {
+    if (!state.advWordPool) return null;
+    if (!state.advUsedIds) state.advUsedIds = new Set();
+    const activeIds = new Set([
+      ...state.turkishCards.map(c => c.word.id),
+      ...state.englishGrid.filter(Boolean).map(t => t.word.id)
+    ]);
+    let available = state.advWordPool.filter(w => !activeIds.has(w.id) && !state.advUsedIds.has(w.id));
+    if (!available.length) {
+      state.advUsedIds = new Set(activeIds);
+      available = state.advWordPool.filter(w => !activeIds.has(w.id));
+    }
+    if (!available.length) return null;
+    const word = available[Math.floor(Math.random() * available.length)];
+    state.advUsedIds.add(word.id);
+    return word;
+  }
+
+  // Returns true if the game ended (caller should return immediately)
+  async function _advHpHit(count) {
+    state.advEnemyHp = Math.max(0, state.advEnemyHp - count);
+    Screens.updateHud(state);
+    if (state.advEnemyHp <= 0) {
+      await adventureVictory();
+      return true;
+    }
+    return false;
+  }
+
+  async function adventureVictory() {
+    stopTimer();
+    state.isResolving = true;
+    state.isPaused = false;
+    Screens.setMessage("ENEMY DEFEATED!");
+    if (window.ToastManager) window.ToastManager.show("ENEMY DEFEATED! ⚔");
+    await sleep(1200);
+    endGame();
+  }
+
+  async function adventureWaveRefill() {
+    state.isResolving = true;
+    Screens.setMessage("Next wave incoming...");
+    await sleep(600);
+
+    const newWords = [];
+    for (let index = 0; index < State.BOARD_SIZE; index += 1) {
+      const word = _drawOneAdventureWord();
+      if (word) newWords.push(word);
+    }
+    if (!newWords.length) { endGame(); return; }
+
+    state.turkishCards = shuffle(newWords.map(w => ({ word: w })));
+    collapseColumns();
+    refillEnglishFromTurkishCards();
+    render();
+
+    await sleep(400);
+    state.isResolving = false;
+    Screens.setMessage("Pick the next pair.");
+    render();
   }
 
   async function completeBoard() {
@@ -171,8 +258,25 @@
     render();
     await sleep(520);
 
+    if (state.runType === 'adventure' && state.advEnemyHp !== null) {
+      if (await _advHpHit(1)) return;
+      // Continuous refill: add new word to keep deck alive
+      const newWord = _drawOneAdventureWord();
+      if (newWord) {
+        state.turkishCards.push({ word: newWord, isNew: true });
+        refillEnglishFromTurkishCards();
+        render();
+        // clear isNew flag after render so animation only plays once
+        state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      }
+    }
+
     if (!state.turkishCards.length) {
-      await completeBoard();
+      if (state.runType === 'adventure') {
+        await adventureWaveRefill(); // safety fallback, should not trigger
+      } else {
+        await completeBoard();
+      }
       return;
     }
 
@@ -212,6 +316,10 @@
       refillEnglishFromTurkishCards();
       render();
       await sleep(520);
+
+      if (state.runType === 'adventure' && state.advEnemyHp !== null) {
+        if (await _advHpHit(wordIds.length)) return;
+      }
     }
 
     if (chain >= State.COMBO_CHAIN_LIMIT && findColorGroups().length) {
@@ -591,7 +699,20 @@
     tile.color = "black";
     releasePreviousLock(selectedWordId);
     state.lockedTurkishId = selectedWordId;
-    Screens.setMessage("Wrong match. Turkish card locked, gem turned black.");
+
+    if (state.runType === 'adventure' && state.advLives !== null) {
+      state.advLives = Math.max(0, state.advLives - 1);
+      Screens.updateHud(state);
+      if (state.advLives <= 0) {
+        Screens.setMessage("No lives left — fight lost!");
+        setTimeout(() => endGame(), 900);
+        return;
+      }
+      const hearts = '♥'.repeat(state.advLives) + '♡'.repeat(state.advMaxLives - state.advLives);
+      Screens.setMessage(`Wrong match! ${hearts} lives remaining.`);
+    } else {
+      Screens.setMessage("Wrong match. Turkish card locked, gem turned black.");
+    }
   }
 
   function releasePreviousLock(nextLockedId) {
@@ -799,10 +920,145 @@
     return new Promise((resolve) => window.setTimeout(resolve, ms));
   }
 
+  // ── JOKER ACTIVATIONS ────────────────────────────────────────────────────
+  let _blastTimer = null;
+  let _blastPos   = { row: 0, col: 0 };
+
+  async function activateTransmute() {
+    if (!state.isRunning || state.isResolving) return false;
+    const colors = State.COLORS;
+    state.englishGrid = state.englishGrid.map(tile => {
+      if (!tile) return null;
+      return { ...tile, color: colors[Math.floor(Math.random() * colors.length)] };
+    });
+    render();
+    Audio.play('combo');
+    await sleep(300);
+    state.isResolving = true;
+    await resolveCombos();
+    state.isResolving = false;
+    Screens.setMessage('TRANSMUTE! Gems reshuffled.');
+    render();
+    return true;
+  }
+
+  function activateReveal() {
+    if (!state.isRunning || state.isResolving) return false;
+    const tiles = state.englishGrid.filter(Boolean);
+    if (!tiles.length) return false;
+    const target = tiles[Math.floor(Math.random() * tiles.length)];
+    const id = target.word.id;
+    [
+      document.querySelector(`#english-board [data-word-id="${id}"]`),
+      document.querySelector(`#turkish-board [data-word-id="${id}"]`)
+    ].forEach(el => {
+      if (!el) return;
+      el.classList.add('joker-revealed');
+      setTimeout(() => el.classList.remove('joker-revealed'), 4000);
+    });
+    Screens.setMessage('REVEAL! Find the highlighted pair.');
+    return true;
+  }
+
+  function activateBlast() {
+    if (!state.isRunning || state.isResolving || _blastTimer) return false;
+    const cursor = document.getElementById('blast-cursor');
+    if (!cursor) return false;
+    state.isResolving = true;
+    cursor.classList.add('active');
+    _moveBlastCursor();
+    _blastTimer = setInterval(_moveBlastCursor, 700);
+    Screens.setMessage('BLAST! Click the target.');
+    cursor.onclick = _onBlastFire;
+    return true;
+  }
+
+  function _moveBlastCursor() {
+    const row = Math.floor(Math.random() * (State.ROWS - 1));
+    const col = Math.floor(Math.random() * (State.COLS - 1));
+    _blastPos = { row, col };
+    const cursor = document.getElementById('blast-cursor');
+    if (!cursor) return;
+    cursor.style.left = `${(col / State.COLS) * 100}%`;
+    cursor.style.top  = `${(row / State.ROWS) * 100}%`;
+  }
+
+  async function _onBlastFire() {
+    const cursor = document.getElementById('blast-cursor');
+    clearInterval(_blastTimer);
+    _blastTimer = null;
+    if (cursor) { cursor.classList.remove('active'); cursor.onclick = null; }
+
+    const { row, col } = _blastPos;
+    const indices = [
+      row * State.COLS + col,
+      row * State.COLS + col + 1,
+      (row + 1) * State.COLS + col,
+      (row + 1) * State.COLS + col + 1,
+    ];
+    const wordIds = [...new Set(indices.map(i => state.englishGrid[i]?.word?.id).filter(Boolean))];
+
+    if (!wordIds.length) { state.isResolving = false; return; }
+
+    Board.markEnglishCrushing(wordIds);
+    Board.markTurkishCrushing(wordIds);
+    Audio.play('combo');
+    await sleep(760);
+
+    removeEnglishWords(wordIds);
+    state.turkishCards = state.turkishCards.filter(c => !wordIds.includes(c.word.id));
+
+    for (let i = 0; i < wordIds.length; i++) {
+      const w = _drawOneAdventureWord();
+      if (w) state.turkishCards.push({ word: w, isNew: true });
+    }
+
+    collapseColumns();
+    refillEnglishFromTurkishCards();
+    render();
+    state.turkishCards.forEach(c => { c.isNew = false; });
+
+    await sleep(400);
+    if (await _advHpHit(wordIds.length)) return;
+
+    state.isResolving = false;
+    Screens.setMessage('Pick the next pair.');
+    render();
+  }
+
+  function activateHeal() {
+    if (!state.isRunning) return false;
+    const max = state.advMaxLives || 5;
+    if (state.advLives >= max) return false;
+    state.advLives = Math.min(max, (state.advLives || 0) + 2);
+    Screens.updateHud(state);
+    Screens.setMessage(`❤️‍🩹 +2 CAN! (${state.advLives}/${max})`);
+    Audio.play('correct');
+    return true;
+  }
+
+  function activateStamina() {
+    if (!state.isRunning) return false;
+    state.secondsLeft += 30;
+    Screens.updateHud(state);
+    Screens.setMessage('⚡ +30 SN SÜRE!');
+    Audio.play('correct');
+    return true;
+  }
+
+  function activateJoker(type) {
+    if (type === 'transmute') return activateTransmute();
+    if (type === 'reveal')    return activateReveal();
+    if (type === 'blast')     return activateBlast();
+    if (type === 'heal')      return activateHeal();
+    if (type === 'stamina')   return activateStamina();
+  }
+
   window.WordCrushGame = {
     startGame,
     togglePause,
     endGame,
+    activateJoker,
     getLastResultRoute: () => lastResultRoute,
     getState: () => state
   };

@@ -20,7 +20,7 @@
   let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 30));
 
   function play(name) {
-    if (muted || !SOUNDS[name]) return;
+    if (!SOUNDS[name]) return;
     try {
       const audio = new Audio(resolveSource(name));
       audio.volume = volumes[name] ?? 0.7;

@@ -7,7 +7,9 @@
 
   function renderEnglishBoard(state, handlers) {
     const board = document.getElementById("english-board");
+    const blastCursor = document.getElementById("blast-cursor");
     board.innerHTML = "";
+    if (blastCursor) board.appendChild(blastCursor);
 
     state.englishGrid.forEach((tile, index) => {
       if (!tile) {
@@ -44,6 +46,7 @@
       const button = document.createElement("button");
       button.className = "paper-card";
       button.classList.toggle("intro-card", Boolean(card.intro));
+      button.classList.toggle("new-card", Boolean(card.isNew));
       button.dataset.wordId = card.word.id;
       button.style.setProperty("--intro-delay", `${card.introDelay || 0}ms`);
       button.style.setProperty("--intro-x", `${card.introX || 0}px`);
@@ -53,7 +56,7 @@
       button.appendChild(createLabel(card.word.tr));
       button.classList.toggle("selected", state.selectedTurkishId === card.word.id);
       button.classList.toggle("locked", state.lockedTurkishId === card.word.id);
-      button.disabled = state.isResolving || state.isPaused || state.lockedTurkishId === card.word.id;
+      button.disabled = state.isResolving || state.lockedTurkishId === card.word.id;
       button.addEventListener("click", () => handlers.onTurkish(card.word.id));
       board.appendChild(button);
     });

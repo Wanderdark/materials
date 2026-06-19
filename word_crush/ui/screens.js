@@ -21,6 +21,8 @@
 
     if (state.runType === "campaign") {
       setText("sp-hud-q", `LEVEL ${state.campaignLevel || state.levelNumber || 1}/${state.campaignTotalLevels || 10}`);
+    } else if (state.runType === "adventure") {
+      setText("sp-hud-q", "ADVENTURE");
     } else {
       setText("sp-hud-q", "QUICK GAME");
     }
@@ -29,21 +31,37 @@
     setText("sp-hud-lives", formatTime(state.secondsLeft));
     setText("sp-hud-streak", String(state.comboBest || 0));
 
-    const pauseButton = document.getElementById("pause-btn");
-    if (pauseButton) {
-      pauseButton.textContent = state.isPaused ? "▶" : "Ⅱ";
-      pauseButton.title = state.isPaused ? "Resume" : "Pause";
+    const jokerBtn = document.getElementById("adv-joker-btn");
+    if (jokerBtn) jokerBtn.style.display = state.runType === "adventure" ? "" : "none";
+
+    const advLivesCell = document.getElementById("sp-hud-adv-lives");
+    if (advLivesCell) {
+      if (state.runType === "adventure" && state.advMaxLives) {
+        advLivesCell.style.display = "";
+        const filled = Math.max(0, state.advLives || 0);
+        const empty  = Math.max(0, (state.advMaxLives || 0) - filled);
+        setText("sp-hud-adv-lives-val", "♥".repeat(filled) + "♡".repeat(empty));
+      } else {
+        advLivesCell.style.display = "none";
+      }
     }
 
-    const fill = document.getElementById("wo-hud-progress");
+const fill = document.getElementById("wo-hud-progress");
     if (fill) {
-      fill.style.width = `${progressPct}%`;
-      fill.className = "wo-progress-fill";
-      if (state.score >= starThresholds[2]) fill.classList.add("s3");
-      else if (state.score >= starThresholds[1]) fill.classList.add("s2");
-      else if (state.score >= starThresholds[0]) fill.classList.add("s1");
+      if (state.runType === "adventure" && state.advEnemyMaxHp) {
+        const hpPct = Math.max(0, Math.round((state.advEnemyHp / state.advEnemyMaxHp) * 100));
+        fill.style.width = `${hpPct}%`;
+        fill.className = "wo-progress-fill adv-hp-bar";
+      } else {
+        fill.style.width = `${progressPct}%`;
+        fill.className = "wo-progress-fill";
+        if (state.score >= starThresholds[2]) fill.classList.add("s3");
+        else if (state.score >= starThresholds[1]) fill.classList.add("s2");
+        else if (state.score >= starThresholds[0]) fill.classList.add("s1");
+      }
     }
 
+    const starsVisible = state.runType !== "adventure";
     starThresholds.forEach((threshold, index) => {
       const mark = document.getElementById(`wo-pmark-${index + 1}`);
       const star = document.getElementById(`wo-pstar-${index + 1}`);
@@ -51,10 +69,12 @@
 
       if (mark) {
         mark.style.left = left;
+        mark.style.display = starsVisible ? "" : "none";
       }
 
       if (star) {
         star.style.left = left;
+        star.style.display = starsVisible ? "" : "none";
         star.classList.toggle("lit", state.score >= threshold);
       }
 
@@ -64,7 +84,7 @@
         if (window.WordCrushAudio) {
           window.WordCrushAudio.play("star");
         }
-        if (window.ToastManager) {
+        if (window.ToastManager && state.runType !== "adventure") {
           window.ToastManager.show(starMessages[index]);
         }
       }
@@ -94,6 +114,19 @@
   }
 
   function showResult(state) {
+    const completed = state.runType === "adventure"
+      ? state.advEnemyHp <= 0
+      : (state.turkishCards || []).length === 0;
+    const titleEl = document.getElementById("result-title");
+    if (titleEl) {
+      if (state.runType === "adventure") {
+        titleEl.textContent = completed ? "SUCCESS!" : "GAME OVER";
+        titleEl.style.color = completed ? "#4ade80" : "";
+      } else {
+        titleEl.textContent = "GAME OVER";
+        titleEl.style.color = "";
+      }
+    }
     document.getElementById("final-score").textContent = String(state.score);
     document.getElementById("final-stats").innerHTML = [
       ["WORD SCORE", state.wordScore],
@@ -108,7 +141,6 @@
     )).join("");
     showScreen("result-screen");
 
-    const completed = (state.turkishCards || []).length === 0;
     if (completed) {
       const stars = window.WordCrushCampaign?.starsForScore?.(state.score) ?? 0;
       if (stars >= 3) {

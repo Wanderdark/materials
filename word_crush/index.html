@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/base.css?v=campaign-ready-1">
-  <link rel="stylesheet" href="styles/game.css?v=campaign-ready-1">
+  <link rel="stylesheet" href="styles/base.css?v=adventure-words-1">
+  <link rel="stylesheet" href="styles/game.css?v=adventure-words-1">
 </head>
 <body>
   <main id="app">
@@ -48,7 +48,7 @@
             <img src="images/dailyboard.webp" alt="DAILY BOARD" onerror="this.remove()">
             <span>DAILY BOARD</span>
           </button>
-          <button class="mode-chart disabled" type="button" data-disabled-mode="ADVENTURE RUN" disabled>
+          <button id="adv-run-btn" class="mode-chart" type="button">
             <img src="images/adventurerun.webp" alt="ADVENTURE RUN" onerror="this.remove()">
             <span>ADVENTURE RUN</span>
           </button>
@@ -264,17 +264,32 @@
           <div id="sp-hud-streak" class="sp-hud-value">0</div>
           <div class="sp-hud-label">STREAK</div>
         </div>
+        <button id="adv-joker-btn" class="adv-joker-btn-hud" style="display:none" onclick="AdvRun.openJokerOverlay()">🃏 JOKER <span id="adv-joker-count">0</span></button>
+        <div id="sp-hud-adv-lives" class="sp-hud-cell" style="display:none">
+          <div id="sp-hud-adv-lives-val" class="sp-hud-value adv-lives-val"></div>
+          <div class="sp-hud-label">LIVES</div>
+        </div>
         <div id="sp-controls">
           <button id="lite-btn">LITE</button>
           <button class="ctrl-btn" id="mute-btn" title="Sound">🔊</button>
           <button class="ctrl-btn" id="fs-btn" title="Fullscreen">⛶</button>
-          <button class="ctrl-btn" id="pause-btn" title="Pause">Ⅱ</button>
         </div>
       </header>
 
+      <!-- JOKER SELECT OVERLAY -->
+      <div id="adv-joker-overlay" class="adv-joker-overlay" style="display:none" onclick="AdvRun.closeJokerOverlay()">
+        <div class="adv-joker-panel" onclick="event.stopPropagation()">
+          <div class="adv-joker-panel-title">USE A JOKER</div>
+          <div id="adv-joker-list" class="adv-joker-list"></div>
+          <button class="adv-joker-cancel" onclick="AdvRun.closeJokerOverlay()">CANCEL</button>
+        </div>
+      </div>
+
       <section class="play-stage">
         <div class="board-panel english-panel">
-          <div id="english-board" class="english-board"></div>
+          <div id="english-board" class="english-board">
+            <div id="blast-cursor" class="blast-cursor"></div>
+          </div>
         </div>
 
         <div class="board-panel turkish-panel">
@@ -312,6 +327,140 @@
         <div class="wo-level-footer">
           <button class="wo-level-action" onclick="WordCrushProfile.showProfile()">↩ BACK</button>
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ADVENTURE RUN MAP ═══════════ -->
+    <section id="adv-run-screen" class="screen">
+      <div class="adv-map-wrap">
+
+        <!-- HUD -->
+        <div class="adv-hud">
+          <div class="adv-hud-left">
+            <div class="adv-hud-title">ADVENTURE RUN</div>
+            <div id="adv-hud-lives" class="adv-hud-lives"></div>
+          </div>
+          <div class="adv-hud-right">
+            <div id="adv-hud-gold" class="adv-hud-gold">💰 0</div>
+            <div class="adv-hud-step-label">PROGRESS</div>
+            <div id="adv-hud-step" class="adv-hud-step">0 / 10</div>
+            <button class="adv-exit-btn" onclick="AdvRun.confirmExit()">✕ EXIT</button>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="adv-map-container">
+          <div class="adv-map-inner">
+            <img src="images/adv_map1.webp" class="adv-map-bg" alt="Adventure Map" draggable="false">
+            <svg id="adv-map-svg" class="adv-map-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div id="adv-map-nodes" class="adv-map-nodes"></div>
+          </div>
+        </div>
+
+        <!-- Exit Confirm Overlay -->
+        <div id="adv-exit-confirm-overlay" class="adv-exit-confirm-overlay">
+          <div class="adv-exit-confirm-panel">
+            <div class="adv-exit-confirm-icon">⚠</div>
+            <div class="adv-exit-confirm-title">ABANDON RUN?</div>
+            <div class="adv-exit-confirm-sub">All your progress will be lost.</div>
+            <div class="adv-exit-confirm-btns">
+              <button class="adv-exit-confirm-btn adv-exit-confirm-btn--cancel" onclick="AdvRun.cancelExit()">CONTINUE</button>
+              <button class="adv-exit-confirm-btn adv-exit-confirm-btn--exit" onclick="AdvRun.exitRun()">ABANDON</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Overlay -->
+        <div id="adv-shop-overlay" class="adv-shop-overlay">
+          <div class="adv-shop-panel">
+            <img src="images/shop.webp" class="adv-shop-img" alt="Shop" draggable="false">
+            <div class="adv-shop-content">
+              <div class="adv-shop-header">
+                <div class="adv-shop-title">⚗ GEM BAZAAR</div>
+                <div class="adv-shop-gold">🪙 <span id="adv-shop-gold-val">0</span></div>
+              </div>
+              <div id="adv-shop-items" class="adv-shop-items"></div>
+              <button class="adv-shop-leave" onclick="AdvRun.closeShop()">LEAVE SHOP →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Adventure Completed Overlay -->
+        <div id="adv-completed-overlay" class="adv-completed-overlay">
+          <div class="adv-completed-panel">
+            <div class="adv-completed-icon">🏆</div>
+            <div class="adv-completed-title">ADVENTURE COMPLETED!</div>
+            <div class="adv-completed-stats">
+              <div class="adv-cs-row"><span class="adv-cs-label">Doğru Kelime</span><span class="adv-cs-val" id="adv-completed-correct">0</span></div>
+              <div class="adv-cs-row"><span class="adv-cs-label">Yanlış Kelime</span><span class="adv-cs-val" id="adv-completed-wrong">0</span></div>
+              <div class="adv-cs-row"><span class="adv-cs-label">En Uzun Combo</span><span class="adv-cs-val" id="adv-completed-combo">0</span></div>
+              <div class="adv-cs-row adv-cs-bonus"><span class="adv-cs-label">Boss Bonus</span><span class="adv-cs-val" id="adv-completed-boss-bonus">+3000</span></div>
+              <div class="adv-cs-row adv-cs-bonus"><span class="adv-cs-label">Gold Tasarrufu</span><span class="adv-cs-val" id="adv-completed-savings">0</span></div>
+              <div class="adv-cs-row adv-cs-total"><span class="adv-cs-label">BOSS SKORU</span><span class="adv-cs-val" id="adv-completed-score">0</span></div>
+            </div>
+            <button class="adv-completed-btn" onclick="AdvRun.exitRun()">↩ RETURN TO HUB</button>
+          </div>
+        </div>
+
+        <!-- Run Failed Overlay -->
+        <div id="adv-run-failed-overlay" class="adv-run-failed-overlay">
+          <div class="adv-run-failed-panel">
+            <div class="adv-run-failed-icon">💀</div>
+            <div class="adv-run-failed-title">RUN FAILED</div>
+            <div class="adv-run-failed-sub">All lives lost. Your adventure ends here.</div>
+            <div class="adv-run-failed-gold">Gold collected: <span id="adv-fail-gold">0</span> 💰</div>
+            <button class="adv-run-failed-btn" onclick="AdvRun.exitRun()">↩ BACK TO HUB</button>
+          </div>
+        </div>
+
+        <!-- Node Preview Overlay -->
+        <div id="adv-preview-overlay" class="adv-prev-overlay">
+          <div class="adv-prev-panel">
+
+            <!-- Type badge -->
+            <div id="adv-prev-header" class="adv-prev-header">
+              <span id="adv-prev-type-icon" class="adv-prev-type-icon"></span>
+              <span id="adv-prev-type-label" class="adv-prev-type-label"></span>
+            </div>
+
+            <!-- Title -->
+            <div id="adv-prev-title" class="adv-prev-title"></div>
+            <div id="adv-prev-subtitle" class="adv-prev-subtitle"></div>
+            <div id="adv-prev-flavor" class="adv-prev-flavor"></div>
+
+            <!-- Stats grid -->
+            <div class="adv-prev-stats">
+              <div id="adv-prev-gold-row" class="adv-prev-stat-row">
+                <span class="adv-prev-stat-icon">💰</span>
+                <span class="adv-prev-stat-label">GOLD REWARD</span>
+                <span id="adv-prev-gold" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-lives-row" class="adv-prev-stat-row">
+                <span class="adv-prev-stat-icon">💀</span>
+                <span class="adv-prev-stat-label">ENEMY HP</span>
+                <span id="adv-prev-lives" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-time-row" class="adv-prev-stat-row adv-prev-stat-row--warn">
+                <span class="adv-prev-stat-icon">⏱</span>
+                <span class="adv-prev-stat-label">TIME MODIFIER</span>
+                <span id="adv-prev-time" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-units-row" class="adv-prev-stat-row adv-prev-units-row">
+                <span class="adv-prev-stat-icon">📚</span>
+                <span class="adv-prev-stat-label">UNITS</span>
+                <span id="adv-prev-units" class="adv-prev-stat-val adv-prev-units-val"></span>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="adv-prev-footer">
+              <button class="adv-prev-btn adv-prev-btn--cancel" onclick="AdvRun.cancelPreview()">✕ CANCEL</button>
+              <button class="adv-prev-btn adv-prev-btn--enter" onclick="AdvRun.enterNode()">ENTER ▶</button>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -371,7 +520,7 @@
 
     <section id="result-screen" class="screen">
       <div class="result-shell">
-        <h2>GAME OVER</h2>
+        <h2 id="result-title">GAME OVER</h2>
         <div id="final-score" class="final-score">0</div>
         <div id="final-stats" class="final-stats"></div>
         <button id="result-back-btn" class="primary-btn">BACK</button>
@@ -379,22 +528,23 @@
     </section>
   </main>
 
-  <script src="../word_contest/words.js?v=campaign-ready-1"></script>
-  <script src="../word_master/questions.js?v=campaign-ready-1"></script>
-  <script src="daily.js?v=campaign-ready-1"></script>
-  <script src="core/adapter.js?v=campaign-ready-1"></script>
-  <script src="core/audio.js?v=campaign-ready-1"></script>
-  <script src="core/game-state.js?v=campaign-ready-1"></script>
-  <script src="ui/toast.js?v=campaign-ready-1"></script>
-  <script src="ui/screens.js?v=campaign-ready-1"></script>
-  <script src="ui/game-board.js?v=campaign-ready-1"></script>
-  <script src="core/profile.js?v=campaign-ready-1"></script>
-  <script src="core/campaign.js?v=campaign-ready-1"></script>
-  <script src="core/daily-board.js?v=campaign-ready-1"></script>
-  <script src="ui/setup-screen.js?v=campaign-ready-1"></script>
-  <script src="core/game-loop.js?v=campaign-ready-1"></script>
-  <script src="core/achievements.js?v=campaign-ready-1"></script>
+  <script src="../word_contest/words.js?v=adventure-words-1"></script>
+  <script src="../word_master/questions.js?v=adventure-words-1"></script>
+  <script src="daily.js?v=adventure-words-1"></script>
+  <script src="core/adapter.js?v=adventure-words-1"></script>
+  <script src="core/audio.js?v=adventure-words-1"></script>
+  <script src="core/game-state.js?v=adventure-words-1"></script>
+  <script src="ui/toast.js?v=adventure-words-1"></script>
+  <script src="ui/screens.js?v=adventure-words-1"></script>
+  <script src="ui/game-board.js?v=adventure-words-1"></script>
+  <script src="core/profile.js?v=adventure-words-1"></script>
+  <script src="core/campaign.js?v=adventure-words-1"></script>
+  <script src="core/daily-board.js?v=adventure-words-1"></script>
+  <script src="ui/setup-screen.js?v=adventure-words-1"></script>
+  <script src="core/game-loop.js?v=adventure-words-1"></script>
+  <script src="core/achievements.js?v=adventure-words-1"></script>
+  <script src="core/adventure-run.js?v=adventure-words-1"></script>
   <script src="core/firebase.js?v=1"></script>
-  <script src="main.js?v=campaign-ready-1"></script>
+  <script src="main.js?v=adventure-words-1"></script>
 </body>
 </html>
