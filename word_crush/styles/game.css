@@ -692,3 +692,225 @@ body.lite-mode .blast-cursor.active { animation: none; }
     min-height: 420px;
   }
 }
+
+@media (orientation: landscape) and (max-height: 520px) {
+  #game-screen {
+    gap: 4px;
+    padding:
+      max(5px, env(safe-area-inset-top))
+      max(8px, env(safe-area-inset-right))
+      max(5px, env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+  }
+
+  #sp-header {
+    height: 44px;
+    min-height: 44px;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #sp-hud-avatar {
+    width: 34px;
+    height: 34px;
+    border-width: 1.5px;
+  }
+
+  .sp-hud-cell {
+    min-width: 54px;
+  }
+
+  #sp-hud-mode-cell {
+    min-width: 92px;
+  }
+
+  .sp-hud-value {
+    font-size: 20px;
+  }
+
+  .sp-hud-label {
+    font-size: 7px;
+    letter-spacing: 0.1em;
+  }
+
+  .wo-progress {
+    order: 0;
+    flex-basis: auto;
+    min-width: 120px;
+    gap: 1px;
+  }
+
+  .wo-progress-track {
+    height: 7px;
+  }
+
+  .wo-progress-stars-row {
+    height: 8px;
+  }
+
+  .wo-pstar {
+    font-size: 7px;
+  }
+
+  #sp-controls {
+    gap: 3px;
+  }
+
+  .ctrl-btn,
+  #lite-btn {
+    height: 28px;
+    border-radius: 7px;
+  }
+
+  .ctrl-btn {
+    width: 28px;
+    font-size: 12px;
+  }
+
+  #lite-btn {
+    width: 38px;
+    font-size: 8px;
+  }
+
+  .adv-joker-btn-hud {
+    padding: 3px 8px;
+    font-size: 12px;
+  }
+
+  .play-stage {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 8px;
+    min-height: 0;
+  }
+
+  .board-panel {
+    padding: 6px;
+    border-width: 2px;
+    border-radius: 8px;
+  }
+
+  .english-board,
+  .turkish-board {
+    gap: 5px;
+    min-height: 0;
+  }
+
+  .gem,
+  .gem-slot,
+  .paper-card {
+    min-height: 0;
+  }
+
+  .gem,
+  .paper-card {
+    padding: 4px 7px;
+  }
+
+  .gem {
+    border-radius: 6px;
+    font-size: clamp(15px, 3.4vh, 26px);
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.85), 0 0 7px rgba(0, 0, 0, 0.8);
+  }
+
+  .paper-card {
+    font-size: clamp(13px, 3vh, 24px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2), inset 0 0 0 1px rgba(121, 80, 47, 0.18);
+  }
+
+  .paper-card::after {
+    inset: 4px;
+  }
+
+  .paper-card.locked::before {
+    top: 2px;
+    right: 4px;
+    font-size: 8px;
+  }
+
+  .message-line {
+    min-height: 16px;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .gem.selected,
+  .paper-card.selected {
+    outline-width: 2px;
+    outline-offset: 1px;
+  }
+
+  .score-float {
+    font-size: 40px;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 380px) {
+  #game-screen {
+    gap: 3px;
+  }
+
+  #sp-header {
+    height: 38px;
+    min-height: 38px;
+    padding: 3px 6px;
+  }
+
+  #sp-hud-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .sp-hud-cell {
+    min-width: 46px;
+  }
+
+  #sp-hud-mode-cell {
+    min-width: 78px;
+  }
+
+  .sp-hud-value {
+    font-size: 17px;
+  }
+
+  .sp-hud-label {
+    display: none;
+  }
+
+  .ctrl-btn {
+    width: 25px;
+  }
+
+  .ctrl-btn,
+  #lite-btn {
+    height: 25px;
+  }
+
+  #lite-btn {
+    width: 34px;
+  }
+
+  .play-stage {
+    gap: 6px;
+  }
+
+  .board-panel {
+    padding: 5px;
+  }
+
+  .english-board,
+  .turkish-board {
+    gap: 4px;
+  }
+
+  .gem {
+    font-size: clamp(13px, 3.1vh, 21px);
+  }
+
+  .paper-card {
+    font-size: clamp(12px, 2.8vh, 20px);
+  }
+}
