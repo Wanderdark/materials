@@ -1,5 +1,14 @@
 (function () {
+  function syncOrientationWarning() {
+    const width = window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth;
+    const height = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
+    const isSmallScreen = Math.min(width, height) <= 820;
+    document.body.classList.toggle("needs-landscape", isSmallScreen && height > width);
+  }
+
   function bind() {
+    syncOrientationWarning();
+
     document.getElementById("new-game-btn").addEventListener("click", () => {
       document.getElementById("new-game-confirm").classList.add("open");
     });
@@ -163,6 +172,11 @@ document.getElementById("mute-btn").addEventListener("click", toggleMute);
     bind();
     window.WordCrushFirebase?.ensureUUID();
   }
+
+  window.addEventListener("load", syncOrientationWarning);
+  window.addEventListener("resize", syncOrientationWarning);
+  window.addEventListener("orientationchange", () => window.setTimeout(syncOrientationWarning, 80));
+  window.visualViewport?.addEventListener("resize", syncOrientationWarning);
 
   document.addEventListener("pointerdown", startMusicOnce);
 })();

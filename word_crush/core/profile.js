@@ -338,16 +338,16 @@
 
   function getRank(score) {
     const ranks = [
-      { name: "LEGEND OF LIGHT", img: "ranks/legend_of_light.webp", threshold: 500000 },
-      { name: "GEM OVERLORD",    img: "ranks/gem_overlord.webp",    threshold: 350000 },
-      { name: "CRYSTAL LORD",    img: "ranks/crystal_lord.webp",    threshold: 250000 },
-      { name: "RADIANT CHAMPION",img: "ranks/radiant_champion.webp",threshold: 175000 },
-      { name: "JEWEL MASTER",    img: "ranks/jewel_master.webp",    threshold: 120000 },
-      { name: "CRYSTAL KEEPER",  img: "ranks/crystal_keeper.webp",  threshold: 80000  },
-      { name: "GEM CRAFTER",     img: "ranks/gem_crafter.webp",     threshold: 50000  },
-      { name: "GEM COLLECTOR",   img: "ranks/gem_collector.webp",   threshold: 25000  },
-      { name: "CRYSTAL SEEKER",  img: "ranks/crystal_seeker.webp",  threshold: 10000  },
-      { name: "SPARK",           img: "ranks/spark.webp",           threshold: 0      },
+      { name: "LEGEND OF LIGHT", img: "ranks/legend_of_light.webp", threshold: 1000000 },
+      { name: "GEM OVERLORD",    img: "ranks/gem_overlord.webp",    threshold: 700000  },
+      { name: "CRYSTAL LORD",    img: "ranks/crystal_lord.webp",    threshold: 500000  },
+      { name: "RADIANT CHAMPION",img: "ranks/radiant_champion.webp",threshold: 350000  },
+      { name: "JEWEL MASTER",    img: "ranks/jewel_master.webp",    threshold: 240000  },
+      { name: "CRYSTAL KEEPER",  img: "ranks/crystal_keeper.webp",  threshold: 160000  },
+      { name: "GEM CRAFTER",     img: "ranks/gem_crafter.webp",     threshold: 100000  },
+      { name: "GEM COLLECTOR",   img: "ranks/gem_collector.webp",   threshold: 50000   },
+      { name: "CRYSTAL SEEKER",  img: "ranks/crystal_seeker.webp",  threshold: 20000   },
+      { name: "SPARK",           img: "ranks/spark.webp",           threshold: 0       },
     ];
     return ranks.find(r => score >= r.threshold) || ranks[ranks.length - 1];
   }

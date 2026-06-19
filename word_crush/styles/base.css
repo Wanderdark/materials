@@ -42,6 +42,10 @@ button {
   display: flex;
 }
 
+body.needs-landscape .rotate-overlay {
+  display: flex;
+}
+
 .rotate-overlay {
   position: fixed;
   inset: 0;
