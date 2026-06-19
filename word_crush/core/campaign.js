@@ -11,16 +11,16 @@
       title: "NEWCOMER CAMPAIGN",
       label: "CAMPAIGN 1",
       levels: [
-        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 10, 2: 5, 3: 0 }, colors: COLOR_SETS.four },
-        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 8,  2: 5, 3: 2 }, colors: COLOR_SETS.four },
-        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 6,  2: 6, 3: 3 }, colors: COLOR_SETS.four },
-        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 5,  2: 7, 3: 3 }, colors: COLOR_SETS.four },
-        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 4,  2: 7, 3: 4 }, colors: COLOR_SETS.four },
-        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 4,  2: 6, 3: 5 }, colors: COLOR_SETS.four },
-        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 3,  2: 6, 3: 6 }, colors: COLOR_SETS.four },
-        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 180, stars: [3000, 6500, 11000],  target: { 1: 3,  2: 5, 3: 7 }, colors: COLOR_SETS.four },
-        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 180, stars: [3000, 6500, 11000],  target: { 1: 2,  2: 6, 3: 7 }, colors: COLOR_SETS.four },
-        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 180, stars: [4000, 8000, 13500], target: { 1: 2,  2: 5, 3: 8 }, colors: COLOR_SETS.four }
+        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 10, 2: 5, 3: 0 }, colors: COLOR_SETS.four },
+        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 8,  2: 5, 3: 2 }, colors: COLOR_SETS.four },
+        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 6,  2: 6, 3: 3 }, colors: COLOR_SETS.four },
+        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 5,  2: 7, 3: 3 }, colors: COLOR_SETS.four },
+        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 180, stars: [250, 520,  850],  target: { 1: 4,  2: 7, 3: 4 }, colors: COLOR_SETS.four },
+        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 180, stars: [250, 520,  850],  target: { 1: 4,  2: 6, 3: 5 }, colors: COLOR_SETS.four },
+        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 180, stars: [250, 520,  850],  target: { 1: 3,  2: 6, 3: 6 }, colors: COLOR_SETS.four },
+        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 180, stars: [300, 650, 1100],  target: { 1: 3,  2: 5, 3: 7 }, colors: COLOR_SETS.four },
+        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 180, stars: [300, 650, 1100],  target: { 1: 2,  2: 6, 3: 7 }, colors: COLOR_SETS.four },
+        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 180, stars: [400, 800, 1350], target: { 1: 2,  2: 5, 3: 8 }, colors: COLOR_SETS.four }
       ]
     },
     experienced: {
@@ -28,16 +28,16 @@
       title: "EXPERIENCED CAMPAIGN",
       label: "CAMPAIGN 2",
       levels: [
-        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 8, 2: 5, 3: 2 }, colors: COLOR_SETS.five },
-        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 7, 2: 5, 3: 3 }, colors: COLOR_SETS.five },
-        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 6, 2: 5, 3: 4 }, colors: COLOR_SETS.five },
-        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 5, 2: 5, 3: 5 }, colors: COLOR_SETS.five },
-        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 4, 2: 5, 3: 6 }, colors: COLOR_SETS.six },
-        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 3, 2: 5, 3: 7 }, colors: COLOR_SETS.six },
-        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 2, 2: 6, 3: 7 }, colors: COLOR_SETS.six },
-        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 150, stars: [3000, 6500, 11000],  target: { 1: 1, 2: 7, 3: 7 }, colors: COLOR_SETS.six },
-        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 150, stars: [3000, 6500, 11000],  target: { 1: 0, 2: 7, 3: 8 }, colors: COLOR_SETS.six },
-        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 150, stars: [4000, 8000, 13500], target: { 1: 0, 2: 5, 3: 10 }, colors: COLOR_SETS.six }
+        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 8, 2: 5, 3: 2 }, colors: COLOR_SETS.five },
+        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 7, 2: 5, 3: 3 }, colors: COLOR_SETS.five },
+        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 6, 2: 5, 3: 4 }, colors: COLOR_SETS.five },
+        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [200, 400,  650],  target: { 1: 5, 2: 5, 3: 5 }, colors: COLOR_SETS.five },
+        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 165, stars: [250, 520,  850],  target: { 1: 4, 2: 5, 3: 6 }, colors: COLOR_SETS.six },
+        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 165, stars: [250, 520,  850],  target: { 1: 3, 2: 5, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 165, stars: [250, 520,  850],  target: { 1: 2, 2: 6, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 150, stars: [300, 650, 1100],  target: { 1: 1, 2: 7, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 150, stars: [300, 650, 1100],  target: { 1: 0, 2: 7, 3: 8 }, colors: COLOR_SETS.six },
+        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 150, stars: [400, 800, 1350], target: { 1: 0, 2: 5, 3: 10 }, colors: COLOR_SETS.six }
       ]
     }
   };
@@ -235,14 +235,14 @@
     const level = Number(state.campaignLevel);
     const completed = (state.turkishCards || []).length === 0;
     const config = campaign.levels.find(l => l.level === level);
-    const thresholds = config?.stars || [2000, 4000, 6500];
+    const thresholds = config?.stars || [200, 400, 650];
     const stars = completed ? starsForScore(state.score, thresholds) : 0;
     window.WordCrushProfile.updateCampaignProgress(campaign.id, level, state.score, stars, completed, campaign.levels.length);
     if (stars >= 1) window.WordCrushFirebase?.submitScore();
   }
 
   function starsForScore(score, thresholds) {
-    thresholds = thresholds || [2000, 4000, 6500];
+    thresholds = thresholds || [200, 400, 650];
     return thresholds.reduce((stars, threshold) => score >= threshold ? stars + 1 : stars, 0);
   }
 

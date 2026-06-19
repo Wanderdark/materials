@@ -311,11 +311,11 @@ const WORD_BANK = [
   { en:'DATE OF BIRTH', tr:'DOĞUM TARİHİ', grade:6, diff:2, unit:6, img:'../images/6/6/39.webp' }, // EKLENDI
 
   // ─── GRADE 6 UNIT 7 ──────────────────────────────────────────────────────────
-  { en:'SAILING', tr:'YELKEN', grade:6, diff:2, unit:7, img:'../images/6/7/1.webp' },
+  { en:'SAILING', tr:'YELKENCİLİK', grade:6, diff:2, unit:7, img:'../images/6/7/1.webp' },
   { en:'SKIING', tr:'KAYAK', grade:6, diff:1, unit:7, img:'../images/6/7/2.webp' },
   { en:'TENT', tr:'ÇADIR', grade:6, diff:1, unit:7, img:'../images/6/7/3.webp' },
   { en:'CAMPING', tr:'KAMP YAPMA', grade:6, diff:1, unit:7, img:'../images/6/7/4.webp' },
-  { en:'RAFTING', tr:'RAFTİNG', grade:6, diff:1, unit:7, img:'../images/6/7/5.webp' },
+  { en:'RAFTING', tr:'KÜREKÇİLİK', grade:6, diff:1, unit:7, img:'../images/6/7/5.webp' },
   { en:'SANDCASTLE', tr:'KUM KALESİ', grade:6, diff:3, unit:7, img:'../images/6/7/6.webp' },
   { en:'SCUBA DIVING', tr:'TÜPLÜ DALIŞ', grade:6, diff:1, unit:7, img:'../images/6/7/7.webp' },
   { en:'PARAGLIDING', tr:'YAMAÇ PARAŞÜTÜ', grade:6, diff:2, unit:7, img:'../images/6/7/8.webp' },

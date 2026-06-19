@@ -3,15 +3,18 @@
   const Screens = window.WordCrushScreens;
   const Board = window.WordCrushBoard;
   const Audio = window.WordCrushAudio || { play() {} };
+  const QuickBonuses = window.WordCrushQuickBonuses || { start() {}, stop() {} };
 
   let state = State.createInitialState();
   let timerId = null;
   let nextTileId = 1;
   let lastResultRoute = "hub";
   let introRunId = 0;
+  let timeWarpTick = false;
   const INTRO_DURATION = 2000;
 
   function startGame(options = {}) {
+    QuickBonuses.stop();
     if (_blastTimer) { clearInterval(_blastTimer); _blastTimer = null; }
     const _bc = document.getElementById('blast-cursor');
     if (_bc) { _bc.classList.remove('active'); _bc.onclick = null; }
@@ -19,6 +22,7 @@
     introRunId += 1;
     const runId = introRunId;
     nextTileId = 1;
+    timeWarpTick = false;
     state = State.createInitialState();
     const sourceWords = normalizeSourceWords(options.words || window.WordCrushAdapter?.buildWordPool?.() || window.WORD_CRUSH_WORDS || []);
     state.wordBank = shuffle([...sourceWords]);
@@ -42,14 +46,23 @@
     state.campaignTotalLevels = options.campaignTotalLevels || window.WordCrushCampaign?.LEVELS?.length || 10;
     state.campaignRefillQueue    = options.campaignRefillQueue ? [...options.campaignRefillQueue] : [];
     state.campaignStarThresholds = options.campaignStarThresholds || null;
+    state.starThresholds = options.starThresholds || options.campaignStarThresholds || null;
+    state.customGame = Boolean(options.customGame);
     state.levelNumber = options.levelNumber || 1;
-    state.activeWords = drawWords(State.BOARD_SIZE, new Set());
+    state.totalWordTarget = Math.max(State.BOARD_SIZE, Number(options.quickWordTarget) || State.BOARD_SIZE);
+    if (state.runType === "quick" && state.totalWordTarget > State.BOARD_SIZE) {
+      const selectedWords = drawWords(state.totalWordTarget, new Set());
+      state.activeWords = selectedWords.slice(0, State.BOARD_SIZE);
+      state.quickRefillQueue = selectedWords.slice(State.BOARD_SIZE);
+    } else {
+      state.activeWords = drawWords(State.BOARD_SIZE, new Set());
+    }
     if (state.runType === 'adventure') {
       state.activeWords.forEach(word => state.advUsedIds.add(word.id));
     }
     state.englishGrid = buildInitialEnglishGrid(state.activeWords);
     state.turkishCards = shuffle(state.activeWords.map((word) => ({ word })));
-    state.boardSize = state.turkishCards.length;
+    state.boardSize = state.runType === "quick" ? state.totalWordTarget : state.turkishCards.length;
     applyIntroMotion();
 
     if (options.profile && window.WordCrushProfile) {
@@ -86,6 +99,7 @@
     const _bc2 = document.getElementById('blast-cursor');
     if (_bc2) { _bc2.classList.remove('active'); _bc2.onclick = null; }
     stopTimer();
+    QuickBonuses.stop();
     if (window.WordCrushProfile) {
       window.WordCrushProfile.recordRun(state);
     }
@@ -270,11 +284,13 @@
     }
 
     state.isResolving = true;
-    const matchPoints = tile.color === "black" ? 0 : State.MATCH_SCORE;
+    const matchPoints = tile.color === "black"
+      ? 0
+      : Math.round(State.MATCH_SCORE * quickScoreMultiplier("match"));
     state.score += matchPoints;
     state.wordScore += matchPoints;
     state.matches += 1;
-    Screens.setMessage(matchPoints ? "+100 MATCH" : "BLACK GEM +0");
+    Screens.setMessage(matchPoints ? `+${matchPoints} MATCH` : "BLACK GEM +0");
     Audio.play("gemShatter");
     Board.markEnglishCrushing([tile.word.id]);
     Board.markTurkishCrushing([tile.word.id]);
@@ -299,6 +315,14 @@
         render();
         state.turkishCards[state.turkishCards.length - 1].isNew = false;
       }
+    }
+
+    if (state.runType === "quick" && state.quickRefillQueue?.length > 0) {
+      const newWord = state.quickRefillQueue.shift();
+      state.turkishCards.push({ word: newWord, isNew: true });
+      refillEnglishFromTurkishCards();
+      render();
+      state.turkishCards[state.turkishCards.length - 1].isNew = false;
     }
 
     if (state.runType === 'campaign' && state.campaignRefillQueue?.length > 0) {
@@ -346,7 +370,9 @@
       state.combos += groups.length;
 
       const wordIds = unique(groups.flat().map((index) => state.englishGrid[index].word.id));
-      const points = Math.round(wordIds.length * State.COMBO_SCORE * comboMultiplier(chain));
+      const points = Math.round(
+        wordIds.length * State.COMBO_SCORE * comboMultiplier(chain) * quickScoreMultiplier("combo")
+      );
       state.score += points;
       state.comboScore += points;
 
@@ -444,6 +470,10 @@
   }
 
   function findColorGroups() {
+    if (state.quickFadeToBlackActive) {
+      return [];
+    }
+
     const grouped = new Set();
 
     for (let row = 0; row < State.ROWS; row += 1) {
@@ -590,6 +620,7 @@
     if (runId !== introRunId) return;
     Screens.setMessage("Match English gems with Turkish cards.");
     startTimer();
+    QuickBonuses.start(state, render, { onDisplace: displaceBoards });
   }
 
   function applyIntroMotion() {
@@ -882,8 +913,43 @@
     state.selectedTurkishId = null;
   }
 
+  async function displaceBoards() {
+    if (!state.isRunning) return;
+
+    state.isResolving = true;
+    clearSelection();
+    const stage = document.querySelector(".play-stage");
+    const animate = !isLiteMode();
+    if (animate) {
+      stage?.classList.add("displacing");
+      await sleep(460);
+    }
+
+    state.englishGrid = shuffle(state.englishGrid);
+    state.turkishCards = shuffle(state.turkishCards);
+    render();
+    if (animate) {
+      await sleep(500);
+      stage?.classList.remove("displacing");
+    }
+
+    await resolveCombos();
+    if (!state.isRunning) return;
+
+    state.isResolving = false;
+    Screens.setMessage("DISPLACE COMPLETE");
+    render();
+  }
+
   function canAct() {
     return state.isRunning && !state.isPaused && !state.isResolving;
+  }
+
+  function quickScoreMultiplier(scoreType) {
+    if (state.runType !== "quick") return 1;
+    if (state.quickEffectKind === "bonus") return 1.5;
+    if (state.quickEffectKind === "curse" && scoreType === "match") return 1.5;
+    return 1;
   }
 
   function startTimer() {
@@ -891,6 +957,13 @@
     timerId = window.setInterval(() => {
       if (!state.isRunning || state.isPaused || state.isResolving) {
         return;
+      }
+
+      if (state.quickTimeWarpActive) {
+        timeWarpTick = !timeWarpTick;
+        if (timeWarpTick) return;
+      } else {
+        timeWarpTick = false;
       }
 
       state.secondsLeft -= 1;

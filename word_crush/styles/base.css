@@ -564,6 +564,97 @@ body.needs-landscape .rotate-overlay {
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
+.quick-mode-panel {
+  width: min(720px, 94vw);
+  text-align: center;
+}
+
+.quick-mode-title {
+  margin-bottom: 18px;
+  font-size: clamp(48px, 7vw, 68px);
+}
+
+.quick-mode-choice {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.quick-mode-card {
+  min-height: 190px;
+  border: 1px solid rgba(250, 204, 21, 0.58);
+  border-radius: 8px;
+  background: linear-gradient(145deg, rgba(30, 58, 138, 0.78), rgba(18, 16, 50, 0.96));
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.16s ease, filter 0.16s ease, border-color 0.16s ease;
+}
+
+.quick-mode-card:hover {
+  border-color: #fde68a;
+  filter: brightness(1.14);
+  transform: translateY(-4px);
+}
+
+.quick-mode-card strong,
+.quick-mode-card span {
+  display: block;
+}
+
+.quick-mode-card strong {
+  color: #fde68a;
+  font: clamp(32px, 4vw, 48px)/1 "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.07em;
+}
+
+.quick-mode-card span,
+.quick-mode-subtitle {
+  margin-top: 8px;
+  color: #bfdbfe;
+  font: 800 14px/1 "Barlow Condensed", Arial, sans-serif;
+  letter-spacing: 0.12em;
+}
+
+.quick-custom-choice {
+  display: grid;
+  gap: 14px;
+}
+
+.quick-custom-choice[hidden] {
+  display: none;
+}
+
+.quick-word-counts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quick-word-counts button {
+  min-height: 78px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  font: 800 30px/1 "Bebas Neue", Impact, sans-serif;
+}
+
+.quick-word-counts button.active {
+  border-color: #fde68a;
+  background: linear-gradient(145deg, #ca8a04, #92400e);
+}
+
+.quick-star-preview {
+  color: #fde68a;
+  font: 800 17px/1.2 "Barlow Condensed", Arial, sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.quick-mode-hub {
+  margin-top: 16px;
+}
+
 .wo-title {
   color: #ffd700;
   font-family: "Bebas Neue", Impact, sans-serif;
@@ -1541,14 +1632,15 @@ body.needs-landscape .rotate-overlay {
   }
 }
 
-/* ── HUB CHART GLOW — claimable achievement / complete daily ── */
-.hub-chart-glow {
-  animation: hub-glow-pulse 1.8s ease-in-out infinite;
+/* ── HUB CHART ATTENTION — unseen rank, daily, or achievement update ── */
+.mode-chart.hub-chart-attention {
+  animation: hub-chart-nudge 1.05s ease-in-out infinite;
+  transform-origin: center;
 }
 
-@keyframes hub-glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.85), 0 18px 38px rgba(0, 0, 0, 0.36); }
-  50%       { box-shadow: 0 0 0 4px rgba(96, 165, 250, 1), 0 0 28px 10px rgba(59, 130, 246, 0.55), 0 18px 38px rgba(0, 0, 0, 0.36); }
+@keyframes hub-chart-nudge {
+  0%, 100% { transform: translateX(-2px) rotate(-0.22deg); }
+  50% { transform: translateX(2px) rotate(0.22deg); }
 }
 
 /* ── ACHİEVEMENT SİSTEMİ (word_reveal sp.html'den birebir kopya) ── */

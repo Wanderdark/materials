@@ -19,11 +19,13 @@
 
     document.getElementById("confirm-new-game-btn").addEventListener("click", () => {
       document.getElementById("new-game-confirm").classList.remove("open");
+      void enterFullscreen();
       window.WordCrushProfile.resetProgress();
       window.WordCrushProfile.showCharacterCreate();
     });
 
     document.getElementById("continue-btn").addEventListener("click", () => {
+      void enterFullscreen();
       window.WordCrushProfile.showHub();
     });
 
@@ -96,8 +98,7 @@ document.getElementById("mute-btn").addEventListener("click", toggleMute);
       return;
     }
 
-    window.WordCrushProfile.applyProfileToHud();
-    window.WordCrushSetup.show();
+    window.WordCrushQuickMode.show();
   }
 
   function openSettings() {
@@ -158,6 +159,18 @@ document.getElementById("mute-btn").addEventListener("click", toggleMute);
       await document.exitFullscreen();
     } else {
       await document.documentElement.requestFullscreen();
+    }
+  }
+
+  async function enterFullscreen() {
+    if (document.fullscreenElement || !document.documentElement.requestFullscreen) {
+      return;
+    }
+
+    try {
+      await document.documentElement.requestFullscreen();
+    } catch (_) {
+      // Fullscreen can be declined by the browser without blocking the game flow.
     }
   }
 

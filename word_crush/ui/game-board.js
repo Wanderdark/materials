@@ -20,10 +20,12 @@
       }
 
       const button = document.createElement("button");
-      button.className = `gem ${tile.color}`;
+      const visibleColor = state.quickFadeToBlackActive ? "black" : tile.color;
+      button.className = `gem ${visibleColor}`;
       button.classList.toggle("falling", Number(tile.fallDistance) > 0);
       button.classList.toggle("new-gem", Boolean(tile.isNew));
       button.classList.toggle("intro-gem", Boolean(tile.intro));
+      button.classList.toggle("word-fog", Boolean(state.quickEnglishBlurActive));
       button.dataset.tileId = tile.id;
       button.dataset.wordId = tile.word.id;
       button.dataset.index = String(index);
@@ -45,6 +47,12 @@
     state.turkishCards.forEach((card, index) => {
       const button = document.createElement("button");
       button.className = "paper-card";
+      const matchingGem = state.quickColorHintActive
+        ? state.englishGrid.find((tile) => tile?.word.id === card.word.id)
+        : null;
+      if (matchingGem) {
+        button.classList.add("color-linked", `color-linked-${matchingGem.color}`);
+      }
       button.classList.toggle("intro-card", Boolean(card.intro));
       button.classList.toggle("new-card", Boolean(card.isNew));
       button.dataset.wordId = card.word.id;
@@ -53,7 +61,7 @@
       button.style.setProperty("--intro-y", `${card.introY || 0}px`);
       button.style.setProperty("--intro-rot", `${card.introRot || 0}deg`);
       button.style.setProperty("--intro-index", String(index));
-      button.appendChild(createLabel(card.word.tr));
+      appendTurkishCardContent(button, card.word, state.quickPictureCardsActive);
       button.classList.toggle("selected", state.selectedTurkishId === card.word.id);
       button.classList.toggle("locked", state.lockedTurkishId === card.word.id);
       button.disabled = state.isResolving || state.lockedTurkishId === card.word.id;
@@ -69,6 +77,25 @@
         el.classList.add("crushing");
       }
     });
+  }
+
+  function appendTurkishCardContent(button, word, showPicture) {
+    if (!showPicture || !word.img) {
+      button.appendChild(createLabel(word.tr));
+      return;
+    }
+
+    button.classList.add("picture-card");
+    const image = document.createElement("img");
+    image.className = "turkish-card-image";
+    image.src = word.img;
+    image.alt = word.tr;
+    image.addEventListener("error", () => {
+      image.replaceWith(createLabel(word.tr));
+      button.classList.remove("picture-card");
+      fitBoardLabels();
+    }, { once: true });
+    button.appendChild(image);
   }
 
   function markEnglishCrushing(wordIds) {

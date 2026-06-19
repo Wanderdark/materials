@@ -475,8 +475,8 @@
 
     if (completed) {
       if (nodeType === 'boss') {
-        const savingsBonus = _run.gold * 10;
-        const bossBonus    = 3000;
+        const savingsBonus = _run.gold;
+        const bossBonus    = 300;
         window.WordCrushProfile.addAdventureReward({
           score:      (state.score || 0) + bossBonus + savingsBonus,
           nodes:      1,
@@ -490,7 +490,7 @@
       }
 
       _run.gold += enc?.gold || 0;
-      const eliteBonus = nodeType === 'elite' ? 1000 : 0;
+      const eliteBonus = nodeType === 'elite' ? 100 : 0;
       window.WordCrushProfile.addAdventureReward({
         score: (state.score || 0) + eliteBonus,
         nodes: 1,
@@ -515,7 +515,7 @@
     document.getElementById('adv-completed-wrong').textContent    = _run.totalWrong;
     document.getElementById('adv-completed-combo').textContent    = _run.bestCombo;
     document.getElementById('adv-completed-boss-bonus').textContent    = `+${bossBonus}`;
-    document.getElementById('adv-completed-savings').textContent  = savingsBonus > 0 ? `+${savingsBonus} (${_run.gold} 🪙 × 10)` : '0';
+    document.getElementById('adv-completed-savings').textContent  = savingsBonus > 0 ? `+${savingsBonus} (${_run.gold} 🪙)` : '0';
     document.getElementById('adv-completed-score').textContent    = state.score + bossBonus + savingsBonus;
     el.classList.add('open');
   }

@@ -4,7 +4,7 @@ window.WordCrushDailyTasks = {
     { id: "easy_earn_star", row: 2, title: "Earn 5 star", type: "stars", target: 5, reward: 500 },   
     { id: "easy_streak_3", row: 3, title: "Reach a 3 combo chain", type: "bestStreak", target: 3, reward: 500 },
     { id: "easy_correct_5", row: 4, title: "Match 30 words correctly", type: "correctAnswers", target: 30, reward: 500 },
-    { id: "easy_score_3000", row: 5, title: "Score 3000 points in a run", type: "runScore", target: 3000, reward: 500 },
+    { id: "easy_score_3000", row: 5, title: "Score 300 points in a run", type: "runScore", target: 300, reward: 500 },
     { id: "easy_two_star_level", row: 8, title: "Earn 2 stars on a level", type: "stars", target: 2, reward: 500 },
     { id: "easy_adventure_node", row: 9, title: "Complete 1 adventure node", type: "adventureNodes", target: 1, reward: 500 }
   ],

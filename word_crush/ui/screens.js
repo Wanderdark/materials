@@ -14,7 +14,7 @@
 
   function updateHud(state) {
     const totalWords = state.boardSize || 15;
-    const starThresholds = state.campaignStarThresholds || [2000, 4000, 6500];
+    const starThresholds = state.starThresholds || state.campaignStarThresholds || [200, 400, 650];
     const starMessages = ["⭐ 1 STAR REACHED", "⭐⭐ 2 STARS REACHED", "⭐⭐⭐ 3 STARS REACHED"];
     const maxScore = starThresholds[2];
     const progressPct = Math.min(100, Math.round((state.score / maxScore) * 1000) / 10);
@@ -24,7 +24,7 @@
     } else if (state.runType === "adventure") {
       setText("sp-hud-q", "ADVENTURE");
     } else {
-      setText("sp-hud-q", "QUICK GAME");
+      setText("sp-hud-q", state.customGame ? "CUSTOM GAME" : "QUICK GAME");
     }
     setText("sp-hud-mode-label", "");
     setText("sp-hud-score", String(state.score));
@@ -142,7 +142,7 @@ const fill = document.getElementById("wo-hud-progress");
     showScreen("result-screen");
 
     if (completed) {
-      const stars = window.WordCrushCampaign?.starsForScore?.(state.score, state.campaignStarThresholds) ?? 0;
+      const stars = window.WordCrushCampaign?.starsForScore?.(state.score, state.starThresholds || state.campaignStarThresholds) ?? 0;
       if (stars >= 3) {
         try { new Audio("sounds/finalcheer2.mp3").play().catch(() => {}); } catch (_) {}
       } else if (stars >= 2) {

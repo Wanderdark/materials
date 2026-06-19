@@ -3,12 +3,12 @@
   const COLS = 3;
   const BOARD_SIZE = ROWS * COLS;
   const COLORS = ["red", "green", "blue", "purple"];
-  const MATCH_SCORE = 100;
-  const COMBO_SCORE = 50;
+  const MATCH_SCORE = 10;
+  const COMBO_SCORE = 5;
   const COMBO_CHAIN_LIMIT = 20;
   const INITIAL_COMBO_CELL_LIMIT = 0;
-  const BOARD_COMPLETE_BONUS = 1000;
-  const TIME_BONUS_PER_SECOND = 10;
+  const BOARD_COMPLETE_BONUS = 100;
+  const TIME_BONUS_PER_SECOND = 1;
   const GAME_SECONDS = 180;
 
   function createInitialState() {
@@ -39,6 +39,17 @@
       selectedEnglishId: null,
       selectedTurkishId: null,
       lockedTurkishId: null,
+      quickColorHintActive: false,
+      quickEnglishBlurActive: false,
+      quickTimeWarpActive: false,
+      quickPictureCardsActive: false,
+      quickFadeToBlackActive: false,
+      quickRefillQueue: [],
+      totalWordTarget: BOARD_SIZE,
+      customGame: false,
+      starThresholds: null,
+      quickBonusEffect: null,
+      quickEffectKind: null,
       wordBank: [],
       activeWords: [],
       englishGrid: [],

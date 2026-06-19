@@ -11,6 +11,11 @@
     }
 
     returnScreen = from;
+    const daily = ensureDaily();
+    if (daily?.alertSeen !== true) {
+      daily.alertSeen = true;
+      window.WordCrushProfile.setDailyProgress(daily);
+    }
     render();
     window.WordCrushScreens.showScreen("daily-screen");
     startCountdown();
@@ -95,6 +100,11 @@
     if (completed && state.runType !== "adventure" && Number(state.wrongs) === 0) addDaily("noMistakeLevels", 1);
 
     const gained = dailyCompletedCount() - before;
+    if (gained > 0 && dailyComplete()) {
+      const daily = ensureDaily();
+      daily.alertSeen = false;
+      window.WordCrushProfile.setDailyProgress(daily);
+    }
     if (gained > 0 && window.ToastManager) {
       window.ToastManager.show(dailyComplete() ? "ALL DAILY QUESTS COMPLETED - CLAIM REWARD" : `${gained} DAILY QUEST COMPLETED`);
     }
@@ -218,7 +228,7 @@
   }
 
   function starsForScore(score) {
-    return [2000, 4000, 6500].reduce((stars, threshold) => Number(score) >= threshold ? stars + 1 : stars, 0);
+    return [200, 400, 650].reduce((stars, threshold) => Number(score) >= threshold ? stars + 1 : stars, 0);
   }
 
   function hash(text) {
@@ -233,7 +243,7 @@
     const complete = dailyComplete();
     button.classList.toggle("daily-claimed", complete);
     button.dataset.dailyProgress = countdownText(complete);
-    button.classList.toggle("hub-chart-glow", complete && !daily.claimed);
+    button.classList.toggle("hub-chart-attention", complete && !daily.claimed && !daily.alertSeen);
   }
 
   function renderIfVisible() {

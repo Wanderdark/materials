@@ -56,6 +56,9 @@
       achievementScore: 0,
       unlockedAchievements: [],
       claimedAchievements: [],
+      seenAchievementClaims: [],
+      lastKnownRank: "SPARK",
+      rankAlert: false,
       chainStartStats: {},
       uuid: null
     };
@@ -75,6 +78,7 @@
       if (data.profile && !data.profile.grade) data.profile.grade = 6;
       if (!Array.isArray(data.unlockedAchievements)) data.unlockedAchievements = [];
       if (!Array.isArray(data.claimedAchievements)) data.claimedAchievements = [];
+      if (!Array.isArray(data.seenAchievementClaims)) data.seenAchievementClaims = [];
       if (typeof data.chainStartStats !== 'object' || !data.chainStartStats) data.chainStartStats = {};
       return data;
     } catch (error) {
@@ -107,6 +111,7 @@
     }
 
     applyProfileToHud();
+    updateProfileHubAlert();
     if (window.WordCrushDaily) {
       window.WordCrushDaily.ensureDaily();
       window.WordCrushDaily.render();
@@ -180,11 +185,15 @@
     }
 
     const stats = save.stats || fresh().stats;
+    save.rankAlert = false;
+    save.lastKnownRank = getRank(playerScore()).name;
+    store();
+    updateProfileHubAlert();
     const campaigns = getAllCampaignProgress();
     const campaignLevels = Object.values(campaigns).flatMap((campaign) => Object.values(campaign.levels || {}));
     const campaignStars = campaignLevels.reduce((total, level) => total + (Number(level.stars) || 0), 0);
     const completedCampaignLevels = campaignLevels.filter((level) => level.completed).length;
-    const score = Number(stats.totalScore) || 0;
+    const score = playerScore();
     const rank = getRank(score);
     const rankImg = document.getElementById("sp-rank-img");
     const rankName = document.getElementById("sp-rank-name");
@@ -236,6 +245,7 @@
     }
 
     gameState.profileRecorded = true;
+    const previousRank = getRank(playerScore()).name;
     const stats = { ...fresh().stats, ...(save.stats || {}) };
     const score = Number(gameState.score) || 0;
     stats.totalScore += score;
@@ -251,6 +261,7 @@
       stats.quickRunsCompleted = (stats.quickRunsCompleted || 0) + 1;
     }
     save.stats = stats;
+    updateRankAlert(previousRank);
     store();
     setTimeout(() => window.WCAchievements?.checkAndNotify?.(), 400);
   }
@@ -318,6 +329,7 @@
   }
 
   function addAdventureReward({ score, nodes, run, elite, miser, jokerFree, perfectRun }) {
+    const previousRank = getRank(playerScore()).name;
     const stats = { ...fresh().stats, ...(save.stats || {}) };
     stats.totalScore            += Number(score)  || 0;
     stats.adventureNodes        += Number(nodes)  || 0;
@@ -327,16 +339,32 @@
     stats.adventureJokerFreeRuns+= jokerFree   ? 1 : 0;
     stats.adventurePerfectRuns  += perfectRun  ? 1 : 0;
     save.stats = stats;
+    updateRankAlert(previousRank);
     store();
     setTimeout(() => window.WCAchievements?.checkAndNotify?.(), 400);
   }
 
   function claimDailyReward(reward) {
+    const previousRank = getRank(playerScore()).name;
     const stats = { ...fresh().stats, ...(save.stats || {}) };
     stats.totalScore += Number(reward) || 0;
     stats.dailyBoardsCompleted += 1;
     save.stats = stats;
+    updateRankAlert(previousRank);
     store();
+  }
+
+  function updateRankAlert(previousRank) {
+    const currentRank = getRank(playerScore()).name;
+    const knownRank = previousRank || save.lastKnownRank || currentRank;
+    if (knownRank !== currentRank) save.rankAlert = true;
+    save.lastKnownRank = currentRank;
+    updateProfileHubAlert();
+  }
+
+  function updateProfileHubAlert() {
+    const button = document.getElementById("profile-btn");
+    if (button) button.classList.toggle("hub-chart-attention", Boolean(save.rankAlert));
   }
 
   function resetProgress() {
@@ -489,6 +517,7 @@
     playerScore,
     getRawSave,
     setAchievementField,
+    updateRankAlert,
     getRank,
     store
   };

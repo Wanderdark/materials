@@ -244,6 +244,7 @@
     migrateLegacySecretAutoClaim();
     if (!_achGroup) _achGroup = WC_ACHIEVEMENT_GROUPS[0].id;
     unlockAchievements();
+    markClaimableAchievementsSeen();
     window.WordCrushProfile.store();
     const scoreEl = document.getElementById('wc-ach-score');
     if (scoreEl) scoreEl.textContent = window.WordCrushProfile.playerScore();
@@ -268,6 +269,7 @@
     const a = WC_ACHIEVEMENTS.find(x => x.id === id);
     if (!a || (save.claimedAchievements || []).includes(id) || !(save.unlockedAchievements || []).includes(id)) return;
 
+    const previousRank = window.WordCrushProfile.getRank(window.WordCrushProfile.playerScore()).name;
     window.WordCrushProfile.setAchievementField('claimedAchievements', [...(save.claimedAchievements || []), id]);
     if (a.secret) {
       window.WordCrushProfile.setAchievementField('secretAchievementClaims', [
@@ -286,6 +288,7 @@
     }
 
     window.WordCrushProfile.store();
+    window.WordCrushProfile.updateRankAlert(previousRank);
 
     try { const audio = new Audio('sounds/star.mp3'); audio.volume = 0.8; audio.play().catch(() => {}); } catch (e) {}
 
@@ -353,8 +356,22 @@
     const save = window.WordCrushProfile.getRawSave();
     const unlocked = save.unlockedAchievements || [];
     const claimed = new Set(save.claimedAchievements || []);
-    const hasClaimable = unlocked.some(id => !claimed.has(id));
-    btn.classList.toggle('hub-chart-glow', hasClaimable);
+    const seen = new Set(save.seenAchievementClaims || []);
+    const hasUnseenClaimable = unlocked.some(id => !claimed.has(id) && !seen.has(id));
+    btn.classList.toggle('hub-chart-attention', hasUnseenClaimable);
+  }
+
+  function markClaimableAchievementsSeen() {
+    const save = window.WordCrushProfile.getRawSave();
+    const claimed = new Set(save.claimedAchievements || []);
+    const claimable = (save.unlockedAchievements || []).filter(id => !claimed.has(id));
+    if (!claimable.length) return;
+
+    const seen = new Set(save.seenAchievementClaims || []);
+    claimable.forEach(id => seen.add(id));
+    window.WordCrushProfile.setAchievementField('seenAchievementClaims', [...seen]);
+    window.WordCrushProfile.store();
+    updateHubGlow();
   }
 
   window.WCAchievements = {

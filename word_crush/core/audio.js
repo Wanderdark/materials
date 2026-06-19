@@ -2,13 +2,15 @@
   const SOUNDS = {
     gemShatter: "sounds/gemshatter.mp3",
     combo: ["sounds/combo.mp3", "sounds/combo2.mp3"],
-    star: "sounds/star.mp3"
+    star: "sounds/star.mp3",
+    rumble: "sounds/rumble.mp3"
   };
 
   const volumes = {
     gemShatter: 0.72,
     combo: 0.78,
-    star: 0.8
+    star: 0.8,
+    rumble: 1
   };
 
   const MUSIC_VOL_KEY = 'wc_music_vol';
@@ -19,10 +21,19 @@
   let bgStarted = false;
   let rumbleTimer = null;
   let musicSuppressed = false;
+  let timeWarpMusicActive = false;
   let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 30));
 
   function applyMusicVolume() {
     if (bgMusic) bgMusic.volume = muted || musicSuppressed ? 0 : _musicVol / 100;
+  }
+
+  function applyMusicPlaybackRate() {
+    if (!bgMusic) return;
+    bgMusic.playbackRate = timeWarpMusicActive ? 0.45 : 1;
+    ["preservesPitch", "mozPreservesPitch", "webkitPreservesPitch"].forEach((property) => {
+      if (property in bgMusic) bgMusic[property] = !timeWarpMusicActive;
+    });
   }
 
   function play(name) {
@@ -49,6 +60,7 @@
       bgMusic = new Audio("sounds/main.mp3");
       bgMusic.loop = true;
       applyMusicVolume();
+      applyMusicPlaybackRate();
       bgMusic.play().catch(() => {});
     } catch (_) {}
   }
@@ -91,6 +103,11 @@
     }, 10000);
   }
 
+  function setTimeWarpMusic(active) {
+    timeWarpMusicActive = Boolean(active);
+    applyMusicPlaybackRate();
+  }
+
   window.WordCrushAudio = {
     play,
     startMusic,
@@ -98,6 +115,7 @@
     getMusicVolume,
     toggleMute,
     isMuted,
-    playRumble
+    playRumble,
+    setTimeWarpMusic
   };
 })();

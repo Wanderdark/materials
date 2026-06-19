@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/base.css?v=black-combo-achievement-1">
-  <link rel="stylesheet" href="styles/game.css?v=black-combo-achievement-1">
+  <link rel="stylesheet" href="styles/base.css?v=hub-attention-continuous-1">
+  <link rel="stylesheet" href="styles/game.css?v=surprise-layer-1">
 </head>
 <body>
   <main id="app">
@@ -254,6 +254,30 @@
           <button class="wo-btn ghost" onclick="WordCrushProfile.showHub()">BACK</button>
           <button class="sc-save-btn" onclick="WordCrushSetup.startSelectedGame()">START LEVEL</button>
         </div>
+      </div>
+    </section>
+
+    <section id="quick-mode-screen" class="screen">
+      <div class="wo-panel quick-mode-panel">
+        <div class="wo-title quick-mode-title">QUICK GAME</div>
+        <div id="quick-mode-choice" class="quick-mode-choice">
+          <button class="quick-mode-card" type="button" onclick="WordCrushQuickMode.startQuickGame()">
+            <strong>QUICK GAME</strong>
+            <span>15 WORDS</span>
+          </button>
+          <button class="quick-mode-card" type="button" onclick="WordCrushQuickMode.showCustomGame()">
+            <strong>CUSTOM GAME</strong>
+            <span>CHOOSE WORD COUNT</span>
+          </button>
+        </div>
+        <div id="quick-custom-choice" class="quick-custom-choice" hidden>
+          <div class="quick-mode-subtitle">WORD COUNT</div>
+          <div id="quick-word-counts" class="quick-word-counts"></div>
+          <div id="quick-star-preview" class="quick-star-preview"></div>
+          <button class="wo-btn gold" type="button" onclick="WordCrushQuickMode.startCustomGame()">START CUSTOM GAME</button>
+          <button class="wo-btn ghost" type="button" onclick="WordCrushQuickMode.showChoices()">BACK</button>
+        </div>
+        <button class="wo-btn ghost quick-mode-hub" type="button" onclick="WordCrushProfile.showHub()">HUB</button>
       </div>
     </section>
 
@@ -568,21 +592,23 @@
 
   <script src="../word_contest/words.js?v=campaign-select-1"></script>
   <script src="../word_master/questions.js?v=campaign-select-1"></script>
-  <script src="daily.js?v=campaign-select-1"></script>
+  <script src="daily.js?v=score-economy-1"></script>
   <script src="core/adapter.js?v=campaign-select-1"></script>
-  <script src="core/audio.js?v=black-combo-achievement-1"></script>
-  <script src="core/game-state.js?v=campaign-select-1"></script>
+  <script src="core/audio.js?v=fade-to-black-1"></script>
+  <script src="core/game-state.js?v=score-economy-1"></script>
   <script src="ui/toast.js?v=campaign-select-1"></script>
-  <script src="ui/screens.js?v=campaign-select-1"></script>
-  <script src="ui/game-board.js?v=campaign-select-1"></script>
-  <script src="core/profile.js?v=campaign-select-1"></script>
-  <script src="core/campaign.js?v=campaign-select-1"></script>
-  <script src="core/daily-board.js?v=campaign-select-1"></script>
+  <script src="ui/screens.js?v=score-economy-1"></script>
+  <script src="ui/game-board.js?v=fade-to-black-1"></script>
+  <script src="core/profile.js?v=hub-attention-1"></script>
+  <script src="core/campaign.js?v=score-economy-1"></script>
+  <script src="core/daily-board.js?v=score-economy-1"></script>
   <script src="ui/setup-screen.js?v=campaign-select-1"></script>
-  <script src="core/game-loop.js?v=black-combo-achievement-1"></script>
-  <script src="core/achievements.js?v=black-combo-achievement-2"></script>
-  <script src="core/adventure-run.js?v=campaign-select-1"></script>
+  <script src="core/quick-bonuses.js?v=score-economy-1"></script>
+  <script src="core/game-loop.js?v=custom-quick-1"></script>
+  <script src="ui/quick-mode.js?v=score-economy-1"></script>
+  <script src="core/achievements.js?v=hub-attention-1"></script>
+  <script src="core/adventure-run.js?v=score-economy-1"></script>
   <script src="core/firebase.js?v=1"></script>
-  <script src="main.js?v=campaign-select-1"></script>
+  <script src="main.js?v=custom-quick-1"></script>
 </body>
 </html>
