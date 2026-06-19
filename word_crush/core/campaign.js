@@ -1,41 +1,89 @@
 (function () {
-  const LEVELS = [
-    { level: 1, units: [1], target: { 1: 10, 2: 5, 3: 0 } },
-    { level: 2, units: [1, 2], target: { 1: 8, 2: 5, 3: 2 } },
-    { level: 3, units: [1, 2, 3], target: { 1: 6, 2: 6, 3: 3 } },
-    { level: 4, units: [1, 2, 3, 4], target: { 1: 5, 2: 7, 3: 3 } },
-    { level: 5, units: [1, 2, 3, 4, 5], target: { 1: 4, 2: 7, 3: 4 } },
-    { level: 6, units: [1, 2, 3, 4, 5, 6], target: { 1: 4, 2: 6, 3: 5 } },
-    { level: 7, units: [1, 2, 3, 4, 5, 6, 7], target: { 1: 3, 2: 6, 3: 6 } },
-    { level: 8, units: [1, 2, 3, 4, 5, 6, 7, 8], target: { 1: 3, 2: 5, 3: 7 } },
-    { level: 9, units: [1, 2, 3, 4, 5, 6, 7, 8, 9], target: { 1: 2, 2: 6, 3: 7 } },
-    { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target: { 1: 2, 2: 5, 3: 8 } }
-  ];
-  const STAR_THRESHOLDS = [2000, 4000, 6500];
+  const COLOR_SETS = {
+    four: ["red", "green", "blue", "purple"],
+    five: ["red", "green", "blue", "purple", "orange"],
+    six: ["red", "green", "blue", "purple", "orange", "darkblue"]
+  };
+
+  const CAMPAIGNS = {
+    newcomer: {
+      id: "newcomer",
+      title: "NEWCOMER CAMPAIGN",
+      label: "CAMPAIGN 1",
+      levels: [
+        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 10, 2: 5, 3: 0 }, colors: COLOR_SETS.four },
+        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 8,  2: 5, 3: 2 }, colors: COLOR_SETS.four },
+        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 6,  2: 6, 3: 3 }, colors: COLOR_SETS.four },
+        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 5,  2: 7, 3: 3 }, colors: COLOR_SETS.four },
+        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 4,  2: 7, 3: 4 }, colors: COLOR_SETS.four },
+        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 4,  2: 6, 3: 5 }, colors: COLOR_SETS.four },
+        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 180, stars: [2500, 5200,  8500],  target: { 1: 3,  2: 6, 3: 6 }, colors: COLOR_SETS.four },
+        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 180, stars: [3000, 6500, 11000],  target: { 1: 3,  2: 5, 3: 7 }, colors: COLOR_SETS.four },
+        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 180, stars: [3000, 6500, 11000],  target: { 1: 2,  2: 6, 3: 7 }, colors: COLOR_SETS.four },
+        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 180, stars: [4000, 8000, 13500], target: { 1: 2,  2: 5, 3: 8 }, colors: COLOR_SETS.four }
+      ]
+    },
+    experienced: {
+      id: "experienced",
+      title: "EXPERIENCED CAMPAIGN",
+      label: "CAMPAIGN 2",
+      levels: [
+        { level: 1,  units: [1],                          wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 8, 2: 5, 3: 2 }, colors: COLOR_SETS.five },
+        { level: 2,  units: [1, 2],                        wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 7, 2: 5, 3: 3 }, colors: COLOR_SETS.five },
+        { level: 3,  units: [1, 2, 3],                     wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 6, 2: 5, 3: 4 }, colors: COLOR_SETS.five },
+        { level: 4,  units: [1, 2, 3, 4],                  wordTarget: 15, seconds: 180, stars: [2000, 4000,  6500],  target: { 1: 5, 2: 5, 3: 5 }, colors: COLOR_SETS.five },
+        { level: 5,  units: [1, 2, 3, 4, 5],               wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 4, 2: 5, 3: 6 }, colors: COLOR_SETS.six },
+        { level: 6,  units: [1, 2, 3, 4, 5, 6],            wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 3, 2: 5, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 7,  units: [1, 2, 3, 4, 5, 6, 7],         wordTarget: 20, seconds: 165, stars: [2500, 5200,  8500],  target: { 1: 2, 2: 6, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 8,  units: [1, 2, 3, 4, 5, 6, 7, 8],      wordTarget: 25, seconds: 150, stars: [3000, 6500, 11000],  target: { 1: 1, 2: 7, 3: 7 }, colors: COLOR_SETS.six },
+        { level: 9,  units: [1, 2, 3, 4, 5, 6, 7, 8, 9],   wordTarget: 25, seconds: 150, stars: [3000, 6500, 11000],  target: { 1: 0, 2: 7, 3: 8 }, colors: COLOR_SETS.six },
+        { level: 10, units: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], wordTarget: 30, seconds: 150, stars: [4000, 8000, 13500], target: { 1: 0, 2: 5, 3: 10 }, colors: COLOR_SETS.six }
+      ]
+    }
+  };
+
+  const LEVELS = CAMPAIGNS.newcomer.levels;
+  let selectedCampaignId = "newcomer";
   let selectedLevelNumber = 1;
 
-  function showCampaign() {
+  function showCampaignSelect() {
     const profile = window.WordCrushProfile.getProfile();
     if (!profile) {
       window.WordCrushProfile.showCharacterCreate();
       return;
     }
 
+    window.WordCrushScreens.showScreen("campaign-select-screen");
+  }
+
+  function showCampaign(campaignId = selectedCampaignId) {
+    const profile = window.WordCrushProfile.getProfile();
+    if (!profile) {
+      window.WordCrushProfile.showCharacterCreate();
+      return;
+    }
+
+    selectedCampaignId = CAMPAIGNS[campaignId] ? campaignId : "newcomer";
     renderCampaign();
     window.WordCrushScreens.showScreen("campaign-screen");
   }
 
+  function activeCampaign() {
+    return CAMPAIGNS[selectedCampaignId] || CAMPAIGNS.newcomer;
+  }
+
   function renderCampaign() {
+    const campaign = activeCampaign();
     const profile = window.WordCrushProfile.getProfile() || {};
     const grade = Number(profile.grade) || 6;
-    const progress = window.WordCrushProfile.getCampaignProgress();
+    const progress = window.WordCrushProfile.getCampaignProgress(campaign.id);
     const grid = document.getElementById("campaign-level-grid");
-    const subtitle = document.getElementById("campaign-subtitle");
-    if (subtitle) subtitle.textContent = `GRADE ${grade} - 10 LEVELS`;
+    setText("campaign-title", campaign.title);
+    setText("campaign-subtitle", `GRADE ${grade} - 10 LEVELS`);
     if (!grid) return;
 
     grid.innerHTML = "";
-    LEVELS.forEach((config) => {
+    campaign.levels.forEach((config) => {
       const saved = progress.levels[String(config.level)] || {};
       const locked = config.level > (progress.unlockedLevel || 1);
       const button = document.createElement("button");
@@ -56,24 +104,25 @@
   }
 
   function showLevelReady(levelNumber) {
-    const config = LEVELS.find((level) => level.level === levelNumber);
-    const progress = window.WordCrushProfile.getCampaignProgress();
+    const campaign = activeCampaign();
+    const config = campaign.levels.find((level) => level.level === levelNumber);
+    const progress = window.WordCrushProfile.getCampaignProgress(campaign.id);
     const saved = progress.levels[String(levelNumber)] || {};
     const locked = !config || levelNumber > (progress.unlockedLevel || 1);
     if (locked) return;
 
     selectedLevelNumber = levelNumber;
-    setText("campaign-ready-title", `CAMPAIGN 1 - LEVEL ${levelNumber}`);
-    setText("campaign-ready-subtitle", `UNITS ${config.units[0]}-${config.units[config.units.length - 1]} - ${window.WordCrushAdapter.BOARD_WORD_COUNT} WORDS`);
+    setText("campaign-ready-title", `${campaign.label} - LEVEL ${levelNumber}`);
+    setText("campaign-ready-subtitle", `UNITS ${config.units[0]}-${config.units[config.units.length - 1]} - ${config.wordTarget} WORDS - ${config.colors.length} GEMS`);
     setText("campaign-ready-best", `YOUR BEST: ${Number(saved.bestScore) || 0} POINTS`);
 
     const earnedStars = Math.max(0, Math.min(3, Number(saved.stars) || 0));
     const starRows = document.getElementById("campaign-ready-stars");
     if (starRows) {
       starRows.innerHTML = [
-        [1, STAR_THRESHOLDS[0], "COMPLETE THE LEVEL"],
-        [2, STAR_THRESHOLDS[1], "GOOD PERFORMANCE"],
-        [3, STAR_THRESHOLDS[2], "MASTER PERFORMANCE"]
+        [1, config.stars[0], "COMPLETE THE LEVEL"],
+        [2, config.stars[1], "GOOD PERFORMANCE"],
+        [3, config.stars[2], "MASTER PERFORMANCE"]
       ].map(([stars, points, description]) => {
         const completed = earnedStars >= stars;
         return `
@@ -96,35 +145,48 @@
   }
 
   function startSelectedLevel() {
-    startLevel(selectedLevelNumber);
+    startLevel(selectedLevelNumber, selectedCampaignId);
   }
 
-  function startLevel(levelNumber) {
-    const config = LEVELS.find((level) => level.level === levelNumber);
+  function startLevel(levelNumber, campaignId = selectedCampaignId) {
+    selectedCampaignId = CAMPAIGNS[campaignId] ? campaignId : "newcomer";
+    const campaign = activeCampaign();
+    const config = campaign.levels.find((level) => level.level === levelNumber);
     const profile = window.WordCrushProfile.getProfile();
     if (!config || !profile) return;
 
     const grade = Number(profile.grade) || 6;
-    const words = buildLevelWords(grade, config);
-    if (words.length < window.WordCrushAdapter.BOARD_WORD_COUNT) {
+    const boardSize = window.WordCrushAdapter.BOARD_WORD_COUNT;
+    const wordTarget = config.wordTarget || boardSize;
+    const allWords = buildLevelWords(grade, config, wordTarget);
+
+    if (allWords.length < boardSize) {
       if (window.ToastManager) {
         window.ToastManager.show("NOT ENOUGH WORDS FOR THIS LEVEL");
       }
       return;
     }
 
+    const firstBoard = allWords.slice(0, boardSize);
+    const refillQueue = allWords.slice(boardSize);
+
     window.WordCrushGame.startGame({
-      words,
+      words: firstBoard,
       profile,
       runType: "campaign",
-      campaignId: "campaign-1",
+      campaignId: campaign.id,
       campaignLevel: levelNumber,
-      campaignTotalLevels: LEVELS.length,
+      campaignTotalLevels: campaign.levels.length,
+      campaignRefillQueue: refillQueue,
+      campaignStarThresholds: config.stars,
+      gameSeconds: config.seconds,
+      gemColors: config.colors,
       levelNumber
     });
   }
 
-  function buildLevelWords(grade, config) {
+  function buildLevelWords(grade, config, total) {
+    total = total || window.WordCrushAdapter.BOARD_WORD_COUNT;
     const pool = window.WordCrushAdapter.buildWordPool({
       grades: [grade],
       units: config.units,
@@ -135,29 +197,29 @@
     const usedTerms = new Set();
 
     [1, 2, 3].forEach((diff) => {
-      pickDiffWords(pool, diff, config.target[diff], selected, usedIds, usedTerms, true);
+      pickDiffWords(pool, diff, config.target[diff], selected, usedIds, usedTerms, true, total);
     });
 
-    const total = window.WordCrushAdapter.BOARD_WORD_COUNT;
     for (const diff of [2, 1, 3]) {
       if (selected.length >= total) break;
-      pickDiffWords(pool, diff, total - selected.length, selected, usedIds, usedTerms, true);
+      pickDiffWords(pool, diff, total - selected.length, selected, usedIds, usedTerms, true, total);
     }
 
     for (const diff of [2, 1, 3]) {
       if (selected.length >= total) break;
-      pickDiffWords(pool, diff, total - selected.length, selected, usedIds, usedTerms, false);
+      pickDiffWords(pool, diff, total - selected.length, selected, usedIds, usedTerms, false, total);
     }
 
     return shuffle(selected).slice(0, total);
   }
 
-  function pickDiffWords(pool, diff, count, selected, usedIds, usedTerms, respectConflicts) {
+  function pickDiffWords(pool, diff, count, selected, usedIds, usedTerms, respectConflicts, cap) {
     if (count <= 0) return;
+    cap = cap || window.WordCrushAdapter.BOARD_WORD_COUNT;
     const candidates = shuffle(pool.filter((word) => Number(word.diff) === diff && !usedIds.has(word.id)));
 
     for (const word of candidates) {
-      if (selected.length >= window.WordCrushAdapter.BOARD_WORD_COUNT || count <= 0) return;
+      if (selected.length >= cap || count <= 0) return;
       if (respectConflicts && conflictsWith(word, usedTerms)) continue;
       selected.push(word);
       usedIds.add(word.id);
@@ -168,20 +230,20 @@
 
   function recordResult(state) {
     if (!state || state.runType !== "campaign") return;
+    const campaignId = state.campaignId || "newcomer";
+    const campaign = CAMPAIGNS[campaignId] || CAMPAIGNS.newcomer;
     const level = Number(state.campaignLevel);
     const completed = (state.turkishCards || []).length === 0;
-    const stars = completed ? starsForScore(state.score) : 0;
-    window.WordCrushProfile.updateCampaignProgress(level, state.score, stars, completed);
+    const config = campaign.levels.find(l => l.level === level);
+    const thresholds = config?.stars || [2000, 4000, 6500];
+    const stars = completed ? starsForScore(state.score, thresholds) : 0;
+    window.WordCrushProfile.updateCampaignProgress(campaign.id, level, state.score, stars, completed, campaign.levels.length);
     if (stars >= 1) window.WordCrushFirebase?.submitScore();
   }
 
-  function starsForScore(score) {
-    return STAR_THRESHOLDS.reduce((stars, threshold) => score >= threshold ? stars + 1 : stars, 0);
-  }
-
-  function starsText(stars) {
-    const safeStars = Math.max(0, Math.min(3, Number(stars) || 0));
-    return "⭐".repeat(safeStars) + "☆".repeat(3 - safeStars);
+  function starsForScore(score, thresholds) {
+    thresholds = thresholds || [2000, 4000, 6500];
+    return thresholds.reduce((stars, threshold) => score >= threshold ? stars + 1 : stars, 0);
   }
 
   function starText(stars) {
@@ -191,9 +253,7 @@
 
   function setText(id, text) {
     const el = document.getElementById(id);
-    if (el) {
-      el.textContent = text;
-    }
+    if (el) el.textContent = text;
   }
 
   function conflictsWith(word, usedTerms) {
@@ -223,7 +283,9 @@
   }
 
   window.WordCrushCampaign = {
+    CAMPAIGNS,
     LEVELS,
+    showCampaignSelect,
     showCampaign,
     renderCampaign,
     showLevelReady,

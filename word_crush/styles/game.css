@@ -359,6 +359,22 @@ body:not(.lite-mode) .gem.purple {
   background-image: url("../assets/gems/gem-purple.png");
 }
 
+.gem.orange {
+  background: linear-gradient(145deg, #f97316, #9a3412);
+}
+
+body:not(.lite-mode) .gem.orange {
+  background-image: url("../assets/gems/gem-orange.png");
+}
+
+.gem.darkblue {
+  background: linear-gradient(145deg, #1d4ed8, #172554);
+}
+
+body:not(.lite-mode) .gem.darkblue {
+  background-image: url("../assets/gems/gem-darkblue.png");
+}
+
 .gem.black {
   background: linear-gradient(145deg, #111827, #030712);
   color: rgba(255, 255, 255, 0.72);
@@ -522,6 +538,32 @@ body.lite-mode .paper-card.intro-card {
   letter-spacing: 0.04em;
   text-shadow: 0 4px 0 #3b1b0f, 0 0 22px rgba(250, 204, 21, 0.62);
   animation: scoreFloat 1.35s ease forwards;
+}
+
+.black-combo-float {
+  color: #f87171;
+  font-size: clamp(64px, 9vw, 148px);
+  text-shadow: 0 5px 0 #240707, 0 0 30px rgba(239, 68, 68, 0.9);
+  animation: blackComboFloat 3s ease-out forwards;
+}
+
+body.black-combo-active {
+  animation: blackComboQuake 0.16s linear infinite;
+}
+
+@keyframes blackComboQuake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  20% { transform: translate(-9px, 5px) rotate(-0.22deg); }
+  40% { transform: translate(8px, -6px) rotate(0.2deg); }
+  60% { transform: translate(-6px, -4px) rotate(-0.16deg); }
+  80% { transform: translate(7px, 6px) rotate(0.15deg); }
+}
+
+@keyframes blackComboFloat {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.45) rotate(-5deg); }
+  14% { opacity: 1; transform: translate(-50%, -50%) scale(1.12) rotate(2deg); }
+  75% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); }
+  100% { opacity: 0; transform: translate(-50%, -58%) scale(0.92) rotate(1deg); }
 }
 
 @keyframes crushOut {
@@ -693,6 +735,82 @@ body.lite-mode .blast-cursor.active { animation: none; }
   }
 }
 
+.campaign-select-panel {
+  width: min(1120px, 96vw);
+}
+
+.campaign-select-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 260px));
+  justify-content: center;
+  gap: clamp(10px, 1.5vw, 18px);
+}
+
+.campaign-choice-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 2 / 3;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  border: 1.5px solid rgba(255, 215, 0, 0.38);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 35%),
+    linear-gradient(145deg, rgba(30, 58, 138, 0.45), rgba(2, 6, 24, 0.9));
+  color: #ffd700;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.38);
+  transition: transform 0.14s ease, filter 0.14s ease, border-color 0.14s ease;
+}
+
+.campaign-choice-card:hover {
+  border-color: rgba(255, 215, 0, 0.9);
+  filter: brightness(1.08);
+  transform: translateY(-4px);
+}
+
+.campaign-choice-card:active {
+  transform: translateY(-1px);
+}
+
+.campaign-choice-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.campaign-choice-card span {
+  position: relative;
+  z-index: 1;
+  padding: 10px 16px;
+  color: #ffd700;
+  font: clamp(28px, 3.2vw, 48px)/0.96 "Bebas Neue", Impact, sans-serif;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-shadow: 0 4px 0 #2a1407, 0 0 20px rgba(0, 0, 0, 0.86);
+}
+
+.campaign-choice-card img + span {
+  opacity: 0;
+}
+
+.campaign-choice-card.back-card {
+  background: linear-gradient(145deg, rgba(71, 85, 105, 0.58), rgba(15, 23, 42, 0.92));
+}
+
+@media (max-width: 920px) {
+  .campaign-select-grid {
+    grid-template-columns: 1fr;
+    max-height: 72vh;
+    overflow-y: auto;
+  }
+}
+
 @media (orientation: landscape) and (max-height: 520px) {
   #game-screen {
     gap: 4px;
@@ -845,6 +963,22 @@ body.lite-mode .blast-cursor.active { animation: none; }
 
   .score-float {
     font-size: 40px;
+  }
+
+  .campaign-select-panel {
+    width: min(760px, calc(100vw - 20px));
+    padding: 14px;
+  }
+
+  .campaign-select-grid {
+    grid-template-columns: repeat(3, minmax(120px, 200px));
+    gap: 8px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .campaign-choice-card span {
+    font-size: clamp(22px, 5.2vh, 34px);
   }
 }
 

@@ -4,6 +4,7 @@
     { id: 'first_step', icon: '⚔', name: 'FIRST STEP', desc: 'Complete your first campaign level.', reward: 500, test: s => s.completedLevels >= 1, progress: s => [s.completedLevels, 1], chain: 'next_step' },
     { id: 'next_step', icon: '⚔', name: 'NEXT STEP', desc: 'Complete 5 campaign levels.', reward: 1500, test: s => s.completedLevels >= 5, progress: s => [s.completedLevels, 5], chain: 'final_step' },
     { id: 'final_step', icon: '⚔', name: 'FINAL STEP', desc: 'Complete all 10 campaign levels.', reward: 3000, test: s => s.completedLevels >= 10, progress: s => [s.completedLevels, 10], badge: 'finalstep' },
+    { id: 'brilliant_minded_individual', icon: '!', name: 'BRILLIANT MINDED INDIVIDUAL', desc: 'Make a combo from black gems.', reward: 0, test: () => false, progress: () => [1, 1], secret: true, badge: 'brilliant' },
 
     // ── STAR COLLECTION — total stars
     { id: 'star_student', icon: '★', name: 'STAR STUDENT', desc: 'Collect 5 stars.', reward: 1000, test: s => s.totalStars >= 5, progress: s => [s.totalStars, 5], chain: 'star_lord' },
@@ -71,7 +72,7 @@
   ];
 
   const WC_ACHIEVEMENT_GROUPS = [
-    { id: 'milestones', icon: '⚔', label: 'MILESTONES', ids: ['first_step', 'next_step', 'final_step'] },
+    { id: 'milestones', icon: '⚔', label: 'MILESTONES', ids: ['first_step', 'next_step', 'final_step', 'brilliant_minded_individual'] },
     { id: 'star_collection', icon: '★', label: 'STAR COLLECTION', ids: ['star_student', 'star_lord', 'star_overlord', 'perfection', 'three_star_addiction', 'three_star_obsession'] },
     { id: 'combo_master', icon: '⚡', label: 'COMBO MASTER', ids: ['combo_beginner', 'combo_apprentice', 'combo_overlord'] },
     { id: 'score_hunter', icon: '✶', label: 'SCORE HUNTER', ids: ['rising_star', 'score_baron', 'crush_legend'] },
@@ -92,7 +93,10 @@
   function achStats() {
     const save = window.WordCrushProfile.getRawSave();
     const stats = save.stats || {};
-    const campaignLevels = Object.values((save.campaign || {}).levels || {});
+    const campaigns = window.WordCrushProfile.getAllCampaignProgress
+      ? window.WordCrushProfile.getAllCampaignProgress()
+      : { newcomer: save.campaign || {} };
+    const campaignLevels = Object.values(campaigns).flatMap((campaign) => Object.values((campaign || {}).levels || {}));
     return {
       completedLevels: campaignLevels.filter(l => l.completed).length,
       totalStars: campaignLevels.reduce((sum, l) => sum + (Number(l.stars) || 0), 0),
@@ -152,6 +156,39 @@
     });
   }
 
+  function unlockSecretAchievement(id) {
+    const achievement = WC_ACHIEVEMENTS.find(item => item.id === id && item.secret);
+    if (!achievement) return false;
+
+    const save = window.WordCrushProfile.getRawSave();
+    const unlocked = new Set(save.unlockedAchievements || []);
+    const claimed = new Set(save.claimedAchievements || []);
+    if (unlocked.has(id) || claimed.has(id)) return false;
+
+    unlocked.add(id);
+    window.WordCrushProfile.setAchievementField('unlockedAchievements', [...unlocked]);
+    window.WordCrushProfile.setAchievementField('claimedAchievements', [...claimed]);
+    window.WordCrushProfile.store();
+    updateHubGlow();
+    return true;
+  }
+
+  function migrateLegacySecretAutoClaim() {
+    const id = 'brilliant_minded_individual';
+    const save = window.WordCrushProfile.getRawSave();
+    const claimed = new Set(save.claimedAchievements || []);
+    const confirmed = new Set(save.secretAchievementClaims || []);
+    const migrated = new Set(save.legacySecretClaimMigrations || []);
+
+    if (!claimed.has(id) || confirmed.has(id) || migrated.has(id)) return;
+
+    claimed.delete(id);
+    migrated.add(id);
+    window.WordCrushProfile.setAchievementField('claimedAchievements', [...claimed]);
+    window.WordCrushProfile.setAchievementField('legacySecretClaimMigrations', [...migrated]);
+    window.WordCrushProfile.store();
+  }
+
   // ── RENDER ────────────────────────────────────────────
 
   function renderGrid() {
@@ -167,7 +204,9 @@
       return `<button class="wo-ach-tab${_achGroup === x.id ? ' active' : ''}" onclick="WCAchievements.filterGroup('${x.id}')">${hasNew ? '<span class="wo-ach-tab-new">NEW</span>' : ''}${x.icon} ${x.label}</button>`;
     }).join('');
 
-    document.getElementById('wc-ach-grid').innerHTML = WC_ACHIEVEMENTS.filter(a => ids.has(a.id)).map(a => {
+    document.getElementById('wc-ach-grid').innerHTML = WC_ACHIEVEMENTS.filter(a => {
+      return ids.has(a.id) && (!a.secret || unlocked.has(a.id) || claimed.has(a.id));
+    }).map(a => {
       const ready = unlocked.has(a.id);
       const done = claimed.has(a.id);
       const visible = isVisible(a);
@@ -185,7 +224,7 @@
           <small>${ready ? target : Math.min(value, target)}/${target}</small>
         </div>
         <div class="wo-achievement-reward">
-          <strong>+${a.reward}</strong><span>SCORE</span>
+          ${a.reward ? `<strong>+${a.reward}</strong><span>SCORE</span>` : '<span class="wo-achievement-easter">EASTER EGG</span>'}
           ${done
             ? '<button disabled>CLAIMED ✓</button>'
             : ready
@@ -202,6 +241,7 @@
 
   function show(from = 'hub') {
     _achReturn = from;
+    migrateLegacySecretAutoClaim();
     if (!_achGroup) _achGroup = WC_ACHIEVEMENT_GROUPS[0].id;
     unlockAchievements();
     window.WordCrushProfile.store();
@@ -229,6 +269,12 @@
     if (!a || (save.claimedAchievements || []).includes(id) || !(save.unlockedAchievements || []).includes(id)) return;
 
     window.WordCrushProfile.setAchievementField('claimedAchievements', [...(save.claimedAchievements || []), id]);
+    if (a.secret) {
+      window.WordCrushProfile.setAchievementField('secretAchievementClaims', [
+        ...(save.secretAchievementClaims || []),
+        id
+      ]);
+    }
     window.WordCrushProfile.setAchievementField('achievementScore', (Number(save.achievementScore) || 0) + a.reward);
     _dirty = true;
 
@@ -255,7 +301,12 @@
     const img = document.getElementById('wc-badge-reveal-img');
     if (img) img.src = 'badges/' + a.badge + '.webp';
     document.getElementById('wc-badge-reveal').classList.add('open');
-    if (window.ToastManager) window.ToastManager.show(`ACHIEVEMENT CLAIMED · +${a.reward} SCORE`);
+    if (window.ToastManager) {
+      const message = a.reward
+        ? `ACHIEVEMENT CLAIMED · +${a.reward} SCORE`
+        : `ACHIEVEMENT CLAIMED: ${a.name}`;
+      window.ToastManager.show(message);
+    }
   }
 
   function closeBadgeReveal() {
@@ -284,7 +335,9 @@
   function achievementCount() {
     const save = window.WordCrushProfile.getRawSave();
     const claimed = save.claimedAchievements || [];
-    return { earned: claimed.length, total: WC_ACHIEVEMENTS.length };
+    const unlocked = new Set(save.unlockedAchievements || []);
+    const total = WC_ACHIEVEMENTS.filter(a => !a.secret || unlocked.has(a.id) || claimed.includes(a.id)).length;
+    return { earned: claimed.length, total };
   }
 
   function checkAndNotify() {
@@ -313,6 +366,7 @@
     earnedBadges,
     badgeCount,
     achievementCount,
+    unlockSecretAchievement,
     checkAndNotify,
     updateHubGlow,
   };

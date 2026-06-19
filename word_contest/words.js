@@ -62,7 +62,7 @@ const WORD_BANK = [
   { en:'BAGEL', tr:'SİMİT', grade:6, diff:1, unit:2, img:'../images/6/2/1.webp' },
   { en:'BUTTER', tr:'TEREYAĞI', grade:6, diff:2, unit:2, img:'../images/6/2/2.webp' },
   { en:'CEREAL', tr:'TAHIL GEVREĞİ', grade:6, diff:2, unit:2, img:'../images/6/2/3.webp' },
-  { en:'CROISSANT', tr:'KROİSAN', grade:6, diff:2, unit:2, img:'../images/6/2/4.webp' },
+  { en:'CROISSANT', tr:'KRUVASAN', grade:6, diff:2, unit:2, img:'../images/6/2/4.webp' },
   { en:'EGG', tr:'YUMURTA', grade:6, diff:1, unit:2, img:'../images/6/2/5.webp' },
   { en:'FRUIT JUICE', tr:'MEYVE SUYU', grade:6, diff:1, unit:2, img:'../images/6/2/6.webp' },
   { en:'JAM', tr:'REÇEL', grade:6, diff:1, unit:2, img:'../images/6/2/7.webp' },
@@ -99,7 +99,7 @@ const WORD_BANK = [
   { en:'ENJOY', tr:'ZEVK ALMAK', grade:6, diff:2, unit:2, img:'../images/6/2/38.webp' },
   { en:'COOK', tr:'PİŞİRMEK', grade:6, diff:1, unit:2, img:'../images/6/2/39.webp' },
   { en:'BUY', tr:'SATIN ALMAK', grade:6, diff:3, unit:2, img:'../images/6/2/40.webp' },
-  { en:'TASTE', tr:'TAT', grade:6, diff:3, unit:2, img:'../images/6/2/41.webp' },
+  { en:'TASTE', tr:'TATMAK', grade:6, diff:3, unit:2, img:'../images/6/2/41.webp' },
   { en:'PREPARE', tr:'HAZIRLAMAK', grade:6, diff:3, unit:2, img:'../images/6/2/42.webp' },
   { en:'HUNGRY', tr:'AÇ', grade:6, diff:2, unit:2, img:'../images/6/2/43.webp' },
   { en:'THIRSTY', tr:'SUSUZ', grade:6, diff:2, unit:2, img:'../images/6/2/44.webp' },
@@ -107,7 +107,7 @@ const WORD_BANK = [
   { en:'HEALTHY', tr:'SAĞLIKLI', grade:6, diff:2, unit:2, img:'../images/6/2/46.webp' },
   { en:'UNHEALTHY', tr:'SAĞLIKSIZ', grade:6, diff:2, unit:2, img:'../images/6/2/47.webp' },
   { en:'JUNK FOOD', tr:'ABUR CUBUR', grade:6, diff:1, unit:2, img:'../images/6/2/48.webp' },
-  { en:'SNACK', tr:'ATİŞTİRMELİK', grade:6, diff:1, unit:2, img:'../images/6/2/49.webp' },
+  { en:'SNACK', tr:'ATIŞTIRMALIK', grade:6, diff:1, unit:2, img:'../images/6/2/49.webp' },
   { en:'MEAL', tr:'ÖĞÜN', grade:6, diff:2, unit:2, img:'../images/6/2/50.webp' },
 
   // ─── GRADE 6 UNIT 3 ──────────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ const WORD_BANK = [
   { en:'TRAFFIC JAM', tr:'TRAFİK TIKANIKLIĞI', grade:6, diff:1, unit:3, img:'../images/6/3/3.webp' },
   { en:'HOMETOWN', tr:'MEMLEKET', grade:6, diff:2, unit:3, img:'../images/6/3/4.webp' },
   { en:'KIOSK', tr:'BÜFE', grade:6, diff:2, unit:3, img:'../images/6/3/5.webp' },
-  { en:'COMPARE', tr:'KARŞILAŞTIRMAK', grade:6, diff:2, unit:3, img:'../images/6/3/6.webp' },
+  { en:'COMPARE', tr:'KIYASLAMAK', grade:6, diff:2, unit:3, img:'../images/6/3/6.webp' },
   { en:'SELL', tr:'SATMAK', grade:6, diff:2, unit:3, img:'../images/6/3/7.webp' },
   { en:'SKYSCRAPER', tr:'GÖKDELEN', grade:6, diff:2, unit:3, img:'../images/6/3/8.webp' },
   { en:'STREET', tr:'CADDE', grade:6, diff:1, unit:3, img:'../images/6/1/9.webp' },
@@ -162,7 +162,7 @@ const WORD_BANK = [
   { en:'LARGE', tr:'BÜYÜK', grade:6, diff:2, unit:3, img:'../images/6/3/43.webp' },
   { en:'SMALL', tr:'KÜÇÜK', grade:6, diff:1, unit:3, img:'../images/6/3/44.webp' },
   { en:'NOISY', tr:'GÜRÜLTÜLÜ', grade:6, diff:2, unit:3, img:'../images/6/3/45.webp' },
-  { en:'QUIET', tr:'SAKİN', grade:6, diff:2, unit:3, img:'../images/6/3/46.webp' },
+  { en:'QUIET', tr:'SESSİZ', grade:6, diff:2, unit:3, img:'../images/6/3/46.webp' },
   { en:'DANGEROUS', tr:'TEHLİKELİ', grade:6, diff:2, unit:3, img:'../images/6/3/47.webp' },
   { en:'SAFE', tr:'GÜVENLİ', grade:6, diff:2, unit:3, img:'../images/6/3/48.webp' },
   { en:'GOOD', tr:'İYİ', grade:6, diff:1, unit:3, img:'../images/6/3/49.webp' },
@@ -176,18 +176,18 @@ const WORD_BANK = [
   { en:'PARTLY CLOUDY', tr:'PARÇALI BULUTLU', grade:6, diff:2, unit:4, img:'../images/6/4/3.webp' }, // EKLENDI
   { en:'FOGGY', tr:'SİSLİ', grade:6, diff:2, unit:4, img:'../images/6/4/4.webp' }, // EKLENDI
   { en:'WINDY', tr:'RÜZGARLI', grade:6, diff:1, unit:4, img:'../images/6/4/5.webp' }, // EKLENDI
-  { en:'FREEZING', tr:'BUZ GİBİ SOĞUK', grade:6, diff:2, unit:4, img:'../images/6/4/6.webp' }, // EKLENDI
+  { en:'FREEZING', tr:'DONDURUCU', grade:6, diff:2, unit:4, img:'../images/6/4/6.webp' }, // EKLENDI
   { en:'CHILLY', tr:'SERİN / SOĞUK', grade:6, diff:3, unit:4, img:'../images/6/4/6.webp' }, // EKLENDI
   { en:'LIGHTNING', tr:'ŞIMŞEK', grade:6, diff:3, unit:4, img:'../images/6/4/7.webp' }, // EKLENDI
   { en:'THUNDER', tr:'GÖKGÜRÜLTÜSÜ', grade:6, diff:3, unit:4, img:'../images/6/4/8.webp' }, // EKLENDI
   { en:'STORMY', tr:'FIRTINALI', grade:6, diff:3, unit:4, img:'../images/6/4/9.webp' }, // EKLENDI
   { en:'WARM', tr:'ILIK', grade:6, diff:1, unit:4, img:'../images/6/4/10.webp' }, // EKLENDI
-  { en:'PLEASANT', tr:'HOŞ / GÜZEL', grade:6, diff:3, unit:4, img:'../images/6/4/10.webp' }, // EKLENDI
+  { en:'PLEASANT', tr:'HOŞ', grade:6, diff:3, unit:4, img:'../images/6/4/10.webp' }, // EKLENDI
   { en:'MILD', tr:'ILIMAN', grade:6, diff:3, unit:4, img:'../images/6/4/10.webp' }, // EKLENDI
   { en:'HOT', tr:'SICAK', grade:6, diff:1, unit:4, img:'../images/6/4/13.webp' }, // EKLENDI
   { en:'COLD', tr:'SOĞUK', grade:6, diff:1, unit:4, img:'../images/6/4/14.webp' }, // EKLENDI
   { en:'COOL', tr:'SERİN', grade:6, diff:2, unit:4, img:'../images/6/4/15.webp' }, // EKLENDI
-  { en:'HAILING', tr:'DOLU YAĞIYOR', grade:6, diff:3, unit:4, img:'../images/6/4/16.webp' }, // EKLENDI
+  { en:'HAILING', tr:'DOLU YAĞIŞI', grade:6, diff:3, unit:4, img:'../images/6/4/16.webp' }, // EKLENDI
   { en:'FABULOUS', tr:'HARİKA', grade:6, diff:3, unit:4, img:'../images/6/4/17.webp' }, // EKLENDI
   { en:'WEATHER', tr:'HAVA DURUMU', grade:6, diff:2, unit:4, img:'../images/6/4/18.webp' }, // EKLENDI
   { en:'TEMPERATURE', tr:'SICAKLIK', grade:6, diff:3, unit:4, img:'../images/6/4/19.webp' }, // EKLENDI
@@ -199,10 +199,10 @@ const WORD_BANK = [
   { en:'HAPPY', tr:'MUTLU', grade:6, diff:1, unit:4, img:'../images/6/4/28.webp' }, // EKLENDI
   { en:'ANGRY', tr:'KIZGIN', grade:6, diff:2, unit:4, img:'../images/6/4/29.webp' }, // EKLENDI
   { en:'SAD', tr:'ÜZGÜN', grade:6, diff:2, unit:4, img:'../images/6/4/30.webp' }, // EKLENDI
-  { en:'UPSET', tr:'ÜZGÜN / KIZGIN', grade:6, diff:2, unit:4, img:'../images/6/4/30.webp' }, // EKLENDI
+  { en:'UPSET', tr:'ÜZGÜN', grade:6, diff:2, unit:4, img:'../images/6/4/30.webp' }, // EKLENDI
   { en:'BORED', tr:'SIKILMIŞ', grade:6, diff:1, unit:4, img:'../images/6/4/31.webp' }, // EKLENDI
   { en:'DULL', tr:'NEŞESİZ', grade:6, diff:2, unit:4, img:'../images/6/4/31.webp' }, // EKLENDI
-  { en:'MOODY', tr:'HUYSUZ / DEĞİŞKEN', grade:6, diff:3, unit:4, img:'../images/6/4/32.webp' }, // EKLENDI
+  { en:'MOODY', tr:'HUYSUZ', grade:6, diff:3, unit:4, img:'../images/6/4/32.webp' }, // EKLENDI
   { en:'ENERGETIC', tr:'ENERJİK', grade:6, diff:2, unit:4, img:'../images/6/4/33.webp' }, // EKLENDI
   { en:'TIRED', tr:'YORGUN', grade:6, diff:1, unit:4, img:'../images/6/4/34.webp' }, // EKLENDI
   { en:'SLEEPY', tr:'UYKULU', grade:6, diff:1, unit:4, img:'../images/6/4/35.webp' }, // EKLENDI
@@ -1253,7 +1253,7 @@ const WORD_BANK = [
   { en:'FRUIT JUICE', tr:'MEYVE SUYU', grade:0, diff:1, unit:12, img:'../images/6/2/6.webp' },
   { en:'JAM', tr:'REÇEL', grade:0, diff:1, unit:12, img:'../images/6/2/7.webp' },
   { en:'OMELETTE', tr:'OMLET', grade:0, diff:2, unit:12, img:'../images/6/2/8.webp' },
-  { en:'MUFFIN', tr:'MAFİN', grade:0, diff:1, unit:12, img:'../images/6/2/9.webp' },
+  { en:'MUFFIN', tr:'TOPKEK', grade:0, diff:1, unit:12, img:'../images/6/2/9.webp' },
   { en:'PANCAKE', tr:'KREP', grade:0, diff:1, unit:12, img:'../images/6/2/10.webp' },
   { en:'SAUSAGE', tr:'SOSİS', grade:0, diff:1, unit:12, img:'../images/6/2/11.webp' },
   { en:'NUTRITIOUS', tr:'BESLEYİCİ', grade:0, diff:3, unit:12, img:'../images/6/2/12.webp' },

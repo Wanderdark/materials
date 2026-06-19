@@ -14,7 +14,7 @@
 
   function updateHud(state) {
     const totalWords = state.boardSize || 15;
-    const starThresholds = [2000, 4000, 6500];
+    const starThresholds = state.campaignStarThresholds || [2000, 4000, 6500];
     const starMessages = ["⭐ 1 STAR REACHED", "⭐⭐ 2 STARS REACHED", "⭐⭐⭐ 3 STARS REACHED"];
     const maxScore = starThresholds[2];
     const progressPct = Math.min(100, Math.round((state.score / maxScore) * 1000) / 10);
@@ -142,7 +142,7 @@ const fill = document.getElementById("wo-hud-progress");
     showScreen("result-screen");
 
     if (completed) {
-      const stars = window.WordCrushCampaign?.starsForScore?.(state.score) ?? 0;
+      const stars = window.WordCrushCampaign?.starsForScore?.(state.score, state.campaignStarThresholds) ?? 0;
       if (stars >= 3) {
         try { new Audio("sounds/finalcheer2.mp3").play().catch(() => {}); } catch (_) {}
       } else if (stars >= 2) {
@@ -151,19 +151,19 @@ const fill = document.getElementById("wo-hud-progress");
     }
   }
 
-  function floatScore(text, x, y) {
+  function floatScore(text, x, y, options = {}) {
     const layer = document.getElementById("float-layer");
     if (!layer) {
       return;
     }
 
     const item = document.createElement("div");
-    item.className = "score-float";
+    item.className = `score-float ${options.className || ""}`.trim();
     item.textContent = text;
     item.style.left = `${x}px`;
     item.style.top = `${y}px`;
     layer.appendChild(item);
-    setTimeout(() => item.remove(), 1050);
+    setTimeout(() => item.remove(), options.duration ?? 1050);
   }
 
   function formatTime(totalSeconds) {

@@ -51,6 +51,7 @@
         unlockedLevel: 1,
         levels: {}
       },
+      campaigns: {},
       daily: null,
       achievementScore: 0,
       unlockedAchievements: [],
@@ -66,6 +67,11 @@
       data.stats = { ...fresh().stats, ...(data.stats || {}) };
       data.campaign = { ...fresh().campaign, ...(data.campaign || {}) };
       data.campaign.levels = data.campaign.levels || {};
+      data.campaigns = { ...(data.campaigns || {}) };
+      Object.keys(data.campaigns).forEach((id) => {
+        data.campaigns[id] = { ...fresh().campaign, ...(data.campaigns[id] || {}) };
+        data.campaigns[id].levels = data.campaigns[id].levels || {};
+      });
       if (data.profile && !data.profile.grade) data.profile.grade = 6;
       if (!Array.isArray(data.unlockedAchievements)) data.unlockedAchievements = [];
       if (!Array.isArray(data.claimedAchievements)) data.claimedAchievements = [];
@@ -174,8 +180,8 @@
     }
 
     const stats = save.stats || fresh().stats;
-    const campaign = getCampaignProgress();
-    const campaignLevels = Object.values(campaign.levels || {});
+    const campaigns = getAllCampaignProgress();
+    const campaignLevels = Object.values(campaigns).flatMap((campaign) => Object.values(campaign.levels || {}));
     const campaignStars = campaignLevels.reduce((total, level) => total + (Number(level.stars) || 0), 0);
     const completedCampaignLevels = campaignLevels.filter((level) => level.completed).length;
     const score = Number(stats.totalScore) || 0;
@@ -200,7 +206,9 @@
       const ac = window.WCAchievements.achievementCount();
       setText("sp-profile-ach-score", `${ac.earned}/${ac.total}`);
     }
-    setText("sp-profile-campaigns", completedCampaignLevels >= 10 ? "1" : "0");
+    setText("sp-profile-campaigns", String(Object.values(campaigns).filter((campaign) => {
+      return Object.values(campaign.levels || {}).filter((level) => level.completed).length >= 10;
+    }).length));
 
     const items = [
       ["BEST SCORE", stats.bestScore || 0],
@@ -247,14 +255,39 @@
     setTimeout(() => window.WCAchievements?.checkAndNotify?.(), 400);
   }
 
-  function getCampaignProgress() {
-    save.campaign = { ...fresh().campaign, ...(save.campaign || {}) };
-    save.campaign.levels = save.campaign.levels || {};
-    return save.campaign;
+  function getCampaignProgress(campaignId = "newcomer") {
+    const id = campaignId || "newcomer";
+    if (id === "newcomer" || id === "campaign-1") {
+      save.campaign = { ...fresh().campaign, ...(save.campaign || {}) };
+      save.campaign.levels = save.campaign.levels || {};
+      return save.campaign;
+    }
+
+    save.campaigns = { ...(save.campaigns || {}) };
+    save.campaigns[id] = { ...fresh().campaign, ...(save.campaigns[id] || {}) };
+    save.campaigns[id].levels = save.campaigns[id].levels || {};
+    return save.campaigns[id];
   }
 
-  function updateCampaignProgress(level, score, stars, completed) {
-    const campaign = getCampaignProgress();
+  function getAllCampaignProgress() {
+    const campaigns = { newcomer: getCampaignProgress("newcomer") };
+    Object.keys(save.campaigns || {}).forEach((id) => {
+      campaigns[id] = getCampaignProgress(id);
+    });
+    return campaigns;
+  }
+
+  function updateCampaignProgress(campaignId, level, score, stars, completed, totalLevels = 10) {
+    if (typeof campaignId === "number") {
+      totalLevels = 10;
+      completed = stars;
+      stars = score;
+      score = level;
+      level = campaignId;
+      campaignId = "newcomer";
+    }
+
+    const campaign = getCampaignProgress(campaignId);
     const key = String(level);
     const existing = campaign.levels[key] || {};
     campaign.levels[key] = {
@@ -263,11 +296,15 @@
       completed: Boolean(existing.completed || completed)
     };
 
-    if (completed && level >= (campaign.unlockedLevel || 1) && level < 10) {
+    if (completed && level >= (campaign.unlockedLevel || 1) && level < totalLevels) {
       campaign.unlockedLevel = level + 1;
     }
 
-    save.campaign = campaign;
+    if (campaignId === "newcomer" || campaignId === "campaign-1") {
+      save.campaign = campaign;
+    } else {
+      save.campaigns = { ...(save.campaigns || {}), [campaignId]: campaign };
+    }
     store();
   }
 
@@ -442,6 +479,7 @@
     resetProgress,
     getProfile,
     getCampaignProgress,
+    getAllCampaignProgress,
     updateCampaignProgress,
     getDailyProgress,
     setDailyProgress,

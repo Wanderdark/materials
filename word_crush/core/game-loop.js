@@ -32,12 +32,16 @@
     state.advEnemyHp    = options.advEnemyHp  != null ? options.advEnemyHp  : null;
     state.advEnemyMaxHp = options.advEnemyHp  != null ? options.advEnemyHp  : null;
     state.advWordPool   = options.advWordPool  || null;
+    state.colors        = sanitizeColors(options.gemColors);
+    if (options.gameSeconds != null) state.secondsLeft = Number(options.gameSeconds) || state.secondsLeft;
     state.advUsedIds    = new Set();
     if (options.advTimeOverride != null) state.secondsLeft = options.advTimeOverride;
     else if (options.advTimeMod) state.secondsLeft = Math.max(30, state.secondsLeft + options.advTimeMod);
     state.campaignId = options.campaignId || null;
     state.campaignLevel = options.campaignLevel || null;
     state.campaignTotalLevels = options.campaignTotalLevels || window.WordCrushCampaign?.LEVELS?.length || 10;
+    state.campaignRefillQueue    = options.campaignRefillQueue ? [...options.campaignRefillQueue] : [];
+    state.campaignStarThresholds = options.campaignStarThresholds || null;
     state.levelNumber = options.levelNumber || 1;
     state.activeWords = drawWords(State.BOARD_SIZE, new Set());
     if (state.runType === 'adventure') {
@@ -69,8 +73,8 @@
     render();
   }
 
-  function endGame() {
-    if (state.isRunning && state.timeBonus === 0 && state.turkishCards.length > 0) {
+  function endGame({ awardTimeBonus = true } = {}) {
+    if (awardTimeBonus && state.isRunning && state.timeBonus === 0 && state.turkishCards.length > 0) {
       state.timeBonus = state.secondsLeft * State.TIME_BONUS_PER_SECOND;
       state.score += state.timeBonus;
     }
@@ -266,14 +270,15 @@
     }
 
     state.isResolving = true;
-    state.score += State.MATCH_SCORE;
-    state.wordScore += State.MATCH_SCORE;
+    const matchPoints = tile.color === "black" ? 0 : State.MATCH_SCORE;
+    state.score += matchPoints;
+    state.wordScore += matchPoints;
     state.matches += 1;
-    Screens.setMessage("+100 MATCH");
+    Screens.setMessage(matchPoints ? "+100 MATCH" : "BLACK GEM +0");
     Audio.play("gemShatter");
     Board.markEnglishCrushing([tile.word.id]);
     Board.markTurkishCrushing([tile.word.id]);
-    Screens.floatScore("+100", ...centerPairArgs());
+    Screens.floatScore(`+${matchPoints}`, ...centerPairArgs());
 
     await sleep(760);
     removeMatchedWord(tile.word.id);
@@ -292,9 +297,16 @@
         state.turkishCards.push({ word: newWord, isNew: true });
         refillEnglishFromTurkishCards();
         render();
-        // clear isNew flag after render so animation only plays once
         state.turkishCards[state.turkishCards.length - 1].isNew = false;
       }
+    }
+
+    if (state.runType === 'campaign' && state.campaignRefillQueue?.length > 0) {
+      const newWord = state.campaignRefillQueue.shift();
+      state.turkishCards.push({ word: newWord, isNew: true });
+      refillEnglishFromTurkishCards();
+      render();
+      state.turkishCards[state.turkishCards.length - 1].isNew = false;
     }
 
     if (!state.turkishCards.length) {
@@ -307,6 +319,9 @@
     }
 
     await resolveCombos();
+    if (!state.isRunning) {
+      return;
+    }
     state.isResolving = false;
     Screens.setMessage("Pick the next pair.");
     render();
@@ -319,6 +334,11 @@
       const groups = findColorGroups();
       if (!groups.length) {
         break;
+      }
+
+      if (hasBlackCombo(groups)) {
+        triggerBlackComboGameOver(groups);
+        return;
       }
 
       chain += 1;
@@ -453,11 +473,11 @@
       const tile = state.englishGrid[index];
       const color = tile ? tile.color : null;
 
-      if (color && color !== "black" && color === runColor) {
+      if (color && color === runColor) {
         run.push(index);
       } else {
         commitRun(run, grouped);
-        run = color && color !== "black" ? [index] : [];
+        run = color ? [index] : [];
         runColor = color;
       }
     });
@@ -486,7 +506,7 @@
         const cornerIndex = toIndex(row, col);
         const cornerTile = state.englishGrid[cornerIndex];
 
-        if (!cornerTile || cornerTile.color === "black") {
+        if (!cornerTile) {
           continue;
         }
 
@@ -503,7 +523,7 @@
 
           const isSameColor = indices.every((index) => {
             const tile = state.englishGrid[index];
-            return tile && tile.color !== "black" && tile.color === cornerTile.color;
+            return tile && tile.color === cornerTile.color;
           });
 
           if (isSameColor) {
@@ -627,18 +647,18 @@
 
   function chooseControlledColor(index, options = {}) {
     if (index === null) {
-      return chooseWeightedColor(State.COLORS);
+      return chooseWeightedColor(currentColors());
     }
 
     if (options.allowPattern) {
-      return chooseWeightedColor(State.COLORS);
+      return chooseWeightedColor(currentColors());
     }
 
-    const safeColors = State.COLORS.filter((color) => {
+    const safeColors = currentColors().filter((color) => {
       return !wouldCreatePattern(index, color);
     });
 
-    return chooseWeightedColor(safeColors.length ? safeColors : State.COLORS);
+    return chooseWeightedColor(safeColors.length ? safeColors : currentColors());
   }
 
   function chooseWeightedColor(colors) {
@@ -654,7 +674,7 @@
 
   function countColors() {
     return state.englishGrid.reduce((counts, tile) => {
-      if (tile && State.COLORS.includes(tile.color)) {
+      if (tile && currentColors().includes(tile.color)) {
         counts[tile.color] = (counts[tile.color] || 0) + 1;
       }
 
@@ -726,6 +746,12 @@
     releasePreviousLock(selectedWordId);
     state.lockedTurkishId = selectedWordId;
 
+    const groups = findColorGroups();
+    if (hasBlackCombo(groups)) {
+      triggerBlackComboGameOver(groups);
+      return;
+    }
+
     if (state.runType === 'adventure' && state.advLives !== null) {
       state.advLives = Math.max(0, state.advLives - 1);
       Screens.updateHud(state);
@@ -745,6 +771,38 @@
     if (state.lockedTurkishId && state.lockedTurkishId !== nextLockedId) {
       state.lockedTurkishId = null;
     }
+  }
+
+  function hasBlackCombo(groups = findColorGroups()) {
+    return groups.flat().some((index) => state.englishGrid[index]?.color === "black");
+  }
+
+  function triggerBlackComboGameOver(groups) {
+    state.isResolving = true;
+    stopTimer();
+    const blackWordIds = unique(groups.flat()
+      .filter((index) => state.englishGrid[index]?.color === "black")
+      .map((index) => state.englishGrid[index].word.id));
+
+    Audio.play("combo");
+    Audio.playRumble?.();
+    Board.markEnglishCrushing(blackWordIds);
+    Screens.setMessage("BLACK COMBO - GAME OVER!");
+    Screens.floatScore("COMBO -1000000", ...centerPairArgs(), {
+      className: "black-combo-float",
+      duration: 3000
+    });
+    document.body.classList.add("black-combo-active");
+    if (window.ToastManager) {
+      window.ToastManager.show("BLACK COMBO - GAME OVER!");
+    }
+    if (window.WCAchievements?.unlockSecretAchievement?.("brilliant_minded_individual")) {
+      window.setTimeout(() => {
+        window.ToastManager?.show("ACHIEVEMENT EARNED: BRILLIANT MINDED INDIVIDUAL");
+      }, 650);
+    }
+    window.setTimeout(() => endGame({ awardTimeBonus: false }), 2000);
+    window.setTimeout(() => document.body.classList.remove("black-combo-active"), 3000);
   }
 
   function hasRunOfThree(colors, color) {
@@ -946,13 +1004,23 @@
     return new Promise((resolve) => window.setTimeout(resolve, ms));
   }
 
+  function currentColors() {
+    return Array.isArray(state.colors) && state.colors.length ? state.colors : State.COLORS;
+  }
+
+  function sanitizeColors(colors) {
+    const allowed = new Set(["red", "green", "blue", "purple", "orange", "darkblue", "yellow", "cyan"]);
+    const picked = Array.isArray(colors) ? colors.filter((color) => allowed.has(color)) : [];
+    return picked.length >= 3 ? picked : State.COLORS;
+  }
+
   // ── JOKER ACTIVATIONS ────────────────────────────────────────────────────
   let _blastTimer = null;
   let _blastPos   = { row: 0, col: 0 };
 
   async function activateTransmute() {
     if (!state.isRunning || state.isResolving) return false;
-    const colors = State.COLORS;
+    const colors = currentColors();
     state.englishGrid = state.englishGrid.map(tile => {
       if (!tile) return null;
       return { ...tile, color: colors[Math.floor(Math.random() * colors.length)] };

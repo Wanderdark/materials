@@ -1701,6 +1701,14 @@ body.needs-landscape .rotate-overlay {
   letter-spacing: 0.12em;
 }
 
+.wo-achievement-easter {
+  display: block;
+  margin-top: 8px;
+  color: #f8d874;
+  font: 700 10px/1 "Barlow Condensed", sans-serif;
+  letter-spacing: 0.12em;
+}
+
 .wo-achievement-reward button {
   width: 100%;
   margin-top: 7px;

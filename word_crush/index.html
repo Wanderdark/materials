@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/base.css?v=mobile-landscape-1">
-  <link rel="stylesheet" href="styles/game.css?v=mobile-landscape-1">
+  <link rel="stylesheet" href="styles/base.css?v=black-combo-achievement-1">
+  <link rel="stylesheet" href="styles/game.css?v=black-combo-achievement-1">
 </head>
 <body>
   <main id="app">
@@ -122,14 +122,40 @@
       </div>
     </section>
 
+    <section id="campaign-select-screen" class="screen">
+      <div class="wo-panel campaign-select-panel">
+        <div class="campaign-head">
+          <div>
+            <div class="wo-title campaign-title">CAMPAIGNS</div>
+            <div class="campaign-subtitle">CHOOSE YOUR PATH</div>
+          </div>
+          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+        </div>
+        <div class="campaign-select-grid" aria-label="Campaign choices">
+          <button class="campaign-choice-card" type="button" onclick="WordCrushCampaign.showCampaign('newcomer')">
+            <img src="images/campaign/newcomer.webp" alt="NEWCOMER CAMPAIGN" onerror="this.remove()">
+            <span>NEWCOMER CAMPAIGN</span>
+          </button>
+          <button class="campaign-choice-card" type="button" onclick="WordCrushCampaign.showCampaign('experienced')">
+            <img src="images/campaign/experienced.webp" alt="EXPERIENCED CAMPAIGN" onerror="this.remove()">
+            <span>EXPERIENCED CAMPAIGN</span>
+          </button>
+          <button class="campaign-choice-card back-card" type="button" onclick="WordCrushProfile.showHub()">
+            <img src="images/campaign-back.webp" alt="BACK" onerror="this.remove()">
+            <span>BACK</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <section id="campaign-screen" class="screen">
       <div class="wo-panel campaign-panel">
         <div class="campaign-head">
           <div>
-            <div class="wo-title campaign-title">CAMPAIGN 1</div>
+            <div id="campaign-title" class="wo-title campaign-title">NEWCOMER CAMPAIGN</div>
             <div id="campaign-subtitle" class="campaign-subtitle">GRADE 6 - UNITS 1-10</div>
           </div>
-          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+          <button class="wo-level-action" onclick="WordCrushCampaign.showCampaignSelect()">BACK</button>
         </div>
         <div id="campaign-level-grid" class="campaign-level-grid"></div>
       </div>
@@ -540,23 +566,23 @@
     </section>
   </main>
 
-  <script src="../word_contest/words.js?v=mobile-landscape-1"></script>
-  <script src="../word_master/questions.js?v=mobile-landscape-1"></script>
-  <script src="daily.js?v=mobile-landscape-1"></script>
-  <script src="core/adapter.js?v=mobile-landscape-1"></script>
-  <script src="core/audio.js?v=mobile-landscape-1"></script>
-  <script src="core/game-state.js?v=mobile-landscape-1"></script>
-  <script src="ui/toast.js?v=mobile-landscape-1"></script>
-  <script src="ui/screens.js?v=mobile-landscape-1"></script>
-  <script src="ui/game-board.js?v=mobile-landscape-1"></script>
-  <script src="core/profile.js?v=mobile-landscape-1"></script>
-  <script src="core/campaign.js?v=mobile-landscape-1"></script>
-  <script src="core/daily-board.js?v=mobile-landscape-1"></script>
-  <script src="ui/setup-screen.js?v=mobile-landscape-1"></script>
-  <script src="core/game-loop.js?v=mobile-landscape-1"></script>
-  <script src="core/achievements.js?v=mobile-landscape-1"></script>
-  <script src="core/adventure-run.js?v=mobile-landscape-1"></script>
+  <script src="../word_contest/words.js?v=campaign-select-1"></script>
+  <script src="../word_master/questions.js?v=campaign-select-1"></script>
+  <script src="daily.js?v=campaign-select-1"></script>
+  <script src="core/adapter.js?v=campaign-select-1"></script>
+  <script src="core/audio.js?v=black-combo-achievement-1"></script>
+  <script src="core/game-state.js?v=campaign-select-1"></script>
+  <script src="ui/toast.js?v=campaign-select-1"></script>
+  <script src="ui/screens.js?v=campaign-select-1"></script>
+  <script src="ui/game-board.js?v=campaign-select-1"></script>
+  <script src="core/profile.js?v=campaign-select-1"></script>
+  <script src="core/campaign.js?v=campaign-select-1"></script>
+  <script src="core/daily-board.js?v=campaign-select-1"></script>
+  <script src="ui/setup-screen.js?v=campaign-select-1"></script>
+  <script src="core/game-loop.js?v=black-combo-achievement-1"></script>
+  <script src="core/achievements.js?v=black-combo-achievement-2"></script>
+  <script src="core/adventure-run.js?v=campaign-select-1"></script>
   <script src="core/firebase.js?v=1"></script>
-  <script src="main.js?v=mobile-landscape-1"></script>
+  <script src="main.js?v=campaign-select-1"></script>
 </body>
 </html>

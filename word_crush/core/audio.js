@@ -17,7 +17,13 @@
   let comboSoundIndex = 0;
   let bgMusic = null;
   let bgStarted = false;
+  let rumbleTimer = null;
+  let musicSuppressed = false;
   let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 30));
+
+  function applyMusicVolume() {
+    if (bgMusic) bgMusic.volume = muted || musicSuppressed ? 0 : _musicVol / 100;
+  }
 
   function play(name) {
     if (!SOUNDS[name]) return;
@@ -42,7 +48,7 @@
     try {
       bgMusic = new Audio("sounds/main.mp3");
       bgMusic.loop = true;
-      bgMusic.volume = muted ? 0 : _musicVol / 100;
+      applyMusicVolume();
       bgMusic.play().catch(() => {});
     } catch (_) {}
   }
@@ -50,7 +56,7 @@
   function setMusicVolume(v) {
     _musicVol = Math.max(0, Math.min(100, Number(v) || 0));
     localStorage.setItem(MUSIC_VOL_KEY, _musicVol);
-    if (bgMusic) bgMusic.volume = muted ? 0 : _musicVol / 100;
+    applyMusicVolume();
   }
 
   function getMusicVolume() {
@@ -59,12 +65,30 @@
 
   function toggleMute() {
     muted = !muted;
-    if (bgMusic) bgMusic.volume = muted ? 0 : _musicVol / 100;
+    applyMusicVolume();
     return muted;
   }
 
   function isMuted() {
     return muted;
+  }
+
+  function playRumble() {
+    musicSuppressed = true;
+    applyMusicVolume();
+    if (rumbleTimer) window.clearTimeout(rumbleTimer);
+
+    try {
+      const rumble = new Audio("sounds/rumble.mp3");
+      rumble.volume = 1;
+      rumble.play().catch(() => {});
+    } catch (_) {}
+
+    rumbleTimer = window.setTimeout(() => {
+      musicSuppressed = false;
+      rumbleTimer = null;
+      applyMusicVolume();
+    }, 10000);
   }
 
   window.WordCrushAudio = {
@@ -73,6 +97,7 @@
     setMusicVolume,
     getMusicVolume,
     toggleMute,
-    isMuted
+    isMuted,
+    playRumble
   };
 })();

@@ -30,7 +30,7 @@
     document.getElementById("quick-game-btn").addEventListener("click", openQuickGame);
 
     document.getElementById("campaign-btn").addEventListener("click", () => {
-      window.WordCrushCampaign.showCampaign();
+      window.WordCrushCampaign.showCampaignSelect();
     });
 
     document.getElementById("daily-board-btn").addEventListener("click", () => {
