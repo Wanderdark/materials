@@ -38,10 +38,12 @@
   let _run = null;
 
   // ── WORD BUILDER ─────────────────────────────────────────────────────────
-  function _buildFullPool(enc) {
+  function _buildFullPool(enc, nodeId) {
     const grade = enc.units[0]?.grade || (Number(window.WordCrushProfile?.getProfile?.()?.grade) || 6);
     const units = enc.units.map(u => u.unit);
-    return window.WordCrushAdapter.buildWordPool({ grades: [grade], units, categories: [] });
+    const cat = _run?.nodeCategories?.[nodeId];
+    const categories = cat ? [cat.unit] : [];
+    return window.WordCrushAdapter.buildWordPool({ grades: [grade], units, categories });
   }
 
   function _selectFirstWave(pool, nodeType) {
@@ -196,6 +198,21 @@
   }
 
   // ── RUN INIT ─────────────────────────────────────────────────────────────
+  function _assignCategoryNodes(nodeTypes) {
+    const allCats = (window.WordCrushAdapter.getCategories?.() || []).filter(c => c.count >= 5);
+    if (!allCats.length) return {};
+    const combatIds = NODE_DEFS
+      .filter(n => !['shop', 'boss', 'start'].includes(n.id) && ['battle', 'elite'].includes(nodeTypes[n.id]))
+      .map(n => n.id);
+    const shuffledCats  = _shuffle(allCats).slice(0, 2);
+    const shuffledNodes = _shuffle(combatIds);
+    const map = {};
+    shuffledCats.forEach((cat, i) => {
+      if (shuffledNodes[i]) map[shuffledNodes[i]] = { unit: cat.unit, label: cat.label, icon: cat.icon || '🏷' };
+    });
+    return map;
+  }
+
   function startRun() {
     const pool = [...TYPE_POOL].sort(() => Math.random() - 0.5);
     const unitCounts = new Map();
@@ -208,11 +225,14 @@
       encounters[n.id] = _generateEncounter(type, unitCounts);
     });
 
+    const nodeCategories = _assignCategoryNodes(nodeTypes);
+
     _run = {
       current:       null,
       visited:       new Set(),
       nodeTypes,
       encounters,
+      nodeCategories,
       lives:         5,
       maxLives:      5,
       gold:          0,
@@ -267,13 +287,16 @@
       const isVis = _run.visited.has(node.id);
       const isAv  = availIds.has(node.id);
       const state = isCur ? 'cur' : isVis ? 'done' : isAv ? 'avail' : 'locked';
-      const click = isAv ? `onclick="AdvRun.preview('${node.id}')"` : '';
+      const click    = isAv ? `onclick="AdvRun.preview('${node.id}')"` : '';
+      const nodeCat  = _run.nodeCategories?.[node.id];
+      const catBadge = nodeCat ? `<span class="adv-node-cat-badge">${nodeCat.icon || '🏷'}</span>` : '';
       return (
-        `<button class="adv-node adv-node--${state}" ` +
+        `<button class="adv-node adv-node--${state}${nodeCat ? ' adv-node--has-cat' : ''}" ` +
         `style="left:${node.x}%;top:${node.y}%;--nc:${info.color}" ` +
         `${click} ${(state === 'locked' || isCur) ? 'disabled' : ''}>` +
         `<span class="adv-node-icon">${info.icon}</span>` +
         `<span class="adv-node-label">${info.label}</span>` +
+        `${catBadge}` +
         `</button>`
       );
     }).join('');
@@ -288,14 +311,11 @@
         `<span class="adv-heart${i < _run.lives ? '' : ' lost'}">♥</span>`
       ).join('');
     }
-const goldEl = document.getElementById('adv-hud-gold');
+    const jokerMapEl = document.getElementById('adv-hud-joker-map-val');
+    if (jokerMapEl && _run) jokerMapEl.textContent = _run.jokers;
+    const goldEl = document.getElementById('adv-hud-gold');
     if (goldEl && _run) goldEl.textContent = `💰 ${_run.gold}`;
 
-    const stepEl = document.getElementById('adv-hud-step');
-    if (stepEl && _run) {
-      const steps = [..._run.visited].filter(id => id !== 'start').length;
-      stepEl.textContent = `${steps} / 10`;
-    }
   }
 
   // ── PREVIEW OVERLAY ───────────────────────────────────────────────────────
@@ -355,6 +375,18 @@ const goldEl = document.getElementById('adv-hud-gold');
       unitsRow.style.display = 'none';
     }
 
+    const catRow = document.getElementById('adv-prev-category-row');
+    const cat = _run.nodeCategories?.[id];
+    if (catRow) {
+      if (cat && type !== 'shop' && type !== 'boss') {
+        catRow.style.display = '';
+        _setText('adv-prev-cat-icon',  cat.icon || '🏷');
+        _setText('adv-prev-cat-label', cat.label);
+      } else {
+        catRow.style.display = 'none';
+      }
+    }
+
     document.getElementById('adv-preview-overlay').classList.add('open');
   }
 
@@ -380,7 +412,7 @@ const goldEl = document.getElementById('adv-hud-gold');
     }
 
     const profile  = window.WordCrushProfile.getProfile();
-    const fullPool = _buildFullPool(enc);
+    const fullPool = _buildFullPool(enc, id);
     const words    = _selectFirstWave(fullPool, type);
 
     if (words.length < (window.WordCrushAdapter.BOARD_WORD_COUNT || 15)) {

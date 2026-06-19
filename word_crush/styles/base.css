@@ -1992,17 +1992,6 @@ button {
 
 .adv-heart.lost { color: rgba(255,255,255,.18); }
 
-.adv-hud-step-label {
-  font: 600 11px "Barlow Condensed", sans-serif;
-  letter-spacing: .1em;
-  color: #aaa;
-}
-
-.adv-hud-step {
-  font: 800 clamp(16px,1.8vw,22px) "Barlow Condensed", sans-serif;
-  color: #fff;
-  letter-spacing: .06em;
-}
 
 .adv-exit-btn {
   padding: 8px 18px;
@@ -2109,6 +2098,21 @@ button {
   white-space: nowrap;
   position: absolute;
   bottom: -16px;
+}
+.adv-node-cat-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: clamp(9px, 1vw, 13px);
+  background: #fbbf24;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 1px 4px #0006;
 }
 
 /* States */

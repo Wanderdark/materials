@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/base.css?v=adventure-words-1">
-  <link rel="stylesheet" href="styles/game.css?v=adventure-words-1">
+  <link rel="stylesheet" href="styles/base.css?v=adventure-conflicts-1">
+  <link rel="stylesheet" href="styles/game.css?v=adventure-conflicts-1">
 </head>
 <body>
   <main id="app">
@@ -341,9 +341,9 @@
             <div id="adv-hud-lives" class="adv-hud-lives"></div>
           </div>
           <div class="adv-hud-right">
+            <div id="adv-hud-joker-map" class="adv-hud-gold">🃏 <span id="adv-hud-joker-map-val">0</span></div>
             <div id="adv-hud-gold" class="adv-hud-gold">💰 0</div>
-            <div class="adv-hud-step-label">PROGRESS</div>
-            <div id="adv-hud-step" class="adv-hud-step">0 / 10</div>
+
             <button class="adv-exit-btn" onclick="AdvRun.confirmExit()">✕ EXIT</button>
           </div>
         </div>
@@ -450,6 +450,11 @@
                 <span class="adv-prev-stat-label">UNITS</span>
                 <span id="adv-prev-units" class="adv-prev-stat-val adv-prev-units-val"></span>
               </div>
+              <div id="adv-prev-category-row" class="adv-prev-stat-row adv-prev-category-row" style="display:none">
+                <span class="adv-prev-stat-icon" id="adv-prev-cat-icon">🏷</span>
+                <span class="adv-prev-stat-label">CATEGORY BONUS</span>
+                <span id="adv-prev-cat-label" class="adv-prev-stat-val" style="color:#fbbf24"></span>
+              </div>
             </div>
 
             <!-- Buttons -->
@@ -528,23 +533,23 @@
     </section>
   </main>
 
-  <script src="../word_contest/words.js?v=adventure-words-1"></script>
-  <script src="../word_master/questions.js?v=adventure-words-1"></script>
-  <script src="daily.js?v=adventure-words-1"></script>
-  <script src="core/adapter.js?v=adventure-words-1"></script>
-  <script src="core/audio.js?v=adventure-words-1"></script>
-  <script src="core/game-state.js?v=adventure-words-1"></script>
-  <script src="ui/toast.js?v=adventure-words-1"></script>
-  <script src="ui/screens.js?v=adventure-words-1"></script>
-  <script src="ui/game-board.js?v=adventure-words-1"></script>
-  <script src="core/profile.js?v=adventure-words-1"></script>
-  <script src="core/campaign.js?v=adventure-words-1"></script>
-  <script src="core/daily-board.js?v=adventure-words-1"></script>
-  <script src="ui/setup-screen.js?v=adventure-words-1"></script>
-  <script src="core/game-loop.js?v=adventure-words-1"></script>
-  <script src="core/achievements.js?v=adventure-words-1"></script>
-  <script src="core/adventure-run.js?v=adventure-words-1"></script>
+  <script src="../word_contest/words.js?v=adventure-conflicts-1"></script>
+  <script src="../word_master/questions.js?v=adventure-conflicts-1"></script>
+  <script src="daily.js?v=adventure-conflicts-1"></script>
+  <script src="core/adapter.js?v=adventure-conflicts-1"></script>
+  <script src="core/audio.js?v=adventure-conflicts-1"></script>
+  <script src="core/game-state.js?v=adventure-conflicts-1"></script>
+  <script src="ui/toast.js?v=adventure-conflicts-1"></script>
+  <script src="ui/screens.js?v=adventure-conflicts-1"></script>
+  <script src="ui/game-board.js?v=adventure-conflicts-1"></script>
+  <script src="core/profile.js?v=adventure-conflicts-1"></script>
+  <script src="core/campaign.js?v=adventure-conflicts-1"></script>
+  <script src="core/daily-board.js?v=adventure-conflicts-1"></script>
+  <script src="ui/setup-screen.js?v=adventure-conflicts-1"></script>
+  <script src="core/game-loop.js?v=adventure-conflicts-1"></script>
+  <script src="core/achievements.js?v=adventure-conflicts-1"></script>
+  <script src="core/adventure-run.js?v=adventure-conflicts-1"></script>
   <script src="core/firebase.js?v=1"></script>
-  <script src="main.js?v=adventure-words-1"></script>
+  <script src="main.js?v=adventure-conflicts-1"></script>
 </body>
 </html>

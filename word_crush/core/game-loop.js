@@ -103,22 +103,42 @@
     Screens.showResult(state);
   }
 
-  function _drawOneAdventureWord() {
+  function _drawOneAdventureWord(extraIds = new Set(), extraTerms = new Set()) {
     if (!state.advWordPool) return null;
     if (!state.advUsedIds) state.advUsedIds = new Set();
     const activeIds = new Set([
       ...state.turkishCards.map(c => c.word.id),
-      ...state.englishGrid.filter(Boolean).map(t => t.word.id)
+      ...state.englishGrid.filter(Boolean).map(t => t.word.id),
+      ...extraIds
     ]);
-    let available = state.advWordPool.filter(w => !activeIds.has(w.id) && !state.advUsedIds.has(w.id));
+    const activeTerms = activeConflictTerms(extraTerms);
+    let available = state.advWordPool.filter(w => {
+      return !activeIds.has(w.id)
+        && !state.advUsedIds.has(w.id)
+        && !conflictsWith(w, activeTerms);
+    });
     if (!available.length) {
       state.advUsedIds = new Set(activeIds);
+      available = state.advWordPool.filter(w => !activeIds.has(w.id) && !conflictsWith(w, activeTerms));
+    }
+    if (!available.length) {
       available = state.advWordPool.filter(w => !activeIds.has(w.id));
     }
     if (!available.length) return null;
     const word = available[Math.floor(Math.random() * available.length)];
     state.advUsedIds.add(word.id);
     return word;
+  }
+
+  function activeConflictTerms(extraTerms = new Set()) {
+    const terms = new Set(extraTerms);
+    [
+      ...state.turkishCards.map(card => card.word),
+      ...state.englishGrid.filter(Boolean).map(tile => tile.word)
+    ].forEach(word => {
+      getConflictTerms(word).forEach(term => terms.add(term));
+    });
+    return terms;
   }
 
   // Returns true if the game ended (caller should return immediately)
@@ -148,9 +168,15 @@
     await sleep(600);
 
     const newWords = [];
+    const newIds = new Set();
+    const newTerms = new Set();
     for (let index = 0; index < State.BOARD_SIZE; index += 1) {
-      const word = _drawOneAdventureWord();
-      if (word) newWords.push(word);
+      const word = _drawOneAdventureWord(newIds, newTerms);
+      if (word) {
+        newWords.push(word);
+        newIds.add(word.id);
+        getConflictTerms(word).forEach(term => newTerms.add(term));
+      }
     }
     if (!newWords.length) { endGame(); return; }
 
