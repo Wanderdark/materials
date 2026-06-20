@@ -78,7 +78,7 @@
   }
 
   function recordRun(state) {
-    if (!state || state.dailyRecorded || !window.WordCrushProfile.getProfile()) return;
+    if (!state || state.dailyRecorded || state.practiceMode || !window.WordCrushProfile.getProfile()) return;
     state.dailyRecorded = true;
 
     const adventureCompleted = state.runType === "adventure" && Number(state.advEnemyHp) <= 0;

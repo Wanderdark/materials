@@ -14,10 +14,11 @@
 
   function updateHud(state) {
     const totalWords = state.boardSize || 15;
+    const starsEnabled = state.runType !== "adventure" && !state.disableStars;
     const starThresholds = state.starThresholds || state.campaignStarThresholds || [200, 400, 650];
     const starMessages = ["⭐ 1 STAR REACHED", "⭐⭐ 2 STARS REACHED", "⭐⭐⭐ 3 STARS REACHED"];
     const maxScore = starThresholds[2];
-    const progressPct = Math.min(100, Math.round((state.score / maxScore) * 1000) / 10);
+    const progressPct = starsEnabled ? Math.min(100, Math.round((state.score / maxScore) * 1000) / 10) : 100;
 
     if (state.runType === "campaign") {
       setText("sp-hud-q", `LEVEL ${state.campaignLevel || state.levelNumber || 1}/${state.campaignTotalLevels || 10}`);
@@ -28,7 +29,7 @@
     }
     setText("sp-hud-mode-label", "");
     setText("sp-hud-score", String(state.score));
-    setText("sp-hud-lives", formatTime(state.secondsLeft));
+    setText("sp-hud-lives", state.endlessTime ? "ENDLESS" : formatTime(state.secondsLeft));
     setText("sp-hud-streak", String(state.comboBest || 0));
 
     const jokerBtn = document.getElementById("adv-joker-btn");
@@ -54,14 +55,14 @@ const fill = document.getElementById("wo-hud-progress");
         fill.className = "wo-progress-fill adv-hp-bar";
       } else {
         fill.style.width = `${progressPct}%`;
-        fill.className = "wo-progress-fill";
-        if (state.score >= starThresholds[2]) fill.classList.add("s3");
-        else if (state.score >= starThresholds[1]) fill.classList.add("s2");
-        else if (state.score >= starThresholds[0]) fill.classList.add("s1");
+        fill.className = starsEnabled ? "wo-progress-fill" : "wo-progress-fill locked";
+        if (starsEnabled && state.score >= starThresholds[2]) fill.classList.add("s3");
+        else if (starsEnabled && state.score >= starThresholds[1]) fill.classList.add("s2");
+        else if (starsEnabled && state.score >= starThresholds[0]) fill.classList.add("s1");
       }
     }
 
-    const starsVisible = state.runType !== "adventure";
+    const starsVisible = starsEnabled;
     starThresholds.forEach((threshold, index) => {
       const mark = document.getElementById(`wo-pmark-${index + 1}`);
       const star = document.getElementById(`wo-pstar-${index + 1}`);
@@ -78,7 +79,7 @@ const fill = document.getElementById("wo-hud-progress");
         star.classList.toggle("lit", state.score >= threshold);
       }
 
-      if (state.score >= threshold && state.reachedStars && !state.reachedStars[index]) {
+      if (starsEnabled && state.score >= threshold && state.reachedStars && !state.reachedStars[index]) {
         state.reachedStars[index] = true;
         triggerStarPulse(`wo-pstar-${index + 1}`);
         if (window.WordCrushAudio) {
@@ -99,6 +100,9 @@ const fill = document.getElementById("wo-hud-progress");
   }
 
   function triggerStarPulse(id) {
+    if (document.body.classList.contains("lite-mode")) {
+      return;
+    }
     const el = document.getElementById(id);
     if (!el) {
       return;
@@ -141,7 +145,7 @@ const fill = document.getElementById("wo-hud-progress");
     )).join("");
     showScreen("result-screen");
 
-    if (completed) {
+    if (completed && !state.disableStars) {
       const stars = window.WordCrushCampaign?.starsForScore?.(state.score, state.starThresholds || state.campaignStarThresholds) ?? 0;
       if (stars >= 3) {
         try { new Audio("sounds/finalcheer2.mp3").play().catch(() => {}); } catch (_) {}
@@ -152,6 +156,9 @@ const fill = document.getElementById("wo-hud-progress");
   }
 
   function floatScore(text, x, y, options = {}) {
+    if (document.body.classList.contains("lite-mode") && options.className !== "black-combo-float") {
+      return;
+    }
     const layer = document.getElementById("float-layer");
     if (!layer) {
       return;

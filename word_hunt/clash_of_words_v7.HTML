@@ -1349,10 +1349,12 @@ const BONUS_CATEGORIES = [
 // ── GAME STATE ───────────────────────────────────────────
 let selectedClass  = null;
 let selectedPlayers = [];    // [{name,level}]
-let pairs = [];              // [[name1, name2], ...] — çiftler
-let _pairingMode   = false;  // pair seçimi aktif mi
-let _pairingSource = null;   // kaynak öğrenci adı
-let _lastSelected  = null;   // en son seçilen öğrenci adı
+let pairs = [];              // [[studentObj, studentObj], ...] — çiftler
+let _pairingMode      = false;  // pair seçimi aktif mi
+let _pairingSource    = null;   // student object
+let _lastSelected     = null;   // name string (rename compat)
+let _lastSelectedObj  = null;   // student object
+let _guestSlotCounter = 100;    // guests get slots 101+
 let seats = [[],[],[]];      // seats[row0-2] = [playerName, ...]
 let _selectedFromPool = null; // seating pool'dan seçilen id
 
@@ -1682,7 +1684,8 @@ function openWebStudentSelect(){
 // ── STUDENT SELECT ───────────────────────────────────────
 function buildStudentPool(){
   selectedPlayers=[]; pairs=[];
-  _pairingMode=false; _pairingSource=null; _lastSelected=null;
+  _pairingMode=false; _pairingSource=null;
+  _lastSelected=null; _lastSelectedObj=null; _guestSlotCounter=100;
   const pool=document.getElementById('ss-class-pool'); pool.innerHTML='';
   if(_teacherMode && selectedClass){
     selectedClass.students.forEach(s=>{
@@ -1697,7 +1700,7 @@ function buildStudentPool(){
     const saved=_loadStudentNames();
     for(let i=1;i<=18;i++){
       const nm=saved[i-1]||`STUDENT ${i}`;
-      const s={name:nm,level:null};
+      const s={name:nm,level:null,slot:i};
       const chip=document.createElement('button');
       chip.className='ss-chip';
       chip.textContent=nm;
@@ -1713,35 +1716,37 @@ function buildStudentPool(){
 function togglePlayer(s,chip){
   // ── Pairing mode: bu tıklama partner seçimi ──
   if(_pairingMode){
-    if(s.name===_pairingSource){ cancelPairing(); return; }
-    if(pairs.some(([a,b])=>a===s.name||b===s.name)){
+    if(s===_pairingSource){ cancelPairing(); return; }
+    if(pairs.some(([a,b])=>a===s||b===s)){
       chip.classList.add('disabled'); setTimeout(()=>chip.classList.remove('disabled'),300); return;
     }
-    if(!selectedPlayers.find(p=>p.name===s.name)){
+    if(!selectedPlayers.find(p=>p===s)){
       selectedPlayers.push(s); chip.classList.add('selected');
     }
-    createPair(_pairingSource,s.name);
+    createPair(_pairingSource,s);
     return;
   }
   // ── Normal toggle ──
-  const idx=selectedPlayers.findIndex(p=>p.name===s.name);
+  const idx=selectedPlayers.findIndex(p=>p===s);
   if(idx>=0){
     // Çiftli öğrenciyi deselect → çifti boz ve her ikisini kaldır
-    const pe=pairs.find(([a,b])=>a===s.name||b===s.name);
+    const pe=pairs.find(([a,b])=>a===s||b===s);
     if(pe){
-      const partner=pe[0]===s.name?pe[1]:pe[0];
-      breakPair(pe[0],pe[1],null);
-      [s.name,partner].forEach(nm=>{
-        const i=selectedPlayers.findIndex(p=>p.name===nm);
+      const partner=pe[0]===s?pe[1]:pe[0];
+      breakPair(pe[0].slot,pe[1].slot,null);
+      [s,partner].forEach(p=>{
+        const i=selectedPlayers.findIndex(sp=>sp===p);
         if(i>=0) selectedPlayers.splice(i,1);
-        const c=document.querySelector(`.ss-chip[data-name="${nm}"]`);
+        const c=document.querySelector(`.ss-chip[data-slot="${p.slot}"]`);
         if(c) c.classList.remove('selected');
       });
-      if(_lastSelected===s.name||_lastSelected===partner) _lastSelected=null;
+      if(_lastSelectedObj===s||_lastSelectedObj===partner){
+        _lastSelected=null; _lastSelectedObj=null;
+      }
     } else {
       selectedPlayers.splice(idx,1);
       chip.classList.remove('selected');
-      if(_lastSelected===s.name) _lastSelected=null;
+      if(_lastSelectedObj===s){ _lastSelected=null; _lastSelectedObj=null; }
     }
   } else {
     if((selectedPlayers.length - pairs.length) >= 9){
@@ -1750,6 +1755,7 @@ function togglePlayer(s,chip){
     selectedPlayers.push(s);
     chip.classList.add('selected');
     _lastSelected=s.name;
+    _lastSelectedObj=s;
   }
   updateSSCount();
 }
@@ -1776,8 +1782,8 @@ function updateSSCount(){
   // RENAME butonu: sadece web modunda, tekil seçim varsa
   const rnBtn=document.getElementById('ss-rename-btn');
   if(rnBtn){
-    const inPair=_lastSelected&&pairs.some(([a,b])=>a===_lastSelected||b===_lastSelected);
-    const canRename=!_teacherMode&&_lastSelected&&!inPair;
+    const inPair=_lastSelectedObj&&pairs.some(([a,b])=>a===_lastSelectedObj||b===_lastSelectedObj);
+    const canRename=!_teacherMode&&_lastSelectedObj&&!inPair;
     rnBtn.classList.toggle('hidden',!canRename);
   }
 }
@@ -1789,7 +1795,7 @@ function _updatePairWithBtn(){
     btn.textContent='✕ İPTAL'; btn.classList.add('active'); btn.disabled=false;
   } else {
     btn.textContent='⚭ PAIR WITH'; btn.classList.remove('active');
-    btn.disabled=!_lastSelected;
+    btn.disabled=!_lastSelectedObj;
   }
 }
 
@@ -1798,12 +1804,12 @@ function onPairWithBtn(){
 }
 
 function startPairing(){
-  if(!_lastSelected) return;
-  _pairingMode=true; _pairingSource=_lastSelected;
-  const chip=document.querySelector(`.ss-chip[data-name="${_pairingSource}"]`);
+  if(!_lastSelectedObj) return;
+  _pairingMode=true; _pairingSource=_lastSelectedObj;
+  const chip=document.querySelector(`.ss-chip[data-slot="${_pairingSource.slot}"]`);
   if(chip) chip.classList.add('pairing-source');
   const hint=document.getElementById('ss-pair-hint');
-  if(hint) hint.textContent=`"${_pairingSource}" ile eşlenecek öğrenciyi seç`;
+  if(hint) hint.textContent=`"${_pairingSource.name}" ile eşlenecek öğrenciyi seç`;
   _updatePairWithBtn();
 }
 
@@ -1811,7 +1817,7 @@ function cancelPairing(){
   const src=_pairingSource;
   _pairingMode=false; _pairingSource=null;
   if(src){
-    const chip=document.querySelector(`.ss-chip[data-name="${src}"]`);
+    const chip=document.querySelector(`.ss-chip[data-slot="${src.slot}"]`);
     if(chip) chip.classList.remove('pairing-source');
   }
   const hint=document.getElementById('ss-pair-hint');
@@ -1819,37 +1825,39 @@ function cancelPairing(){
   _updatePairWithBtn();
 }
 
-function createPair(n1,n2){
-  pairs.push([n1,n2]);
+function createPair(s1,s2){
+  pairs.push([s1,s2]);
   // Bireysel chip'leri gizle
-  [n1,n2].forEach(nm=>{
-    const c=document.querySelector(`.ss-chip[data-name="${nm}"]`);
+  [s1,s2].forEach(s=>{
+    const c=document.querySelector(`.ss-chip[data-slot="${s.slot}"]`);
     if(c){ c.classList.add('paired-hidden'); c.classList.remove('pairing-source'); }
   });
   // Pair chip ekle
   const pool=document.getElementById('ss-class-pool');
   const pchip=document.createElement('button');
   pchip.className='ss-chip pair-chip selected';
-  pchip.dataset.pair=`${n1}|||${n2}`;
-  const sn1=n1.replace(/'/g,"\\'"), sn2=n2.replace(/'/g,"\\'");
-  pchip.innerHTML=`${n1} <span class="ss-pair-amp">&</span> ${n2}&nbsp;<button class="ss-pair-x" onclick="breakPair('${sn1}','${sn2}',event)">×</button>`;
+  pchip.dataset.pair=`${s1.slot}|||${s2.slot}`;
+  pchip.innerHTML=`${s1.name} <span class="ss-pair-amp">&</span> ${s2.name}&nbsp;<button class="ss-pair-x" onclick="breakPair(${s1.slot},${s2.slot},event)">×</button>`;
   pool.appendChild(pchip);
-  _pairingMode=false; _pairingSource=null; _lastSelected=null;
+  _pairingMode=false; _pairingSource=null;
+  _lastSelected=null; _lastSelectedObj=null;
   const hint=document.getElementById('ss-pair-hint');
   if(hint) hint.textContent='';
   updateSSCount();
 }
 
-function breakPair(n1,n2,evt){
+function breakPair(slot1,slot2,evt){
   if(evt) evt.stopPropagation();
-  const idx=pairs.findIndex(([a,b])=>a===n1&&b===n2||a===n2&&b===n1);
+  const idx=pairs.findIndex(([a,b])=>
+    (a.slot===slot1&&b.slot===slot2)||(a.slot===slot2&&b.slot===slot1));
   if(idx>=0) pairs.splice(idx,1);
   // Pair chip'i kaldır
-  const pchip=document.querySelector(`.ss-chip.pair-chip[data-pair="${n1}|||${n2}"]`);
+  const pchip=document.querySelector(`.ss-chip.pair-chip[data-pair="${slot1}|||${slot2}"]`)||
+              document.querySelector(`.ss-chip.pair-chip[data-pair="${slot2}|||${slot1}"]`);
   if(pchip) pchip.remove();
   // Bireysel chip'leri geri getir
-  [n1,n2].forEach(nm=>{
-    const c=document.querySelector(`.ss-chip[data-name="${nm}"]`);
+  [slot1,slot2].forEach(slot=>{
+    const c=document.querySelector(`.ss-chip[data-slot="${slot}"]`);
     if(c) c.classList.remove('paired-hidden');
   });
   updateSSCount();
@@ -1975,7 +1983,7 @@ function confirmGuests(){
     const name=n.trim().replace(/\s+/g,' ').toUpperCase();
     if(!name||existing.has(name)) return;
     if((selectedPlayers.length - pairs.length) >= 9){ showSSLimitWarning(); return; }
-    const student={name,level:null};
+    const student={name,level:null,slot:++_guestSlotCounter};
     selectedPlayers.push(student);
     existing.add(name);
     added++;
@@ -1984,6 +1992,7 @@ function confirmGuests(){
     chip.className='ss-chip gs-chip selected';
     chip.textContent=name;
     chip.dataset.name=name;
+    chip.dataset.slot=student.slot;
     chip.onclick=()=>togglePlayer(student,chip);
     pool.appendChild(chip);
   });
@@ -2041,11 +2050,12 @@ function _applyRename(){
   if(!newName||!_rnTargetName){closeRenameOverlay();return;}
   const oldName=_rnTargetName;
   // selectedPlayers objesini güncelle
-  const p=selectedPlayers.find(p=>p.name===oldName);
+  const p=selectedPlayers.find(p=>p.name===oldName&&p===_lastSelectedObj);
   if(p) p.name=newName;
-  // DOM chip'ini güncelle
-  const allChips=document.querySelectorAll('.ss-chip');
-  const chip=Array.from(allChips).find(c=>c.dataset.name===oldName);
+  // DOM chip'ini güncelle (slot ile bul — rename'e karşı dayanıklı)
+  const chip=_lastSelectedObj
+    ? document.querySelector(`.ss-chip[data-slot="${_lastSelectedObj.slot}"]`)
+    : Array.from(document.querySelectorAll('.ss-chip')).find(c=>c.dataset.name===oldName);
   if(chip){chip.textContent=newName;chip.dataset.name=newName;}
   _lastSelected=newName;
   closeRenameOverlay();
@@ -3147,7 +3157,7 @@ function restartGame(){
   stopMainGameMusic(); stopMenuMusic();
   playMenuMusic();
   if(!_liteMode) startMenuEffects(); else stopMenuEffects();
-  selectedClass=null; selectedPlayers=[]; pairs=[]; _pairingMode=false; _pairingSource=null; _lastSelected=null; seats=[[],[],[]]; _selectedFromPool=null;
+  selectedClass=null; selectedPlayers=[]; pairs=[]; _pairingMode=false; _pairingSource=null; _lastSelected=null; _lastSelectedObj=null; _guestSlotCounter=100; seats=[[],[],[]]; _selectedFromPool=null;
   roundNumber=0; wordHistory=new Set(); playerScores={}; playerWordCount={}; playerUniqueCount={}; playerBonusCount={}; playerStreak={}; categoryHistory=[]; bonusHistory=[];
   document.getElementById('end-game-btn').classList.remove('visible');
 }

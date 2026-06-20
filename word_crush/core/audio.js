@@ -20,6 +20,7 @@
   let bgMusic = null;
   let bgStarted = false;
   let rumbleTimer = null;
+  let rumbleAudio = null;
   let musicSuppressed = false;
   let timeWarpMusicActive = false;
   let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 30));
@@ -89,18 +90,35 @@
     musicSuppressed = true;
     applyMusicVolume();
     if (rumbleTimer) window.clearTimeout(rumbleTimer);
+    if (rumbleAudio) {
+      rumbleAudio.pause();
+      rumbleAudio.currentTime = 0;
+    }
 
     try {
-      const rumble = new Audio("sounds/rumble.mp3");
-      rumble.volume = 1;
-      rumble.play().catch(() => {});
+      rumbleAudio = new Audio("sounds/rumble.mp3");
+      rumbleAudio.volume = 1;
+      rumbleAudio.play().catch(() => {});
     } catch (_) {}
 
     rumbleTimer = window.setTimeout(() => {
+      rumbleAudio = null;
       musicSuppressed = false;
       rumbleTimer = null;
       applyMusicVolume();
     }, 10000);
+  }
+
+  function stopRumble() {
+    if (rumbleTimer) window.clearTimeout(rumbleTimer);
+    rumbleTimer = null;
+    if (rumbleAudio) {
+      rumbleAudio.pause();
+      rumbleAudio.currentTime = 0;
+      rumbleAudio = null;
+    }
+    musicSuppressed = false;
+    applyMusicVolume();
   }
 
   function setTimeWarpMusic(active) {
@@ -116,6 +134,7 @@
     toggleMute,
     isMuted,
     playRumble,
+    stopRumble,
     setTimeWarpMusic
   };
 })();

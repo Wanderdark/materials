@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0">
+  <title>WORD GEMORIA — SINIF MODU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/base.css?v=custom-overlay-flow-1">
+  <link rel="stylesheet" href="styles/game.css?v=custom-endless-1">
+  <style>
+    /* ── CSS vars used by student-select overlay CSS ── */
+    :root {
+      --gold:#FF8C00;--gold-dark:#CC5500;
+      --green:#1DB954;--white:#FFF4E8;--muted:rgba(255,244,232,.55);
+    }
+    /* ── Overlay base ── */
+    .overlay{position:fixed;inset:0;z-index:9000;background:rgba(10,3,0,.97);display:flex;align-items:center;justify-content:center}
+    .overlay.hidden{display:none}
+    .ov-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,4vw,40px);color:var(--gold);letter-spacing:.12em;text-shadow:0 0 28px rgba(255,140,0,.6);text-align:center;margin-bottom:18px}
+    @keyframes modalIn{0%{opacity:0;transform:scale(.85)}100%{opacity:1;transform:scale(1)}}
+    .modal-panel{animation:modalIn .28s cubic-bezier(.175,.885,.32,1.275)}
+
+    /* ── Class SELECT overlay ── */
+    .settings-box{background:linear-gradient(145deg,#1a0800,#0d0400);border:1.5px solid rgba(255,140,0,.35);border-radius:24px;padding:36px 40px 32px;width:min(520px,92vw);display:flex;flex-direction:column;gap:28px;box-shadow:0 0 80px rgba(255,100,0,.12);animation:modalIn .25s cubic-bezier(.175,.885,.32,1.275)}
+    .class-grid{display:flex;flex-direction:column;gap:10px}
+    .class-btn{width:100%;padding:16px 20px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.05);border:1.5px solid rgba(255,140,0,.25);border-radius:12px;color:var(--white);cursor:pointer;transition:background .14s,border-color .14s,transform .1s;text-align:left}
+    .class-btn:hover{background:rgba(255,140,0,.12);border-color:rgba(255,140,0,.6);transform:translateX(4px)}
+    .class-btn.selected{background:rgba(255,140,0,.18);border-color:var(--gold);color:var(--gold)}
+
+    /* ── STUDENT SELECT OVERLAY ── */
+    #overlay-student-select .ss-box{background:linear-gradient(145deg,#2D0E00,#120500);border:1.5px solid var(--gold);border-radius:28px;padding:40px 44px 34px;width:min(96vw,1540px);height:min(92vh,940px);display:flex;flex-direction:column;gap:22px;overflow:hidden}
+    #overlay-student-select .ov-title,#overlay-seat-assign .ov-title{font-size:clamp(38px,4vw,56px)}
+    .ss-sub{font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:.1em;color:var(--muted);text-align:center;margin-top:-10px}
+    .ss-class-pool{display:flex;flex-wrap:wrap;align-content:flex-start;gap:14px;padding:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow-y:auto;flex:1;min-height:0}
+    .ss-chip{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;letter-spacing:.1em;padding:13px 22px;border-radius:11px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--white);cursor:pointer;transition:all .13s;user-select:none}
+    .ss-chip:hover{border-color:rgba(255,140,0,.5);background:rgba(255,140,0,.1)}
+    .ss-chip.selected{border-color:var(--green);background:rgba(29,185,84,.18);color:#4ade80}
+    .ss-chip.disabled{opacity:.3;cursor:not-allowed}
+    .ss-chip.paired-hidden{display:none!important}
+    .ss-chip.pairing-source{border-color:#a78bfa!important;background:rgba(139,92,246,.22)!important;color:#c4b5fd!important;animation:pairingPulse .85s ease-in-out infinite}
+    @keyframes pairingPulse{0%,100%{box-shadow:0 0 5px rgba(139,92,246,.4)}50%{box-shadow:0 0 18px rgba(139,92,246,.85),inset 0 0 8px rgba(139,92,246,.12)}}
+    .ss-chip.pair-chip{background:rgba(139,92,246,.18)!important;border-color:rgba(139,92,246,.6)!important;color:#c4b5fd!important;display:inline-flex!important;align-items:center;gap:7px}
+    .ss-chip.pair-chip:hover{background:rgba(139,92,246,.3)!important;border-color:#a78bfa!important}
+    .ss-pair-amp{opacity:.55;font-weight:400}
+    .ss-pair-x{background:none;border:none;color:rgba(255,255,255,.35);cursor:pointer;font-size:22px;padding:0 0 0 2px;line-height:1;transition:color .1s;flex-shrink:0}
+    .ss-pair-x:hover{color:#f87171}
+    .ss-pair-hint{font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.1em;color:#a78bfa;text-align:center;min-height:22px;margin-top:-8px}
+    .pair-with-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:13px 22px;background:rgba(139,92,246,.08);border:1.5px solid rgba(139,92,246,.4);border-radius:12px;color:#a78bfa;cursor:pointer;transition:all .14s}
+    .pair-with-btn:hover:not(:disabled){background:rgba(139,92,246,.2);border-color:#a78bfa;transform:translateY(-1px)}
+    .pair-with-btn:disabled{opacity:.28;cursor:not-allowed}
+    .pair-with-btn.active{background:rgba(239,68,68,.1)!important;border-color:rgba(239,68,68,.45)!important;color:#fca5a5!important}
+    .ss-count-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-shrink:0;flex-wrap:wrap}
+    .ss-count{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+    .ss-count.ready{color:#4ade80}
+    .ss-count.limit-warn{color:#f87171;animation:limitShake .35s ease}
+    @keyframes limitShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    .ss-continue-btn{font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:15px 32px;background:linear-gradient(135deg,#CC5500,#FF8C00);border:none;border-radius:13px;color:#fff;cursor:pointer;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 18px rgba(204,85,0,.4)}
+    .ss-continue-btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+    .ss-continue-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 7px 28px rgba(204,85,0,.6)}
+    /* GUEST */
+    #overlay-guest .gs-box{background:linear-gradient(145deg,#0e0518,#06020e);border:1.5px solid var(--gold);border-radius:24px;padding:22px 26px 18px;width:min(98vw,760px);max-height:94vh;display:flex;flex-direction:column;gap:11px;overflow:hidden}
+    .gs-sub{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--muted);text-align:center}
+    .gs-slots{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex-shrink:0}
+    .gs-slot{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:9px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);cursor:pointer;transition:border-color .12s,background .12s,box-shadow .12s;min-height:42px}
+    .gs-slot:hover:not(.active){border-color:rgba(255,140,0,.3);background:rgba(255,140,0,.05)}
+    .gs-slot.active{border-color:var(--gold);background:rgba(255,140,0,.1);box-shadow:0 0 12px rgba(255,140,0,.22)}
+    .gs-slot-num{font-family:'Bebas Neue',sans-serif;font-size:15px;color:rgba(255,255,255,.28);min-width:18px;text-align:center;flex-shrink:0}
+    .gs-slot.active .gs-slot-num{color:var(--gold)}
+    .gs-slot-text{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.07em;color:rgba(255,255,255,.82);flex:1;min-height:1em}
+    .gs-slot:not(.active) .gs-slot-text.empty{color:rgba(255,255,255,.2)}
+    @keyframes gsCursor{0%,100%{opacity:1}50%{opacity:0}}
+    .gs-cursor{animation:gsCursor .75s step-end infinite;color:var(--gold);font-weight:400}
+    .plain-kb{display:flex;flex-direction:column;gap:5px;align-items:center;flex-shrink:0}
+    .plain-kb-row{display:flex;gap:4px;justify-content:center}
+    .plain-kb-key{font-family:'Bebas Neue',sans-serif;font-size:clamp(12px,2vw,17px);width:clamp(28px,4.8vw,42px);height:clamp(32px,5.2vw,44px);background:rgba(15,8,28,.9);border:1.5px solid rgba(255,255,255,.11);border-radius:7px;color:rgba(255,255,255,.78);cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;transition:background .08s,transform .06s,border-color .08s}
+    .plain-kb-key:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.26);transform:translateY(-1px)}
+    .plain-kb-key:active{transform:translateY(2px)!important;background:rgba(255,255,255,.2)!important}
+    .plain-kb-key.pkb-wide{width:clamp(40px,6.5vw,58px)}
+    .plain-kb-key.pkb-space{width:clamp(80px,14vw,140px);font-size:clamp(8px,1.2vw,11px);letter-spacing:.16em;color:rgba(255,255,255,.38)}
+    .plain-kb-key.pkb-del{color:#f87171;border-color:rgba(232,33,58,.22);background:rgba(20,3,6,.9)}
+    .plain-kb-key.pkb-nav{width:clamp(72px,11vw,110px);font-size:clamp(8px,1.2vw,11px);letter-spacing:.1em;color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.14)}
+    .plain-kb-key.pkb-nav:hover{color:var(--gold);border-color:rgba(255,140,0,.45)}
+    .gs-footer{display:flex;gap:10px;flex-shrink:0}
+    .gs-cancel-btn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.12em;padding:10px 20px;background:transparent;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;color:var(--muted);cursor:pointer;transition:all .14s}
+    .gs-cancel-btn:hover{border-color:rgba(255,255,255,.42);color:var(--white)}
+    .gs-confirm-btn{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:.14em;padding:10px 28px;background:linear-gradient(135deg,#15803d,#22c55e);border:none;border-radius:10px;color:#fff;cursor:pointer;flex:1;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 16px rgba(34,197,94,.3)}
+    .gs-confirm-btn:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(34,197,94,.5)}
+    .gs-open-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:13px 22px;background:rgba(250,204,21,.07);border:1.5px solid rgba(250,204,21,.38);border-radius:12px;color:#facc15;cursor:pointer;transition:all .14s}
+    .gs-open-btn:hover{background:rgba(250,204,21,.18);border-color:#facc15;transform:translateY(-1px)}
+    .ss-chip.gs-chip::after{content:' ✦';font-size:10px;opacity:.7}
+    /* RENAME */
+    .ss-rename-btn{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:13px 22px;background:rgba(255,140,0,.1);border:1.5px solid rgba(255,140,0,.4);border-radius:12px;color:var(--gold);cursor:pointer;transition:all .14s}
+    .ss-rename-btn:hover{background:rgba(255,140,0,.25);border-color:var(--gold);transform:translateY(-1px)}
+    #overlay-rename{z-index:12500}
+    .rn-box{background:linear-gradient(145deg,#1a0800,#0d0400);border:1.5px solid rgba(255,140,0,.35);border-radius:24px;padding:28px 32px 24px;width:min(760px,96vw);display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 80px rgba(255,100,0,.14)}
+    .rn-display-wrap{background:rgba(0,0,0,.4);border:2px solid rgba(255,140,0,.28);border-radius:14px;padding:14px 40px;width:100%;text-align:center;min-height:72px;display:flex;align-items:center;justify-content:center}
+    .rn-display{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,6vw,52px);letter-spacing:.14em;color:var(--gold);text-shadow:0 0 28px rgba(255,140,0,.6)}
+    .rn-cancel-btn{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:10px 28px;background:transparent;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;color:var(--muted);cursor:pointer;transition:all .14s}
+    .rn-cancel-btn:hover{border-color:rgba(255,255,255,.42);color:var(--white)}
+    /* ── AUTO LEADERBOARD (birebir word_master) ── */
+    #auto-lb {
+      position: fixed; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9500;
+      width: min(90vw, 420px);
+      background: linear-gradient(145deg, rgba(8,18,72,0.97), rgba(4,12,44,0.97));
+      border: 1.5px solid var(--gold);
+      border-radius: 22px;
+      padding: 22px 26px 26px;
+      box-shadow: 0 0 70px rgba(255,215,0,0.18), 0 24px 64px rgba(0,0,0,0.75);
+      display: none;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    #auto-lb.show { display: block; opacity: 1; pointer-events: all; }
+    .alb-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px; color: var(--gold);
+      text-shadow: 0 0 24px rgba(255,215,0,.6);
+      letter-spacing: .12em; text-align: center; margin-bottom: 14px;
+    }
+    #auto-lb-list { position: relative; transition: height 0.55s ease; }
+    .alb-row {
+      position: absolute; left: 0; right: 0; height: 48px;
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,215,0,0.12);
+      border-radius: 10px; padding: 0 14px;
+      transition: top 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s;
+    }
+    .alb-row.r1 { border-color: rgba(255,215,0,0.55); background: rgba(255,215,0,0.09); }
+    @keyframes goldPulsate {
+      0%, 100% { transform: scale(1);    letter-spacing: 0.08em; }
+      50%       { transform: scale(1.12); letter-spacing: 0.14em; }
+    }
+    .alb-row.r1 .alb-name {
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(255,215,0,0.95), 0 0 22px rgba(255,215,0,0.55), 0 0 40px rgba(255,215,0,0.25);
+      animation: goldPulsate 1.5s ease-in-out infinite;
+      display: inline-block;
+    }
+    .alb-row.r1 .alb-pts { text-shadow: 0 0 12px rgba(255,215,0,0.9), 0 0 28px rgba(255,215,0,0.45); }
+    .alb-row.r2 { border-color: rgba(192,192,192,0.38); }
+    .alb-row.r3 { border-color: rgba(205,127,50,0.38); }
+    .alb-rk {
+      font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+      width: 24px; text-align: center; flex-shrink: 0;
+    }
+    .alb-row.r1 .alb-rk { color: #FFD700; }
+    .alb-row.r2 .alb-rk { color: #C0C0C0; }
+    .alb-row.r3 .alb-rk { color: #CD7F32; }
+    .alb-row:not(.r1):not(.r2):not(.r3) .alb-rk { color: var(--muted); }
+    .alb-info { flex: 1; min-width: 0; }
+    .alb-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 700; color: var(--white);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .alb-pts {
+      font-family: 'Bebas Neue', sans-serif; font-size: 26px;
+      color: var(--gold); flex-shrink: 0;
+    }
+    /* GRADE SELECTION in student select */
+    .ss-grade-row{display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+    .ss-grade-label{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+    .ss-grade-btn{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;letter-spacing:.1em;padding:10px 20px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--white);cursor:pointer;transition:all .13s}
+    .ss-grade-btn:hover{border-color:rgba(255,140,0,.5);background:rgba(255,140,0,.1)}
+    .ss-grade-btn.active{border-color:var(--gold);background:rgba(255,140,0,.18);color:var(--gold)}
+    /* SP CUSTOM GAME overlay */
+    .sp-custom-box{background:linear-gradient(145deg,#2D0E00,#120500);border:1.5px solid var(--gold);border-radius:28px;padding:28px 34px;display:flex;flex-direction:column;gap:14px;width:min(96vw,920px);max-height:92vh;overflow-y:auto}
+    .sp-custom-sub{font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:.1em;color:var(--muted);text-align:center;margin-top:-14px}
+    .sp-custom-section{display:flex;flex-direction:column;gap:12px}
+    .sp-custom-label{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+    .sp-custom-btns{display:flex;gap:10px;flex-wrap:wrap}
+    .sp-custom-btn{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;letter-spacing:.1em;padding:13px 22px;border-radius:11px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--white);cursor:pointer;transition:all .13s}
+    .sp-custom-btn:hover{border-color:rgba(255,140,0,.5);background:rgba(255,140,0,.1)}
+    .sp-custom-btn.active{border-color:var(--gold);background:rgba(255,140,0,.18);color:var(--gold)}
+    .sp-custom-filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .sp-custom-filter-section{padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.035)}
+    .sp-custom-filter-section .sp-custom-label{margin-bottom:8px}
+    .sp-custom-filter-btn{font-size:16px;padding:8px 12px}
+    .sp-custom-filter-btn small{display:block;font-size:11px;opacity:.65;margin-top:2px}
+    .sp-custom-clear-btn{display:block;width:100%;margin-top:8px;padding:6px 10px;border:1px solid rgba(252,165,165,.42);border-radius:7px;background:rgba(127,29,29,.2);color:#fecaca;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;cursor:pointer}
+    .sp-custom-clear-btn:hover{background:rgba(127,29,29,.42);border-color:#fca5a5}
+    .sp-custom-pool{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.08em;color:#fde68a;text-align:center}
+    .sp-custom-warn{min-height:16px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:.08em;color:#fca5a5;text-align:center}
+    .sp-star-preview{font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:.1em;color:var(--muted);text-align:center}
+    .sp-custom-actions{display:flex;gap:14px;align-items:center;justify-content:center;margin-top:4px}
+    .class-adv-picker{background:linear-gradient(145deg,#10231a,#07110c);border:1.5px solid #4ade80;border-radius:22px;padding:26px;width:min(92vw,780px);display:flex;flex-direction:column;gap:14px;box-shadow:0 24px 70px rgba(0,0,0,.7)}
+    .class-adv-picker-sub{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-align:center}
+    .class-adv-player-list{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-height:44vh;overflow-y:auto;padding:5px}
+    .class-adv-player-btn{min-width:142px;padding:12px 16px;border:1px solid rgba(255,255,255,.16);border-radius:9px;background:rgba(255,255,255,.06);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:.08em;cursor:pointer}
+    .class-adv-player-btn.active{border-color:#4ade80;background:rgba(74,222,128,.17);color:#bbf7d0;box-shadow:0 0 16px rgba(74,222,128,.18)}
+    .class-adv-player-btn small{display:block;margin-top:3px;font-size:11px;opacity:.68}
+    .class-adv-picker-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    .class-adv-picker-actions button{min-width:145px}
+    .class-adv-summary{width:100%;margin:18px 0 6px;padding:14px;border:1px solid rgba(250,204,21,.34);border-radius:12px;background:rgba(250,204,21,.06)}
+    .class-adv-summary-title{font-family:'Bebas Neue',sans-serif;font-size:27px;letter-spacing:.08em;color:#fde68a;text-align:center}
+    .class-adv-summary-copy{margin:4px 0 11px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-align:center}
+    .class-adv-summary-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:7px 2px;border-top:1px solid rgba(255,255,255,.08);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.05em}
+    .class-adv-summary-row:first-of-type{border-top:0}
+    .class-adv-summary-row .not-played{color:#fca5a5}
+    #sp-hud-q.class-adv-player-name{color:#fff4e8;font-size:24px;max-width:210px;overflow:hidden;text-overflow:ellipsis}
+    @media (max-width:700px){.class-adv-picker{padding:20px}.class-adv-player-list{max-height:38vh}.class-adv-player-btn{min-width:120px}.class-adv-summary-row{font-size:14px;gap:8px}}
+    /* FINAL SCORES overlay (birebir word_hunt go-*) */
+    #overlay-final-scores{z-index:9900}
+    .go-box{background:linear-gradient(145deg,#0a0418,#04020a);border:2px solid var(--gold);border-radius:28px;padding:26px 30px 22px;width:min(98vw,1280px);max-height:96vh;display:flex;flex-direction:column;gap:14px;box-shadow:0 0 120px rgba(255,140,0,.18),0 30px 80px rgba(0,0,0,.85)}
+    .go-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,48px);color:var(--gold);letter-spacing:.14em;text-shadow:0 0 40px rgba(255,140,0,.85);text-align:center}
+    .go-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:-8px}
+    .go-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:10px;overflow:hidden}
+    .go-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,140,0,.1);border-radius:14px;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;animation:finalCardIn .45s ease-out both}
+    @keyframes finalCardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+    .go-card.fc-1st{background:rgba(255,140,0,.13);border-color:var(--gold);box-shadow:0 0 32px rgba(255,140,0,.22),inset 0 0 18px rgba(255,140,0,.05)}
+    .go-card.fc-2nd{background:rgba(192,192,192,.09);border-color:rgba(192,192,192,.48);box-shadow:0 0 20px rgba(192,192,192,.1)}
+    .go-card.fc-3rd{background:rgba(205,127,50,.09);border-color:rgba(205,127,50,.42);box-shadow:0 0 20px rgba(205,127,50,.1)}
+    .fc-cup{font-size:clamp(22px,3.5vw,34px);line-height:1}
+    .go-card.fc-1st .fc-cup,.go-card.fc-2nd .fc-cup,.go-card.fc-3rd .fc-cup{animation:fcCupPulse 1.5s ease-in-out infinite}
+    @keyframes fcCupPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+    .fc-rank-num{font-family:'Bebas Neue',sans-serif;font-size:16px;color:rgba(255,255,255,.28);line-height:1}
+    .fc-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.8vw,17px);font-weight:700;letter-spacing:.07em;color:var(--white);line-height:1.25;word-break:break-word}
+    .go-card.fc-1st .fc-name{color:var(--gold);animation:fcGlow1 1.6s ease-in-out infinite}
+    .go-card.fc-2nd .fc-name{color:#e8e8e8;animation:fcGlow2 1.8s ease-in-out infinite}
+    .go-card.fc-3rd .fc-name{color:#d4956a;animation:fcGlow3 2s ease-in-out infinite}
+    @keyframes fcGlow1{0%,100%{text-shadow:0 0 14px rgba(255,140,0,.65),0 0 28px rgba(255,140,0,.3)}50%{text-shadow:0 0 26px rgba(255,180,0,1),0 0 52px rgba(255,140,0,.65)}}
+    @keyframes fcGlow2{0%,100%{text-shadow:0 0 10px rgba(200,200,200,.45)}50%{text-shadow:0 0 22px rgba(230,230,230,.9)}}
+    @keyframes fcGlow3{0%,100%{text-shadow:0 0 10px rgba(205,127,50,.45)}50%{text-shadow:0 0 22px rgba(225,155,85,.9)}}
+    .fc-stars{display:flex;gap:3px;justify-content:center;font-size:clamp(13px,1.8vw,18px);line-height:1}
+    .fc-star-filled{color:#facc15;text-shadow:0 0 7px rgba(250,204,21,.9),0 0 14px rgba(250,204,21,.4)}
+    .fc-star-empty{color:rgba(255,255,255,.1)}
+    .fc-score{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,1.8vw,18px);color:rgba(255,255,255,.5);letter-spacing:.06em}
+    .go-play-again-btn{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:.16em;padding:13px 28px;background:linear-gradient(135deg,#CC5500,#FF8C00);border:none;border-radius:12px;color:#fff;cursor:pointer;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 20px rgba(204,85,0,.4);flex-shrink:0}
+    .go-play-again-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(204,85,0,.6)}
+    /* SCHOOL NAME — sınıf row'unun sağında */
+    .ss-grade-school-row{display:flex;align-items:center;gap:16px;flex-shrink:0}
+    .ss-school-inline{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+    .ss-school-field{display:flex;flex-direction:column;gap:4px}
+    .ss-school-display{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;letter-spacing:.06em;width:260px;padding:9px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:var(--white);cursor:pointer;transition:border-color .13s,background .13s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ss-school-display:hover{border-color:rgba(255,140,0,.45);background:rgba(255,140,0,.06)}
+    .ss-school-display.empty{color:rgba(255,244,232,.3)}
+    .ss-school-note{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,244,232,.35);padding-left:2px}
+    /* SCHOOL KB OVERLAY */
+    #overlay-school-kb{z-index:12500}
+    .skb-box{background:linear-gradient(145deg,#1a0800,#0d0400);border:1.5px solid rgba(255,140,0,.35);border-radius:24px;padding:24px 28px 20px;width:min(760px,96vw);display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 0 80px rgba(255,100,0,.14)}
+    .skb-display-wrap{background:rgba(0,0,0,.4);border:2px solid rgba(255,140,0,.28);border-radius:14px;padding:12px 32px;width:100%;text-align:center;min-height:60px;display:flex;align-items:center;justify-content:center}
+    .skb-display{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,4vw,40px);letter-spacing:.14em;color:var(--gold);text-shadow:0 0 20px rgba(255,140,0,.5)}
+    .skb-footer{display:flex;gap:10px;width:100%;justify-content:center}
+    /* SP LEADERBOARD overlay */
+    #overlay-sp-lb{z-index:9800}
+    .sp-lb-box{background:linear-gradient(145deg,#06091a,#03050e);border:1.5px solid var(--gold);border-radius:24px;padding:28px 32px 26px;width:min(96vw,560px);max-height:92vh;display:flex;flex-direction:column;gap:16px;overflow:hidden;box-shadow:0 0 80px rgba(255,215,0,.14),0 24px 64px rgba(0,0,0,.8)}
+    .sp-lb-sub{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:-10px}
+    .sp-lb-list{overflow-y:auto;display:flex;flex-direction:column;gap:7px;flex:1;min-height:0}
+    .sp-lb-row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,215,0,.1);background:rgba(255,255,255,.03)}
+    .sp-lb-row.lb-r1{border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.08)}
+    .sp-lb-row.lb-r2{border-color:rgba(192,192,192,.32)}
+    .sp-lb-row.lb-r3{border-color:rgba(205,127,50,.32)}
+    .sp-lb-num{font-family:'Bebas Neue',sans-serif;font-size:21px;width:26px;text-align:center;flex-shrink:0;color:var(--muted)}
+    .sp-lb-row.lb-r1 .sp-lb-num{color:#FFD700}
+    .sp-lb-row.lb-r2 .sp-lb-num{color:#C0C0C0}
+    .sp-lb-row.lb-r3 .sp-lb-num{color:#CD7F32}
+    .sp-lb-info{flex:1;min-width:0}
+    .sp-lb-name{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:.06em;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .sp-lb-row.lb-r1 .sp-lb-name{color:var(--gold)}
+    .sp-lb-score{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--gold);flex-shrink:0}
+    .sp-lb-stars{font-size:13px;letter-spacing:.06em;color:#facc15;flex-shrink:0}
+    .sp-lb-loading{font-family:'Barlow Condensed',sans-serif;font-size:18px;letter-spacing:.12em;color:var(--muted);text-align:center;padding:32px 0}
+    .sp-lb-empty{font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:.1em;color:var(--muted);text-align:center;padding:28px 0}
+    /* STUDENT CURRENT overlay */
+    .sc-now-box{background:linear-gradient(145deg,#2D0E00,#120500);border:2px solid var(--gold);border-radius:28px;padding:52px 72px;display:flex;flex-direction:column;align-items:center;gap:20px;min-width:min(460px,92vw)}
+    .sc-now-label{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--muted)}
+    .sc-now-name{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7vw,88px);color:var(--gold);letter-spacing:.1em;text-shadow:0 0 40px rgba(255,140,0,.6);text-align:center;line-height:1}
+    .sc-now-pos{font-family:'Barlow Condensed',sans-serif;font-size:20px;letter-spacing:.1em;color:var(--muted)}
+    .sc-now-start-btn{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:18px 52px;background:linear-gradient(135deg,#CC5500,#FF8C00);border:none;border-radius:13px;color:#fff;cursor:pointer;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 18px rgba(204,85,0,.4);margin-top:12px}
+    .sc-now-start-btn:hover{transform:translateY(-2px);box-shadow:0 7px 28px rgba(204,85,0,.6)}
+  </style>
+</head>
+<body>
+  <main id="app">
+    <div id="rotate-overlay" class="rotate-overlay" aria-hidden="true">
+      <div class="rotate-panel">
+        <strong>TURN YOUR DEVICE</strong>
+        <span>Landscape mode is recommended.</span>
+      </div>
+    </div>
+
+    <section id="menu-screen" class="screen open">
+      <div class="main-menu-controls">
+        <button id="menu-lite-btn">LITE</button>
+        <button class="ctrl-btn" id="menu-mute-btn" title="Sound">🔊</button>
+        <button class="ctrl-btn" id="menu-fs-btn" title="Fullscreen">⛶</button>
+      </div>
+      <div class="main-menu-shell">
+        <img src="images/wordcrushmain2.webp" alt="WORD GEMORIA" class="menu-logo" onerror="this.style.display='none';this.nextElementSibling.style.display=''">
+        <h1 style="display:none">WORD GEMORIA</h1>
+        <div class="main-menu-actions">
+          <button id="new-game-btn" class="primary-btn">PLAY</button>
+          <button id="settings-btn" class="secondary-btn">SETTINGS</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="hub-screen" class="screen">
+      <div class="menu-hub">
+        <header class="menu-hub-head">
+          <img src="images/wordcrushmain.webp" alt="WORD GEMORIA" class="hub-logo" onerror="this.style.display='none';this.nextElementSibling.style.display=''">
+          <h1 style="display:none">WORD GEMORIA — SINIF MODU</h1>
+        </header>
+        <div class="mode-chart-row" aria-label="Game modes">
+          <button id="quick-game-btn" class="mode-chart" type="button">
+            <img src="images/quickgame.webp" alt="QUICK GAME" onerror="this.remove()">
+            <span>QUICK GAME</span>
+          </button>
+          <button id="adv-run-btn" class="mode-chart" type="button">
+            <img src="images/adventurerun.webp" alt="ADVENTURE RUN" onerror="this.remove()">
+            <span>ADVENTURE RUN</span>
+          </button>
+          <button id="leaderboard-btn" class="mode-chart" type="button">
+            <img src="images/leaderboard.webp" alt="LEADERBOARD" onerror="this.remove()">
+            <span>LEADERBOARD</span>
+          </button>
+        </div>
+        <button class="hub-main-menu-btn" type="button" onclick="WordCrushScreens.showScreen('menu-screen')">
+          <span>MAIN MENU</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Hidden stub elements profile.js may reference via hub -->
+    <div style="display:none" aria-hidden="true">
+      <div id="profile-chart-score"></div>
+      <img id="sp-hud-avatar-chart" alt="">
+    </div>
+
+    <section id="sp-char" class="screen">
+      <div class="wo-panel wo-new-panel">
+        <div class="wo-title wo-new-title">CREATE YOUR SOLDIER</div>
+        <div class="wo-new-layout">
+          <div class="wo-avatar-preview">
+            <img id="sp-char-prev" alt="">
+            <div id="sp-char-prev-name"></div>
+          </div>
+          <div class="wo-form">
+            <div>
+              <label class="wo-label">PLAYER NAME</label>
+              <input id="sp-char-name" class="wo-name-input" maxlength="16" placeholder="ENTER YOUR NAME">
+            </div>
+            <div>
+              <label class="wo-label">AVATAR</label>
+              <div class="wo-avatar-grid" id="sp-char-avatars"></div>
+            </div>
+            <div>
+              <label class="wo-label">GRADE</label>
+              <div class="wo-grade-grid" id="sp-char-grades"></div>
+            </div>
+            <div id="sp-char-warn" class="wo-warning"></div>
+            <div class="wo-choice-row">
+              <button class="wo-btn ghost" onclick="spBackToMenu()">BACK</button>
+              <button class="wo-btn gold" onclick="spConfirmNew()">BEGIN</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="campaign-select-screen" class="screen">
+      <div class="wo-panel campaign-select-panel">
+        <div class="campaign-head">
+          <div>
+            <div class="wo-title campaign-title">CAMPAIGNS</div>
+            <div class="campaign-subtitle">CHOOSE YOUR PATH</div>
+          </div>
+          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+        </div>
+        <div class="campaign-select-grid" aria-label="Campaign choices">
+          <button class="campaign-choice-card" type="button" onclick="WordCrushCampaign.showCampaign('newcomer')">
+            <img src="images/campaign/newcomer.webp" alt="NEWCOMER CAMPAIGN" onerror="this.remove()">
+            <span>NEWCOMER CAMPAIGN</span>
+          </button>
+          <button class="campaign-choice-card" type="button" onclick="WordCrushCampaign.showCampaign('experienced')">
+            <img src="images/campaign/experienced.webp" alt="EXPERIENCED CAMPAIGN" onerror="this.remove()">
+            <span>EXPERIENCED CAMPAIGN</span>
+          </button>
+          <button class="campaign-choice-card back-card" type="button" onclick="WordCrushProfile.showHub()">
+            <img src="images/campaign-back.webp" alt="BACK" onerror="this.remove()">
+            <span>BACK</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="campaign-screen" class="screen">
+      <div class="wo-panel campaign-panel">
+        <div class="campaign-head">
+          <div>
+            <div id="campaign-title" class="wo-title campaign-title">NEWCOMER CAMPAIGN</div>
+            <div id="campaign-subtitle" class="campaign-subtitle">GRADE 6 - UNITS 1-10</div>
+          </div>
+          <button class="wo-level-action" onclick="WordCrushCampaign.showCampaignSelect()">BACK</button>
+        </div>
+        <div id="campaign-level-grid" class="campaign-level-grid"></div>
+      </div>
+    </section>
+
+    <section id="campaign-ready-screen" class="screen">
+      <div class="wo-panel campaign-ready-panel">
+        <div id="campaign-ready-title" class="wo-title campaign-ready-title">LEVEL 1</div>
+        <div id="campaign-ready-subtitle" class="campaign-ready-subtitle"></div>
+        <div id="campaign-ready-stars" class="campaign-ready-stars"></div>
+        <div id="campaign-ready-best" class="campaign-ready-best"></div>
+        <div class="wo-level-footer campaign-ready-actions">
+          <button class="wo-level-action" type="button" onclick="WordCrushCampaign.showCampaign()">BACK</button>
+          <button id="campaign-ready-start" class="wo-level-action gold" type="button" onclick="WordCrushCampaign.startSelectedLevel()">START LEVEL</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="daily-screen" class="screen">
+      <div class="wo-panel daily-panel">
+        <div class="daily-head">
+          <div>
+            <div class="wo-title daily-title">DAILY QUESTS</div>
+            <div id="daily-date" class="daily-subtitle"></div>
+          </div>
+          <div class="daily-reward">
+            <span>REWARD</span>
+            <strong id="daily-reward">+0</strong>
+          </div>
+        </div>
+        <div id="daily-board" class="daily-board"></div>
+        <div class="wo-choice-row">
+          <div id="daily-countdown-line" class="daily-countdown-line"></div>
+          <button id="daily-claim-btn" class="wo-btn gold">IN PROGRESS</button>
+          <button class="wo-btn ghost" onclick="WordCrushDaily.closeDailyBoard()">BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sp-profile" class="screen">
+      <div class="wo-panel wo-profile-panel">
+        <div id="sp-rank-display" class="wo-rank-display">
+          <img id="sp-rank-img" class="wc-rank-img" src="" alt="">
+          <span id="sp-rank-name">SPARK</span>
+        </div>
+        <div class="wo-profile-hero">
+          <img id="sp-profile-avatar" alt="">
+          <div>
+            <div id="sp-profile-name" class="wo-title profile-title"></div>
+            <div id="sp-profile-grade" class="wo-profile-grade"></div>
+            <div class="wo-profile-score-label">SCORE</div>
+            <div id="sp-profile-score" class="wo-profile-score"></div>
+          </div>
+        </div>
+        <div id="sp-profile-stats" class="wo-profile-stats"></div>
+        <div class="wo-profile-actions">
+          <button class="wo-profile-info" type="button" onclick="WCAchievements.earnedBadges()">
+            <span>ACHIEVEMENT BADGES</span>
+            <strong id="sp-profile-achievements">0/0</strong>
+            <b>?</b>
+          </button>
+          <button class="wo-profile-info" type="button" onclick="WCAchievements.show('profile')">
+            <span>ACHIEVEMENTS</span>
+            <strong id="sp-profile-ach-score">0</strong>
+            <b>?</b>
+          </button>
+        </div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushProfile.showHub()">BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="setup-screen" class="screen">
+      <div class="sc-modal">
+        <div class="sc-title">WORD SETUP</div>
+        <div class="sc-section" id="sc-class-section">
+          <div class="sc-section-head">
+            <div class="sc-section-label">SINIF</div>
+            <button class="sc-clear-btn" onclick="_scClearAll()">CLEAR ALL</button>
+          </div>
+          <div class="sc-class-grid" id="sc-class-grid"></div>
+          <div class="sc-warn" id="sc-class-warn"></div>
+        </div>
+        <div class="sc-section">
+          <div class="sc-section-label">UNITE</div>
+          <div class="sc-unit-grid" id="sc-unit-grid"></div>
+          <div class="sc-warn" id="sc-unit-warn"></div>
+        </div>
+        <div class="sc-section" id="sc-cat-section" style="display:none">
+          <div class="sc-section-label">KATEGORILER <span>(unite bagimsiz)</span></div>
+          <div class="sc-unit-grid" id="sc-cat-grid"></div>
+        </div>
+        <div class="sc-word-count" id="sc-word-count"></div>
+        <div class="wo-choice-row">
+          <button class="wo-btn ghost" onclick="WordCrushProfile.showHub()">BACK</button>
+          <button class="sc-save-btn" onclick="WordCrushSetup.startSelectedGame()">START LEVEL</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="quick-mode-screen" class="screen">
+      <div class="wo-panel quick-mode-panel">
+        <div id="quick-mode-title" class="wo-title quick-mode-title">QUICK GAME</div>
+        <div id="quick-mode-choice" class="quick-mode-choice">
+          <button class="quick-mode-card" type="button" onclick="WordCrushQuickMode.startQuickGame()">
+            <strong>QUICK GAME</strong>
+            <span>15 WORDS</span>
+          </button>
+          <button class="quick-mode-card" type="button" onclick="WordCrushQuickMode.showCustomGame()">
+            <strong>CUSTOM GAME</strong>
+            <span>SET WORDS AND TIME</span>
+          </button>
+        </div>
+        <div id="quick-mode-choice-footer" class="quick-mode-choice-footer">
+          <button class="wo-btn ghost quick-mode-hub" type="button" onclick="WordCrushProfile.showHub()">HUB</button>
+        </div>
+        <div id="quick-custom-choice" class="quick-custom-choice" hidden>
+          <div class="quick-mode-subtitle">WORD COUNT</div>
+          <div id="quick-word-counts" class="quick-word-counts"></div>
+          <div class="quick-mode-subtitle">TIME LIMIT</div>
+          <div id="quick-time-options" class="quick-word-counts quick-time-options"></div>
+          <div id="quick-star-preview" class="quick-star-preview"></div>
+          <div class="quick-practice-note">CUSTOM GAMES ARE PRACTICE RUNS. SCORES DO NOT COUNT TOWARD PROFILE, ACHIEVEMENTS, DAILY QUESTS, OR LEADERBOARDS.</div>
+          <div class="quick-custom-actions">
+            <button class="wo-btn gold" type="button" onclick="WordCrushQuickMode.startCustomGame()">START CUSTOM GAME</button>
+            <button class="wo-btn ghost" type="button" onclick="WordCrushQuickMode.showChoices()">BACK</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="cat-preview-overlay" onclick="if(event.target===this)_closeCatPreview()">
+      <div class="cp-modal">
+        <div class="cp-title" id="cp-title">KATEGORI</div>
+        <div class="cp-grid" id="cp-grid"></div>
+        <button class="cp-close" onclick="_closeCatPreview()">KAPAT</button>
+      </div>
+    </div>
+
+    <section id="game-screen" class="screen">
+      <header id="sp-header">
+        <img id="sp-hud-avatar" src="../word_overlord/avatars/AV_Anime_Blaze_head.webp" alt="">
+        <div id="sp-hud-mode-cell" class="sp-hud-cell">
+          <div id="sp-hud-q" class="sp-hud-value">0/15</div>
+          <div id="sp-hud-mode-label" class="sp-hud-label">MODE</div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-score" class="sp-hud-value">0</div>
+          <div class="sp-hud-label">LEVEL SCORE</div>
+        </div>
+        <div class="wo-progress">
+          <div class="wo-progress-track">
+            <div id="wo-hud-progress" class="wo-progress-fill"></div>
+            <div id="wo-pmark-1" class="wo-pmark"></div>
+            <div id="wo-pmark-2" class="wo-pmark"></div>
+            <div id="wo-pmark-3" class="wo-pmark"></div>
+          </div>
+          <div class="wo-progress-stars-row">
+            <span id="wo-pstar-1" class="wo-pstar">★</span>
+            <span id="wo-pstar-2" class="wo-pstar">★★</span>
+            <span id="wo-pstar-3" class="wo-pstar">★★★</span>
+          </div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-lives" class="sp-hud-value">03:00</div>
+          <div class="sp-hud-label">TIME</div>
+        </div>
+        <div class="sp-hud-cell">
+          <div id="sp-hud-streak" class="sp-hud-value">0</div>
+          <div id="sp-hud-streak-label" class="sp-hud-label">STREAK</div>
+        </div>
+        <button id="adv-joker-btn" class="adv-joker-btn-hud" style="display:none" onclick="AdvRun.openJokerOverlay()">🃏 JOKER <span id="adv-joker-count">0</span></button>
+        <div id="sp-hud-adv-lives" class="sp-hud-cell" style="display:none">
+          <div id="sp-hud-adv-lives-val" class="sp-hud-value adv-lives-val"></div>
+          <div class="sp-hud-label">LIVES</div>
+        </div>
+        <div id="sp-controls">
+          <button id="lite-btn">LITE</button>
+          <button class="ctrl-btn" id="mute-btn" title="Sound">🔊</button>
+          <button class="ctrl-btn" id="fs-btn" title="Fullscreen">⛶</button>
+        </div>
+      </header>
+
+      <div id="adv-joker-overlay" class="adv-joker-overlay" style="display:none" onclick="AdvRun.closeJokerOverlay()">
+        <div class="adv-joker-panel" onclick="event.stopPropagation()">
+          <div class="adv-joker-panel-title">USE A JOKER</div>
+          <div id="adv-joker-list" class="adv-joker-list"></div>
+          <button class="adv-joker-cancel" onclick="AdvRun.closeJokerOverlay()">CANCEL</button>
+        </div>
+      </div>
+
+      <section class="play-stage">
+        <div class="board-panel english-panel">
+          <div id="english-board" class="english-board">
+            <div id="blast-cursor" class="blast-cursor"></div>
+          </div>
+        </div>
+        <div class="board-panel turkish-panel">
+          <div id="turkish-board" class="turkish-board"></div>
+        </div>
+      </section>
+
+      <div id="message-line" class="message-line"></div>
+      <div id="float-layer" class="float-layer"></div>
+    </section>
+
+    <section id="wc-achievements" class="screen">
+      <div class="wo-panel wo-achievements-panel">
+        <div class="wo-achievements-head">
+          <div>
+            <div class="wo-title" style="font-size:58px;text-align:left">ACHIEVEMENTS</div>
+            <div class="wo-achievements-sub">COMPLETE CHALLENGES AND CLAIM SCORE REWARDS</div>
+          </div>
+          <div class="wo-achievements-score"><span>SCORE</span><strong id="wc-ach-score"></strong></div>
+        </div>
+        <div id="wc-ach-tabs" class="wo-ach-tabs"></div>
+        <div id="wc-ach-grid" class="wo-achievements-grid"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WCAchievements.close()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="wc-badges" class="screen">
+      <div class="wo-panel wo-badges-panel">
+        <div class="wo-title" style="font-size:58px">ACHIEVEMENT BADGES</div>
+        <div id="wc-badges-grid" class="wo-badges-grid"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushProfile.showProfile()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="adv-run-screen" class="screen">
+      <div class="adv-map-wrap">
+        <div class="adv-hud">
+          <div class="adv-hud-left">
+            <div class="adv-hud-title">ADVENTURE RUN</div>
+            <div id="adv-hud-lives" class="adv-hud-lives"></div>
+          </div>
+          <div class="adv-hud-right">
+            <div id="adv-hud-joker-map" class="adv-hud-gold">🃏 <span id="adv-hud-joker-map-val">0</span></div>
+            <div id="adv-hud-gold" class="adv-hud-gold">💰 0</div>
+            <button class="adv-exit-btn" onclick="AdvRun.confirmExit()">✕ EXIT</button>
+          </div>
+        </div>
+        <div class="adv-map-container">
+          <div class="adv-map-inner">
+            <img src="images/adv_map1.webp" class="adv-map-bg" alt="Adventure Map" draggable="false">
+            <svg id="adv-map-svg" class="adv-map-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div id="adv-map-nodes" class="adv-map-nodes"></div>
+          </div>
+        </div>
+        <div id="adv-exit-confirm-overlay" class="adv-exit-confirm-overlay">
+          <div class="adv-exit-confirm-panel">
+            <div class="adv-exit-confirm-icon">⚠</div>
+            <div class="adv-exit-confirm-title">ABANDON RUN?</div>
+            <div class="adv-exit-confirm-sub">All your progress will be lost.</div>
+            <div class="adv-exit-confirm-btns">
+              <button class="adv-exit-confirm-btn adv-exit-confirm-btn--cancel" onclick="AdvRun.cancelExit()">CONTINUE</button>
+              <button class="adv-exit-confirm-btn adv-exit-confirm-btn--exit" onclick="AdvRun.exitRun()">ABANDON</button>
+            </div>
+          </div>
+        </div>
+        <div id="adv-shop-overlay" class="adv-shop-overlay">
+          <div class="adv-shop-panel">
+            <img src="images/shop.webp" class="adv-shop-img" alt="Shop" draggable="false">
+            <div class="adv-shop-content">
+              <div class="adv-shop-header">
+                <div class="adv-shop-title">⚗ GEM BAZAAR</div>
+                <div class="adv-shop-gold">🪙 <span id="adv-shop-gold-val">0</span></div>
+              </div>
+              <div id="adv-shop-items" class="adv-shop-items"></div>
+              <button class="adv-shop-leave" onclick="AdvRun.closeShop()">LEAVE SHOP →</button>
+            </div>
+          </div>
+        </div>
+        <div id="adv-completed-overlay" class="adv-completed-overlay">
+          <div class="adv-completed-panel">
+            <div class="adv-completed-icon">🏆</div>
+            <div class="adv-completed-title">ADVENTURE COMPLETED!</div>
+            <div class="adv-completed-stats">
+              <div class="adv-cs-row"><span class="adv-cs-label">Doğru Kelime</span><span class="adv-cs-val" id="adv-completed-correct">0</span></div>
+              <div class="adv-cs-row"><span class="adv-cs-label">Yanlış Kelime</span><span class="adv-cs-val" id="adv-completed-wrong">0</span></div>
+              <div class="adv-cs-row"><span class="adv-cs-label">En Uzun Combo</span><span class="adv-cs-val" id="adv-completed-combo">0</span></div>
+              <div class="adv-cs-row adv-cs-bonus"><span class="adv-cs-label">Boss Bonus</span><span class="adv-cs-val" id="adv-completed-boss-bonus">+3000</span></div>
+              <div class="adv-cs-row adv-cs-bonus"><span class="adv-cs-label">Gold Tasarrufu</span><span class="adv-cs-val" id="adv-completed-savings">0</span></div>
+              <div class="adv-cs-row adv-cs-total"><span class="adv-cs-label">BOSS SKORU</span><span class="adv-cs-val" id="adv-completed-score">0</span></div>
+            </div>
+            <button class="adv-completed-btn" onclick="AdvRun.exitRun()">↩ RETURN TO HUB</button>
+          </div>
+        </div>
+        <div id="adv-run-failed-overlay" class="adv-run-failed-overlay">
+          <div class="adv-run-failed-panel">
+            <div class="adv-run-failed-icon">💀</div>
+            <div class="adv-run-failed-title">RUN FAILED</div>
+            <div class="adv-run-failed-sub">All lives lost. Your adventure ends here.</div>
+            <div class="adv-run-failed-gold">Gold collected: <span id="adv-fail-gold">0</span> 💰</div>
+            <button class="adv-run-failed-btn" onclick="AdvRun.exitRun()">↩ BACK TO HUB</button>
+          </div>
+        </div>
+        <div id="adv-preview-overlay" class="adv-prev-overlay">
+          <div class="adv-prev-panel">
+            <div id="adv-prev-header" class="adv-prev-header">
+              <span id="adv-prev-type-icon" class="adv-prev-type-icon"></span>
+              <span id="adv-prev-type-label" class="adv-prev-type-label"></span>
+            </div>
+            <div id="adv-prev-title" class="adv-prev-title"></div>
+            <div id="adv-prev-subtitle" class="adv-prev-subtitle"></div>
+            <div id="adv-prev-flavor" class="adv-prev-flavor"></div>
+            <div class="adv-prev-stats">
+              <div id="adv-prev-gold-row" class="adv-prev-stat-row">
+                <span class="adv-prev-stat-icon">💰</span>
+                <span class="adv-prev-stat-label">GOLD REWARD</span>
+                <span id="adv-prev-gold" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-lives-row" class="adv-prev-stat-row">
+                <span class="adv-prev-stat-icon">💀</span>
+                <span class="adv-prev-stat-label">ENEMY HP</span>
+                <span id="adv-prev-lives" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-time-row" class="adv-prev-stat-row adv-prev-stat-row--warn">
+                <span class="adv-prev-stat-icon">⏱</span>
+                <span class="adv-prev-stat-label">TIME MODIFIER</span>
+                <span id="adv-prev-time" class="adv-prev-stat-val"></span>
+              </div>
+              <div id="adv-prev-units-row" class="adv-prev-stat-row adv-prev-units-row">
+                <span class="adv-prev-stat-icon">📚</span>
+                <span class="adv-prev-stat-label">UNITS</span>
+                <span id="adv-prev-units" class="adv-prev-stat-val adv-prev-units-val"></span>
+              </div>
+              <div id="adv-prev-category-row" class="adv-prev-stat-row adv-prev-category-row" style="display:none">
+                <span class="adv-prev-stat-icon" id="adv-prev-cat-icon">🏷</span>
+                <span class="adv-prev-stat-label">CATEGORY BONUS</span>
+                <span id="adv-prev-cat-label" class="adv-prev-stat-val" style="color:#fbbf24"></span>
+              </div>
+            </div>
+            <div class="adv-prev-footer">
+              <button class="adv-prev-btn adv-prev-btn--cancel" onclick="AdvRun.cancelPreview()">✕ CANCEL</button>
+              <button class="adv-prev-btn adv-prev-btn--enter" onclick="AdvRun.enterNode()">ENTER ▶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings-screen" class="screen">
+      <div class="wo-panel wc-settings-panel">
+        <div class="wo-title" style="font-size:58px">SETTINGS</div>
+        <div class="wc-settings-row">
+          <label class="wc-settings-label">MUSIC VOLUME</label>
+          <div class="wc-vol-wrap">
+            <input id="wc-music-vol-slider" type="range" min="0" max="100" step="1" class="wc-vol-slider">
+            <span id="wc-music-vol-val" class="wc-vol-val">30</span>
+          </div>
+          <div id="wc-music-mute-badge" class="wc-mute-badge" style="display:none">MUSIC MUTE</div>
+        </div>
+        <div class="wc-settings-row">
+          <label class="wc-settings-label">LITE MODE</label>
+          <div class="wc-toggle-wrap">
+            <button id="wc-lite-on-btn" class="wc-toggle-btn" onclick="wcSetLite(true)">ON</button>
+            <button id="wc-lite-off-btn" class="wc-toggle-btn" onclick="wcSetLite(false)">OFF</button>
+          </div>
+        </div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushScreens.showScreen('menu-screen')">↩ EXIT</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="wc-leaderboard" class="screen">
+      <div class="wo-panel wo-leaderboard-panel">
+        <div class="wo-achievements-head">
+          <div>
+            <div class="wo-title" style="font-size:58px;text-align:left">LEADERBOARD</div>
+            <div class="wo-achievements-sub">TOP 50 PLAYERS — WORD GEMORIA</div>
+          </div>
+          <div id="wc-lb-myrank" class="wo-lb-myrank"></div>
+        </div>
+        <div id="wc-lb-list" class="wo-lb-list"></div>
+        <div class="wo-level-footer">
+          <button class="wo-level-action" onclick="WordCrushFirebase.leaderboardBack()">↩ BACK</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="wc-badge-reveal" class="wo-badge-reveal">
+      <div class="wo-badge-reveal-panel">
+        <div class="wo-badge-reveal-label">BADGE UNLOCKED</div>
+        <img id="wc-badge-reveal-img" class="wo-badge-reveal-img" alt="">
+        <button class="wo-btn gold" style="margin-top:24px;min-width:200px" onclick="WCAchievements.closeBadgeReveal()">COOL!</button>
+      </div>
+    </div>
+
+    <section id="result-screen" class="screen">
+      <div class="result-shell">
+        <h2 id="result-title">GAME OVER</h2>
+        <div id="final-score" class="final-score">0</div>
+        <div id="final-stats" class="final-stats"></div>
+        <button id="result-back-btn" class="primary-btn">BACK</button>
+      </div>
+    </section>
+
+    <!-- AUTO LEADERBOARD (birebir word_master) -->
+    <div id="auto-lb">
+      <div class="alb-title">🏆 HIGH SCORES</div>
+      <div id="auto-lb-list"></div>
+    </div>
+
+    <!-- CLASS SELECTION OVERLAY -->
+    <div id="overlay-settings" class="overlay hidden">
+      <div class="settings-box modal-panel">
+        <div class="ov-title">SELECT CLASS</div>
+        <div class="class-grid" id="class-grid"></div>
+      </div>
+    </div>
+
+    <!-- STUDENT SELECT OVERLAY (birebir word_hunt — sadece continue butonu değişti) -->
+    <div id="overlay-student-select" class="overlay hidden">
+      <div class="ss-box modal-panel">
+        <div class="ov-title">SELECT PLAYERS</div>
+        <div id="ss-sub" class="ss-sub">Oynamasını istediğiniz öğrencileri seçin · <span style="color:var(--gold)">RENAME</span> ile isim değiştirebilirsiniz</div>
+        <div class="ss-grade-school-row">
+          <div class="ss-grade-row" id="ss-grade-row"></div>
+          <div class="ss-school-inline">
+            <span class="ss-grade-label">Okul:</span>
+            <div class="ss-school-field">
+              <div id="ss-school-display" class="ss-school-display empty" onclick="openSchoolKb()">Okul adı...</div>
+              <div class="ss-school-note">Opsiyoneldir · Leaderboard eşleşmesi için önerilir</div>
+            </div>
+          </div>
+        </div>
+        <div class="ss-class-pool" id="ss-class-pool"></div>
+        <div class="ss-count-row">
+          <div class="ss-count" id="ss-count">0 seçildi</div>
+          <button id="ss-rename-btn" class="ss-rename-btn" style="visibility:hidden;pointer-events:none" onclick="openRenameOverlay()">✎ RENAME</button>
+          <button class="pair-with-btn" id="pair-with-btn" onclick="onPairWithBtn()" disabled>⚭ PAIR WITH</button>
+          <button id="gs-open-overlay-btn" class="gs-open-btn" onclick="openGuestOverlay()">✦ MİSAFİR EKLE</button>
+          <button class="ss-continue-btn" id="ss-continue-btn" disabled onclick="goToHub()">DEVAM →</button>
+        </div>
+        <div class="ss-pair-hint" id="ss-pair-hint"></div>
+      </div>
+    </div>
+
+    <!-- GUEST STUDENTS OVERLAY (birebir word_hunt) -->
+    <div id="overlay-guest" class="overlay hidden">
+      <div class="gs-box modal-panel">
+        <div class="ov-title">MİSAFİR ÖĞRENCİLER</div>
+        <div class="gs-sub">İsimleri yaz — boş bırakılanlar eklenmez · Misafirler ✦ ile işaretlenir</div>
+        <div class="gs-slots" id="gs-slots"></div>
+        <div id="gs-keyboard"></div>
+        <div class="gs-footer">
+          <button class="gs-cancel-btn" onclick="closeGuestOverlay()">İPTAL</button>
+          <button class="gs-confirm-btn" onclick="confirmGuests()">✓ EKLE</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RENAME OVERLAY (birebir word_hunt) -->
+    <div id="overlay-rename" class="overlay hidden">
+      <div class="rn-box modal-panel">
+        <div class="ov-title" style="font-size:26px;margin-bottom:2px">RENAME PLAYER</div>
+        <div class="rn-display-wrap">
+          <div class="rn-display" id="rn-display">—</div>
+        </div>
+        <div id="rn-keyboard"></div>
+        <button class="rn-cancel-btn" onclick="closeRenameOverlay()">CANCEL</button>
+      </div>
+    </div>
+
+    <!-- SP CUSTOM GAME SETTINGS OVERLAY -->
+    <div id="overlay-sp-custom" class="overlay hidden">
+      <div class="sp-custom-box modal-panel">
+        <div class="ov-title">CUSTOM GAME</div>
+        <div class="sp-custom-sub">Kelime sayısı ve süre seçin</div>
+        <div class="sp-custom-section">
+          <div class="sp-custom-label">Kelime Sayısı</div>
+          <div id="sp-word-counts" class="sp-custom-btns"></div>
+        </div>
+        <div class="sp-custom-section">
+          <div class="sp-custom-label">Süre</div>
+          <div id="sp-time-options" class="sp-custom-btns"></div>
+        </div>
+        <div class="sp-custom-filter-grid">
+          <div class="sp-custom-filter-section">
+            <div class="sp-custom-label">Üniteler</div>
+            <div id="sp-unit-options" class="sp-custom-btns"></div>
+            <button id="sp-units-clear" class="sp-custom-clear-btn" type="button">CLEAR ALL</button>
+          </div>
+          <div class="sp-custom-filter-section">
+            <div class="sp-custom-label">Kategoriler</div>
+            <div id="sp-category-options" class="sp-custom-btns"></div>
+          </div>
+        </div>
+        <div id="sp-pool-preview" class="sp-custom-pool"></div>
+        <div id="sp-custom-warn" class="sp-custom-warn"></div>
+        <div id="sp-star-preview" class="sp-star-preview"></div>
+        <div class="sp-custom-actions">
+          <button class="rn-cancel-btn" onclick="hide('overlay-sp-custom')">← GERİ</button>
+          <button class="ss-continue-btn" onclick="startSPQueue()">OYUNU BAŞLAT ▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL SCORES OVERLAY (birebir word_hunt go-*) -->
+    <div id="overlay-final-scores" class="overlay hidden">
+      <div class="go-box modal-panel">
+        <div class="go-title">🏆 FINAL RESULTS</div>
+        <div class="go-subtitle" id="go-subtitle">— — —</div>
+        <div class="go-grid" id="go-grid"></div>
+        <div style="display:flex;justify-content:center;margin-top:4px">
+          <button class="go-play-again-btn" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);box-shadow:0 6px 28px rgba(37,99,235,.4)" onclick="goToHubFromFinal()">↩ RETURN TO HUB</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHOOL NAME KEYBOARD OVERLAY -->
+    <div id="overlay-school-kb" class="overlay hidden">
+      <div class="skb-box modal-panel">
+        <div class="ov-title" style="font-size:24px;margin-bottom:2px">OKUL ADI</div>
+        <div class="skb-display-wrap">
+          <div class="skb-display" id="skb-display">—</div>
+        </div>
+        <div id="skb-keyboard"></div>
+        <div class="skb-footer">
+          <button class="rn-cancel-btn" onclick="closeSchoolKb()">İPTAL</button>
+          <button class="gs-confirm-btn" onclick="confirmSchoolKb()">✓ KAYDET</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SP LEADERBOARD OVERLAY -->
+    <div id="overlay-sp-lb" class="overlay hidden">
+      <div class="sp-lb-box modal-panel">
+        <div class="ov-title">🏆 SINIF LEADERBOARD</div>
+        <div class="sp-lb-sub">Word Gemoria — Tüm Sınıflar</div>
+        <div id="sp-lb-list" class="sp-lb-list"><div class="sp-lb-loading">YÜKLENİYOR...</div></div>
+        <div style="display:flex;justify-content:center;margin-top:4px">
+          <button class="go-play-again-btn" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);box-shadow:0 4px 20px rgba(37,99,235,.35)" onclick="hide('overlay-sp-lb')">↩ GERİ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT CURRENT OVERLAY (new) -->
+    <div id="overlay-student-current" class="overlay hidden">
+      <div class="sc-now-box modal-panel">
+        <div class="sc-now-label">SIRA</div>
+        <div class="sc-now-name" id="sc-student-name">—</div>
+        <div class="sc-now-pos" id="sc-student-pos"></div>
+        <button class="sc-now-start-btn" onclick="scStartGame()">OYUNU BAŞLAT ▶</button>
+      </div>
+    </div>
+
+    <div id="overlay-class-adv-player" class="overlay hidden">
+      <div class="class-adv-picker modal-panel">
+        <div class="ov-title">SELECT PLAYER</div>
+        <div id="class-adv-picker-sub" class="class-adv-picker-sub"></div>
+        <div id="class-adv-player-list" class="class-adv-player-list"></div>
+        <div class="class-adv-picker-actions">
+          <button class="rn-cancel-btn" type="button" onclick="classAdventureCancelPlayer()">BACK</button>
+          <button class="sp-custom-btn" type="button" onclick="classAdventureRandomPlayer()">RANDOM</button>
+          <button id="class-adv-start-btn" class="ss-continue-btn" type="button" onclick="classAdventureStartNode()" disabled>START NODE</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../word_contest/words.js?v=campaign-select-1"></script>
+  <script src="../word_master/questions.js?v=campaign-select-1"></script>
+  <script src="daily.js?v=score-economy-1"></script>
+  <script src="core/adapter.js?v=campaign-select-1"></script>
+  <script src="core/audio.js?v=fade-to-black-1"></script>
+  <script src="core/game-state.js?v=custom-endless-1"></script>
+  <script src="ui/toast.js?v=campaign-select-1"></script>
+  <script src="ui/screens.js?v=custom-endless-1"></script>
+  <script src="ui/game-board.js?v=fade-to-black-1"></script>
+  <script src="core/profile.js?v=custom-endless-1"></script>
+  <script src="core/campaign.js?v=score-economy-1"></script>
+  <script src="core/daily-board.js?v=custom-endless-1"></script>
+  <script src="ui/setup-screen.js?v=campaign-select-1"></script>
+  <script src="core/quick-bonuses.js?v=score-economy-1"></script>
+  <script src="core/game-loop.js?v=custom-endless-1"></script>
+  <script src="ui/quick-mode.js?v=custom-overlay-flow-1"></script>
+  <script src="core/achievements.js?v=hub-attention-1"></script>
+  <script src="core/adventure-run.js?v=score-economy-1"></script>
+  <script src="core/firebase.js?v=1"></script>
+  <script src="../word_hunt/names.js" onerror="void 0"></script>
+  <script src="../word_hunt/rgbkeyboard.js"></script>
+  <script src="../modules/profanity-filter.js?v=4"></script>
+
+  <script>
+  // ── Profanity filter ───────────────────────────────────────
+  /* Legacy filter implementation retained only for source-history context.
+  const _BAD_WORDS=['FUCK','SHIT','BITCH','CUNT','COCK','DICK','PUSSY','ASS','NIGGER','FAGGOT','WHORE','SLUT','PORN','SEX','NUDE','NAKED','PENIS','VAGINA','BOOB','TITS','RAPE','MOTHERFUCKER','MF','BASTARD','SOB','CUM','BLOWJOB','BJ','HANDJOB','WANKER','TWAT','PRICK','DOUCHE','JACKASS','ASSHOLE','RETARD','FAG','HORNY','MILF','XXX','HENTAI','OROSPU','YARRAK','SIK','SIKIM','SIKERIM','SIKTIM','SIKTIR','AMINA','AMK','AMCIK','BOK','OTUZBIR','DALYARAK','SAKSO','YALAMA','IBNE','GAVAT','KAHPE','KALTAK','FAHISE','PEZEVENK','SEREFSIZ','ANANI','ANASINI','PIC','MEME'];
+  */
+
+  /* Legacy filter function removed after migration to modules/profanity-filter.js.
+  function _isBadName(raw){
+    const n=raw.toUpperCase()
+      .replace(/4/g,'A').replace(/3/g,'E').replace(/0/g,'O').replace(/1/g,'I').replace(/5/g,'S').replace(/7/g,'T')
+      .replace(/\$/g,'S').replace(/\@/g,'A')
+      .replace(/[İ]/g,'I').replace(/[Ş]/g,'S').replace(/[Ğ]/g,'G').replace(/[Ü]/g,'U').replace(/[Ö]/g,'O').replace(/[Ç]/g,'C')
+      .replace(/[^A-Z]/g,'');
+    return _BAD_WORDS.some(w=>n.includes(w));
+  }
+
+  */
+
+  function _isBadName(raw){
+    return window.ProfanityFilter?.isBlocked(raw) ?? true;
+  }
+
+  // ── Utilities ──────────────────────────────────────────────
+  function show(id){ document.getElementById(id)?.classList.remove('hidden'); }
+  function hide(id){ document.getElementById(id)?.classList.add('hidden'); }
+
+  // ── Student select state (birebir word_hunt) ───────────────
+  const _teacherMode = false;
+  let selectedClass     = null;
+  let selectedPlayers   = [];
+  let pairs             = [];   // stores [studentObj, studentObj]
+  let _pairingMode      = false;
+  let _pairingSource    = null; // student object
+  let _lastSelected     = null; // name string (for rename compat)
+  let _lastSelectedObj  = null; // student object
+  let _guestSlotCounter = 100;  // guests get slots 101+
+
+  // ── School name (classroom leaderboard) ───────────────────
+  const SP_FB_URL  = 'https://word-overlord-default-rtdb.europe-west1.firebasedatabase.app';
+  const SP_FB_GAME = 'word_gemoria_sp';
+
+  function _slugFB(s){
+    return s.toLowerCase().replace(/[çÇ]/g,'c').replace(/[ğĞ]/g,'g').replace(/[ıİ]/g,'i')
+      .replace(/[öÖ]/g,'o').replace(/[şŞ]/g,'s').replace(/[üÜ]/g,'u')
+      .replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40) || 'x';
+  }
+
+  function _loadSchoolName(){
+    try{ return localStorage.getItem('wc_sp_school') || ''; }catch(e){ return ''; }
+  }
+
+  function _saveSchoolName(name){
+    try{ localStorage.setItem('wc_sp_school', name.trim()); }catch(e){}
+  }
+
+  function _updateSchoolDisplay(){
+    const name = _loadSchoolName();
+    const el = document.getElementById('ss-school-display');
+    if(!el) return;
+    if(name){ el.textContent = name; el.classList.remove('empty'); }
+    else    { el.textContent = 'Okul adı...'; el.classList.add('empty'); }
+  }
+
+  // ── SCHOOL KB ─────────────────────────────────────────────
+  let _skbText = '';
+  let _skbKbHandler = null;
+
+  function openSchoolKb(){
+    _skbText = _loadSchoolName();
+    _updateSkbDisplay();
+    if(typeof RGBKeyboard !== 'undefined') RGBKeyboard.build('skb-keyboard', _skbOnKey);
+    else _buildSchoolPlainKb();
+    _skbKbHandler = (e) => {
+      if(document.getElementById('overlay-school-kb').classList.contains('hidden')) return;
+      if(e.key === 'Escape'){ e.preventDefault(); closeSchoolKb(); return; }
+      if(e.key === 'Enter'){ e.preventDefault(); confirmSchoolKb(); return; }
+      if(e.key === 'Backspace'){ e.preventDefault(); _skbOnKey('⌫'); return; }
+      if(e.key === ' '){ e.preventDefault(); _skbOnKey(' '); return; }
+      if(e.key.length === 1 && /[a-zA-ZçÇğĞıİöÖşŞüÜ0-9\-\s]/.test(e.key)) _skbOnKey(e.key.toUpperCase());
+    };
+    document.addEventListener('keydown', _skbKbHandler);
+    show('overlay-school-kb');
+  }
+
+  function closeSchoolKb(){
+    hide('overlay-school-kb');
+    if(_skbKbHandler){ document.removeEventListener('keydown', _skbKbHandler); _skbKbHandler = null; }
+  }
+
+  function confirmSchoolKb(){
+    if(_isBadName(_skbText)){ _skbText=''; _updateSkbDisplay(); if(typeof RGBKeyboard!=='undefined') RGBKeyboard.setSure(true); return; }
+    _saveSchoolName(_skbText);
+    _updateSchoolDisplay();
+    closeSchoolKb();
+  }
+
+  function _skbOnKey(k){
+    if(k === 'SUBMIT'){ confirmSchoolKb(); return; }
+    if(typeof RGBKeyboard !== 'undefined') RGBKeyboard.setSure(false);
+    if(k === '⌫'){ _skbText = _skbText.slice(0,-1); }
+    else if(k === ' '){ if(_skbText.length < 40) _skbText += ' '; }
+    else{ if(_skbText.length < 40) _skbText += k; }
+    _updateSkbDisplay();
+  }
+
+  function _updateSkbDisplay(){
+    const el = document.getElementById('skb-display');
+    if(el) el.textContent = _skbText || '—';
+  }
+
+  function _buildSchoolPlainKb(){
+    const kb = document.getElementById('skb-keyboard');
+    kb.innerHTML = ''; kb.className = 'plain-kb';
+    const rows = [
+      ['Q','W','E','R','T','Y','U','I','O','P','⌫'],
+      ['A','S','D','F','G','H','J','K','L'],
+      ['Z','X','C','V','B','N','M'],
+      ['Ğ','Ü','Ş','İ','I','Ö','Ç'],
+      [' ']
+    ];
+    rows.forEach(row => {
+      const rowEl = document.createElement('div'); rowEl.className = 'plain-kb-row';
+      row.forEach(k => {
+        const btn = document.createElement('button'); btn.className = 'plain-kb-key';
+        if(k==='⌫'){ btn.classList.add('pkb-wide','pkb-del'); btn.textContent='⌫'; }
+        else if(k===' '){ btn.classList.add('pkb-space'); btn.textContent='SPACE'; }
+        else{ btn.textContent=k; }
+        btn.addEventListener('click', ()=>_skbOnKey(k));
+        rowEl.appendChild(btn);
+      });
+      kb.appendChild(rowEl);
+    });
+  }
+
+  function _submitSPScore(name, score, stars){
+    const school = _loadSchoolName();
+    const displayName = school ? `${name} (${school})` : name;
+    const key = school
+      ? `${_slugFB(school)}_${_slugFB(name)}`
+      : _slugFB(name);
+    fetch(`${SP_FB_URL}/scores/${SP_FB_GAME}/${encodeURIComponent(key)}.json`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: displayName, score, stars, updatedAt: Date.now() })
+    }).catch(() => {});
+  }
+
+  async function openSPLeaderboard(){
+    show('overlay-sp-lb');
+    const list = document.getElementById('sp-lb-list');
+    list.innerHTML = '<div class="sp-lb-loading">YÜKLENİYOR...</div>';
+    try{
+      const res  = await fetch(`${SP_FB_URL}/scores/${SP_FB_GAME}.json`);
+      const data = await res.json();
+      if(!data){ list.innerHTML = '<div class="sp-lb-empty">Henüz skor yok — ilk sen ol!</div>'; return; }
+      const entries = Object.values(data)
+        .filter(v => v && v.name && typeof v.score === 'number')
+        .sort((a, b) => b.score - a.score);
+      if(!entries.length){ list.innerHTML = '<div class="sp-lb-empty">Henüz skor yok — ilk sen ol!</div>'; return; }
+      list.innerHTML = entries.slice(0, 50).map((e, i) => {
+        const rk   = i === 0 ? 'lb-r1' : i === 1 ? 'lb-r2' : i === 2 ? 'lb-r3' : '';
+        const stars = typeof e.stars === 'number'
+          ? Array.from({length:3}, (_,si) => si < e.stars ? '★' : '☆').join('')
+          : '';
+        return `<div class="sp-lb-row ${rk}">
+          <div class="sp-lb-num">${i+1}</div>
+          <div class="sp-lb-info"><div class="sp-lb-name">${e.name}</div></div>
+          ${stars ? `<div class="sp-lb-stars">${stars}</div>` : ''}
+          <div class="sp-lb-score">${e.score.toLocaleString()}</div>
+        </div>`;
+      }).join('');
+    }catch(_){
+      list.innerHTML = '<div class="sp-lb-empty">⚠ Bağlantı hatası</div>';
+    }
+  }
+
+  // ── Student select entry & hub routing ────────────────────
+  function openStudentSelect(){
+    selectedClass = null;
+    _spGrades = _loadSpGrades();
+    buildStudentPool();
+    _buildGradeButtons();
+    _updateSchoolDisplay();
+    show('overlay-student-select');
+  }
+
+  function goToHub(){
+    hide('overlay-student-select');
+    window.WordCrushScreens.showScreen('hub-screen');
+  }
+
+  // ── STUDENT SELECT (birebir word_hunt) ────────────────────
+  function buildStudentPool(){
+    selectedPlayers = []; pairs = [];
+    _pairingMode = false; _pairingSource = null;
+    _lastSelected = null; _lastSelectedObj = null; _guestSlotCounter = 100;
+    const pool = document.getElementById('ss-class-pool'); pool.innerHTML = '';
+    if(_teacherMode && selectedClass){
+      selectedClass.students.forEach(s => {
+        const chip = document.createElement('button');
+        chip.className = 'ss-chip';
+        chip.textContent = s.name;
+        chip.dataset.name = s.name;
+        chip.onclick = () => togglePlayer(s, chip);
+        pool.appendChild(chip);
+      });
+    } else {
+      const saved = _loadStudentNames();
+      for(let i = 1; i <= 18; i++){
+        const nm = saved[i-1] || `STUDENT ${i}`;
+        const s = {name: nm, level: null, slot: i};
+        const chip = document.createElement('button');
+        chip.className = 'ss-chip';
+        chip.textContent = nm;
+        chip.dataset.name = nm;
+        chip.dataset.slot = i;
+        chip.onclick = () => togglePlayer(s, chip);
+        pool.appendChild(chip);
+      }
+    }
+    updateSSCount();
+  }
+
+  function togglePlayer(s, chip){
+    if(_pairingMode){
+      if(s === _pairingSource){ cancelPairing(); return; }
+      if(pairs.some(([a,b]) => a === s || b === s)){
+        chip.classList.add('disabled'); setTimeout(() => chip.classList.remove('disabled'), 300); return;
+      }
+      if(!selectedPlayers.find(p => p === s)){
+        selectedPlayers.push(s); chip.classList.add('selected');
+      }
+      createPair(_pairingSource, s);
+      return;
+    }
+    const idx = selectedPlayers.findIndex(p => p === s);
+    if(idx >= 0){
+      const pe = pairs.find(([a,b]) => a === s || b === s);
+      if(pe){
+        const partner = pe[0] === s ? pe[1] : pe[0];
+        breakPair(pe[0].slot, pe[1].slot, null);
+        [s, partner].forEach(p => {
+          const i = selectedPlayers.findIndex(sp => sp === p);
+          if(i >= 0) selectedPlayers.splice(i, 1);
+          const c = document.querySelector(`.ss-chip[data-slot="${p.slot}"]`);
+          if(c) c.classList.remove('selected');
+        });
+        if(_lastSelectedObj === s || _lastSelectedObj === partner){
+          _lastSelected = null; _lastSelectedObj = null;
+        }
+      } else {
+        selectedPlayers.splice(idx, 1);
+        chip.classList.remove('selected');
+        if(_lastSelectedObj === s){ _lastSelected = null; _lastSelectedObj = null; }
+      }
+    } else {
+      selectedPlayers.push(s);
+      chip.classList.add('selected');
+      _lastSelected = s.name;
+      _lastSelectedObj = s;
+    }
+    updateSSCount();
+  }
+
+  function showSSLimitWarning(){
+    const el = document.getElementById('ss-count');
+    el.textContent = 'Maksimum 9 birim! (Çift = 1 birim)';
+    el.className = 'ss-count limit-warn';
+    setTimeout(() => updateSSCount(), 1800);
+  }
+
+  function updateSSCount(){
+    const n = selectedPlayers.length;
+    const pc = pairs.length;
+    const units = n - pc;
+    const el = document.getElementById('ss-count');
+    let txt = n === 0 ? 'Henüz seçilmedi' : `${n} öğrenci seçildi`;
+    if(pc > 0) txt += ` · ${pc} çift`;
+    if(units > 0) txt += ` · ${units} birim`;
+    el.textContent = txt;
+    el.className = 'ss-count' + (n >= 3 ? ' ready' : '');
+    document.getElementById('ss-continue-btn').disabled = (n < 1);
+    _updatePairWithBtn();
+    const rnBtn = document.getElementById('ss-rename-btn');
+    if(rnBtn){
+      const inPair = _lastSelectedObj && pairs.some(([a,b]) => a === _lastSelectedObj || b === _lastSelectedObj);
+      const canRename = !_teacherMode && _lastSelectedObj && !inPair;
+      rnBtn.style.visibility = canRename ? 'visible' : 'hidden';
+      rnBtn.style.pointerEvents = canRename ? '' : 'none';
+    }
+  }
+
+  function _updatePairWithBtn(){
+    const btn = document.getElementById('pair-with-btn'); if(!btn) return;
+    if(_pairingMode){
+      btn.textContent = '✕ İPTAL'; btn.classList.add('active'); btn.disabled = false;
+    } else {
+      btn.textContent = '⚭ PAIR WITH'; btn.classList.remove('active');
+      btn.disabled = !_lastSelectedObj;
+    }
+  }
+
+  function onPairWithBtn(){
+    if(_pairingMode){ cancelPairing(); } else { startPairing(); }
+  }
+
+  function startPairing(){
+    if(!_lastSelectedObj) return;
+    _pairingMode = true; _pairingSource = _lastSelectedObj;
+    const chip = document.querySelector(`.ss-chip[data-slot="${_pairingSource.slot}"]`);
+    if(chip) chip.classList.add('pairing-source');
+    const hint = document.getElementById('ss-pair-hint');
+    if(hint) hint.textContent = `"${_pairingSource.name}" ile eşlenecek öğrenciyi seç`;
+    _updatePairWithBtn();
+  }
+
+  function cancelPairing(){
+    const src = _pairingSource;
+    _pairingMode = false; _pairingSource = null;
+    if(src){
+      const chip = document.querySelector(`.ss-chip[data-slot="${src.slot}"]`);
+      if(chip) chip.classList.remove('pairing-source');
+    }
+    const hint = document.getElementById('ss-pair-hint');
+    if(hint) hint.textContent = '';
+    _updatePairWithBtn();
+  }
+
+  function createPair(s1, s2){
+    pairs.push([s1, s2]);
+    [s1, s2].forEach(s => {
+      const c = document.querySelector(`.ss-chip[data-slot="${s.slot}"]`);
+      if(c){ c.classList.add('paired-hidden'); c.classList.remove('pairing-source'); }
+    });
+    const pool = document.getElementById('ss-class-pool');
+    const pchip = document.createElement('button');
+    pchip.className = 'ss-chip pair-chip selected';
+    pchip.dataset.pair = `${s1.slot}|||${s2.slot}`;
+    pchip.innerHTML = `${s1.name} <span class="ss-pair-amp">&</span> ${s2.name}&nbsp;<button class="ss-pair-x" onclick="breakPair(${s1.slot},${s2.slot},event)">×</button>`;
+    pool.appendChild(pchip);
+    _pairingMode = false; _pairingSource = null;
+    _lastSelected = null; _lastSelectedObj = null;
+    const hint = document.getElementById('ss-pair-hint');
+    if(hint) hint.textContent = '';
+    updateSSCount();
+  }
+
+  function breakPair(slot1, slot2, evt){
+    if(evt) evt.stopPropagation();
+    const idx = pairs.findIndex(([a,b]) =>
+      (a.slot===slot1 && b.slot===slot2) || (a.slot===slot2 && b.slot===slot1));
+    if(idx >= 0) pairs.splice(idx, 1);
+    const pchip = document.querySelector(`.ss-chip.pair-chip[data-pair="${slot1}|||${slot2}"]`) ||
+                  document.querySelector(`.ss-chip.pair-chip[data-pair="${slot2}|||${slot1}"]`);
+    if(pchip) pchip.remove();
+    [slot1, slot2].forEach(slot => {
+      const c = document.querySelector(`.ss-chip[data-slot="${slot}"]`);
+      if(c) c.classList.remove('paired-hidden');
+    });
+    updateSSCount();
+  }
+
+  // ── GUEST STUDENTS (birebir word_hunt) ────────────────────
+  const GS_MAX     = 10;
+  const GS_MAX_LEN = 16;
+  let _gsNames     = [];
+  let _gsActive    = 0;
+  let _gsKbHandler = null;
+
+  function openGuestOverlay(){
+    _gsNames  = Array(GS_MAX).fill('');
+    _gsActive = 0;
+    _buildGuestSlots();
+    _buildGuestKeyboard();
+    show('overlay-guest');
+    gsSelectSlot(0);
+    _gsKbHandler = (e) => {
+      if(document.getElementById('overlay-guest').classList.contains('hidden')) return;
+      if(e.key === 'Backspace'){ e.preventDefault(); gsOnKey('⌫'); }
+      else if(e.key === ' '){ e.preventDefault(); gsOnKey(' '); }
+      else if(e.key === 'Enter' || e.key === 'Tab'){ e.preventDefault(); gsMoveSlot(1); }
+      else if(e.key === 'ArrowRight'){ e.preventDefault(); gsMoveSlot(1); }
+      else if(e.key === 'ArrowLeft'){ e.preventDefault(); gsMoveSlot(-1); }
+      else if(e.key === 'Escape'){ e.preventDefault(); closeGuestOverlay(); }
+      else if(e.key.length === 1 && /[a-zA-ZçÇğĞıİöÖşŞüÜ\-]/.test(e.key)){ gsOnKey(e.key.toUpperCase()); }
+    };
+    document.addEventListener('keydown', _gsKbHandler);
+  }
+
+  function closeGuestOverlay(){
+    hide('overlay-guest');
+    if(_gsKbHandler){ document.removeEventListener('keydown', _gsKbHandler); _gsKbHandler = null; }
+  }
+
+  function _buildGuestSlots(){
+    const wrap = document.getElementById('gs-slots'); wrap.innerHTML = '';
+    for(let i = 0; i < GS_MAX; i++){
+      const slot = document.createElement('div');
+      slot.className = 'gs-slot'; slot.id = `gs-slot-${i}`;
+      slot.onclick = () => gsSelectSlot(i);
+      slot.innerHTML = `<span class="gs-slot-num">${i+1}</span><span class="gs-slot-text empty" id="gs-stext-${i}">—</span>`;
+      wrap.appendChild(slot);
+    }
+  }
+
+  function gsSelectSlot(i){
+    _gsActive = Math.max(0, Math.min(GS_MAX-1, i));
+    document.querySelectorAll('.gs-slot').forEach((s, idx) => s.classList.toggle('active', idx === _gsActive));
+    _gsRenderAllSlots();
+  }
+
+  function gsMoveSlot(dir){ gsSelectSlot(_gsActive + dir); }
+
+  function _gsRenderSlot(i){
+    const el = document.getElementById(`gs-stext-${i}`);
+    if(!el) return;
+    const name = _gsNames[i];
+    if(i === _gsActive){
+      el.innerHTML = (name || '') + '<span class="gs-cursor">|</span>';
+      el.classList.remove('empty');
+    } else {
+      if(name){ el.textContent = name; el.classList.remove('empty'); }
+      else    { el.textContent = '—'; el.classList.add('empty'); }
+    }
+  }
+
+  function _gsRenderAllSlots(){ for(let i = 0; i < GS_MAX; i++) _gsRenderSlot(i); }
+
+  function gsOnKey(k){
+    if(k === '⌫'){
+      _gsNames[_gsActive] = _gsNames[_gsActive].slice(0, -1);
+    } else if(k === ' '){
+      if(_gsNames[_gsActive].length < GS_MAX_LEN) _gsNames[_gsActive] += ' ';
+    } else {
+      if(_gsNames[_gsActive].length < GS_MAX_LEN) _gsNames[_gsActive] += k;
+    }
+    _gsRenderSlot(_gsActive);
+  }
+
+  function _buildGuestKeyboard(){
+    const kb = document.getElementById('gs-keyboard');
+    kb.innerHTML = ''; kb.className = 'plain-kb';
+    const rows = [
+      ['Q','W','E','R','T','Y','U','I','O','P','⌫'],
+      ['A','S','D','F','G','H','J','K','L'],
+      ['Z','X','C','V','B','N','M'],
+      ['Ğ','Ü','Ş','İ','I','Ö','Ç'],
+      [' ']
+    ];
+    rows.forEach(row => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'plain-kb-row';
+      row.forEach(k => {
+        const btn = document.createElement('button');
+        btn.className = 'plain-kb-key';
+        if(k === '⌫'){ btn.classList.add('pkb-wide','pkb-del'); btn.textContent = '⌫'; }
+        else if(k === ' '){ btn.classList.add('pkb-space'); btn.textContent = 'SPACE'; }
+        else{ btn.textContent = k; }
+        btn.addEventListener('click', () => gsOnKey(k));
+        rowEl.appendChild(btn);
+      });
+      kb.appendChild(rowEl);
+    });
+    const navRow = document.createElement('div');
+    navRow.className = 'plain-kb-row';
+    [['← ÖNCEKİ', -1], ['SONRAKİ →', 1]].forEach(([label, dir]) => {
+      const btn = document.createElement('button');
+      btn.className = 'plain-kb-key pkb-nav';
+      btn.textContent = label;
+      btn.onclick = () => gsMoveSlot(dir);
+      navRow.appendChild(btn);
+    });
+    kb.appendChild(navRow);
+  }
+
+  function confirmGuests(){
+    const existing = new Set(selectedPlayers.map(p => p.name.toUpperCase()));
+    const pool = document.getElementById('ss-class-pool');
+    _gsNames.forEach(n => {
+      const name = n.trim().replace(/\s+/g, ' ').toUpperCase();
+      if(!name || existing.has(name)) return;
+      const student = {name, level: null, slot: ++_guestSlotCounter};
+      selectedPlayers.push(student);
+      existing.add(name);
+      const chip = document.createElement('button');
+      chip.className = 'ss-chip gs-chip selected';
+      chip.textContent = name;
+      chip.dataset.name = name;
+      chip.onclick = () => togglePlayer(student, chip);
+      pool.appendChild(chip);
+    });
+    updateSSCount();
+    closeGuestOverlay();
+  }
+
+  // ── RENAME (birebir word_hunt) ─────────────────────────────
+  let _rnTargetName = null;
+  let _rnText       = '';
+  let _rnKbHandler  = null;
+
+  function openRenameOverlay(){
+    if(!_lastSelected) return;
+    _rnTargetName = _lastSelected;
+    _rnText = (_lastSelected.startsWith('STUDENT ') ? '' : _lastSelected);
+    _updateRnDisplay();
+    if(typeof RGBKeyboard !== 'undefined') RGBKeyboard.build('rn-keyboard', _rnOnKey);
+    _rnKbHandler = (e) => {
+      if(document.getElementById('overlay-rename').classList.contains('hidden')) return;
+      if(e.key === 'Escape'){ e.preventDefault(); closeRenameOverlay(); return; }
+      if(e.key === 'Backspace'){ e.preventDefault(); _rnOnKey('⌫'); return; }
+      if(e.key === ' '){ e.preventDefault(); _rnOnKey(' '); return; }
+      if(e.key === 'Enter'){ e.preventDefault(); _rnOnKey('SUBMIT'); return; }
+      if(e.key.length === 1 && /[a-zA-ZçÇğĞıİöÖşŞüÜ\-]/.test(e.key)) _rnOnKey(e.key.toUpperCase());
+    };
+    document.addEventListener('keydown', _rnKbHandler);
+    show('overlay-rename');
+  }
+
+  function closeRenameOverlay(){
+    hide('overlay-rename');
+    if(_rnKbHandler){ document.removeEventListener('keydown', _rnKbHandler); _rnKbHandler = null; }
+  }
+
+  function _rnOnKey(k){
+    if(k === 'SUBMIT'){
+      if(!_rnText.trim()){ if(typeof RGBKeyboard !== 'undefined') RGBKeyboard.setSure(true); return; }
+      _applyRename(); return;
+    }
+    if(typeof RGBKeyboard !== 'undefined') RGBKeyboard.setSure(false);
+    if(k === '⌫'){ _rnText = _rnText.slice(0, -1); }
+    else if(k === ' '){ if(_rnText.length < 20) _rnText += ' '; }
+    else{ if(_rnText.length < 20) _rnText += k; }
+    _updateRnDisplay();
+  }
+
+  function _updateRnDisplay(){
+    const el = document.getElementById('rn-display');
+    if(el) el.textContent = _rnText || '—';
+  }
+
+  function _applyRename(){
+    const newName = _rnText.trim().toUpperCase();
+    if(!newName || !_rnTargetName){ closeRenameOverlay(); return; }
+    if(_isBadName(newName)){ _rnText=''; _updateRnDisplay(); if(typeof RGBKeyboard!=='undefined') RGBKeyboard.setSure(true); return; }
+    const oldName = _rnTargetName;
+    const p = selectedPlayers.find(p => p.name === oldName && p === _lastSelectedObj);
+    if(p) p.name = newName;
+    const chip = _lastSelectedObj
+      ? document.querySelector(`.ss-chip[data-slot="${_lastSelectedObj.slot}"]`)
+      : Array.from(document.querySelectorAll('.ss-chip')).find(c => c.dataset.name === oldName);
+    if(chip){ chip.textContent = newName; chip.dataset.name = newName; }
+    _lastSelected = newName;
+    closeRenameOverlay();
+    updateSSCount();
+    _saveStudentNames();
+  }
+
+  function _saveStudentNames(){
+    const names = Array(18).fill(null);
+    document.querySelectorAll('#ss-class-pool .ss-chip[data-slot]').forEach(c => {
+      const slot = parseInt(c.dataset.slot);
+      if(slot >= 1 && slot <= 18) names[slot-1] = c.dataset.name;
+    });
+    try{ localStorage.setItem('cow_student_names', JSON.stringify(names)); }catch(e){}
+  }
+
+  function _loadStudentNames(){
+    try{ return JSON.parse(localStorage.getItem('cow_student_names')) || []; }
+    catch(e){ return []; }
+  }
+
+  // ── GRADE SELECTION ───────────────────────────────────────
+  let _spGrades = [];
+
+  function _availableGrades(){
+    return window.WordCrushAdapter?.getGrades() || [6, 7, 8];
+  }
+
+  function _loadSpGrades(){
+    const available = _availableGrades();
+    try{
+      const saved = JSON.parse(localStorage.getItem('wc_sp_grades') || '[]');
+      const valid = saved.filter(g => available.includes(g));
+      return valid.length > 0 ? valid : [available[0]];
+    }catch(e){ return [available[0]]; }
+  }
+
+  function _saveSpGrades(){
+    try{ localStorage.setItem('wc_sp_grades', JSON.stringify(_spGrades)); }catch(e){}
+  }
+
+  function _buildGradeButtons(){
+    const available = _availableGrades();
+    const row = document.getElementById('ss-grade-row');
+    if(!row) return;
+    row.innerHTML = '<span class="ss-grade-label">Sınıf:</span>';
+    available.forEach(g => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ss-grade-btn' + (_spGrades.includes(g) ? ' active' : '');
+      btn.textContent = `${g}. Sınıf`;
+      btn.onclick = () => {
+        if(_spGrades.includes(g)){
+          if(_spGrades.length === 1) return;
+          _spGrades = _spGrades.filter(x => x !== g);
+        } else {
+          _spGrades = [..._spGrades, g].sort((a,b) => a - b);
+        }
+        _saveSpGrades();
+        _buildGradeButtons();
+      };
+      row.appendChild(btn);
+    });
+  }
+
+  // ── SP CUSTOM GAME SETTINGS ───────────────────────────────
+  const SP_WORD_COUNTS  = [15, 20, 25, 30, 'endless'];
+  const SP_TIME_OPTIONS = [180, 120, 90, 'endless'];
+  const SP_BASE_STARS   = [200, 400, 650];
+  let _spWordCount = 15;
+  let _spTimeLimit = 90;
+  let _spUnits = new Set();
+  let _spCategories = new Set();
+
+  function _spStarThresholds(wordCount){
+    return SP_BASE_STARS.map(t => Math.round((t * wordCount / 15) / 100) * 100);
+  }
+
+  function _spFormatTime(seconds){
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return s ? `${m}:${String(s).padStart(2,'0')}` : `${m}:00`;
+  }
+
+  function _saveSPSettings(){
+    try{
+      localStorage.setItem('wc_sp_settings', JSON.stringify({
+        wordCount: _spWordCount,
+        timeLimit: _spTimeLimit,
+        units: [..._spUnits],
+        categories: [..._spCategories]
+      }));
+    }catch(e){}
+  }
+
+  function _loadSPSettings(){
+    try{
+      const s = JSON.parse(localStorage.getItem('wc_sp_settings')||'{}');
+      const wordCount = SP_WORD_COUNTS.includes(s.wordCount) ? s.wordCount : 15;
+      const timeLimit = SP_TIME_OPTIONS.includes(s.timeLimit) ? s.timeLimit : 90;
+      return {
+        wordCount,
+        timeLimit,
+        units: Array.isArray(s.units) ? s.units.map(Number) : [],
+        categories: Array.isArray(s.categories) ? s.categories.map(Number) : []
+      };
+    }catch(e){ return {wordCount:15,timeLimit:90,units:[],categories:[]}; }
+  }
+
+  function openSPCustomGame(){
+    const saved = _loadSPSettings();
+    _spWordCount = saved.wordCount;
+    _spTimeLimit = saved.timeLimit;
+    const grades = _spGrades.length > 0 ? _spGrades : _loadSpGrades();
+    const availableUnits = window.WordCrushAdapter.getUnits(grades);
+    const availableCategories = window.WordCrushAdapter.getCategories().map(c => c.unit);
+    _spUnits = new Set(saved.units.filter(unit => availableUnits.includes(unit)));
+    if(!_spUnits.size) _spUnits = new Set(availableUnits);
+    _spCategories = new Set(saved.categories.filter(unit => availableCategories.includes(unit)));
+    _renderSPCustom();
+    show('overlay-sp-custom');
+  }
+
+  function _renderSPCustom(){
+    const wc = document.getElementById('sp-word-counts');
+    wc.innerHTML = '';
+    SP_WORD_COUNTS.forEach(c => {
+      const btn = document.createElement('button');
+      btn.className = 'sp-custom-btn' + (c === _spWordCount ? ' active' : '');
+      btn.textContent = c === 'endless' ? 'ENDLESS' : String(c);
+      btn.onclick = () => { _spWordCount = c; _saveSPSettings(); _renderSPCustom(); };
+      wc.appendChild(btn);
+    });
+    const to = document.getElementById('sp-time-options');
+    to.innerHTML = '';
+    SP_TIME_OPTIONS.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'sp-custom-btn' + (t === _spTimeLimit ? ' active' : '');
+      btn.textContent = t === 'endless' ? 'ENDLESS' : _spFormatTime(t);
+      btn.onclick = () => { _spTimeLimit = t; _saveSPSettings(); _renderSPCustom(); };
+      to.appendChild(btn);
+    });
+    _renderSPFilters();
+    const starCount = _spWordCount === 'endless' ? 30 : _spWordCount;
+    const preview   = document.getElementById('sp-star-preview');
+    if(_spWordCount === 'endless' && _spTimeLimit === 'endless'){
+      preview.textContent = 'ENDLESS PRATİK: YILDIZ YOK';
+    } else {
+      preview.textContent = `YILDIZ HEDEFLERİ: ${_spStarThresholds(starCount).join(' / ')}`;
+    }
+  }
+
+  function _currentSPFilters(){
+    const profile = window.WordCrushProfile.getProfile();
+    const grades = _spGrades.length > 0 ? _spGrades : [Number(profile?.grade) || 6];
+    return { grades, units:[..._spUnits], categories:[..._spCategories] };
+  }
+
+  function _renderSPFilters(){
+    const adapter = window.WordCrushAdapter;
+    const filters = _currentSPFilters();
+    const unitBox = document.getElementById('sp-unit-options');
+    const categoryBox = document.getElementById('sp-category-options');
+    if(!unitBox || !categoryBox || !adapter) return;
+
+    const units = adapter.getUnits(filters.grades);
+    unitBox.innerHTML = '';
+    units.forEach(unit => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sp-custom-btn sp-custom-filter-btn' + (_spUnits.has(unit) ? ' active' : '');
+      btn.innerHTML = `ÜNİTE ${unit}<small>${adapter.countUnitWords(unit, filters.grades)}</small>`;
+      btn.onclick = () => {
+        if(_spUnits.has(unit)){
+          if(_spUnits.size === 1 && _spCategories.size === 0){
+            _setSPCustomWarning('EN AZ BİR ÜNİTE VEYA KATEGORİ SEÇİN');
+            return;
+          }
+          _spUnits.delete(unit);
+        } else {
+          _spUnits.add(unit);
+        }
+        _saveSPSettings();
+        _renderSPCustom();
+      };
+      unitBox.appendChild(btn);
+    });
+
+    const clearUnits = document.getElementById('sp-units-clear');
+    if(clearUnits){
+      clearUnits.disabled = _spUnits.size === 0;
+      clearUnits.style.opacity = _spUnits.size === 0 ? '.45' : '1';
+      clearUnits.style.cursor = _spUnits.size === 0 ? 'default' : 'pointer';
+      clearUnits.onclick = () => {
+        if(_spUnits.size === 0) return;
+        _spUnits.clear();
+        _saveSPSettings();
+        _renderSPCustom();
+      };
+    }
+
+    const categories = adapter.getCategories();
+    categoryBox.innerHTML = '';
+    if(!categories.length){
+      categoryBox.textContent = 'KATEGORİ YOK';
+    }
+    categories.forEach(category => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'sp-custom-btn sp-custom-filter-btn' + (_spCategories.has(category.unit) ? ' active' : '');
+      btn.innerHTML = `${category.icon ? `${category.icon} ` : ''}${category.label}<small>${adapter.countCategoryWords(category.unit, filters.grades)}</small>`;
+      btn.onclick = () => {
+        if(_spCategories.has(category.unit)){
+          _spCategories.delete(category.unit);
+        } else {
+          _spCategories.add(category.unit);
+        }
+        _saveSPSettings();
+        _renderSPCustom();
+      };
+      categoryBox.appendChild(btn);
+    });
+
+    const count = adapter.countPool(_currentSPFilters());
+    const preview = document.getElementById('sp-pool-preview');
+    if(preview) preview.textContent = `${count} KELİME HAZIR`;
+  }
+
+  function _setSPCustomWarning(text){
+    const warning = document.getElementById('sp-custom-warn');
+    if(!warning) return;
+    warning.textContent = text;
+    setTimeout(() => { if(warning.textContent === text) warning.textContent = ''; }, 2200);
+  }
+
+  function _spWordPool(){
+    return window.WordCrushAdapter.buildWordPool(_currentSPFilters());
+  }
+
+  // ── SP QUEUE LOGIC ─────────────────────────────────────────
+  let _scQueue   = [];
+  let _scIdx     = 0;
+  let _scResults = [];
+
+  function startSPQueue(){
+    if(selectedPlayers.length === 0) return;
+    const required = _spWordCount === 'endless' ? 15 : _spWordCount;
+    if(_spWordPool().length < required){
+      _setSPCustomWarning(`BU FİLTRE İÇİN EN AZ ${required} KELİME GEREKLİ`);
+      return;
+    }
+    hide('overlay-sp-custom');
+    _scQueue   = selectedPlayers.slice().sort(() => Math.random() - 0.5);
+    _scIdx     = 0;
+    _scResults = [];
+    _showCurrentStudent();
+  }
+
+  function _showCurrentStudent(){
+    if(_scIdx >= _scQueue.length){
+      _showFinalScores();
+      return;
+    }
+    const p = _scQueue[_scIdx];
+    document.getElementById('sc-student-name').textContent = p.name;
+    document.getElementById('sc-student-pos').textContent  = `${_scIdx + 1} / ${_scQueue.length}`;
+    show('overlay-student-current');
+  }
+
+  function scStartGame(){
+    hide('overlay-student-current');
+    const profile = window.WordCrushProfile.getProfile();
+    if(!profile) return;
+    const starCount       = _spWordCount === 'endless' ? 30 : _spWordCount;
+    const endlessPractice = _spWordCount === 'endless' && _spTimeLimit === 'endless';
+    const thresholds      = endlessPractice ? null : _spStarThresholds(starCount);
+    const pool = _spWordPool();
+    window.WordCrushGame.startGame({
+      words:           pool,
+      profile,
+      runType:         'quick',
+      quickWordTarget: _spWordCount === 'endless' ? null : _spWordCount,
+      gameSeconds:     _spTimeLimit === 'endless' ? null : _spTimeLimit,
+      starThresholds:  thresholds,
+      customGame:      true,
+      practiceMode:    true,
+      endlessWords:    _spWordCount === 'endless',
+      endlessTime:     _spTimeLimit === 'endless',
+      disableStars:    endlessPractice
+    });
+  }
+
+  // ── INTERIM LEADERBOARD ───────────────────────────────────
+  const ALB_SLOT = 56;
+  let _autoLbTimer = null;
+
+  function _showInterimLeaderboard(onDone){
+    const overlay   = document.getElementById('auto-lb');
+    const container = document.getElementById('auto-lb-list');
+
+    const sorted = [..._scResults].sort((a,b) => b.score - a.score).slice(0, 5);
+    container.innerHTML = '';
+    sorted.forEach((r, idx) => {
+      const rClass = idx===0?'r1':idx===1?'r2':idx===2?'r3':'';
+      const row = document.createElement('div');
+      row.className = 'alb-row' + (rClass ? ' '+rClass : '');
+      row.style.top = (idx * ALB_SLOT) + 'px';
+      row.innerHTML =
+        `<div class="alb-rk">${idx+1}</div>` +
+        `<div class="alb-info"><div class="alb-name">${r.name}</div></div>` +
+        `<div class="alb-pts">${r.score}</div>`;
+      container.appendChild(row);
+    });
+    container.style.height = (sorted.length * ALB_SLOT) + 'px';
+
+    overlay.classList.add('show');
+    clearTimeout(_autoLbTimer);
+    _autoLbTimer = setTimeout(() => {
+      overlay.classList.remove('show');
+      setTimeout(onDone, 500);
+    }, 2000);
+  }
+
+  // ── FINAL SCORES ───────────────────────────────────────────
+  function _showFinalScores(){
+    const sorted  = [..._scResults].sort((a,b) => b.score - a.score);
+    const hasBonus = sorted.length > 10;
+    const cups    = {1:'🥇',2:'🥈',3:'🥉'};
+    const mClass  = {1:'fc-1st',2:'fc-2nd',3:'fc-3rd'};
+    const grid    = document.getElementById('go-grid');
+    grid.innerHTML = '';
+    let rank = 1;
+    sorted.forEach((r, i) => {
+      if(i > 0 && r.score < sorted[i-1].score) rank = i + 1;
+      const displayStars = (hasBonus && rank === 1) ? r.stars + 1 : r.stars;
+      const maxSlots     = displayStars > 3 ? 4 : 3;
+      const card = document.createElement('div');
+      card.className = `go-card ${mClass[rank]||''}`;
+      card.style.animationDelay = (i * 55) + 'ms';
+      const cupHtml = cups[rank]
+        ? `<div class="fc-cup">${cups[rank]}</div>`
+        : `<div class="fc-rank-num">${rank}</div>`;
+      const starsHtml = Array.from({length: maxSlots}, (_,si) =>
+        `<span class="${si < displayStars ? 'fc-star-filled' : 'fc-star-empty'}">${si < displayStars ? '★' : '☆'}</span>`
+      ).join('');
+      const bonusBadge = (hasBonus && rank === 1)
+        ? '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;color:#facc15;margin-top:-4px">+1 BONUS ★</div>'
+        : '';
+      card.innerHTML = `${cupHtml}<div class="fc-name">${r.name}</div><div class="fc-stars">${starsHtml}</div>${bonusBadge}<div class="fc-score">${r.score} PTS</div>`;
+      grid.appendChild(card);
+    });
+    const wLabel = _spWordCount === 'endless' ? '∞ KELİME' : `${_spWordCount} KELİME`;
+    const tLabel = _spTimeLimit === 'endless' ? '∞ SÜRE'   : _spFormatTime(_spTimeLimit);
+    document.getElementById('go-subtitle').textContent = `${sorted.length} Öğrenci · ${wLabel} · ${tLabel}`;
+    show('overlay-final-scores');
+  }
+
+  function goToHubFromFinal(){
+    hide('overlay-final-scores');
+    _scQueue = [];
+    window.WordCrushScreens.showScreen('hub-screen');
+  }
+
+  // Class-only adapter: wraps the shared Adventure Run without changing its
+  // single-player flow.
+  let _classAdventure = null;
+  let _classAdventureOriginals = null;
+
+  function _classAdventurePlayerId(player){
+    return String(player?.slot ?? player?.name ?? 'player');
+  }
+
+  function startClassAdventure(){
+    if(!selectedPlayers.length){
+      window.ToastManager?.show('SELECT PLAYERS FIRST');
+      return;
+    }
+    const roster = selectedPlayers.map(player => ({ id: _classAdventurePlayerId(player), name: player.name }));
+    _classAdventure = {
+      active: true,
+      roster,
+      available: roster.map(player => player.id),
+      selectedId: null,
+      activePlayerId: null,
+      bestResults: new Map()
+    };
+    window.AdvRun?.startRun?.();
+  }
+
+  function _classAdventurePlayerById(id){
+    return _classAdventure?.roster.find(player => player.id === id) || null;
+  }
+
+  function _openClassAdventurePlayerSelect(){
+    if(!_classAdventure?.active) return;
+    if(_classAdventure.available.length === 0){
+      _classAdventure.available = _classAdventure.roster.map(player => player.id);
+    }
+    _classAdventure.selectedId = null;
+    _renderClassAdventurePlayerSelect();
+    show('overlay-class-adv-player');
+  }
+
+  function _renderClassAdventurePlayerSelect(){
+    const list = document.getElementById('class-adv-player-list');
+    const sub = document.getElementById('class-adv-picker-sub');
+    const start = document.getElementById('class-adv-start-btn');
+    if(!list || !_classAdventure) return;
+    const available = _classAdventure.available.map(_classAdventurePlayerById).filter(Boolean);
+    list.innerHTML = '';
+    available.forEach(player => {
+      const best = _classAdventure.bestResults.get(player.id);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'class-adv-player-btn' + (_classAdventure.selectedId === player.id ? ' active' : '');
+      button.textContent = player.name;
+      if(best){
+        const detail = document.createElement('small');
+        detail.textContent = `BEST: ${best.stars} STAR / ${best.score} PTS`;
+        button.appendChild(detail);
+      }
+      button.onclick = () => {
+        _classAdventure.selectedId = player.id;
+        _renderClassAdventurePlayerSelect();
+      };
+      list.appendChild(button);
+    });
+    if(sub) sub.textContent = `${available.length} PLAYER${available.length === 1 ? '' : 'S'} IN THE CURRENT POOL`;
+    if(start) start.disabled = !_classAdventure.selectedId;
+  }
+
+  function classAdventureRandomPlayer(){
+    if(!_classAdventure?.available.length) return;
+    const index = Math.floor(Math.random() * _classAdventure.available.length);
+    _classAdventure.selectedId = _classAdventure.available[index];
+    _renderClassAdventurePlayerSelect();
+  }
+
+  function classAdventureCancelPlayer(){
+    hide('overlay-class-adv-player');
+    document.getElementById('adv-preview-overlay')?.classList.add('open');
+  }
+
+  function classAdventureStartNode(){
+    if(!_classAdventure?.selectedId || !_classAdventureOriginals) return;
+    _classAdventure.activePlayerId = _classAdventure.selectedId;
+    hide('overlay-class-adv-player');
+    _classAdventureOriginals.enterNode();
+  }
+
+  function _classAdventureStars(state){
+    if((state?.advEnemyHp ?? 1) > 0) return 0;
+    const matches = Math.max(1, Number(state.matches) || 0);
+    const wrongs = Math.max(0, Number(state.wrongs) || 0);
+    const accuracy = matches / (matches + wrongs);
+    if(wrongs === 0) return 3;
+    if(accuracy >= .8) return 2;
+    return 1;
+  }
+
+  function _recordClassAdventureResult(state){
+    if(!_classAdventure?.active || !_classAdventure.activePlayerId) return;
+    const player = _classAdventurePlayerById(_classAdventure.activePlayerId);
+    if(!player) return;
+    const candidate = {
+      name: player.name,
+      score: Math.max(0, Number(state?.score) || 0),
+      stars: _classAdventureStars(state)
+    };
+    const previous = _classAdventure.bestResults.get(player.id);
+    if(!previous || candidate.stars > previous.stars ||
+      (candidate.stars === previous.stars && candidate.score > previous.score)){
+      _classAdventure.bestResults.set(player.id, candidate);
+    }
+    _classAdventure.available = _classAdventure.available.filter(id => id !== player.id);
+    _classAdventure.activePlayerId = null;
+    if(state?.advNodeType === 'boss' && state.advEnemyHp <= 0){
+      window.setTimeout(_renderClassAdventureFinal, 0);
+    }
+  }
+
+  function _renderClassAdventureFinal(){
+    const panel = document.querySelector('#adv-completed-overlay .adv-completed-panel');
+    const action = panel?.querySelector('.adv-completed-btn');
+    if(!panel || !action || !_classAdventure) return;
+    panel.querySelector('.class-adv-summary')?.remove();
+    const summary = document.createElement('section');
+    summary.className = 'class-adv-summary';
+    summary.innerHTML = '<div class="class-adv-summary-title">CLASS CONTRIBUTIONS</div><div class="class-adv-summary-copy">EVERY GEM MATTERS. THE BOSS FELL THROUGH TEAMWORK.</div>';
+    const results = _classAdventure.roster.map(player => ({ player, result: _classAdventure.bestResults.get(player.id) || null }))
+      .sort((a, b) => {
+        if(!a.result) return 1;
+        if(!b.result) return -1;
+        return b.result.stars - a.result.stars || b.result.score - a.result.score;
+      });
+    results.forEach(({ player, result }) => {
+      const row = document.createElement('div');
+      row.className = 'class-adv-summary-row';
+      const name = document.createElement('span');
+      name.textContent = player.name;
+      const stars = document.createElement('span');
+      const score = document.createElement('span');
+      if(result){
+        stars.textContent = `${result.stars} STAR`;
+        score.textContent = `${result.score} PTS`;
+      } else {
+        stars.textContent = 'NOT PLAYED';
+        stars.className = 'not-played';
+        score.textContent = '-';
+      }
+      row.append(name, stars, score);
+      summary.appendChild(row);
+    });
+    panel.insertBefore(summary, action);
+  }
+
+  function _initClassAdventure(){
+    if(!window.AdvRun || window.AdvRun.__classAdventureWrapped) return;
+    _classAdventureOriginals = {
+      enterNode: window.AdvRun.enterNode,
+      recordResult: window.AdvRun.recordResult,
+      exitRun: window.AdvRun.exitRun,
+      updateHud: window.WordCrushScreens?.updateHud,
+      startGame: window.WordCrushGame?.startGame,
+      showResult: window.WordCrushScreens?.showResult
+    };
+    window.AdvRun.enterNode = () => {
+      if(!_classAdventure?.active) return _classAdventureOriginals.enterNode();
+      const type = document.getElementById('adv-prev-type-label')?.textContent.trim().toUpperCase();
+      if(type === 'SHOP') return _classAdventureOriginals.enterNode();
+      document.getElementById('adv-preview-overlay')?.classList.remove('open');
+      _openClassAdventurePlayerSelect();
+    };
+    window.AdvRun.recordResult = state => {
+      const isClassAdventure = _classAdventure?.active && state?.runType === 'adventure';
+      const profile = window.WordCrushProfile;
+      const addReward = profile?.addAdventureReward;
+      if(isClassAdventure && addReward) profile.addAdventureReward = () => {};
+      try {
+        _classAdventureOriginals.recordResult(state);
+      } finally {
+        if(isClassAdventure && addReward) profile.addAdventureReward = addReward;
+      }
+      _recordClassAdventureResult(state);
+    };
+    window.AdvRun.exitRun = () => {
+      _classAdventure = null;
+      return _classAdventureOriginals.exitRun();
+    };
+    if(_classAdventureOriginals.updateHud){
+      window.WordCrushScreens.updateHud = state => {
+        _classAdventureOriginals.updateHud(state);
+        const playerName = document.getElementById('sp-hud-q');
+        const streak = document.getElementById('sp-hud-streak');
+        const streakLabel = document.getElementById('sp-hud-streak-label');
+        const isClassAdventure = _classAdventure?.active && state?.runType === 'adventure';
+        if(!isClassAdventure){
+          playerName?.classList.remove('class-adv-player-name');
+          if(streakLabel) streakLabel.textContent = 'STREAK';
+          return;
+        }
+        const player = _classAdventurePlayerById(_classAdventure.activePlayerId);
+        if(playerName && player){
+          playerName.textContent = player.name;
+          playerName.classList.add('class-adv-player-name');
+        }
+        const skulls = state.advNodeType === 'boss' ? 3 : state.advNodeType === 'elite' ? 2 : 1;
+        if(streak) streak.textContent = String.fromCodePoint(0x1F480).repeat(skulls);
+        if(streakLabel) streakLabel.textContent = 'ENEMY';
+      };
+    }
+    if(_classAdventureOriginals.startGame){
+      window.WordCrushGame.startGame = options => {
+        if(_classAdventure?.active && options?.runType === 'adventure'){
+          return _classAdventureOriginals.startGame({ ...options, practiceMode: true });
+        }
+        return _classAdventureOriginals.startGame(options);
+      };
+    }
+    if(_classAdventureOriginals.showResult){
+      window.WordCrushScreens.showResult = state => {
+        if(_classAdventure?.active && state?.runType === 'adventure'){
+          window.AdvRun.recordResult(state);
+        }
+        return _classAdventureOriginals.showResult(state);
+      };
+    }
+    window.AdvRun.__classAdventureWrapped = true;
+  }
+
+  // ── MAIN BINDINGS ──────────────────────────────────────────
+  (function bind(){
+    function syncOrientationWarning(){
+      const width  = window.visualViewport?.width  || window.innerWidth  || document.documentElement.clientWidth;
+      const height = window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
+      const isSmall = Math.min(width, height) <= 820;
+      document.body.classList.toggle('needs-landscape', isSmall && height > width);
+    }
+
+    syncOrientationWarning();
+    _initClassAdventure();
+
+    document.getElementById('new-game-btn').addEventListener('click', () => {
+      void enterFullscreen();
+      openStudentSelect();
+    });
+
+    document.getElementById('quick-game-btn').addEventListener('click', () => {
+      openSPCustomGame();
+    });
+
+    document.getElementById('adv-run-btn').addEventListener('click', () => {
+      startClassAdventure();
+    });
+
+    document.getElementById('leaderboard-btn').addEventListener('click', () => {
+      openSPLeaderboard();
+    });
+
+    document.getElementById('settings-btn').addEventListener('click', openWCSettings);
+
+    document.getElementById('result-back-btn').addEventListener('click', () => {
+      const route = window.WordCrushGame?.getLastResultRoute?.();
+      if(route === 'adventure' && window.AdvRun){
+        window.AdvRun.returnToMap(); return;
+      }
+      if(_scQueue.length > 0){
+        // Skoru ve yıldızları kaydet
+        const score      = parseInt(document.getElementById('final-score').textContent) || 0;
+        const starCount  = _spWordCount === 'endless' ? 30 : _spWordCount;
+        const ep         = _spWordCount === 'endless' && _spTimeLimit === 'endless';
+        const thresholds = ep ? null : _spStarThresholds(starCount);
+        const stars      = thresholds ? (window.WordCrushCampaign?.starsForScore?.(score, thresholds) ?? 0) : 0;
+        const playerName = _scQueue[_scIdx].name;
+        _scResults.push({ name: playerName, score, stars });
+        _submitSPScore(playerName, score, stars);
+        _scIdx++;
+        if(_scIdx < _scQueue.length){
+          // Sırada daha öğrenci var → LB'yi 2 sn göster, sonra davet et
+          _showInterimLeaderboard(() => _showCurrentStudent());
+        } else {
+          // Son öğrenci bitti → direkt final
+          _showFinalScores();
+        }
+        return;
+      }
+      window.WordCrushScreens.showScreen('hub-screen');
+    });
+
+    document.getElementById('mute-btn')?.addEventListener('click', toggleMute);
+    document.getElementById('menu-mute-btn')?.addEventListener('click', toggleMute);
+    document.getElementById('lite-btn')?.addEventListener('click', toggleLite);
+    document.getElementById('menu-lite-btn')?.addEventListener('click', toggleLite);
+    document.getElementById('fs-btn')?.addEventListener('click', toggleFullscreen);
+    document.getElementById('menu-fs-btn')?.addEventListener('click', toggleFullscreen);
+    document.getElementById('daily-claim-btn')?.addEventListener('click', () => {
+      window.WordCrushDaily.claimDailyReward();
+    });
+
+    const volSlider = document.getElementById('wc-music-vol-slider');
+    if(volSlider){
+      volSlider.addEventListener('input', () => {
+        const v = Number(volSlider.value);
+        window.WordCrushAudio?.setMusicVolume(v);
+        document.getElementById('wc-music-vol-val').textContent = v;
+        document.getElementById('wc-music-mute-badge').style.display = v === 0 ? '' : 'none';
+      });
+    }
+
+    window.addEventListener('load', syncOrientationWarning);
+    window.addEventListener('resize', syncOrientationWarning);
+    window.addEventListener('orientationchange', () => setTimeout(syncOrientationWarning, 80));
+    window.visualViewport?.addEventListener('resize', syncOrientationWarning);
+
+    document.addEventListener('pointerdown', function startMusicOnce(){
+      window.WordCrushAudio?.startMusic?.();
+      document.removeEventListener('pointerdown', startMusicOnce);
+    });
+
+    window.WordCrushFirebase?.ensureUUID();
+  })();
+
+  window.wcSetLite = function(on){
+    document.body.classList.toggle('lite-mode', on);
+    document.getElementById('wc-lite-on-btn')?.classList.toggle('active', on);
+    document.getElementById('wc-lite-off-btn')?.classList.toggle('active', !on);
+    ['lite-btn','menu-lite-btn'].forEach(id => {
+      document.getElementById(id)?.classList.toggle('active', on);
+    });
+  };
+
+  function toggleLite(){
+    document.body.classList.toggle('lite-mode');
+    const active = document.body.classList.contains('lite-mode');
+    ['lite-btn','menu-lite-btn'].forEach(id => {
+      document.getElementById(id)?.classList.toggle('active', active);
+    });
+    window.WordCrushScreens.setMessage(active ? 'Lite mode on.' : 'Lite mode off.');
+  }
+
+  function toggleMute(){
+    if(!window.WordCrushAudio){ window.WordCrushScreens.setMessage('Sound system is not ready.'); return; }
+    const muted = window.WordCrushAudio.toggleMute();
+    ['mute-btn','menu-mute-btn'].forEach(id => {
+      const btn = document.getElementById(id);
+      if(!btn) return;
+      btn.textContent = muted ? '🔇' : '🔊';
+      btn.classList.toggle('muted', muted);
+    });
+    window.WordCrushScreens.setMessage(muted ? 'Sound muted.' : 'Sound on.');
+  }
+
+  async function toggleFullscreen(){
+    if(document.fullscreenElement){ await document.exitFullscreen(); }
+    else { await document.documentElement.requestFullscreen(); }
+  }
+
+  async function enterFullscreen(){
+    if(document.fullscreenElement || !document.documentElement.requestFullscreen) return;
+    try{ await document.documentElement.requestFullscreen(); }catch(_){}
+  }
+
+  function openWCSettings(){
+    const vol    = window.WordCrushAudio?.getMusicVolume() ?? 30;
+    const slider = document.getElementById('wc-music-vol-slider');
+    const valEl  = document.getElementById('wc-music-vol-val');
+    const badge  = document.getElementById('wc-music-mute-badge');
+    if(slider) slider.value = vol;
+    if(valEl)  valEl.textContent = vol;
+    if(badge)  badge.style.display = vol === 0 ? '' : 'none';
+    const isLite = document.body.classList.contains('lite-mode');
+    document.getElementById('wc-lite-on-btn')?.classList.toggle('active', isLite);
+    document.getElementById('wc-lite-off-btn')?.classList.toggle('active', !isLite);
+    window.WordCrushScreens.showScreen('settings-screen');
+  }
+  </script>
+</body>
+</html>

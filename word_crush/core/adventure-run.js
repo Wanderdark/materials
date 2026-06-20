@@ -42,8 +42,15 @@
     const grade = enc.units[0]?.grade || (Number(window.WordCrushProfile?.getProfile?.()?.grade) || 6);
     const units = enc.units.map(u => u.unit);
     const cat = _run?.nodeCategories?.[nodeId];
-    const categories = cat ? [cat.unit] : [];
-    return window.WordCrushAdapter.buildWordPool({ grades: [grade], units, categories });
+
+    if (cat) {
+      const catPool  = window.WordCrushAdapter.buildWordPool({ grades: [grade], units: [], categories: [cat.unit] });
+      const unitPool = window.WordCrushAdapter.buildWordPool({ grades: [grade], units, categories: [] });
+      const usedIds  = new Set(catPool.map(w => w.id));
+      return [...catPool, ...unitPool.filter(w => !usedIds.has(w.id))];
+    }
+
+    return window.WordCrushAdapter.buildWordPool({ grades: [grade], units, categories: [] });
   }
 
   function _selectFirstWave(pool, nodeType) {

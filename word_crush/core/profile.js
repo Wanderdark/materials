@@ -2,27 +2,6 @@
   const SAVE_KEY = "word_crush_sp_v1";
   const AVATAR_BASE = "../word_overlord/";
   const AVATARS = ["Blaze", "Frost", "Grace", "Louis", "Mara", "Nova", "Orion", "Pixie", "Rex", "Terra"];
-  const BAD_NAMES = [
-    "FUCK", "SHIT", "BITCH", "CUNT", "COCK", "DICK", "PUSSY", "NIGGER", "FAGGOT", "WHORE",
-    "SLUT", "PORN", "SEX", "NUDE", "NAKED", "PENIS", "VAGINA", "RAPE", "OROSPU", "YARRAK",
-    "SIK", "SIKTIR", "AMK", "AQ", "GOT", "AMCIK", "BOK", "IBNE", "GAVAT", "KAHPE",
-    "SEREFSIZ", "PIC", "OC", "TOP", "MEME"
-  ];
-  const SHORT_BAD_TOKENS = ["AM", "OC", "AQ", "MK", "SG"];
-  const COMPACT_BAD_PATTERNS = [
-    "AMBITI",
-    "AMYALAMA",
-    "AMYALA",
-    "AMGOT",
-    "AMK",
-    "AMCIK",
-    "AMINA",
-    "AMINI",
-    "AMINAK",
-    "AMINAKOY",
-    "AMINAKOYIM"
-  ];
-
   let save = load();
   let draft = save.profile ? { ...save.profile } : { name: "", avatar: "Blaze", grade: 6 };
 
@@ -165,7 +144,8 @@
       return;
     }
 
-    if (isBadProfileName(draft.name)) {
+    const validation = window.ProfanityFilter?.validate(draft.name, { kind: "player", maxLength: 16 });
+    if (!validation?.valid) {
       setWarning(warning, "INAPPROPRIATE NAME - CHOOSE ANOTHER");
       return;
     }
@@ -240,7 +220,7 @@
   }
 
   function recordRun(gameState) {
-    if (!save.profile || !gameState || gameState.profileRecorded) {
+    if (!save.profile || !gameState || gameState.profileRecorded || gameState.practiceMode) {
       return;
     }
 
@@ -417,22 +397,7 @@
     return ranks.find(r => score >= r.threshold) || ranks[ranks.length - 1];
   }
 
-  function isBadProfileName(raw) {
-    const normalizedWithSpaces = normalizeProfileName(raw, true);
-    const compact = normalizeProfileName(raw, false);
-    const tokens = normalizedWithSpaces.split(" ").filter(Boolean);
-
-    if (BAD_NAMES.some((word) => compact.includes(word))) {
-      return true;
-    }
-
-    if (COMPACT_BAD_PATTERNS.some((word) => compact.includes(word))) {
-      return true;
-    }
-
-    return tokens.some((token) => SHORT_BAD_TOKENS.includes(token));
-  }
-
+  /* Legacy filter implementation retained only for source-history context.
   function normalizeProfileName(raw, keepSpaces) {
     const value = String(raw || "")
       .toUpperCase()
@@ -483,6 +448,8 @@
 
     return BAD_NAMES.some((word) => normalized.includes(word));
   }
+
+  */
 
   function playerScore() {
     return (Number((save.stats || {}).totalScore) || 0) + (Number(save.achievementScore) || 0);

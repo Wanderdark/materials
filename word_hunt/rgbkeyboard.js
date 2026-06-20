@@ -154,11 +154,13 @@ const RGBKeyboard = (() => {
     const rows = [
       ['Q','W','E','R','T','Y','U','I','O','P','⌫'],
       ['A','S','D','F','G','H','J','K','L','SUBMIT'],
-      ['Z','X','C','V','B','N','M',' '],
+      ['Z','X','C','V','B','N','M'],
+      ['Ğ','Ü','Ş','İ','I','Ö','Ç'],
+      [' '],
     ];
 
     // Visual left-edge col offset per row (simulates staggered physical keyboard)
-    const rowColOffset = [0, 0.5, 1.0];
+    const rowColOffset = [0, 0.5, 1.0, 2.0, 0];
 
     // Wave period MUST match @keyframes rgbKbWave duration (3s)
     const wavePeriod = 3;

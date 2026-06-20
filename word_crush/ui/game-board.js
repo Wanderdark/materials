@@ -1,4 +1,6 @@
 (function () {
+  const _fitCache = new Map();
+
   function render(state, handlers) {
     renderEnglishBoard(state, handlers);
     renderTurkishBoard(state, handlers);
@@ -79,6 +81,15 @@
     });
   }
 
+  function updateSelection(state) {
+    document.querySelectorAll("#english-board [data-tile-id]").forEach((button) => {
+      button.classList.toggle("selected", button.dataset.tileId === state.selectedEnglishId);
+    });
+    document.querySelectorAll("#turkish-board [data-word-id]").forEach((button) => {
+      button.classList.toggle("selected", button.dataset.wordId === state.selectedTurkishId);
+    });
+  }
+
   function appendTurkishCardContent(button, word, showPicture) {
     if (!showPicture || !word.img) {
       button.appendChild(createLabel(word.tr));
@@ -138,33 +149,43 @@
   }
 
   function fitBoardLabels() {
+    const vw = window.innerWidth;
+
     document.querySelectorAll(".gem .fit-label, .paper-card .fit-label").forEach((label) => {
       const host = label.closest(".gem, .paper-card");
-      if (!host) {
+      if (!host) return;
+
+      const isGem = host.classList.contains("gem");
+      const cacheKey = `${label.textContent}::${isGem ? "g" : "c"}::${vw}`;
+
+      if (_fitCache.has(cacheKey)) {
+        const { size, overflow } = _fitCache.get(cacheKey);
+        host.style.fontSize = `${size}px`;
+        label.style.lineHeight = "1.02";
+        label.classList.toggle("text-overflow-guard", overflow);
         return;
       }
 
-      const isGem = host.classList.contains("gem");
       const computed = window.getComputedStyle(host);
       const baseSize = Number.parseFloat(computed.fontSize) || (isGem ? 42 : 38);
       const startSize = label.classList.contains("long-single-word") ? Math.round(baseSize * 0.72) : baseSize;
       const minSize = isGem ? 12 : 10;
       const lineRatio = 1.02;
-      const singleLine = true;
 
       host.style.fontSize = `${startSize}px`;
       label.style.lineHeight = String(lineRatio);
       label.classList.remove("text-overflow-guard");
 
       let size = startSize;
-      while (size > minSize && !(singleLine ? fitsOneLine(label, lineRatio) : fitsTwoLines(label, lineRatio))) {
+      while (size > minSize && !fitsOneLine(label, lineRatio)) {
         size -= 1.5;
         host.style.fontSize = `${size}px`;
       }
 
-      if (!(singleLine ? fitsOneLine(label, lineRatio) : fitsTwoLines(label, lineRatio))) {
-        label.classList.add("text-overflow-guard");
-      }
+      const overflow = !fitsOneLine(label, lineRatio);
+      if (overflow) label.classList.add("text-overflow-guard");
+
+      _fitCache.set(cacheKey, { size, overflow });
     });
   }
 
@@ -201,6 +222,7 @@
     markCrushing,
     markEnglishCrushing,
     markTurkishCrushing,
+    updateSelection,
     boardCenter
   };
 })();

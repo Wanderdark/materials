@@ -24,7 +24,9 @@
     nextTileId = 1;
     timeWarpTick = false;
     state = State.createInitialState();
+    state.liteModeAtStart = isLiteMode();
     const sourceWords = normalizeSourceWords(options.words || window.WordCrushAdapter?.buildWordPool?.() || window.WORD_CRUSH_WORDS || []);
+    state.sourceWords = [...sourceWords];
     state.wordBank = shuffle([...sourceWords]);
     state.isRunning = true;
     state.runType     = options.runType || "quick";
@@ -37,7 +39,12 @@
     state.advEnemyMaxHp = options.advEnemyHp  != null ? options.advEnemyHp  : null;
     state.advWordPool   = options.advWordPool  || null;
     state.colors        = sanitizeColors(options.gemColors);
-    if (options.gameSeconds != null) state.secondsLeft = Number(options.gameSeconds) || state.secondsLeft;
+    state.endlessWords = Boolean(options.endlessWords);
+    state.endlessTime = Boolean(options.endlessTime);
+    state.practiceMode = Boolean(options.practiceMode);
+    state.disableStars = Boolean(options.disableStars);
+    if (state.endlessTime) state.secondsLeft = null;
+    else if (options.gameSeconds != null) state.secondsLeft = Number(options.gameSeconds) || state.secondsLeft;
     state.advUsedIds    = new Set();
     if (options.advTimeOverride != null) state.secondsLeft = options.advTimeOverride;
     else if (options.advTimeMod) state.secondsLeft = Math.max(30, state.secondsLeft + options.advTimeMod);
@@ -48,9 +55,12 @@
     state.campaignStarThresholds = options.campaignStarThresholds || null;
     state.starThresholds = options.starThresholds || options.campaignStarThresholds || null;
     state.customGame = Boolean(options.customGame);
+    state.customTimeSeconds = state.customGame && !state.endlessTime ? state.secondsLeft : null;
     state.levelNumber = options.levelNumber || 1;
-    state.totalWordTarget = Math.max(State.BOARD_SIZE, Number(options.quickWordTarget) || State.BOARD_SIZE);
-    if (state.runType === "quick" && state.totalWordTarget > State.BOARD_SIZE) {
+    state.totalWordTarget = state.endlessWords
+      ? null
+      : Math.max(State.BOARD_SIZE, Number(options.quickWordTarget) || State.BOARD_SIZE);
+    if (state.runType === "quick" && !state.endlessWords && state.totalWordTarget > State.BOARD_SIZE) {
       const selectedWords = drawWords(state.totalWordTarget, new Set());
       state.activeWords = selectedWords.slice(0, State.BOARD_SIZE);
       state.quickRefillQueue = selectedWords.slice(State.BOARD_SIZE);
@@ -62,7 +72,9 @@
     }
     state.englishGrid = buildInitialEnglishGrid(state.activeWords);
     state.turkishCards = shuffle(state.activeWords.map((word) => ({ word })));
-    state.boardSize = state.runType === "quick" ? state.totalWordTarget : state.turkishCards.length;
+    state.boardSize = state.runType === "quick"
+      ? (state.totalWordTarget || State.BOARD_SIZE)
+      : state.turkishCards.length;
     applyIntroMotion();
 
     if (options.profile && window.WordCrushProfile) {
@@ -87,7 +99,7 @@
   }
 
   function endGame({ awardTimeBonus = true } = {}) {
-    if (awardTimeBonus && state.isRunning && state.timeBonus === 0 && state.turkishCards.length > 0) {
+    if (awardTimeBonus && !state.endlessTime && state.isRunning && state.timeBonus === 0 && state.turkishCards.length > 0) {
       state.timeBonus = state.secondsLeft * State.TIME_BONUS_PER_SECOND;
       state.score += state.timeBonus;
     }
@@ -100,20 +112,22 @@
     if (_bc2) { _bc2.classList.remove('active'); _bc2.onclick = null; }
     stopTimer();
     QuickBonuses.stop();
-    if (window.WordCrushProfile) {
-      window.WordCrushProfile.recordRun(state);
-    }
-    if (state.runType === 'quick' && (state.turkishCards || []).length === 0) {
-      window.WordCrushFirebase?.submitScore();
-    }
-    if (window.WordCrushCampaign) {
-      window.WordCrushCampaign.recordResult(state);
-    }
-    if (window.WordCrushDaily) {
-      window.WordCrushDaily.recordRun(state);
-    }
-    if (window.AdvRun) {
-      window.AdvRun.recordResult(state);
+    if (!state.practiceMode) {
+      if (window.WordCrushProfile) {
+        window.WordCrushProfile.recordRun(state);
+      }
+      if (state.runType === 'quick' && (state.turkishCards || []).length === 0) {
+        window.WordCrushFirebase?.submitScore();
+      }
+      if (window.WordCrushCampaign) {
+        window.WordCrushCampaign.recordResult(state);
+      }
+      if (window.WordCrushDaily) {
+        window.WordCrushDaily.recordRun(state);
+      }
+      if (window.AdvRun) {
+        window.AdvRun.recordResult(state);
+      }
     }
     lastResultRoute = state.runType === "campaign" ? "campaign"
                     : state.runType === "adventure" ? "adventure"
@@ -219,7 +233,7 @@
     Screens.setMessage(state.boardBonus ? `NO MISTAKE BONUS +${state.boardBonus}` : "BOARD COMPLETED");
     Screens.updateHud(state);
     if (state.boardBonus) {
-      Screens.floatScore(`+${state.boardBonus} NO MISTAKE`, ...centerPairArgs());
+      showScoreFloat(`+${state.boardBonus} NO MISTAKE`);
     }
     if (window.ToastManager) {
       window.ToastManager.show(state.boardBonus ? `NO MISTAKE BONUS +${state.boardBonus}` : "BOARD COMPLETED");
@@ -227,14 +241,17 @@
 
     await sleep(900);
 
-    state.timeBonus = state.secondsLeft * State.TIME_BONUS_PER_SECOND;
-    state.score += state.timeBonus;
-    Screens.setMessage(`TIME LEFT BONUS +${state.timeBonus}`);
-    Screens.updateHud(state);
-    Screens.floatScore(`+${state.timeBonus} TIME`, ...centerPairArgs());
-
-    await sleep(2000);
-    endGame();
+    if (!state.endlessTime) {
+      state.timeBonus = state.secondsLeft * State.TIME_BONUS_PER_SECOND;
+      state.score += state.timeBonus;
+      Screens.setMessage(`TIME LEFT BONUS +${state.timeBonus}`);
+      Screens.updateHud(state);
+      showScoreFloat(`+${state.timeBonus} TIME`);
+      await sleep(2000);
+    } else {
+      await sleep(1200);
+    }
+    endGame({ awardTimeBonus: false });
   }
 
   function onEnglish(tileId) {
@@ -243,7 +260,7 @@
     }
 
     state.selectedEnglishId = state.selectedEnglishId === tileId ? null : tileId;
-    render();
+    renderSelection();
     tryResolveSelection();
   }
 
@@ -258,7 +275,7 @@
     }
 
     state.selectedTurkishId = state.selectedTurkishId === wordId ? null : wordId;
-    render();
+    renderSelection();
     tryResolveSelection();
   }
 
@@ -294,16 +311,16 @@
     Audio.play("gemShatter");
     Board.markEnglishCrushing([tile.word.id]);
     Board.markTurkishCrushing([tile.word.id]);
-    Screens.floatScore(`+${matchPoints}`, ...centerPairArgs());
+    showScoreFloat(`+${matchPoints}`);
 
-    await sleep(760);
+    await sleep(crushDelay());
     removeMatchedWord(tile.word.id);
     releasePreviousLock(null);
     clearSelection();
     collapseColumns();
     refillEnglishFromTurkishCards();
     render();
-    await sleep(520);
+    await sleep(refillDelay());
 
     if (state.runType === 'adventure' && state.advEnemyHp !== null) {
       if (await _advHpHit(1)) return;
@@ -317,7 +334,15 @@
       }
     }
 
-    if (state.runType === "quick" && state.quickRefillQueue?.length > 0) {
+    if (state.runType === "quick" && state.endlessWords) {
+      const newWord = drawEndlessQuickWord();
+      if (newWord) {
+        state.turkishCards.push({ word: newWord, isNew: true });
+        refillEnglishFromTurkishCards();
+        render();
+        state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      }
+    } else if (state.runType === "quick" && state.quickRefillQueue?.length > 0) {
       const newWord = state.quickRefillQueue.shift();
       state.turkishCards.push({ word: newWord, isNew: true });
       refillEnglishFromTurkishCards();
@@ -380,14 +405,14 @@
       Screens.setMessage(`COMBO x${chain} +${points}`);
       Audio.play("combo");
       Board.markEnglishCrushing(wordIds);
-      Screens.floatScore(`COMBO +${points}`, ...centerPairArgs());
+      showScoreFloat(`COMBO +${points}`);
 
-      await sleep(760);
+      await sleep(crushDelay());
       removeEnglishWords(wordIds);
       collapseColumns();
       refillEnglishFromTurkishCards();
       render();
-      await sleep(520);
+      await sleep(refillDelay());
 
       if (state.runType === 'adventure' && state.advEnemyHp !== null) {
         if (await _advHpHit(wordIds.length)) return;
@@ -676,6 +701,14 @@
     return document.body.classList.contains("lite-mode");
   }
 
+  function crushDelay() {
+    return isLiteMode() ? 80 : 760;
+  }
+
+  function refillDelay() {
+    return isLiteMode() ? 60 : 520;
+  }
+
   function chooseControlledColor(index, options = {}) {
     if (index === null) {
       return chooseWeightedColor(currentColors());
@@ -819,7 +852,7 @@
     Audio.playRumble?.();
     Board.markEnglishCrushing(blackWordIds);
     Screens.setMessage("BLACK COMBO - GAME OVER!");
-    Screens.floatScore("COMBO -1000000", ...centerPairArgs(), {
+    showScoreFloat("COMBO -1000000", {
       className: "black-combo-float",
       duration: 3000
     });
@@ -908,6 +941,39 @@
     return word;
   }
 
+  function drawEndlessQuickWord() {
+    const activeIds = new Set([
+      ...state.turkishCards.map((card) => card.word.id),
+      ...state.englishGrid.filter(Boolean).map((tile) => tile.word.id)
+    ]);
+    const activeTerms = activeConflictTerms();
+    let available = state.wordBank.filter((word) => (
+      !activeIds.has(word.id) && !conflictsWith(word, activeTerms)
+    ));
+
+    if (!available.length && !state.endlessTime) {
+      state.wordBank = shuffle([...state.sourceWords]);
+      available = state.wordBank.filter((word) => (
+        !activeIds.has(word.id) && !conflictsWith(word, activeTerms)
+      ));
+    }
+
+    if (!available.length) {
+      available = state.wordBank.filter((word) => !activeIds.has(word.id));
+    }
+
+    if (!available.length && !state.endlessTime) {
+      state.wordBank = shuffle([...state.sourceWords]);
+      available = state.wordBank.filter((word) => !activeIds.has(word.id));
+    }
+
+    if (!available.length) return null;
+
+    const word = randomItem(available);
+    state.wordBank = state.wordBank.filter((item) => item.id !== word.id);
+    return word;
+  }
+
   function clearSelection() {
     state.selectedEnglishId = null;
     state.selectedTurkishId = null;
@@ -954,6 +1020,7 @@
 
   function startTimer() {
     Screens.updateHud(state);
+    if (state.endlessTime) return;
     timerId = window.setInterval(() => {
       if (!state.isRunning || state.isPaused || state.isResolving) {
         return;
@@ -992,6 +1059,14 @@
     clearMotionFlags();
   }
 
+  function renderSelection() {
+    if (isLiteMode()) {
+      Board.updateSelection(state);
+      return;
+    }
+    render();
+  }
+
   function normalizeGravity() {
     if (!state.englishGrid.length) {
       return;
@@ -1015,6 +1090,13 @@
   function centerPairArgs() {
     const center = Board.boardCenter();
     return [center.x, center.y];
+  }
+
+  function showScoreFloat(text, options = {}) {
+    if (isLiteMode() && options.className !== "black-combo-float") {
+      return;
+    }
+    Screens.floatScore(text, ...centerPairArgs(), options);
   }
 
   function toIndex(row, col) {
@@ -1170,7 +1252,7 @@
     Board.markEnglishCrushing(wordIds);
     Board.markTurkishCrushing(wordIds);
     Audio.play('combo');
-    await sleep(760);
+    await sleep(crushDelay());
 
     removeEnglishWords(wordIds);
     state.turkishCards = state.turkishCards.filter(c => !wordIds.includes(c.word.id));
@@ -1185,7 +1267,7 @@
     render();
     state.turkishCards.forEach(c => { c.isNew = false; });
 
-    await sleep(400);
+    await sleep(isLiteMode() ? 60 : 400);
     if (await _advHpHit(wordIds.length)) return;
 
     state.isResolving = false;

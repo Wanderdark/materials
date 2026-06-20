@@ -789,6 +789,7 @@ body.lite-mode .final-trophy{animation:none!important}
   </div>
 </div>
 
+<script src="../modules/profanity-filter.js?v=4"></script>
 <script src="../modules/rgbkeyboard.js"></script>
 <script src="../word_master/questions.js"></script>
 <script src="words.js"></script>
@@ -1860,8 +1861,7 @@ function spRenderAvatarGrid(){
 }
 function spPickAvatar(a){spDraft.avatar=a;spRenderAvatarGrid();}
 
-const _SP_BAD=['FUCK','SHIT','BITCH','CUNT','COCK','DICK','PUSSY','ASS','NIGGER','FAGGOT','WHORE','SLUT','PORN','SEX','NUDE','NAKED','PENIS','VAGINA','BOOB','TITS','RAPE','MOTHERFUCKER','MOTHERFUCK','MF','MFKR','BASTARD','SONOFABITCH','SOB','CUM','CUMSHOT','BLOWJOB','BJ','HANDJOB','HJ','WANKER','TWAT','PRICK','DOUCHE','DOUCHEBAG','JACKASS','ASSHOLE','RETARD','FAG','FAGOT','FAGG','HORNY','MILF','BDSM','XXX','HENTAI','ERECT','BONER','OROSPU','OROSPUCOCUGU','OROSB','YARRAK','YARRAM','YARRAGIM','SIK','SIKIM','SIKERIM','SIKTIM','SIKTIR','SIKTIRGI','AMINA','AMK','AMKK','AMQ','AQ','AQQ','MQ','MK','SG','SGT','GOTVEREN','GOTLEK','GOTOGLANI','GOTLALESI','GOTU','GOTUNU','AMCIK','AMCIGI','BOK','BOKTAN','OTUZBIR','DALYARAK','SAKSO','SAKSOCU','YALAMA','IBNE','GAVAT','KAHPE','KALTAK','DOSEK','SURUK','FAHISE','FUHUS','PEZEVENK','PEZO','SEREFSIZ','SRFSZ','ANANI','ANASINI','AVRADINI','AVRAD','YAVSAK','PIC','PICKURUSU','OC','TOP','YOSMA','ZINA','MEME','DURZU','DALLAMA','KEZBAN'];
-function spBadName(raw){const n=raw.toUpperCase().replace(/4/g,'A').replace(/3/g,'E').replace(/0/g,'O').replace(/1/g,'I').replace(/5/g,'S').replace(/7/g,'T').replace(/\$/g,'S').replace(/\@/g,'A').replace(/İ/g,'I').replace(/Ş/g,'S').replace(/Ğ/g,'G').replace(/Ü/g,'U').replace(/Ö/g,'O').replace(/Ç/g,'C').replace(/[^A-Z]/g,'');return _SP_BAD.some(w=>n.includes(w));}
+function spBadName(raw){return window.ProfanityFilter?.isBlocked(raw) ?? true;}
 
 function spConfirmNew(){
   const inp=document.getElementById('sp-char-name');
