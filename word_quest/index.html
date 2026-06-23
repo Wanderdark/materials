@@ -1319,7 +1319,7 @@ body.lite .grid-shatter-layer{display:none}
 </div>
 
 <!-- ── SCRIPTS ── -->
-<script src="words.js"></script>
+<script src="../word_rivals/words.js"></script>
 <script src="names.js" onerror="void 0"></script>
 <script src="avatars.js"></script>
 <script src="enemies.js"></script>
@@ -3425,7 +3425,7 @@ async function _startRound() {
   const q = _pickQuestion();
   if (!await _buildGrid(q)) return;
   _spClickLocked = false;
-  const word = q[0];
+  const word = q[0].toLowerCase();
   _currentWord = word;
   const ww = document.getElementById('cur-word');
   if (_listeningMode) {

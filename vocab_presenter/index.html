@@ -49,6 +49,8 @@
             <span>Select a grade and unit to continue.</span>
           </div>
           <div class="setup-actions">
+            <button id="viewCategoriesButton" class="category-view-button" disabled>VIEW CATEGORIES</button>
+            <button id="exercisesButton" class="secondary-button" disabled>EXERCISES</button>
             <button id="startQuizButton" class="secondary-button" disabled>START 20 WORD QUIZ</button>
             <button id="startButton" class="primary-button" disabled>Start Presentation <span>→</span></button>
           </div>
@@ -57,12 +59,215 @@
       <p class="keyboard-tip">Use the <kbd>←</kbd> <kbd>→</kbd> keys during the presentation.</p>
     </section>
 
+    <div id="exercisesModal" class="exercise-modal hidden" role="dialog" aria-modal="true" aria-label="Exercises">
+      <div class="exercise-menu">
+        <button id="closeExercisesButton" class="icon-button exercise-close" aria-label="Close exercises">×</button>
+        <p class="eyebrow">EXERCISES</p>
+        <h2>Choose an exercise</h2>
+        <button id="startAnagramButton" class="exercise-choice">
+          <span>01</span>
+          <strong>ANAGRAM</strong>
+          <small>Arrange the letters to match the image.</small>
+        </button>
+        <button id="startMatchButton" class="exercise-choice hidden">
+          <span>02</span>
+          <strong>MATCH PICTURES</strong>
+          <small>Match each word to its hidden image.</small>
+        </button>
+        <button id="startSortButton" class="exercise-choice hidden">
+          <span>03</span>
+          <strong>SORT IT!</strong>
+          <small>Sort the words into their categories.</small>
+        </button>
+        <button id="startMemoryButton" class="exercise-choice">
+          <span>04</span>
+          <strong>WATCH &amp; REMEMBER</strong>
+          <small>Memorize 5 words, then find them from 20.</small>
+        </button>
+      </div>
+    </div>
+
+    <div id="categorySummaryModal" class="exercise-modal category-summary-modal hidden" role="dialog" aria-modal="true" aria-label="Unit categories">
+      <div class="exercise-menu category-summary-menu">
+        <button id="closeCategorySummaryButton" class="icon-button exercise-close" aria-label="Close category list">×</button>
+        <p class="eyebrow">UNIT OVERVIEW</p>
+        <h2 id="categorySummaryTitle">Categories</h2>
+        <div id="categorySummaryOptions" class="category-summary-options"></div>
+      </div>
+    </div>
+
+    <div id="anagramCategoryModal" class="exercise-modal anagram-category-modal hidden" role="dialog" aria-modal="true" aria-label="Choose an anagram category">
+      <div class="exercise-menu anagram-category-menu">
+        <button id="closeAnagramCategoriesButton" class="icon-button exercise-close" aria-label="Back to exercises">←</button>
+        <p class="eyebrow">ANAGRAM</p>
+        <h2>Choose a word pool</h2>
+        <p class="category-picker-copy">Practice one category or use every available word in this unit.</p>
+        <div id="anagramCategoryOptions" class="anagram-category-options"></div>
+      </div>
+    </div>
+
+    <div id="matchCategoryModal" class="exercise-modal anagram-category-modal hidden" role="dialog" aria-modal="true" aria-label="Choose a matching category">
+      <div class="exercise-menu anagram-category-menu">
+        <button id="closeMatchCategoriesButton" class="icon-button exercise-close" aria-label="Back to exercises">←</button>
+        <p class="eyebrow">MATCH PICTURES</p>
+        <h2>Choose a category</h2>
+        <p class="category-picker-copy">Each round contains six words and six hidden pictures.</p>
+        <div id="matchCategoryOptions" class="anagram-category-options"></div>
+      </div>
+    </div>
+
+    <section id="anagramScreen" class="screen anagram-screen hidden">
+      <header class="anagram-header">
+        <button id="anagramBackButton" class="icon-button" aria-label="Return to unit selection">←</button>
+        <div class="anagram-session">
+          <span id="anagramSessionLabel">GRADE 7 · UNIT 1</span>
+          <strong>ANAGRAM</strong>
+        </div>
+        <div class="anagram-progress"><strong id="anagramProgressText">1 / 10</strong><span>WORDS</span></div>
+      </header>
+      <div class="anagram-card">
+        <div class="anagram-image-frame"><img id="anagramImage" alt="Anagram image"></div>
+        <div class="anagram-workspace">
+          <p class="eyebrow">ARRANGE THE LETTERS</p>
+          <h1 id="anagramPrompt">Which word matches this image?</h1>
+          <span id="anagramMistakeCount" class="anagram-mistakes">LIVES &#9829; &#9829; &#9829;</span>
+          <div id="anagramTiles" class="anagram-tiles" aria-label="Draggable letter tiles"></div>
+          <p id="anagramFeedback" class="anagram-feedback" aria-live="polite"></p>
+          <div class="anagram-actions">
+            <button id="anagramExitButton" class="secondary-button">EXIT</button>
+          </div>
+        </div>
+      </div>
+      <div id="anagramResultView" class="anagram-result hidden">
+        <p class="eyebrow">ANAGRAM COMPLETE</p>
+        <h1 id="anagramResultScore">0 / 10</h1>
+        <p id="anagramResultMessage"></p>
+        <button id="anagramHomeButton" class="primary-button">BACK TO UNIT SELECTION</button>
+      </div>
+    </section>
+
+    <section id="matchScreen" class="screen match-screen hidden">
+      <header class="match-header">
+        <button id="matchBackButton" class="icon-button" aria-label="Return to unit selection">←</button>
+        <div class="anagram-session">
+          <span id="matchSessionLabel">GRADE 5 · UNIT 1 · CATEGORY</span>
+          <strong>MATCH PICTURES</strong>
+        </div>
+        <div class="anagram-progress"><strong id="matchProgressText">0 / 6</strong><span>MATCHES</span></div>
+      </header>
+      <div class="match-card">
+        <p class="eyebrow">MATCH THE WORD TO THE PICTURE</p>
+        <h1>Choose a word, then open a picture.</h1>
+        <div class="match-layout">
+          <div id="matchWordGrid" class="match-word-grid"></div>
+          <div id="matchVisualGrid" class="match-visual-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matchResultScreen" class="screen match-result-screen hidden">
+      <div class="match-result-card">
+        <p class="eyebrow">MATCHING ROUND COMPLETE</p>
+        <h1 id="matchTimeText">Your time is: 00:00</h1>
+        <p id="matchResultMessage">6 words matched.</p>
+        <h2>PLAY AGAIN?</h2>
+        <div class="match-result-actions">
+          <button id="matchNoButton" class="secondary-button">NO, EXIT</button>
+          <button id="matchYesButton" class="primary-button">YES, PLAY AGAIN</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="sortScreen" class="screen sort-screen hidden">
+      <header class="match-header">
+        <button id="sortBackButton" class="icon-button" aria-label="Return to unit selection">←</button>
+        <div class="anagram-session">
+          <span id="sortSessionLabel">GRADE 5 · UNIT 1</span>
+          <strong>SORT IT!</strong>
+        </div>
+        <div class="anagram-progress"><strong id="sortProgressText">0 / 16</strong><span>SORTED</span></div>
+      </header>
+      <p class="sort-instruction">Drag a word to its category. On a touch screen, tap a word and then tap a category.</p>
+      <div id="sortCardBank" class="sort-card-bank" aria-label="Words to sort"></div>
+      <div id="sortZones" class="sort-zones" aria-label="Word categories"></div>
+    </section>
+
+    <section id="sortResultScreen" class="screen match-result-screen hidden">
+      <div class="match-result-card">
+        <p class="eyebrow">SORTING ROUND COMPLETE</p>
+        <h1 id="sortResultScore">0 / 0</h1>
+        <p id="sortResultMessage"></p>
+        <button id="sortNextRoundButton" class="primary-button">NEXT WORD SET</button>
+      </div>
+    </section>
+
+    <section id="memoryScreen" class="screen memory-screen hidden">
+
+      <div id="memoryStudyPhase">
+        <header class="match-header">
+          <button id="memoryBackButton" class="icon-button" aria-label="Return to selection">←</button>
+          <div class="anagram-session">
+            <span id="memorySessionLabel">GRADE 7 · UNIT 1</span>
+            <strong>WATCH &amp; REMEMBER</strong>
+          </div>
+          <div class="anagram-progress"><strong id="memoryStudyCount">1 / 5</strong><span>WORDS</span></div>
+        </header>
+        <div class="memory-study-body">
+          <p class="eyebrow">MEMORIZE THIS WORD</p>
+          <div class="memory-study-image-frame">
+            <img id="memoryStudyImage" alt="">
+          </div>
+          <h1 id="memoryStudyWord"></h1>
+          <div id="memoryStudyProgress" class="memory-study-dots">
+            <div class="memory-study-dot"></div>
+            <div class="memory-study-dot"></div>
+            <div class="memory-study-dot"></div>
+            <div class="memory-study-dot"></div>
+            <div class="memory-study-dot"></div>
+          </div>
+          <div class="memory-countdown-bar"><div id="memoryCountdownFill" class="memory-countdown-fill"></div></div>
+          <button id="memoryStudyNextButton" class="secondary-button">NEXT →</button>
+        </div>
+      </div>
+
+      <div id="memoryTestPhase" class="hidden">
+        <header class="match-header">
+          <div class="anagram-session">
+            <span id="memoryTestSessionLabel">GRADE 7 · UNIT 1</span>
+            <strong>WATCH &amp; REMEMBER</strong>
+          </div>
+          <div class="anagram-progress"><strong id="memorySelectCount">0 / 5</strong><span>FOUND</span></div>
+          <div class="anagram-progress memory-timer-block"><strong id="memoryTimer">20</strong><span>SEC</span></div>
+        </header>
+        <p class="memory-test-instruction" id="memoryTestInstruction">Get ready…</p>
+        <div id="memoryGrid" class="memory-grid"></div>
+      </div>
+
+      <div id="memoryResultPhase" class="hidden">
+        <div class="memory-result-body">
+          <p class="eyebrow" id="memoryResultEyebrow">RESULT</p>
+          <h1 id="memoryResultScore">0 / 5</h1>
+          <p id="memoryResultMessage"></p>
+          <div id="memoryResultGrid" class="memory-result-grid"></div>
+          <div class="memory-result-actions">
+            <button id="memoryPlayAgainButton" class="primary-button">PLAY AGAIN</button>
+            <button id="memoryHomeButton" class="secondary-button">EXIT</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
     <section id="presentationScreen" class="screen presentation-screen hidden">
       <header class="presentation-header">
         <button id="backButton" class="icon-button" aria-label="Return to selection screen">←</button>
         <div class="session-info">
-          <span id="sessionLabel">Grade 6 · Unit 1</span>
+          <span id="sessionLabel" class="unit-context">GRADE 6 · UNIT 1</span>
+          <strong id="categoryHeader" class="category-header">ALL VOCABULARY</strong>
+        </div>
+        <div class="progress-summary">
           <strong id="progressText">1 / 1</strong>
+          <span>WORDS</span>
         </div>
         <div class="progress-track"><span id="progressBar"></span></div>
         <button id="fullscreenButton" class="icon-button fullscreen-button" aria-label="Full screen">⛶</button>
@@ -99,6 +304,16 @@
             <p id="oppositeInfo" class="opposite-info hidden"></p>
           </div>
         </article>
+      </div>
+
+      <div id="categoryIntroView" class="category-intro hidden">
+        <div class="category-intro-topline">
+          <span>VOCABULARY CATEGORY</span>
+          <strong id="categoryIntroNumber">01</strong>
+        </div>
+        <h2 id="categoryIntroTitle">School Subjects</h2>
+        <p id="categoryIntroCount" class="category-intro-count">13 WORDS</p>
+        <button id="categoryContinueButton" class="primary-button category-continue">CONTINUE <span>→</span></button>
       </div>
 
       <div id="quizView" class="quiz-view hidden">
@@ -151,8 +366,10 @@
   </main>
 
   <script src="../word_master/questions.js"></script>
+  <script src="../word_contest/words.js"></script>
   <script src="turkish-adapter.js"></script>
   <script src="rivals-distractor-adapter.js"></script>
+  <script src="category-adapter.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

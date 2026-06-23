@@ -814,7 +814,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <!-- ── MAIN MENU ── -->
 <div id="main-menu">
   <div class="mm-logo">
-    <div class="mm-word1"><span id="mm-w" onclick="_secretTap('W')">W</span><span id="mm-o" onclick="_secretTap('O')">O</span><span id="mm-r" onclick="_secretTap('R')">R</span><span id="mm-d" onclick="_secretTap('D')">D</span></div>
+    <div class="mm-word1">WORD</div>
     <div class="mm-word2">RIVALS</div>
     <div class="mm-credit">Designed by ADİL FIRAT OKTAV</div>
   </div>
@@ -1132,12 +1132,8 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
     </div>
     <div id="std-warning"></div>
     <div class="std-actions">
-      <!-- t=1 teacher modu -->
-      <button class="std-attendance" id="att-btn" onclick="openAttendance()">📋 Yoklama</button>
-      <button class="std-balance" id="std-balance-btn" onclick="balanceDistribute()">⚖ Dengeli Dağıt</button>
-      <!-- default (web) modu -->
-      <button class="std-balance" id="std-clearall-btn" style="background:linear-gradient(135deg,#7f1d1d,#dc2626);display:none" onclick="stdClearAll()">✕ Clear All</button>
-      <button class="std-balance" id="std-fillall-btn" style="display:none" onclick="stdFillAll()">↓ Fill All</button>
+      <button class="std-balance" id="std-clearall-btn" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)" onclick="stdClearAll()">✕ Clear All</button>
+      <button class="std-balance" id="std-fillall-btn" onclick="stdFillAll()">↓ Fill All</button>
       <!-- her zaman -->
       <button class="std-start" onclick="applyStudentsAndContinue()">✓ Tamam, Devam Et</button>
     </div>
@@ -1349,13 +1345,8 @@ let studentAvatars     = [[], []];
 let studentAvatarShown = [[], []];
 let avatarDmgTriggered = [false, false];
 let tauntsUnlocked     = true;
-let _teacherMode = false; // W-O-R-D koduyla aktifleşir
 try { CLASSES; } catch(e) { window.CLASSES = []; } // names.js yoksa fallback
-let selectedClasses = new Set(CLASSES.map(c => c.id));
-// CLASSES yoksa QUESTIONS'tan tüm grade'leri al
-let selectedGrades  = CLASSES.length > 0
-  ? new Set(CLASSES.map(c => c.grade))
-  : new Set(QUESTIONS.filter(q => !_isCatUnit(q[2]) && q[1] > 0).map(q => q[1]));
+let selectedGrades  = new Set(QUESTIONS.filter(q => !_isCatUnit(q[2]) && q[1] > 0).map(q => q[1]));
 let selectedCategories = new Set();
 // Kategori unit mi? CATEGORIES map'ine bakarak karar ver
 function _isCatUnit(u) { return typeof CATEGORIES !== 'undefined' && Object.prototype.hasOwnProperty.call(CATEGORIES, u); }
@@ -3418,10 +3409,6 @@ function teacherDecisionNo() {
 }
 
 // ── SETTINGS ─────────────────────────────────────────────
-function _syncGradesFromClasses() {
-  selectedGrades.clear();
-  CLASSES.filter(c => selectedClasses.has(c.id)).forEach(c => selectedGrades.add(c.grade));
-}
 
 function _filteredQCount() {
   const minG = selectedGrades.size > 0 ? Math.min(...selectedGrades) : 0;
@@ -3470,47 +3457,24 @@ function buildSettingsUI() {
   const classGrid = document.getElementById('sc-class-grid');
   if (classGrid) {
     classGrid.innerHTML = '';
-    if (CLASSES.length > 0) {
-      // Teacher modu — gerçek sınıf butonları (grade'e göre sıralı)
-      [...CLASSES].sort((a,b) => a.grade - b.grade).forEach(cls => {
-        const btn = document.createElement('button');
-        btn.className = 'sc-class-btn' + (selectedClasses.has(cls.id) ? ' active' : '');
-        btn.textContent = cls.grade;
-        btn.onclick = () => {
-          if (selectedClasses.has(cls.id) && selectedClasses.size === 1) {
-            const w = document.getElementById('sc-class-warn');
-            if (w) { w.textContent = 'En az bir sınıf seçili olmalı!'; setTimeout(() => w.textContent = '', 2000); }
-            return;
-          }
-          selectedClasses.has(cls.id) ? selectedClasses.delete(cls.id) : selectedClasses.add(cls.id);
-          btn.classList.toggle('active');
-          _syncGradesFromClasses();
-          _buildUnitButtons();
-          _buildCategoryButtons();
-        };
-        classGrid.appendChild(btn);
-      });
-    } else {
-      // Default (web) modu — QUESTIONS'tan grade butonları üret
-      const grades = [...new Set(QUESTIONS.filter(q => !_isCatUnit(q[2]) && q[1] > 0).map(q => q[1]))].sort((a,b) => a-b);
-      grades.forEach(g => {
-        const btn = document.createElement('button');
-        btn.className = 'sc-class-btn' + (selectedGrades.has(g) ? ' active' : '');
-        btn.textContent = `${g}`;
-        btn.onclick = () => {
-          if (selectedGrades.has(g) && selectedGrades.size === 1 && selectedCategories.size === 0) {
-            const w = document.getElementById('sc-class-warn');
-            if (w) { w.textContent = 'En az bir grade seçili olmalı!'; setTimeout(() => w.textContent = '', 2000); }
-            return;
-          }
-          selectedGrades.has(g) ? selectedGrades.delete(g) : selectedGrades.add(g);
-          btn.classList.toggle('active');
-          _buildUnitButtons();
-          _buildCategoryButtons();
-        };
-        classGrid.appendChild(btn);
-      });
-    }
+    const grades = [...new Set(QUESTIONS.filter(q => !_isCatUnit(q[2]) && q[1] > 0).map(q => q[1]))].sort((a,b) => a-b);
+    grades.forEach(g => {
+      const btn = document.createElement('button');
+      btn.className = 'sc-class-btn' + (selectedGrades.has(g) ? ' active' : '');
+      btn.textContent = `${g}`;
+      btn.onclick = () => {
+        if (selectedGrades.has(g) && selectedGrades.size === 1 && selectedCategories.size === 0) {
+          const w = document.getElementById('sc-class-warn');
+          if (w) { w.textContent = 'En az bir grade seçili olmalı!'; setTimeout(() => w.textContent = '', 2000); }
+          return;
+        }
+        selectedGrades.has(g) ? selectedGrades.delete(g) : selectedGrades.add(g);
+        btn.classList.toggle('active');
+        _buildUnitButtons();
+        _buildCategoryButtons();
+      };
+      classGrid.appendChild(btn);
+    });
   }
   _buildUnitButtons();
   _buildCategoryButtons();
@@ -3604,7 +3568,7 @@ const _TC_LS_KEY = 'tc_settings_v1';
 function _saveSettings() {
   try {
     localStorage.setItem(_TC_LS_KEY, JSON.stringify({
-      classes:       [...selectedClasses],
+      grades:        [...selectedGrades],
       units:         [...selectedUnits],
       gameMode:      _gameMode,
       listeningMode: _listeningMode,
@@ -3620,14 +3584,11 @@ function _loadSettings() {
     if (!raw) return;
     const data = JSON.parse(raw);
 
-    // Sınıfları uygula — artık CLASSES'ta olmayan ID'leri at
-    if (Array.isArray(data.classes)) {
-      const validIds = new Set(CLASSES.map(c => c.id));
-      const saved    = data.classes.filter(id => validIds.has(id));
-      if (saved.length > 0) {
-        selectedClasses = new Set(saved);
-        _syncGradesFromClasses();
-      }
+    // Grade'leri uygula
+    if (Array.isArray(data.grades)) {
+      const allGrades = new Set(QUESTIONS.filter(q => !_isCatUnit(q[2]) && q[1] > 0).map(q => q[1]));
+      const saved = data.grades.filter(g => allGrades.has(g));
+      if (saved.length > 0) selectedGrades = new Set(saved);
     }
 
     // Üniteleri uygula — seçili grade'lerde geçerli olanları filtrele
@@ -3664,9 +3625,7 @@ function balanceDistribute(silent = false) {
   const LEVEL_PTS   = {S:6, A:5, B:4, C:3, D:2, F:1};
   const LEVEL_ORDER = ['S','A','B','C','D','F'];
 
-  const rawPool = CLASSES
-    .filter(c => selectedClasses.has(c.id))
-    .flatMap(c => c.students);
+  const rawPool = CLASSES.flatMap(c => c.students);
   const pool = rawPool.filter(s => !absentStudents.has(s.name));
   if (!pool.length) return;
 
@@ -4067,39 +4026,6 @@ function _tbContinueRound() {
 }
 
 // ── MAIN MENU ─────────────────────────────────────────────
-// ── GİZLİ W-O-R-D KODU ───────────────────────────────────
-const _SECRET_SEQ = ['W','O','R','D'];
-let   _secretIdx  = 0;
-let   _secretTimer = null;
-
-function _secretTap(letter) {
-  if (letter === _SECRET_SEQ[_secretIdx]) {
-    _secretIdx++;
-    clearTimeout(_secretTimer);
-    if (_secretIdx === _SECRET_SEQ.length) {
-      // Dizi tamamlandı — teacher mode aktif
-      _secretIdx = 0;
-      setTimeout(() => {
-        _teacherMode = true;
-        // CLASSES varsa selectedClasses/Grades'i güncelle
-        if (CLASSES.length > 0) {
-          selectedClasses = new Set(CLASSES.map(c => c.id));
-          selectedGrades  = new Set(CLASSES.map(c => c.grade));
-          selectedUnits   = new Set(QUESTIONS.filter(q => !_isCatUnit(q[2])).map(q => q[2]));
-        }
-        _applyStudentModeUI();
-        _spawnJkDropText('🔑 TEACHER MODE AKTİF', '#4ade80');
-      }, 350);
-    } else {
-      // 3 saniye içinde devam edilmezse sıfırla
-      _secretTimer = setTimeout(() => { _secretIdx = 0; }, 3000);
-    }
-  } else {
-    // Yanlış harf — sıfırla
-    _secretIdx = 0;
-    clearTimeout(_secretTimer);
-  }
-}
 
 function _menuStart() {
   _startBgMusic();
@@ -4152,15 +4078,6 @@ function _switchBgTrack() {
 }
 
 // ── STARTUP ───────────────────────────────────────────────
-// ── STUDENT OVERLAY — mode butonları ─────────────────────
-function _applyStudentModeUI() {
-  const isT = _teacherMode;
-  document.getElementById('att-btn')        .style.display = isT ? '' : 'none';
-  document.getElementById('std-balance-btn').style.display = isT ? '' : 'none';
-  document.getElementById('std-clearall-btn').style.display = isT ? 'none' : '';
-  document.getElementById('std-fillall-btn') .style.display = isT ? 'none' : '';
-}
-
 function stdClearAll() {
   studentInputs = [Array(STD_SLOTS).fill(''), Array(STD_SLOTS).fill('')];
   [0, 1].forEach(gi => {
@@ -4194,7 +4111,6 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 window.addEventListener('load', () => {
   _loadSettings();
-  _applyStudentModeUI();
 
   // Ana menü müziğini önceden buffer'a al — play() anında hazır olsun (Chrome fix)
   const audio = document.getElementById('bg-music');

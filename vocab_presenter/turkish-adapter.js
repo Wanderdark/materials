@@ -1010,14 +1010,34 @@
     "ZOO": "HAYVANAT BAHÇESİ",
   };
 
+  function getContestTranslation(record, word) {
+    if (typeof WORD_BANK === "undefined") return null;
+    const grade = Array.isArray(record) ? record[3] : null;
+    const unit = Array.isArray(record) ? record[5] : null;
+    const normalized = String(word || "").trim().toUpperCase();
+    const exactMatch = WORD_BANK.find((item) =>
+      String(item.en || "").trim().toUpperCase() === normalized
+      && item.grade === grade
+      && item.unit === unit
+    );
+    const wordMatch = exactMatch || WORD_BANK.find((item) =>
+      String(item.en || "").trim().toUpperCase() === normalized
+    );
+    return wordMatch?.tr || null;
+  }
+
   window.TurkishAdapter = {
     getMeaning(recordOrWord) {
       const word = Array.isArray(recordOrWord) ? recordOrWord[2] : recordOrWord;
       const key = String(word || "").trim().toUpperCase();
-      return TRANSLATIONS[key] || "T?RK?E KAR?ILIK EKS?K";
+      return getContestTranslation(recordOrWord, key)
+        || TRANSLATIONS[key]
+        || "T?RK?E KAR?ILIK EKS?K";
     },
     has(word) {
-      return Object.prototype.hasOwnProperty.call(TRANSLATIONS, String(word || "").trim().toUpperCase());
+      const key = String(word || "").trim().toUpperCase();
+      return Boolean(getContestTranslation(null, key))
+        || Object.prototype.hasOwnProperty.call(TRANSLATIONS, key);
     },
     size: Object.keys(TRANSLATIONS).length
   };

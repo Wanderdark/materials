@@ -2,6 +2,10 @@
 (function () {
   "use strict";
   const EXCLUSIONS = {
+    "5:2:AFTERNOON": ["NOON"],
+    "5:2:NOON": ["AFTERNOON"],
+    "5:2:RUBBER": ["ERASER"],
+    "5:2:ERASER": ["RUBBER"],
     "6:1:AFTERNOON": ["O CLOCK"],
     "6:1:ALWAYS": ["EVERY DAY"],
     "6:1:ATTEND COURSE": ["STUDY LESSON"],

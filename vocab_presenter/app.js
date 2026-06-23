@@ -1,6 +1,9 @@
 (() => {
   "use strict";
 
+  document.addEventListener("contextmenu", (event) => event.preventDefault(), true);
+  document.addEventListener("selectstart", (event) => event.preventDefault(), true);
+
   const $ = (id) => document.getElementById(id);
   const els = {
     setup: $("setupScreen"),
@@ -12,12 +15,69 @@
     poolSummary: $("poolSummary"),
     start: $("startButton"),
     startQuiz: $("startQuizButton"),
+    viewCategories: $("viewCategoriesButton"),
+    exercises: $("exercisesButton"),
+    categorySummaryModal: $("categorySummaryModal"),
+    closeCategorySummary: $("closeCategorySummaryButton"),
+    categorySummaryTitle: $("categorySummaryTitle"),
+    categorySummaryOptions: $("categorySummaryOptions"),
+    exercisesModal: $("exercisesModal"),
+    closeExercises: $("closeExercisesButton"),
+    startAnagram: $("startAnagramButton"),
+    startMatch: $("startMatchButton"),
+    startSort: $("startSortButton"),
+    anagramCategoryModal: $("anagramCategoryModal"),
+    closeAnagramCategories: $("closeAnagramCategoriesButton"),
+    anagramCategoryOptions: $("anagramCategoryOptions"),
+    matchCategoryModal: $("matchCategoryModal"),
+    closeMatchCategories: $("closeMatchCategoriesButton"),
+    matchCategoryOptions: $("matchCategoryOptions"),
+    anagramScreen: $("anagramScreen"),
+    anagramBack: $("anagramBackButton"),
+    anagramExit: $("anagramExitButton"),
+    anagramSessionLabel: $("anagramSessionLabel"),
+    anagramProgressText: $("anagramProgressText"),
+    anagramImage: $("anagramImage"),
+    anagramTiles: $("anagramTiles"),
+    anagramMistakeCount: $("anagramMistakeCount"),
+    anagramFeedback: $("anagramFeedback"),
+    anagramResult: $("anagramResultView"),
+    anagramResultScore: $("anagramResultScore"),
+    anagramResultMessage: $("anagramResultMessage"),
+    anagramHome: $("anagramHomeButton"),
+    matchScreen: $("matchScreen"),
+    matchBack: $("matchBackButton"),
+    matchSessionLabel: $("matchSessionLabel"),
+    matchProgressText: $("matchProgressText"),
+    matchWordGrid: $("matchWordGrid"),
+    matchVisualGrid: $("matchVisualGrid"),
+    matchResult: $("matchResultScreen"),
+    matchTimeText: $("matchTimeText"),
+    matchResultMessage: $("matchResultMessage"),
+    matchYes: $("matchYesButton"),
+    matchNo: $("matchNoButton"),
+    sortScreen: $("sortScreen"),
+    sortBack: $("sortBackButton"),
+    sortSessionLabel: $("sortSessionLabel"),
+    sortProgressText: $("sortProgressText"),
+    sortCardBank: $("sortCardBank"),
+    sortZones: $("sortZones"),
+    sortResult: $("sortResultScreen"),
+    sortResultScore: $("sortResultScore"),
+    sortResultMessage: $("sortResultMessage"),
+    sortNextRound: $("sortNextRoundButton"),
     back: $("backButton"),
     fullscreen: $("fullscreenButton"),
     sessionLabel: $("sessionLabel"),
+    categoryHeader: $("categoryHeader"),
     progressText: $("progressText"),
     progressBar: $("progressBar"),
     wordView: $("wordView"),
+    categoryIntro: $("categoryIntroView"),
+    categoryIntroTitle: $("categoryIntroTitle"),
+    categoryIntroNumber: $("categoryIntroNumber"),
+    categoryIntroCount: $("categoryIntroCount"),
+    categoryContinue: $("categoryContinueButton"),
     wordImage: $("wordImage"),
     imageFallback: $("imageFallback"),
     wordGuessPanel: $("wordGuessPanel"),
@@ -53,7 +113,15 @@
     previous: $("previousButton"),
     revealTurkish: $("revealTurkishButton"),
     next: $("nextButton"),
-    dots: $("checkpointDots")
+    dots: $("checkpointDots"),
+    memoryScreen: $("memoryScreen"),
+    startMemory: $("startMemoryButton"),
+    memoryBack: $("memoryBackButton"),
+    memorySessionLabel: $("memorySessionLabel"),
+    memoryStudyNext: $("memoryStudyNextButton"),
+    memoryTestSessionLabel: $("memoryTestSessionLabel"),
+    memoryPlayAgain: $("memoryPlayAgainButton"),
+    memoryHome: $("memoryHomeButton")
   };
 
   const records = typeof QUESTIONS === "undefined"
@@ -67,11 +135,14 @@
   const state = {
     grade: null,
     unit: null,
+    categorySequence: [],
+    categoryIndex: 0,
     pool: [],
     index: 0,
     mode: "word",
     wordStage: "guess",
     revealTimer: null,
+    categoryIntroTimer: null,
     speechTimer: null,
     feedbackAudio: null,
     quizCheckpoint: null,
@@ -80,7 +151,42 @@
     finalQuizQuestions: [],
     finalQuizIndex: 0,
     finalQuizScore: 0,
-    finalQuizMistakes: []
+    finalQuizMistakes: [],
+    anagramQuestions: [],
+    anagramIndex: 0,
+    anagramScore: 0,
+    anagramSolved: false,
+    draggedAnagramTile: null,
+    anagramAudioContext: null,
+    anagramMistakes: 0,
+    anagramTransitionTimer: null,
+    anagramCategoryTitle: "ALL WORDS",
+    matchCategoryTitle: "",
+    matchPool: [],
+    matchRemainingPool: [],
+    matchRound: [],
+    matchSelectedWord: null,
+    matchMatched: 0,
+    matchStartedAt: null,
+    matchResolving: false,
+    sortCategories: [],
+    sortRemaining: new Map(),
+    sortRound: [],
+    sortRoundNumber: 0,
+    sortSorted: 0,
+    sortTotalSorted: 0,
+    sortMistakes: 0,
+    selectedSortCard: null,
+    draggedSortCard: null,
+    memoryLevel: 5,
+    memoryTargets: [],
+    memoryPool: [],
+    memoryStudyIndex: 0,
+    memoryStudyTimer: null,
+    memoryTimer: null,
+    memoryTimeLeft: 20,
+    memoryActive: false,
+    memorySelected: new Set()
   };
 
   function uniqueSorted(values) {
@@ -109,6 +215,7 @@
   }
 
   function selectGrade(grade) {
+    enterFullscreen();
     state.grade = grade;
     state.unit = null;
     els.gradeStatus.textContent = `Grade ${grade} selected`;
@@ -144,13 +251,40 @@
     });
   }
 
+  function getCategories() {
+    if (!state.grade || !state.unit || typeof VocabCategoryAdapter === "undefined") return [];
+    return VocabCategoryAdapter.get(state.grade, state.unit);
+  }
+
+  function getUnitPool() {
+    return records.filter((item) => item[3] === state.grade && item[5] === state.unit);
+  }
+
+  function buildCategorySequence() {
+    const unitRecords = getUnitPool();
+    const categories = getCategories();
+    if (!categories.length) return [{ id: "all", title: "All Vocabulary", records: unitRecords }];
+
+    const categorizedWords = new Set(categories.flatMap((category) => category.words));
+    const sequence = categories
+      .map((category) => ({
+        id: category.id,
+        title: category.title,
+        records: unitRecords.filter((record) => category.words.includes(record[2]))
+      }))
+      .filter((category) => category.records.length);
+    const uncategorized = unitRecords.filter((record) => !categorizedWords.has(record[2]));
+    if (uncategorized.length) sequence.push({ id: "other-vocabulary", title: "Other Words", records: uncategorized });
+    return sequence;
+  }
+
   function updateSetupSummary() {
     const ready = state.grade && state.unit;
-    const count = ready
-      ? records.filter((item) => item[3] === state.grade && item[5] === state.unit).length
-      : 0;
+    const count = ready ? getUnitPool().length : 0;
     els.start.disabled = !ready;
     els.startQuiz.disabled = !ready;
+    els.viewCategories.disabled = !ready;
+    els.exercises.disabled = !ready;
     els.poolSummary.innerHTML = ready
       ? `<strong>${count}-word presentation ready</strong><span>A quick review appears after every 5 words.</span>`
       : "<strong>Not ready</strong><span>Select a grade and unit to continue.</span>";
@@ -160,25 +294,976 @@
     return record[6] || "";
   }
 
+  function openCategorySummary() {
+    const categories = buildCategorySequence();
+    els.categorySummaryTitle.textContent = `GRADE ${state.grade} · UNIT ${state.unit} CATEGORIES`;
+    els.categorySummaryOptions.replaceChildren(...categories.map((category) => {
+      const card = document.createElement("article");
+      card.className = "category-summary-card";
+      const heading = document.createElement("div");
+      heading.className = "category-summary-heading";
+      const title = document.createElement("h3");
+      title.textContent = category.title;
+      const count = document.createElement("span");
+      count.textContent = `${category.records.length} WORDS`;
+      heading.append(title, count);
+      const words = document.createElement("div");
+      words.className = "category-word-list";
+      category.records.forEach((record) => {
+        const word = document.createElement("span");
+        word.textContent = record[2];
+        words.append(word);
+      });
+      card.append(heading, words);
+      return card;
+    }));
+    els.categorySummaryModal.classList.remove("hidden");
+  }
+
+  function closeCategorySummary() {
+    els.categorySummaryModal.classList.add("hidden");
+  }
+
   function startPresentation() {
-    state.pool = records.filter((item) => item[3] === state.grade && item[5] === state.unit);
-    state.index = 0;
-    state.mode = "word";
+    state.categorySequence = buildCategorySequence();
+    state.categoryIndex = 0;
     state.completedCheckpoints.clear();
     state.completedRelationCheckpoints.clear();
     els.setup.classList.add("hidden");
     els.presentation.classList.remove("hidden");
-    renderWord();
+    activateCategory(0);
+  }
+
+  function openExercises() {
+    els.startMatch.classList.toggle("hidden", !getMatchCategories().length);
+    els.startSort.classList.toggle("hidden", getSortCategories().length < 2);
+    els.exercisesModal.classList.remove("hidden");
+  }
+
+  function closeExercises() {
+    els.exercisesModal.classList.add("hidden");
+  }
+
+  function eligibleAnagramRecords(pool) {
+    return pool.filter((record) => isEligibleAnagramWord(record[2]));
+  }
+
+  function openAnagramCategoryChooser() {
+    const options = [
+      { id: "all", title: "ALL WORDS", records: getUnitPool() },
+      ...getCategories().map((category) => ({
+        id: category.id,
+        title: category.title,
+        records: getUnitPool().filter((record) => category.words.includes(record[2]))
+      }))
+    ];
+
+    els.anagramCategoryOptions.replaceChildren();
+    options.forEach((option) => {
+      const eligibleRecords = eligibleAnagramRecords(option.records);
+      if (option.id !== "all" && eligibleRecords.length < 7) return;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "anagram-category-choice";
+      button.innerHTML = `<strong>${option.title}</strong><small>${option.records.length} category word${option.records.length === 1 ? "" : "s"} · ${eligibleRecords.length} anagram-ready</small>`;
+      button.addEventListener("click", () => startAnagram(eligibleRecords, option.title));
+      els.anagramCategoryOptions.append(button);
+    });
+    closeExercises();
+    els.anagramCategoryModal.classList.remove("hidden");
+  }
+
+  function closeAnagramCategoryChooser() {
+    els.anagramCategoryModal.classList.add("hidden");
+    openExercises();
+  }
+
+  function getMatchCategories() {
+    const unitRecords = getUnitPool();
+    return getCategories()
+      .map((category) => ({
+        title: category.title,
+        records: getDistinctMatchRecords(unitRecords.filter((record) => category.words.includes(record[2])))
+      }))
+      .filter((category) => category.records.length >= 12);
+  }
+
+  function getSortCategories() {
+    const assignedWords = new Set();
+    const unitRecords = getUnitPool();
+    return getCategories().reduce((categories, category) => {
+      const categoryRecords = unitRecords.filter((record) => category.words.includes(record[2]) && !assignedWords.has(record[2]));
+      if (categoryRecords.length >= 6) {
+        categoryRecords.forEach((record) => assignedWords.add(record[2]));
+        categories.push({ id: category.id, title: category.title, records: categoryRecords });
+      }
+      return categories;
+    }, []);
+  }
+
+  function startSort() {
+    state.sortCategories = getSortCategories();
+    if (state.sortCategories.length < 2) return;
+    state.sortRemaining = new Map(state.sortCategories.map((category) => [category.id, sample(category.records, category.records.length)]));
+    state.sortRoundNumber = 0;
+    state.sortTotalSorted = 0;
+    state.sortMistakes = 0;
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    els.sortResult.classList.add("hidden");
+    els.sortScreen.classList.remove("hidden");
+    startSortRound();
+  }
+
+  function startSortRound() {
+    const remainingCount = [...state.sortRemaining.values()].reduce((total, words) => total + words.length, 0);
+    if (!remainingCount) {
+      showSortRoundResult(true);
+      return;
+    }
+    const target = Math.min(16, remainingCount);
+    const round = [];
+    while (round.length < target) {
+      const available = state.sortCategories.filter((category) => state.sortRemaining.get(category.id).length);
+      if (!available.length) break;
+      available.forEach((category) => {
+        if (round.length >= target) return;
+        const word = state.sortRemaining.get(category.id).shift();
+        round.push({ id: `${category.id}-${word[2]}-${round.length}`, label: word[2], categoryId: category.id });
+      });
+    }
+    state.sortRound = round;
+    state.sortRoundNumber += 1;
+    state.sortSorted = 0;
+    state.selectedSortCard = null;
+    state.draggedSortCard = null;
+    els.sortSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit} · ROUND ${state.sortRoundNumber}`;
+    els.sortProgressText.textContent = `0 / ${round.length}`;
+    renderSortRound();
+  }
+
+  function renderSortRound() {
+    els.sortCardBank.replaceChildren(...sample(state.sortRound, state.sortRound.length).map((card) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "sort-card";
+      button.draggable = true;
+      button.dataset.categoryId = card.categoryId;
+      button.textContent = card.label;
+      applyTextSize(button, card.label);
+      button.addEventListener("click", () => selectSortCard(button));
+      button.addEventListener("dragstart", () => {
+        state.draggedSortCard = button;
+        button.classList.add("dragging");
+      });
+      button.addEventListener("dragend", () => {
+        state.draggedSortCard = null;
+        button.classList.remove("dragging");
+      });
+      return button;
+    }));
+    els.sortZones.replaceChildren(...state.sortCategories.map((category) => {
+      const zone = document.createElement("div");
+      zone.className = "sort-zone";
+      zone.dataset.categoryId = category.id;
+      zone.setAttribute("role", "button");
+      zone.tabIndex = 0;
+      const title = document.createElement("strong");
+      title.textContent = category.title;
+      const hint = document.createElement("span");
+      hint.textContent = "DROP WORDS HERE";
+      zone.append(title, hint);
+      zone.addEventListener("click", () => placeSortCard(zone));
+      zone.addEventListener("dragover", (event) => {
+        if (state.draggedSortCard) event.preventDefault();
+      });
+      zone.addEventListener("drop", (event) => {
+        event.preventDefault();
+        placeSortCard(zone, state.draggedSortCard);
+      });
+      return zone;
+    }));
+  }
+
+  function selectSortCard(card) {
+    if (card.disabled) return;
+    if (state.selectedSortCard && state.selectedSortCard !== card) state.selectedSortCard.classList.remove("selected");
+    state.selectedSortCard = card;
+    card.classList.add("selected");
+  }
+
+  function placeSortCard(zone, card = state.selectedSortCard) {
+    if (!card || card.disabled) return;
+    if (card.dataset.categoryId !== zone.dataset.categoryId) {
+      state.sortMistakes += 1;
+      card.classList.add("wrong");
+      setTimeout(() => card.classList.remove("wrong"), 360);
+      playFeedbackSound(false);
+      return;
+    }
+    zone.append(card);
+    card.draggable = false;
+    card.disabled = true;
+    card.classList.remove("selected", "dragging");
+    card.classList.add("sorted");
+    state.selectedSortCard = null;
+    state.draggedSortCard = null;
+    state.sortSorted += 1;
+    state.sortTotalSorted += 1;
+    els.sortProgressText.textContent = `${state.sortSorted} / ${state.sortRound.length}`;
+    playFeedbackSound(true);
+    if (state.sortSorted === state.sortRound.length) {
+      const hasMoreWords = [...state.sortRemaining.values()].some((words) => words.length);
+      setTimeout(() => showSortRoundResult(!hasMoreWords), 700);
+    }
+  }
+
+  function showSortRoundResult(isFinalRound) {
+    const total = state.sortRound.length;
+    const totalWords = state.sortCategories.reduce((sum, category) => sum + category.records.length, 0);
+    els.sortResultScore.textContent = isFinalRound
+      ? `${state.sortTotalSorted} / ${totalWords}`
+      : `${state.sortSorted} / ${total}`;
+    els.sortResultMessage.textContent = isFinalRound
+      ? `All categorized words are sorted. Mistakes: ${state.sortMistakes}.`
+      : `${total} words sorted. Next set is ready.`;
+    els.sortNextRound.textContent = isFinalRound ? "BACK TO UNIT SELECTION" : "NEXT WORD SET";
+    els.sortNextRound.dataset.finalRound = String(isFinalRound);
+    els.sortScreen.classList.add("hidden");
+    els.sortResult.classList.remove("hidden");
+  }
+
+  // ─── WATCH & REMEMBER ───────────────────────────────────────────
+
+  const MEMORY_STUDY_DURATION = 3000;
+  const MEMORY_TOTAL_CARDS    = 20;
+  const MEMORY_TIME_LIMIT     = 20;
+  const MEMORY_SHUFFLES       = 5;
+  const MEMORY_SHUFFLE_MS     = 270;
+
+  function playMemoryTick() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    try {
+      state.anagramAudioContext ||= new AC();
+      const ctx = state.anagramAudioContext;
+      const t = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(1500, t);
+      osc.frequency.exponentialRampToValueAtTime(1800, t + .05);
+      gain.gain.setValueAtTime(.001, t);
+      gain.gain.exponentialRampToValueAtTime(.11, t + .008);
+      gain.gain.exponentialRampToValueAtTime(.001, t + .1);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + .11);
+    } catch {}
+  }
+
+  function playMemoryFile(name) {
+    try {
+      const a = new Audio(`sounds/${name}`);
+      a.volume = .8;
+      a.play().catch(() => {});
+    } catch {}
+  }
+
+  function startMemory() {
+    const unitPool = getUnitPool().filter((r) => imagePath(r));
+    if (unitPool.length < 5) return;
+
+    state.memoryLevel = Math.min(state.memoryLevel, unitPool.length);
+    const n = state.memoryLevel;
+
+    state.memoryTargets = sample(unitPool, n);
+    const targetSet = new Set(state.memoryTargets.map((r) => r[2]));
+    const distractors = sample(
+      records.filter((r) => imagePath(r) && !targetSet.has(r[2])),
+      MEMORY_TOTAL_CARDS - n
+    );
+    state.memoryPool = sample([...state.memoryTargets, ...distractors], state.memoryTargets.length + distractors.length);
+    state.memorySelected = new Set();
+    state.memoryStudyIndex = 0;
+    state.memoryActive = false;
+    clearInterval(state.memoryTimer);
+
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.memoryScreen.classList.remove("hidden");
+    showMemoryStudyPhase();
+    showMemoryWord(0);
+  }
+
+  function showMemoryStudyPhase() {
+    document.getElementById("memoryStudyPhase").classList.remove("hidden");
+    document.getElementById("memoryTestPhase").classList.add("hidden");
+    document.getElementById("memoryResultPhase").classList.add("hidden");
+    els.memorySessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit} · LEVEL ${state.memoryLevel}`;
+
+    const n = state.memoryTargets.length;
+    const dotsEl = document.getElementById("memoryStudyProgress");
+    dotsEl.replaceChildren(...Array.from({ length: n }, () => {
+      const d = document.createElement("div");
+      d.className = "memory-study-dot";
+      return d;
+    }));
+  }
+
+  function showMemoryWord(index) {
+    clearTimeout(state.memoryStudyTimer);
+    state.memoryStudyIndex = index;
+    const record = state.memoryTargets[index];
+    const n = state.memoryTargets.length;
+
+    document.getElementById("memoryStudyCount").textContent = `${index + 1} / ${n}`;
+    document.getElementById("memoryStudyImage").src = imagePath(record);
+    document.getElementById("memoryStudyWord").textContent = record[2];
+
+    const dots = document.getElementById("memoryStudyProgress").children;
+    for (let i = 0; i < dots.length; i++) {
+      dots[i].className = "memory-study-dot" + (i < index ? " done" : i === index ? " active" : "");
+    }
+
+    const fill = document.getElementById("memoryCountdownFill");
+    fill.style.transition = "none";
+    fill.style.width = "100%";
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      fill.style.transition = `width ${MEMORY_STUDY_DURATION}ms linear`;
+      fill.style.width = "0%";
+    }));
+
+    state.memoryStudyTimer = setTimeout(advanceMemoryStudy, MEMORY_STUDY_DURATION);
+  }
+
+  function advanceMemoryStudy() {
+    clearTimeout(state.memoryStudyTimer);
+    const next = state.memoryStudyIndex + 1;
+    if (next < state.memoryTargets.length) {
+      showMemoryWord(next);
+    } else {
+      startMemoryTestWithShuffle();
+    }
+  }
+
+  function startMemoryTestWithShuffle() {
+    document.getElementById("memoryStudyPhase").classList.add("hidden");
+    document.getElementById("memoryTestPhase").classList.remove("hidden");
+
+    const n = state.memoryTargets.length;
+    els.memoryTestSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit} · LEVEL ${state.memoryLevel}`;
+    document.getElementById("memorySelectCount").textContent = `0 / ${n}`;
+    document.getElementById("memoryTimer").textContent = MEMORY_TIME_LIMIT;
+    document.getElementById("memoryTimer").parentElement.classList.remove("low");
+    document.getElementById("memoryTestInstruction").textContent = "Get ready…";
+    state.memorySelected = new Set();
+    state.memoryActive = false;
+
+    renderMemoryGrid();
+
+    let shufflesDone = 0;
+    const shuffleInterval = setInterval(() => {
+      shufflesDone++;
+      state.memoryPool = sample(state.memoryPool, state.memoryPool.length);
+      renderMemoryGrid();
+      if (shufflesDone >= MEMORY_SHUFFLES) {
+        clearInterval(shuffleInterval);
+        startMemoryCountdown();
+      }
+    }, MEMORY_SHUFFLE_MS);
+  }
+
+  function startMemoryCountdown() {
+    state.memoryTimeLeft = MEMORY_TIME_LIMIT;
+    state.memoryActive = true;
+    const n = state.memoryTargets.length;
+    document.getElementById("memoryTestInstruction").textContent = `Find the ${n} words you memorized!`;
+    updateMemoryTimerDisplay();
+
+    state.memoryTimer = setInterval(() => {
+      state.memoryTimeLeft--;
+      updateMemoryTimerDisplay();
+      if (state.memoryTimeLeft <= 0) {
+        clearInterval(state.memoryTimer);
+        state.memoryActive = false;
+        playMemoryFile("wrong.mp3");
+        finishMemory(false, "timeout");
+      }
+    }, 1000);
+  }
+
+  function updateMemoryTimerDisplay() {
+    const el = document.getElementById("memoryTimer");
+    el.textContent = state.memoryTimeLeft;
+    el.parentElement.classList.toggle("low", state.memoryTimeLeft <= 5);
+  }
+
+  function renderMemoryGrid() {
+    const grid = document.getElementById("memoryGrid");
+    grid.replaceChildren(...state.memoryPool.map((record) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "memory-card";
+      card.dataset.word = record[2];
+      const img = document.createElement("img");
+      img.src = imagePath(record);
+      img.alt = record[2];
+      const label = document.createElement("span");
+      label.textContent = record[2];
+      card.append(img, label);
+      card.addEventListener("click", () => handleMemoryCardClick(record[2], card));
+      return card;
+    }));
+  }
+
+  function handleMemoryCardClick(word, card) {
+    if (!state.memoryActive) return;
+    if (card.classList.contains("correct-pick") || card.classList.contains("wrong-pick")) return;
+
+    const targetSet = new Set(state.memoryTargets.map((r) => r[2]));
+    const n = state.memoryTargets.length;
+
+    if (targetSet.has(word)) {
+      playMemoryTick();
+      card.classList.add("correct-pick");
+      state.memorySelected.add(word);
+      const count = state.memorySelected.size;
+      document.getElementById("memorySelectCount").textContent = `${count} / ${n}`;
+      if (count === n) {
+        state.memoryActive = false;
+        clearInterval(state.memoryTimer);
+        setTimeout(() => finishMemory(true), 350);
+      }
+    } else {
+      state.memoryActive = false;
+      clearInterval(state.memoryTimer);
+      playMemoryFile("wrong.mp3");
+      card.classList.add("wrong-pick");
+      const phase = document.getElementById("memoryTestPhase");
+      phase.classList.add("memory-shake");
+      setTimeout(() => {
+        phase.classList.remove("memory-shake");
+        finishMemory(false, "wrong");
+      }, 480);
+    }
+  }
+
+  function finishMemory(success, reason) {
+    clearInterval(state.memoryTimer);
+    state.memoryActive = false;
+
+    const score = state.memorySelected.size;
+    const n = state.memoryTargets.length;
+
+    if (success) {
+      playMemoryFile("correct.mp3");
+      state.memoryLevel++;
+    } else {
+      state.memoryLevel = 5;
+    }
+
+    document.getElementById("memoryTestPhase").classList.add("hidden");
+    document.getElementById("memoryResultPhase").classList.remove("hidden");
+
+    if (success) {
+      document.getElementById("memoryResultEyebrow").textContent = `LEVEL ${state.memoryLevel - 1} COMPLETE`;
+      document.getElementById("memoryResultScore").textContent = "WELL DONE!";
+      document.getElementById("memoryResultMessage").textContent = `All ${n} words found! Next: ${state.memoryLevel} words.`;
+      els.memoryPlayAgain.textContent = `→ LEVEL ${state.memoryLevel}`;
+    } else {
+      document.getElementById("memoryResultEyebrow").textContent = reason === "timeout" ? "TIME'S UP!" : "WRONG TAP!";
+      document.getElementById("memoryResultScore").textContent = `${score} / ${n}`;
+      document.getElementById("memoryResultMessage").textContent = "Back to Level 5.";
+      els.memoryPlayAgain.textContent = "↺ TRY LEVEL 5";
+    }
+
+    const resultGrid = document.getElementById("memoryResultGrid");
+    resultGrid.replaceChildren(...state.memoryTargets.map((record) => {
+      const hit = state.memorySelected.has(record[2]);
+      const card = document.createElement("div");
+      card.className = `memory-result-card ${hit ? "correct" : "missed"}`;
+      const img = document.createElement("img");
+      img.src = imagePath(record);
+      img.alt = record[2];
+      const name = document.createElement("span");
+      name.textContent = record[2];
+      const tick = document.createElement("span");
+      tick.className = "result-tick";
+      tick.textContent = hit ? "✓" : "✗";
+      card.append(img, name, tick);
+      return card;
+    }));
+  }
+
+  function playMemoryAgain() {
+    startMemory();
+  }
+
+  // ────────────────────────────────────────────────────────────────
+
+  function areRivalEquivalent(first, second) {
+    if (typeof RivalsDistractorAdapter === "undefined") return false;
+    const firstExclusions = RivalsDistractorAdapter.get(first[3], first[5], first[2]);
+    const secondExclusions = RivalsDistractorAdapter.get(second[3], second[5], second[2]);
+    return firstExclusions.includes(second[2]) || secondExclusions.includes(first[2]);
+  }
+
+  function getDistinctMatchRecords(pool) {
+    const handled = new Set();
+    const distinct = [];
+    pool.forEach((record, index) => {
+      if (handled.has(index)) return;
+      distinct.push(record);
+      handled.add(index);
+      const connected = [index];
+      while (connected.length) {
+        const currentIndex = connected.pop();
+        pool.forEach((candidate, candidateIndex) => {
+          if (handled.has(candidateIndex) || !areRivalEquivalent(pool[currentIndex], candidate)) return;
+          handled.add(candidateIndex);
+          connected.push(candidateIndex);
+        });
+      }
+    });
+    return distinct;
+  }
+
+  function openMatchCategoryChooser() {
+    els.matchCategoryOptions.replaceChildren();
+    getMatchCategories().forEach((category) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "anagram-category-choice";
+      button.innerHTML = `<strong>${category.title}</strong><small>${category.records.length} category words</small>`;
+      button.addEventListener("click", () => startMatch(category));
+      els.matchCategoryOptions.append(button);
+    });
+    closeExercises();
+    els.matchCategoryModal.classList.remove("hidden");
+  }
+
+  function closeMatchCategoryChooser() {
+    els.matchCategoryModal.classList.add("hidden");
+    openExercises();
+  }
+
+  function startMatch(category) {
+    state.matchCategoryTitle = category.title;
+    state.matchPool = [...category.records];
+    state.matchRemainingPool = sample(state.matchPool, state.matchPool.length);
+    els.matchCategoryModal.classList.add("hidden");
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    els.matchResult.classList.add("hidden");
+    els.matchScreen.classList.remove("hidden");
+    startMatchRound();
+  }
+
+  function startMatchRound() {
+    if (state.matchRemainingPool.length < 6) {
+      state.matchRemainingPool = sample(state.matchPool, state.matchPool.length);
+    }
+    state.matchRound = state.matchRemainingPool.splice(0, 6).map((record, index) => ({
+      id: `${record[2]}-${record[6]}-${index}`,
+      word: record[2],
+      imagePath: imagePath(record)
+    }));
+    state.matchSelectedWord = null;
+    state.matchMatched = 0;
+    state.matchStartedAt = null;
+    state.matchResolving = false;
+    els.matchSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit} · ${state.matchCategoryTitle}`;
+    els.matchProgressText.textContent = "0 / 6";
+    renderMatchRound();
+  }
+
+  function renderMatchRound() {
+    els.matchWordGrid.replaceChildren(...sample(state.matchRound, state.matchRound.length).map((pair) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "match-word";
+      button.dataset.pairId = pair.id;
+      button.textContent = pair.word;
+      applyTextSize(button, pair.word);
+      button.addEventListener("click", () => selectMatchWord(button));
+      return button;
+    }));
+    els.matchVisualGrid.replaceChildren(...sample(state.matchRound, state.matchRound.length).map((pair) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "match-visual";
+      button.dataset.pairId = pair.id;
+      button.disabled = true;
+      const image = document.createElement("img");
+      image.src = pair.imagePath;
+      image.alt = pair.word;
+      image.addEventListener("error", () => {
+        image.remove();
+        const placeholder = document.createElement("span");
+        placeholder.className = "match-image-placeholder";
+        placeholder.textContent = pair.word;
+        button.append(placeholder);
+      }, { once: true });
+      button.append(image);
+      button.addEventListener("click", () => selectMatchVisual(button));
+      return button;
+    }));
+  }
+
+  function selectMatchWord(button) {
+    if (button.disabled || state.matchResolving) return;
+    if (state.matchSelectedWord && state.matchSelectedWord !== button) {
+      state.matchSelectedWord.classList.remove("selected", "revealed");
+    }
+    state.matchSelectedWord = button;
+    button.classList.add("revealed");
+    [...els.matchWordGrid.children].forEach((item) => item.classList.toggle("selected", item === button));
+    setMatchVisualAvailability(true);
+  }
+
+  function selectMatchVisual(button) {
+    if (!state.matchSelectedWord || button.disabled || state.matchResolving) return;
+    button.classList.add("revealed");
+    matchWordAndVisual(button, state.matchSelectedWord);
+  }
+
+  function matchWordAndVisual(visualButton, wordButton) {
+    if (!wordButton || wordButton.disabled || visualButton.disabled) return;
+    state.matchResolving = true;
+    if (!state.matchStartedAt) state.matchStartedAt = Date.now();
+    const isCorrect = wordButton.dataset.pairId === visualButton.dataset.pairId;
+    if (!isCorrect) {
+      wordButton.classList.add("wrong");
+      visualButton.classList.add("wrong");
+      playFeedbackSound(false);
+      state.matchSelectedWord = null;
+      setMatchVisualAvailability(false);
+      setTimeout(() => {
+        wordButton.classList.remove("selected", "wrong", "revealed");
+        visualButton.classList.remove("wrong", "revealed");
+        state.matchResolving = false;
+      }, 1000);
+      return;
+    }
+    wordButton.disabled = true;
+    visualButton.disabled = true;
+    wordButton.classList.remove("selected");
+    wordButton.classList.add("correct");
+    visualButton.classList.add("correct");
+    state.matchSelectedWord = null;
+    setMatchVisualAvailability(false);
+    state.matchMatched += 1;
+    els.matchProgressText.textContent = `${state.matchMatched} / 6`;
+    playFeedbackSound(true);
+    if (state.matchMatched === 6) setTimeout(showMatchRoundResult, 700);
+    else state.matchResolving = false;
+  }
+
+  function setMatchVisualAvailability(isAvailable) {
+    [...els.matchVisualGrid.children].forEach((button) => {
+      if (button.classList.contains("correct")) return;
+      button.disabled = !isAvailable;
+      button.classList.toggle("ready", isAvailable);
+    });
+  }
+
+  function formatMatchTime(milliseconds) {
+    const totalSeconds = Math.max(0, Math.round(milliseconds / 1000));
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, "0");
+    const seconds = String(totalSeconds % 60).padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  }
+
+  function showMatchRoundResult() {
+    const elapsed = state.matchStartedAt ? Date.now() - state.matchStartedAt : 0;
+    els.matchTimeText.textContent = `Your time is: ${formatMatchTime(elapsed)}`;
+    els.matchResultMessage.textContent = `6 ${state.matchCategoryTitle.toLowerCase()} words matched.`;
+    els.matchScreen.classList.add("hidden");
+    els.matchResult.classList.remove("hidden");
+  }
+
+  function normalizeAnagram(word) {
+    return String(word || "").toUpperCase().replace(/[^A-Z]/g, "");
+  }
+
+  function shuffledLetters(word) {
+    const letters = [...normalizeAnagram(word)];
+    for (let attempt = 0; attempt < 500; attempt += 1) {
+      const shuffled = sample(letters, letters.length);
+      if (shuffled.every((letter, index) => letter !== letters[index])) return shuffled;
+    }
+    return letters.map((_, index) => letters[(index + 1) % letters.length]);
+  }
+
+  function canDerange(word) {
+    const letters = [...normalizeAnagram(word)];
+    if (letters.length < 2) return false;
+    const counts = new Map();
+    letters.forEach((letter) => counts.set(letter, (counts.get(letter) || 0) + 1));
+    return Math.max(...counts.values()) <= letters.length / 2;
+  }
+
+  function isEligibleAnagramWord(word) {
+    const value = String(word || "").trim();
+    return /^[A-Za-z]{5,11}$/.test(value) && canDerange(value);
+  }
+
+  function startAnagram(pool, categoryTitle) {
+    const eligiblePool = eligibleAnagramRecords(pool || getUnitPool());
+    if (!eligiblePool.length) return;
+    state.anagramQuestions = sample(eligiblePool, Math.min(10, eligiblePool.length));
+    state.anagramIndex = 0;
+    state.anagramScore = 0;
+    state.anagramMistakes = 0;
+    state.anagramCategoryTitle = categoryTitle || "ALL WORDS";
+    closeExercises();
+    els.anagramCategoryModal.classList.add("hidden");
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    els.anagramScreen.classList.remove("hidden");
+    els.anagramResult.classList.add("hidden");
+    renderAnagramQuestion();
+  }
+
+  function renderAnagramQuestion() {
+    clearTimeout(state.anagramTransitionTimer);
+    const record = state.anagramQuestions[state.anagramIndex];
+    state.anagramSolved = false;
+    state.anagramMistakes = 0;
+    els.anagramSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit} · ${state.anagramCategoryTitle}`;
+    els.anagramProgressText.textContent = `${state.anagramIndex + 1} / ${state.anagramQuestions.length}`;
+    els.anagramImage.src = imagePath(record);
+    els.anagramImage.alt = `Image for the anagram word`;
+    els.anagramFeedback.textContent = "Drag the letters into the correct order.";
+    els.anagramFeedback.className = "anagram-feedback";
+    updateAnagramMistakeCount();
+    els.anagramTiles.replaceChildren();
+    const letters = shuffledLetters(record[2]);
+    els.anagramTiles.style.setProperty("--tile-count", letters.length);
+    letters.forEach((letter, index) => {
+      const tile = document.createElement("button");
+      tile.className = "letter-tile";
+      tile.type = "button";
+      tile.draggable = true;
+      tile.dataset.letter = letter;
+      tile.dataset.tileId = `${Date.now()}-${index}`;
+      tile.textContent = letter;
+      tile.addEventListener("dragstart", () => {
+        state.draggedAnagramTile = tile;
+        tile.classList.add("dragging");
+      });
+      tile.addEventListener("dragend", () => {
+        state.draggedAnagramTile = null;
+        tile.classList.remove("dragging");
+        updateAnagramTilePositions();
+      });
+      tile.addEventListener("dragover", (event) => event.preventDefault());
+      tile.addEventListener("drop", (event) => reorderAnagramTile(event, tile));
+      els.anagramTiles.append(tile);
+    });
+    updateAnagramTilePositions(false);
+  }
+
+  function reorderAnagramTile(event, target) {
+    event.preventDefault();
+    const dragged = state.draggedAnagramTile;
+    if (!dragged || dragged === target || state.anagramSolved) return;
+    const targetBounds = target.getBoundingClientRect();
+    const dropAfterTarget = event.clientX > targetBounds.left + targetBounds.width / 2;
+    placeAnagramTile(dragged, dropAfterTarget ? target.nextSibling : target);
+  }
+
+  function reorderAnagramGap(event) {
+    event.preventDefault();
+    if (event.target.closest(".letter-tile")) return;
+
+    const dragged = state.draggedAnagramTile;
+    if (!dragged || state.anagramSolved) return;
+    const tiles = [...els.anagramTiles.children].filter((tile) => tile !== dragged);
+    const reference = tiles.find((tile) => {
+      const bounds = tile.getBoundingClientRect();
+      return event.clientX < bounds.left + bounds.width / 2;
+    }) || null;
+    placeAnagramTile(dragged, reference);
+  }
+
+  function placeAnagramTile(dragged, reference) {
+    if (reference === dragged || reference === dragged.nextElementSibling) return;
+    els.anagramTiles.insertBefore(dragged, reference);
+    dragged.classList.remove("dragging");
+    const placement = updateAnagramTilePositions();
+    if (placement.allCorrect) {
+      completeAnagramWord();
+    } else if (placement.draggedCorrect) {
+      playAnagramCorrectTone();
+    } else {
+      registerAnagramMistake(dragged);
+    }
+  }
+
+  function updateAnagramTilePositions() {
+    const expected = normalizeAnagram(state.anagramQuestions[state.anagramIndex]?.[2]);
+    let allCorrect = true;
+    let draggedCorrect = false;
+    [...els.anagramTiles.children].forEach((tile, index) => {
+      const isCorrectPosition = tile.dataset.letter === expected[index];
+      if (!isCorrectPosition) allCorrect = false;
+      if (tile === state.draggedAnagramTile && isCorrectPosition) draggedCorrect = true;
+      tile.classList.toggle("correct-position", isCorrectPosition);
+      tile.draggable = !isCorrectPosition && !state.anagramSolved;
+      tile.disabled = isCorrectPosition || state.anagramSolved;
+    });
+    return { allCorrect, draggedCorrect };
+  }
+
+  function playAnagramCorrectTone() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    try {
+      state.anagramAudioContext ||= new AudioContext();
+      const context = state.anagramAudioContext;
+      const start = context.currentTime;
+      const gain = context.createGain();
+      gain.connect(context.destination);
+      gain.gain.setValueAtTime(.001, start);
+      gain.gain.exponentialRampToValueAtTime(.08, start + .015);
+      gain.gain.exponentialRampToValueAtTime(.001, start + .18);
+      [660, 880].forEach((frequency, index) => {
+        const oscillator = context.createOscillator();
+        oscillator.type = "sine";
+        oscillator.frequency.setValueAtTime(frequency, start + index * .055);
+        oscillator.connect(gain);
+        oscillator.start(start + index * .055);
+        oscillator.stop(start + .19);
+      });
+    } catch {
+      // The anagram remains fully playable when browser audio is unavailable.
+    }
+  }
+
+  function playAnagramWrongTone() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    try {
+      state.anagramAudioContext ||= new AudioContext();
+      const context = state.anagramAudioContext;
+      const start = context.currentTime;
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      oscillator.type = "sawtooth";
+      oscillator.frequency.setValueAtTime(145, start);
+      oscillator.frequency.exponentialRampToValueAtTime(85, start + .18);
+      gain.gain.setValueAtTime(.001, start);
+      gain.gain.exponentialRampToValueAtTime(.14, start + .02);
+      gain.gain.exponentialRampToValueAtTime(.001, start + .2);
+      oscillator.connect(gain);
+      gain.connect(context.destination);
+      oscillator.start(start);
+      oscillator.stop(start + .21);
+    } catch {
+      // The exercise stays playable if browser audio is unavailable.
+    }
+  }
+
+  function updateAnagramMistakeCount() {
+    const lives = Math.max(0, 3 - state.anagramMistakes);
+    els.anagramMistakeCount.innerHTML = `LIVES ${Array.from({ length: 3 }, (_, index) => `<span class="anagram-heart${index < lives ? "" : " lost"}">&#9829;</span>`).join("")}`;
+  }
+
+  function registerAnagramMistake(tile) {
+    state.anagramMistakes += 1;
+    updateAnagramMistakeCount();
+    tile.classList.add("wrong-drop");
+    setTimeout(() => tile.classList.remove("wrong-drop"), 360);
+    if (state.anagramMistakes >= 3) {
+      restartAnagramWord();
+      return;
+    }
+    playAnagramWrongTone();
+    els.anagramFeedback.textContent = `${3 - state.anagramMistakes} mistake${state.anagramMistakes === 2 ? "" : "s"} left.`;
+    els.anagramFeedback.className = "anagram-feedback wrong";
+  }
+
+  function lockAnagramTiles() {
+    [...els.anagramTiles.children].forEach((tile) => {
+      tile.draggable = false;
+      tile.disabled = true;
+    });
+  }
+
+  function completeAnagramWord() {
+    if (state.anagramSolved) return;
+    state.anagramSolved = true;
+    state.anagramScore += 1;
+    lockAnagramTiles();
+    playFeedbackSound(true);
+    els.anagramFeedback.textContent = `Correct! ${state.anagramQuestions[state.anagramIndex][2]}`;
+    els.anagramFeedback.className = "anagram-feedback correct";
+    state.anagramTransitionTimer = setTimeout(nextAnagramQuestion, 1100);
+  }
+
+  function restartAnagramWord() {
+    if (state.anagramSolved) return;
+    state.anagramSolved = true;
+    lockAnagramTiles();
+    playFeedbackSound(false);
+    els.anagramFeedback.textContent = "No lives left. Try this word again!";
+    els.anagramFeedback.className = "anagram-feedback wrong";
+    state.anagramTransitionTimer = setTimeout(renderAnagramQuestion, 850);
+  }
+
+  function nextAnagramQuestion() {
+    state.anagramIndex += 1;
+    if (state.anagramIndex >= state.anagramQuestions.length) {
+      showAnagramResults();
+    } else {
+      renderAnagramQuestion();
+    }
+  }
+
+  function showAnagramResults() {
+    els.anagramResultScore.textContent = `${state.anagramScore} / ${state.anagramQuestions.length}`;
+    els.anagramResultMessage.textContent = `${state.anagramScore} words solved correctly.`;
+    els.anagramResult.classList.remove("hidden");
+    els.anagramScreen.querySelector(".anagram-card").classList.add("hidden");
+  }
+
+  function activateCategory(index) {
+    state.categoryIndex = index;
+    state.pool = state.categorySequence[index].records;
+    state.index = 0;
+    state.completedCheckpoints.clear();
+    state.completedRelationCheckpoints.clear();
+    showCategoryIntro();
+  }
+
+  function showCategoryIntro() {
+    const category = state.categorySequence[state.categoryIndex];
+    state.mode = "categoryIntro";
+    els.wordView.classList.add("hidden");
+    els.quizView.classList.add("hidden");
+    els.categoryIntroTitle.textContent = category.title;
+    els.categoryIntroNumber.textContent = String(state.categoryIndex + 1).padStart(2, "0");
+    els.categoryIntroCount.textContent = `${category.records.length} WORDS`;
+    els.categoryIntro.classList.remove("hidden");
+    updateChrome();
   }
 
   function renderWord() {
+    clearTimeout(state.categoryIntroTimer);
     clearTimeout(state.revealTimer);
+    clearTimeout(state.anagramTransitionTimer);
     clearTimeout(state.speechTimer);
     window.speechSynthesis?.cancel();
     stopFeedbackAudio();
     state.mode = "word";
     state.wordStage = "guess";
     const record = state.pool[state.index];
+    els.categoryIntro.classList.add("hidden");
     els.wordView.classList.remove("hidden");
     els.quizView.classList.add("hidden");
     els.englishWord.textContent = record[2];
@@ -329,10 +1414,12 @@
 
   function updateChrome() {
     const atEnd = state.index === state.pool.length - 1;
-    els.sessionLabel.textContent = `Grade ${state.grade} · Unit ${state.unit}`;
+    const category = state.categorySequence[state.categoryIndex];
+    els.sessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit}`;
+    els.categoryHeader.textContent = category ? category.title.toUpperCase() : "ALL VOCABULARY";
     els.progressText.textContent = `${state.index + 1} / ${state.pool.length}`;
     els.progressBar.style.width = `${((state.index + 1) / state.pool.length) * 100}%`;
-    els.navigation.classList.toggle("hidden", ["offer", "results", "farewell"].includes(state.mode));
+    els.navigation.classList.toggle("hidden", ["offer", "results", "farewell", "categoryIntro"].includes(state.mode));
     els.previous.classList.toggle("hidden", state.index === 0 || state.mode !== "word");
     els.next.textContent = state.mode !== "word" ? "Continue →" : atEnd ? "Finish Presentation ✓" : "Next →";
     els.next.classList.toggle("hidden", state.mode === "word" && state.wordStage !== "turkish");
@@ -383,6 +1470,14 @@
     } else if (state.index < state.pool.length - 1) {
       state.index += 1;
       renderWord();
+    } else {
+      advanceCategoryOrFinish();
+    }
+  }
+
+  function advanceCategoryOrFinish() {
+    if (state.categoryIndex < state.categorySequence.length - 1) {
+      activateCategory(state.categoryIndex + 1);
     } else {
       finishPresentation();
     }
@@ -586,6 +1681,7 @@
 
   function finishPresentation() {
     clearTimeout(state.revealTimer);
+    clearTimeout(state.categoryIntroTimer);
     clearTimeout(state.speechTimer);
     window.speechSynthesis?.cancel();
     stopFeedbackAudio();
@@ -598,7 +1694,7 @@
   }
 
   function startFinalQuiz() {
-    state.pool = records.filter((item) => item[3] === state.grade && item[5] === state.unit);
+    state.pool = getUnitPool();
     const shuffled = sample(state.pool, state.pool.length);
     state.finalQuizQuestions = shuffled.slice(0, 20);
     while (state.finalQuizQuestions.length < 20) {
@@ -635,6 +1731,7 @@
       els.quizOptions.append(button);
     });
     els.sessionLabel.textContent = `Grade ${state.grade} · Unit ${state.unit}`;
+    els.categoryHeader.textContent = "20 WORD QUIZ";
     els.progressText.textContent = `${state.finalQuizIndex + 1} / 20`;
     els.progressBar.style.width = `${((state.finalQuizIndex + 1) / 20) * 100}%`;
     els.previous.classList.add("hidden");
@@ -682,6 +1779,7 @@
 
   function hidePresentationViews() {
     els.wordView.classList.add("hidden");
+    els.categoryIntro.classList.add("hidden");
     els.quizView.classList.add("hidden");
     els.finishOffer.classList.add("hidden");
     els.quizResults.classList.add("hidden");
@@ -698,28 +1796,89 @@
 
   function returnToSetup() {
     clearTimeout(state.revealTimer);
+    clearTimeout(state.categoryIntroTimer);
     clearTimeout(state.speechTimer);
     window.speechSynthesis?.cancel();
     stopFeedbackAudio();
     hidePresentationViews();
     els.presentation.classList.add("hidden");
+    els.anagramScreen.classList.add("hidden");
+    els.matchScreen.classList.add("hidden");
+    els.matchResult.classList.add("hidden");
+    els.sortScreen.classList.add("hidden");
+    els.sortResult.classList.add("hidden");
+    clearTimeout(state.memoryStudyTimer);
+    clearInterval(state.memoryTimer);
+    state.memoryActive = false;
+    state.memoryLevel = 5;
+    els.memoryScreen.classList.add("hidden");
+    els.exercisesModal.classList.add("hidden");
+    els.categorySummaryModal.classList.add("hidden");
+    els.anagramCategoryModal.classList.add("hidden");
+    els.matchCategoryModal.classList.add("hidden");
+    els.anagramScreen.querySelector(".anagram-card").classList.remove("hidden");
     els.setup.classList.remove("hidden");
     els.poolSummary.innerHTML = `<strong>Ready for another round</strong><span>Select a grade and unit to continue.</span>`;
   }
 
+  function enterFullscreen() {
+    if (document.fullscreenElement || !document.documentElement.requestFullscreen) return;
+    document.documentElement.requestFullscreen().catch(() => {});
+  }
+
   els.start.addEventListener("click", startPresentation);
   els.startQuiz.addEventListener("click", startFinalQuiz);
+  els.viewCategories.addEventListener("click", openCategorySummary);
+  els.closeCategorySummary.addEventListener("click", closeCategorySummary);
+  els.exercises.addEventListener("click", openExercises);
+  els.closeExercises.addEventListener("click", closeExercises);
+  els.startAnagram.addEventListener("click", openAnagramCategoryChooser);
+  els.closeAnagramCategories.addEventListener("click", closeAnagramCategoryChooser);
+  els.startMatch.addEventListener("click", openMatchCategoryChooser);
+  els.closeMatchCategories.addEventListener("click", closeMatchCategoryChooser);
+  els.startSort.addEventListener("click", startSort);
+  els.startMemory.addEventListener("click", startMemory);
+  els.memoryBack.addEventListener("click", returnToSetup);
+  els.memoryStudyNext.addEventListener("click", advanceMemoryStudy);
+  els.memoryPlayAgain.addEventListener("click", playMemoryAgain);
+  els.memoryHome.addEventListener("click", returnToSetup);
+  els.anagramTiles.addEventListener("dragover", (event) => {
+    if (state.draggedAnagramTile) event.preventDefault();
+  });
+  els.anagramTiles.addEventListener("drop", reorderAnagramGap);
+  els.anagramBack.addEventListener("click", returnToSetup);
+  els.anagramExit.addEventListener("click", returnToSetup);
+  els.anagramHome.addEventListener("click", returnToSetup);
+  els.matchBack.addEventListener("click", returnToSetup);
+  els.matchYes.addEventListener("click", () => {
+    els.matchResult.classList.add("hidden");
+    els.matchScreen.classList.remove("hidden");
+    startMatchRound();
+  });
+  els.matchNo.addEventListener("click", returnToSetup);
+  els.sortBack.addEventListener("click", returnToSetup);
+  els.sortNextRound.addEventListener("click", () => {
+    if (els.sortNextRound.dataset.finalRound === "true") returnToSetup();
+    else {
+      els.sortResult.classList.add("hidden");
+      els.sortScreen.classList.remove("hidden");
+      startSortRound();
+    }
+  });
   els.next.addEventListener("click", next);
   els.previous.addEventListener("click", previous);
   els.revealTurkish.addEventListener("click", revealTurkish);
   els.speakWord.addEventListener("click", speakWord);
+  els.categoryContinue.addEventListener("click", () => {
+    if (state.mode === "categoryIntro") renderWord();
+  });
   els.acceptQuiz.addEventListener("click", startFinalQuiz);
   els.declineQuiz.addEventListener("click", showFarewell);
   els.resultsHome.addEventListener("click", returnToSetup);
   els.back.addEventListener("click", returnToSetup);
   els.fullscreen.addEventListener("click", () => {
     if (document.fullscreenElement) document.exitFullscreen();
-    else document.documentElement.requestFullscreen();
+    else enterFullscreen();
   });
   document.addEventListener("keydown", (event) => {
     if (els.presentation.classList.contains("hidden")) return;
@@ -727,6 +1886,7 @@
       event.preventDefault();
       revealTurkish();
     }
+    if (event.key === "Enter" && state.mode === "categoryIntro") renderWord();
     if (event.key === "ArrowRight" && !els.next.disabled) next();
     if (event.key === "ArrowLeft") previous();
   });

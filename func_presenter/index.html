@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grammar Function Presenter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="setupScreen" class="setup-screen">
+      <div class="brand-lockup">
+        <span class="brand-kicker">CLASSROOM TOOL</span>
+        <h1>GRAMMAR FUNCTION<br><em>PRESENTER</em></h1>
+        <p>Introduce a grammar function through focused examples and visuals.</p>
+      </div>
+
+      <div class="setup-card">
+        <div class="selection-block">
+          <div class="selection-heading"><span>01</span><div><h2>Choose a grade</h2><p>Choose one class level.</p></div></div>
+          <div id="gradeOptions" class="grade-grid" aria-label="Grade selection"></div>
+        </div>
+        <div class="selection-block">
+          <div class="selection-heading"><span>02</span><div><h2>Choose a unit</h2><p>Choose one unit.</p></div></div>
+          <div id="unitOptions" class="grade-grid" aria-label="Unit selection"></div>
+        </div>
+        <div class="selection-block">
+          <div class="selection-heading"><span>03</span><div><h2>Choose a function</h2><p>Choose the grammar function to present.</p></div></div>
+          <div id="functionOptions" class="function-grid" aria-label="Function selection"></div>
+        </div>
+        <div id="setupSummary" class="setup-summary"><strong>Choose a grade to begin</strong><span>Your available grammar functions will appear here.</span></div>
+        <div class="setup-actions">
+          <button id="startButton" class="primary-button" disabled>START PRESENTATION</button>
+          <button id="setupExercisesButton" class="secondary-button" disabled>EXERCISES</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="presentationScreen" class="presentation-screen hidden">
+      <header class="presentation-header">
+        <button id="backButton" class="icon-button" aria-label="Return to selection screen">BACK</button>
+        <div class="session-info">
+          <span id="gradeLabel">GRADE 5</span>
+          <strong id="functionTitle">USE OF "A, AN, THE"</strong>
+        </div>
+        <div class="progress"><strong id="progressText">1 / 10</strong><span>EXAMPLES</span></div>
+        <button id="presentationExercisesButton" class="icon-button">EXERCISES</button>
+        <button id="fullscreenButton" class="icon-button" aria-label="Toggle full screen">FULL</button>
+      </header>
+
+      <div class="progress-track"><span id="progressBar"></span></div>
+
+      <article id="exampleCard" class="example-card">
+        <div class="visual-panel">
+          <img id="exampleImage" alt="Grammar example visual">
+          <div id="visualFallback" class="visual-fallback hidden">
+            <span>VISUAL BRIEF</span>
+            <p id="visualBrief"></p>
+            <small>Place the planned image at the path assigned in the function module.</small>
+          </div>
+        </div>
+        <div class="sentence-panel">
+          <span id="articleBadge" class="article-badge">A</span>
+          <p id="referenceType" class="reference-type">NON-SPECIFIC NOUN</p>
+          <h1 id="sentenceText"></h1>
+          <p id="presentationExampleSentence" class="presentation-example-sentence hidden"></p>
+          <p id="functionDescription" class="function-description"></p>
+          <aside id="ruleNote" class="rule-note hidden"></aside>
+        </div>
+      </article>
+
+      <article id="functionIntro" class="function-intro hidden">
+        <p class="reference-type">PERSONAL PRONOUNS + TO BE</p>
+        <h1 id="functionIntroTitle">Choose the correct form of to be.</h1>
+        <div id="pronounTable" class="pronoun-table"></div>
+      </article>
+
+      <nav class="navigation-bar" aria-label="Presentation navigation">
+        <button id="previousButton" class="secondary-button">PREVIOUS</button>
+        <div id="slideDots" class="slide-dots" aria-hidden="true"></div>
+        <button id="nextButton" class="primary-button">NEXT</button>
+      </nav>
+    </section>
+
+    <section id="sortScreen" class="sort-screen hidden">
+      <header class="presentation-header">
+        <button id="sortBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="sortGradeLabel">GRADE 5</span><strong>SORT IT!</strong></div>
+        <div class="progress"><strong id="sortProgressText">0 / 10</strong><span>SORTED</span></div>
+        <div class="exercise-score">MISTAKES <strong id="sortMistakeCount">0</strong></div>
+      </header>
+      <p class="sort-instruction">Drag a card to the correct category. On a touch screen, tap a card and then tap a category.</p>
+      <div id="sortCardBank" class="sort-card-bank" aria-label="Cards to sort"></div>
+      <div id="sortZones" class="sort-zones" aria-label="Sorting categories"></div>
+    </section>
+
+    <section id="conversationScreen" class="conversation-screen hidden">
+      <header class="presentation-header">
+        <button id="conversationBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="conversationGradeLabel">GRADE 5</span><strong>ORDER THE SENTENCES</strong></div>
+        <div class="progress"><strong id="conversationProgressText">1 / 11</strong><span>CLUBS</span></div>
+        <div class="exercise-score">SCORE <strong id="conversationScore">0</strong></div>
+      </header>
+      <div id="conversationBuilderView" class="conversation-card">
+        <p class="reference-type">BUILD THE CONVERSATION</p>
+        <h1>Tap the next sentence in the correct order.</h1>
+        <div id="conversationSequence" class="conversation-sequence"></div>
+        <div id="conversationLineBank" class="conversation-line-bank"></div>
+        <button id="conversationNextButton" class="primary-button conversation-next hidden" disabled>NEXT</button>
+      </div>
+      <div id="clubQuizView" class="club-quiz-card hidden">
+        <p class="reference-type">CHOOSE THE CLUB</p>
+        <h1 id="clubQuizQuestion">Which club is this conversation about?</h1>
+        <div id="clubQuizOptions" class="club-quiz-options"></div>
+        <p id="clubQuizFeedback" class="exercise-feedback" aria-live="polite"></p>
+        <button id="clubQuizNextButton" class="primary-button" disabled>NEXT CLUB</button>
+      </div>
+    </section>
+
+    <section id="jumbledScreen" class="jumbled-screen hidden">
+      <header class="presentation-header">
+        <button id="jumbledBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="jumbledGradeLabel">GRADE 5</span><strong>JUMBLED SENTENCES</strong></div>
+        <div class="progress"><strong id="jumbledProgressText">1 / 14</strong><span>SENTENCES</span></div>
+        <div class="exercise-score">SCORE <strong id="jumbledScore">0</strong></div>
+        <div class="jumbled-lives" aria-label="Three lives remaining"><span id="jumbledLives"></span></div>
+      </header>
+      <div id="jumbledCard" class="jumbled-card">
+        <p id="jumbledType" class="reference-type">QUESTION</p>
+        <h1>Drag the words into the correct order.</h1>
+        <div id="jumbledWordTiles" class="jumbled-word-tiles" aria-label="Draggable words"></div>
+        <p id="jumbledFeedback" class="exercise-feedback" aria-live="polite">Build the sentence.</p>
+      </div>
+    </section>
+
+    <section id="matchingScreen" class="matching-screen hidden">
+      <header class="presentation-header">
+        <button id="matchingBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="matchingGradeLabel">GRADE 5</span><strong>MATCH PICTURES</strong></div>
+        <div class="progress"><strong id="matchingProgressText">0 / 10</strong><span>MATCHES</span></div>
+        <div class="exercise-score">SCORE <strong id="matchingScore">0</strong></div>
+      </header>
+      <div class="matching-card">
+        <p class="reference-type">MATCH THE SENTENCE TO THE CLUB VISUAL</p>
+        <h1>Choose a sentence, then open a picture.</h1>
+        <div class="matching-layout">
+          <div id="matchingSentenceGrid" class="matching-sentence-grid"></div>
+          <div id="matchingVisualGrid" class="matching-visual-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="matchingTimeScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p class="brand-kicker">MATCHING SET COMPLETE</p>
+        <h1 id="matchingTimeText">Your time is: 00:00</h1>
+        <p id="matchingTimeMessage"></p>
+        <button id="matchingTimeNextButton" class="primary-button">NEXT 6 MATCHES</button>
+      </div>
+    </section>
+
+    <div id="exerciseMenu" class="exercise-menu-overlay hidden" role="dialog" aria-modal="true" aria-label="Exercises">
+      <div class="exercise-menu-card">
+        <button id="closeExerciseMenuButton" class="icon-button exercise-menu-close">CLOSE</button>
+        <p class="brand-kicker">EXERCISES</p>
+        <h2>Choose an activity</h2>
+        <div id="exerciseMenuOptions" class="exercise-menu-options"></div>
+      </div>
+    </div>
+
+    <section id="completeScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p class="brand-kicker">PRESENTATION COMPLETE</p>
+        <h1>Ready to<br><em>practise?</em></h1>
+        <p>You have seen all the examples. Choose an exercise to practise.</p>
+        <div class="setup-actions">
+          <button id="completeExercisesButton" class="primary-button">EXERCISES</button>
+          <button id="completeHomeButton" class="secondary-button">BACK TO MENU</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="exerciseScreen" class="exercise-screen hidden">
+      <header class="presentation-header">
+        <button id="exerciseBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="exerciseGradeLabel">GRADE 5</span><strong id="exerciseTitle">A / AN / THE CHALLENGE</strong></div>
+        <div class="progress"><strong id="exerciseProgressText">1 / 10</strong><span>QUESTIONS</span></div>
+        <div class="exercise-score">SCORE <strong id="exerciseScore">0</strong></div>
+      </header>
+      <div class="progress-track"><span id="exerciseProgressBar"></span></div>
+      <article id="exerciseCard" class="exercise-card">
+        <div id="exerciseVisualPanel" class="visual-panel">
+          <img id="exerciseImage" alt="Exercise visual">
+          <div id="exerciseVisualFallback" class="visual-fallback hidden"><span>VISUAL BRIEF</span><p id="exerciseVisualBrief"></p></div>
+        </div>
+        <div class="exercise-panel">
+          <p id="exerciseReferenceType" class="reference-type">CHOOSE THE CORRECT ARTICLE</p>
+          <span id="exerciseWord" class="exercise-word">DOG</span>
+          <h1 id="exercisePrompt">___ dog</h1>
+          <p id="exerciseSentence" class="exercise-sentence"></p>
+          <div id="articleOptions" class="article-options"></div>
+          <p id="exerciseFeedback" class="exercise-feedback" aria-live="polite"></p>
+          <button id="exerciseNextButton" class="primary-button" disabled>NEXT</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="exerciseResultScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p class="brand-kicker">EXERCISE COMPLETE</p>
+        <h1 id="exerciseResultScore">0 / 10</h1>
+        <p id="exerciseResultMessage"></p>
+        <button id="exerciseHomeButton" class="primary-button">BACK TO MENU</button>
+      </div>
+    </section>
+
+    <section id="trueFalseScreen" class="true-false-screen hidden">
+      <header class="presentation-header">
+        <button id="trueFalseBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="trueFalseGradeLabel">GRADE 5</span><strong>TRUE - FALSE</strong></div>
+        <div class="progress"><strong id="trueFalseProgressText">0 / 16</strong><span>ANSWERED</span></div>
+        <div class="exercise-score">SCORE <strong id="trueFalseScore">0</strong></div>
+      </header>
+      <div class="true-false-card">
+        <p class="reference-type">READ EACH SCHOOL RULE AND MARK IT TRUE OR FALSE.</p>
+        <div id="trueFalseGrid" class="true-false-grid"></div>
+      </div>
+    </section>
+
+    <section id="pronounMemoryScreen" class="pronoun-memory-screen hidden">
+      <header class="presentation-header">
+        <button id="pronounMemoryExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="pronounMemoryGradeLabel">GRADE 5</span><strong>PRONOUN MEMORY</strong></div>
+        <div class="progress"><strong id="pronounMemoryLevelText">LEVEL 1 / 10</strong><span id="pronounMemoryStatus">MEMORIZE</span></div>
+        <div class="exercise-score">SCORE <strong id="pronounMemoryScore">0</strong></div>
+      </header>
+      <div class="pronoun-memory-card">
+        <p id="pronounMemoryInstruction" class="reference-type">MEMORIZE THE PICTURES.</p>
+        <div id="pronounMemoryImages" class="pronoun-memory-images"></div>
+        <div id="pronounMemoryChoices" class="pronoun-memory-choices hidden">
+          <p id="pronounMemoryPrompt"></p>
+          <div class="pronoun-choice-buttons">
+            <button type="button" data-pronoun="he">HE</button>
+            <button type="button" data-pronoun="she">SHE</button>
+            <button type="button" data-pronoun="it">IT</button>
+            <button type="button" data-pronoun="they">THEY</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pronounMemoryResultScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p id="pronounMemoryResultKicker" class="brand-kicker">GAME OVER</p>
+        <h1 id="pronounMemoryResultScore">0</h1>
+        <p id="pronounMemoryResultMessage"></p>
+        <div class="memory-result-actions">
+          <button id="pronounMemoryExitResultButton" class="secondary-button">EXIT</button>
+          <button id="pronounMemoryRestartButton" class="primary-button">RESTART</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="pronounSnapScreen" class="pronoun-snap-screen hidden">
+      <header class="presentation-header">
+        <button id="pronounSnapExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="pronounSnapGradeLabel">GRADE 5 · UNIT 1</span><strong>PRONOUN SNAP</strong></div>
+        <div class="progress"><strong id="pronounSnapProgressText">1 / 20</strong><span id="pronounSnapTimerText">2 SECONDS</span></div>
+        <div class="exercise-score">SCORE <strong id="pronounSnapScore">0</strong><br>STREAK <strong id="pronounSnapStreak">0</strong></div>
+      </header>
+      <div id="pronounSnapCard" class="pronoun-snap-card">
+        <p class="reference-type">CHOOSE THE PRONOUN BEFORE THE PICTURE CHANGES.</p>
+        <img id="pronounSnapImage" alt="Pronoun Snap visual">
+        <div id="pronounSnapChoices" class="pronoun-choice-buttons">
+          <button type="button" data-pronoun="he">HE</button>
+          <button type="button" data-pronoun="she">SHE</button>
+          <button type="button" data-pronoun="it">IT</button>
+          <button type="button" data-pronoun="they">THEY</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="pronounSnapResultScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p class="brand-kicker">PRONOUN SNAP COMPLETE</p>
+        <h1 id="pronounSnapResultScore">0</h1>
+        <p id="pronounSnapResultMessage"></p>
+        <div class="memory-result-actions">
+          <button id="pronounSnapExitResultButton" class="secondary-button">EXIT</button>
+          <button id="pronounSnapRestartButton" class="primary-button">PLAY AGAIN</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="functions/a-an-the.js"></script>
+  <script src="functions/singular-plurals.js"></script>
+  <script src="functions/simple-present-do-you-like.js"></script>
+  <script src="functions/modals-prohibition.js"></script>
+  <script src="functions/imperatives-do-dont.js"></script>
+  <script src="functions/to-be-present.js"></script>
+  <script src="functions/index.js"></script>
+  <script src="exercises/activity-modules.js"></script>
+  <script src="exercises/article-choice.js"></script>
+  <script src="exercises/modals-prohibition-choice.js"></script>
+  <script src="exercises/modals-prohibition-true-false.js"></script>
+  <script src="exercises/imperatives-choice.js"></script>
+  <script src="exercises/imperatives-true-false.js"></script>
+  <script src="exercises/imperatives-sort.js"></script>
+  <script src="exercises/to-be-present-choice.js"></script>
+  <script src="exercises/pronoun-memory.js"></script>
+  <script src="exercises/pronoun-snap.js"></script>
+  <script src="exercises/singular-plural-choice.js"></script>
+  <script src="exercises/sort-it.js"></script>
+  <script src="exercises/conversation-builder.js"></script>
+  <script src="exercises/jumbled-sentences.js"></script>
+  <script src="exercises/activity-visual-match.js"></script>
+  <script src="exercises/index.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
