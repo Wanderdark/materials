@@ -708,6 +708,43 @@
           <div class="hub-arrow">&#9654; &nbsp;Open</div>
         </a>
 
+        <a class="hub-card learn" href="func_presenter/index.html">
+          <div class="hub-icon">📝</div>
+          <div class="hub-title">Grammar Presenter</div>
+          <div class="hub-sub">Dilbilgisi konularının sınıfta sunumu için interaktif bir araç</div>
+          <div class="hub-arrow">&#9654; &nbsp;Open</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       STUDENT LEARN HUB VIEW
+  ══════════════════════════════════════ -->
+  <div id="student-learn-hub-view" class="hub-section">
+
+    <div class="back-bar">
+      <button class="back-btn" onclick="showHub()">&#8592; &nbsp;Back</button>
+    </div>
+
+    <div class="hub-cards-area">
+      <div class="hub-grid">
+
+        <a class="hub-card learn" href="vocab_presenter/index.html">
+          <div class="hub-icon">📖</div>
+          <div class="hub-title">Learn Words</div>
+          <div class="hub-sub">Ünite kelimelerinin flashcard'larla sunumu</div>
+          <div class="hub-arrow">&#9654; &nbsp;Open</div>
+        </a>
+
+        <a class="hub-card practice" href="func_presenter/index.html">
+          <div class="hub-icon">📝</div>
+          <div class="hub-title">Learn Grammar</div>
+          <div class="hub-sub">Dilbilgisi konularını interaktif sunumlarla keşfet</div>
+          <div class="hub-arrow">&#9654; &nbsp;Open</div>
+        </a>
+
       </div>
     </div>
   </div>
@@ -950,19 +987,20 @@
     }
 
     function showLearn() {
+      document.getElementById('hub-view').style.display = 'none';
       if (currentRole === 'teacher') {
-        document.getElementById('hub-view').style.display = 'none';
         document.getElementById('learn-hub-view').style.display = 'flex';
-        window.scrollTo({ top: 0, behavior: 'instant' });
       } else {
-        window.location.href = 'vocab_presenter/index.html';
+        document.getElementById('student-learn-hub-view').style.display = 'flex';
       }
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
     function showHub() {
       document.getElementById('teacher-practice-view').style.display = 'none';
       document.getElementById('student-practice-view').style.display = 'none';
       document.getElementById('learn-hub-view').style.display = 'none';
+      document.getElementById('student-learn-hub-view').style.display = 'none';
       document.getElementById('hub-view').style.display = 'flex';
       window.scrollTo({ top: 0, behavior: 'instant' });
     }

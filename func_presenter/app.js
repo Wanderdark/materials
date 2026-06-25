@@ -17,6 +17,7 @@ const els = {
   completeHome: $("completeHomeButton"),
   back: $("backButton"),
   exampleCard: $("exampleCard"),
+  exampleVisualPanel: $("exampleVisualPanel"),
   functionIntro: $("functionIntro"),
   functionIntroTitle: $("functionIntroTitle"),
   pronounTable: $("pronounTable"),
@@ -30,10 +31,19 @@ const els = {
   brief: $("visualBrief"),
   article: $("articleBadge"),
   referenceType: $("referenceType"),
+  timeQuestion: $("timeQuestion"),
   sentence: $("sentenceText"),
   presentationExampleSentence: $("presentationExampleSentence"),
   description: $("functionDescription"),
   ruleNote: $("ruleNote"),
+  timetableAnswerView: $("timetableAnswerView"),
+  timetableAnswer: $("timetableAnswer"),
+  timetableReveal: $("timetableRevealButton"),
+  timeDigitalDisplay: $("timeDigitalDisplay"),
+  timePromptView: $("timePromptView"),
+  timePromptDigital: $("timePromptDigital"),
+  timeReveal: $("timeRevealButton"),
+  timePromptAnswer: $("timePromptAnswer"),
   previous: $("previousButton"),
   next: $("nextButton"),
   dots: $("slideDots"),
@@ -59,6 +69,7 @@ const els = {
   exerciseNext: $("exerciseNextButton"),
   exerciseResultScore: $("exerciseResultScore"),
   exerciseResultMessage: $("exerciseResultMessage"),
+  exerciseContinue: $("exerciseContinueButton"),
   exerciseHome: $("exerciseHomeButton"),
   sort: $("sortScreen"),
   sortBack: $("sortBackButton"),
@@ -110,7 +121,15 @@ const els = {
   trueFalseGrade: $("trueFalseGradeLabel"),
   trueFalseProgress: $("trueFalseProgressText"),
   trueFalseScore: $("trueFalseScore"),
+  trueFalseCard: $("trueFalseCard"),
+  trueFalseVisualPanel: $("trueFalseVisualPanel"),
+  trueFalseImage: $("trueFalseImage"),
+  trueFalseVisualFallback: $("trueFalseVisualFallback"),
+  trueFalseVisualBrief: $("trueFalseVisualBrief"),
+  trueFalseInstruction: $("trueFalseInstruction"),
   trueFalseGrid: $("trueFalseGrid"),
+  trueFalseActions: $("trueFalseActions"),
+  trueFalseNext: $("trueFalseNextButton"),
   pronounMemory: $("pronounMemoryScreen"),
   pronounMemoryExit: $("pronounMemoryExitButton"),
   pronounMemoryGrade: $("pronounMemoryGradeLabel"),
@@ -141,14 +160,29 @@ const els = {
   pronounSnapResultScore: $("pronounSnapResultScore"),
   pronounSnapResultMessage: $("pronounSnapResultMessage"),
   pronounSnapRestart: $("pronounSnapRestartButton"),
-  pronounSnapExitResult: $("pronounSnapExitResultButton")
+  pronounSnapExitResult: $("pronounSnapExitResultButton"),
+  timeSetter: $("timeSetterScreen"),
+  timeSetterExit: $("timeSetterExitButton"),
+  timeSetterGrade: $("timeSetterGradeLabel"),
+  timeSetterRound: $("timeSetterRoundText"),
+  timeSetterScore: $("timeSetterScore"),
+  timeSetterTarget: $("timeSetterTarget"),
+  timeSetterHour: $("timeSetterHour"),
+  timeSetterMinute: $("timeSetterMinute"),
+  timeSetterHourUp: $("timeSetterHourUp"),
+  timeSetterHourDown: $("timeSetterHourDown"),
+  timeSetterMinuteUp: $("timeSetterMinuteUp"),
+  timeSetterMinuteDown: $("timeSetterMinuteDown"),
+  timeSetterCheck: $("timeSetterCheckButton"),
+  timeSetterFeedback: $("timeSetterFeedback"),
+  timeSetterActions: $("timeSetterActions")
 };
 
-const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false };
+const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, exerciseReturnScreen: "setup" };
 let feedbackAudio = null;
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -281,9 +315,13 @@ function renderExample() {
   els.exampleCard.classList.remove("hidden");
   const example = state.module.sentences[state.index];
   const total = state.module.sentences.length;
+  const isTimePrompt = Boolean(example.timePrompt);
+  const isTimetableSlide = Boolean(example.timetableSlide);
   const focus = example.focus || example.article;
   const highlight = example.highlight || example.article;
-  const highlightedSentence = example.highlightSuffix
+  const highlightedSentence = isTimePrompt || isTimetableSlide
+    ? ""
+    : example.highlightSuffix
     ? example.sentence.replace(
       new RegExp(`\\b(${example.highlightStem})(${example.highlightSuffix})\\b`, "i"),
       `$1<mark class="plural-ending ${example.suffixClass}">$2</mark>`
@@ -295,12 +333,33 @@ function renderExample() {
   els.title.textContent = state.module.title.toUpperCase();
   els.progressText.textContent = `${state.index + 1} / ${total}`;
   els.progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
+  els.exampleCard.classList.toggle("time-prompt-slide", isTimePrompt);
+  els.exampleCard.classList.toggle("timetable-slide", isTimetableSlide);
+  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt);
+  els.timeDigitalDisplay.textContent = example.digitalTime || "";
+  els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
+  els.timePromptView.classList.toggle("hidden", !isTimePrompt);
+  els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
+  if (isTimePrompt) {
+    els.timePromptDigital.textContent = example.digitalTime;
+    els.timePromptAnswer.textContent = example.answerSentence;
+    els.timePromptAnswer.classList.add("hidden");
+    els.timeReveal.disabled = false;
+  }
+  [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt));
   els.article.textContent = focus.toUpperCase();
   els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
-  els.referenceType.textContent = example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
-  els.sentence.innerHTML = highlightedSentence;
-  els.sentence.classList.toggle("long-phrase", example.sentence.length > 10);
-  const showExampleSentence = state.module.id === "a-an-the" && example.exerciseSentence;
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide);
+  els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
+  els.timeQuestion.textContent = example.question || "";
+  els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
+  els.sentence.innerHTML = isTimetableSlide
+    ? renderTimetableParts(example.questionParts || example.sentenceParts)
+    : highlightedSentence;
+  els.sentence.classList.toggle("long-phrase", isTimetableSlide || (example.sentence?.length || 0) > 10);
+  els.sentence.classList.toggle("timetable-sentence", isTimetableSlide);
+  const showExampleSentence = !isTimePrompt && state.module.id === "a-an-the" && example.exerciseSentence;
   els.presentationExampleSentence.textContent = showExampleSentence
     ? example.exerciseSentence.replace("___", example.article)
     : "";
@@ -308,13 +367,22 @@ function renderExample() {
   els.description.textContent = state.module.id === "a-an-the"
     ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
     : state.module.description;
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !els.description.textContent);
   els.ruleNote.textContent = example.ruleNote || "";
-  els.ruleNote.classList.toggle("hidden", !example.ruleNote);
-  els.brief.textContent = example.visualBrief;
-  els.fallback.classList.add("hidden");
-  els.image.classList.remove("hidden");
-  els.image.alt = example.visualBrief;
-  els.image.src = example.imagePath;
+  els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !example.ruleNote);
+  if (isTimetableSlide && example.answerParts) {
+    els.timetableAnswer.innerHTML = renderTimetableParts(example.answerParts);
+    els.timetableAnswer.classList.toggle("hidden", Boolean(example.answerReveal));
+    els.timetableReveal.classList.toggle("hidden", !example.answerReveal);
+    els.timetableReveal.disabled = false;
+  }
+  if (!isTimePrompt) {
+    els.brief.textContent = example.visualBrief;
+    els.fallback.classList.add("hidden");
+    els.image.classList.remove("hidden");
+    els.image.alt = example.visualBrief;
+    els.image.src = example.imagePath;
+  }
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
   els.next.textContent = state.index === total - 1 ? "FINISH" : "NEXT";
   els.dots.replaceChildren(...state.module.sentences.map((_, index) => {
@@ -322,6 +390,24 @@ function renderExample() {
     dot.className = index === state.index ? "active" : index < state.index ? "complete" : "";
     return dot;
   }));
+}
+
+function revealTimeAnswer() {
+  const example = state.module?.sentences[state.index];
+  if (!example?.timePrompt) return;
+  els.timePromptAnswer.classList.remove("hidden");
+  els.timeReveal.disabled = true;
+}
+
+function renderTimetableParts(parts = []) {
+  return parts.map(({ text, className = "" }) => `<span class="${className}">${text}</span>`).join("");
+}
+
+function revealTimetableAnswer() {
+  const example = state.module?.sentences[state.index];
+  if (!example?.timetableSlide || !example.answerReveal) return;
+  els.timetableAnswer.classList.remove("hidden");
+  els.timetableReveal.disabled = true;
 }
 
 function next() {
@@ -353,6 +439,7 @@ function returnToSetup() {
   clearTimeout(state.pronounMemoryTimer);
   clearTimeout(state.pronounMemoryAnswerTimer);
   clearTimeout(state.pronounSnapTimer);
+  clearTimeout(state.timeSetterAdvanceTimer);
   hideAllScreens();
   els.setup.classList.remove("hidden");
 }
@@ -364,6 +451,11 @@ function showPresentationComplete() {
 
 function openExerciseMenu() {
   if (!state.module) return;
+  state.exerciseReturnScreen = !els.presentation.classList.contains("hidden")
+    ? "presentation"
+    : !els.complete.classList.contains("hidden")
+    ? "complete"
+    : "setup";
   const exercises = getExercisesForFunction(state.module);
   if (!exercises.length) return;
   els.exerciseMenuOptions.replaceChildren(...exercises.map((exercise) => {
@@ -377,7 +469,8 @@ function openExerciseMenu() {
       "match-pictures": "Match each activity sentence to its club visual.",
       "true-false-grid": "Mark every school rule as true or false.",
       "pronoun-memory": "Memorize the pictures, then choose the pronouns in order.",
-      "pronoun-snap": "Choose the pronoun before each Unit 1 + 2 picture changes."
+      "pronoun-snap": "Choose the pronoun before each Unit 1 + 2 picture changes.",
+      "time-setter": "Set the digital clock to match the target time."
     };
     const exerciseDescription = exerciseDescriptions[exercise.activity] || "Start this activity.";
     button.innerHTML = `<span>EXERCISE</span><strong>${exercise.title}</strong><small>${exerciseDescription}</small>`;
@@ -389,6 +482,7 @@ function openExerciseMenu() {
 
 function startSelectedExercise(exercise) {
   els.exerciseMenu.classList.add("hidden");
+  resetExerciseResultActions();
   switch (exercise.activity) {
     case "sort":
       startSortIt(exercise);
@@ -411,9 +505,163 @@ function startSelectedExercise(exercise) {
     case "pronoun-snap":
       startPronounSnap(exercise);
       return;
+    case "time-setter":
+      startTimeSetter(exercise);
+      return;
     default:
       startChoiceExercise(exercise);
   }
+}
+
+function resetExerciseResultActions() {
+  els.exerciseContinue.classList.add("hidden");
+  els.exerciseHome.textContent = "BACK TO MENU";
+  els.exerciseHome.className = "primary-button";
+}
+
+function createTimeSetterTarget(previousTarget = null, round = 1, exercise = {}) {
+  const defaultTypes = [
+    { minutes: [0] },
+    { minutes: [15] },
+    { minutes: [30] },
+    { minutes: [5, 10, 20] },
+    { minutes: [45] }
+  ];
+  const types = exercise.timeTypes || defaultTypes;
+  const guidedRounds = exercise.guidedRounds || [0, 15, 30, 0, 15];
+  const allowedTypes = round <= guidedRounds.length
+    ? [{ minutes: [guidedRounds[round - 1]] }]
+    : types;
+  let target;
+  do {
+    const type = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
+    target = {
+      hour: Math.floor(Math.random() * 12) + 1,
+      minute: type.minutes[Math.floor(Math.random() * type.minutes.length)]
+    };
+  } while (previousTarget && target.hour === previousTarget.hour && target.minute === previousTarget.minute);
+  return target;
+}
+
+function describeTimeSetterTarget({ hour, minute }) {
+  const words = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+  const hourWord = words[hour];
+  if (minute === 0) return `It is ${hourWord} o'clock.`;
+  if (minute === 15) return `It is quarter past ${hourWord}.`;
+  if (minute === 30) return `It is half past ${hourWord}.`;
+  if (minute === 45) return `It is quarter to ${words[hour === 12 ? 1 : hour + 1]}.`;
+  return `It is ${words[minute]} past ${hourWord}.`;
+}
+
+function startTimeSetter(exercise) {
+  state.timeSetterExercise = exercise;
+  state.timeSetterScore = 0;
+  state.timeSetterRound = 1;
+  state.timeSetterTarget = createTimeSetterTarget(null, state.timeSetterRound, state.timeSetterExercise);
+  state.timeSetterHour = 12;
+  state.timeSetterMinute = 0;
+  state.timeSetterLocked = false;
+  hideAllScreens();
+  els.timeSetter.classList.remove("hidden");
+  renderTimeSetter();
+}
+
+function renderTimeSetter() {
+  els.timeSetterGrade.textContent = `GRADE ${state.grade}`;
+  els.timeSetterRound.textContent = `ROUND ${state.timeSetterRound}`;
+  els.timeSetterScore.textContent = state.timeSetterScore;
+  els.timeSetterTarget.textContent = describeTimeSetterTarget(state.timeSetterTarget);
+  els.timeSetterHour.textContent = state.timeSetterHour;
+  els.timeSetterMinute.textContent = String(state.timeSetterMinute).padStart(2, "0");
+  els.timeSetterFeedback.textContent = "Set the clock, then press OK.";
+  els.timeSetterFeedback.className = "exercise-feedback";
+  els.timeSetterActions.replaceChildren(
+    createTimeSetterAction("OK", "primary-button", checkTimeSetter),
+    createTimeSetterAction("EXIT", "secondary-button", returnFromTimeSetter)
+  );
+  setTimeSetterControlsDisabled(false);
+}
+
+function createTimeSetterAction(label, className, handler) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = className;
+  button.textContent = label;
+  button.addEventListener("click", handler);
+  return button;
+}
+
+function setTimeSetterControlsDisabled(disabled) {
+  [els.timeSetterHourUp, els.timeSetterHourDown, els.timeSetterMinuteUp, els.timeSetterMinuteDown]
+    .forEach((button) => { button.disabled = disabled; });
+}
+
+function playTimeSetterStep(isIncrease) {
+  window.exerciseActivityModules.playTone(isIncrease ? "correct-position" : "wrong-position");
+}
+
+function adjustTimeSetterHour(change) {
+  if (state.timeSetterLocked) return;
+  state.timeSetterHour = ((state.timeSetterHour - 1 + change + 12) % 12) + 1;
+  els.timeSetterHour.textContent = state.timeSetterHour;
+  playTimeSetterStep(change > 0);
+}
+
+function adjustTimeSetterMinute(change) {
+  if (state.timeSetterLocked) return;
+  state.timeSetterMinute = (state.timeSetterMinute + change + 60) % 60;
+  els.timeSetterMinute.textContent = String(state.timeSetterMinute).padStart(2, "0");
+  playTimeSetterStep(change > 0);
+}
+
+function checkTimeSetter() {
+  if (state.timeSetterLocked) return;
+  const isCorrect = state.timeSetterHour === state.timeSetterTarget.hour && state.timeSetterMinute === state.timeSetterTarget.minute;
+  state.timeSetterLocked = true;
+  setTimeSetterControlsDisabled(true);
+  if (isCorrect) {
+    state.timeSetterScore += 1;
+    playFeedbackSound(true);
+    els.timeSetterScore.textContent = state.timeSetterScore;
+    els.timeSetterFeedback.textContent = "Correct! Get ready for the next time.";
+    els.timeSetterFeedback.className = "exercise-feedback correct";
+    els.timeSetterActions.replaceChildren();
+    state.timeSetterAdvanceTimer = window.setTimeout(() => {
+      state.timeSetterRound += 1;
+      state.timeSetterTarget = createTimeSetterTarget(state.timeSetterTarget, state.timeSetterRound, state.timeSetterExercise);
+      state.timeSetterHour = 12;
+      state.timeSetterMinute = 0;
+      state.timeSetterLocked = false;
+      renderTimeSetter();
+    }, 1200);
+    return;
+  }
+  playFeedbackSound(false);
+  els.timeSetterFeedback.textContent = "Not quite. Try the same target again.";
+  els.timeSetterFeedback.className = "exercise-feedback wrong";
+  els.timeSetterActions.replaceChildren(
+    createTimeSetterAction("TRY AGAIN", "primary-button", retryTimeSetter),
+    createTimeSetterAction("EXIT", "secondary-button", returnFromTimeSetter)
+  );
+}
+
+function retryTimeSetter() {
+  state.timeSetterLocked = false;
+  renderTimeSetter();
+}
+
+function returnFromTimeSetter() {
+  clearTimeout(state.timeSetterAdvanceTimer);
+  hideAllScreens();
+  if (state.exerciseReturnScreen === "presentation") {
+    els.presentation.classList.remove("hidden");
+    return;
+  }
+  if (state.exerciseReturnScreen === "complete") {
+    els.complete.classList.remove("hidden");
+    return;
+  }
+  els.setup.classList.remove("hidden");
 }
 
 function startChoiceExercise(exercise) {
@@ -432,12 +680,35 @@ function startTrueFalseGrid(exercise) {
   state.trueFalseQuestions = exercise.buildQuestions(state.module);
   state.trueFalseAnswered = 0;
   state.trueFalseScore = 0;
+  state.trueFalsePageIndex = 0;
+  state.trueFalsePageAnswered = 0;
+  const pageSize = exercise.pageSize || state.trueFalseQuestions.length;
+  state.trueFalsePages = Array.from({ length: Math.ceil(state.trueFalseQuestions.length / pageSize) }, (_, index) =>
+    state.trueFalseQuestions.slice(index * pageSize, (index + 1) * pageSize)
+  );
   hideAllScreens();
   els.trueFalse.classList.remove("hidden");
   els.trueFalseGrade.textContent = `GRADE ${state.grade}`;
-  els.trueFalseProgress.textContent = `0 / ${state.trueFalseQuestions.length}`;
   els.trueFalseScore.textContent = "0";
-  els.trueFalseGrid.replaceChildren(...state.trueFalseQuestions.map(createTrueFalseRow));
+  els.trueFalseInstruction.textContent = exercise.instruction || "READ EACH STATEMENT AND MARK IT TRUE OR FALSE.";
+  els.trueFalseVisualPanel.classList.toggle("hidden", !exercise.imagePath);
+  els.trueFalseCard.classList.toggle("with-visual", Boolean(exercise.imagePath));
+  if (exercise.imagePath) {
+    els.trueFalseVisualBrief.textContent = exercise.visualBrief || "A visual for this activity.";
+    els.trueFalseVisualFallback.classList.add("hidden");
+    els.trueFalseImage.classList.remove("hidden");
+    els.trueFalseImage.alt = exercise.visualBrief || "True or false visual";
+    els.trueFalseImage.src = exercise.imagePath;
+  }
+  renderTrueFalsePage();
+}
+
+function renderTrueFalsePage() {
+  const page = state.trueFalsePages[state.trueFalsePageIndex];
+  state.trueFalsePageAnswered = 0;
+  els.trueFalseProgress.textContent = `${state.trueFalseAnswered} / ${state.trueFalseQuestions.length}`;
+  els.trueFalseActions.classList.add("hidden");
+  els.trueFalseGrid.replaceChildren(...page.map(createTrueFalseRow));
 }
 
 function createTrueFalseRow(question) {
@@ -480,17 +751,28 @@ function answerTrueFalse(row, selectedAnswer) {
   row.classList.add(row.dataset.answer === "true" ? "statement-true" : "statement-false");
   if (isCorrect) state.trueFalseScore += 1;
   state.trueFalseAnswered += 1;
+  state.trueFalsePageAnswered += 1;
   els.trueFalseScore.textContent = state.trueFalseScore;
   els.trueFalseProgress.textContent = `${state.trueFalseAnswered} / ${state.trueFalseQuestions.length}`;
   playFeedbackSound(isCorrect);
-  if (state.trueFalseAnswered === state.trueFalseQuestions.length) {
+  if (state.trueFalsePageAnswered === state.trueFalsePages[state.trueFalsePageIndex].length) {
+    if (state.trueFalsePageIndex < state.trueFalsePages.length - 1) {
+      els.trueFalseActions.classList.remove("hidden");
+      return;
+    }
     setTimeout(() => {
       hideAllScreens();
       els.exerciseResultScore.textContent = `${state.trueFalseScore} / ${state.trueFalseQuestions.length}`;
-      els.exerciseResultMessage.textContent = `${state.trueFalseScore} school rules marked correctly.`;
+      els.exerciseResultMessage.textContent = `${state.trueFalseScore} statements marked correctly.`;
       els.exerciseResult.classList.remove("hidden");
     }, 700);
   }
+}
+
+function nextTrueFalsePage() {
+  if (state.trueFalsePageIndex >= state.trueFalsePages.length - 1) return;
+  state.trueFalsePageIndex += 1;
+  renderTrueFalsePage();
 }
 
 function startPronounMemory(exercise) {
@@ -1242,7 +1524,9 @@ function renderExerciseQuestion() {
   els.exerciseScore.textContent = state.exerciseScore;
   const visualOnly = Boolean(question.visualOnly);
   const textOnly = Boolean(question.textOnly);
+  const wideOptions = Boolean(state.exercise.wideOptions);
   els.exerciseCard.classList.toggle("text-only-choice", textOnly);
+  els.exerciseCard.classList.toggle("wide-options-choice", wideOptions);
   els.exerciseVisualPanel.classList.toggle("hidden", textOnly);
   els.exerciseReferenceType.textContent = question.referenceType || "CHOOSE THE CORRECT ARTICLE";
   els.exerciseReferenceType.classList.toggle("hidden", visualOnly);
@@ -1254,7 +1538,8 @@ function renderExerciseQuestion() {
   els.exerciseSentence.textContent = question.exerciseSentence || "";
   els.exerciseSentence.classList.toggle("hidden", visualOnly || textOnly);
   els.articleOptions.classList.toggle("sentence-choice-options", visualOnly || textOnly);
-  els.exerciseFeedback.textContent = visualOnly || textOnly ? "" : "Choose the correct article.";
+  els.articleOptions.classList.toggle("wide-sentence-options", wideOptions);
+  els.exerciseFeedback.textContent = visualOnly || textOnly ? "" : question.instruction || "Choose the correct article.";
   els.exerciseFeedback.className = "exercise-feedback";
   els.exerciseNext.disabled = true;
   els.exerciseNext.textContent = state.exerciseIndex === total - 1 ? "SEE RESULT" : "NEXT";
@@ -1273,7 +1558,7 @@ function renderExerciseQuestion() {
     if (visualOnly) {
       button.innerHTML = article.replace(/\b(can't|can|mustn't|must|don't|do)\b/gi, '<mark class="modal-option-word">$1</mark>');
     } else {
-      button.textContent = article.toUpperCase();
+      button.textContent = wideOptions ? article : article.toUpperCase();
     }
     button.dataset.article = article;
     button.addEventListener("click", () => answerExercise(article));
@@ -1316,6 +1601,10 @@ function showExerciseResult() {
   hideAllScreens();
   els.exerciseResultScore.textContent = `${state.exerciseScore} / ${state.exerciseQuestions.length}`;
   els.exerciseResultMessage.textContent = `${state.exerciseScore} correct answers out of ${state.exerciseQuestions.length}.`;
+  const canContinue = Boolean(state.exercise?.repeatable);
+  els.exerciseContinue.classList.toggle("hidden", !canContinue);
+  els.exerciseHome.textContent = canContinue ? "EXIT" : "BACK TO MENU";
+  els.exerciseHome.className = canContinue ? "secondary-button" : "primary-button";
   els.exerciseResult.classList.remove("hidden");
 }
 
@@ -1336,6 +1625,10 @@ els.exerciseImage.addEventListener("error", () => {
   els.exerciseImage.classList.add("hidden");
   els.exerciseFallback.classList.remove("hidden");
 });
+els.trueFalseImage.addEventListener("error", () => {
+  els.trueFalseImage.classList.add("hidden");
+  els.trueFalseVisualFallback.classList.remove("hidden");
+});
 els.start.addEventListener("click", startPresentation);
 els.setupExercises.addEventListener("click", openExerciseMenu);
 els.presentationExercises.addEventListener("click", openExerciseMenu);
@@ -1343,10 +1636,13 @@ els.back.addEventListener("click", returnToSetup);
 els.fullscreen.addEventListener("click", toggleFullscreen);
 els.previous.addEventListener("click", previous);
 els.next.addEventListener("click", next);
+els.timeReveal.addEventListener("click", revealTimeAnswer);
+els.timetableReveal.addEventListener("click", revealTimetableAnswer);
 els.completeExercises.addEventListener("click", openExerciseMenu);
 els.completeHome.addEventListener("click", returnToSetup);
 els.exerciseBack.addEventListener("click", returnToSetup);
 els.exerciseNext.addEventListener("click", nextExerciseQuestion);
+els.exerciseContinue.addEventListener("click", () => startChoiceExercise(state.exercise));
 els.exerciseHome.addEventListener("click", returnToSetup);
 els.sortBack.addEventListener("click", returnToSetup);
 els.exerciseMenuClose.addEventListener("click", () => els.exerciseMenu.classList.add("hidden"));
@@ -1361,9 +1657,15 @@ els.jumbledTiles.addEventListener("drop", reorderJumbledGap);
 els.matchingBack.addEventListener("click", returnToSetup);
 els.matchingTimeNext.addEventListener("click", continueMatchingAfterTime);
 els.trueFalseBack.addEventListener("click", returnToSetup);
+els.trueFalseNext.addEventListener("click", nextTrueFalsePage);
 els.pronounMemoryExit.addEventListener("click", returnToSetup);
 els.pronounMemoryExitResult.addEventListener("click", returnToSetup);
 els.pronounMemoryRestart.addEventListener("click", () => startPronounMemory(state.pronounMemoryExercise));
+els.timeSetterExit.addEventListener("click", returnFromTimeSetter);
+els.timeSetterHourUp.addEventListener("click", () => adjustTimeSetterHour(1));
+els.timeSetterHourDown.addEventListener("click", () => adjustTimeSetterHour(-1));
+els.timeSetterMinuteUp.addEventListener("click", () => adjustTimeSetterMinute(5));
+els.timeSetterMinuteDown.addEventListener("click", () => adjustTimeSetterMinute(-5));
 els.pronounMemoryChoices.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-pronoun]");
   if (button) answerPronounMemory(button.dataset.pronoun, button);

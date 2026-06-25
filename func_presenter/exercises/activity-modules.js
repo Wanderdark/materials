@@ -48,7 +48,7 @@ window.exerciseActivityModules = {
   matchPictures(config) {
     return { activity: "match-pictures", ...config };
   },
-  trueFalseGrid({ statements = [], buildStatements, ...config }) {
+  trueFalseGrid({ statements = [], buildStatements, questionCount, ...config }) {
     return {
       activity: "true-false-grid",
       ...config,
@@ -62,7 +62,7 @@ window.exerciseActivityModules = {
             options: ["true", "false"],
             answer: String(Boolean(isTrue))
           };
-        }));
+        })).slice(0, questionCount || undefined);
       }
     };
   },
@@ -71,6 +71,9 @@ window.exerciseActivityModules = {
   },
   pronounSnap(config) {
     return { activity: "pronoun-snap", ...config };
+  },
+  timeSetter(config) {
+    return { activity: "time-setter", ...config };
   },
   playTone(type) {
     playActivityTone(type);

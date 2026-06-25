@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grammar Function Presenter</title>
   <link rel="stylesheet" href="styles.css">
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+  </script>
 </head>
 <body>
   <main class="app-shell">
@@ -51,7 +55,7 @@
       <div class="progress-track"><span id="progressBar"></span></div>
 
       <article id="exampleCard" class="example-card">
-        <div class="visual-panel">
+        <div id="exampleVisualPanel" class="visual-panel">
           <img id="exampleImage" alt="Grammar example visual">
           <div id="visualFallback" class="visual-fallback hidden">
             <span>VISUAL BRIEF</span>
@@ -60,12 +64,23 @@
           </div>
         </div>
         <div class="sentence-panel">
+          <span id="timeDigitalDisplay" class="time-digital hidden">1:00</span>
           <span id="articleBadge" class="article-badge">A</span>
           <p id="referenceType" class="reference-type">NON-SPECIFIC NOUN</p>
+          <p id="timeQuestion" class="time-question hidden"></p>
           <h1 id="sentenceText"></h1>
           <p id="presentationExampleSentence" class="presentation-example-sentence hidden"></p>
           <p id="functionDescription" class="function-description"></p>
           <aside id="ruleNote" class="rule-note hidden"></aside>
+          <div id="timetableAnswerView" class="timetable-answer-view hidden">
+            <p id="timetableAnswer"></p>
+            <button id="timetableRevealButton" class="primary-button hidden">REVEAL</button>
+          </div>
+          <div id="timePromptView" class="time-prompt-view hidden">
+            <span id="timePromptDigital">4:00</span>
+            <button id="timeRevealButton" class="primary-button">REVEAL</button>
+            <p id="timePromptAnswer" class="hidden"></p>
+          </div>
         </div>
       </article>
 
@@ -210,8 +225,42 @@
         <p class="brand-kicker">EXERCISE COMPLETE</p>
         <h1 id="exerciseResultScore">0 / 10</h1>
         <p id="exerciseResultMessage"></p>
-        <button id="exerciseHomeButton" class="primary-button">BACK TO MENU</button>
+        <div class="setup-actions">
+          <button id="exerciseContinueButton" class="primary-button hidden">CONTINUE</button>
+          <button id="exerciseHomeButton" class="primary-button">BACK TO MENU</button>
+        </div>
       </div>
+    </section>
+
+    <section id="timeSetterScreen" class="time-setter-screen hidden">
+      <header class="presentation-header">
+        <button id="timeSetterExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="timeSetterGradeLabel">GRADE 5</span><strong>SET THE TIME</strong></div>
+        <div class="progress"><strong id="timeSetterRoundText">ROUND 1</strong><span>SUCCESSFUL SETS</span></div>
+        <div class="exercise-score">SCORE <strong id="timeSetterScore">0</strong></div>
+      </header>
+      <article id="timeSetterCard" class="time-setter-card">
+        <p class="reference-type">SET THE DIGITAL CLOCK</p>
+        <h1 id="timeSetterTarget" class="time-setter-question">It is quarter past five.</h1>
+        <p class="time-setter-instruction">Use the controls to set the digital clock.</p>
+        <div class="time-setter-clock" aria-label="Digital clock setter">
+          <div class="time-setter-unit">
+            <button id="timeSetterHourUp" class="time-step-button" aria-label="Increase hour">+</button>
+            <strong id="timeSetterHour">12</strong>
+            <button id="timeSetterHourDown" class="time-step-button" aria-label="Decrease hour">&minus;</button>
+          </div>
+          <span class="time-setter-colon">:</span>
+          <div class="time-setter-unit">
+            <button id="timeSetterMinuteUp" class="time-step-button" aria-label="Increase minutes">+</button>
+            <strong id="timeSetterMinute">00</strong>
+            <button id="timeSetterMinuteDown" class="time-step-button" aria-label="Decrease minutes">&minus;</button>
+          </div>
+        </div>
+        <p id="timeSetterFeedback" class="exercise-feedback" aria-live="polite">Set the clock, then press OK.</p>
+        <div id="timeSetterActions" class="setup-actions time-setter-actions">
+          <button id="timeSetterCheckButton" class="primary-button">OK</button>
+        </div>
+      </article>
     </section>
 
     <section id="trueFalseScreen" class="true-false-screen hidden">
@@ -221,9 +270,18 @@
         <div class="progress"><strong id="trueFalseProgressText">0 / 16</strong><span>ANSWERED</span></div>
         <div class="exercise-score">SCORE <strong id="trueFalseScore">0</strong></div>
       </header>
-      <div class="true-false-card">
-        <p class="reference-type">READ EACH SCHOOL RULE AND MARK IT TRUE OR FALSE.</p>
-        <div id="trueFalseGrid" class="true-false-grid"></div>
+      <div id="trueFalseCard" class="true-false-card">
+        <div id="trueFalseVisualPanel" class="visual-panel hidden">
+          <img id="trueFalseImage" alt="True or false visual">
+          <div id="trueFalseVisualFallback" class="visual-fallback hidden"><span>VISUAL BRIEF</span><p id="trueFalseVisualBrief"></p></div>
+        </div>
+        <div class="true-false-content">
+          <p id="trueFalseInstruction" class="reference-type">READ EACH SCHOOL RULE AND MARK IT TRUE OR FALSE.</p>
+          <div id="trueFalseGrid" class="true-false-grid"></div>
+          <div id="trueFalseActions" class="setup-actions true-false-actions hidden">
+            <button id="trueFalseNextButton" class="primary-button">NEXT 8 STATEMENTS</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -298,6 +356,7 @@
   <script src="functions/modals-prohibition.js"></script>
   <script src="functions/imperatives-do-dont.js"></script>
   <script src="functions/to-be-present.js"></script>
+  <script src="functions/to-be-telling-time.js"></script>
   <script src="functions/index.js"></script>
   <script src="exercises/activity-modules.js"></script>
   <script src="exercises/article-choice.js"></script>
@@ -314,6 +373,9 @@
   <script src="exercises/conversation-builder.js"></script>
   <script src="exercises/jumbled-sentences.js"></script>
   <script src="exercises/activity-visual-match.js"></script>
+  <script src="exercises/time-setter.js"></script>
+  <script src="exercises/timetable-choice.js"></script>
+  <script src="exercises/timetable-true-false.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
 </body>
