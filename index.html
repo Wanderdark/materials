@@ -617,7 +617,7 @@
   <header>
     <div class="header-eyebrow">Classroom Collection</div>
     <h1>Educational Materials</h1>
-    <div class="header-sub">to use in classroom</div>
+    <div class="header-sub"><em style="color:#FFD700;font-style:italic;text-transform:none;letter-spacing:0.05em;">Growing together, learning together</em></div>
     <div class="header-credit">Designed by ADİL FIRAT OKTAV</div>
   </header>
 
@@ -666,7 +666,7 @@
 
         <div class="hub-card learn" onclick="showLearn()">
           <div class="hub-icon">📖</div>
-          <div class="hub-title">Learn</div>
+          <div class="hub-title" id="hub-learn-title">Learn</div>
           <div class="hub-sub">Vocabulary presenter &amp; flashcard tools for structured learning</div>
           <div class="hub-arrow">&#9654; &nbsp;Open</div>
         </div>
@@ -692,7 +692,7 @@
     </div>
 
     <div class="hub-cards-area">
-      <div class="hub-grid">
+      <div class="hub-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1080px;">
 
         <a class="hub-card learn" href="vocab_presenter/index.html">
           <div class="hub-icon">📖</div>
@@ -701,17 +701,17 @@
           <div class="hub-arrow">&#9654; &nbsp;Open</div>
         </a>
 
-        <a class="hub-card practice" href="word_duel/index.html">
-          <div class="hub-icon">🏆</div>
-          <div class="hub-title">Word Tournament</div>
-          <div class="hub-sub">Öğrencilerin öğrendikleri kelimeleri turnuva usulü ile pekiştirmelerini sağlamak üzere bir araç</div>
-          <div class="hub-arrow">&#9654; &nbsp;Open</div>
-        </a>
-
         <a class="hub-card learn" href="func_presenter/index.html">
           <div class="hub-icon">📝</div>
           <div class="hub-title">Grammar Presenter</div>
           <div class="hub-sub">Dilbilgisi konularının sınıfta sunumu için interaktif bir araç</div>
+          <div class="hub-arrow">&#9654; &nbsp;Open</div>
+        </a>
+
+        <a class="hub-card practice" href="word_duel/index.html">
+          <div class="hub-icon">🏆</div>
+          <div class="hub-title">Word Tournament</div>
+          <div class="hub-sub">Öğrencilerin öğrendikleri kelimeleri turnuva usulü ile pekiştirmelerini sağlamak üzere bir araç</div>
           <div class="hub-arrow">&#9654; &nbsp;Open</div>
         </a>
 
@@ -960,7 +960,7 @@
 
     function selectRole(role) {
       currentRole = role;
-      // Update Practice subtitle based on role
+      document.getElementById('hub-learn-title').textContent = role === 'teacher' ? 'Teach' : 'Learn';
       const sub = document.getElementById('hub-practice-sub');
       if (role === 'student') {
         sub.textContent = 'Solo vocabulary activities designed for self-directed learning';

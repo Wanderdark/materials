@@ -76,6 +76,7 @@
             <p id="timetableAnswer"></p>
             <button id="timetableRevealButton" class="primary-button hidden">REVEAL</button>
           </div>
+          <div id="presenceView" class="presence-view hidden"></div>
           <div id="timePromptView" class="time-prompt-view hidden">
             <span id="timePromptDigital">4:00</span>
             <button id="timeRevealButton" class="primary-button">REVEAL</button>
@@ -232,6 +233,39 @@
       </div>
     </section>
 
+    <section id="fillBlankScreen" class="fill-blank-screen hidden">
+      <header class="presentation-header">
+        <button id="fillBlankBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="fillBlankGradeLabel">GRADE 5</span><strong id="fillBlankTitle">FILL THE BLANKS</strong></div>
+        <div class="progress"><strong id="fillBlankProgressText">0 / 8</strong><span>REVEALED</span></div>
+      </header>
+      <article class="fill-blank-card">
+        <p id="fillBlankInstruction" class="reference-type">TAP EACH BLANK TO REVEAL THE ANSWER.</p>
+        <div id="fillBlankGrid" class="fill-blank-grid"></div>
+        <p id="fillBlankFeedback" class="exercise-feedback" aria-live="polite">Tap the blanks.</p>
+      </article>
+    </section>
+
+    <section id="mistakeScreen" class="mistake-screen hidden">
+      <header class="presentation-header">
+        <button id="mistakeBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="mistakeGradeLabel">GRADE 5</span><strong id="mistakeTitle">MISTAKE? CORRECT IT</strong></div>
+        <div class="progress"><strong id="mistakeProgressText">1 / 15</strong><span>SENTENCES</span></div>
+        <div class="exercise-score">SCORE <strong id="mistakeScore">0</strong></div>
+      </header>
+      <article id="mistakeCard" class="mistake-card">
+        <p id="mistakeInstruction" class="reference-type">IS THIS SENTENCE CORRECT?</p>
+        <h1 id="mistakeSentence">She go to school.</h1>
+        <div id="mistakeDecisionButtons" class="mistake-decision-buttons">
+          <button id="mistakeCorrectButton" type="button">CORRECT</button>
+          <button id="mistakeWrongButton" type="button">WRONG</button>
+        </div>
+        <div id="mistakeWordBank" class="mistake-word-bank hidden"></div>
+        <p id="mistakeFeedback" class="exercise-feedback" aria-live="polite"></p>
+        <button id="mistakeNextButton" class="primary-button" disabled>NEXT</button>
+      </article>
+    </section>
+
     <section id="timeSetterScreen" class="time-setter-screen hidden">
       <header class="presentation-header">
         <button id="timeSetterExitButton" class="icon-button">EXIT</button>
@@ -244,22 +278,23 @@
         <h1 id="timeSetterTarget" class="time-setter-question">It is quarter past five.</h1>
         <p class="time-setter-instruction">Use the controls to set the digital clock.</p>
         <div class="time-setter-clock" aria-label="Digital clock setter">
-          <div class="time-setter-unit">
-            <button id="timeSetterHourUp" class="time-step-button" aria-label="Increase hour">+</button>
-            <strong id="timeSetterHour">12</strong>
-            <button id="timeSetterHourDown" class="time-step-button" aria-label="Decrease hour">&minus;</button>
-          </div>
-          <span class="time-setter-colon">:</span>
-          <div class="time-setter-unit">
-            <button id="timeSetterMinuteUp" class="time-step-button" aria-label="Increase minutes">+</button>
-            <strong id="timeSetterMinute">00</strong>
-            <button id="timeSetterMinuteDown" class="time-step-button" aria-label="Decrease minutes">&minus;</button>
+          <div class="digital-clock-body">
+            <div class="time-step-row top">
+              <button id="timeSetterHourUp" class="time-step-button" aria-label="Increase hour">HOUR +</button>
+              <button id="timeSetterMinuteUp" class="time-step-button" aria-label="Increase minutes">MIN +</button>
+              <button id="timeSetterInlineExitButton" class="time-step-button time-action-exit" aria-label="Exit set the time">EXIT</button>
+            </div>
+            <strong id="timeSetterDigital" class="digital-clock-display">12:00</strong>
+            <div class="time-step-row bottom">
+              <button id="timeSetterHourDown" class="time-step-button" aria-label="Decrease hour">HOUR &minus;</button>
+              <button id="timeSetterMinuteDown" class="time-step-button" aria-label="Decrease minutes">MIN &minus;</button>
+              <button id="timeSetterCheckButton" class="time-step-button time-action-ok" aria-label="Check the time">OK</button>
+            </div>
+            <span class="digital-clock-glare"></span>
           </div>
         </div>
         <p id="timeSetterFeedback" class="exercise-feedback" aria-live="polite">Set the clock, then press OK.</p>
-        <div id="timeSetterActions" class="setup-actions time-setter-actions">
-          <button id="timeSetterCheckButton" class="primary-button">OK</button>
-        </div>
+        <div id="timeSetterActions" class="setup-actions time-setter-actions"></div>
       </article>
     </section>
 
@@ -279,7 +314,9 @@
           <p id="trueFalseInstruction" class="reference-type">READ EACH SCHOOL RULE AND MARK IT TRUE OR FALSE.</p>
           <div id="trueFalseGrid" class="true-false-grid"></div>
           <div id="trueFalseActions" class="setup-actions true-false-actions hidden">
+            <p id="trueFalseActionMessage" class="true-false-action-message hidden"></p>
             <button id="trueFalseNextButton" class="primary-button">NEXT 8 STATEMENTS</button>
+            <button id="trueFalseExitButton" class="secondary-button hidden">EXIT</button>
           </div>
         </div>
       </div>
@@ -349,6 +386,50 @@
         </div>
       </div>
     </section>
+
+    <section id="paragraphChoiceScreen" class="pc-screen hidden">
+      <header class="presentation-header">
+        <button id="pcBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="pcGradeLabel">GRADE 5</span><strong id="pcTitle">DESCRIBE THE PERSON</strong></div>
+        <div class="exercise-score">SCORE <strong id="pcScore">0 / 0</strong></div>
+      </header>
+      <article class="pc-card">
+        <div id="pcVisualPanel" class="visual-panel">
+          <img id="pcImage" alt="">
+        </div>
+        <div class="pc-text-panel">
+          <p class="reference-type">CHOOSE THE CORRECT WORDS</p>
+          <div id="pcParagraph" class="pc-paragraph"></div>
+          <div id="pcResult" class="pc-result hidden">
+            <p id="pcResultText" class="pc-result-text"></p>
+            <button id="pcDoneButton" class="primary-button">BACK TO MENU</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div id="presenceOverlay" class="presence-overlay hidden">
+      <div class="presence-overlay-card">
+        <button id="presenceOverlayClose" class="presence-overlay-close">✕</button>
+        <p id="presenceOverlayQuestion" class="presence-overlay-question"></p>
+        <img id="presenceOverlayImage" class="presence-overlay-image" alt="">
+        <p id="presenceOverlaySentence" class="presence-overlay-sentence"></p>
+      </div>
+    </div>
+
+    <section id="studentMatchScreen" class="sm-screen hidden">
+      <header class="presentation-header">
+        <button id="smBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="smGradeLabel">GRADE 5</span><strong id="smTitle">MATCH THE DESCRIPTION</strong></div>
+        <div class="sm-progress-wrap">GROUP <strong id="smProgress">1 / 6</strong></div>
+      </header>
+      <div id="smStudentGrid" class="sm-student-grid"></div>
+      <div id="smDescList" class="sm-desc-list"></div>
+      <div id="smResult" class="sm-result hidden">
+        <p id="smResultText" class="sm-result-text"></p>
+        <button id="smNextButton" class="primary-button">NEXT GROUP →</button>
+      </div>
+    </section>
   </main>
   <script src="functions/a-an-the.js"></script>
   <script src="functions/singular-plurals.js"></script>
@@ -357,6 +438,12 @@
   <script src="functions/imperatives-do-dont.js"></script>
   <script src="functions/to-be-present.js"></script>
   <script src="functions/to-be-telling-time.js"></script>
+  <script src="functions/there-is-are.js"></script>
+  <script src="functions/object-pronouns.js"></script>
+  <script src="functions/simple-present-daily-routines.js"></script>
+  <script src="functions/physical-appearance.js"></script>
+  <script src="functions/frequency-adverbs.js"></script>
+  <script src="functions/possessive-adjectives.js"></script>
   <script src="functions/index.js"></script>
   <script src="exercises/activity-modules.js"></script>
   <script src="exercises/article-choice.js"></script>
@@ -373,9 +460,24 @@
   <script src="exercises/conversation-builder.js"></script>
   <script src="exercises/jumbled-sentences.js"></script>
   <script src="exercises/activity-visual-match.js"></script>
+  <div id="func-stamp"></div>
   <script src="exercises/time-setter.js"></script>
   <script src="exercises/timetable-choice.js"></script>
   <script src="exercises/timetable-true-false.js"></script>
+  <script src="exercises/object-pronouns-fill-blank.js"></script>
+  <script src="exercises/object-pronouns-choice.js"></script>
+  <script src="exercises/there-is-are-timetable-true-false.js"></script>
+  <script src="exercises/simple-present-daily-routines-choice.js"></script>
+  <script src="exercises/simple-present-daily-routines-mistake.js"></script>
+  <script src="exercises/simple-present-daily-routines-jumbled.js"></script>
+  <script src="../modules/stamp.js"></script>
+  <script src="exercises/physical-appearance-paragraph-combined.js"></script>
+  <script src="exercises/physical-appearance-student-match.js"></script>
+  <script src="exercises/physical-appearance-true-false-combined.js"></script>
+  <script src="exercises/possessive-adjectives-fill-blank.js"></script>
+  <script src="exercises/possessive-adjectives-choice.js"></script>
+  <script src="exercises/frequency-adverbs-choice.js"></script>
+  <script src="exercises/frequency-adverbs-jumbled.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
 </body>

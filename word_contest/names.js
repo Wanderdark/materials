@@ -20,6 +20,13 @@
 
 const CLASSES = [
   {
+    id: '5A',
+    label: '5',
+    grade: 5,
+    pairs: [],
+    students: [],
+  },
+  {
     id: '7A',
     label: '7',
     grade: 7,

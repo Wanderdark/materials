@@ -329,6 +329,30 @@ h1 { margin-bottom: 4px; font-size: clamp(30px, 4vw, 48px); letter-spacing: -.04
 .match-result-card h2 { margin: 6px 0 0; font-size: clamp(26px, 3vw, 40px); letter-spacing: .09em; }
 .match-result-card p:not(.eyebrow) { margin: 0; color: var(--muted); font-size: 18px; }
 .match-result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.lucky-spin-screen { display: grid; grid-template-rows: auto 1fr; gap: 18px; }
+.lucky-spin-card { position: relative; display: grid; grid-template-columns: minmax(420px, .95fr) minmax(380px, 1.05fr); gap: clamp(22px, 4vw, 54px); align-items: center; min-height: 0; padding: clamp(24px, 4vw, 52px); border: 1px solid rgba(143,166,255,.22); border-radius: 30px; background: linear-gradient(135deg, rgba(10,25,61,.9), rgba(5,12,30,.86)); box-shadow: var(--shadow); overflow: hidden; }
+.lucky-wheel-wrap { position: relative; display: grid; place-items: center; justify-self: center; width: min(520px, 100%); aspect-ratio: 1; }
+.lucky-wheel { position: relative; width: 100%; aspect-ratio: 1; border: 12px solid #0a1631; border-radius: 50%; box-shadow: inset 0 0 0 7px rgba(255,255,255,.13), inset 0 0 42px rgba(0,0,0,.36), 0 24px 70px rgba(0,0,0,.42), 0 0 34px rgba(255,216,77,.12); transition: transform 2.55s cubic-bezier(.12,.72,.12,1); overflow: hidden; }
+.lucky-wheel::after { position: absolute; inset: 15%; border: 2px solid rgba(255,255,255,.22); border-radius: 50%; content: ""; pointer-events: none; }
+.lucky-segment-label { position: absolute; left: 50%; top: 50%; display: grid; place-items: center; width: 54px; height: 54px; margin: -27px; border-radius: 50%; color: #071225; background: rgba(255,255,255,.86); font-size: 24px; font-weight: 950; transform: rotate(var(--segment-angle)) translateY(-178px) rotate(calc(var(--segment-counter-angle) + var(--wheel-counter-rotation, 0deg))); box-shadow: 0 3px 12px rgba(0,0,0,.22); }
+.lucky-segment-label.eliminated { color: #6b7899; background: rgba(9,20,48,.72); text-decoration: line-through; }
+.lucky-pointer { position: absolute; z-index: 4; top: -2px; width: 0; height: 0; border-left: 22px solid transparent; border-right: 22px solid transparent; border-top: 42px solid #ffd84d; filter: drop-shadow(0 8px 10px rgba(0,0,0,.34)); }
+.lucky-spin-button { position: absolute; z-index: 5; display: grid; place-items: center; width: clamp(112px, 13vw, 150px); aspect-ratio: 1; border: 7px solid rgba(255,255,255,.32); border-radius: 50%; color: #241f00; background: radial-gradient(circle at 35% 30%, #fff3a8, #ffd84d 52%, #e1a900); cursor: pointer; font-size: clamp(22px, 3vw, 34px); font-weight: 950; letter-spacing: .08em; box-shadow: 0 12px 34px rgba(0,0,0,.38), 0 0 28px rgba(255,216,77,.28); }
+.lucky-spin-button:hover:not(:disabled) { transform: scale(1.04); }
+.lucky-spin-button:disabled { cursor: default; opacity: .65; transform: none; }
+.lucky-task-panel { display: grid; align-content: center; gap: 18px; min-height: 460px; padding: clamp(26px, 4vw, 48px); border: 1px solid rgba(143,166,255,.24); border-radius: 28px; background: rgba(7,17,40,.76); }
+.lucky-task-panel h1 { margin: 0; color: #f4f7ff; font-size: clamp(30px, 4vw, 58px); line-height: 1.1; }
+.lucky-task-panel p:not(.eyebrow) { margin: 0; color: #aeb9d4; font-size: clamp(17px, 1.8vw, 24px); font-weight: 800; }
+.lucky-judge { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+.lucky-judge button { flex: 1 1 170px; }
+.lucky-judge .secondary-button { color: #ffe4df; border-color: #ff8066; background: rgba(110,44,37,.65); }
+.lucky-end { display: grid; gap: 14px; margin-top: 10px; padding-top: 18px; border-top: 1px solid rgba(143,166,255,.22); }
+.lucky-end h2 { margin: 0; color: #ffd84d; font-size: clamp(38px, 5vw, 70px); }
+.lucky-end-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.lucky-end-actions button { flex: 1 1 180px; }
+.lucky-floating-text { position: absolute; z-index: 8; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #ffd84d; font-size: clamp(42px, 6vw, 86px); font-weight: 950; letter-spacing: .08em; text-shadow: 0 0 18px rgba(255,216,77,.7), 0 8px 22px rgba(0,0,0,.45); pointer-events: none; opacity: 0; }
+.lucky-floating-text.show { animation: luckyFloatScore 1.05s ease-out forwards; }
+@keyframes luckyFloatScore { 0% { opacity: 0; transform: translate(-50%, -26%) scale(.72); } 18% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } 100% { opacity: 0; transform: translate(-50%, -138%) scale(1); } }
 .sort-screen { display: grid; grid-template-rows: auto auto auto 1fr; gap: 18px; }
 .sort-instruction { margin: 0; color: var(--muted); text-align: center; font-size: 15px; font-weight: 750; }
 .sort-card-bank { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 110px; padding: 18px; border: 1px dashed #4c659e; border-radius: 22px; background: rgba(5,12,30,.48); }
@@ -714,6 +738,42 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
 .relation-word.text-xlong { font-size: clamp(17px, 2vw, 25px); }
 .relation-word.text-xxlong { font-size: clamp(14px, 1.6vw, 20px); }
 
+/* === ODD ONE OUT === */
+
+.ooo-screen { display: flex; flex-direction: column; gap: 18px; }
+.ooo-header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; min-height: 68px; }
+.ooo-card { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 24px 16px; }
+.ooo-instruction { margin: 0; color: var(--muted); font-size: 15px; font-weight: 750; letter-spacing: .1em; }
+.ooo-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; max-width: 660px; width: 100%; }
+.ooo-option { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 12px; border: 3px solid #4c659e; border-radius: 18px; color: #f4f7ff; background: rgba(16,34,77,.7); cursor: pointer; transition: border-color .18s, background .18s, transform .12s; }
+.ooo-option:hover:not(:disabled) { border-color: #6688ff; transform: translateY(-3px); }
+.ooo-option:disabled { cursor: default; }
+.ooo-option-image { width: 250px; height: 250px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 10px; background: rgba(255,255,255,.04); }
+.ooo-option-image img { max-width: 100%; max-height: 100%; object-fit: contain; display: none; }
+.ooo-option.revealed .ooo-option-image img { display: block; }
+.ooo-option-word { font-size: clamp(14px, 1.6vw, 20px); font-weight: 850; letter-spacing: .04em; text-align: center; }
+.ooo-option.ooo-correct { border-color: #27b58b; background: rgba(39,181,139,.15); }
+.ooo-option.ooo-wrong { border-color: #ff7a59; background: rgba(255,122,89,.12); }
+.ooo-option.ooo-highlight { border-color: #ffd84d; background: rgba(255,216,77,.12); box-shadow: 0 0 22px rgba(255,216,77,.35); }
+.ooo-option.ooo-highlight.ooo-shake { animation: oooHighlightShake .7s ease-in-out infinite; }
+@keyframes oooHighlightShake {
+  0%,100% { transform: translate(0,0); }
+  12%     { transform: translate(-6px,-3px); }
+  25%     { transform: translate(6px,3px); }
+  37%     { transform: translate(-5px,4px); }
+  50%     { transform: translate(5px,-4px); }
+  62%     { transform: translate(-4px,2px); }
+  75%     { transform: translate(4px,-2px); }
+  87%     { transform: translate(-2px,1px); }
+}
+.ooo-feedback { margin: 0; font-size: 18px; font-weight: 800; letter-spacing: .04em; min-height: 28px; text-align: center; }
+.ooo-feedback.correct { color: #27b58b; }
+.ooo-feedback.wrong { color: #ff7a59; }
+.ooo-actions { display: flex; gap: 12px; }
+.ooo-group-end { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 48px 16px; }
+.ooo-group-end h2 { margin: 0; font-size: clamp(36px, 6vw, 72px); letter-spacing: .06em; }
+.ooo-group-buttons { display: flex; gap: 14px; }
+
 /* === WATCH & REMEMBER === */
 
 .memory-screen {
@@ -974,6 +1034,9 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
   .anagram-card { grid-template-columns: 1fr; }
   .anagram-image-frame img { width: min(320px, 100%); }
   .match-layout { grid-template-columns: 1fr; }
+  .lucky-spin-card { grid-template-columns: 1fr; }
+  .lucky-wheel-wrap { width: min(360px, 100%); }
+  .lucky-segment-label { width: 40px; height: 40px; margin: -20px; font-size: 18px; transform: rotate(var(--segment-angle)) translateY(-126px) rotate(calc(var(--segment-counter-angle) + var(--wheel-counter-rotation, 0deg))); }
   .sort-zones { grid-template-columns: 1fr; }
   .primary-button { width: 100%; }
   .quiz-options { grid-template-columns: 1fr; }

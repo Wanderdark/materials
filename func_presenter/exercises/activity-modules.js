@@ -48,22 +48,30 @@ window.exerciseActivityModules = {
   matchPictures(config) {
     return { activity: "match-pictures", ...config };
   },
-  trueFalseGrid({ statements = [], buildStatements, questionCount, ...config }) {
+  trueFalseGrid({ statements = [], buildStatements, questionCount, pages, ...config }) {
+    function mapStatements(source, prefix) {
+      return shuffleActivityItems(source.map((statement, index) => {
+        const [sentence, isTrue] = Array.isArray(statement) ? statement : [statement.sentence, statement.isTrue];
+        return {
+          id: statement.id || `${prefix}-${index + 1}`,
+          prompt: sentence,
+          options: ["true", "false"],
+          answer: String(Boolean(isTrue))
+        };
+      }));
+    }
     return {
       activity: "true-false-grid",
       ...config,
       buildQuestions(functionModule) {
+        if (pages) return pages.flatMap((p, pi) => mapStatements(p.statements, `tf-p${pi}`));
         const source = typeof buildStatements === "function" ? buildStatements(functionModule) : statements;
-        return shuffleActivityItems(source.map((statement, index) => {
-          const [sentence, isTrue] = Array.isArray(statement) ? statement : [statement.sentence, statement.isTrue];
-          return {
-            id: statement.id || `true-false-${index + 1}`,
-            prompt: sentence,
-            options: ["true", "false"],
-            answer: String(Boolean(isTrue))
-          };
-        })).slice(0, questionCount || undefined);
-      }
+        return mapStatements(source, "true-false").slice(0, questionCount || undefined);
+      },
+      buildPages: pages ? () => pages.map((p, pi) => ({
+        imagePath: p.imagePath,
+        questions: mapStatements(p.statements, `tf-p${pi}`)
+      })) : null
     };
   },
   pronounMemory(config) {
@@ -75,8 +83,24 @@ window.exerciseActivityModules = {
   timeSetter(config) {
     return { activity: "time-setter", ...config };
   },
+  fillBlank(config) {
+    return { activity: "fill-blank", ...config };
+  },
+  mistakeCorrectIt(config) {
+    return { activity: "mistake-correct-it", ...config };
+  },
   playTone(type) {
     playActivityTone(type);
+  },
+  showStamp(isCorrect) {
+    const el = document.getElementById('func-stamp');
+    if (!el) return;
+    el.innerHTML = '';
+    const badge = document.createElement('div');
+    badge.className = `stamp-badge ${isCorrect ? 'stamp-correct' : 'stamp-wrong'}`;
+    badge.textContent = isCorrect ? 'CORRECT' : 'WRONG';
+    el.appendChild(badge);
+    setTimeout(() => { el.innerHTML = ''; }, 900);
   },
   reorderLockedSlots({ items, dragged, reference, isLocked }) {
     const sourceIndex = items.indexOf(dragged);

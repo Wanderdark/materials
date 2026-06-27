@@ -84,6 +84,16 @@
           <strong>WATCH &amp; REMEMBER</strong>
           <small>Memorize 5 words, then find them from 20.</small>
         </button>
+        <button id="startOddOneOutButton" class="exercise-choice hidden">
+          <span>05</span>
+          <strong>ODD ONE OUT</strong>
+          <small>Find the word that doesn't belong to the group.</small>
+        </button>
+        <button id="startLuckySpinButton" class="exercise-choice hidden">
+          <span>06</span>
+          <strong>LUCKY SPIN</strong>
+          <small>Spin the wheel, complete the task, and score points.</small>
+        </button>
       </div>
     </div>
 
@@ -198,6 +208,42 @@
         <h1 id="sortResultScore">0 / 0</h1>
         <p id="sortResultMessage"></p>
         <button id="sortNextRoundButton" class="primary-button">NEXT WORD SET</button>
+      </div>
+    </section>
+
+    <section id="luckySpinScreen" class="screen lucky-spin-screen hidden">
+      <header class="match-header">
+        <button id="luckySpinBackButton" class="icon-button" aria-label="Return to unit selection">←</button>
+        <div class="anagram-session">
+          <span id="luckySpinSessionLabel">GRADE 5 · UNIT 3</span>
+          <strong>LUCKY SPIN</strong>
+        </div>
+        <div class="anagram-progress"><strong id="luckySpinScore">8</strong><span>LEFT</span></div>
+      </header>
+      <div class="lucky-spin-card">
+        <div id="luckyFloatingText" class="lucky-floating-text hidden">+10 POINTS</div>
+        <div class="lucky-wheel-wrap">
+          <div class="lucky-pointer"></div>
+          <div id="luckyWheel" class="lucky-wheel" aria-label="Lucky spin wheel"></div>
+          <button id="luckySpinButton" class="lucky-spin-button">SPIN</button>
+        </div>
+        <div class="lucky-task-panel">
+          <p class="eyebrow">CURRENT TASK</p>
+          <h1 id="luckySpinPrompt">Spin the wheel to get a task.</h1>
+          <p id="luckySpinMeta">Remaining sections: 0</p>
+          <div id="luckySpinJudge" class="lucky-judge hidden">
+            <button id="luckyWrongButton" class="secondary-button">WRONG</button>
+            <button id="luckyCorrectButton" class="primary-button">CORRECT</button>
+          </div>
+          <div id="luckySpinEnd" class="lucky-end hidden">
+            <p id="luckySpinEndKicker" class="eyebrow">GAME COMPLETE</p>
+            <h2 id="luckySpinFinalScore">0 POINTS</h2>
+            <div class="lucky-end-actions">
+              <button id="luckySpinContinueButton" class="primary-button">CONTINUE</button>
+              <button id="luckySpinHomeButton" class="secondary-button">EXIT</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -363,6 +409,31 @@
         </div>
       </footer>
     </section>
+
+    <section id="oddOneOutScreen" class="screen ooo-screen hidden">
+      <header class="ooo-header">
+        <button id="oooBackButton" class="icon-button" aria-label="Return to unit selection">←</button>
+        <div class="anagram-session">
+          <span id="oooSessionLabel">GRADE 5 · UNIT 1</span>
+          <strong>ODD ONE OUT</strong>
+        </div>
+        <div class="anagram-progress"><strong id="oooProgressText">1 / 10</strong><span>QUESTIONS</span></div>
+      </header>
+      <div id="oooCard" class="ooo-card">
+        <p class="eyebrow ooo-instruction">FIND AND CHOOSE THE ODD ONE OUT</p>
+        <div id="oooOptions" class="ooo-options"></div>
+        <p id="oooFeedback" class="ooo-feedback" aria-live="polite"></p>
+        <div id="oooActions" class="ooo-actions"></div>
+      </div>
+      <div id="oooGroupEnd" class="ooo-group-end hidden">
+        <p class="eyebrow">GROUP COMPLETE</p>
+        <h2 id="oooGroupScore">10 / 10</h2>
+        <div class="ooo-group-buttons">
+          <button id="oooContinueButton" class="primary-button">CONTINUE →</button>
+          <button id="oooExitButton" class="secondary-button">EXIT</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script src="../word_master/questions.js"></script>
@@ -370,6 +441,7 @@
   <script src="turkish-adapter.js"></script>
   <script src="rivals-distractor-adapter.js"></script>
   <script src="category-adapter.js"></script>
+  <script src="lucky-spin-adapter.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

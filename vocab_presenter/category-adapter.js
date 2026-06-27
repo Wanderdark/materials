@@ -380,6 +380,57 @@
         ]
       }
     ],
+    "5:3": [
+      {
+        id: "body-parts",
+        title: "Body Parts",
+        words: [
+          "HEAD", "HAIR", "FACE", "EYE", "NOSE", "TOOTH", "TEETH",
+          "NECK", "ARM", "HAND", "FINGER", "BODY", "LEG", "FOOT"
+        ]
+      },
+      {
+        id: "physical-appearance",
+        title: "Physical Appearance",
+        words: [
+          "TALL", "SHORT", "THIN", "THICK", "WAVY", "CURLY", "STRAIGHT",
+          "ROUND", "OVAL", "HEIGHT", "MEDIUM HEIGHT"
+        ]
+      },
+      {
+        id: "clothing",
+        title: "Clothing",
+        words: [
+          "TSHIRT", "SHIRT", "JEANS", "TROUSERS", "PANTS", "SKIRT", "DRESS",
+          "COAT", "JACKET", "HOODIE", "JUMPER", "SWEATER",
+          "BOOTS", "SHOES", "SLIPPERS", "SOCK",
+          "CAP", "HAT", "SCARF", "HEADSCARF", "BELT", "GLOVES",
+          "UMBRELLA", "RAINCOAT", "GLASSES", "SUNGLASSES", "TIE",
+          "BAG", "HANDBAG", "BACKPACK",
+          "COSTUME", "FANCY DRESS", "CASUAL CLOTHES", "OUTFIT", "CLOTHING",
+          "RING", "EARRINGS", "NECKLACE", "WATCH", "BOW"
+        ]
+      },
+      {
+        id: "adverbs-of-frequency",
+        title: "Adverbs of Frequency",
+        words: ["ALWAYS", "USUALLY", "OFTEN", "SOMETIMES", "RARELY", "SELDOM", "NEVER", "ONCE", "TWICE"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "FASHION", "FASHIONABLE", "TRENDY", "STYLISH", "FASHION SHOW",
+          "COMFORTABLE", "LOOSE", "ORDINARY", "FANCY", "DIFFERENT",
+          "BRIGHT", "COOL", "RECYCLED", "CREATE", "TRY ON",
+          "COTTON", "SILK", "WOOL", "FABRIC",
+          "SPRING", "SUMMER", "AUTUMN", "WINTER", "RAINY",
+          "MUSIC", "VIDEO GAME", "READ", "GO SHOPPING", "DRAW",
+          "GO OUT", "TRAVEL", "WEAR", "MAGAZINE", "MAP", "COMPUTER",
+          "ACCESSORIES", "SILVER"
+        ]
+      }
+    ],
     "5:2": [
       {
         id: "school-subjects",

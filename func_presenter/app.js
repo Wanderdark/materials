@@ -39,6 +39,7 @@ const els = {
   timetableAnswerView: $("timetableAnswerView"),
   timetableAnswer: $("timetableAnswer"),
   timetableReveal: $("timetableRevealButton"),
+  presenceView: $("presenceView"),
   timeDigitalDisplay: $("timeDigitalDisplay"),
   timePromptView: $("timePromptView"),
   timePromptDigital: $("timePromptDigital"),
@@ -129,7 +130,9 @@ const els = {
   trueFalseInstruction: $("trueFalseInstruction"),
   trueFalseGrid: $("trueFalseGrid"),
   trueFalseActions: $("trueFalseActions"),
+  trueFalseActionMessage: $("trueFalseActionMessage"),
   trueFalseNext: $("trueFalseNextButton"),
+  trueFalseExit: $("trueFalseExitButton"),
   pronounMemory: $("pronounMemoryScreen"),
   pronounMemoryExit: $("pronounMemoryExitButton"),
   pronounMemoryGrade: $("pronounMemoryGradeLabel"),
@@ -167,6 +170,7 @@ const els = {
   timeSetterRound: $("timeSetterRoundText"),
   timeSetterScore: $("timeSetterScore"),
   timeSetterTarget: $("timeSetterTarget"),
+  timeSetterDigital: $("timeSetterDigital"),
   timeSetterHour: $("timeSetterHour"),
   timeSetterMinute: $("timeSetterMinute"),
   timeSetterHourUp: $("timeSetterHourUp"),
@@ -174,15 +178,65 @@ const els = {
   timeSetterMinuteUp: $("timeSetterMinuteUp"),
   timeSetterMinuteDown: $("timeSetterMinuteDown"),
   timeSetterCheck: $("timeSetterCheckButton"),
+  timeSetterInlineExit: $("timeSetterInlineExitButton"),
   timeSetterFeedback: $("timeSetterFeedback"),
-  timeSetterActions: $("timeSetterActions")
+  timeSetterActions: $("timeSetterActions"),
+  fillBlank: $("fillBlankScreen"),
+  presenceOverlay: $("presenceOverlay"),
+  presenceOverlayClose: $("presenceOverlayClose"),
+  presenceOverlayQuestion: $("presenceOverlayQuestion"),
+  presenceOverlayImage: $("presenceOverlayImage"),
+  presenceOverlaySentence: $("presenceOverlaySentence"),
+  smScreen: $("studentMatchScreen"),
+  smBack: $("smBackButton"),
+  smGrade: $("smGradeLabel"),
+  smTitle: $("smTitle"),
+  smProgress: $("smProgress"),
+  smStudentGrid: $("smStudentGrid"),
+  smDescList: $("smDescList"),
+  smResult: $("smResult"),
+  smResultText: $("smResultText"),
+  smNext: $("smNextButton"),
+  pcScreen: $("paragraphChoiceScreen"),
+  pcBack: $("pcBackButton"),
+  pcGradeLabel: $("pcGradeLabel"),
+  pcTitle: $("pcTitle"),
+  pcScore: $("pcScore"),
+  pcImage: $("pcImage"),
+  pcParagraph: $("pcParagraph"),
+  pcResult: $("pcResult"),
+  pcResultText: $("pcResultText"),
+  pcDone: $("pcDoneButton"),
+  fillBlankBack: $("fillBlankBackButton"),
+  fillBlankGrade: $("fillBlankGradeLabel"),
+  fillBlankTitle: $("fillBlankTitle"),
+  fillBlankProgress: $("fillBlankProgressText"),
+  fillBlankInstruction: $("fillBlankInstruction"),
+  fillBlankGrid: $("fillBlankGrid"),
+  fillBlankFeedback: $("fillBlankFeedback"),
+  mistake: $("mistakeScreen"),
+  mistakeBack: $("mistakeBackButton"),
+  mistakeGrade: $("mistakeGradeLabel"),
+  mistakeTitle: $("mistakeTitle"),
+  mistakeProgress: $("mistakeProgressText"),
+  mistakeScore: $("mistakeScore"),
+  mistakeCard: $("mistakeCard"),
+  mistakeInstruction: $("mistakeInstruction"),
+  mistakeSentence: $("mistakeSentence"),
+  mistakeDecisionButtons: $("mistakeDecisionButtons"),
+  mistakeCorrect: $("mistakeCorrectButton"),
+  mistakeWrong: $("mistakeWrongButton"),
+  mistakeWordBank: $("mistakeWordBank"),
+  mistakeFeedback: $("mistakeFeedback"),
+  mistakeNext: $("mistakeNextButton")
 };
 
-const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, exerciseReturnScreen: "setup" };
+const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
 let feedbackAudio = null;
+let timeStepAudio = null;
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.pcScreen, els.smScreen, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -191,6 +245,15 @@ function playFeedbackSound(isCorrect) {
     feedbackAudio.currentTime = 0;
   }
   feedbackAudio = new Audio(`sounds/${isCorrect ? "correct" : "wrong"}.mp3`);
+  feedbackAudio.play().catch(() => {});
+}
+
+function playWavFeedback(isCorrect) {
+  if (feedbackAudio) {
+    feedbackAudio.pause();
+    feedbackAudio.currentTime = 0;
+  }
+  feedbackAudio = new Audio(`sounds/${isCorrect ? "correct" : "wrong"}.wav`);
   feedbackAudio.play().catch(() => {});
 }
 
@@ -240,7 +303,7 @@ function renderFunctions() {
   els.functions.replaceChildren(...modules.map((module) => {
     const button = document.createElement("button");
     button.className = "function-button";
-    button.innerHTML = `<span>GRAMMAR FUNCTION</span><strong>${module.title}</strong><small>${module.description}</small>`;
+    button.innerHTML = `<span>GRAMMAR FUNCTION</span><strong>${module.title}</strong>${module.description ? `<small>${module.description}</small>` : ""}`;
     button.addEventListener("click", () => selectFunction(module));
     return button;
   }));
@@ -317,9 +380,11 @@ function renderExample() {
   const total = state.module.sentences.length;
   const isTimePrompt = Boolean(example.timePrompt);
   const isTimetableSlide = Boolean(example.timetableSlide);
-  const focus = example.focus || example.article;
+  const isPresenceSlide = Boolean(example.presenceSlide);
+  const noVisual = Boolean(example.noVisual);
+  const focus = example.focus || example.article || "";
   const highlight = example.highlight || example.article;
-  const highlightedSentence = isTimePrompt || isTimetableSlide
+  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide
     ? ""
     : example.highlightSuffix
     ? example.sentence.replace(
@@ -335,11 +400,17 @@ function renderExample() {
   els.progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
   els.exampleCard.classList.toggle("time-prompt-slide", isTimePrompt);
   els.exampleCard.classList.toggle("timetable-slide", isTimetableSlide);
-  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt);
+  els.exampleCard.classList.toggle("presence-slide", isPresenceSlide);
+  els.exampleCard.classList.toggle("no-visual-slide", noVisual);
+  els.exampleCard.classList.toggle("speech-bubble-slide", example.visualStyle === "speech-bubble");
+  els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
+  els.exampleCard.classList.toggle("inline-choice-slide", example.listClass === "inline-choice-list");
+  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
   els.timePromptView.classList.toggle("hidden", !isTimePrompt);
   els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
+  els.presenceView.classList.toggle("hidden", !isPresenceSlide);
   if (isTimePrompt) {
     els.timePromptDigital.textContent = example.digitalTime;
     els.timePromptAnswer.textContent = example.answerSentence;
@@ -347,10 +418,10 @@ function renderExample() {
     els.timeReveal.disabled = false;
   }
   [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
-    .forEach((element) => element.classList.toggle("hidden", isTimePrompt));
-  els.article.textContent = focus.toUpperCase();
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide));
+  els.article.textContent = focus ? focus.toUpperCase() : "";
   els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
-  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide);
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide);
   els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
   els.timeQuestion.textContent = example.question || "";
   els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
@@ -367,7 +438,7 @@ function renderExample() {
   els.description.textContent = state.module.id === "a-an-the"
     ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
     : state.module.description;
-  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !els.description.textContent);
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || !els.description.textContent);
   els.ruleNote.textContent = example.ruleNote || "";
   els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !example.ruleNote);
   if (isTimetableSlide && example.answerParts) {
@@ -376,10 +447,12 @@ function renderExample() {
     els.timetableReveal.classList.toggle("hidden", !example.answerReveal);
     els.timetableReveal.disabled = false;
   }
-  if (!isTimePrompt) {
+  if (isPresenceSlide) renderPresenceSlide(example);
+  if (!isTimePrompt && !noVisual) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");
+    els.image.className = example.imageClass || "";
     els.image.alt = example.visualBrief;
     els.image.src = example.imagePath;
   }
@@ -401,6 +474,310 @@ function revealTimeAnswer() {
 
 function renderTimetableParts(parts = []) {
   return parts.map(({ text, className = "" }) => `<span class="${className}">${text}</span>`).join("");
+}
+
+function openPresenceOverlay({ question, imagePath, sentence, sentences }) {
+  const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+  els.presenceOverlayQuestion.innerHTML = highlight(question || "");
+  els.presenceOverlayImage.src = imagePath;
+  els.presenceOverlayImage.alt = question;
+  const all = sentences || (sentence ? [sentence] : []);
+  els.presenceOverlaySentence.innerHTML = all.length > 1
+    ? all.map((s, i) => `<span class="freq-overlay-line">${i + 1}) ${highlight(s)}</span>`).join("")
+    : highlight(all[0] || "");
+  els.presenceOverlay.classList.remove("hidden");
+}
+
+function renderPresenceParts(parts = []) {
+  return parts.map(({ text, className = "" }) => `<span class="${className}">${text}</span>`).join("");
+}
+
+function renderPresenceSlide(example) {
+  els.presenceView.replaceChildren();
+  if (example.kicker) {
+    const kicker = document.createElement("p");
+    kicker.className = "presence-kicker";
+    kicker.textContent = example.kicker;
+    els.presenceView.append(kicker);
+  }
+  if (example.title || example.titleParts) {
+    const title = document.createElement("h1");
+    title.className = "presence-title";
+    title.classList.toggle("compact", Boolean(example.compactTitle));
+    title.innerHTML = renderPresenceParts(example.titleParts || [{ text: example.title }]);
+    els.presenceView.append(title);
+  }
+  if (example.note) {
+    const note = document.createElement("p");
+    note.className = "presence-note";
+    note.textContent = example.note;
+    els.presenceView.append(note);
+  }
+  const list = document.createElement("div");
+  list.className = `presence-list ${example.listClass || ""}`;
+  const shouldReplaceCurrentItem = Boolean(example.replaceCurrentItem || (state.module?.id === "object-pronouns" && !example.showAllItems));
+  list.dataset.replaceCurrentItem = shouldReplaceCurrentItem ? "true" : "";
+  const items = example.items || [];
+  items.forEach((item, index) => {
+    const row = document.createElement("section");
+    row.className = `presence-row ${item.kind || "statement"}`;
+    if (item.targetId) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => goToSlideById(item.targetId));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          goToSlideById(item.targetId);
+        }
+      });
+    }
+    if (item.overlayData) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => openPresenceOverlay(item.overlayData));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openPresenceOverlay(item.overlayData);
+        }
+      });
+    }
+    if (index > 0 && !example.showAllItems) row.classList.add("hidden");
+    row.dataset.presenceIndex = index;
+    const promptLine = document.createElement("div");
+    promptLine.className = `presence-prompt-line ${item.kind === "replace-choice" ? "replace-prompt-line" : ""}`;
+    if (item.kind === "inline-choice") {
+      const prompt = document.createElement("p");
+      prompt.className = "presence-prompt inline-choice-prompt";
+      prompt.append(...createInlineChoiceParts(item.segments || []));
+      promptLine.append(prompt);
+    } else if (item.kind === "replace-choice") {
+      const source = document.createElement("p");
+      source.className = "presence-prompt replace-source";
+      source.innerHTML = renderPresenceParts(item.sourceParts || []);
+      const arrow = document.createElement("span");
+      arrow.className = "replace-arrow";
+      arrow.textContent = "->";
+      const target = document.createElement("p");
+      target.className = "presence-prompt replace-target";
+      target.innerHTML = renderPresenceParts(item.targetParts || []);
+      promptLine.append(source, arrow, target);
+    } else {
+      const prompt = document.createElement("p");
+      prompt.className = "presence-prompt";
+      prompt.innerHTML = renderPresenceParts(item.parts || [{ text: item.text || "" }]);
+      promptLine.append(prompt);
+    }
+    if (index < items.length - 1 && !example.showAllItems) {
+      const nextButton = document.createElement("button");
+      nextButton.className = "presence-next";
+      nextButton.type = "button";
+      nextButton.textContent = "›";
+      nextButton.setAttribute("aria-label", "Show next sentence");
+      nextButton.disabled = Boolean(item.answerReveal || item.choices);
+      nextButton.addEventListener("click", () => showNextPresenceRow(list, index));
+      promptLine.append(nextButton);
+    }
+    if (!item.hidePrompt) row.append(promptLine);
+    if (item.answerParts) {
+      const answer = document.createElement("p");
+      answer.className = "presence-answer";
+      answer.innerHTML = renderPresenceParts(item.answerParts);
+      if (item.answerReveal) {
+        answer.classList.add("hidden");
+        const reveal = document.createElement("button");
+        reveal.className = "primary-button presence-reveal";
+        reveal.textContent = "REVEAL";
+        reveal.addEventListener("click", () => {
+          answer.classList.remove("hidden");
+          reveal.disabled = true;
+          enablePresenceNext(row);
+        });
+        row.append(reveal);
+      }
+      row.append(answer);
+    }
+    if (item.choices) {
+      const choices = document.createElement("div");
+      choices.className = "presence-choices";
+      const choiceList = item.shuffleChoices ? shuffle(item.choices) : item.choices;
+      choiceList.forEach((choice) => {
+        const button = document.createElement("button");
+        button.className = "presence-choice";
+        button.textContent = choice;
+        button.addEventListener("click", () => answerPresenceChoice(button, choices, item.answer, row));
+        choices.append(button);
+      });
+      row.append(choices);
+    }
+    if (item.kind === "style-match") {
+      row.append(createPresenceStyleMatch(item));
+    }
+    list.append(row);
+  });
+  els.presenceView.append(list);
+}
+
+function createInlineChoiceParts(segments) {
+  return segments.map((segment) => {
+    if (segment.text) {
+      const span = document.createElement("span");
+      span.className = segment.className || "";
+      span.textContent = segment.text;
+      return span;
+    }
+    const group = document.createElement("span");
+    group.className = "inline-choice-group";
+    group.dataset.answer = segment.answer;
+
+    const trigger = document.createElement("button");
+    trigger.type = "button";
+    trigger.className = "inline-choice-trigger";
+    trigger.textContent = "?";
+
+    const popup = document.createElement("div");
+    popup.className = "inline-choice-popup hidden";
+
+    let closeHandler = null;
+
+    const closePopup = () => {
+      popup.classList.add("hidden");
+      if (closeHandler) {
+        document.removeEventListener("click", closeHandler, true);
+        closeHandler = null;
+      }
+    };
+
+    shuffle(segment.options || []).forEach((option) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "inline-choice-popup-option";
+      btn.textContent = option;
+      btn.addEventListener("click", () => {
+        const isCorrect = option === group.dataset.answer;
+        closePopup();
+        trigger.disabled = true;
+        trigger.classList.add(isCorrect ? "correct" : "wrong");
+        trigger.textContent = isCorrect ? option : group.dataset.answer;
+        group.dataset.answered = "true";
+        playFeedbackSound(isCorrect);
+      });
+      popup.append(btn);
+    });
+
+    trigger.addEventListener("click", (e) => {
+      if (group.dataset.answered) return;
+      e.stopPropagation();
+      const isHidden = popup.classList.contains("hidden");
+      popup.classList.toggle("hidden", !isHidden);
+      if (isHidden) {
+        closeHandler = (ev) => { if (!group.contains(ev.target)) closePopup(); };
+        document.addEventListener("click", closeHandler, true);
+      } else {
+        if (closeHandler) { document.removeEventListener("click", closeHandler, true); closeHandler = null; }
+      }
+    });
+
+    group.append(trigger, popup);
+    return group;
+  });
+}
+
+function createPresenceStyleMatch(item) {
+  const activity = document.createElement("div");
+  activity.className = "presence-style-match";
+  const image = document.createElement("img");
+  image.src = item.imagePath;
+  image.alt = item.visualBrief || "Style matching visual";
+  activity.append(image);
+
+  const slots = document.createElement("div");
+  slots.className = "style-match-slots";
+  (item.slots || []).forEach((slot) => {
+    const target = document.createElement("div");
+    target.className = "style-match-slot";
+    target.dataset.answer = slot.answer;
+    target.textContent = slot.label || "";
+    target.addEventListener("dragover", (event) => event.preventDefault());
+    target.addEventListener("drop", (event) => {
+      event.preventDefault();
+      const word = event.dataTransfer.getData("text/plain");
+      const card = [...activity.querySelectorAll(".style-match-card")].find((button) => button.dataset.word === word);
+      if (!card || card.disabled) return;
+      const isCorrect = word === target.dataset.answer;
+      playFeedbackSound(isCorrect);
+      if (!isCorrect) {
+        target.classList.add("wrong");
+        setTimeout(() => target.classList.remove("wrong"), 420);
+        return;
+      }
+      target.classList.add("filled");
+      target.textContent = word;
+      card.disabled = true;
+      card.draggable = false;
+      card.classList.add("used");
+    });
+    slots.append(target);
+  });
+  activity.append(slots);
+
+  const bank = document.createElement("div");
+  bank.className = "style-match-bank";
+  shuffle(item.words || []).forEach((word) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "style-match-card";
+    card.textContent = word;
+    card.dataset.word = word;
+    card.draggable = true;
+    card.addEventListener("dragstart", (event) => {
+      if (card.disabled) return;
+      event.dataTransfer.setData("text/plain", word);
+    });
+    bank.append(card);
+  });
+  activity.append(bank);
+  return activity;
+}
+
+function showNextPresenceRow(list, currentIndex) {
+  const nextRow = list.querySelector(`[data-presence-index="${currentIndex + 1}"]`);
+  if (!nextRow) return;
+  if (list.dataset.replaceCurrentItem === "true") {
+    const currentRow = list.querySelector(`[data-presence-index="${currentIndex}"]`);
+    currentRow?.classList.add("hidden");
+  }
+  nextRow.classList.remove("hidden");
+  const nextButton = list.querySelector(`[data-presence-index="${currentIndex}"] .presence-next`);
+  if (nextButton) nextButton.classList.add("hidden");
+}
+
+function enablePresenceNext(row) {
+  const nextButton = row.querySelector(".presence-next");
+  if (nextButton) nextButton.disabled = false;
+}
+
+function answerPresenceChoice(button, choices, answer, row) {
+  if (choices.dataset.answered) return;
+  choices.dataset.answered = "true";
+  const isCorrect = button.textContent === answer;
+  [...choices.children].forEach((choiceButton) => {
+    choiceButton.disabled = true;
+    if (choiceButton.textContent === answer) choiceButton.classList.add("correct");
+  });
+  if (!isCorrect) button.classList.add("wrong");
+  enablePresenceNext(row);
+  playFeedbackSound(isCorrect);
+}
+
+function goToSlideById(targetId) {
+  const targetIndex = state.module?.sentences.findIndex((sentence) => sentence.id === targetId);
+  if (targetIndex == null || targetIndex < 0) return;
+  state.index = targetIndex;
+  renderExample();
 }
 
 function revealTimetableAnswer() {
@@ -445,6 +822,10 @@ function returnToSetup() {
 }
 
 function showPresentationComplete() {
+  if (state.module?.returnToSetupOnComplete) {
+    returnToSetup();
+    return;
+  }
   hideAllScreens();
   els.complete.classList.remove("hidden");
 }
@@ -470,7 +851,10 @@ function openExerciseMenu() {
       "true-false-grid": "Mark every school rule as true or false.",
       "pronoun-memory": "Memorize the pictures, then choose the pronouns in order.",
       "pronoun-snap": "Choose the pronoun before each Unit 1 + 2 picture changes.",
-      "time-setter": "Set the digital clock to match the target time."
+      "time-setter": "Set the digital clock to match the target time.",
+      "fill-blank": "Tap each blank to reveal the correct answer.",
+      "mistake-correct-it": "Decide if the sentence is correct. If not, find the mistake.",
+      "paragraph-choice": "Choose the correct word for each blank in the paragraph."
     };
     const exerciseDescription = exerciseDescriptions[exercise.activity] || "Start this activity.";
     button.innerHTML = `<span>EXERCISE</span><strong>${exercise.title}</strong><small>${exerciseDescription}</small>`;
@@ -483,6 +867,7 @@ function openExerciseMenu() {
 function startSelectedExercise(exercise) {
   els.exerciseMenu.classList.add("hidden");
   resetExerciseResultActions();
+  exercise.reset?.();
   switch (exercise.activity) {
     case "sort":
       startSortIt(exercise);
@@ -508,6 +893,18 @@ function startSelectedExercise(exercise) {
     case "time-setter":
       startTimeSetter(exercise);
       return;
+    case "fill-blank":
+      startFillBlank(exercise);
+      return;
+    case "mistake-correct-it":
+      startMistakeCorrectIt(exercise);
+      return;
+    case "paragraph-choice":
+      startParagraphChoice(exercise);
+      return;
+    case "student-match":
+      startStudentMatch(exercise);
+      return;
     default:
       startChoiceExercise(exercise);
   }
@@ -517,6 +914,368 @@ function resetExerciseResultActions() {
   els.exerciseContinue.classList.add("hidden");
   els.exerciseHome.textContent = "BACK TO MENU";
   els.exerciseHome.className = "primary-button";
+}
+
+function startParagraphChoice(exercise) {
+  state.exercise = exercise;
+  state.pcPages = exercise.pages || [{ imagePath: exercise.imagePath, sentences: exercise.sentences }];
+  state.pcPageIndex = 0;
+  state.pcOverallCorrect = 0;
+  state.pcCurrentPageCorrect = 0;
+  state.pcTotalChoices = state.pcPages.reduce((sum, p) =>
+    sum + (p.sentences || []).reduce((s2, sen) =>
+      s2 + (sen.segments || []).filter((seg) => seg.options).length, 0), 0);
+  hideAllScreens();
+  els.pcGradeLabel.textContent = `GRADE ${state.module.grade}`;
+  els.pcTitle.textContent = exercise.title;
+  els.pcScore.textContent = `0 / ${state.pcTotalChoices}`;
+  els.pcResult.classList.add("hidden");
+  els.pcScreen.classList.remove("hidden");
+  renderPcPage();
+}
+
+function renderPcPage() {
+  const page = state.pcPages[state.pcPageIndex];
+  els.pcImage.src = page.imagePath;
+  els.pcImage.alt = state.exercise.title;
+  els.pcResult.classList.add("hidden");
+  els.pcDone.dataset.pcAction = "done";
+  els.pcDone.textContent = "BACK TO MENU";
+  els.pcParagraph.replaceChildren(...(page.sentences || []).map((sentence) => {
+    const p = document.createElement("p");
+    p.className = "inline-choice-prompt";
+    p.append(...createInlineChoiceParts(sentence.segments || []));
+    return p;
+  }));
+}
+
+function advancePcPage() {
+  state.pcOverallCorrect += state.pcCurrentPageCorrect;
+  state.pcCurrentPageCorrect = 0;
+  state.pcPageIndex++;
+  renderPcPage();
+}
+
+function checkPcProgress() {
+  const groups = [...els.pcParagraph.querySelectorAll(".inline-choice-group")];
+  const total = groups.length;
+  const answered = groups.filter((g) => g.dataset.answered).length;
+  const correct = groups.filter((g) => g.querySelector(".inline-choice-trigger.correct")).length;
+  const overallCorrect = state.pcOverallCorrect + correct;
+  els.pcScore.textContent = `${overallCorrect} / ${state.pcTotalChoices}`;
+  if (answered === total && total > 0) {
+    state.pcCurrentPageCorrect = correct;
+    const isLastPage = state.pcPageIndex >= state.pcPages.length - 1;
+    setTimeout(() => {
+      if (isLastPage) {
+        els.pcResultText.textContent = overallCorrect === state.pcTotalChoices
+          ? `Perfect! All ${state.pcTotalChoices} correct!`
+          : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
+        els.pcDone.textContent = "BACK TO MENU";
+        els.pcDone.dataset.pcAction = "done";
+      } else {
+        els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
+        els.pcDone.textContent = "NEXT PAGE →";
+        els.pcDone.dataset.pcAction = "next";
+      }
+      els.pcResult.classList.remove("hidden");
+    }, 500);
+  }
+}
+
+function startStudentMatch(exercise) {
+  state.exercise = exercise;
+  state.smBatchIndex = 0;
+  state.smScore = 0;
+  state.smSelectedDescId = null;
+  state.smMatched = 0;
+  const glassStudents = shuffle(exercise.students.filter((s) => s.hasGlasses));
+  const normalStudents = shuffle(exercise.students.filter((s) => !s.hasGlasses));
+  const batches = [];
+  for (let i = 0; i < glassStudents.length; i += 2) {
+    batches.push(shuffle([glassStudents[i], glassStudents[i + 1], normalStudents.pop(), normalStudents.pop()]));
+  }
+  while (normalStudents.length >= 4) {
+    batches.push(shuffle(normalStudents.splice(0, 4)));
+  }
+  state.smBatches = shuffle(batches);
+  hideAllScreens();
+  els.smGrade.textContent = `GRADE ${state.module.grade}`;
+  els.smTitle.textContent = exercise.title;
+  els.smResult.classList.add("hidden");
+  els.smScreen.classList.remove("hidden");
+  renderSmBatch();
+}
+
+function renderSmBatch() {
+  const batches = state.smBatches;
+  const batch = batches[state.smBatchIndex];
+  state.smMatched = 0;
+  state.smSelectedDescId = null;
+  els.smProgress.textContent = `${state.smBatchIndex + 1} / ${batches.length}`;
+  els.smResult.classList.add("hidden");
+
+  els.smStudentGrid.replaceChildren(...batch.map((student) => {
+    const card = document.createElement("div");
+    card.className = "sm-student-card";
+    card.dataset.studentId = student.id;
+    const img = document.createElement("img");
+    img.className = "sm-student-img";
+    img.src = student.imagePath;
+    img.alt = student.name;
+    const nameEl = document.createElement("span");
+    nameEl.className = "sm-student-name";
+    nameEl.textContent = student.name;
+    card.append(img, nameEl);
+    card.addEventListener("click", () => handleSmStudentClick(student.id));
+    return card;
+  }));
+
+  const batchHasGlasses = batch.some((s) => s.hasGlasses);
+  const shuffled = shuffle([...batch]);
+  els.smDescList.replaceChildren(...shuffled.map((student) => {
+    const card = document.createElement("div");
+    card.className = "sm-desc-card";
+    card.dataset.descId = student.id;
+    let desc = student.description;
+    if (batchHasGlasses) {
+      desc += student.hasGlasses
+        ? ` S/he has got ${student.glassesType} glasses.`
+        : " S/he hasn't got glasses.";
+    }
+    card.textContent = desc;
+    card.addEventListener("click", () => handleSmDescClick(student.id));
+    return card;
+  }));
+}
+
+function handleSmDescClick(descId) {
+  if (els.smDescList.querySelector(`.sm-desc-card[data-desc-id="${descId}"]`)?.classList.contains("sm-matched")) return;
+  els.smDescList.querySelectorAll(".sm-desc-card").forEach((c) => c.classList.remove("sm-selected"));
+  const card = els.smDescList.querySelector(`.sm-desc-card[data-desc-id="${descId}"]`);
+  if (card) card.classList.add("sm-selected");
+  state.smSelectedDescId = descId;
+}
+
+function handleSmStudentClick(studentId) {
+  if (state.smSelectedDescId === null) return;
+  const studentCard = els.smStudentGrid.querySelector(`.sm-student-card[data-student-id="${studentId}"]`);
+  if (!studentCard || studentCard.classList.contains("sm-matched")) return;
+  const isCorrect = Number(state.smSelectedDescId) === studentId;
+  const img = studentCard.querySelector(".sm-student-img");
+  Stamp.show(img, isCorrect ? "correct" : "wrong", { duration: isCorrect ? 1100 : 900 });
+  playWavFeedback(isCorrect);
+  if (isCorrect) {
+    studentCard.classList.add("sm-matched");
+    const descCard = els.smDescList.querySelector(`.sm-desc-card[data-desc-id="${state.smSelectedDescId}"]`);
+    if (descCard) descCard.classList.add("sm-matched");
+    state.smSelectedDescId = null;
+    state.smMatched++;
+    state.smScore++;
+    if (state.smMatched === 4) {
+      const isLast = state.smBatchIndex >= state.smBatches.length - 1;
+      setTimeout(() => {
+        if (isLast) {
+          hideAllScreens();
+          els.exerciseResultScore.textContent = `${state.smScore} / ${state.exercise.students.length}`;
+          els.exerciseResultMessage.textContent = `${state.smScore} students matched correctly.`;
+          els.exerciseResult.classList.remove("hidden");
+        } else {
+          els.smResultText.textContent = "Well done! Ready for the next group?";
+          els.smResult.classList.remove("hidden");
+        }
+      }, 700);
+    }
+  } else {
+    setTimeout(() => {
+      const descCard = els.smDescList.querySelector(`.sm-desc-card[data-desc-id="${state.smSelectedDescId}"]`);
+      if (descCard) descCard.classList.remove("sm-selected");
+      state.smSelectedDescId = null;
+    }, 900);
+  }
+}
+
+function startFillBlank(exercise) {
+  state.exercise = exercise;
+  state.fillBlankQuestions = typeof exercise.buildQuestions === "function"
+    ? exercise.buildQuestions(state.module)
+    : exercise.questions || [];
+  state.fillBlankRevealed = 0;
+  hideAllScreens();
+  els.fillBlank.classList.remove("hidden");
+  els.fillBlankGrade.textContent = `GRADE ${state.grade}`;
+  els.fillBlankTitle.textContent = exercise.title;
+  els.fillBlankInstruction.textContent = exercise.instruction || "TAP EACH BLANK TO REVEAL THE ANSWER.";
+  els.fillBlankFeedback.textContent = "Tap the blanks.";
+  els.fillBlankFeedback.className = "exercise-feedback";
+  updateFillBlankProgress();
+  els.fillBlankGrid.replaceChildren(...state.fillBlankQuestions.map((question, index) => createFillBlankItem(question, index)));
+}
+
+function createFillBlankItem(question, index) {
+  const item = document.createElement("section");
+  item.className = "fill-blank-item";
+  item.dataset.index = index;
+  (question.parts || []).forEach((part) => {
+    const span = document.createElement("span");
+    span.className = part.mark ? "fill-blank-mark" : "";
+    span.textContent = part.text;
+    item.append(span);
+  });
+  const answer = document.createElement("button");
+  answer.className = "fill-blank-answer";
+  answer.type = "button";
+  answer.dataset.answer = question.answer;
+  answer.textContent = "______";
+  answer.addEventListener("click", () => revealFillBlankAnswer(answer));
+  item.append(answer);
+  if (question.suffix) {
+    const suffix = document.createElement("span");
+    suffix.textContent = question.suffix;
+    item.append(suffix);
+  }
+  return item;
+}
+
+function revealFillBlankAnswer(button) {
+  if (button.classList.contains("revealed")) return;
+  button.textContent = button.dataset.answer;
+  button.classList.add("revealed");
+  button.disabled = true;
+  state.fillBlankRevealed += 1;
+  updateFillBlankProgress();
+  playFeedbackSound(true);
+  els.fillBlankFeedback.textContent = state.fillBlankRevealed === state.fillBlankQuestions.length
+    ? "Great! All blanks are revealed."
+    : "Good. Keep going.";
+  els.fillBlankFeedback.className = "exercise-feedback correct";
+}
+
+function updateFillBlankProgress() {
+  els.fillBlankProgress.textContent = `${state.fillBlankRevealed} / ${state.fillBlankQuestions.length}`;
+}
+
+function startMistakeCorrectIt(exercise) {
+  state.exercise = exercise;
+  state.mistakeQuestions = exercise.buildQuestions(state.module);
+  if (!state.mistakeQuestions.length) return;
+  state.mistakeIndex = 0;
+  state.mistakeScore = 0;
+  hideAllScreens();
+  els.mistake.classList.remove("hidden");
+  els.mistakeGrade.textContent = `GRADE ${state.grade}`;
+  els.mistakeTitle.textContent = exercise.title || "MISTAKE? CORRECT IT";
+  renderMistakeQuestion();
+}
+
+function renderMistakeQuestion() {
+  const question = state.mistakeQuestions[state.mistakeIndex];
+  const total = state.mistakeQuestions.length;
+  state.mistakeLocked = false;
+  els.mistakeProgress.textContent = `${state.mistakeIndex + 1} / ${total}`;
+  els.mistakeScore.textContent = state.mistakeScore;
+  els.mistakeInstruction.textContent = "IS THIS SENTENCE CORRECT?";
+  els.mistakeSentence.textContent = question.sentence;
+  els.mistakeSentence.classList.remove("mistake-wrong-sentence", "mistake-correct-sentence");
+  els.mistakeDecisionButtons.classList.remove("hidden");
+  els.mistakeCorrect.disabled = false;
+  els.mistakeWrong.disabled = false;
+  els.mistakeWordBank.classList.add("hidden");
+  els.mistakeWordBank.replaceChildren();
+  els.mistakeFeedback.textContent = "Choose CORRECT or WRONG.";
+  els.mistakeFeedback.className = "exercise-feedback";
+  els.mistakeNext.disabled = true;
+  els.mistakeNext.textContent = state.mistakeIndex === total - 1 ? "SEE RESULT" : "NEXT";
+}
+
+function answerMistakeDecision(userSaysCorrect) {
+  if (state.mistakeLocked) return;
+  const question = state.mistakeQuestions[state.mistakeIndex];
+  const isSentenceCorrect = Boolean(question.correct);
+  if (userSaysCorrect === isSentenceCorrect) {
+    if (isSentenceCorrect) {
+      state.mistakeScore += 1;
+      els.mistakeScore.textContent = state.mistakeScore;
+      els.mistakeSentence.classList.add("mistake-correct-sentence");
+      els.mistakeFeedback.textContent = "Correct!";
+      els.mistakeFeedback.className = "exercise-feedback correct";
+      playFeedbackSound(true);
+      finishMistakeQuestion();
+      return;
+    }
+    revealMistakeWords(question);
+    els.mistakeFeedback.textContent = "Good. Now tap the mistake.";
+    els.mistakeFeedback.className = "exercise-feedback";
+    return;
+  }
+  els.mistakeFeedback.textContent = isSentenceCorrect ? "This sentence is correct." : "There is a mistake. Tap WRONG first.";
+  els.mistakeFeedback.className = "exercise-feedback wrong";
+  playFeedbackSound(false);
+  finishMistakeQuestion();
+}
+
+function revealMistakeWords(question) {
+  els.mistakeDecisionButtons.classList.add("hidden");
+  els.mistakeWordBank.classList.remove("hidden");
+  els.mistakeSentence.classList.add("mistake-wrong-sentence");
+  els.mistakeWordBank.replaceChildren(...question.parts.map((part, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "mistake-word";
+    button.textContent = part;
+    button.dataset.index = index;
+    button.addEventListener("click", () => answerMistakeWord(button, question));
+    return button;
+  }));
+}
+
+function answerMistakeWord(button, question) {
+  if (state.mistakeLocked) return;
+  const index = Number(button.dataset.index);
+  if (index === question.errorIndex) {
+    state.mistakeScore += 1;
+    els.mistakeScore.textContent = state.mistakeScore;
+    button.classList.add("correct");
+    els.mistakeFeedback.innerHTML = `<span>Correct!</span><strong class="mistake-fixed-sentence">${question.fixedSentence}</strong>`;
+    els.mistakeFeedback.className = "exercise-feedback correct";
+    playFeedbackSound(true);
+    finishMistakeQuestion();
+    return;
+  }
+  button.classList.add("wrong");
+  els.mistakeFeedback.textContent = "That part is not the mistake. Try again.";
+  els.mistakeFeedback.className = "exercise-feedback wrong";
+  playFeedbackSound(false);
+}
+
+function finishMistakeQuestion() {
+  state.mistakeLocked = true;
+  els.mistakeCorrect.disabled = true;
+  els.mistakeWrong.disabled = true;
+  [...els.mistakeWordBank.children].forEach((button) => {
+    button.disabled = true;
+  });
+  els.mistakeNext.disabled = false;
+}
+
+function nextMistakeQuestion() {
+  if (state.mistakeIndex === state.mistakeQuestions.length - 1) {
+    showMistakeResult();
+    return;
+  }
+  state.mistakeIndex += 1;
+  renderMistakeQuestion();
+}
+
+function showMistakeResult() {
+  hideAllScreens();
+  els.exerciseResultScore.textContent = `${state.mistakeScore} / ${state.mistakeQuestions.length}`;
+  els.exerciseResultMessage.textContent = `${state.mistakeScore} correct answers out of ${state.mistakeQuestions.length}.`;
+  const canContinue = Boolean(state.exercise?.repeatable && (!state.exercise.hasMoreQuestions || state.exercise.hasMoreQuestions()));
+  els.exerciseContinue.classList.toggle("hidden", !canContinue);
+  els.exerciseHome.textContent = state.exercise?.repeatable ? "MAIN MENU" : "BACK TO MENU";
+  els.exerciseHome.className = "primary-button";
+  els.exerciseResult.classList.remove("hidden");
 }
 
 function createTimeSetterTarget(previousTarget = null, round = 1, exercise = {}) {
@@ -563,23 +1322,28 @@ function startTimeSetter(exercise) {
   state.timeSetterLocked = false;
   hideAllScreens();
   els.timeSetter.classList.remove("hidden");
-  renderTimeSetter();
+  renderTimeSetter(true);
 }
 
-function renderTimeSetter() {
+function shakeTimeSetterTarget() {
+  const el = els.timeSetterTarget;
+  el.classList.remove("ts-shake");
+  void el.offsetWidth;
+  el.classList.add("ts-shake");
+  el.addEventListener("animationend", () => el.classList.remove("ts-shake"), { once: true });
+}
+
+function renderTimeSetter(shake = false) {
   els.timeSetterGrade.textContent = `GRADE ${state.grade}`;
   els.timeSetterRound.textContent = `ROUND ${state.timeSetterRound}`;
   els.timeSetterScore.textContent = state.timeSetterScore;
   els.timeSetterTarget.textContent = describeTimeSetterTarget(state.timeSetterTarget);
-  els.timeSetterHour.textContent = state.timeSetterHour;
-  els.timeSetterMinute.textContent = String(state.timeSetterMinute).padStart(2, "0");
+  updateTimeSetterDigital();
   els.timeSetterFeedback.textContent = "Set the clock, then press OK.";
   els.timeSetterFeedback.className = "exercise-feedback";
-  els.timeSetterActions.replaceChildren(
-    createTimeSetterAction("OK", "primary-button", checkTimeSetter),
-    createTimeSetterAction("EXIT", "secondary-button", returnFromTimeSetter)
-  );
+  els.timeSetterActions.replaceChildren();
   setTimeSetterControlsDisabled(false);
+  if (shake) shakeTimeSetterTarget();
 }
 
 function createTimeSetterAction(label, className, handler) {
@@ -592,36 +1356,78 @@ function createTimeSetterAction(label, className, handler) {
 }
 
 function setTimeSetterControlsDisabled(disabled) {
-  [els.timeSetterHourUp, els.timeSetterHourDown, els.timeSetterMinuteUp, els.timeSetterMinuteDown]
+  [els.timeSetterHourUp, els.timeSetterHourDown, els.timeSetterMinuteUp, els.timeSetterMinuteDown, els.timeSetterCheck]
     .forEach((button) => { button.disabled = disabled; });
 }
 
 function playTimeSetterStep(isIncrease) {
-  window.exerciseActivityModules.playTone(isIncrease ? "correct-position" : "wrong-position");
+  if (timeStepAudio) {
+    timeStepAudio.pause();
+    timeStepAudio.currentTime = 0;
+  }
+  timeStepAudio = new Audio(`sounds/${isIncrease ? "digital_up" : "digital_down"}.mp3`);
+  timeStepAudio.play().catch(() => {});
 }
 
 function adjustTimeSetterHour(change) {
   if (state.timeSetterLocked) return;
   state.timeSetterHour = ((state.timeSetterHour - 1 + change + 12) % 12) + 1;
-  els.timeSetterHour.textContent = state.timeSetterHour;
+  updateTimeSetterDigital();
   playTimeSetterStep(change > 0);
 }
 
 function adjustTimeSetterMinute(change) {
   if (state.timeSetterLocked) return;
   state.timeSetterMinute = (state.timeSetterMinute + change + 60) % 60;
-  els.timeSetterMinute.textContent = String(state.timeSetterMinute).padStart(2, "0");
+  updateTimeSetterDigital();
   playTimeSetterStep(change > 0);
+}
+
+function updateTimeSetterDigital() {
+  if (!els.timeSetterDigital) return;
+  const value = `${String(state.timeSetterHour).padStart(2, "0")}:${String(state.timeSetterMinute).padStart(2, "0")}`;
+  els.timeSetterDigital.setAttribute("aria-label", value);
+  els.timeSetterDigital.replaceChildren(...value.split("").map(createDigitalClockGlyph));
+}
+
+function createDigitalClockGlyph(character) {
+  const glyph = document.createElement("span");
+  if (character === ":") {
+    glyph.className = "digital-colon";
+    glyph.append(document.createElement("i"), document.createElement("i"));
+    return glyph;
+  }
+  const activeSegmentsByDigit = {
+    0: ["a", "b", "c", "d", "e", "f"],
+    1: ["b", "c"],
+    2: ["a", "b", "g", "e", "d"],
+    3: ["a", "b", "g", "c", "d"],
+    4: ["f", "g", "b", "c"],
+    5: ["a", "f", "g", "c", "d"],
+    6: ["a", "f", "g", "e", "c", "d"],
+    7: ["a", "b", "c"],
+    8: ["a", "b", "c", "d", "e", "f", "g"],
+    9: ["a", "b", "c", "d", "f", "g"]
+  };
+  glyph.className = "digital-digit";
+  const activeSegments = new Set(activeSegmentsByDigit[character] || []);
+  ["a", "b", "c", "d", "e", "f", "g"].forEach((segment) => {
+    const bar = document.createElement("i");
+    bar.className = `segment segment-${segment}${activeSegments.has(segment) ? " active" : ""}`;
+    glyph.append(bar);
+  });
+  return glyph;
 }
 
 function checkTimeSetter() {
   if (state.timeSetterLocked) return;
   const isCorrect = state.timeSetterHour === state.timeSetterTarget.hour && state.timeSetterMinute === state.timeSetterTarget.minute;
-  state.timeSetterLocked = true;
-  setTimeSetterControlsDisabled(true);
   if (isCorrect) {
+    state.timeSetterLocked = true;
+    setTimeSetterControlsDisabled(true);
     state.timeSetterScore += 1;
-    playFeedbackSound(true);
+    playWavFeedback(true);
+    window.exerciseActivityModules.showStamp(true);
     els.timeSetterScore.textContent = state.timeSetterScore;
     els.timeSetterFeedback.textContent = "Correct! Get ready for the next time.";
     els.timeSetterFeedback.className = "exercise-feedback correct";
@@ -632,17 +1438,14 @@ function checkTimeSetter() {
       state.timeSetterHour = 12;
       state.timeSetterMinute = 0;
       state.timeSetterLocked = false;
-      renderTimeSetter();
+      renderTimeSetter(true);
     }, 1200);
     return;
   }
-  playFeedbackSound(false);
+  playWavFeedback(false);
+  window.exerciseActivityModules.showStamp(false);
   els.timeSetterFeedback.textContent = "Not quite. Try the same target again.";
   els.timeSetterFeedback.className = "exercise-feedback wrong";
-  els.timeSetterActions.replaceChildren(
-    createTimeSetterAction("TRY AGAIN", "primary-button", retryTimeSetter),
-    createTimeSetterAction("EXIT", "secondary-button", returnFromTimeSetter)
-  );
 }
 
 function retryTimeSetter() {
@@ -677,28 +1480,37 @@ function startChoiceExercise(exercise) {
 
 function startTrueFalseGrid(exercise) {
   state.exercise = exercise;
-  state.trueFalseQuestions = exercise.buildQuestions(state.module);
   state.trueFalseAnswered = 0;
   state.trueFalseScore = 0;
   state.trueFalsePageIndex = 0;
   state.trueFalsePageAnswered = 0;
-  const pageSize = exercise.pageSize || state.trueFalseQuestions.length;
-  state.trueFalsePages = Array.from({ length: Math.ceil(state.trueFalseQuestions.length / pageSize) }, (_, index) =>
-    state.trueFalseQuestions.slice(index * pageSize, (index + 1) * pageSize)
-  );
+  if (exercise.buildPages) {
+    state.trueFalsePages = exercise.buildPages();
+    state.trueFalseQuestions = state.trueFalsePages.flatMap((p) => p.questions);
+  } else {
+    state.trueFalseQuestions = exercise.buildQuestions(state.module);
+    const pageSize = exercise.pageSize || state.trueFalseQuestions.length;
+    state.trueFalsePages = Array.from(
+      { length: Math.ceil(state.trueFalseQuestions.length / pageSize) },
+      (_, index) => ({ questions: state.trueFalseQuestions.slice(index * pageSize, (index + 1) * pageSize), imagePath: exercise.imagePath })
+    );
+  }
   hideAllScreens();
   els.trueFalse.classList.remove("hidden");
   els.trueFalseGrade.textContent = `GRADE ${state.grade}`;
   els.trueFalseScore.textContent = "0";
+  els.trueFalseNext.textContent = exercise.continueLabel || (exercise.buildPages ? "CONTINUE" : "NEXT 8 STATEMENTS");
+  els.trueFalseExit.textContent = "EXIT";
   els.trueFalseInstruction.textContent = exercise.instruction || "READ EACH STATEMENT AND MARK IT TRUE OR FALSE.";
-  els.trueFalseVisualPanel.classList.toggle("hidden", !exercise.imagePath);
-  els.trueFalseCard.classList.toggle("with-visual", Boolean(exercise.imagePath));
-  if (exercise.imagePath) {
+  const firstImage = state.trueFalsePages[0]?.imagePath;
+  els.trueFalseVisualPanel.classList.toggle("hidden", !firstImage);
+  els.trueFalseCard.classList.toggle("with-visual", Boolean(firstImage));
+  if (firstImage) {
     els.trueFalseVisualBrief.textContent = exercise.visualBrief || "A visual for this activity.";
     els.trueFalseVisualFallback.classList.add("hidden");
     els.trueFalseImage.classList.remove("hidden");
     els.trueFalseImage.alt = exercise.visualBrief || "True or false visual";
-    els.trueFalseImage.src = exercise.imagePath;
+    els.trueFalseImage.src = firstImage;
   }
   renderTrueFalsePage();
 }
@@ -708,7 +1520,15 @@ function renderTrueFalsePage() {
   state.trueFalsePageAnswered = 0;
   els.trueFalseProgress.textContent = `${state.trueFalseAnswered} / ${state.trueFalseQuestions.length}`;
   els.trueFalseActions.classList.add("hidden");
-  els.trueFalseGrid.replaceChildren(...page.map(createTrueFalseRow));
+  els.trueFalseActionMessage.classList.add("hidden");
+  els.trueFalseNext.classList.remove("hidden");
+  els.trueFalseExit.classList.add("hidden");
+  if (page.imagePath) {
+    els.trueFalseImage.src = page.imagePath;
+    els.trueFalseVisualPanel.classList.remove("hidden");
+    els.trueFalseCard.classList.add("with-visual");
+  }
+  els.trueFalseGrid.replaceChildren(...page.questions.map(createTrueFalseRow));
 }
 
 function createTrueFalseRow(question) {
@@ -755,9 +1575,19 @@ function answerTrueFalse(row, selectedAnswer) {
   els.trueFalseScore.textContent = state.trueFalseScore;
   els.trueFalseProgress.textContent = `${state.trueFalseAnswered} / ${state.trueFalseQuestions.length}`;
   playFeedbackSound(isCorrect);
-  if (state.trueFalsePageAnswered === state.trueFalsePages[state.trueFalsePageIndex].length) {
+  if (state.trueFalsePageAnswered === state.trueFalsePages[state.trueFalsePageIndex].questions.length) {
+    if (state.exercise.maxAnsweredBeforeExit && state.trueFalseAnswered >= state.exercise.maxAnsweredBeforeExit) {
+      els.trueFalseActions.classList.remove("hidden");
+      els.trueFalseActionMessage.textContent = state.exercise.limitMessage || "There are still lots of different sentences, but it seems it's enough for now. Come back later.";
+      els.trueFalseActionMessage.classList.remove("hidden");
+      els.trueFalseNext.classList.add("hidden");
+      els.trueFalseExit.classList.remove("hidden");
+      return;
+    }
     if (state.trueFalsePageIndex < state.trueFalsePages.length - 1) {
       els.trueFalseActions.classList.remove("hidden");
+      els.trueFalseNext.classList.remove("hidden");
+      els.trueFalseExit.classList.remove("hidden");
       return;
     }
     setTimeout(() => {
@@ -1199,6 +2029,7 @@ function jumbleTokens(tokens) {
 
 function startJumbledSentences(exercise) {
   state.jumbledQuestions = exercise.buildQuestions(state.module);
+  if (!state.jumbledQuestions.length) return;
   state.jumbledIndex = 0;
   state.jumbledScore = 0;
   state.jumbledLivesMax = exercise.lives;
@@ -1358,6 +2189,10 @@ function nextJumbledSentence() {
     hideAllScreens();
     els.exerciseResultScore.textContent = `${state.jumbledScore} / ${state.jumbledQuestions.length}`;
     els.exerciseResultMessage.textContent = `${state.jumbledScore} sentences built correctly.`;
+    const canContinue = Boolean(state.exercise?.repeatable && (!state.exercise.hasMoreQuestions || state.exercise.hasMoreQuestions()));
+    els.exerciseContinue.classList.toggle("hidden", !canContinue);
+    els.exerciseHome.textContent = state.exercise?.repeatable ? "EXIT" : "BACK TO MENU";
+    els.exerciseHome.className = state.exercise?.repeatable ? "secondary-button" : "primary-button";
     els.exerciseResult.classList.remove("hidden");
     return;
   }
@@ -1601,10 +2436,11 @@ function showExerciseResult() {
   hideAllScreens();
   els.exerciseResultScore.textContent = `${state.exerciseScore} / ${state.exerciseQuestions.length}`;
   els.exerciseResultMessage.textContent = `${state.exerciseScore} correct answers out of ${state.exerciseQuestions.length}.`;
-  const canContinue = Boolean(state.exercise?.repeatable);
+  const isRepeatable = Boolean(state.exercise?.repeatable);
+  const canContinue = Boolean(isRepeatable && (!state.exercise.hasMoreQuestions || state.exercise.hasMoreQuestions()));
   els.exerciseContinue.classList.toggle("hidden", !canContinue);
-  els.exerciseHome.textContent = canContinue ? "EXIT" : "BACK TO MENU";
-  els.exerciseHome.className = canContinue ? "secondary-button" : "primary-button";
+  els.exerciseHome.textContent = isRepeatable ? "EXIT" : "BACK TO MENU";
+  els.exerciseHome.className = isRepeatable ? "secondary-button" : "primary-button";
   els.exerciseResult.classList.remove("hidden");
 }
 
@@ -1642,8 +2478,25 @@ els.completeExercises.addEventListener("click", openExerciseMenu);
 els.completeHome.addEventListener("click", returnToSetup);
 els.exerciseBack.addEventListener("click", returnToSetup);
 els.exerciseNext.addEventListener("click", nextExerciseQuestion);
-els.exerciseContinue.addEventListener("click", () => startChoiceExercise(state.exercise));
+els.exerciseContinue.addEventListener("click", () => {
+  if (state.exercise?.activity === "mistake-correct-it") startMistakeCorrectIt(state.exercise);
+  else if (state.exercise?.activity === "jumbled-sentences") startJumbledSentences(state.exercise);
+  else startChoiceExercise(state.exercise);
+});
 els.exerciseHome.addEventListener("click", returnToSetup);
+els.fillBlankBack.addEventListener("click", returnToSetup);
+els.pcBack.addEventListener("click", returnToSetup);
+els.pcDone.addEventListener("click", () => {
+  if (els.pcDone.dataset.pcAction === "next") advancePcPage();
+  else returnToSetup();
+});
+els.pcParagraph.addEventListener("click", (e) => {
+  if (e.target.classList.contains("inline-choice-popup-option")) setTimeout(checkPcProgress, 30);
+});
+els.mistakeBack.addEventListener("click", returnToSetup);
+els.mistakeCorrect.addEventListener("click", () => answerMistakeDecision(true));
+els.mistakeWrong.addEventListener("click", () => answerMistakeDecision(false));
+els.mistakeNext.addEventListener("click", nextMistakeQuestion);
 els.sortBack.addEventListener("click", returnToSetup);
 els.exerciseMenuClose.addEventListener("click", () => els.exerciseMenu.classList.add("hidden"));
 els.conversationBack.addEventListener("click", returnToSetup);
@@ -1656,12 +2509,19 @@ els.jumbledTiles.addEventListener("dragover", (event) => {
 els.jumbledTiles.addEventListener("drop", reorderJumbledGap);
 els.matchingBack.addEventListener("click", returnToSetup);
 els.matchingTimeNext.addEventListener("click", continueMatchingAfterTime);
+els.presenceOverlayClose.addEventListener("click", () => els.presenceOverlay.classList.add("hidden"));
+els.presenceOverlay.addEventListener("click", (e) => { if (e.target === els.presenceOverlay) els.presenceOverlay.classList.add("hidden"); });
+els.smBack.addEventListener("click", returnToSetup);
+els.smNext.addEventListener("click", () => { state.smBatchIndex++; renderSmBatch(); });
 els.trueFalseBack.addEventListener("click", returnToSetup);
 els.trueFalseNext.addEventListener("click", nextTrueFalsePage);
+els.trueFalseExit.addEventListener("click", returnToSetup);
 els.pronounMemoryExit.addEventListener("click", returnToSetup);
 els.pronounMemoryExitResult.addEventListener("click", returnToSetup);
 els.pronounMemoryRestart.addEventListener("click", () => startPronounMemory(state.pronounMemoryExercise));
 els.timeSetterExit.addEventListener("click", returnFromTimeSetter);
+els.timeSetterInlineExit.addEventListener("click", returnFromTimeSetter);
+els.timeSetterCheck.addEventListener("click", checkTimeSetter);
 els.timeSetterHourUp.addEventListener("click", () => adjustTimeSetterHour(1));
 els.timeSetterHourDown.addEventListener("click", () => adjustTimeSetterHour(-1));
 els.timeSetterMinuteUp.addEventListener("click", () => adjustTimeSetterMinute(5));

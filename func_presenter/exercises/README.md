@@ -13,7 +13,7 @@ window.exerciseActivityModules.jumbledSentences({
 });
 ```
 
-Available factories: `choice`, `sort`, `orderSentences`, `jumbledSentences`, `matchPictures`, `trueFalseGrid`, `pronounMemory`, `pronounSnap`, and `timeSetter`.
+Available factories: `choice`, `sort`, `orderSentences`, `jumbledSentences`, `matchPictures`, `trueFalseGrid`, `pronounMemory`, `pronounSnap`, `timeSetter`, and `fillBlank`.
 
 `trueFalseGrid` renders every statement on one two-column screen with a yellow tick and a red cross. It accepts `statements` as `[sentence, isTrue]` pairs, randomizes their order, plays the shared feedback sounds, and reveals true statements in yellow and false statements in red after they are answered:
 
@@ -52,3 +52,5 @@ window.exerciseActivityModules.timeSetter({
   ]
 });
 ```
+
+`fillBlank` renders all configured sentences on one screen. Each sentence can mark focus words with `mark: true`, which renders them in white while the rest stays yellow. Tapping a blank reveals its answer and updates the revealed count.

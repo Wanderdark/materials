@@ -26,6 +26,8 @@
     startAnagram: $("startAnagramButton"),
     startMatch: $("startMatchButton"),
     startSort: $("startSortButton"),
+    startOddOneOut: $("startOddOneOutButton"),
+    startLuckySpin: $("startLuckySpinButton"),
     anagramCategoryModal: $("anagramCategoryModal"),
     closeAnagramCategories: $("closeAnagramCategoriesButton"),
     anagramCategoryOptions: $("anagramCategoryOptions"),
@@ -66,6 +68,23 @@
     sortResultScore: $("sortResultScore"),
     sortResultMessage: $("sortResultMessage"),
     sortNextRound: $("sortNextRoundButton"),
+    luckySpinScreen: $("luckySpinScreen"),
+    luckySpinBack: $("luckySpinBackButton"),
+    luckySpinSessionLabel: $("luckySpinSessionLabel"),
+    luckySpinScore: $("luckySpinScore"),
+    luckyFloatingText: $("luckyFloatingText"),
+    luckyWheel: $("luckyWheel"),
+    luckySpinButton: $("luckySpinButton"),
+    luckySpinPrompt: $("luckySpinPrompt"),
+    luckySpinMeta: $("luckySpinMeta"),
+    luckySpinJudge: $("luckySpinJudge"),
+    luckyWrong: $("luckyWrongButton"),
+    luckyCorrect: $("luckyCorrectButton"),
+    luckySpinEnd: $("luckySpinEnd"),
+    luckySpinEndKicker: $("luckySpinEndKicker"),
+    luckySpinFinalScore: $("luckySpinFinalScore"),
+    luckySpinContinue: $("luckySpinContinueButton"),
+    luckySpinHome: $("luckySpinHomeButton"),
     back: $("backButton"),
     fullscreen: $("fullscreenButton"),
     sessionLabel: $("sessionLabel"),
@@ -116,6 +135,18 @@
     dots: $("checkpointDots"),
     memoryScreen: $("memoryScreen"),
     startMemory: $("startMemoryButton"),
+    oddOneOutScreen: $("oddOneOutScreen"),
+    oooCard: $("oooCard"),
+    oooBack: $("oooBackButton"),
+    oooSessionLabel: $("oooSessionLabel"),
+    oooProgressText: $("oooProgressText"),
+    oooOptions: $("oooOptions"),
+    oooFeedback: $("oooFeedback"),
+    oooActions: $("oooActions"),
+    oooGroupEnd: $("oooGroupEnd"),
+    oooGroupScore: $("oooGroupScore"),
+    oooContinue: $("oooContinueButton"),
+    oooExit: $("oooExitButton"),
     memoryBack: $("memoryBackButton"),
     memorySessionLabel: $("memorySessionLabel"),
     memoryStudyNext: $("memoryStudyNextButton"),
@@ -186,7 +217,22 @@
     memoryTimer: null,
     memoryTimeLeft: 20,
     memoryActive: false,
-    memorySelected: new Set()
+    memorySelected: new Set(),
+    oddPool: [],
+    oddIndex: 0,
+    oddGroupCorrect: 0,
+    oddAnswered: false,
+    luckyItems: [],
+    luckyExtraPool: [],
+    luckyRoundNumber: 1,
+    luckyRemaining: [],
+    luckyCurrent: null,
+    luckyScore: 0,
+    luckyRotation: 0,
+    luckySpinning: false,
+    luckyTickTimer: null,
+    luckyFinishTimer: null,
+    luckyAudioContext: null
   };
 
   function uniqueSorted(values) {
@@ -337,6 +383,8 @@
   function openExercises() {
     els.startMatch.classList.toggle("hidden", !getMatchCategories().length);
     els.startSort.classList.toggle("hidden", getSortCategories().length < 2);
+    els.startOddOneOut.classList.toggle("hidden", getCategories().length < 2);
+    els.startLuckySpin.classList.toggle("hidden", !getLuckySpinItems().length);
     els.exercisesModal.classList.remove("hidden");
   }
 
@@ -535,6 +583,196 @@
   }
 
   // ─── WATCH & REMEMBER ───────────────────────────────────────────
+
+  function getLuckySpinItems() {
+    if (typeof VocabLuckySpinAdapter === "undefined") return [];
+    return VocabLuckySpinAdapter.getInitial?.(state.grade, state.unit) || VocabLuckySpinAdapter.get(state.grade, state.unit);
+  }
+
+  function getLuckySpinExtraItems() {
+    if (typeof VocabLuckySpinAdapter === "undefined") return [];
+    return VocabLuckySpinAdapter.getExtra?.(state.grade, state.unit) || [];
+  }
+
+  function startLuckySpin() {
+    const items = getLuckySpinItems();
+    if (!items.length) return;
+    state.luckyExtraPool = sample(getLuckySpinExtraItems(), getLuckySpinExtraItems().length);
+    state.luckyRoundNumber = 1;
+    state.luckyScore = 0;
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    els.luckySpinScreen.classList.remove("hidden");
+    startLuckySpinRound(items);
+  }
+
+  function startLuckySpinRound(items) {
+    state.luckyItems = items.map((item, index) => ({ ...item, label: String(index + 1) }));
+    state.luckyRemaining = state.luckyItems.map((_, index) => index);
+    state.luckyCurrent = null;
+    state.luckyRotation = 0;
+    state.luckySpinning = false;
+    clearTimeout(state.luckyTickTimer);
+    clearTimeout(state.luckyFinishTimer);
+    els.luckySpinEnd.classList.add("hidden");
+    els.luckySpinJudge.classList.add("hidden");
+    els.luckySpinButton.disabled = false;
+    els.luckySpinPrompt.textContent = state.luckyRoundNumber === 1
+      ? "Spin the wheel to get a task."
+      : `Round ${state.luckyRoundNumber}. Spin the wheel.`;
+    renderLuckySpin();
+  }
+
+  function continueLuckySpin() {
+    if (!state.luckyExtraPool.length) return;
+    const nextItems = sample(state.luckyExtraPool, Math.min(8, state.luckyExtraPool.length));
+    const pickedIds = new Set(nextItems.map((item) => item.id));
+    state.luckyExtraPool = state.luckyExtraPool.filter((item) => !pickedIds.has(item.id));
+    state.luckyRoundNumber += 1;
+    startLuckySpinRound(nextItems);
+  }
+
+  function luckySegmentCenterAngle(activeIndex, segmentCount) {
+    return -90 + (activeIndex + .5) * (360 / segmentCount);
+  }
+
+  function renderLuckySpin() {
+    els.luckySpinSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit}`;
+    els.luckySpinScore.textContent = state.luckyRemaining.length;
+    els.luckySpinMeta.textContent = `Round ${state.luckyRoundNumber} · Remaining sections: ${state.luckyRemaining.length} / ${state.luckyItems.length}`;
+    const colors = ["#ffd84d", "#65e6b8", "#6688ff", "#ff8066", "#9f7aea", "#38bdf8", "#f472b6", "#a3e635"];
+    const activeItems = state.luckyRemaining.map((itemIndex) => ({
+      itemIndex,
+      item: state.luckyItems[itemIndex]
+    }));
+    const size = activeItems.length || 1;
+    const gradient = activeItems.map(({ itemIndex }, activeIndex) => {
+      const start = (activeIndex / size) * 100;
+      const end = ((activeIndex + 1) / size) * 100;
+      const color = colors[itemIndex % colors.length];
+      return `${color} ${start}% ${end}%`;
+    }).join(", ");
+    els.luckyWheel.style.background = `conic-gradient(from -90deg, ${gradient})`;
+    els.luckyWheel.style.setProperty("--wheel-rotation", `${state.luckyRotation}deg`);
+    els.luckyWheel.style.setProperty("--wheel-counter-rotation", `${-state.luckyRotation}deg`);
+    els.luckyWheel.style.transform = `rotate(${state.luckyRotation}deg)`;
+    els.luckyWheel.replaceChildren(...activeItems.map(({ item }, activeIndex) => {
+      const label = document.createElement("span");
+      label.className = "lucky-segment-label";
+      const segmentAngle = luckySegmentCenterAngle(activeIndex, size);
+      label.style.setProperty("--segment-angle", `${segmentAngle}deg`);
+      label.style.setProperty("--segment-counter-angle", `${-segmentAngle}deg`);
+      label.textContent = item.label || activeIndex + 1;
+      return label;
+    }));
+  }
+
+  function spinLuckyWheel() {
+    if (state.luckySpinning || !state.luckyRemaining.length) return;
+    state.luckySpinning = true;
+    state.luckyCurrent = null;
+    els.luckySpinButton.disabled = true;
+    els.luckySpinJudge.classList.add("hidden");
+    els.luckySpinPrompt.textContent = "Spinning...";
+    const activeSegments = [...state.luckyRemaining];
+    const activeTargetIndex = Math.floor(Math.random() * activeSegments.length);
+    const targetItemIndex = activeSegments[activeTargetIndex];
+    const centerAngle = luckySegmentCenterAngle(activeTargetIndex, activeSegments.length);
+    const normalizedRotation = ((state.luckyRotation % 360) + 360) % 360;
+    const targetRotation = ((-centerAngle % 360) + 360) % 360;
+    state.luckyRotation = state.luckyRotation + 1440 + targetRotation - normalizedRotation;
+    startLuckySpinTicks(2500);
+    els.luckyWheel.style.setProperty("--wheel-rotation", `${state.luckyRotation}deg`);
+    els.luckyWheel.style.setProperty("--wheel-counter-rotation", `${-state.luckyRotation}deg`);
+    els.luckyWheel.style.transform = `rotate(${state.luckyRotation}deg)`;
+    clearTimeout(state.luckyFinishTimer);
+    state.luckyFinishTimer = window.setTimeout(() => finishLuckySpin(targetItemIndex), 2550);
+  }
+
+  function startLuckySpinTicks(duration) {
+    clearTimeout(state.luckyTickTimer);
+    const startedAt = performance.now();
+    const tick = () => {
+      const elapsed = performance.now() - startedAt;
+      if (elapsed >= duration || !state.luckySpinning) return;
+      playLuckyTick();
+      const progress = elapsed / duration;
+      state.luckyTickTimer = window.setTimeout(tick, 38 + Math.pow(progress, 2.2) * 210);
+    };
+    tick();
+  }
+
+  function playLuckyTick() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    try {
+      state.luckyAudioContext ||= new AudioContext();
+      const ctx = state.luckyAudioContext;
+      const start = ctx.currentTime;
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      oscillator.type = "square";
+      oscillator.frequency.setValueAtTime(920, start);
+      gain.gain.setValueAtTime(.001, start);
+      gain.gain.exponentialRampToValueAtTime(.075, start + .006);
+      gain.gain.exponentialRampToValueAtTime(.001, start + .045);
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+      oscillator.start(start);
+      oscillator.stop(start + .05);
+    } catch {}
+  }
+
+  function finishLuckySpin(targetIndex) {
+    clearTimeout(state.luckyTickTimer);
+    clearTimeout(state.luckyFinishTimer);
+    state.luckySpinning = false;
+    state.luckyCurrent = targetIndex;
+    const item = state.luckyItems[targetIndex];
+    els.luckySpinPrompt.textContent = item.prompt;
+    els.luckySpinMeta.textContent = `${item.points} points · Let the student answer, then mark it.`;
+    els.luckySpinJudge.classList.remove("hidden");
+  }
+
+  function judgeLuckySpin(isCorrect) {
+    if (state.luckyCurrent === null || state.luckySpinning) return;
+    const item = state.luckyItems[state.luckyCurrent];
+    if (isCorrect) {
+      state.luckyScore += item.points || 0;
+      showLuckyFloatingText(item.points || 0);
+    }
+    playFeedbackSound(isCorrect);
+    state.luckyRemaining = state.luckyRemaining.filter((index) => index !== state.luckyCurrent);
+    state.luckyCurrent = null;
+    els.luckySpinJudge.classList.add("hidden");
+    renderLuckySpin();
+    if (!state.luckyRemaining.length) {
+      els.luckySpinButton.disabled = true;
+      els.luckySpinPrompt.textContent = "This wheel is complete.";
+      els.luckySpinMeta.textContent = state.luckyExtraPool.length
+        ? "Continue for a new wheel or exit."
+        : "Great work! No more prompts left.";
+      els.luckySpinEndKicker.textContent = state.luckyExtraPool.length ? "ROUND COMPLETE" : "GAME COMPLETE";
+      els.luckySpinFinalScore.textContent = `${state.luckyScore} POINTS`;
+      els.luckySpinContinue.classList.toggle("hidden", !state.luckyExtraPool.length);
+      els.luckySpinHome.textContent = state.luckyExtraPool.length ? "EXIT" : "BACK TO UNIT SELECTION";
+      els.luckySpinEnd.classList.remove("hidden");
+    } else {
+      els.luckySpinButton.disabled = false;
+      els.luckySpinPrompt.textContent = isCorrect ? "Correct! Spin again." : "Wrong. Spin again.";
+      els.luckySpinMeta.textContent = `Round ${state.luckyRoundNumber} · Remaining sections: ${state.luckyRemaining.length} / ${state.luckyItems.length}`;
+    }
+  }
+
+  function showLuckyFloatingText(points) {
+    if (!points) return;
+    els.luckyFloatingText.textContent = `+${points} POINTS`;
+    els.luckyFloatingText.classList.remove("hidden", "show");
+    void els.luckyFloatingText.offsetWidth;
+    els.luckyFloatingText.classList.add("show");
+    window.setTimeout(() => els.luckyFloatingText.classList.add("hidden"), 1100);
+  }
 
   const MEMORY_STUDY_DURATION = 3000;
   const MEMORY_TOTAL_CARDS    = 20;
@@ -1777,6 +2015,156 @@
     });
   }
 
+  // ──────────────────────────────── ODD ONE OUT ────────────────────────────────
+
+  function buildOddOneOutPool() {
+    const unitRecords = getUnitPool();
+    const categories = getCategories()
+      .map((cat) => ({
+        id: cat.id,
+        title: cat.title,
+        records: unitRecords.filter((r) => cat.words.includes(r[2]))
+      }))
+      .filter((cat) => cat.records.length >= 1);
+
+    if (categories.length < 2) return [];
+
+    const questions = [];
+    const attempts = 200;
+    for (let i = 0; i < attempts && questions.length < 40; i++) {
+      const dominantIdx = Math.floor(Math.random() * categories.length);
+      const dominant = categories[dominantIdx];
+      if (dominant.records.length < 3) continue;
+
+      const oddCandidates = categories.filter((_, idx) => idx !== dominantIdx && _.records.length >= 1);
+      if (!oddCandidates.length) continue;
+      const oddCat = oddCandidates[Math.floor(Math.random() * oddCandidates.length)];
+
+      const picked3 = sample(dominant.records, 3);
+      const picked1 = sample(oddCat.records, 1)[0];
+      const options = sample([...picked3.map((r) => ({ record: r, categoryId: dominant.id, categoryTitle: dominant.title })),
+        { record: picked1, categoryId: oddCat.id, categoryTitle: oddCat.title }], 4);
+
+      const correctIdx = options.findIndex((o) => o.categoryId === oddCat.id);
+      questions.push({ options, correctIdx });
+    }
+    return questions;
+  }
+
+  function startOddOneOut() {
+    state.oddPool = buildOddOneOutPool();
+    if (!state.oddPool.length) return;
+    state.oddIndex = 0;
+    state.oddGroupCorrect = 0;
+    state.oddAnswered = false;
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    els.oddOneOutScreen.classList.remove("hidden");
+    els.oooCard.classList.remove("hidden");
+    els.oooGroupEnd.classList.add("hidden");
+    renderOddOneOutQuestion();
+  }
+
+  function renderOddOneOutQuestion() {
+    state.oddAnswered = false;
+    const total = state.oddPool.length;
+    const groupStart = Math.floor(state.oddIndex / 10) * 10;
+    const posInGroup = state.oddIndex - groupStart + 1;
+    const groupSize = Math.min(10, total - groupStart);
+
+    els.oooSessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit}`;
+    els.oooProgressText.textContent = `${posInGroup} / ${groupSize}`;
+    els.oooFeedback.textContent = "";
+    els.oooFeedback.className = "ooo-feedback";
+    els.oooActions.replaceChildren();
+
+    const question = state.oddPool[state.oddIndex];
+    els.oooOptions.replaceChildren(...question.options.map((option, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "ooo-option";
+      const imgWrap = document.createElement("div");
+      imgWrap.className = "ooo-option-image";
+      const img = document.createElement("img");
+      img.src = imagePath(option.record);
+      img.alt = option.record[2];
+      imgWrap.append(img);
+      const label = document.createElement("span");
+      label.className = "ooo-option-word";
+      label.textContent = option.record[2];
+      applyTextSize(label, option.record[2]);
+      btn.append(imgWrap, label);
+      btn.addEventListener("click", () => checkOddOneOut(idx, question));
+      return btn;
+    }));
+  }
+
+  function checkOddOneOut(selectedIdx, question) {
+    if (state.oddAnswered) return;
+    state.oddAnswered = true;
+
+    const isCorrect = selectedIdx === question.correctIdx;
+    const buttons = [...els.oooOptions.children];
+
+    buttons.forEach((btn) => {
+      btn.disabled = true;
+      btn.classList.add("revealed");
+    });
+
+    if (isCorrect) {
+      state.oddGroupCorrect++;
+      buttons[selectedIdx].classList.add("ooo-correct");
+      els.oooFeedback.textContent = "Correct!";
+      els.oooFeedback.className = "ooo-feedback correct";
+      playFeedbackSound(true);
+    } else {
+      buttons[selectedIdx].classList.add("ooo-wrong");
+      buttons[question.correctIdx].classList.add("ooo-highlight", "ooo-shake");
+      els.oooFeedback.textContent = "Not quite — see the highlighted answer.";
+      els.oooFeedback.className = "ooo-feedback wrong";
+      playFeedbackSound(false);
+    }
+
+    if (window.exerciseActivityModules?.showStamp) {
+      window.exerciseActivityModules.showStamp(isCorrect);
+    }
+
+    const nextBtn = document.createElement("button");
+    nextBtn.type = "button";
+    nextBtn.className = "primary-button";
+    nextBtn.textContent = "NEXT →";
+    nextBtn.addEventListener("click", advanceOddOneOut);
+    els.oooActions.replaceChildren(nextBtn);
+  }
+
+  function advanceOddOneOut() {
+    const prevIndex = state.oddIndex;
+    state.oddIndex++;
+    const total = state.oddPool.length;
+    const groupSize = Math.min(10, total - Math.floor(prevIndex / 10) * 10);
+    const posInGroup = (prevIndex % 10) + 1;
+    const isGroupEnd = posInGroup >= groupSize;
+
+    if (isGroupEnd) {
+      els.oooGroupScore.textContent = `${state.oddGroupCorrect} / ${groupSize}`;
+      state.oddGroupCorrect = 0;
+      els.oooCard.classList.add("hidden");
+      els.oooGroupEnd.classList.remove("hidden");
+      els.oooContinue.classList.toggle("hidden", state.oddIndex >= total);
+    } else {
+      renderOddOneOutQuestion();
+    }
+  }
+
+  function continueOddOneOut() {
+    els.oooGroupEnd.classList.add("hidden");
+    els.oooCard.classList.remove("hidden");
+    renderOddOneOutQuestion();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+
   function hidePresentationViews() {
     els.wordView.classList.add("hidden");
     els.categoryIntro.classList.add("hidden");
@@ -1807,11 +2195,15 @@
     els.matchResult.classList.add("hidden");
     els.sortScreen.classList.add("hidden");
     els.sortResult.classList.add("hidden");
+    clearTimeout(state.luckyTickTimer);
+    state.luckySpinning = false;
+    els.luckySpinScreen.classList.add("hidden");
     clearTimeout(state.memoryStudyTimer);
     clearInterval(state.memoryTimer);
     state.memoryActive = false;
     state.memoryLevel = 5;
     els.memoryScreen.classList.add("hidden");
+    els.oddOneOutScreen.classList.add("hidden");
     els.exercisesModal.classList.add("hidden");
     els.categorySummaryModal.classList.add("hidden");
     els.anagramCategoryModal.classList.add("hidden");
@@ -1837,6 +2229,17 @@
   els.startMatch.addEventListener("click", openMatchCategoryChooser);
   els.closeMatchCategories.addEventListener("click", closeMatchCategoryChooser);
   els.startSort.addEventListener("click", startSort);
+  els.startOddOneOut.addEventListener("click", startOddOneOut);
+  els.startLuckySpin.addEventListener("click", startLuckySpin);
+  els.luckySpinBack.addEventListener("click", returnToSetup);
+  els.luckySpinButton.addEventListener("click", spinLuckyWheel);
+  els.luckyCorrect.addEventListener("click", () => judgeLuckySpin(true));
+  els.luckyWrong.addEventListener("click", () => judgeLuckySpin(false));
+  els.luckySpinContinue.addEventListener("click", continueLuckySpin);
+  els.luckySpinHome.addEventListener("click", returnToSetup);
+  els.oooBack.addEventListener("click", returnToSetup);
+  els.oooContinue.addEventListener("click", continueOddOneOut);
+  els.oooExit.addEventListener("click", returnToSetup);
   els.startMemory.addEventListener("click", startMemory);
   els.memoryBack.addEventListener("click", returnToSetup);
   els.memoryStudyNext.addEventListener("click", advanceMemoryStudy);
