@@ -575,7 +575,7 @@
   .settings-modal .diff-title { font-size: clamp(22px,3.8vw,40px); margin-bottom: 10px; }
   .settings-modal .diff-section { margin-bottom: 8px; }
   .settings-modal .diff-section-label { margin-bottom: 5px; padding-bottom: 3px; }
-  .settings-modal .sc-class-btn { padding: 5px 11px; }
+  .settings-modal .sc-grade-btn { padding: 5px 11px; }
   .settings-modal .sc-unit-btn { padding: 4px 9px; font-size: 12px; }
   .settings-modal .sc-unit-btn small { display: none; }
   .settings-modal .sc-group-btn { padding: 7px 0; font-size: 14px; }
@@ -643,6 +643,18 @@
   .diff-toggle-switch input:checked ~ .diff-toggle-thumb { transform: translateX(20px); }
 
   /* ── SETTINGS PANEL — ÜNİTE / GRUP BUTONLARI ── */
+  .sc-grade-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sc-grade-btn {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 800;
+    letter-spacing: .1em; padding: 7px 18px; border-radius: 9px; cursor: pointer;
+    border: 1.5px solid rgba(255,215,0,0.18); background: rgba(255,255,255,0.04);
+    color: var(--muted); transition: all .15s; text-transform: uppercase;
+  }
+  .sc-grade-btn:hover { border-color: rgba(255,215,0,0.4); color: var(--white); background: rgba(255,215,0,0.07); }
+  .sc-grade-btn.active {
+    background: rgba(255,215,0,0.13); border-color: var(--gold); color: var(--gold);
+    box-shadow: 0 0 12px rgba(255,215,0,0.2);
+  }
   .sc-unit-grid { display: flex; flex-wrap: wrap; gap: 6px; }
   .sc-unit-btn {
     font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
@@ -1599,6 +1611,11 @@
     <div class="diff-title">AYARLAR</div>
 
     <div class="diff-section">
+      <div class="diff-section-label">SINIF</div>
+      <div class="sc-grade-grid" id="sc-grade-grid"></div>
+    </div>
+
+    <div class="diff-section">
       <div class="diff-section-label">ÜNİTELER</div>
       <div class="sc-unit-grid" id="sc-unit-grid"></div>
       <div class="sc-settings-warn" id="sc-unit-warn"></div>
@@ -2030,6 +2047,7 @@ function menuSettings() {
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   document.getElementById('main-menu').style.display = 'none';
   document.getElementById('settings-overlay').style.display = 'flex';
+  buildScrabbleGradeSelector();
   buildScrabbleUnitSelector();
   _refreshGroupCountBtns();
   updateDiffLongDesc();
@@ -2066,8 +2084,9 @@ function saveSettings() {
   // localStorage'a kaydet
   try {
     localStorage.setItem(WC_SETTINGS_KEY, JSON.stringify({
-      selectedUnits: [...selectedUnits],
-      groupCount:    groupCount,
+      selectedGrades: [...selectedGrades],
+      selectedUnits:  [...selectedUnits],
+      groupCount:     groupCount,
     }));
   } catch(e) { console.warn('[settings] kayıt hatası:', e); }
 
@@ -2081,6 +2100,11 @@ function loadPersistedSettings() {
     const raw = localStorage.getItem(WC_SETTINGS_KEY);
     if(!raw) return false;
     const s = JSON.parse(raw);
+    // Sınıflar
+    if(Array.isArray(s.selectedGrades) && s.selectedGrades.length > 0) {
+      selectedGrades = new Set(s.selectedGrades.map(Number).filter(g => g >= 5 && g <= 8));
+      if(selectedGrades.size === 0) selectedGrades = new Set([5,6,7,8]);
+    }
     // Üniteler
     if(Array.isArray(s.selectedUnits) && s.selectedUnits.length > 0) {
       selectedUnits = new Set(s.selectedUnits.map(Number));
@@ -4236,8 +4260,9 @@ function closeScoresPopup() {
 }
 
 /* ── SETTINGS — ünite, grup sayısı ── */
-let groupCount    = 3;           // 2 veya 3 — settings'ten değişir
-let selectedUnits = new Set([1,2,3,4,5,6,7,8,9,10]); // Irregular Verbs (11) default kapalı
+let groupCount     = 3;           // 2 veya 3 — settings'ten değişir
+let selectedGrades = new Set([5,6,7,8]);
+let selectedUnits  = new Set([1,2,3,4,5,6,7,8,9,10]); // Irregular Verbs (11) default kapalı
 
 /** Aktif grup index'lerini döndürür: groupCount=2 → [0,1]  groupCount=3 → [0,1,2] */
 function grpIdxs() { return Array.from({length: groupCount}, (_, i) => i); }
@@ -4251,11 +4276,43 @@ function grpIdxs() { return Array.from({length: groupCount}, (_, i) => i); }
 /* Seçili üniteye göre WORD_BANK filtrele → {50:[], 100:[], 150:[]} */
 function getActiveWordBank() {
   if(typeof WORD_BANK === 'undefined') return {50:[], 100:[], 150:[]};
-  const inUnit = (w, n) => w.unit === n;
+  const inUnit  = (w, n) => w.unit === n;
+  const inGrade = (w)    => w.grade === 0 || selectedGrades.size === 0 || selectedGrades.has(w.grade);
   const filter = (diffNum) => (Array.isArray(WORD_BANK) ? WORD_BANK : [])
     .filter(w => w.diff === diffNum)
+    .filter(inGrade)
     .filter(w => selectedUnits.size === 0 || [...selectedUnits].some(u => inUnit(w, u)));
   return { 50: filter(1), 100: filter(2), 150: filter(3) };
+}
+
+/* Sınıf seçici UI */
+function buildScrabbleGradeSelector() {
+  const grid = document.getElementById('sc-grade-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  [5, 6, 7, 8].forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'sc-grade-btn' + (selectedGrades.has(g) ? ' active' : '');
+    btn.textContent = g + '. Sınıf';
+    btn.onclick = (e) => { e.preventDefault(); toggleScrabbleGrade(g); };
+    grid.appendChild(btn);
+  });
+}
+
+function toggleScrabbleGrade(g) {
+  if(selectedGrades.has(g)) {
+    if(selectedGrades.size <= 1) {
+      const warn = document.getElementById('sc-unit-warn');
+      if(warn) { warn.textContent = '⚠ En az 1 sınıf seçili olmalı!'; setTimeout(() => { warn.textContent = ''; }, 2000); }
+      return;
+    }
+    selectedGrades.delete(g);
+  } else {
+    selectedGrades.add(g);
+  }
+  buildScrabbleGradeSelector();
+  buildScrabbleUnitSelector();
+  updateDiffLongDesc();
 }
 
 /* Ünite seçici UI */
@@ -4263,8 +4320,9 @@ function buildScrabbleUnitSelector() {
   const grid = document.getElementById('sc-unit-grid');
   if(!grid || typeof WORD_BANK === 'undefined') return;
   grid.innerHTML = '';
-  const inUnit = (w, n) => w.unit === n;
-  const countForUnit = (n) => (Array.isArray(WORD_BANK) ? WORD_BANK : []).filter(w => inUnit(w, n)).length;
+  const inUnit  = (w, n) => w.unit === n;
+  const inGrade = (w)    => w.grade === 0 || selectedGrades.size === 0 || selectedGrades.has(w.grade);
+  const countForUnit = (n) => (Array.isArray(WORD_BANK) ? WORD_BANK : []).filter(w => inUnit(w, n) && inGrade(w)).length;
 
   // Üniteler 1–10
   for(let n = 1; n <= 10; n++) {

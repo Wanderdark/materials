@@ -144,6 +144,9 @@
       <div id="jumbledCard" class="jumbled-card">
         <p id="jumbledType" class="reference-type">QUESTION</p>
         <h1>Drag the words into the correct order.</h1>
+        <div id="jumbledImagePanel" class="jumbled-image-panel hidden">
+          <img id="jumbledImage" alt="Jumbled sentence visual">
+        </div>
         <div id="jumbledWordTiles" class="jumbled-word-tiles" aria-label="Draggable words"></div>
         <p id="jumbledFeedback" class="exercise-feedback" aria-live="polite">Build the sentence.</p>
       </div>
@@ -298,6 +301,42 @@
       </article>
     </section>
 
+    <section id="luckySpinScreen" class="lucky-spin-screen hidden">
+      <header class="presentation-header">
+        <button id="luckySpinBackButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="luckySpinGradeLabel">GRADE 5</span><strong>LUCKY SPIN</strong></div>
+        <div class="progress"><strong id="luckySpinProgressText">16</strong><span>LEFT</span></div>
+        <div class="exercise-score">SCORE <strong id="luckySpinScore">0</strong></div>
+      </header>
+      <div class="lucky-spin-card">
+        <div id="luckyFloatingText" class="lucky-floating-text hidden">+10 POINTS</div>
+        <div class="lucky-wheel-wrap">
+          <div class="lucky-pointer"></div>
+          <div id="luckyWheel" class="lucky-wheel" aria-label="Lucky spin wheel"></div>
+          <button id="luckySpinButton" class="lucky-spin-button">SPIN</button>
+        </div>
+        <div class="lucky-task-panel">
+          <p class="eyebrow">CURRENT TASK</p>
+          <div id="luckySpinVisualPanel" class="lucky-spin-visual hidden">
+            <img id="luckySpinImage" alt="Lucky spin task visual">
+          </div>
+          <h1 id="luckySpinPrompt">Spin the wheel to get a task.</h1>
+          <p id="luckySpinMeta">Remaining sections: 0</p>
+          <div id="luckySpinJudge" class="lucky-judge hidden">
+            <button id="luckyWrongButton" class="secondary-button">WRONG</button>
+            <button id="luckyCorrectButton" class="primary-button">CORRECT</button>
+          </div>
+          <div id="luckySpinEnd" class="lucky-end hidden">
+            <p id="luckySpinEndKicker" class="eyebrow">GAME COMPLETE</p>
+            <h2 id="luckySpinFinalScore">0 POINTS</h2>
+            <div class="lucky-end-actions">
+              <button id="luckySpinHomeButton" class="secondary-button">EXIT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="trueFalseScreen" class="true-false-screen hidden">
       <header class="presentation-header">
         <button id="trueFalseBackButton" class="icon-button">EXIT</button>
@@ -321,6 +360,11 @@
         </div>
       </div>
     </section>
+
+    <div id="luckyImageOverlay" class="lucky-image-overlay hidden" aria-modal="true" role="dialog">
+      <button id="luckyImageOverlayClose" class="lucky-image-overlay-close" aria-label="Close image">X</button>
+      <img id="luckyImageOverlayImage" alt="Lucky spin enlarged visual">
+    </div>
 
     <section id="pronounMemoryScreen" class="pronoun-memory-screen hidden">
       <header class="presentation-header">
@@ -400,6 +444,7 @@
         <div class="pc-text-panel">
           <p class="reference-type">CHOOSE THE CORRECT WORDS</p>
           <div id="pcParagraph" class="pc-paragraph"></div>
+          <button id="pcSkipButton" class="pc-skip-btn hidden">SKIP EXERCISE</button>
           <div id="pcResult" class="pc-result hidden">
             <p id="pcResultText" class="pc-result-text"></p>
             <button id="pcDoneButton" class="primary-button">BACK TO MENU</button>
@@ -444,6 +489,9 @@
   <script src="functions/physical-appearance.js"></script>
   <script src="functions/frequency-adverbs.js"></script>
   <script src="functions/possessive-adjectives.js"></script>
+  <script src="functions/present-progressive.js"></script>
+  <script src="functions/comparatives.js"></script>
+  <script src="functions/there-is-are-unit5.js"></script>
   <script src="functions/index.js"></script>
   <script src="exercises/activity-modules.js"></script>
   <script src="exercises/article-choice.js"></script>
@@ -467,6 +515,8 @@
   <script src="exercises/object-pronouns-fill-blank.js"></script>
   <script src="exercises/object-pronouns-choice.js"></script>
   <script src="exercises/there-is-are-timetable-true-false.js"></script>
+  <script src="exercises/there-is-are-unit5-sort.js"></script>
+  <script src="exercises/there-is-are-unit5-true-false.js"></script>
   <script src="exercises/simple-present-daily-routines-choice.js"></script>
   <script src="exercises/simple-present-daily-routines-mistake.js"></script>
   <script src="exercises/simple-present-daily-routines-jumbled.js"></script>
@@ -476,8 +526,16 @@
   <script src="exercises/physical-appearance-true-false-combined.js"></script>
   <script src="exercises/possessive-adjectives-fill-blank.js"></script>
   <script src="exercises/possessive-adjectives-choice.js"></script>
+  <script src="exercises/present-progressive-fill-blank.js"></script>
+  <script src="exercises/present-progressive-choice.js"></script>
+  <script src="exercises/present-progressive-jumbled.js"></script>
   <script src="exercises/frequency-adverbs-choice.js"></script>
   <script src="exercises/frequency-adverbs-jumbled.js"></script>
+  <script src="exercises/comparatives-choice.js"></script>
+  <script src="exercises/comparatives-sort.js"></script>
+  <script src="exercises/comparatives-true-false.js"></script>
+  <script src="exercises/comparatives-lucky-spin.js"></script>
+  <script src="exercises/comparatives-jumbled.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
 </body>

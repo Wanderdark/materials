@@ -1,0 +1,263 @@
+version: "1.0-lite"
+title: "ADILHOCA CHARACTERS LITE"
+purpose: "Compact DALL-e character consistency reference for the canonical AdilHoca student roster."
+
+canonical_rules:
+  signature_activities_are_locked: true
+  rule: "A student's signature activity always belongs to that canonical student. Never assign another student's signature activity unless explicitly requested."
+
+signature_activity_index:
+  pet_care: Ava
+  swimming: Benjamin
+  dancing: Chloe
+  electric_scooter: Daniel
+  family_holidays: David
+  singing: Ella
+  helping_others: Emma
+  golf: Ethan
+  cycling: Hannah
+  fishing: Jack
+  football: Lucas
+  diary: Mia
+  studying: Noah
+  photography: Olivia
+  coding: Victoria
+  crossword_puzzles: Zoe
+
+style_lock:
+  style: "Premium casual educational game asset, stylized illustration, child-friendly, smooth rounded shapes, soft shading, clean outlines, vibrant colors, highly readable composition, isolated on a pure white background unless a scene background is requested, no text, no logo, production-ready educational asset, high detail."
+  consistency_rule: "This is the SAME canonical student from the AdilHoca educational universe. Preserve the face shape, hairstyle, hair length, hair color, eye color, glasses status, age, body proportions, skin tone, and overall facial identity exactly. Only clothing, pose, action, environment, and facial expression may change when requested."
+
+relative_height_system:
+  note: "Relative visual proportions only, never exact centimeters. Use subtly unless the scene teaches tall / short comparisons."
+  scale:
+    5: "tallest students"
+    4: "above average height"
+    3: "average height"
+    2: "short"
+    1: "shortest students"
+
+students:
+  - id: AVA
+    name: "Ava"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 2, label: "short", note: "Short; caring and gentle presence."}
+    ai_character_card: "Ava is a 12-year-old girl from the AdilHoca educational universe. She has shoulder-length curly black hair and green eyes. She does not wear glasses. Her default facial expression is a warm, gentle smile. Preserve her shoulder-length curly black hairstyle, green eyes, and gentle caring identity across all images."
+    canonical_description: "Ava has shoulder-length curly black hair and green eyes. She does not wear glasses."
+    default_expression: "Warm, gentle smile."
+    expression_note: "Yumusak ve icten bir gulumseme. Gozleri sicak bakar."
+    personality:
+      traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
+      note: "Her zaman baskalarina ve hayvanlara sefkatle yaklasir."
+    prompt_insert: "Ava, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length curly black hair, green eyes, no glasses, and a warm, gentle smile with kind eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: BENJAMIN
+    name: "Benjamin"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 3, label: "average height", note: "Average height."}
+    ai_character_card: "Benjamin is a 12-year-old boy from the AdilHoca educational universe. He has short blonde straight hair and blue eyes. He does not wear glasses. His default facial expression is a relaxed smile. Preserve his short blonde straight hairstyle, blue eyes, and calm easy-going identity across all images."
+    canonical_description: "Benjamin has short blonde straight hair and blue eyes. He does not wear glasses."
+    default_expression: "Relaxed smile."
+    expression_note: "Hafif rahat bir gulumseme. Huzurlu gorunur."
+    personality:
+      traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
+      note: "Stres yapmayan, huzurlu cocuk."
+    prompt_insert: "Benjamin, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short blonde straight hair, blue eyes, no glasses, and a relaxed, peaceful smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: CHLOE
+    name: "Chloe"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 3, label: "average height", note: "Average height."}
+    ai_character_card: "Chloe is a 12-year-old girl from the AdilHoca educational universe. She has long curly blonde hair and blue eyes. She does not wear glasses. Her default facial expression is a soft, thoughtful smile. Preserve her long curly blonde hairstyle, blue eyes, and sensitive creative identity across all images."
+    canonical_description: "Chloe has long curly blonde hair and blue eyes. She does not wear glasses."
+    default_expression: "Soft, thoughtful smile."
+    expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
+    personality:
+      traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
+      note: "Insanlarin duygularini onemser."
+    prompt_insert: "Chloe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly blonde hair, blue eyes, no glasses, and a soft, thoughtful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: DANIEL
+    name: "Daniel"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 4, label: "above average height", note: "Above average height; adventurous and energetic."}
+    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has short wavy blonde hair and green eyes. He does not wear glasses. His default facial expression is a confident smirk. Preserve his short wavy blonde hairstyle, green eyes, and adventurous confident identity across all images."
+    canonical_description: "Daniel has short wavy blonde hair and green eyes. He does not wear glasses."
+    default_expression: "Confident smirk."
+    expression_note: "Hafif muzip bir siritis. \"Hadi bir seyler yapalim.\" enerjisi."
+    personality:
+      traits: [Energetic, adventurous, confident, curious, playful, fearless]
+      note: "Surekli yeni seyler denemek ister."
+    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short wavy blonde hair, green eyes, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: DAVID
+    name: "David"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 3, label: "average height", note: "Average height."}
+    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has short black wavy hair and brown eyes. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his short black wavy hairstyle, brown eyes, and dependable caring identity across all images."
+    canonical_description: "David has short black wavy hair and brown eyes. He does not wear glasses."
+    default_expression: "Calm, reassuring smile."
+    expression_note: "Guven veren sakin bir gulumseme."
+    personality:
+      traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
+      note: "Ailesine cok baglidir."
+    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black wavy hair, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: ELLA
+    name: "Ella"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 5, label: "tallest students", note: "Tallest girl; useful for comparative adjective scenes."}
+    ai_character_card: "Ella is a 12-year-old girl from the AdilHoca educational universe. She has shoulder-length wavy blonde hair and green eyes. She does not wear glasses. Her default facial expression is a bright cheerful smile. Preserve her shoulder-length wavy blonde hairstyle, green eyes, and outgoing enthusiastic identity across all images."
+    canonical_description: "Ella has shoulder-length wavy blonde hair and green eyes. She does not wear glasses."
+    default_expression: "Bright cheerful smile."
+    expression_note: "Sinifin en pozitif yuzlerinden biri."
+    personality:
+      traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
+      note: "Kalabalik ortamlari sever."
+    prompt_insert: "Ella, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length wavy blonde hair, green eyes, no glasses, and a bright cheerful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: EMMA
+    name: "Emma"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 4, label: "above average height", note: "Above average height; balanced presence in group scenes."}
+    ai_character_card: "Emma is a 12-year-old girl from the AdilHoca educational universe. She has long straight black hair and warm brown eyes. She does not wear glasses. Her default facial expression is a friendly smile. Preserve her long straight black hairstyle, brown eyes, youthful facial identity, and supportive leader identity across all images."
+    canonical_description: "Emma has long straight black hair and brown eyes. She does not wear glasses."
+    default_expression: "Friendly smile."
+    expression_note: "Insanlarla konusmaya hazir gibi duran samimi ifade."
+    personality:
+      traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
+      note: "Sinifin dogal liderlerinden biri."
+    prompt_insert: "Emma, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight black hair, brown eyes, no glasses, and a friendly, approachable smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: ETHAN
+    name: "Ethan"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 3, label: "average height", note: "Average height."}
+    ai_character_card: "Ethan is a 12-year-old boy from the AdilHoca educational universe. He has a tall-looking face and a slim-looking youthful build. He has short curly blonde hair and clear blue eyes. He does not wear glasses. His default facial expression is a focused neutral expression. Preserve his youthful rounded facial features, short curly blonde hairstyle, blue eyes, and disciplined focused identity across all images."
+    canonical_description: "Ethan has short curly blonde hair and blue eyes. He does not wear glasses."
+    default_expression: "Focused neutral expression."
+    expression_note: "Hafif ciddi ama soguk degil. Sadece dikkatli."
+    personality:
+      traits: [Disciplined, patient, focused, analytical, determined, respectful]
+      note: "Once dusunur, sonra hareket eder."
+    prompt_insert: "Ethan, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short curly blonde hair, blue eyes, no glasses, and a focused neutral expression that feels attentive, not cold. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: HANNAH
+    name: "Hannah"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 4, label: "above average height", note: "Above average height; active outdoor personality."}
+    ai_character_card: "Hannah is a 12-year-old girl from the AdilHoca educational universe. She has long straight blonde hair and blue eyes. She does not wear glasses. Her default facial expression is an energetic grin. Preserve her long straight blonde hairstyle, blue eyes, and energetic cheerful identity across all images."
+    canonical_description: "Hannah has long straight blonde hair and blue eyes. She does not wear glasses."
+    default_expression: "Energetic grin."
+    expression_note: "Hareket etmeye hazir gibi."
+    personality:
+      traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
+      note: "Yerinde duramayan doga cocugu."
+    prompt_insert: "Hannah, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight blonde hair, blue eyes, no glasses, and an energetic grin like she is ready to move. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: JACK
+    name: "Jack"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 4, label: "above average height", note: "Above average height; confident and active."}
+    ai_character_card: "Jack is a 12-year-old boy from the AdilHoca educational universe. He has short straight black hair and brown eyes. He does not wear glasses. His default facial expression is a self-confident smirk. Preserve his short straight black hairstyle, brown eyes, and confident youthful identity across all images."
+    canonical_description: "Jack has short straight black hair and brown eyes. He does not wear glasses."
+    default_expression: "Self-confident smirk."
+    expression_note: "Hafif tek tarafli gulumseme. En belirgin karakter ifadelerinden biri olabilir."
+    personality:
+      traits: [Confident, practical, resourceful, courageous, independent, easy-going]
+      note: "Elinden her is gelir."
+    prompt_insert: "Jack, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight black hair, brown eyes, no glasses, and a self-confident, slightly one-sided smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: LUCAS
+    name: "Lucas"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 5, label: "tallest students", note: "Tallest boy; useful for clear tall / taller than comparisons."}
+    ai_character_card: "Lucas is a 12-year-old boy from the AdilHoca educational universe. He has short black curly hair and brown eyes. He does not wear glasses. His default facial expression is a determined smile. Preserve his short black curly hairstyle, brown eyes, and competitive friendly identity across all images."
+    canonical_description: "Lucas has short black curly hair and brown eyes. He does not wear glasses."
+    default_expression: "Determined smile."
+    expression_note: "Rekabetci ama arkadas canlisi."
+    personality:
+      traits: [Competitive, athletic, energetic, determined, resilient, fair]
+      note: "Kaybetmeyi sevmez ama centilmendir."
+    prompt_insert: "Lucas, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black curly hair, brown eyes, no glasses, and a determined but friendly smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: MIA
+    name: "Mia"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 2, label: "short", note: "Short; shy and quiet presence."}
+    ai_character_card: "Mia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and blue eyes. She does not wear glasses. Her default facial expression is a shy, gentle expression. Preserve her long wavy brown hairstyle, blue eyes, and soft emotional identity across all images."
+    canonical_description: "Mia has long wavy brown hair and blue eyes. She does not wear glasses."
+    default_expression: "Shy, gentle expression."
+    expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
+    personality:
+      traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
+      note: "Konusmaktan cok dinlemeyi sever."
+    prompt_insert: "Mia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, blue eyes, no glasses, and a shy, gentle expression with a very slight smile or no smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: NOAH
+    name: "Noah"
+    gender: "boy"
+    age: 12
+    relative_height: {scale: 1, label: "shortest students", note: "Shortest boy; useful for clear short / shorter than comparisons."}
+    ai_character_card: "Noah is a 12-year-old boy from the AdilHoca educational universe. He has short straight brown hair and green eyes. He wears rectangular eyeglasses. His default facial expression is a thoughtful neutral expression. Preserve his short straight brown hairstyle, green eyes, rectangular glasses, and studious logical identity across all images."
+    canonical_description: "Noah has short straight brown hair and green eyes. He wears rectangular eyeglasses."
+    default_expression: "Thoughtful neutral expression."
+    expression_note: "Dusunuyormus gibi. Kaslar hafif odakli."
+    personality:
+      traits: [Studious, intelligent, logical, curious, organized, hardworking]
+      note: "Ogrenmeyi gercekten sever."
+    prompt_insert: "Noah, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight brown hair, green eyes, rectangular eyeglasses, and a thoughtful neutral expression with slightly focused eyebrows. Preserve his face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
+
+  - id: OLIVIA
+    name: "Olivia"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 3, label: "average height", note: "Average height."}
+    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her long wavy brown hairstyle, green eyes, youthful rounded facial identity, and creative observant identity across all images."
+    canonical_description: "Olivia has long wavy brown hair and green eyes. She does not wear glasses."
+    default_expression: "Curious creative smile."
+    expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
+    personality:
+      traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
+      note: "Kucuk detaylari herkesten once fark eder."
+    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: VICTORIA
+    name: "Victoria"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 2, label: "short", note: "Short; calm, analytical presence."}
+    ai_character_card: "Victoria is a 12-year-old girl from the AdilHoca educational universe. She has long wavy black hair and blue eyes. She wears round eyeglasses. Her default facial expression is a calm analytical expression. Preserve her long wavy black hairstyle, blue eyes, round glasses, and calm analytical identity across all images."
+    canonical_description: "Victoria has long wavy black hair and blue eyes. She wears round eyeglasses."
+    default_expression: "Calm analytical expression."
+    expression_note: "Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi."
+    personality:
+      traits: [Calm, analytical, intelligent, strategic, composed, logical]
+      note: "Baski altinda bile sakin kalir."
+    prompt_insert: "Victoria, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy black hair, blue eyes, round eyeglasses, and a calm analytical expression with a very slight smile and thoughtful eyes. Preserve her face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
+
+  - id: ZOE
+    name: "Zoe"
+    gender: "girl"
+    age: 12
+    relative_height: {scale: 1, label: "shortest students", note: "Shortest girl; useful for clear short / shorter than comparisons."}
+    ai_character_card: "Zoe is a 12-year-old girl from the AdilHoca educational universe. She has long curly black hair and brown eyes. She does not wear glasses. Her default facial expression is a quiet reflective expression. Preserve her long curly black hairstyle, brown eyes, and introverted reflective identity across all images."
+    canonical_description: "Zoe has long curly black hair and brown eyes. She does not wear glasses."
+    default_expression: "Quiet reflective expression."
+    expression_note: "Hafif ciddi. Sakin. Icine donuk."
+    personality:
+      traits: [Independent, thoughtful, introverted, curious, patient, reflective]
+      note: "Once gozlemler, sonra konusur."
+    prompt_insert: "Zoe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly black hair, brown eyes, no glasses, and a quiet reflective expression that feels calm and slightly serious. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."

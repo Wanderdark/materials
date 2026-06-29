@@ -431,6 +431,82 @@
         ]
       }
     ],
+    "5:5": [
+      {
+        id: "places-in-a-town-city",
+        title: "Places in a Town/City",
+        words: [
+          "SQUARE", "COAST", "CASTLE", "TOWER", "MOSQUE", "TOWN",
+          "ANCIENT SITE", "FLAT", "SKYSCRAPER", "PLAYGROUND",
+          "GYM", "STREET FAIR", "SPORTS CENTRE", "ART GALLERY",
+          "MUSEUM", "SHOE SHOP", "CINEMA", "BOOK STORE"
+        ]
+      },
+      {
+        id: "rooms-of-a-house",
+        title: "Rooms of a House",
+        words: [
+          "KITCHEN", "BATHROOM", "SITTING ROOM", "LIVING ROOM", "BEDROOM",
+          "BALCONY", "DINING ROOM", "GARAGE", "TERRACE", "TOILET", "GARDEN"
+        ]
+      },
+      {
+        id: "furniture",
+        title: "Furniture",
+        words: [
+          "SOFA", "PILLOW", "LAMP", "ARMCHAIR", "WARDROBE", "TABLE", "CHAIR",
+          "CUPBOARD", "FRIDGE", "DISHWASHER"
+        ]
+      },
+      {
+        id: "adjectives",
+        title: "Adjectives",
+        words: [
+          "FAMOUS", "CROWDED", "TRADITIONAL", "EXPENSIVE", "SOCIAL", "CLOSE",
+          "MODERN", "PEACEFUL", "BRAND NEW", "BEST", "COMFORTABLE", "WIDE"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "GUIDE", "HIRE", "RENT", "KNIFE", "FORK", "PLATE", "SPOON",
+          "JUMP", "JOKE", "EXPERIENCE", "ATTEND AN EVENT", "EASILY",
+          "TAKE A TOUR", "INFORMATION", "CARAVAN", "DOUBLE DECKER BUS",
+          "NEIGHBORHOOD", "LOCATION", "ROOF", "LIFT", "CORNER", "FURNITURE",
+          "LOCAL", "WOODEN", "STEEL", "INSIDE", "OUTSIDE", "BOTTOM"
+        ]
+      }
+    ],
+    "5:4": [
+      {
+        id: "outdoor-hobbies",
+        title: "Outdoor Hobbies",
+        words: [
+          "CAMPING", "CYCLING", "FISHING", "PLAYING GOLF", "SWIMMING", "CLIMB",
+          "HAVE PICNIC", "PLAY FOOTBALL", "TAKE PHOTOS", "BARBEQUE", "GARDEN"
+        ]
+      },
+      {
+        id: "indoor-hobbies",
+        title: "Indoor Hobbies",
+        words: [
+          "DANCING", "COOKING", "PLAY PIANO", "PLAY BOARD GAMES", "PLAY GUITAR",
+          "READ BOOKS", "SING SONGS", "LISTEN MUSIC", "PARTY"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "ORGANISE", "BRUSH", "TAKE CARE", "REST", "TIDY UP", "RELAX", "JOIN",
+          "FOCUS", "GET ON WELL", "JOB", "ROLE", "TASK", "MEMBER", "COUPLE",
+          "HOBBY", "BREAKFAST", "AT THE MOMENT", "UNUSUAL", "BICYCLE", "CAMERA",
+          "TENT", "SCOOTER", "NEWSPAPER", "DIARY", "PHOTOGRAPH", "MUSEUM",
+          "FOREST", "FLOWER", "FESTIVAL", "WEEKEND", "HOLIDAY", "VISIT GRANDPARENTS"
+        ]
+      }
+    ],
     "5:2": [
       {
         id: "school-subjects",

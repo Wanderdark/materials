@@ -327,6 +327,181 @@ const QUESTIONS = [
   ["MEDIUM HEIGHT",5,3,"HEIGHT","TALL","SHORT","../images/5/3/72.webp"],
   ["RECYCLED",5,3,"../images/5/3/73.webp"],
 
+  // ─── GRADE 5 UNIT 4 ──────────────────────────────────────────────────────────
+  // ORGANISE = İngiliz imlası, ORGANIZE zaten 5/1'de var → synonym
+  ["ORGANISE",5,4,"ORGANIZE","ARRANGE","../images/7/2/6.webp"],
+  ["BRUSH",5,4,"../images/6/1/31.webp"],
+  ["TAKE CARE",5,4,"FOCUS","../images/6/3/13.webp"],
+  // REST / RELAX — farklı resim ama aynı anlam
+  ["REST",5,4,"RELAX","HAVE A REST","../images/6/1/43.webp"],
+  ["TIDY UP",5,4,"../images/8/8/24.webp"],
+  ["MUSEUM",5,4,"../images/8/7/14.webp"],
+  ["FOREST",5,4,"../images/6/7/11.webp"],
+  ["FESTIVAL",5,4,"PARTY","../images/5/1/30.webp"],
+  ["COOKING",5,4,"../images/6/2/39.webp"],
+  ["RELAX",5,4,"REST","HAVE A REST","../images/6/3/21.webp"],
+  ["JOIN",5,4,"../images/8/1/21.webp"],
+  ["CLIMB",5,4,"../images/8/6/20.webp"],
+  ["FLOWER",5,4,"../images/6/7/12.webp"],
+  // JOB / ROLE / TASK — iş/görev karışıklığı
+  ["JOB",5,4,"ROLE","TASK","../images/7/3/34.webp"],
+  ["NEWSPAPER",5,4,"READ BOOKS","../images/6/8/9.webp"],
+  // HOLIDAY / WEEKEND — tatil karışıklığı
+  ["WEEKEND",5,4,"HOLIDAY","../images/6/1/5.webp"],
+  ["AT THE MOMENT",5,4,"../images/6/3/16.webp"],
+  ["COUPLE",5,4,"../images/5/4/1.webp"],
+  // ROLE / TASK — aynı resim → synonym; JOB ile de cross
+  ["ROLE",5,4,"TASK","JOB","../images/5/4/2.webp"],
+  ["TASK",5,4,"ROLE","JOB","../images/5/4/2.webp"],
+  ["FOCUS",5,4,"TAKE CARE","../images/5/4/3.webp"],
+  ["PLAY BOARD GAMES",5,4,"../images/5/4/4.webp"],
+  // BARBEQUE / HAVE PICNIC — açık hava yemek karışıklığı
+  ["BARBEQUE",5,4,"HAVE PICNIC","../images/5/4/5.webp"],
+  // BICYCLE / CYCLING — görsel benzer
+  ["BICYCLE",5,4,"CYCLING","SCOOTER","../images/5/4/6.webp"],
+  // CAMERA / PHOTOGRAPH / TAKE PHOTOS — fotoğraf karışıklığı
+  ["CAMERA",5,4,"PHOTOGRAPH","TAKE PHOTOS","../images/5/4/7.webp"],
+  // HOLIDAY / WEEKEND — cross
+  ["HOLIDAY",5,4,"WEEKEND","../images/5/4/8.webp"],
+  ["PHOTOGRAPH",5,4,"TAKE PHOTOS","CAMERA","../images/5/4/9.webp"],
+  // TENT / CAMPING — kamp karışıklığı
+  ["TENT",5,4,"CAMPING","../images/5/4/10.webp"],
+  ["PARTY",5,4,"FESTIVAL","../images/5/4/11.webp"],
+  ["MEMBER",5,4,"../images/5/4/12.webp"],
+  // SCOOTER / BICYCLE — araç karışıklığı
+  ["SCOOTER",5,4,"BICYCLE","CYCLING","../images/5/4/13.webp"],
+  // PLAY PIANO / PLAY GUITAR — müzik aletleri karışıklığı
+  ["PLAY PIANO",5,4,"PLAY GUITAR","../images/5/4/14.webp"],
+  // CAMPING / TENT — cross
+  ["CAMPING",5,4,"TENT","../images/5/4/15.webp"],
+  // CYCLING / BICYCLE — cross
+  ["CYCLING",5,4,"BICYCLE","SCOOTER","../images/5/4/16.webp"],
+  // DANCING / SING SONGS — performans karışıklığı
+  ["DANCING",5,4,"SING SONGS","../images/5/4/17.webp"],
+  // FISHING / SWIMMING — su aktivitesi karışıklığı
+  ["FISHING",5,4,"SWIMMING","../images/5/4/18.webp"],
+  // PLAYING GOLF / PLAY FOOTBALL — spor karışıklığı
+  ["PLAYING GOLF",5,4,"PLAY FOOTBALL","../images/5/4/19.webp"],
+  // SWIMMING / FISHING — cross
+  ["SWIMMING",5,4,"FISHING","../images/5/4/20.webp"],
+  // PLAY FOOTBALL / PLAYING GOLF — cross
+  ["PLAY FOOTBALL",5,4,"PLAYING GOLF","../images/5/4/21.webp"],
+  // HAVE PICNIC / BARBEQUE — cross
+  ["HAVE PICNIC",5,4,"BARBEQUE","../images/5/4/22.webp"],
+  // BREAKFAST / DIARY — aynı resim → synonym
+  ["BREAKFAST",5,4,"DIARY","../images/5/4/23.webp"],
+  ["DIARY",5,4,"BREAKFAST","../images/5/4/23.webp"],
+  ["GARDEN",5,4,"FOREST","../images/5/4/24.webp"],
+  ["GET ON WELL",5,4,"../images/5/4/25.webp"],
+  ["HOBBY",5,4,"../images/5/4/26.webp"],
+  ["TAKE PHOTOS",5,4,"PHOTOGRAPH","CAMERA","../images/5/4/27.webp"],
+  ["UNUSUAL",5,4,"../images/5/4/28.webp"],
+  ["VISIT GRANDPARENTS",5,4,"../images/5/4/29.webp"],
+  // PLAY GUITAR / PLAY PIANO — cross
+  ["PLAY GUITAR",5,4,"PLAY PIANO","../images/5/4/30.webp"],
+  // READ BOOKS / NEWSPAPER — okuma karışıklığı
+  ["READ BOOKS",5,4,"NEWSPAPER","../images/5/4/31.webp"],
+  // SING SONGS / DANCING / LISTEN MUSIC — performans/müzik karışıklığı
+  ["SING SONGS",5,4,"DANCING","LISTEN MUSIC","../images/5/4/32.webp"],
+  ["LISTEN MUSIC",5,4,"SING SONGS","MUSIC","../images/5/4/33.webp"],
+
+  // ─── GRADE 5 UNIT 5 ──────────────────────────────────────────────────────────
+  // Açık alanlar
+  ["SQUARE",5,5,"../images/6/3/23.webp"],
+  // Doğa / kıyı
+  ["COAST",5,5,"../images/8/7/3.webp"],
+  // Tarihi/yüksek binalar — görsel karışıklık
+  ["CASTLE",5,5,"../images/8/7/16.webp"],
+  ["TOWER",5,5,"CASTLE","SKYSCRAPER","ANCIENT SITE","../images/8/7/8.webp"],
+  ["MOSQUE",5,5,"../images/8/7/15.webp"],
+  ["TOWN",5,5,"NEIGHBORHOOD","../images/6/3/11.webp"],
+  ["ANCIENT SITE",5,5,"../images/8/7/22.webp"],
+  ["GUIDE",5,5,"../images/8/7/55.webp"],
+  ["FAMOUS",5,5,"../images/7/3/8.webp"],
+  ["CROWDED",5,5,"../images/6/3/1.webp"],
+  ["TRADITIONAL",5,5,"../images/6/2/45.webp"],
+  // HIRE / RENT — aynı resim → synonym
+  ["HIRE",5,5,"RENT","../images/6/3/29.webp"],
+  ["RENT",5,5,"HIRE","../images/6/3/29.webp"],
+  ["FLAT",5,5,"CARAVAN","../images/6/3/15.webp"],
+  // Çatal-bıçak takımı — görsel karışıklık
+  ["KNIFE",5,5,"../images/8/3/3.webp"],
+  ["FORK",5,5,"../images/8/3/12.webp"],
+  ["NEIGHBORHOOD",5,5,"../images/6/3/17.webp"],
+  ["LOCATION",5,5,"../images/8/5/46.webp"],
+  ["GARDEN",5,5,"../images/5/4/24.webp"],
+  ["PLATE",5,5,"../images/8/3/18.webp"],
+  ["PLAYGROUND",5,5,"../images/6/3/25.webp"],
+  ["SPOON",5,5,"../images/8/3/9.webp"],
+  ["EXPENSIVE",5,5,"BRAND NEW","../images/6/3/41.webp"],
+  // Spor mekanları — görsel karışıklık
+  ["GYM",5,5,"SPORTS CENTRE","../images/5/5/1.webp"],
+  ["STREET FAIR",5,5,"../images/5/5/2.webp"],
+  ["SPORTS CENTRE",5,5,"GYM","../images/5/5/3.webp"],
+  // Kültürel mekanlar — görsel karışıklık
+  ["ART GALLERY",5,5,"MUSEUM","../images/5/5/4.webp"],
+  ["MUSEUM",5,5,"ART GALLERY","../images/5/5/5.webp"],
+  ["JUMP",5,5,"../images/5/5/6.webp"],
+  ["SHOE SHOP",5,5,"../images/5/5/7.webp"],
+  ["JOKE",5,5,"../images/5/5/8.webp"],
+  ["EXPERIENCE",5,5,"../images/5/5/9.webp"],
+  ["ATTEND AN EVENT",5,5,"../images/5/5/10.webp"],
+  ["SOCIAL",5,5,"../images/5/5/11.webp"],
+  // Yakın/yerel — anlam benzerliği
+  ["CLOSE",5,5,"../images/5/5/12.webp"],
+  ["MODERN",5,5,"BRAND NEW","../images/5/5/13.webp"],
+  // Huzurlu/rahat — anlam benzerliği
+  ["PEACEFUL",5,5,"COMFORTABLE","../images/5/5/14.webp"],
+  ["BRAND NEW",5,5,"MODERN","EXPENSIVE","../images/5/5/15.webp"],
+  ["LOCAL",5,5,"../images/5/5/16.webp"],
+  ["BEST",5,5,"../images/5/5/17.webp"],
+  ["EASILY",5,5,"../images/5/5/18.webp"],
+  ["TAKE A TOUR",5,5,"TRAVEL","../images/5/5/19.webp"],
+  // Odalar — görsel karışıklık
+  ["KITCHEN",5,5,"../images/5/5/20.webp"],
+  ["BATHROOM",5,5,"../images/5/5/21.webp"],
+  // SITTING ROOM / LIVING ROOM — aynı resim → synonym
+  ["SITTING ROOM",5,5,"LIVING ROOM","../images/5/5/22.webp"],
+  ["LIVING ROOM",5,5,"SITTING ROOM","../images/5/5/22.webp"],
+  ["BEDROOM",5,5,"../images/5/5/23.webp"],
+  // Bina dış alanları — görsel benzer
+  ["BALCONY",5,5,"TERRACE","../images/5/5/24.webp"],
+  ["DINING ROOM",5,5,"../images/5/5/25.webp"],
+  ["GARAGE",5,5,"../images/5/5/26.webp"],
+  ["TERRACE",5,5,"BALCONY","../images/5/5/27.webp"],
+  ["TOILET",5,5,"BATHROOM","../images/5/5/28.webp"],
+  // Oturma grubu — görsel karışıklık
+  ["SOFA",5,5,"../images/5/5/29.webp"],
+  ["PILLOW",5,5,"SOFA","../images/5/5/30.webp"],
+  ["LAMP",5,5,"../images/5/5/31.webp"],
+  ["ARMCHAIR",5,5,"../images/5/5/32.webp"],
+  // Depolama — görsel karışıklık
+  ["WARDROBE",5,5,"../images/5/5/33.webp"],
+  ["TABLE",5,5,"../images/5/5/34.webp"],
+  ["CHAIR",5,5,"../images/5/5/35.webp"],
+  ["CUPBOARD",5,5,"../images/5/5/36.webp"],
+  ["FRIDGE",5,5,"../images/5/5/37.webp"],
+  ["DISHWASHER",5,5,"../images/5/5/38.webp"],
+  // Yüksek binalar — cross
+  ["SKYSCRAPER",5,5,"../images/5/5/39.webp"],
+  ["ROOF",5,5,"../images/5/5/40.webp"],
+  ["LIFT",5,5,"../images/5/5/41.webp"],
+  ["COMFORTABLE",5,5,"PEACEFUL","../images/5/5/42.webp"],
+  ["BOTTOM",5,5,"../images/5/5/43.webp"],
+  ["WIDE",5,5,"../images/5/5/44.webp"],
+  ["CORNER",5,5,"../images/5/5/45.webp"],
+  // İçeri/dışarı — zıt anlamlı → cross
+  ["INSIDE",5,5,"OUTSIDE","../images/5/5/47.webp"],
+  ["OUTSIDE",5,5,"INSIDE","../images/5/5/48.webp"],
+  // Malzemeler — görsel benzer
+  ["STEEL",5,5,"../images/5/5/49.webp"],
+  ["WOODEN",5,5,"../images/5/5/50.webp"],
+  ["CINEMA",5,5,"../images/5/5/51.webp"],
+  ["BOOK STORE",5,5,"../images/5/5/52.webp"],
+  ["DOUBLE DECKER BUS",5,5,"../images/5/5/53.webp"],
+  ["CARAVAN",5,5,"FLAT","../images/5/5/54.webp"],
+  ["INFORMATION",5,5,"../images/5/5/55.webp"],
+
   // ─── GRADE 6 UNIT 1 ──────────────────────────────────────────────────────────
   ["LIFE",6,1,"../images/6/1/1.webp"],
   ["START",6,1,"../images/6/1/2.webp"],

@@ -56,7 +56,8 @@ window.exerciseActivityModules = {
           id: statement.id || `${prefix}-${index + 1}`,
           prompt: sentence,
           options: ["true", "false"],
-          answer: String(Boolean(isTrue))
+          answer: String(Boolean(isTrue)),
+          imagePath: statement.imagePath
         };
       }));
     }
@@ -88,6 +89,9 @@ window.exerciseActivityModules = {
   },
   mistakeCorrectIt(config) {
     return { activity: "mistake-correct-it", ...config };
+  },
+  luckySpin(config) {
+    return { activity: "lucky-spin", ...config };
   },
   playTone(type) {
     playActivityTone(type);

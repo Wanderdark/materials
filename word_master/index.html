@@ -2464,13 +2464,13 @@
   <div class="mm-banner">
     <div class="mm-hex-row">
       <!-- W -->
-      <div class="mm-hex" onclick="_secretTap('W')"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>W</span></div></div>
+      <div class="mm-hex"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>W</span></div></div>
       <!-- O -->
-      <div class="mm-hex" onclick="_secretTap('O')"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>O</span></div></div>
+      <div class="mm-hex"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>O</span></div></div>
       <!-- R -->
-      <div class="mm-hex" onclick="_secretTap('R')"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>R</span></div></div>
+      <div class="mm-hex"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>R</span></div></div>
       <!-- D -->
-      <div class="mm-hex" onclick="_secretTap('D')"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>D</span></div></div>
+      <div class="mm-hex"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>D</span></div></div>
       <!-- M -->
       <div class="mm-hex"><div class="mm-hx-border"></div><div class="mm-hx-inner"><span>M</span></div></div>
       <!-- A -->
@@ -2960,7 +2960,6 @@
 
 <script src="../modules/rgbkeyboard.js"></script>
 <script src="../modules/finalscreen.js"></script>
-<script src="names.js" onerror="void 0"></script>
 <script src="questions.js"></script>
 <script>
 /* ── QUESTIONS.JS POOL ── */
@@ -2968,6 +2967,7 @@
 function buildQuizPool() {
   const pool = typeof QUESTIONS !== 'undefined' ? QUESTIONS : [];
   const filtered = pool.filter(q => {
+    if(!q) return false;
     if(q[3] === 0) return selectedCategories.has(q[5]); // özel kategori (grade=0)
     return selectedGrades.has(q[3]) && selectedUnits.has(q[5]);
   });
@@ -3135,7 +3135,7 @@ function loadPersistedSettings() {
       selectedCategories = new Set(s.selectedCategories.map(Number));
       // Kayıt sonrası eklenen yeni kategorileri otomatik seçili yap
       if(typeof QUESTIONS !== 'undefined') {
-        QUESTIONS.filter(q => q[3] === 0).forEach(q => selectedCategories.add(q[5]));
+        QUESTIONS.filter(q => q && q[3] === 0).forEach(q => selectedCategories.add(q[5]));
       }
     } else if(typeof s.selectedAnimals === 'boolean') {
       if(s.selectedAnimals) selectedCategories.add(11);
@@ -5302,28 +5302,12 @@ let _silentDistributed = false;
 let absentStudents     = new Set();
 let _pairNames         = new Set(); // pair kısıtına giren öğrenci isimleri (🔗 gösterimi için)
 
-/** Aktif sınıflardan pair listesini döndürür.
- *  Her iki üye de present (absentStudents dışı) ve aktif havuzda olmalı. */
-function getActivePairs() {
-  if(typeof CLASSES === 'undefined') return [];
-  const pairs = [];
-  CLASSES.forEach(cls => {
-    if(!selectedClasses.has(cls.id) || !Array.isArray(cls.pairs)) return;
-    cls.pairs.forEach(pair => pairs.push(pair));
-  });
-  return pairs;
-}
+function getActivePairs() { return []; }
 let activeStdGroup     = 0;
 let activeStdSlot      = 0;
 let stdNumMode         = false;
 
-/* Seçili sınıflardaki öğrencileri döndür */
-function getActiveStudentsPool() {
-  if(typeof CLASSES !== 'undefined' && typeof selectedClasses !== 'undefined' && selectedClasses.size > 0)
-    return CLASSES.filter(c => selectedClasses.has(c.id)).flatMap(c => c.students);
-  if(typeof STUDENTS !== 'undefined') return STUDENTS;
-  return [];
-}
+function getActiveStudentsPool() { return []; }
 
 /* ── Grup kolonu oluştur ── */
 function buildStdGroupCol(gi) {
@@ -5351,14 +5335,6 @@ function buildStdGroupCol(gi) {
     cur.className = 'std-cursor';
     slot.appendChild(txt);
     slot.appendChild(cur);
-    if(_teacherMode) {
-      const rnd = document.createElement('button');
-      rnd.className = 'std-rand';
-      rnd.title = 'Rastgele öğrenci ata';
-      rnd.textContent = '🎲';
-      rnd.onclick = (e) => { e.stopPropagation(); assignStdRandom(gi, si); };
-      slot.appendChild(rnd);
-    }
     col.appendChild(slot);
   }
   return col;
@@ -5479,71 +5455,8 @@ function fillAllStudents() {
   selectStdField(0, 0);
 }
 
-function balanceDistribute() {
-  // Aktif öğrenci havuzu
-  const rawPool = (typeof CLASSES !== 'undefined' && CLASSES.length > 0)
-    ? CLASSES.filter(c => selectedClasses.has(c.id)).flatMap(c => c.students)
-    : [];
-  if(!rawPool.length) { showToast('Öğrenci listesi boş!', 2000, 'warn'); return; }
+function balanceDistribute() {}
 
-  const LEVEL_PTS = { S:6, A:5, B:4, C:3, D:2, F:1 };
-  const gc     = groupCount;
-  const teams  = Array.from({length: gc}, () => []);
-  const scores = new Array(gc).fill(0);
-
-  // Seviyeye göre sırala (level yoksa orta = 3 puan varsay)
-  const sorted = [...rawPool].sort((a, b) => {
-    const d = (LEVEL_PTS[b.level] || 3) - (LEVEL_PTS[a.level] || 3);
-    return d !== 0 ? d : Math.random() - .5;
-  });
-
-  // Greedy dağıtım — her öğrenci en düşük puanlı takıma gider
-  sorted.forEach(s => {
-    const minS = Math.min(...scores);
-    const t    = scores.indexOf(minS);
-    teams[t].push(s.name || s);
-    scores[t] += (LEVEL_PTS[s.level] || 3);
-  });
-
-  // studentInputs güncelle + UI'ı aç
-  for(let gi = 0; gi < 3; gi++) {
-    for(let si = 0; si < STD_SLOTS; si++) {
-      const name = (gi < gc && si < teams[gi].length) ? teams[gi][si] : '';
-      studentInputs[gi][si]  = name;
-      _slotRevealed[gi][si]  = true;
-      const t    = document.getElementById(`stdt-${gi}-${si}`);
-      const slot = document.getElementById(`std-${gi}-${si}`);
-      if(t)    t.textContent = name;
-      if(slot) name.trim() === '' ? slot.classList.add('is-empty') : slot.classList.remove('is-empty');
-    }
-  }
-
-  const info = teams.map((_, gi) => (groupNames[gi] || ('Grup '+(gi+1))) + ': ' + scores[gi] + 'p').join(' · ');
-  showToast('⚖ Dağıtıldı — ' + info, 2500);
-  selectStdField(0, 0);
-}
-
-// Teacher mode zar: aktif öğrenci havuzundan rastgele ata
-function assignStdRandom(gi, si) {
-  const pool = (typeof CLASSES !== 'undefined' && CLASSES.length > 0)
-    ? CLASSES.filter(c => selectedClasses.has(c.id)).flatMap(c => c.students).map(s => s.name || s)
-    : [];
-  if(!pool.length) return;
-  const used = new Set();
-  for(let g = 0; g < groupCount; g++)
-    for(let s = 0; s < STD_SLOTS; s++)
-      if(studentInputs[g][s].trim()) used.add(studentInputs[g][s].trim().toUpperCase());
-  const avail = pool.filter(n => !used.has(n.toUpperCase()));
-  const name  = avail.length > 0 ? avail[Math.floor(Math.random() * avail.length)] : null;
-  if(!name) return;
-  studentInputs[gi][si]  = name;
-  _slotRevealed[gi][si]  = true;
-  const t    = document.getElementById(`stdt-${gi}-${si}`);
-  const slot = document.getElementById(`std-${gi}-${si}`);
-  if(t)    t.textContent = name;
-  if(slot) slot.classList.remove('is-empty');
-  selectStdField(gi, si);
-}
 function _hideDistBadge() {
   const el = document.getElementById('dist-badge');
   if(el) el.style.display = 'none';
@@ -5563,83 +5476,9 @@ function _clearNowPlaying() {
   if(el) el.style.display = 'none';
 }
 
-/* ── YOKLAMA ── */
-function openAttendance() {
-  const body = document.getElementById('att-body');
-  if(!body) return;
-  body.innerHTML = '';
-
-  // Seçili sınıfları getir
-  const classes = (typeof CLASSES !== 'undefined')
-    ? CLASSES.filter(c => selectedClasses.has(c.id))
-    : [];
-
-  if(!classes.length) {
-    // CLASSES yoksa ya da sınıf seçilmemişse düz öğrenci listesi
-    const pool = (typeof STUDENTS !== 'undefined') ? STUDENTS : [];
-    if(pool.length) {
-      const grid = document.createElement('div');
-      grid.className = 'att-students';
-      pool.forEach(s => {
-        const name = s.name ?? s;
-        const btn = document.createElement('button');
-        btn.className = 'att-student' + (absentStudents.has(name) ? ' absent' : '');
-        btn.textContent = name;
-        btn.onclick = () => {
-          if(absentStudents.has(name)) absentStudents.delete(name);
-          else absentStudents.add(name);
-          btn.classList.toggle('absent');
-          _updateAttBtn();
-        };
-        grid.appendChild(btn);
-      });
-      body.appendChild(grid);
-    }
-  } else {
-    classes.forEach(cls => {
-      const validStudents = cls.students.filter(s => s.name && s.name.trim() !== '');
-      if(!validStudents.length) return;
-      const section = document.createElement('div');
-      section.className = 'att-class-section';
-      if(classes.length > 1) {
-        const lbl = document.createElement('div');
-        lbl.className = 'att-class-label';
-        lbl.textContent = cls.label;
-        section.appendChild(lbl);
-      }
-      const grid = document.createElement('div');
-      grid.className = 'att-students';
-      validStudents.forEach(s => {
-        const btn = document.createElement('button');
-        btn.className = 'att-student' + (absentStudents.has(s.name) ? ' absent' : '');
-        btn.textContent = s.name;
-        btn.onclick = () => {
-          if(absentStudents.has(s.name)) absentStudents.delete(s.name);
-          else absentStudents.add(s.name);
-          btn.classList.toggle('absent');
-          _updateAttBtn();
-        };
-        grid.appendChild(btn);
-      });
-      section.appendChild(grid);
-      body.appendChild(section);
-    });
-  }
-
-  document.getElementById('attendance-overlay').classList.remove('hidden');
-}
-
-function closeAttendance() {
-  document.getElementById('attendance-overlay').classList.add('hidden');
-  _updateAttBtn();
-}
-
-function _updateAttBtn() {
-  const btn = document.getElementById('att-btn');
-  if(!btn) return;
-  const n = absentStudents.size;
-  btn.textContent = n > 0 ? '📋 Yoklama (' + n + ' devamsız)' : '📋 Yoklama';
-}
+function openAttendance() {}
+function closeAttendance() {}
+function _updateAttBtn() {}
 
 /* ── Klavye ── */
 function buildStdKeyboard() {
@@ -5995,74 +5834,22 @@ function closeScoresPopup() {
 /* ── SETTINGS ── */
 let groupCount      = 3;
 // Sınıflar direkt seçilir, grade'ler sınıflardan türetilir
-let selectedClasses  = new Set(typeof CLASSES !== 'undefined' ? CLASSES.map(c => c.id) : []);
-let selectedGrades   = new Set(typeof CLASSES !== 'undefined' ? CLASSES.map(c => c.grade) : [6,7,8]);
-let selectedUnits    = new Set(typeof QUESTIONS !== 'undefined' ? QUESTIONS.filter(q => q[3] !== 0 && selectedGrades.has(q[3])).map(q => q[5]) : [1,2,3,4,5]);
+let selectedGrades   = new Set([6,7,8]);
+let selectedUnits    = new Set(typeof QUESTIONS !== 'undefined' ? QUESTIONS.filter(q => q && q[3] !== 0 && selectedGrades.has(q[3])).map(q => q[5]) : [1,2,3,4,5]);
 // ── Özel kategoriler (grade=0, q[5]=kategori id) ──
 // Yeni kategori eklemek için buraya satır ekle, questions.js'te aynı id'yi kullan.
 // WC_CATEGORY_META — questions.js içinde tanımlı
 // Hangi kategori id'leri seçili — tümü varsayılan açık
 let selectedCategories = new Set(
   typeof QUESTIONS !== 'undefined'
-    ? [...new Set(QUESTIONS.filter(q => q[3] === 0).map(q => q[5]))]
+    ? [...new Set(QUESTIONS.filter(q => q && q[3] === 0).map(q => q[5]))]
     : [11, 12]
 );
 
 /** Aktif grup index'lerini döndürür: groupCount=2 → [0,1]  groupCount=3 → [0,1,2] */
 function grpIdxs() { return Array.from({length: groupCount}, (_, i) => i); }
 
-// CLASSES fallback — names.js yüklenemediyse boş dizi
-try { CLASSES; } catch(e) { window.CLASSES = []; }
 
-function syncClassesFromGrades() {}
-function syncGradesFromClasses()  {}
-
-/* ══════════════════════════════════════════════════
-   🔐 TEACHER MODE — Gizli tıklama: W → O → R → D
-   ══════════════════════════════════════════════════ */
-let _teacherMode  = false;
-const _SECRET_SEQ = ['W','O','R','D'];
-let   _secretIdx  = 0;
-let   _secretTimer = null;
-
-function _secretTap(letter) {
-  if(letter === _SECRET_SEQ[_secretIdx]) {
-    _secretIdx++;
-    clearTimeout(_secretTimer);
-    if(_secretIdx === _SECRET_SEQ.length) {
-      _secretIdx = 0;
-      setTimeout(() => {
-        _teacherMode = !_teacherMode; // toggle — tekrar W-O-R-D ile kapatılabilir
-        // CLASSES varsa grade seçimlerini senkronize et
-        if(typeof CLASSES !== 'undefined' && CLASSES.length > 0) {
-          if(_teacherMode) {
-            selectedClasses = new Set(CLASSES.map(c => c.id));
-            selectedGrades  = new Set(CLASSES.map(c => c.grade));
-          }
-        }
-        _applyStudentModeUI();
-        buildGradeSelector();   // teacher: sınıf bazlı / web: grade bazlı
-        buildUnitSelector();
-        showToast(_teacherMode ? '🔓 Teacher Mode aktif' : '🔒 Web Mode', 1800);
-      }, 350);
-    } else {
-      _secretTimer = setTimeout(() => { _secretIdx = 0; }, 3000);
-    }
-  } else {
-    _secretIdx = 0;
-    clearTimeout(_secretTimer);
-    // Yanlış harf — sıfırla ve ilk harfle yeniden dene
-    if(letter === _SECRET_SEQ[0]) { _secretIdx = 1; }
-  }
-}
-
-function _applyStudentModeUI() {
-  const t = _teacherMode;
-  document.getElementById('std-clearall-btn')?.style.setProperty('display', t ? 'none' : '');
-  document.getElementById('std-fillall-btn') ?.style.setProperty('display', t ? 'none' : '');
-  document.getElementById('att-btn')         ?.style.setProperty('display', t ? ''     : 'none');
-  document.getElementById('std-balance-btn') ?.style.setProperty('display', t ? ''     : 'none');
-}
 
 // Sayfa yüklenince kaydedilmiş ayarları geri yükle; yoksa default
 (function initSettings() {
@@ -6084,51 +5871,19 @@ function buildGradeSelector() {
   if(!grid || typeof QUESTIONS === 'undefined') return;
   grid.innerHTML = '';
 
-  if(_teacherMode && typeof CLASSES !== 'undefined' && CLASSES.length > 0) {
-    // Teacher mode: sınıf bazlı (7/A, 7/B …)
-    CLASSES.forEach(cls => {
-      const cnt = QUESTIONS.filter(q => q[3] === cls.grade).length;
-      const btn = document.createElement('button');
-      btn.className = 'sc-class-btn' + (selectedClasses.has(cls.id) ? ' active' : '');
-      btn.innerHTML = cls.label + '<small>' + cnt + ' soru</small>';
-      btn.onclick = (e) => { e.preventDefault(); toggleClass(cls.id); };
-      grid.appendChild(btn);
-    });
-  } else {
-    // Web mode: sadece grade numaraları (6, 7, 8)
-    const grades = [...new Set(QUESTIONS.filter(q => q[3] !== 0).map(q => q[3]))].sort((a, b) => a - b);
-    grades.forEach(g => {
-      const cnt = QUESTIONS.filter(q => q[3] === g).length;
-      const btn = document.createElement('button');
-      btn.className = 'sc-class-btn' + (selectedGrades.has(g) ? ' active' : '');
-      btn.innerHTML = g + '<small>' + cnt + ' soru</small>';
-      btn.onclick = (e) => { e.preventDefault(); toggleGrade(g); };
-      grid.appendChild(btn);
-    });
-  }
+  const grades = [...new Set(QUESTIONS.filter(q => q && q[3] !== 0).map(q => q[3]))].sort((a, b) => a - b);
+  grades.forEach(g => {
+    const cnt = QUESTIONS.filter(q => q && q[3] === g).length;
+    const btn = document.createElement('button');
+    btn.className = 'sc-class-btn' + (selectedGrades.has(g) ? ' active' : '');
+    btn.innerHTML = g + '<small>' + cnt + ' soru</small>';
+    btn.onclick = (e) => { e.preventDefault(); toggleGrade(g); };
+    grid.appendChild(btn);
+  });
   updateUnitCount();
 }
 
-function toggleClass(id) {
-  if(selectedClasses.has(id)) {
-    if(selectedClasses.size <= 1) {
-      const warn = document.getElementById('sc-class-warn');
-      if(warn) { warn.textContent = '⚠ En az 1 sınıf seçili olmalı!'; setTimeout(() => { warn.textContent = ''; }, 2000); }
-      return;
-    }
-    selectedClasses.delete(id);
-  } else {
-    selectedClasses.add(id);
-  }
-  // Seçili sınıflardan grade'leri türet
-  if(typeof CLASSES !== 'undefined') {
-    selectedGrades = new Set(CLASSES.filter(c => selectedClasses.has(c.id)).map(c => c.grade));
-  }
-  syncAnimalsAutoSelect();
-  buildGradeSelector();
-  buildUnitSelector();
-
-}
+function toggleClass(id) {}
 
 function toggleGrade(g) {
   if(selectedGrades.has(g)) {
@@ -6138,14 +5893,22 @@ function toggleGrade(g) {
       return;
     }
     selectedGrades.delete(g);
+    // Kaldırılan grade'e özgü unitleri selectedUnits'ten çıkar
+    if(typeof QUESTIONS !== 'undefined') {
+      const removedUnits = new Set(QUESTIONS.filter(q => q && q[3] === g).map(q => q[5]));
+      const keptUnits    = new Set(QUESTIONS.filter(q => q && q[3] !== 0 && selectedGrades.has(q[3])).map(q => q[5]));
+      removedUnits.forEach(u => { if(!keptUnits.has(u)) selectedUnits.delete(u); });
+    }
   } else {
     selectedGrades.add(g);
+    // Eklenen grade'in tüm unitleri otomatik seçili
+    if(typeof QUESTIONS !== 'undefined') {
+      QUESTIONS.filter(q => q && q[3] === g).forEach(q => selectedUnits.add(q[5]));
+    }
   }
-  syncClassesFromGrades();
   syncAnimalsAutoSelect();
   buildGradeSelector();
   buildUnitSelector();
-
 }
 
 /* Ünite seçici UI — QUESTIONS.js'den unit numaralarını çek */
@@ -6160,10 +5923,10 @@ function buildUnitSelector() {
 
   // ── Ünite butonları (grade≠0, seçili grade'lere göre) ──
   const unitSet = new Set(
-    QUESTIONS.filter(q => q[3] !== 0 && selectedGrades.has(q[3])).map(q => q[5])
+    QUESTIONS.filter(q => q && q[3] !== 0 && selectedGrades.has(q[3])).map(q => q[5])
   );
   [...unitSet].sort((a, b) => a - b).forEach(n => {
-    const cnt = QUESTIONS.filter(q => q[3] !== 0 && q[5] === n && selectedGrades.has(q[3])).length;
+    const cnt = QUESTIONS.filter(q => q && q[3] !== 0 && q[5] === n && selectedGrades.has(q[3])).length;
     const btn = document.createElement('button');
     btn.className = 'sc-unit-btn' + (selectedUnits.has(n) ? ' active' : '');
     btn.disabled  = cnt === 0;
@@ -6173,10 +5936,10 @@ function buildUnitSelector() {
   });
 
   // ── Kategori butonları (grade=0) — ayrı bölüm ──
-  const catIds = [...new Set(QUESTIONS.filter(q => q[3] === 0).map(q => q[5]))];
+  const catIds = [...new Set(QUESTIONS.filter(q => q && q[3] === 0).map(q => q[5]))];
   if(catGrid && catSec) {
     catIds.forEach(catId => {
-      const cnt  = QUESTIONS.filter(q => q[3] === 0 && q[5] === catId).length;
+      const cnt  = QUESTIONS.filter(q => q && q[3] === 0 && q[5] === catId).length;
       const meta = WC_CATEGORY_META[catId] || { label: 'KATEGORİ ' + catId, icon: '📦' };
       const cBtn = document.createElement('button');
       cBtn.className     = 'sc-unit-btn sc-cat-btn' + (selectedCategories.has(catId) ? ' active' : '');
@@ -6207,13 +5970,11 @@ function toggleCategory(catId) {
 }
 
 function clearAllSelections() {
-  selectedClasses    = new Set();
-  selectedGrades     = new Set();
-  selectedUnits      = new Set();
+  selectedGrades     = new Set([5]);
+  selectedUnits      = new Set([1]);
   selectedCategories = new Set();
   buildGradeSelector();
   buildUnitSelector();
-
 }
 
 /* 7. Sınıf Ünite 4 seçiliyse ANIMALS (id:11) otomatik aç (kapatmaz) */
@@ -6978,7 +6739,7 @@ function handleWfWordChallenge(type) {
   const excludeSet = new Set(wordGroup);
   const pool = typeof QUESTIONS !== 'undefined'
     ? [...new Set(QUESTIONS
-        .filter(q => q[3] !== 0
+        .filter(q => q && q[3] !== 0
           && (selectedGrades.size === 0 || selectedGrades.has(q[3]))
           && (selectedUnits.size  === 0 || selectedUnits.has(q[5]))
           && !excludeSet.has(q[2]))

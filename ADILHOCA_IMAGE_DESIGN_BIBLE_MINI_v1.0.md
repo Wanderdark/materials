@@ -1,0 +1,111 @@
+# ADILHOCA IMAGE DESIGN BIBLE (MINI)
+
+## Character Consistency
+
+Always use the SAME canonical AdilHoca students.
+
+Maintain their established appearances, hairstyles, facial features,
+body proportions, personalities, and clothing exactly as defined in the
+Character Bible.
+
+Never create different children.
+
+------------------------------------------------------------------------
+
+## Reference Images
+
+Reference images are used ONLY for:
+
+-   composition
+-   camera angle
+-   perspective
+-   room layout
+-   furniture placement
+-   atmosphere
+-   lighting
+
+Never copy:
+
+-   faces
+-   hairstyles
+-   identities
+-   clothing
+-   poses exactly
+
+Replace every child with the canonical AdilHoca characters.
+
+------------------------------------------------------------------------
+
+## Composition
+
+-   Natural candid moments.
+-   No posing.
+-   Students should interact with:
+    -   each other
+    -   objects
+    -   environment
+-   Avoid eye contact with the camera.
+
+------------------------------------------------------------------------
+
+## Facial Expressions
+
+Expressions must match each character's personality.
+
+Examples:
+
+-   focused
+-   thoughtful
+-   determined
+-   confident
+-   gentle
+-   curious
+-   relaxed
+-   supportive
+-   artistic
+-   calm
+
+Avoid exaggerated smiling.
+
+Avoid identical expressions.
+
+------------------------------------------------------------------------
+
+## Storytelling
+
+Every image should tell a small story.
+
+Each student should have a meaningful role.
+
+Activities must feel natural.
+
+------------------------------------------------------------------------
+
+## Environment
+
+-   Warm
+-   Bright
+-   Colorful
+-   Modern
+-   Organized
+-   Child-friendly
+
+Rich classroom details without clutter.
+
+------------------------------------------------------------------------
+
+## Art Style
+
+-   Premium casual educational game asset
+-   Stylized illustration
+-   Smooth rounded shapes
+-   Soft shading
+-   Clean outlines
+-   Vibrant colors
+-   Highly readable composition
+-   High detail
+-   Production-ready
+-   Cinematic composition
+-   Candid moment
+-   Square composition
+-   --ar 1:1

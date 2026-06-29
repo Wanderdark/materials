@@ -8,6 +8,7 @@ const jumbledSentencesExercise = window.exerciseActivityModules.jumbledSentences
     return functionModule.sentences.map((example) => ({
       id: example.id,
       sentence: example.sentence,
+      imagePath: example.imagePath,
       type: example.sentence.endsWith("?") ? "QUESTION" : "STATEMENT",
       tokens: example.sentence.split(/\s+/)
     }));

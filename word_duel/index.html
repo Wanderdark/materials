@@ -1538,9 +1538,9 @@ function buildGrades() {
   const grid = document.getElementById('grade-grid');
   if (!grid || typeof QUESTIONS === 'undefined') return;
   grid.innerHTML = '';
-  const gs = [...new Set(QUESTIONS.filter(q=>q[3]!==0).map(q=>q[3]))].sort((a,b)=>a-b);
+  const gs = [...new Set(QUESTIONS.filter(q=>q&&q[3]!==0).map(q=>q[3]))].sort((a,b)=>a-b);
   gs.forEach(g => {
-    const cnt = QUESTIONS.filter(q=>q[3]===g).length;
+    const cnt = QUESTIONS.filter(q=>q&&q[3]===g).length;
     const b = document.createElement('button');
     b.className = 'grade-btn' + (selectedGrades.has(g) ? ' active' : '');
     b.innerHTML =
@@ -1556,10 +1556,10 @@ function buildUnits() {
   if (!grid || typeof QUESTIONS === 'undefined') return;
   grid.innerHTML = '';
   const us = [...new Set(
-    QUESTIONS.filter(q=>q[3]!==0&&selectedGrades.has(q[3])).map(q=>q[5])
+    QUESTIONS.filter(q=>q&&q[3]!==0&&selectedGrades.has(q[3])).map(q=>q[5])
   )].sort((a,b)=>a-b);
   us.forEach(n => {
-    const cnt = QUESTIONS.filter(q=>q[3]!==0&&q[5]===n&&selectedGrades.has(q[3])).length;
+    const cnt = QUESTIONS.filter(q=>q&&q[3]!==0&&q[5]===n&&selectedGrades.has(q[3])).length;
     const b = document.createElement('button');
     b.className = 'unit-btn' + (selectedUnits.has(n) ? ' active' : '');
     b.disabled = cnt === 0;
@@ -1577,7 +1577,7 @@ function toggleGrade(g) {
     if (selectedGrades.size <= 1) return;
     selectedGrades.delete(g);
     selectedUnits.forEach(u => {
-      if (!QUESTIONS.some(q=>q[3]!==0&&selectedGrades.has(q[3])&&q[5]===u))
+      if (!QUESTIONS.some(q=>q&&q[3]!==0&&selectedGrades.has(q[3])&&q[5]===u))
         selectedUnits.delete(u);
     });
   } else {
@@ -1602,7 +1602,7 @@ function buildDifficulties() {
     const count = document.getElementById('difficulty-count-' + d);
     if (btn) btn.classList.toggle('active', selectedDifficulties.has(d));
     if (count) {
-      const total = QUESTIONS.filter(q => q[3] !== 0 && q[4] === d).length;
+      const total = QUESTIONS.filter(q => q && q[3] !== 0 && q[4] === d).length;
       count.textContent = total + ' KELİME';
     }
   });
@@ -1621,6 +1621,7 @@ function toggleDifficulty(d) {
 function filteredPool() {
   if (typeof QUESTIONS === 'undefined') return [];
   return QUESTIONS.filter(q =>
+    q &&
     q[3] !== 0 &&
     selectedGrades.has(q[3]) &&
     selectedUnits.has(q[5]) &&
@@ -3372,9 +3373,9 @@ function openSettings() {
     document.getElementById('word-count').textContent = '⚠ questions.js yüklenemedi';
     return;
   }
-  const allGrades = [...new Set(QUESTIONS.filter(q=>q[3]!==0).map(q=>q[3]))];
+  const allGrades = [...new Set(QUESTIONS.filter(q=>q&&q[3]!==0).map(q=>q[3]))];
   selectedGrades  = new Set(allGrades);
-  const allUnits  = [...new Set(QUESTIONS.filter(q=>q[3]!==0).map(q=>q[5]))];
+  const allUnits  = [...new Set(QUESTIONS.filter(q=>q&&q[3]!==0).map(q=>q[5]))];
   selectedUnits   = new Set([allUnits[0]]);
   load(); buildGrades(); buildUnits(); buildDifficulties();
 })();

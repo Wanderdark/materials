@@ -26,7 +26,7 @@ const aAnTheFunction = {
       id: "an-orange",
       article: "an",
       sentence: "an orange",
-      exerciseSentence: "She has ___ orange in her bag.",
+      exerciseSentence: "Ella has ___ orange in her bag.",
       imagePath: "images/a-an-the/03-an-orange-in-a-bag.webp",
       visualBrief: "A student takes one orange out of her school bag."
     },
@@ -82,7 +82,7 @@ const aAnTheFunction = {
       id: "an-apple",
       article: "an",
       sentence: "an apple",
-      exerciseSentence: "She has ___ apple in her lunch box.",
+      exerciseSentence: "Hannah has ___ apple in her lunch box.",
       imagePath: "images/a-an-the/11-an-apple.webp",
       visualBrief: "One red apple in a lunch box."
     },
@@ -98,7 +98,7 @@ const aAnTheFunction = {
       id: "a-book",
       article: "a",
       sentence: "a book",
-      exerciseSentence: "I have ___ book in my bag.",
+      exerciseSentence: "Benjamin has ___ book in his bag.",
       imagePath: "images/a-an-the/13-a-book.webp",
       visualBrief: "One book inside a school bag."
     },

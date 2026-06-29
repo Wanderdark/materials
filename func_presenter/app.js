@@ -104,6 +104,8 @@ const els = {
   jumbledLives: $("jumbledLives"),
   jumbledCard: $("jumbledCard"),
   jumbledType: $("jumbledType"),
+  jumbledImagePanel: $("jumbledImagePanel"),
+  jumbledImage: $("jumbledImage"),
   jumbledTiles: $("jumbledWordTiles"),
   jumbledFeedback: $("jumbledFeedback"),
   matching: $("matchingScreen"),
@@ -199,6 +201,7 @@ const els = {
   smNext: $("smNextButton"),
   pcScreen: $("paragraphChoiceScreen"),
   pcBack: $("pcBackButton"),
+  pcSkip: $("pcSkipButton"),
   pcGradeLabel: $("pcGradeLabel"),
   pcTitle: $("pcTitle"),
   pcScore: $("pcScore"),
@@ -228,15 +231,38 @@ const els = {
   mistakeWrong: $("mistakeWrongButton"),
   mistakeWordBank: $("mistakeWordBank"),
   mistakeFeedback: $("mistakeFeedback"),
-  mistakeNext: $("mistakeNextButton")
+  mistakeNext: $("mistakeNextButton"),
+  luckySpin: $("luckySpinScreen"),
+  luckySpinBack: $("luckySpinBackButton"),
+  luckySpinGrade: $("luckySpinGradeLabel"),
+  luckySpinProgress: $("luckySpinProgressText"),
+  luckySpinScore: $("luckySpinScore"),
+  luckyFloatingText: $("luckyFloatingText"),
+  luckyWheel: $("luckyWheel"),
+  luckySpinButton: $("luckySpinButton"),
+  luckySpinVisualPanel: $("luckySpinVisualPanel"),
+  luckySpinImage: $("luckySpinImage"),
+  luckySpinPrompt: $("luckySpinPrompt"),
+  luckySpinMeta: $("luckySpinMeta"),
+  luckySpinJudge: $("luckySpinJudge"),
+  luckyWrong: $("luckyWrongButton"),
+  luckyCorrect: $("luckyCorrectButton"),
+  luckySpinEnd: $("luckySpinEnd"),
+  luckySpinEndKicker: $("luckySpinEndKicker"),
+  luckySpinFinalScore: $("luckySpinFinalScore"),
+  luckySpinHome: $("luckySpinHomeButton"),
+  luckyImageOverlay: $("luckyImageOverlay"),
+  luckyImageOverlayClose: $("luckyImageOverlayClose"),
+  luckyImageOverlayImage: $("luckyImageOverlayImage")
 };
 
-const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
+const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, luckyItems: [], luckyRemaining: [], luckyCurrent: null, luckyScore: 0, luckyRotation: 0, luckySpinning: false, luckyTickTimer: null, luckyFinishTimer: null, luckyAudioContext: null, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
 let feedbackAudio = null;
+let presenceHotspotPoints = [];
 let timeStepAudio = null;
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.pcScreen, els.smScreen, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -374,10 +400,13 @@ function renderFunctionIntro() {
 
 function renderExample() {
   state.showingFunctionIntro = false;
+  clearPresenceHotspots();
   els.functionIntro.classList.add("hidden");
   els.exampleCard.classList.remove("hidden");
   const example = state.module.sentences[state.index];
-  const total = state.module.sentences.length;
+  const visibleSentences = state.module.sentences.filter((s) => !s.bridgeSlide);
+  const total = visibleSentences.length;
+  const visiblePos = state.module.sentences.slice(0, state.index + 1).filter((s) => !s.bridgeSlide).length;
   const isTimePrompt = Boolean(example.timePrompt);
   const isTimetableSlide = Boolean(example.timetableSlide);
   const isPresenceSlide = Boolean(example.presenceSlide);
@@ -396,8 +425,8 @@ function renderExample() {
 
   els.gradeLabel.textContent = `GRADE ${state.grade}`;
   els.title.textContent = state.module.title.toUpperCase();
-  els.progressText.textContent = `${state.index + 1} / ${total}`;
-  els.progressBar.style.width = `${((state.index + 1) / total) * 100}%`;
+  els.progressText.textContent = `${visiblePos} / ${total}`;
+  els.progressBar.style.width = `${(visiblePos / total) * 100}%`;
   els.exampleCard.classList.toggle("time-prompt-slide", isTimePrompt);
   els.exampleCard.classList.toggle("timetable-slide", isTimetableSlide);
   els.exampleCard.classList.toggle("presence-slide", isPresenceSlide);
@@ -455,12 +484,15 @@ function renderExample() {
     els.image.className = example.imageClass || "";
     els.image.alt = example.visualBrief;
     els.image.src = example.imagePath;
+    if (isPresenceSlide) requestAnimationFrame(positionPresenceHotspots);
   }
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
-  els.next.textContent = state.index === total - 1 ? "FINISH" : "NEXT";
-  els.dots.replaceChildren(...state.module.sentences.map((_, index) => {
+  const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;
+  els.next.textContent = (isLastVisible && !example.exerciseLink && !example.exerciseObj) ? "FINISH" : "NEXT";
+  els.dots.replaceChildren(...visibleSentences.map((s) => {
+    const actualIdx = state.module.sentences.indexOf(s);
     const dot = document.createElement("span");
-    dot.className = index === state.index ? "active" : index < state.index ? "complete" : "";
+    dot.className = actualIdx === state.index ? "active" : actualIdx < state.index ? "complete" : "";
     return dot;
   }));
 }
@@ -476,20 +508,132 @@ function renderTimetableParts(parts = []) {
   return parts.map(({ text, className = "" }) => `<span class="${className}">${text}</span>`).join("");
 }
 
-function openPresenceOverlay({ question, imagePath, sentence, sentences }) {
+function buildComparisonLayout(comp, hl) {
+  const layout = document.createElement("div");
+  layout.className = "comp-layout";
+
+  const leftCol = document.createElement("div");
+  leftCol.className = "comp-col";
+  const leftImg = document.createElement("img");
+  leftImg.src = comp.left.imagePath;
+  leftImg.className = "comp-img";
+  const leftCap = document.createElement("p");
+  leftCap.className = "comp-caption";
+  leftCap.innerHTML = hl(comp.left.caption || "");
+  leftCol.append(leftImg, leftCap);
+
+  const divider = document.createElement("div");
+  divider.className = "comp-divider";
+  const advBtn = document.createElement("button");
+  advBtn.className = "comp-advance-btn";
+  advBtn.textContent = "›";
+  divider.append(advBtn);
+
+  const rightCol = document.createElement("div");
+  rightCol.className = "comp-col hidden";
+  const rightImg = document.createElement("img");
+  rightImg.src = comp.right.imagePath;
+  rightImg.className = "comp-img";
+  const revealBtn = document.createElement("button");
+  revealBtn.className = "comp-reveal-btn";
+  revealBtn.textContent = "▶ Reveal";
+  const revealSentence = document.createElement("p");
+  revealSentence.className = "comp-reveal-sentence hidden";
+  revealSentence.innerHTML = hl(comp.right.revealSentence || "");
+  revealBtn.addEventListener("click", () => {
+    revealSentence.classList.remove("hidden");
+    revealBtn.classList.add("hidden");
+  });
+  rightCol.append(rightImg, revealBtn, revealSentence);
+
+  advBtn.addEventListener("click", () => {
+    rightCol.classList.remove("hidden");
+    advBtn.classList.add("hidden");
+  });
+
+  layout.append(leftCol, divider, rightCol);
+  return layout;
+}
+
+function openPresenceOverlay({ question, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, overlaySize, revealMode }) {
   const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+  if (comparison) {
+    els.presenceOverlay.classList.add("comparison-mode");
+    els.presenceOverlayQuestion.innerHTML = "";
+    els.presenceOverlayImage.src = "";
+    els.presenceOverlaySentence.replaceChildren(buildComparisonLayout(comparison, highlight));
+    els.presenceOverlay.classList.remove("hidden");
+    return;
+  }
+  els.presenceOverlay.classList.remove("comparison-mode");
   els.presenceOverlayQuestion.innerHTML = highlight(question || "");
-  els.presenceOverlayImage.src = imagePath;
-  els.presenceOverlayImage.alt = question;
-  const all = sentences || (sentence ? [sentence] : []);
-  els.presenceOverlaySentence.innerHTML = all.length > 1
-    ? all.map((s, i) => `<span class="freq-overlay-line">${i + 1}) ${highlight(s)}</span>`).join("")
-    : highlight(all[0] || "");
+  els.presenceOverlayImage.classList.toggle("hidden", !imagePath);
+  if (imagePath) {
+    els.presenceOverlayImage.src = imagePath;
+    els.presenceOverlayImage.alt = question;
+    els.presenceOverlayImage.style.aspectRatio = imageAspect || "";
+  } else {
+    els.presenceOverlayImage.removeAttribute("src");
+    els.presenceOverlayImage.alt = "";
+    els.presenceOverlayImage.style.aspectRatio = "";
+  }
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.toggle("overlay-lg", !!overlaySize);
+  if (revealMode) {
+    const raw = sentence || "";
+    els.presenceOverlaySentence.innerHTML = raw.replace(/<([^>]+)>/g,
+      (_, w) => `<span class="reveal-blank" data-answer="${w}">?</span>`);
+    els.presenceOverlaySentence.querySelectorAll(".reveal-blank").forEach((span) => {
+      span.addEventListener("click", () => {
+        span.textContent = span.dataset.answer;
+        span.classList.remove("reveal-blank");
+        span.classList.add("freq-highlight");
+        playFeedbackSound(true);
+      });
+    });
+    els.presenceOverlay.classList.remove("hidden");
+    return;
+  }
+  if (interactiveSentences) {
+    els.presenceOverlaySentence.replaceChildren(
+      ...interactiveSentences.map((s) => {
+        const p = document.createElement("p");
+        p.className = "inline-choice-prompt freq-overlay-line";
+        p.append(...createInlineChoiceParts(s.segments));
+        return p;
+      })
+    );
+  } else {
+    const all = sentences || (sentence ? [sentence] : []);
+    els.presenceOverlaySentence.innerHTML = all.length > 1
+      ? all.map((s, i) => `<span class="freq-overlay-line">${i + 1}) ${highlight(s)}</span>`).join("")
+      : highlight(all[0] || "");
+  }
   els.presenceOverlay.classList.remove("hidden");
 }
 
 function renderPresenceParts(parts = []) {
   return parts.map(({ text, className = "" }) => `<span class="${className}">${text}</span>`).join("");
+}
+
+function createPresenceParts(parts = []) {
+  return parts.map(({ text, className = "", swapImage }) => {
+    const part = swapImage ? document.createElement("button") : document.createElement("span");
+    part.className = className;
+    part.textContent = text;
+    if (swapImage) {
+      part.type = "button";
+      part.classList.add("presence-image-link");
+      part.addEventListener("click", (event) => {
+        event.stopPropagation();
+        els.image.src = swapImage;
+      });
+    }
+    return part;
+  });
+}
+
+function appendPresenceParts(target, parts = []) {
+  target.replaceChildren(...createPresenceParts(parts));
 }
 
 function renderPresenceSlide(example) {
@@ -533,6 +677,60 @@ function renderPresenceSlide(example) {
         }
       });
     }
+    if (item.swapImage) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => { els.image.src = item.swapImage; });
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          els.image.src = item.swapImage;
+        }
+      });
+    }
+    if (item.toggleImages) {
+      let togIdx = 0;
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      const doToggle = () => { togIdx = (togIdx + 1) % item.toggleImages.length; els.image.src = item.toggleImages[togIdx]; };
+      row.addEventListener("click", doToggle);
+      row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); doToggle(); } });
+    }
+    if (item.revealSentence) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => {
+        playFeedbackSound(true);
+        const hl = (s) => s.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+        const prompt = row.querySelector(".presence-prompt");
+        if (prompt) prompt.innerHTML = hl(item.revealSentence);
+        row.classList.remove("clickable");
+        row.classList.add("revealed");
+        row.removeAttribute("tabindex");
+      });
+    }
+    if (item.revealImage) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => {
+        if (row.classList.contains("revealed")) return;
+        playFeedbackSound(true);
+        els.image.src = item.revealImage;
+        const hl = (s) => s.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+        const prompt = row.querySelector(".presence-prompt");
+        if (prompt) {
+          const lines = item.revealSentences || (item.revealSentence ? [item.revealSentence] : []);
+          prompt.innerHTML = lines.map((s) => hl(s)).join("<br>");
+        }
+        row.classList.remove("clickable");
+        row.classList.add("revealed");
+        row.removeAttribute("tabindex");
+      });
+    }
     if (item.overlayData) {
       row.classList.add("clickable");
       row.tabIndex = 0;
@@ -547,6 +745,13 @@ function renderPresenceSlide(example) {
     }
     if (index > 0 && !example.showAllItems) row.classList.add("hidden");
     row.dataset.presenceIndex = index;
+    if (item.clearPreviousOnShow) row.dataset.clearPreviousOnShow = "true";
+    if (item.titleOverride) row.dataset.titleOverride = item.titleOverride;
+    if (example.hotspotMode && item.hotspots) {
+      row.classList.add("hotspot-step", "pending-hotspot");
+      row.dataset.hotspots = JSON.stringify(item.hotspots);
+    }
+    if (item.pauseAfterReveal) row.dataset.pauseAfterReveal = "true";
     const promptLine = document.createElement("div");
     promptLine.className = `presence-prompt-line ${item.kind === "replace-choice" ? "replace-prompt-line" : ""}`;
     if (item.kind === "inline-choice") {
@@ -568,7 +773,8 @@ function renderPresenceSlide(example) {
     } else {
       const prompt = document.createElement("p");
       prompt.className = "presence-prompt";
-      prompt.innerHTML = renderPresenceParts(item.parts || [{ text: item.text || "" }]);
+      if (example.hotspotMode && item.hotspots) prompt.classList.add("hidden");
+      appendPresenceParts(prompt, item.parts || [{ text: item.text || "" }]);
       promptLine.append(prompt);
     }
     if (index < items.length - 1 && !example.showAllItems) {
@@ -577,8 +783,11 @@ function renderPresenceSlide(example) {
       nextButton.type = "button";
       nextButton.textContent = "›";
       nextButton.setAttribute("aria-label", "Show next sentence");
-      nextButton.disabled = Boolean(item.answerReveal || item.choices);
-      nextButton.addEventListener("click", () => showNextPresenceRow(list, index));
+      nextButton.disabled = Boolean(item.answerReveal || item.choices || item.kind === "inline-choice");
+      nextButton.addEventListener("click", () => {
+        if (example.hotspotMode && item.hotspots) revealPresenceHotspotStep(list, index);
+        else showNextPresenceRow(list, index);
+      });
       promptLine.append(nextButton);
     }
     if (!item.hidePrompt) row.append(promptLine);
@@ -619,6 +828,29 @@ function renderPresenceSlide(example) {
     list.append(row);
   });
   els.presenceView.append(list);
+  if (example.hotspotMode) {
+    const firstHotspotRow = list.querySelector(".presence-row:not(.hidden)[data-hotspots]");
+    showPresenceHotspots(readRowHotspots(firstHotspotRow));
+  }
+
+  // Image-next button for revealImage slides
+  const revealItems = example.items?.filter((i) => i.revealImage) || [];
+  document.getElementById("imgNextBtn")?.remove();
+  if (revealItems.length > 1) {
+    let imgIdx = 0;
+    const btn = document.createElement("button");
+    btn.id = "imgNextBtn";
+    btn.className = "img-next-btn";
+    btn.textContent = "NEXT →";
+    btn.addEventListener("click", () => {
+      imgIdx++;
+      if (imgIdx < revealItems.length) {
+        els.image.src = revealItems[imgIdx].revealImage;
+      }
+      if (imgIdx >= revealItems.length - 1) btn.remove();
+    });
+    document.getElementById("exampleVisualPanel").append(btn);
+  }
 }
 
 function createInlineChoiceParts(segments) {
@@ -664,6 +896,10 @@ function createInlineChoiceParts(segments) {
         trigger.textContent = isCorrect ? option : group.dataset.answer;
         group.dataset.answered = "true";
         playFeedbackSound(isCorrect);
+        const row = group.closest(".presence-row");
+        if (row && [...row.querySelectorAll(".inline-choice-group")].every((choiceGroup) => choiceGroup.dataset.answered === "true")) {
+          enablePresenceNext(row);
+        }
       });
       popup.append(btn);
     });
@@ -743,14 +979,101 @@ function createPresenceStyleMatch(item) {
   return activity;
 }
 
+function readRowHotspots(row) {
+  if (!row?.dataset.hotspots) return [];
+  try {
+    return JSON.parse(row.dataset.hotspots);
+  } catch {
+    return [];
+  }
+}
+
+function clearPresenceHotspots() {
+  presenceHotspotPoints = [];
+  document.getElementById("presenceHotspotLayer")?.remove();
+}
+
+function showPresenceHotspots(points = []) {
+  clearPresenceHotspots();
+  if (!points.length || els.image.classList.contains("hidden")) return;
+  presenceHotspotPoints = points;
+  const layer = document.createElement("div");
+  layer.id = "presenceHotspotLayer";
+  layer.className = "presence-hotspot-layer";
+  points.forEach(() => {
+    const marker = document.createElement("div");
+    marker.className = "presence-hotspot-marker";
+    marker.setAttribute("aria-hidden", "true");
+    layer.append(marker);
+  });
+  els.exampleVisualPanel.append(layer);
+  requestAnimationFrame(positionPresenceHotspots);
+}
+
+function positionPresenceHotspots() {
+  const layer = document.getElementById("presenceHotspotLayer");
+  if (!layer || !presenceHotspotPoints.length) return;
+  const imageRect = els.image.getBoundingClientRect();
+  const panelRect = els.exampleVisualPanel.getBoundingClientRect();
+  [...layer.children].forEach((marker, index) => {
+    const point = presenceHotspotPoints[index];
+    if (!point) return;
+    marker.style.left = `${imageRect.left - panelRect.left + (point.x / 500) * imageRect.width}px`;
+    marker.style.top = `${imageRect.top - panelRect.top + (point.y / 500) * imageRect.height}px`;
+  });
+}
+
+function applyPresenceRowTitleOverride(row) {
+  if (!row?.dataset.titleOverride) return;
+  const title = els.presenceView.querySelector(".presence-title");
+  if (title) title.textContent = row.dataset.titleOverride;
+}
+
+function revealPresenceHotspotStep(list, currentIndex) {
+  const currentRow = list.querySelector(`[data-presence-index="${currentIndex}"]`);
+  if (!currentRow) return;
+  currentRow.classList.remove("pending-hotspot");
+  currentRow.querySelector(".presence-prompt")?.classList.remove("hidden");
+  const currentNextButton = currentRow.querySelector(".presence-next");
+  if (currentRow.dataset.pauseAfterReveal === "true") {
+    clearPresenceHotspots();
+    if (currentNextButton) {
+      currentNextButton.onclick = null;
+      currentNextButton.replaceWith(currentNextButton.cloneNode(true));
+      const followButton = currentRow.querySelector(".presence-next");
+      followButton.addEventListener("click", () => showNextPresenceRow(list, currentIndex));
+    }
+    return;
+  }
+  currentNextButton?.classList.add("hidden");
+
+  const nextRow = list.querySelector(`[data-presence-index="${currentIndex + 1}"]`);
+  if (!nextRow) {
+    clearPresenceHotspots();
+    return;
+  }
+  if (nextRow.dataset.clearPreviousOnShow === "true") {
+    [...list.querySelectorAll(".presence-row")].forEach((row) => row.classList.add("hidden"));
+  } else if (list.dataset.replaceCurrentItem === "true") {
+    currentRow.classList.add("hidden");
+  }
+  nextRow.classList.remove("hidden");
+  applyPresenceRowTitleOverride(nextRow);
+  showPresenceHotspots(readRowHotspots(nextRow));
+}
+
 function showNextPresenceRow(list, currentIndex) {
   const nextRow = list.querySelector(`[data-presence-index="${currentIndex + 1}"]`);
   if (!nextRow) return;
-  if (list.dataset.replaceCurrentItem === "true") {
+  if (nextRow.dataset.clearPreviousOnShow === "true") {
+    [...list.querySelectorAll(".presence-row")].forEach((row) => row.classList.add("hidden"));
+  } else if (list.dataset.replaceCurrentItem === "true") {
     const currentRow = list.querySelector(`[data-presence-index="${currentIndex}"]`);
     currentRow?.classList.add("hidden");
   }
   nextRow.classList.remove("hidden");
+  applyPresenceRowTitleOverride(nextRow);
+  showPresenceHotspots(readRowHotspots(nextRow));
   const nextButton = list.querySelector(`[data-presence-index="${currentIndex}"] .presence-next`);
   if (nextButton) nextButton.classList.add("hidden");
 }
@@ -791,6 +1114,15 @@ function next() {
   if (state.showingFunctionIntro) {
     renderExample();
     return;
+  }
+  const example = state.module.sentences[state.index];
+  if (example?.exerciseLink || example?.exerciseObj) {
+    const ex = example.exerciseObj || (window.exerciseModules || []).find((e) => e.id === example.exerciseLink);
+    if (ex) {
+      state.postExerciseIndex = state.index + 1;
+      startSelectedExercise(ex);
+      return;
+    }
   }
   if (state.index === state.module.sentences.length - 1) showPresentationComplete();
   else {
@@ -854,7 +1186,8 @@ function openExerciseMenu() {
       "time-setter": "Set the digital clock to match the target time.",
       "fill-blank": "Tap each blank to reveal the correct answer.",
       "mistake-correct-it": "Decide if the sentence is correct. If not, find the mistake.",
-      "paragraph-choice": "Choose the correct word for each blank in the paragraph."
+      "paragraph-choice": "Choose the correct word for each blank in the paragraph.",
+      "lucky-spin": "Spin the wheel, complete the speaking task, and score points."
     };
     const exerciseDescription = exerciseDescriptions[exercise.activity] || "Start this activity.";
     button.innerHTML = `<span>EXERCISE</span><strong>${exercise.title}</strong><small>${exerciseDescription}</small>`;
@@ -905,6 +1238,9 @@ function startSelectedExercise(exercise) {
     case "student-match":
       startStudentMatch(exercise);
       return;
+    case "lucky-spin":
+      startLuckySpin(exercise);
+      return;
     default:
       startChoiceExercise(exercise);
   }
@@ -930,6 +1266,7 @@ function startParagraphChoice(exercise) {
   els.pcTitle.textContent = exercise.title;
   els.pcScore.textContent = `0 / ${state.pcTotalChoices}`;
   els.pcResult.classList.add("hidden");
+  els.pcSkip.classList.toggle("hidden", state.postExerciseIndex === undefined);
   els.pcScreen.classList.remove("hidden");
   renderPcPage();
 }
@@ -971,7 +1308,7 @@ function checkPcProgress() {
         els.pcResultText.textContent = overallCorrect === state.pcTotalChoices
           ? `Perfect! All ${state.pcTotalChoices} correct!`
           : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
-        els.pcDone.textContent = "BACK TO MENU";
+        els.pcDone.textContent = state.postExerciseIndex !== undefined ? "CONTINUE →" : "BACK TO MENU";
         els.pcDone.dataset.pcAction = "done";
       } else {
         els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
@@ -1101,6 +1438,8 @@ function startFillBlank(exercise) {
     ? exercise.buildQuestions(state.module)
     : exercise.questions || [];
   state.fillBlankRevealed = 0;
+  state.fillBlankTotalBlanks = state.fillBlankQuestions.reduce((sum, q) =>
+    sum + (q.segments ? q.segments.filter((s) => s.blank).length : 1), 0);
   hideAllScreens();
   els.fillBlank.classList.remove("hidden");
   els.fillBlankGrade.textContent = `GRADE ${state.grade}`;
@@ -1108,6 +1447,8 @@ function startFillBlank(exercise) {
   els.fillBlankInstruction.textContent = exercise.instruction || "TAP EACH BLANK TO REVEAL THE ANSWER.";
   els.fillBlankFeedback.textContent = "Tap the blanks.";
   els.fillBlankFeedback.className = "exercise-feedback";
+  const hasImages = state.fillBlankQuestions.some((q) => q.imagePath);
+  els.fillBlankGrid.className = `fill-blank-grid${hasImages ? " fill-blank-grid-img" : ""}`;
   updateFillBlankProgress();
   els.fillBlankGrid.replaceChildren(...state.fillBlankQuestions.map((question, index) => createFillBlankItem(question, index)));
 }
@@ -1116,6 +1457,38 @@ function createFillBlankItem(question, index) {
   const item = document.createElement("section");
   item.className = "fill-blank-item";
   item.dataset.index = index;
+  if (question.segments) {
+    item.classList.add("fill-blank-item-seg");
+    if (question.imagePath) {
+      const img = document.createElement("img");
+      img.src = question.imagePath;
+      img.className = "fill-blank-seg-img";
+      item.append(img);
+    }
+    const body = document.createElement("div");
+    body.className = "fill-blank-seg-body";
+    question.segments.forEach((seg) => {
+      if (seg.blank) {
+        const answer = document.createElement("button");
+        answer.className = "fill-blank-answer";
+        answer.type = "button";
+        answer.dataset.answer = seg.answer;
+        answer.textContent = "______";
+        answer.addEventListener("click", () => revealFillBlankAnswer(answer));
+        body.append(answer);
+        const clue = document.createElement("span");
+        clue.className = "fill-blank-clue";
+        clue.textContent = ` (${seg.clue}) `;
+        body.append(clue);
+      } else {
+        const span = document.createElement("span");
+        span.textContent = seg.text;
+        body.append(span);
+      }
+    });
+    item.append(body);
+    return item;
+  }
   (question.parts || []).forEach((part) => {
     const span = document.createElement("span");
     span.className = part.mark ? "fill-blank-mark" : "";
@@ -1145,14 +1518,14 @@ function revealFillBlankAnswer(button) {
   state.fillBlankRevealed += 1;
   updateFillBlankProgress();
   playFeedbackSound(true);
-  els.fillBlankFeedback.textContent = state.fillBlankRevealed === state.fillBlankQuestions.length
+  els.fillBlankFeedback.textContent = state.fillBlankRevealed === state.fillBlankTotalBlanks
     ? "Great! All blanks are revealed."
     : "Good. Keep going.";
   els.fillBlankFeedback.className = "exercise-feedback correct";
 }
 
 function updateFillBlankProgress() {
-  els.fillBlankProgress.textContent = `${state.fillBlankRevealed} / ${state.fillBlankQuestions.length}`;
+  els.fillBlankProgress.textContent = `${state.fillBlankRevealed} / ${state.fillBlankTotalBlanks}`;
 }
 
 function startMistakeCorrectIt(exercise) {
@@ -1497,22 +1870,30 @@ function startTrueFalseGrid(exercise) {
   }
   hideAllScreens();
   els.trueFalse.classList.remove("hidden");
+  els.trueFalse.dataset.exerciseId = exercise.id || "";
   els.trueFalseGrade.textContent = `GRADE ${state.grade}`;
   els.trueFalseScore.textContent = "0";
   els.trueFalseNext.textContent = exercise.continueLabel || (exercise.buildPages ? "CONTINUE" : "NEXT 8 STATEMENTS");
   els.trueFalseExit.textContent = "EXIT";
   els.trueFalseInstruction.textContent = exercise.instruction || "READ EACH STATEMENT AND MARK IT TRUE OR FALSE.";
-  const firstImage = state.trueFalsePages[0]?.imagePath;
+  const firstImage = state.trueFalsePages[0]?.imagePath || state.trueFalsePages[0]?.questions?.find((question) => question.imagePath)?.imagePath;
   els.trueFalseVisualPanel.classList.toggle("hidden", !firstImage);
   els.trueFalseCard.classList.toggle("with-visual", Boolean(firstImage));
   if (firstImage) {
-    els.trueFalseVisualBrief.textContent = exercise.visualBrief || "A visual for this activity.";
-    els.trueFalseVisualFallback.classList.add("hidden");
-    els.trueFalseImage.classList.remove("hidden");
-    els.trueFalseImage.alt = exercise.visualBrief || "True or false visual";
-    els.trueFalseImage.src = firstImage;
+    setTrueFalseVisual(firstImage);
   }
   renderTrueFalsePage();
+}
+
+function setTrueFalseVisual(imagePath) {
+  if (!imagePath) return;
+  els.trueFalseVisualBrief.textContent = state.exercise?.visualBrief || "A visual for this statement.";
+  els.trueFalseVisualFallback.classList.add("hidden");
+  els.trueFalseImage.classList.remove("hidden");
+  els.trueFalseImage.alt = state.exercise?.visualBrief || "True or false visual";
+  els.trueFalseImage.src = imagePath;
+  els.trueFalseVisualPanel.classList.remove("hidden");
+  els.trueFalseCard.classList.add("with-visual");
 }
 
 function renderTrueFalsePage() {
@@ -1523,11 +1904,8 @@ function renderTrueFalsePage() {
   els.trueFalseActionMessage.classList.add("hidden");
   els.trueFalseNext.classList.remove("hidden");
   els.trueFalseExit.classList.add("hidden");
-  if (page.imagePath) {
-    els.trueFalseImage.src = page.imagePath;
-    els.trueFalseVisualPanel.classList.remove("hidden");
-    els.trueFalseCard.classList.add("with-visual");
-  }
+  const pageImage = page.imagePath || page.questions.find((question) => question.imagePath)?.imagePath;
+  if (pageImage) setTrueFalseVisual(pageImage);
   els.trueFalseGrid.replaceChildren(...page.questions.map(createTrueFalseRow));
 }
 
@@ -1535,8 +1913,20 @@ function createTrueFalseRow(question) {
   const row = document.createElement("article");
   row.className = "true-false-row";
   row.dataset.answer = question.answer;
+  const statement = document.createElement("div");
+  statement.className = "true-false-statement";
+  if (question.imagePath) {
+    const imageButton = document.createElement("button");
+    imageButton.type = "button";
+    imageButton.className = "true-false-image-button";
+    imageButton.textContent = "▣";
+    imageButton.setAttribute("aria-label", "Show statement image");
+    imageButton.addEventListener("click", () => setTrueFalseVisual(question.imagePath));
+    statement.append(imageButton);
+  }
   const sentence = document.createElement("p");
   sentence.textContent = question.prompt;
+  statement.append(sentence);
   const actions = document.createElement("div");
   actions.className = "true-false-actions";
   const trueButton = document.createElement("button");
@@ -1552,7 +1942,7 @@ function createTrueFalseRow(question) {
   falseButton.setAttribute("aria-label", "False");
   falseButton.addEventListener("click", () => answerTrueFalse(row, "false"));
   actions.append(trueButton, falseButton);
-  row.append(sentence, actions);
+  row.append(statement, actions);
   return row;
 }
 
@@ -1814,6 +2204,7 @@ function startSortIt(exercise) {
   state.draggedSortCard = null;
   hideAllScreens();
   els.sort.classList.remove("hidden");
+  els.sort.dataset.exerciseId = exercise.id || "";
   els.sortGrade.textContent = `GRADE ${state.grade}`;
   els.sortBank.replaceChildren(...shuffle(state.sortBoard.cards).map(createSortCard));
   els.sortZones.replaceChildren(...state.sortBoard.categories.map(createSortZone));
@@ -1896,6 +2287,185 @@ function showSortResult() {
   els.exerciseResultScore.textContent = `${state.sortSorted} / ${total}`;
   els.exerciseResultMessage.textContent = `${total} cards sorted. Mistakes: ${state.sortMistakes}.`;
   els.exerciseResult.classList.remove("hidden");
+}
+
+function startLuckySpin(exercise) {
+  const items = exercise.buildItems?.(state.module) || [];
+  if (!items.length) return;
+  state.exercise = exercise;
+  state.luckyItems = items.map((item, index) => ({ ...item, label: item.label || String(index + 1) }));
+  state.luckyRemaining = state.luckyItems.map((_, index) => index);
+  state.luckyCurrent = null;
+  state.luckyScore = 0;
+  state.luckyRotation = 0;
+  state.luckySpinning = false;
+  clearTimeout(state.luckyTickTimer);
+  clearTimeout(state.luckyFinishTimer);
+  hideAllScreens();
+  els.luckySpin.classList.remove("hidden");
+  els.luckySpinGrade.textContent = `GRADE ${state.grade}`;
+  els.luckySpinScore.textContent = "0";
+  els.luckySpinEnd.classList.add("hidden");
+  els.luckySpinJudge.classList.add("hidden");
+  els.luckySpinVisualPanel.classList.add("hidden");
+  els.luckySpinButton.disabled = false;
+  els.luckySpinPrompt.textContent = "Spin the wheel to get a task.";
+  renderLuckySpin();
+}
+
+function luckySegmentCenterAngle(activeIndex, segmentCount) {
+  return -90 + (activeIndex + .5) * (360 / segmentCount);
+}
+
+function renderLuckySpin() {
+  const remainingCount = state.luckyRemaining.length;
+  els.luckySpinProgress.textContent = remainingCount;
+  els.luckySpinMeta.textContent = `Remaining sections: ${remainingCount} / ${state.luckyItems.length}`;
+  const colors = ["#ffd84d", "#65e6b8", "#6688ff", "#ff8066", "#9f7aea", "#38bdf8", "#f472b6", "#a3e635"];
+  const activeItems = state.luckyRemaining.map((itemIndex) => ({
+    itemIndex,
+    item: state.luckyItems[itemIndex]
+  }));
+  const size = activeItems.length || 1;
+  const gradient = activeItems.map(({ itemIndex }, activeIndex) => {
+    const start = (activeIndex / size) * 100;
+    const end = ((activeIndex + 1) / size) * 100;
+    return `${colors[itemIndex % colors.length]} ${start}% ${end}%`;
+  }).join(", ");
+  els.luckyWheel.style.background = `conic-gradient(from -90deg, ${gradient})`;
+  els.luckyWheel.style.setProperty("--wheel-counter-rotation", `${-state.luckyRotation}deg`);
+  els.luckyWheel.style.transform = `rotate(${state.luckyRotation}deg)`;
+  els.luckyWheel.replaceChildren(...activeItems.map(({ item }, activeIndex) => {
+    const label = document.createElement("span");
+    label.className = "lucky-segment-label";
+    const segmentAngle = luckySegmentCenterAngle(activeIndex, size);
+    label.style.setProperty("--segment-angle", `${segmentAngle}deg`);
+    label.style.setProperty("--segment-counter-angle", `${-segmentAngle}deg`);
+    label.textContent = item.label || String(activeIndex + 1);
+    return label;
+  }));
+}
+
+function spinLuckyWheel() {
+  if (state.luckySpinning || !state.luckyRemaining.length) return;
+  state.luckySpinning = true;
+  state.luckyCurrent = null;
+  els.luckySpinButton.disabled = true;
+  els.luckySpinJudge.classList.add("hidden");
+  els.luckySpinVisualPanel.classList.add("hidden");
+  els.luckySpinPrompt.textContent = "Spinning...";
+  const activeSegments = [...state.luckyRemaining];
+  const activeTargetIndex = Math.floor(Math.random() * activeSegments.length);
+  const targetItemIndex = activeSegments[activeTargetIndex];
+  const centerAngle = luckySegmentCenterAngle(activeTargetIndex, activeSegments.length);
+  const normalizedRotation = ((state.luckyRotation % 360) + 360) % 360;
+  const targetRotation = ((-centerAngle % 360) + 360) % 360;
+  state.luckyRotation = state.luckyRotation + 1440 + targetRotation - normalizedRotation;
+  startLuckySpinTicks(2500);
+  els.luckyWheel.style.setProperty("--wheel-counter-rotation", `${-state.luckyRotation}deg`);
+  els.luckyWheel.style.transform = `rotate(${state.luckyRotation}deg)`;
+  clearTimeout(state.luckyFinishTimer);
+  state.luckyFinishTimer = window.setTimeout(() => finishLuckySpin(targetItemIndex), 2550);
+}
+
+function startLuckySpinTicks(duration) {
+  clearTimeout(state.luckyTickTimer);
+  const startedAt = performance.now();
+  const tick = () => {
+    const elapsed = performance.now() - startedAt;
+    if (elapsed >= duration || !state.luckySpinning) return;
+    playLuckyTick();
+    const progress = elapsed / duration;
+    state.luckyTickTimer = window.setTimeout(tick, 38 + Math.pow(progress, 2.2) * 210);
+  };
+  tick();
+}
+
+function playLuckyTick() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  try {
+    state.luckyAudioContext ||= new AudioContext();
+    const ctx = state.luckyAudioContext;
+    const start = ctx.currentTime;
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = "square";
+    oscillator.frequency.setValueAtTime(920, start);
+    gain.gain.setValueAtTime(.001, start);
+    gain.gain.exponentialRampToValueAtTime(.075, start + .006);
+    gain.gain.exponentialRampToValueAtTime(.001, start + .045);
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    oscillator.start(start);
+    oscillator.stop(start + .05);
+  } catch {}
+}
+
+function finishLuckySpin(targetIndex) {
+  clearTimeout(state.luckyTickTimer);
+  clearTimeout(state.luckyFinishTimer);
+  state.luckySpinning = false;
+  state.luckyCurrent = targetIndex;
+  const item = state.luckyItems[targetIndex];
+  els.luckySpinPrompt.textContent = `${item.prompt} (${item.points || 0} Pts)`;
+  els.luckySpinMeta.textContent = "Mark the answer.";
+  if (item.imagePath) {
+    els.luckySpinImage.src = item.imagePath;
+    els.luckySpinVisualPanel.classList.remove("hidden");
+  } else {
+    els.luckySpinVisualPanel.classList.add("hidden");
+  }
+  els.luckySpinJudge.classList.remove("hidden");
+}
+
+function judgeLuckySpin(isCorrect) {
+  if (state.luckyCurrent === null || state.luckySpinning) return;
+  const item = state.luckyItems[state.luckyCurrent];
+  if (isCorrect) {
+    state.luckyScore += item.points || 0;
+    els.luckySpinScore.textContent = state.luckyScore;
+    showLuckyFloatingText(item.points || 0);
+  }
+  playFeedbackSound(isCorrect);
+  state.luckyRemaining = state.luckyRemaining.filter((index) => index !== state.luckyCurrent);
+  state.luckyCurrent = null;
+  els.luckySpinJudge.classList.add("hidden");
+  els.luckySpinVisualPanel.classList.add("hidden");
+  renderLuckySpin();
+  if (!state.luckyRemaining.length) {
+    els.luckySpinButton.disabled = true;
+    els.luckySpinPrompt.textContent = "This wheel is complete.";
+    els.luckySpinMeta.textContent = "Great work! No more prompts left.";
+    els.luckySpinEndKicker.textContent = "GAME COMPLETE";
+    els.luckySpinFinalScore.textContent = `${state.luckyScore} POINTS`;
+    els.luckySpinEnd.classList.remove("hidden");
+  } else {
+    els.luckySpinButton.disabled = false;
+    els.luckySpinPrompt.textContent = isCorrect ? "Correct! Spin again." : "Wrong. Spin again.";
+    els.luckySpinMeta.textContent = `Remaining sections: ${state.luckyRemaining.length} / ${state.luckyItems.length}`;
+  }
+}
+
+function showLuckyFloatingText(points) {
+  if (!points) return;
+  els.luckyFloatingText.textContent = `+${points} POINTS`;
+  els.luckyFloatingText.classList.remove("hidden", "show");
+  void els.luckyFloatingText.offsetWidth;
+  els.luckyFloatingText.classList.add("show");
+  window.setTimeout(() => els.luckyFloatingText.classList.add("hidden"), 1100);
+}
+
+function openLuckyImageOverlay() {
+  const src = els.luckySpinImage.getAttribute("src");
+  if (!src || els.luckySpinVisualPanel.classList.contains("hidden")) return;
+  els.luckyImageOverlayImage.src = src;
+  els.luckyImageOverlay.classList.remove("hidden");
+}
+
+function closeLuckyImageOverlay() {
+  els.luckyImageOverlay.classList.add("hidden");
+  els.luckyImageOverlayImage.removeAttribute("src");
 }
 
 function startConversationBuilder(exercise) {
@@ -2052,6 +2622,14 @@ function renderJumbledSentence() {
   els.jumbledType.textContent = question.type;
   els.jumbledFeedback.textContent = "Build the sentence.";
   els.jumbledFeedback.className = "exercise-feedback";
+  els.jumbledCard.classList.toggle("with-visual", Boolean(question.imagePath));
+  if (question.imagePath) {
+    els.jumbledImage.src = question.imagePath;
+    els.jumbledImagePanel.classList.remove("hidden");
+  } else {
+    els.jumbledImage.removeAttribute("src");
+    els.jumbledImagePanel.classList.add("hidden");
+  }
   els.jumbledTiles.replaceChildren(...jumbleTokens(question.tokens).map((token, index) => createJumbledTile(token, index)));
 }
 
@@ -2457,13 +3035,22 @@ els.image.addEventListener("error", () => {
   els.image.classList.add("hidden");
   els.fallback.classList.remove("hidden");
 });
+els.image.addEventListener("load", positionPresenceHotspots);
+window.addEventListener("resize", positionPresenceHotspots);
 els.exerciseImage.addEventListener("error", () => {
   els.exerciseImage.classList.add("hidden");
   els.exerciseFallback.classList.remove("hidden");
 });
+els.jumbledImage.addEventListener("error", () => {
+  els.jumbledImagePanel.classList.add("hidden");
+  els.jumbledCard.classList.remove("with-visual");
+});
 els.trueFalseImage.addEventListener("error", () => {
   els.trueFalseImage.classList.add("hidden");
   els.trueFalseVisualFallback.classList.remove("hidden");
+});
+els.luckySpinImage.addEventListener("error", () => {
+  els.luckySpinVisualPanel.classList.add("hidden");
 });
 els.start.addEventListener("click", startPresentation);
 els.setupExercises.addEventListener("click", openExerciseMenu);
@@ -2483,11 +3070,43 @@ els.exerciseContinue.addEventListener("click", () => {
   else if (state.exercise?.activity === "jumbled-sentences") startJumbledSentences(state.exercise);
   else startChoiceExercise(state.exercise);
 });
-els.exerciseHome.addEventListener("click", returnToSetup);
-els.fillBlankBack.addEventListener("click", returnToSetup);
-els.pcBack.addEventListener("click", returnToSetup);
+function returnToPostExerciseSlide() {
+  const idx = state.postExerciseIndex;
+  state.postExerciseIndex = undefined;
+  if (idx >= (state.module?.sentences.length || 0)) {
+    showPresentationComplete();
+    return;
+  }
+  state.index = idx;
+  const slide = state.module.sentences[idx];
+  if (slide?.exerciseObj || slide?.exerciseLink) {
+    const ex = slide.exerciseObj || (window.exerciseModules || []).find((e) => e.id === slide.exerciseLink);
+    if (ex) {
+      state.postExerciseIndex = idx + 1;
+      startSelectedExercise(ex);
+      return;
+    }
+  }
+  hideAllScreens();
+  els.presentation.classList.remove("hidden");
+  renderExample();
+}
+els.exerciseHome.addEventListener("click", () => {
+  if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
+  else returnToSetup();
+});
+els.fillBlankBack.addEventListener("click", () => {
+  if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
+  else returnToSetup();
+});
+els.pcBack.addEventListener("click", () => {
+  state.postExerciseIndex = undefined;
+  returnToSetup();
+});
+els.pcSkip.addEventListener("click", returnToPostExerciseSlide);
 els.pcDone.addEventListener("click", () => {
   if (els.pcDone.dataset.pcAction === "next") advancePcPage();
+  else if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
   else returnToSetup();
 });
 els.pcParagraph.addEventListener("click", (e) => {
@@ -2498,6 +3117,16 @@ els.mistakeCorrect.addEventListener("click", () => answerMistakeDecision(true));
 els.mistakeWrong.addEventListener("click", () => answerMistakeDecision(false));
 els.mistakeNext.addEventListener("click", nextMistakeQuestion);
 els.sortBack.addEventListener("click", returnToSetup);
+els.luckySpinBack.addEventListener("click", returnToSetup);
+els.luckySpinButton.addEventListener("click", spinLuckyWheel);
+els.luckySpinVisualPanel.addEventListener("click", openLuckyImageOverlay);
+els.luckyCorrect.addEventListener("click", () => judgeLuckySpin(true));
+els.luckyWrong.addEventListener("click", () => judgeLuckySpin(false));
+els.luckySpinHome.addEventListener("click", returnToSetup);
+els.luckyImageOverlayClose.addEventListener("click", closeLuckyImageOverlay);
+els.luckyImageOverlay.addEventListener("click", (event) => {
+  if (event.target === els.luckyImageOverlay) closeLuckyImageOverlay();
+});
 els.exerciseMenuClose.addEventListener("click", () => els.exerciseMenu.classList.add("hidden"));
 els.conversationBack.addEventListener("click", returnToSetup);
 els.conversationNext.addEventListener("click", renderClubQuiz);
@@ -2509,8 +3138,14 @@ els.jumbledTiles.addEventListener("dragover", (event) => {
 els.jumbledTiles.addEventListener("drop", reorderJumbledGap);
 els.matchingBack.addEventListener("click", returnToSetup);
 els.matchingTimeNext.addEventListener("click", continueMatchingAfterTime);
-els.presenceOverlayClose.addEventListener("click", () => els.presenceOverlay.classList.add("hidden"));
-els.presenceOverlay.addEventListener("click", (e) => { if (e.target === els.presenceOverlay) els.presenceOverlay.classList.add("hidden"); });
+const closePresenceOverlay = () => {
+  els.presenceOverlay.classList.add("hidden");
+  els.presenceOverlay.classList.remove("comparison-mode");
+  els.presenceOverlayImage.style.aspectRatio = "";
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg");
+};
+els.presenceOverlayClose.addEventListener("click", closePresenceOverlay);
+els.presenceOverlay.addEventListener("click", (e) => { if (e.target === els.presenceOverlay) closePresenceOverlay(); });
 els.smBack.addEventListener("click", returnToSetup);
 els.smNext.addEventListener("click", () => { state.smBatchIndex++; renderSmBatch(); });
 els.trueFalseBack.addEventListener("click", returnToSetup);

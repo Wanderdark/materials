@@ -1,0 +1,1139 @@
+version: "1.0"
+title: "ADILHOCA CHARACTERS"
+purpose: "AI-ready character cards for the canonical AdilHoca student roster."
+important_rule: "These cards define permanent physical identity. In normal lesson images, do not change the student's face, age, hair, eye color, glasses status, body proportions, or overall identity. Clothing, pose, activity, background, and expression may change unless the lesson specifically teaches physical appearance."
+
+canonical_rules:
+  signature_activities_are_locked: true
+  rule: "A student's signature activity always belongs to that canonical student. Never assign another student's signature activity unless explicitly requested."
+
+signature_activity_index:
+  pet_care: Ava
+  swimming: Benjamin
+  dancing: Chloe
+  electric_scooter: Daniel
+  family_holidays: David
+  singing: Ella
+  helping_others: Emma
+  golf: Ethan
+  cycling: Hannah
+  fishing: Jack
+  football: Lucas
+  diary: Mia
+  studying: Noah
+  photography: Olivia
+  coding: Victoria
+  crossword_puzzles: Zoe
+
+controlled_vocabularies:
+  decision_styles:
+    - analytical
+    - adventurous
+    - cautious
+    - compassionate
+    - competitive
+    - cooperative
+    - creative
+    - empathetic
+    - expressive
+    - impulsive
+    - logical
+    - practical
+    - reflective
+    - relaxed
+    - responsible
+    - strategic
+  speech_styles:
+    - calm
+    - concise
+    - confident
+    - direct
+    - easygoing
+    - encouraging
+    - energetic
+    - enthusiastic
+    - gentle
+    - imaginative
+    - lively
+    - precise
+    - quiet
+    - soft
+    - thoughtful
+  friend_groups:
+    - Academic
+    - Adventure
+    - Animal Care
+    - Art
+    - Competition
+    - Creative
+    - Emotional Support
+    - Family
+    - Leaders
+    - Music
+    - Nature
+    - Outdoor
+    - Practical
+    - Sports
+    - STEM
+    - Strategy
+    - Travel
+    - Quiet
+  conflict_resolution_types:
+    fix_it: "Solves the problem immediately through action."
+    talk_it_out: "Resolves conflicts by discussing calmly."
+    analyze: "Thinks before acting and finds the most logical solution."
+    compromise: "Looks for a fair solution that satisfies everyone."
+    avoid_conflict: "Prefers staying away from arguments."
+    encourage: "Motivates others and keeps everyone's spirits up."
+    take_charge: "Naturally leads the group during difficult situations."
+    improvise: "Tries creative or unconventional solutions."
+    seek_help: "Asks an adult, teacher or friend for help when necessary."
+    never_give_up: "Keeps trying until the problem is solved."
+
+global_style_lock:
+  style: "Premium casual educational game asset, stylized illustration, child-friendly, smooth rounded shapes, soft shading, clean outlines, vibrant colors, highly readable composition, isolated on a pure white background unless a scene background is requested, no text, no logo, production-ready educational asset, high detail."
+  character_consistency_rule: "This is the SAME canonical student from the AdilHoca educational universe. Do NOT create a different child. Preserve the face shape, hairstyle, hair length, hair color, eye color, glasses status, age, body proportions, skin tone, and overall facial identity exactly. Only the requested clothing, pose, action, environment, and facial expression may change."
+
+classroom_roster_overview:
+  total_students: 16
+  age: "12 years old"
+  format: "mixed boys and girls"
+  boys:
+    count: 7
+    names: [Benjamin, Daniel, David, Ethan, Jack, Lucas, Noah]
+  girls:
+    count: 9
+    names: [Ava, Chloe, Ella, Emma, Hannah, Mia, Olivia, Victoria, Zoe]
+  use_cases:
+    - "describing physical appearance"
+    - "matching descriptions with images"
+    - "Guess Who?"
+    - "speaking activities"
+    - "grammar examples"
+    - "vocabulary scenes"
+  glasses_count: 2
+  no_beards_or_moustaches: true
+  default_portraits: "shoulder-up, front-facing, roster-matched character portraits, white background"
+
+relative_height_system:
+  purpose: "Define consistent relative height differences between canonical AdilHoca students for visual comparison scenes such as tall / short, taller than, shorter than, and other comparative adjective lessons."
+  fixed_centimeter_values: false
+  note: "These are relative visual proportions. Characters grow older across grades, but their relative height ranking should remain consistent."
+  scale:
+    5: "tallest students"
+    4: "above average height"
+    3: "average height"
+    2: "short"
+    1: "shortest students"
+  usage_rules:
+    - "Use this system only for relative visual consistency."
+    - "Do not mention exact height in centimeters."
+    - "Do not exaggerate height differences unrealistically."
+    - "All students are still middle school children, so differences should look natural."
+    - "Keep body type neutral and age-appropriate."
+    - "Do not use height to imply strength, beauty, intelligence, popularity, or personality value."
+    - "When a scene is not about height or comparison, keep height differences subtle and natural."
+    - "Character identity rules still have priority: face, hairstyle, hair color, eye color, eyeglasses, skin tone, and recognizable silhouette must remain consistent."
+  comparison_examples:
+    - pair: [Lucas, Noah]
+      note: "very clear tall / short comparison"
+    - pair: [Ella, Zoe]
+      note: "very clear tall / short comparison"
+    - pair: [Emma, Victoria]
+      note: "moderate taller / shorter comparison"
+    - pair: [Hannah, Mia]
+      note: "moderate taller / shorter comparison"
+    - pair: [Jack, Zoe]
+      note: "clear taller / shorter comparison"
+
+students:
+  - id: AVA
+    name: "Ava"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Science"
+    birthday: {day: 21, month: "April"}
+    zodiac_sign: "Taurus"
+    family:
+      mother: {name: "Clara", job: "Veterinarian"}
+      father: {name: "Martin", job: "Park Ranger"}
+    pet: {has_pet: true, type: "Dog", name: "Buddy"}
+    relative_height:
+      scale: 2
+      label: "short"
+      note: "Short; caring and gentle presence."
+    ai_character_card: "Ava is a 12-year-old girl from the AdilHoca educational universe. She has shoulder-length curly black hair and green eyes. She does not wear glasses. Her default facial expression is a warm, gentle smile. Preserve her shoulder-length curly black hairstyle, green eyes, and gentle caring identity across all images."
+    canonical_description: "Ava has shoulder-length curly black hair and green eyes. She does not wear glasses."
+    default_expression: "Warm, gentle smile."
+    expression_note: "Yumusak ve icten bir gulumseme. Gozleri sicak bakar."
+    signature_activity: "Pet Care"
+    general_interests: [Gardening, "Nature walks", "Feeding animals", "Environmental activities", "Visiting animal shelters"]
+    personality:
+      traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
+      note: "Her zaman baskalarina ve hayvanlara sefkatle yaklasir."
+    behavior_profile:
+      goals:
+        - "care for animals"
+        - "protect nature"
+        - "help friends"
+      dislikes:
+        - "hurting animals"
+        - "littering"
+        - "cruelty"
+      decision_style: "compassionate"
+      speech_style: "gentle"
+      conflict_resolution: "talk_it_out"
+    favorite_food_drink:
+      food: "Salad"
+      drink: "Lemonade"
+      note: "Dogayi ve saglikli yasami seviyor."
+    favorite_profile:
+      color: "Green"
+      subject: "Science"
+      season: "Spring"
+      animal: "Dog"
+      music_type: "Acoustic"
+      book_type: "Animal Stories"
+      tv_program_type: "Nature Documentaries"
+    relationships:
+      best_friend: "Benjamin"
+      reason: "Environmental Club, nature, animals, calm personalities, and spending time outdoors together."
+      good_friends: [Emma, Hannah, Jack]
+      friend_groups: [Animal Care, Nature]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Ava, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length curly black hair, green eyes, no glasses, and a warm, gentle smile with kind eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: BENJAMIN
+    name: "Benjamin"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "P.E."
+    birthday: {day: 8, month: "July"}
+    zodiac_sign: "Cancer"
+    family:
+      mother: {name: "Laura", job: "Travel Agent"}
+      father: {name: "Peter", job: "Swimming Coach"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 3
+      label: "average height"
+      note: "Average height."
+    ai_character_card: "Benjamin is a 12-year-old boy from the AdilHoca educational universe. He has short blonde straight hair and blue eyes. He does not wear glasses. His default facial expression is a relaxed smile. Preserve his short blonde straight hairstyle, blue eyes, and calm easy-going identity across all images."
+    canonical_description: "Benjamin has short blonde straight hair and blue eyes. He does not wear glasses."
+    default_expression: "Relaxed smile."
+    expression_note: "Hafif rahat bir gulumseme. Huzurlu gorunur."
+    signature_activity: "Swimming"
+    general_interests: ["Reading books", "Beach holidays", Picnics, "Orange juice", "Environmental activities"]
+    personality:
+      traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
+      note: "Stres yapmayan, huzurlu cocuk."
+    behavior_profile:
+      goals:
+        - "enjoy life"
+        - "make everyone feel comfortable"
+        - "spend time outdoors"
+      dislikes:
+        - "unnecessary arguments"
+        - "stress"
+        - "negativity"
+      decision_style: "relaxed"
+      speech_style: "easygoing"
+      conflict_resolution: "compromise"
+    favorite_food_drink:
+      food: "Hamburger"
+      drink: "Orange Juice"
+      note: "Rahat ve keyifci karakter. Orange juice zaten lore'da vardi."
+    favorite_profile:
+      color: "Blue"
+      subject: "P.E."
+      season: "Summer"
+      animal: "Dolphin"
+      music_type: "Pop"
+      book_type: "Adventure"
+      tv_program_type: "Travel Shows"
+    relationships:
+      best_friend: "Jack"
+      reason: "Fishing, nature, camping, and relaxed personalities."
+      good_friends: [Ava, David, Hannah]
+      friend_groups: [Outdoor, Nature]
+    hidden_lore:
+      secret_crush: "Ava"
+    prompt_insert: "Benjamin, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short blonde straight hair, blue eyes, no glasses, and a relaxed, peaceful smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: CHLOE
+    name: "Chloe"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Art"
+    birthday: {day: 14, month: "March"}
+    zodiac_sign: "Pisces"
+    family:
+      mother: {name: "Sophie", job: "Baker"}
+      father: {name: "Adrian", job: "Interior Designer"}
+    pet: {has_pet: true, type: "Cat", name: "Luna"}
+    relative_height:
+      scale: 3
+      label: "average height"
+      note: "Average height."
+    ai_character_card: "Chloe is a 12-year-old girl from the AdilHoca educational universe. She has long curly blonde hair and blue eyes. She does not wear glasses. Her default facial expression is a soft, thoughtful smile. Preserve her long curly blonde hairstyle, blue eyes, and sensitive creative identity across all images."
+    canonical_description: "Chloe has long curly blonde hair and blue eyes. She does not wear glasses."
+    default_expression: "Soft, thoughtful smile."
+    expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
+    signature_activity: "Dancing"
+    general_interests: [Drama, Pottery, "Birthday parties", "Baking desserts", Singing]
+    personality:
+      traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
+      note: "Insanlarin duygularini onemser."
+    behavior_profile:
+      goals:
+        - "make people happy"
+        - "express herself creatively"
+        - "support friends emotionally"
+      dislikes:
+        - "hurting someone's feelings"
+        - "conflict"
+        - "being ignored"
+      decision_style: "empathetic"
+      speech_style: "soft"
+      conflict_resolution: "encourage"
+    favorite_food_drink:
+      food: "Cupcake"
+      drink: "Strawberry Milkshake"
+      note: "Tatlilari seviyor, dogum gunu ve pastacilik lore'una uyuyor."
+    favorite_profile:
+      color: "Pink"
+      subject: "Art"
+      season: "Spring"
+      animal: "Butterfly"
+      music_type: "Pop"
+      book_type: "Fairy Tales"
+      tv_program_type: "Talent Shows"
+    relationships:
+      best_friend: "Emma"
+      reason: "Chloe and Emma are canon best friends."
+      good_friends: [Olivia, Ella, Mia]
+      friend_groups: [Creative, Emotional Support]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Chloe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly blonde hair, blue eyes, no glasses, and a soft, thoughtful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: DANIEL
+    name: "Daniel"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "P.E."
+    birthday: {day: 2, month: "August"}
+    zodiac_sign: "Leo"
+    family:
+      mother: {name: "Rachel", job: "Drama Teacher"}
+      father: {name: "Victor", job: "Mechanic"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 4
+      label: "above average height"
+      note: "Above average height; adventurous and energetic."
+    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has short wavy blonde hair and green eyes. He does not wear glasses. His default facial expression is a confident smirk. Preserve his short wavy blonde hairstyle, green eyes, and adventurous confident identity across all images."
+    canonical_description: "Daniel has short wavy blonde hair and green eyes. He does not wear glasses."
+    default_expression: "Confident smirk."
+    expression_note: "Hafif muzip bir siritis. \"Hadi bir seyler yapalim.\" enerjisi."
+    signature_activity: "Riding an Electric Scooter"
+    general_interests: [Football, Drawing, "Drama Club", "Adventure parks", Skateboarding]
+    personality:
+      traits: [Energetic, adventurous, confident, curious, playful, fearless]
+      note: "Surekli yeni seyler denemek ister."
+    behavior_profile:
+      goals:
+        - "try new things"
+        - "have fun"
+        - "motivate others"
+      dislikes:
+        - "boredom"
+        - "waiting"
+        - "giving up"
+      decision_style: "impulsive"
+      speech_style: "energetic"
+      conflict_resolution: "improvise"
+    favorite_food_drink:
+      food: "Pizza"
+      drink: "Cola"
+      note: "Enerjik cocuk. Spor sonrasi pizza tam ona gore."
+    favorite_profile:
+      color: "Orange"
+      subject: "P.E."
+      season: "Summer"
+      animal: "Eagle"
+      music_type: "Rock"
+      book_type: "Adventure"
+      tv_program_type: "Sports Programs"
+    relationships:
+      best_friend: "Lucas"
+      reason: "Both are sporty, energetic, competitive, and adventurous."
+      good_friends: [Jack, Hannah, Chloe]
+      friend_groups: [Sports, Adventure]
+    hidden_lore:
+      secret_crush: "Chloe"
+    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short wavy blonde hair, green eyes, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: DAVID
+    name: "David"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Geography"
+    birthday: {day: 18, month: "June"}
+    zodiac_sign: "Gemini"
+    family:
+      mother: {name: "Marta", job: "Hotel Manager"}
+      father:
+        name: "Robert"
+        job: "Sea Captain"
+        status: "deceased"
+    pet: {has_pet: false}
+    relative_height:
+      scale: 3
+      label: "average height"
+      note: "Average height."
+    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has short black wavy hair and brown eyes. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his short black wavy hairstyle, brown eyes, and dependable caring identity across all images."
+    canonical_description: "David has short black wavy hair and brown eyes. He does not wear glasses."
+    default_expression: "Calm, reassuring smile."
+    expression_note: "Guven veren sakin bir gulumseme."
+    signature_activity: "Family Holidays"
+    general_interests: ["Beach activities", Camping, Hiking, Travelling, "Good daily habits"]
+    personality:
+      traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
+      note: "Ailesine cok baglidir."
+    behavior_profile:
+      goals:
+        - "take responsibility"
+        - "protect friends"
+        - "support family"
+      dislikes:
+        - "selfishness"
+        - "dishonesty"
+        - "breaking promises"
+      decision_style: "responsible"
+      speech_style: "calm"
+      conflict_resolution: "seek_help"
+    favorite_food_drink:
+      food: "Grilled Fish"
+      drink: "Apple Juice"
+      note: "Aile tatilleri ve doga temasiyla uyumlu."
+    favorite_profile:
+      color: "Navy Blue"
+      subject: "Geography"
+      season: "Summer"
+      animal: "Sea Turtle"
+      music_type: "Country"
+      book_type: "Travel Books"
+      tv_program_type: "Travel Programs"
+    relationships:
+      best_friend: "Benjamin"
+      reason: "Family-oriented boys who both connect through beach and travel themes."
+      good_friends: [Jack, Ava]
+      friend_groups: [Family, Travel]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black wavy hair, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: ELLA
+    name: "Ella"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Music"
+    birthday: {day: 25, month: "May"}
+    zodiac_sign: "Gemini"
+    family:
+      mother: {name: "Julia", job: "Music Teacher"}
+      father: {name: "Thomas", job: "Radio Presenter"}
+    pet: {has_pet: true, type: "Canary", name: "Sunny"}
+    relative_height:
+      scale: 5
+      label: "tallest students"
+      note: "Tallest girl; underused character, useful for comparative adjective scenes."
+    ai_character_card: "Ella is a 12-year-old girl from the AdilHoca educational universe. She has shoulder-length wavy blonde hair and green eyes. She does not wear glasses. Her default facial expression is a bright cheerful smile. Preserve her shoulder-length wavy blonde hairstyle, green eyes, and outgoing enthusiastic identity across all images."
+    canonical_description: "Ella has shoulder-length wavy blonde hair and green eyes. She does not wear glasses."
+    default_expression: "Bright cheerful smile."
+    expression_note: "Sinifin en pozitif yuzlerinden biri."
+    signature_activity: "Singing"
+    general_interests: [Music, Guitar, "School performances", Karaoke, Choir]
+    personality:
+      traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
+      note: "Kalabalik ortamlari sever."
+    behavior_profile:
+      goals:
+        - "entertain people"
+        - "make everyone smile"
+        - "enjoy performing"
+      dislikes:
+        - "loneliness"
+        - "silence"
+        - "negative attitudes"
+      decision_style: "expressive"
+      speech_style: "enthusiastic"
+      conflict_resolution: "encourage"
+    character_usage_note: "Ella can be used as a backup Music Club student when needed."
+    favorite_food_drink:
+      food: "Pasta"
+      drink: "Fruit Smoothie"
+      note: "Muzikal ve neseli karaktere renkli bir secim."
+    favorite_profile:
+      color: "Yellow"
+      subject: "Music"
+      season: "Summer"
+      animal: "Canary"
+      music_type: "Pop"
+      book_type: "Musicals"
+      tv_program_type: "Music Shows"
+    relationships:
+      best_friend: "Olivia"
+      reason: "Music and art."
+      good_friends: [Chloe, Emma]
+      friend_groups: [Music, Creative]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Ella, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length wavy blonde hair, green eyes, no glasses, and a bright cheerful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: EMMA
+    name: "Emma"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "English"
+    birthday: {day: 6, month: "September"}
+    zodiac_sign: "Virgo"
+    family:
+      mother: {name: "Grace", job: "Nurse"}
+      father: {name: "Henry", job: "School Principal"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 4
+      label: "above average height"
+      note: "Above average height; balanced presence in group scenes."
+    ai_character_card: "Emma is a 12-year-old girl from the AdilHoca educational universe. She has long straight black hair and warm brown eyes. She does not wear glasses. Her default facial expression is a friendly smile. Preserve her long straight black hairstyle, brown eyes, youthful facial identity, and supportive leader identity across all images."
+    canonical_description: "Emma has long straight black hair and brown eyes. She does not wear glasses."
+    default_expression: "Friendly smile."
+    expression_note: "Insanlarla konusmaya hazir gibi duran samimi ifade."
+    signature_activity: "Helping Others"
+    general_interests: ["Organizing events", Guitar, Cooking, Drama, Teamwork, Leadership]
+    personality:
+      traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
+      note: "Sinifin dogal liderlerinden biri."
+    behavior_profile:
+      goals:
+        - "help friends"
+        - "solve problems"
+        - "include everyone"
+      dislikes:
+        - "unfairness"
+        - "leaving someone alone"
+        - "bullying"
+      decision_style: "cooperative"
+      speech_style: "encouraging"
+      conflict_resolution: "take_charge"
+    favorite_food_drink:
+      food: "Vegetable Soup"
+      drink: "Milk"
+      note: "Yardimsever ve duzenli. Ev yemeklerini sever."
+    favorite_profile:
+      color: "Purple"
+      subject: "English"
+      season: "Spring"
+      animal: "Horse"
+      music_type: "Pop"
+      book_type: "Friendship Stories"
+      tv_program_type: "Cooking Shows"
+    relationships:
+      best_friend: "Chloe"
+      reason: "Emma and Chloe are canon best friends."
+      good_friends: [Hannah, Ava, Olivia, Ethan]
+      friend_groups: [Creative, Leaders]
+    hidden_lore:
+      secret_crush: "Ethan"
+    prompt_insert: "Emma, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight black hair, brown eyes, no glasses, and a friendly, approachable smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: ETHAN
+    name: "Ethan"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Math"
+    birthday: {day: 12, month: "January"}
+    zodiac_sign: "Capricorn"
+    family:
+      mother: {name: "Diana", job: "Architect"}
+      father: {name: "George", job: "Engineer"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 3
+      label: "average height"
+      note: "Average height."
+    ai_character_card: "Ethan is a 12-year-old boy from the AdilHoca educational universe. He has a tall-looking face and a slim-looking youthful build. He has short curly blonde hair and clear blue eyes. He does not wear glasses. His default facial expression is a focused neutral expression. Preserve his youthful rounded facial features, short curly blonde hairstyle, blue eyes, and disciplined focused identity across all images."
+    canonical_description: "Ethan has short curly blonde hair and blue eyes. He does not wear glasses."
+    default_expression: "Focused neutral expression."
+    expression_note: "Hafif ciddi ama soguk degil. Sadece dikkatli."
+    signature_activity: "Playing Golf"
+    general_interests: [Violin, Chess, Football, Homework, Reading]
+    personality:
+      traits: [Disciplined, patient, focused, analytical, determined, respectful]
+      note: "Once dusunur, sonra hareket eder."
+    behavior_profile:
+      goals:
+        - "improve himself"
+        - "master new skills"
+        - "solve difficult problems"
+      dislikes:
+        - "cheating"
+        - "carelessness"
+        - "wasting time"
+      decision_style: "analytical"
+      speech_style: "concise"
+      conflict_resolution: "analyze"
+    favorite_food_drink:
+      food: "Steak"
+      drink: "Mineral Water"
+      note: "Disiplinli, sade ve dengeli secimler."
+    favorite_profile:
+      color: "Dark Blue"
+      subject: "Math"
+      season: "Autumn"
+      animal: "Falcon"
+      music_type: "Classical"
+      book_type: "Mystery"
+      tv_program_type: "Chess Tournaments"
+    relationships:
+      best_friend: "Victoria"
+      reason: "Chess, logic, and STEM."
+      good_friends: [Noah, Emma, Olivia]
+      friend_groups: [Academic, STEM]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Ethan, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short curly blonde hair, blue eyes, no glasses, and a focused neutral expression that feels attentive, not cold. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: HANNAH
+    name: "Hannah"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "P.E."
+    birthday: {day: 3, month: "December"}
+    zodiac_sign: "Sagittarius"
+    family:
+      mother:
+        name: "Linda"
+        job: "Cycling Instructor"
+        status: "deceased"
+      father: {name: "Mark", job: "Camping Store Owner"}
+    pet: {has_pet: true, type: "Horse", name: "Storm"}
+    relative_height:
+      scale: 4
+      label: "above average height"
+      note: "Above average height; active outdoor personality."
+    ai_character_card: "Hannah is a 12-year-old girl from the AdilHoca educational universe. She has long straight blonde hair and blue eyes. She does not wear glasses. Her default facial expression is an energetic grin. Preserve her long straight blonde hairstyle, blue eyes, and energetic cheerful identity across all images."
+    canonical_description: "Hannah has long straight blonde hair and blue eyes. She does not wear glasses."
+    default_expression: "Energetic grin."
+    expression_note: "Hareket etmeye hazir gibi."
+    signature_activity: "Cycling"
+    general_interests: [Camping, Barbecue, Picnics, Hiking, "Outdoor games"]
+    personality:
+      traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
+      note: "Yerinde duramayan doga cocugu."
+    behavior_profile:
+      goals:
+        - "explore outdoors"
+        - "stay active"
+        - "encourage adventure"
+      dislikes:
+        - "staying indoors too long"
+        - "laziness"
+        - "rainy camping trips"
+      decision_style: "adventurous"
+      speech_style: "lively"
+      conflict_resolution: "never_give_up"
+    favorite_food_drink:
+      food: "Barbecue"
+      drink: "Iced Tea"
+      note: "Kamp ve mangal lore'u zaten vardi."
+    favorite_profile:
+      color: "Sky Blue"
+      subject: "P.E."
+      season: "Summer"
+      animal: "Horse"
+      music_type: "Country"
+      book_type: "Camping Stories"
+      tv_program_type: "Adventure Programs"
+    relationships:
+      best_friend: "Emma"
+      reason: "Outdoor energy with a social personality."
+      good_friends: [Jack, Benjamin, Ava, Daniel]
+      friend_groups: [Outdoor, Adventure]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Hannah, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight blonde hair, blue eyes, no glasses, and an energetic grin like she is ready to move. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: JACK
+    name: "Jack"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Science"
+    birthday: {day: 17, month: "November"}
+    zodiac_sign: "Scorpio"
+    family:
+      mother: {name: "Helen", job: "Carpenter"}
+      father: {name: "Brian", job: "Fisherman"}
+    pet: {has_pet: true, type: "Golden Retriever", name: "Max"}
+    relative_height:
+      scale: 4
+      label: "above average height"
+      note: "Above average height; confident and active."
+    ai_character_card: "Jack is a 12-year-old boy from the AdilHoca educational universe. He has short straight black hair and brown eyes. He does not wear glasses. His default facial expression is a self-confident smirk. Preserve his short straight black hairstyle, brown eyes, and confident youthful identity across all images."
+    canonical_description: "Jack has short straight black hair and brown eyes. He does not wear glasses."
+    default_expression: "Self-confident smirk."
+    expression_note: "Hafif tek tarafli gulumseme. En belirgin karakter ifadelerinden biri olabilir."
+    signature_activity: "Fishing"
+    general_interests: [Football, DIY, "Board games", "Washing the family car", Hiking]
+    personality:
+      traits: [Confident, practical, resourceful, courageous, independent, easy-going]
+      note: "Elinden her is gelir."
+    behavior_profile:
+      goals:
+        - "fix problems"
+        - "protect friends"
+        - "finish every challenge"
+      dislikes:
+        - "wasting resources"
+        - "giving up"
+        - "unnecessary complaints"
+      decision_style: "practical"
+      speech_style: "direct"
+      conflict_resolution: "fix_it"
+    favorite_food_drink:
+      food: "Sandwich"
+      drink: "Lemon Iced Tea"
+      note: "Balik tutarken, disarida pratik yemekler."
+    favorite_profile:
+      color: "Dark Green"
+      subject: "Science"
+      season: "Autumn"
+      animal: "Golden Retriever"
+      music_type: "Rock"
+      book_type: "Survival"
+      tv_program_type: "Fishing Programs"
+    relationships:
+      best_friend: "Benjamin"
+      reason: "Outdoor bros."
+      good_friends: [Hannah, Daniel, David, Ava]
+      friend_groups: [Outdoor, Practical]
+    hidden_lore:
+      secret_crush: "Hannah"
+    prompt_insert: "Jack, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight black hair, brown eyes, no glasses, and a self-confident, slightly one-sided smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: LUCAS
+    name: "Lucas"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "P.E."
+    birthday: {day: 29, month: "July"}
+    zodiac_sign: "Leo"
+    family:
+      mother: {name: "Natalie", job: "Fitness Trainer"}
+      father: {name: "Carlos", job: "Football Coach"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 5
+      label: "tallest students"
+      note: "Tallest boy; active and sporty appearance. Useful for clear tall / taller than comparisons."
+    ai_character_card: "Lucas is a 12-year-old boy from the AdilHoca educational universe. He has short black curly hair and brown eyes. He does not wear glasses. His default facial expression is a determined smile. Preserve his short black curly hairstyle, brown eyes, and competitive friendly identity across all images."
+    canonical_description: "Lucas has short black curly hair and brown eyes. He does not wear glasses."
+    default_expression: "Determined smile."
+    expression_note: "Rekabetci ama arkadas canlisi."
+    signature_activity: "Playing Football"
+    general_interests: [Basketball, Running, "Board games", "Washing the car", "Outdoor sports"]
+    personality:
+      traits: [Competitive, athletic, energetic, determined, resilient, fair]
+      note: "Kaybetmeyi sevmez ama centilmendir."
+    behavior_profile:
+      goals:
+        - "win fairly"
+        - "become stronger"
+        - "inspire teammates"
+      dislikes:
+        - "cheating"
+        - "quitting"
+        - "poor teamwork"
+      decision_style: "competitive"
+      speech_style: "confident"
+      conflict_resolution: "never_give_up"
+    favorite_food_drink:
+      food: "Spaghetti"
+      drink: "Sports Drink"
+      note: "Futbolcu enerjisi."
+    favorite_profile:
+      color: "Red"
+      subject: "P.E."
+      season: "Summer"
+      animal: "Cheetah"
+      music_type: "Hip-Hop"
+      book_type: "Sports Stories"
+      tv_program_type: "Football Matches"
+    relationships:
+      best_friend: "Daniel"
+      reason: "Sports, competition, and adventure."
+      good_friends: [Jack, Hannah]
+      friend_groups: [Sports, Competition]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Lucas, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black curly hair, brown eyes, no glasses, and a determined but friendly smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: MIA
+    name: "Mia"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Literature"
+    birthday: {day: 10, month: "October"}
+    zodiac_sign: "Libra"
+    family:
+      mother: {name: "Isabel", job: "Librarian"}
+      father: {name: "Edward", job: "Journalist"}
+    pet: {has_pet: true, type: "Rabbit", name: "Coco"}
+    relative_height:
+      scale: 2
+      label: "short"
+      note: "Short; shy and quiet presence."
+    ai_character_card: "Mia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and blue eyes. She does not wear glasses. Her default facial expression is a shy, gentle expression. Preserve her long wavy brown hairstyle, blue eyes, and soft emotional identity across all images."
+    canonical_description: "Mia has long wavy brown hair and blue eyes. She does not wear glasses."
+    default_expression: "Shy, gentle expression."
+    expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
+    signature_activity: "Writing a Diary"
+    general_interests: ["Reading novels", "School newspaper", Drawing, "Listening to music", "Writing stories"]
+    personality:
+      traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
+      note: "Konusmaktan cok dinlemeyi sever."
+    behavior_profile:
+      goals:
+        - "understand people"
+        - "improve her writing"
+        - "express feelings"
+      dislikes:
+        - "loud arguments"
+        - "attention"
+        - "interrupting others"
+      decision_style: "cautious"
+      speech_style: "quiet"
+      conflict_resolution: "avoid_conflict"
+    favorite_food_drink:
+      food: "Chocolate Cookies"
+      drink: "Hot Chocolate"
+      note: "Gunluk yazarken sicak iceceklerle huzur bulan karakter."
+    favorite_profile:
+      color: "Lavender"
+      subject: "Literature"
+      season: "Autumn"
+      animal: "Rabbit"
+      music_type: "Piano"
+      book_type: "Novels"
+      tv_program_type: "Book Review Programs"
+    relationships:
+      best_friend: "Zoe"
+      reason: "Both are quiet and reflective."
+      good_friends: [Chloe, Victoria]
+      friend_groups: [Quiet, Creative]
+    hidden_lore:
+      secret_crush: "Noah"
+    prompt_insert: "Mia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, blue eyes, no glasses, and a shy, gentle expression with a very slight smile or no smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: NOAH
+    name: "Noah"
+    gender: "boy"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Math"
+    birthday: {day: 23, month: "January"}
+    zodiac_sign: "Aquarius"
+    family:
+      mother: {name: "Anna", job: "Scientist"}
+      father: {name: "Philip", job: "Accountant"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 1
+      label: "shortest students"
+      note: "Shortest boy; useful for clear short / shorter than comparisons."
+    ai_character_card: "Noah is a 12-year-old boy from the AdilHoca educational universe. He has short straight brown hair and green eyes. He wears rectangular eyeglasses. His default facial expression is a thoughtful neutral expression. Preserve his short straight brown hairstyle, green eyes, rectangular glasses, and studious logical identity across all images."
+    canonical_description: "Noah has short straight brown hair and green eyes. He wears rectangular eyeglasses."
+    default_expression: "Thoughtful neutral expression."
+    expression_note: "Dusunuyormus gibi. Kaslar hafif odakli."
+    signature_activity: "Studying"
+    general_interests: [Homework, Reading, Science, Library, "Math puzzles"]
+    personality:
+      traits: [Studious, intelligent, logical, curious, organized, hardworking]
+      note: "Ogrenmeyi gercekten sever."
+    behavior_profile:
+      goals:
+        - "learn something new"
+        - "solve puzzles"
+        - "discover answers"
+      dislikes:
+        - "misinformation"
+        - "disorder"
+        - "unfinished work"
+      decision_style: "logical"
+      speech_style: "thoughtful"
+      conflict_resolution: "analyze"
+    favorite_food_drink:
+      food: "Chicken Wrap"
+      drink: "Green Tea"
+      note: "Ders calisirken hafif ve duzenli beslenmeyi sever."
+    favorite_profile:
+      color: "Emerald Green"
+      subject: "Math"
+      season: "Winter"
+      animal: "Owl"
+      music_type: "Lo-fi"
+      book_type: "Science Books"
+      tv_program_type: "Science Documentaries"
+    relationships:
+      best_friend: "Victoria"
+      reason: "Academic interests, coding, and logic."
+      good_friends: [Ethan, Mia]
+      friend_groups: [Academic, STEM]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Noah, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight brown hair, green eyes, rectangular eyeglasses, and a thoughtful neutral expression with slightly focused eyebrows. Preserve his face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
+
+  - id: OLIVIA
+    name: "Olivia"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Art"
+    birthday: {day: 19, month: "February"}
+    zodiac_sign: "Pisces"
+    family:
+      mother: {name: "Camille", job: "Photographer"}
+      father:
+        name: "Julian"
+        job: "Art Gallery Curator"
+        status: "deceased"
+    pet: {has_pet: false}
+    relative_height:
+      scale: 3
+      label: "average height"
+      note: "Average height."
+    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her long wavy brown hairstyle, green eyes, youthful rounded facial identity, and creative observant identity across all images."
+    canonical_description: "Olivia has long wavy brown hair and green eyes. She does not wear glasses."
+    default_expression: "Curious creative smile."
+    expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
+    signature_activity: "Photography"
+    general_interests: [Piano, Painting, "Robotics design", "School newspaper", "Digital art"]
+    personality:
+      traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
+      note: "Kucuk detaylari herkesten once fark eder."
+    behavior_profile:
+      goals:
+        - "create beautiful things"
+        - "capture special moments"
+        - "inspire creativity"
+      dislikes:
+        - "messy work"
+        - "rushing"
+        - "wasted talent"
+      decision_style: "creative"
+      speech_style: "imaginative"
+      conflict_resolution: "improvise"
+    favorite_food_drink:
+      food: "Blueberry Pancakes"
+      drink: "Iced Chocolate"
+      note: "Sanatci ruhuna renkli ve cocuk dostu bir dokunus."
+    favorite_profile:
+      color: "Turquoise"
+      subject: "Art"
+      season: "Spring"
+      animal: "Fox"
+      music_type: "Instrumental"
+      book_type: "Art Books"
+      tv_program_type: "Photography & Travel"
+    relationships:
+      best_friend: "Ella"
+      reason: "Music and art."
+      good_friends: [Chloe, Victoria, Emma]
+      friend_groups: [Creative, Art]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+  - id: VICTORIA
+    name: "Victoria"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Computer Science"
+    birthday: {day: 5, month: "November"}
+    zodiac_sign: "Scorpio"
+    family:
+      mother: {name: "Monica", job: "Software Developer"}
+      father: {name: "Arthur", job: "Math Teacher"}
+    pet: {has_pet: true, type: "Hamster", name: "Pixel"}
+    relative_height:
+      scale: 2
+      label: "short"
+      note: "Short; calm, analytical presence."
+    ai_character_card: "Victoria is a 12-year-old girl from the AdilHoca educational universe. She has long wavy black hair and blue eyes. She wears round eyeglasses. Her default facial expression is a calm analytical expression. Preserve her long wavy black hairstyle, blue eyes, round glasses, and calm analytical identity across all images."
+    canonical_description: "Victoria has long wavy black hair and blue eyes. She wears round eyeglasses."
+    default_expression: "Calm analytical expression."
+    expression_note: "Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi."
+    signature_activity: "Coding"
+    general_interests: [Robotics, Chess, "Strategy games", Science, Gardening]
+    personality:
+      traits: [Calm, analytical, intelligent, strategic, composed, logical]
+      note: "Baski altinda bile sakin kalir."
+    behavior_profile:
+      goals:
+        - "find the best solution"
+        - "improve every project"
+        - "think ahead"
+      dislikes:
+        - "illogical decisions"
+        - "rushing"
+        - "disorganization"
+      decision_style: "strategic"
+      speech_style: "precise"
+      conflict_resolution: "analyze"
+    favorite_food_drink:
+      food: "Sushi"
+      drink: "Matcha Latte"
+      note: "Analitik ve modern karaktere farkli bir imza."
+    favorite_profile:
+      color: "Violet"
+      subject: "Computer Science"
+      season: "Winter"
+      animal: "Owl"
+      music_type: "Electronic"
+      book_type: "Technology Books"
+      tv_program_type: "Science & Technology"
+    relationships:
+      best_friend: "Ethan"
+      reason: "Canonical chess duo."
+      good_friends: [Olivia, Noah, Mia]
+      friend_groups: [STEM, Strategy]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Victoria, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy black hair, blue eyes, round eyeglasses, and a calm analytical expression with a very slight smile and thoughtful eyes. Preserve her face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
+
+  - id: ZOE
+    name: "Zoe"
+    gender: "girl"
+    age: 12
+    school_profile:
+      grade: 5
+      favorite_subject: "Literature"
+    birthday: {day: 27, month: "May"}
+    zodiac_sign: "Gemini"
+    family:
+      mother: {name: "Elena", job: "Book Editor"}
+      father: {name: "Simon", job: "Museum Guide"}
+    pet: {has_pet: false}
+    relative_height:
+      scale: 1
+      label: "shortest students"
+      note: "Shortest girl; useful for clear short / shorter than comparisons."
+    ai_character_card: "Zoe is a 12-year-old girl from the AdilHoca educational universe. She has long curly black hair and brown eyes. She does not wear glasses. Her default facial expression is a quiet reflective expression. Preserve her long curly black hairstyle, brown eyes, and introverted reflective identity across all images."
+    canonical_description: "Zoe has long curly black hair and brown eyes. She does not wear glasses."
+    default_expression: "Quiet reflective expression."
+    expression_note: "Hafif ciddi. Sakin. Icine donuk."
+    signature_activity: "Crossword Puzzles"
+    general_interests: [Reading, "Nature walks", Photography, "Logic games", Journaling]
+    personality:
+      traits: [Independent, thoughtful, introverted, curious, patient, reflective]
+      note: "Once gozlemler, sonra konusur."
+    behavior_profile:
+      goals:
+        - "keep learning"
+        - "understand the world"
+        - "enjoy peaceful moments"
+      dislikes:
+        - "noisy places"
+        - "unnecessary drama"
+        - "interrupting others"
+      decision_style: "reflective"
+      speech_style: "calm"
+      conflict_resolution: "compromise"
+    favorite_food_drink:
+      food: "Mushroom Pizza"
+      drink: "Herbal Tea"
+      note: "Sessiz ve dusunceli karaktere uygun."
+    favorite_profile:
+      color: "Teal"
+      subject: "Science"
+      season: "Autumn"
+      animal: "Cat"
+      music_type: "Indie Folk"
+      book_type: "Mystery"
+      tv_program_type: "Nature Documentaries"
+    relationships:
+      best_friend: "Mia"
+      reason: "Both are quiet and reflective."
+      good_friends: [Victoria, Chloe]
+      friend_groups: [Quiet, Nature]
+    hidden_lore:
+      secret_crush: "none"
+    prompt_insert: "Zoe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly black hair, brown eyes, no glasses, and a quiet reflective expression that feels calm and slightly serious. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+
+prompt_templates:
+  quick_copy: |
+    [CHARACTER NAME], the SAME canonical 12-year-old student from the AdilHoca educational universe.
+
+    [PASTE THAT STUDENT'S PROMPT INSERT HERE.]
+
+    Scene:
+    [Describe the action, object, lesson concept, or classroom situation.]
+
+    Clothing:
+    [Describe clothing if needed. If not needed, use simple plain classroom-appropriate casual clothes.]
+
+    Expression:
+    [Use canonical expression or describe a new expression required for the lesson.]
+
+    Important:
+    Preserve the student's canonical facial identity, hairstyle, hair color, eye color, glasses status, age, and body proportions exactly. Do NOT create a different child. Only change the requested clothing, pose, activity, environment, or expression.
+
+    Style:
+    Premium casual educational game asset, stylized illustration, child-friendly, smooth rounded shapes, soft shading, clean outlines, vibrant colors, highly readable composition, isolated on a pure white background unless a scene background is requested, no text, no logo, production-ready educational asset, high detail, --ar 1:1
+  group_image: |
+    Six different 12-year-old canonical AdilHoca students arranged in a clean educational comparison chart with 3 columns and 2 rows. Shoulder-up portraits only, front-facing, identical camera angle, identical lighting, equal portrait size, isolated on a pure white background.
+
+    Use these exact canonical students and preserve each student's identity exactly:
+    1. [Student Name + short description]
+    2. [Student Name + short description]
+    3. [Student Name + short description]
+    4. [Student Name + short description]
+    5. [Student Name + short description]
+    6. [Student Name + short description]
+
+    Each student must have a clearly distinct facial expression. Avoid repeating the same smile or facial pose. Some students may slightly tilt their head left or right by 5-10 degrees while still facing the camera. Keep all portraits front-facing but introduce subtle natural variations in posture and facial expression to make each student feel like a unique individual.
+
+    All students wear simple plain colorful T-shirts without logos or accessories. Do not add hats, necklaces, earrings, bags, beards, moustaches, or extra glasses. No text, no labels, no logo.
+
+    Premium casual educational game asset, stylized illustration, child-friendly, smooth rounded shapes, soft shading, clean outlines, highly readable composition, isolated on a pure white background, production-ready educational asset, high detail, --ar 16:9
