@@ -539,8 +539,38 @@
           "NOTEBOOK", "BOOK", "CRAYON", "GLUE", "RULER", "SCHOOL BAG", "SCISSORS", "TRASH BIN"
         ]
       },
-      
-       ]
+
+       ],
+    "5:6": [
+      {
+        id: "food-and-drinks-beverages",
+        title: "Food and Drinks (Beverages)",
+        words: [
+          "BEANS", "JAM", "SUGAR", "BUTTER", "SALT", "PASTA", "FLOUR", "GARLIC", "MEAT",
+          "CROISSANT", "MUSHROOM", "PANCAKE", "PEPPER", "BEEF", "CANDY", "DAIRY",
+          "BISCUIT", "COOKIE", "OIL", "LEMON", "SPICES", "TUNA", "TART", "PIE",
+          "HOME MADE BREAD", "SWEETS", "SAUCE", "BAKING POWDER", "CINNAMON", "CORN",
+          "DOUGH", "LETTUCE", "NUT", "SALAD", "FRUIT JUICE", "SOUP", "DESSERT", "SODA WATER"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "DRINKS", "BEVERAGES", "MEAL", "MAIN DISH", "STARTER", "APETIZER",
+          "HEAT", "GRILLED", "STIR", "COOK", "BOIL", "SLICE", "CUT", "MASH",
+          "WASH", "CLEAN", "DRY", "TASTE", "PREPARE", "CONTAIN",
+          "TABLESPOON", "TEASPOON", "BOWL",
+          "RECIPE", "RECOMMEND", "CUISINE", "CUSTOMER", "INGREDIENT", "WAITER",
+          "TIP", "CHEF", "ORDER", "SERVICE", "SERVE", "BOOK A ROOM", "PAY IN CASH",
+          "RESERVE", "BOOK A TABLE",
+          "DELICIOUS", "TASTY", "FRESH", "HEALTHY", "LIGHT", "FATTY", "SPECIAL",
+          "QUALITY", "EMPTY",
+          "A BIT", "TOP", "NEED", "QUICKLY", "PUT ON WEIGHT", "LOSE WEIGHT",
+          "AMOUNT", "SMELL"
+        ]
+      }
+    ]
   };
 
   window.VocabCategoryAdapter = {

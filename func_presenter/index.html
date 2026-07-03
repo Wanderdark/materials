@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grammar Function Presenter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
@@ -14,28 +17,38 @@
   <main class="app-shell">
     <section id="setupScreen" class="setup-screen">
       <div class="brand-lockup">
-        <span class="brand-kicker">CLASSROOM TOOL</span>
-        <h1>GRAMMAR FUNCTION<br><em>PRESENTER</em></h1>
-        <p>Introduce a grammar function through focused examples and visuals.</p>
+        <span class="brand-kicker"><i></i>CLASSROOM TOOL</span>
+        <h1>GRAMMAR<br>FUNCTION<br><em>PRESENTER</em></h1>
+        <p>Introduce a grammar function through focused examples, visuals and built-in games.</p>
+        <div class="brand-chips">
+          <span class="brand-chip">🎯 Interactive slides</span>
+          <span class="brand-chip">🖼️ Visual examples</span>
+          <span class="brand-chip">🕹️ Exercises</span>
+        </div>
+        <div class="brand-steps">
+          <span><b>1</b>GRADE</span><i></i><span><b>2</b>UNIT</span><i></i><span><b>3</b>FUNCTION</span>
+        </div>
       </div>
 
-      <div class="setup-card">
-        <div class="selection-block">
+      <div id="setupCard" class="setup-card" data-step="grade">
+        <div class="selection-block step-grade">
           <div class="selection-heading"><span>01</span><div><h2>Choose a grade</h2><p>Choose one class level.</p></div></div>
           <div id="gradeOptions" class="grade-grid" aria-label="Grade selection"></div>
         </div>
-        <div class="selection-block">
-          <div class="selection-heading"><span>02</span><div><h2>Choose a unit</h2><p>Choose one unit.</p></div></div>
+        <div class="selection-block step-unit">
+          <div class="selection-heading"><button id="unitBackButton" class="step-back" aria-label="Back to grade selection">←</button><span>02</span><div><h2>Choose a unit</h2><p>Choose one unit.</p></div></div>
           <div id="unitOptions" class="grade-grid" aria-label="Unit selection"></div>
         </div>
-        <div class="selection-block">
-          <div class="selection-heading"><span>03</span><div><h2>Choose a function</h2><p>Choose the grammar function to present.</p></div></div>
+        <div class="selection-block step-function">
+          <div class="selection-heading"><button id="functionBackButton" class="step-back" aria-label="Back to unit selection">←</button><span>03</span><div><h2>Choose a function</h2><p>Choose the grammar function to present.</p></div></div>
           <div id="functionOptions" class="function-grid" aria-label="Function selection"></div>
         </div>
-        <div id="setupSummary" class="setup-summary"><strong>Choose a grade to begin</strong><span>Your available grammar functions will appear here.</span></div>
-        <div class="setup-actions">
-          <button id="startButton" class="primary-button" disabled>START PRESENTATION</button>
-          <button id="setupExercisesButton" class="secondary-button" disabled>EXERCISES</button>
+        <div class="setup-footer">
+          <div id="setupSummary" class="setup-summary"><strong>Choose a grade to begin</strong><span>Your available grammar functions will appear here.</span></div>
+          <div class="setup-actions">
+            <button id="startButton" class="primary-button" disabled>START PRESENTATION</button>
+            <button id="setupExercisesButton" class="secondary-button" disabled>EXERCISES</button>
+          </div>
         </div>
       </div>
     </section>
@@ -96,6 +109,37 @@
         <div id="slideDots" class="slide-dots" aria-hidden="true"></div>
         <button id="nextButton" class="primary-button">NEXT</button>
       </nav>
+    </section>
+
+    <section id="roomScreen" class="room-screen hidden">
+      <header class="presentation-header room-header">
+        <button id="roomBackButton" class="icon-button" aria-label="Return to character hub">BACK</button>
+        <div class="session-info">
+          <span id="roomGradeLabel">GRADE 5</span>
+          <strong id="roomTitle">CHLOE'S ROOM</strong>
+        </div>
+        <div class="progress"><strong id="roomProgressText">1 / 13</strong><span>STEPS</span></div>
+      </header>
+      <div class="room-stage">
+        <div id="roomImageWrap" class="room-image-wrap">
+          <img id="roomImage" alt="Room visual">
+          <svg id="roomHitSvg" class="room-hit-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div id="roomFeedback" class="room-feedback hidden"></div>
+          <div id="roomSpeechBubble" class="room-speech-bubble hidden"></div>
+        </div>
+        <div class="room-sentence-panel">
+          <p id="roomSentence" class="room-sentence"></p>
+          <div id="roomChoices" class="presence-choices hidden"></div>
+          <button id="roomNextButton" class="presence-next hidden" aria-label="Next sentence">&rsaquo;</button>
+          <button id="roomExitButton" class="primary-button hidden">EXIT ROOM</button>
+        </div>
+      </div>
+      <div id="roomIntroOverlay" class="room-intro-overlay hidden">
+        <div class="room-intro-card">
+          <p id="roomIntroText">FIND IT AND CLICK</p>
+          <button id="roomIntroOkButton" class="primary-button">OK</button>
+        </div>
+      </div>
     </section>
 
     <section id="sortScreen" class="sort-screen hidden">
@@ -492,6 +536,10 @@
   <script src="functions/present-progressive.js"></script>
   <script src="functions/comparatives.js"></script>
   <script src="functions/there-is-are-unit5.js"></script>
+  <script src="functions/possessive-s.js"></script>
+  <script src="functions/countable-uncountable.js"></script>
+  <script src="functions/have-got-has-got.js"></script>
+  <script src="functions/can-permission.js"></script>
   <script src="functions/index.js"></script>
   <script src="exercises/activity-modules.js"></script>
   <script src="exercises/article-choice.js"></script>
@@ -535,7 +583,13 @@
   <script src="exercises/comparatives-sort.js"></script>
   <script src="exercises/comparatives-true-false.js"></script>
   <script src="exercises/comparatives-lucky-spin.js"></script>
+  <script src="exercises/can-permission-choice.js"></script>
+  <script src="exercises/can-permission-lucky-spin.js"></script>
   <script src="exercises/comparatives-jumbled.js"></script>
+  <script src="exercises/countable-uncountable-sort.js"></script>
+  <script src="exercises/countable-uncountable-quantity-choice.js"></script>
+  <script src="exercises/countable-uncountable-quantity-snap.js"></script>
+  <script src="exercises/have-got-has-got-appearance-choice.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
 </body>

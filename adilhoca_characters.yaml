@@ -6,6 +6,10 @@ important_rule: "These cards define permanent physical identity. In normal lesso
 canonical_rules:
   signature_activities_are_locked: true
   rule: "A student's signature activity always belongs to that canonical student. Never assign another student's signature activity unless explicitly requested."
+  age_appropriate_action_rule: "Every canonical child character must behave in ways that are realistic for their age. Activities involving legal responsibility, financial transactions, hotel reservations, driving, or other adult-only actions should be performed by an accompanying adult whenever appropriate. Children may observe, assist, or participate naturally, but should not replace adults in age-inappropriate situations."
+  child_age_lock:
+    canonical_age_source: "Use each student's age field. The current canonical roster uses age 12."
+    template: "[NAME] is a [CANONICAL AGE]-year-old [girl/boy]. Do not make [him/her] look older or younger. Preserve [his/her] canonical child age, body proportions and overall youthful appearance."
 
 signature_activity_index:
   pet_care: Ava
@@ -24,6 +28,88 @@ signature_activity_index:
   photography: Olivia
   coding: Victoria
   crossword_puzzles: Zoe
+
+character_hobbies:
+  Chloe:
+    loves:
+      - "dancing"
+    likes:
+      - "playing the piano"
+  Emma:
+    loves:
+      - "cooking"
+    likes:
+      - "baking"
+  Ethan:
+    loves:
+      - "playing the violin"
+    likes:
+      - "listening to classical music"
+  Olivia:
+    loves:
+      - "taking photos"
+    likes:
+      - "painting"
+  Victoria:
+    loves:
+      - "coding"
+    likes:
+      - "solving puzzles"
+  Lucas:
+    loves:
+      - "playing football"
+    likes:
+      - "swimming"
+  Benjamin:
+    loves:
+      - "riding his scooter"
+    likes:
+      - "skateboarding"
+  Daniel:
+    loves:
+      - "playing basketball"
+    likes:
+      - "playing table tennis"
+  Mia:
+    loves:
+      - "writing in her diary"
+    likes:
+      - "reading books"
+  Jack:
+    loves:
+      - "gardening"
+    likes:
+      - "hiking"
+  Ava:
+    loves:
+      - "taking care of animals"
+    likes:
+      - "birdwatching"
+  Hannah:
+    loves:
+      - "cycling"
+    likes:
+      - "hiking"
+  David:
+    loves:
+      - "travelling"
+    likes:
+      - "camping"
+  Ella:
+    loves:
+      - "singing"
+    likes:
+      - "drawing"
+  Noah:
+    loves:
+      - "studying"
+    likes:
+      - "playing chess"
+  Zoe:
+    loves:
+      - "solving crossword puzzles"
+    likes:
+      - "stargazing"
 
 controlled_vocabularies:
   decision_styles:
@@ -156,9 +242,10 @@ students:
       favorite_subject: "Science"
     birthday: {day: 21, month: "April"}
     zodiac_sign: "Taurus"
+    born_in: "Netherlands"
     family:
-      mother: {name: "Clara", job: "Veterinarian"}
-      father: {name: "Martin", job: "Park Ranger"}
+      mother: {name: "Amina", nationality: "Kenyan", job: "Veterinarian"}
+      father: {name: "David", nationality: "Kenyan", job: "Wildlife Photographer"}
     pet: {has_pet: true, type: "Dog", name: "Buddy"}
     relative_height:
       scale: 2
@@ -169,6 +256,11 @@ students:
     default_expression: "Warm, gentle smile."
     expression_note: "Yumusak ve icten bir gulumseme. Gozleri sicak bakar."
     signature_activity: "Pet Care"
+    hobbies:
+      loves:
+        - "taking care of animals"
+      likes:
+        - "birdwatching"
     general_interests: [Gardening, "Nature walks", "Feeding animals", "Environmental activities", "Visiting animal shelters"]
     personality:
       traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
@@ -215,9 +307,10 @@ students:
       favorite_subject: "P.E."
     birthday: {day: 8, month: "July"}
     zodiac_sign: "Cancer"
+    born_in: "New Zealand"
     family:
-      mother: {name: "Laura", job: "Travel Agent"}
-      father: {name: "Peter", job: "Swimming Coach"}
+      mother: {name: "Emily", nationality: "New Zealander", job: "Travel Agent"}
+      father: {name: "Oliver", nationality: "New Zealander", job: "Swimming Coach"}
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -228,6 +321,11 @@ students:
     default_expression: "Relaxed smile."
     expression_note: "Hafif rahat bir gulumseme. Huzurlu gorunur."
     signature_activity: "Swimming"
+    hobbies:
+      loves:
+        - "riding his scooter"
+      likes:
+        - "skateboarding"
     general_interests: ["Reading books", "Beach holidays", Picnics, "Orange juice", "Environmental activities"]
     personality:
       traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
@@ -274,9 +372,10 @@ students:
       favorite_subject: "Art"
     birthday: {day: 14, month: "March"}
     zodiac_sign: "Pisces"
+    born_in: "France"
     family:
-      mother: {name: "Sophie", job: "Baker"}
-      father: {name: "Adrian", job: "Interior Designer"}
+      mother: {name: "Camille", nationality: "French", job: "Baker"}
+      father: {name: "Julien", nationality: "French", job: "Interior Designer"}
     pet: {has_pet: true, type: "Cat", name: "Luna"}
     relative_height:
       scale: 3
@@ -287,6 +386,11 @@ students:
     default_expression: "Soft, thoughtful smile."
     expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
     signature_activity: "Dancing"
+    hobbies:
+      loves:
+        - "dancing"
+      likes:
+        - "playing the piano"
     general_interests: [Drama, Pottery, "Birthday parties", "Baking desserts", Singing]
     personality:
       traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
@@ -333,19 +437,25 @@ students:
       favorite_subject: "P.E."
     birthday: {day: 2, month: "August"}
     zodiac_sign: "Leo"
+    born_in: "Spain"
     family:
-      mother: {name: "Rachel", job: "Drama Teacher"}
-      father: {name: "Victor", job: "Mechanic"}
+      mother: {name: "Elena", nationality: "Spanish", job: "Drama Teacher"}
+      father: {name: "Javier", nationality: "Spanish", job: "Mechanic"}
     pet: {has_pet: false}
     relative_height:
       scale: 4
       label: "above average height"
       note: "Above average height; adventurous and energetic."
-    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has short wavy blonde hair and green eyes. He does not wear glasses. His default facial expression is a confident smirk. Preserve his short wavy blonde hairstyle, green eyes, and adventurous confident identity across all images."
-    canonical_description: "Daniel has short wavy blonde hair and green eyes. He does not wear glasses."
+    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses. His default facial expression is a confident smirk. Preserve his shoulder-length straight black middle-parted hairstyle, slightly thick eyebrows, and adventurous confident identity across all images."
+    canonical_description: "Daniel has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses."
     default_expression: "Confident smirk."
     expression_note: "Hafif muzip bir siritis. \"Hadi bir seyler yapalim.\" enerjisi."
     signature_activity: "Riding an Electric Scooter"
+    hobbies:
+      loves:
+        - "playing basketball"
+      likes:
+        - "playing table tennis"
     general_interests: [Football, Drawing, "Drama Club", "Adventure parks", Skateboarding]
     personality:
       traits: [Energetic, adventurous, confident, curious, playful, fearless]
@@ -381,7 +491,7 @@ students:
       friend_groups: [Sports, Adventure]
     hidden_lore:
       secret_crush: "Chloe"
-    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short wavy blonde hair, green eyes, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part, slightly thick eyebrows, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eyebrows, age, and overall identity exactly."
 
   - id: DAVID
     name: "David"
@@ -392,10 +502,12 @@ students:
       favorite_subject: "Geography"
     birthday: {day: 18, month: "June"}
     zodiac_sign: "Gemini"
+    born_in: "Mexico"
     family:
-      mother: {name: "Marta", job: "Hotel Manager"}
+      mother: {name: "Valeria", nationality: "Mexican", job: "Hotel Manager"}
       father:
-        name: "Robert"
+        name: "Alejandro"
+        nationality: "Mexican"
         job: "Sea Captain"
         status: "deceased"
     pet: {has_pet: false}
@@ -403,11 +515,16 @@ students:
       scale: 3
       label: "average height"
       note: "Average height."
-    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has short black wavy hair and brown eyes. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his short black wavy hairstyle, brown eyes, and dependable caring identity across all images."
-    canonical_description: "David has short black wavy hair and brown eyes. He does not wear glasses."
+    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his very short neatly trimmed black hairstyle, slight natural hair texture, thin eyebrows, brown eyes, and dependable caring identity across all images."
+    canonical_description: "David has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses."
     default_expression: "Calm, reassuring smile."
     expression_note: "Guven veren sakin bir gulumseme."
     signature_activity: "Family Holidays"
+    hobbies:
+      loves:
+        - "travelling"
+      likes:
+        - "camping"
     general_interests: ["Beach activities", Camping, Hiking, Travelling, "Good daily habits"]
     personality:
       traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
@@ -443,7 +560,7 @@ students:
       friend_groups: [Family, Travel]
     hidden_lore:
       secret_crush: "none"
-    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black wavy hair, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has very short neatly trimmed black hair with slight natural texture, thin eyebrows, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: ELLA
     name: "Ella"
@@ -454,9 +571,10 @@ students:
       favorite_subject: "Music"
     birthday: {day: 25, month: "May"}
     zodiac_sign: "Gemini"
+    born_in: "Australia"
     family:
-      mother: {name: "Julia", job: "Music Teacher"}
-      father: {name: "Thomas", job: "Radio Presenter"}
+      mother: {name: "Charlotte", nationality: "Australian", job: "Music Teacher"}
+      father: {name: "Liam", nationality: "Australian", job: "Radio Presenter"}
     pet: {has_pet: true, type: "Canary", name: "Sunny"}
     relative_height:
       scale: 5
@@ -467,6 +585,11 @@ students:
     default_expression: "Bright cheerful smile."
     expression_note: "Sinifin en pozitif yuzlerinden biri."
     signature_activity: "Singing"
+    hobbies:
+      loves:
+        - "singing"
+      likes:
+        - "drawing"
     general_interests: [Music, Guitar, "School performances", Karaoke, Choir]
     personality:
       traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
@@ -514,9 +637,10 @@ students:
       favorite_subject: "English"
     birthday: {day: 6, month: "September"}
     zodiac_sign: "Virgo"
+    born_in: "Canada"
     family:
-      mother: {name: "Grace", job: "Nurse"}
-      father: {name: "Henry", job: "School Principal"}
+      mother: {name: "Sophie", nationality: "Canadian", job: "Nurse"}
+      father: {name: "Haruto", nationality: "Japanese", job: "School Principal"}
     pet: {has_pet: false}
     relative_height:
       scale: 4
@@ -527,6 +651,11 @@ students:
     default_expression: "Friendly smile."
     expression_note: "Insanlarla konusmaya hazir gibi duran samimi ifade."
     signature_activity: "Helping Others"
+    hobbies:
+      loves:
+        - "cooking"
+      likes:
+        - "baking"
     general_interests: ["Organizing events", Guitar, Cooking, Drama, Teamwork, Leadership]
     personality:
       traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
@@ -573,9 +702,10 @@ students:
       favorite_subject: "Math"
     birthday: {day: 12, month: "January"}
     zodiac_sign: "Capricorn"
+    born_in: "England"
     family:
-      mother: {name: "Diana", job: "Architect"}
-      father: {name: "George", job: "Engineer"}
+      mother: {name: "Elizabeth", nationality: "British", job: "Architect"}
+      father: {name: "James", nationality: "British", job: "Engineer"}
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -586,6 +716,11 @@ students:
     default_expression: "Focused neutral expression."
     expression_note: "Hafif ciddi ama soguk degil. Sadece dikkatli."
     signature_activity: "Playing Golf"
+    hobbies:
+      loves:
+        - "playing the violin"
+      likes:
+        - "listening to classical music"
     general_interests: [Violin, Chess, Football, Homework, Reading]
     personality:
       traits: [Disciplined, patient, focused, analytical, determined, respectful]
@@ -616,7 +751,7 @@ students:
       tv_program_type: "Chess Tournaments"
     relationships:
       best_friend: "Victoria"
-      reason: "Chess, logic, and STEM."
+      reason: "Logic, focused study habits, and STEM interests."
       good_friends: [Noah, Emma, Olivia]
       friend_groups: [Academic, STEM]
     hidden_lore:
@@ -632,12 +767,13 @@ students:
       favorite_subject: "P.E."
     birthday: {day: 3, month: "December"}
     zodiac_sign: "Sagittarius"
+    born_in: "Norway"
     family:
       mother:
-        name: "Linda"
+        name: "Ingrid"
+        nationality: "Norwegian"
         job: "Cycling Instructor"
-        status: "deceased"
-      father: {name: "Mark", job: "Camping Store Owner"}
+      father: {name: "Lars", nationality: "Norwegian", job: "Camping Store Owner"}
     pet: {has_pet: true, type: "Horse", name: "Storm"}
     relative_height:
       scale: 4
@@ -648,6 +784,11 @@ students:
     default_expression: "Energetic grin."
     expression_note: "Hareket etmeye hazir gibi."
     signature_activity: "Cycling"
+    hobbies:
+      loves:
+        - "cycling"
+      likes:
+        - "hiking"
     general_interests: [Camping, Barbecue, Picnics, Hiking, "Outdoor games"]
     personality:
       traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
@@ -694,9 +835,10 @@ students:
       favorite_subject: "Science"
     birthday: {day: 17, month: "November"}
     zodiac_sign: "Scorpio"
+    born_in: "Scotland"
     family:
-      mother: {name: "Helen", job: "Carpenter"}
-      father: {name: "Brian", job: "Fisherman"}
+      mother: {name: "Isla", nationality: "Scottish", job: "Carpenter"}
+      father: {name: "Callum", nationality: "Scottish", job: "Fisherman"}
     pet: {has_pet: true, type: "Golden Retriever", name: "Max"}
     relative_height:
       scale: 4
@@ -707,6 +849,11 @@ students:
     default_expression: "Self-confident smirk."
     expression_note: "Hafif tek tarafli gulumseme. En belirgin karakter ifadelerinden biri olabilir."
     signature_activity: "Fishing"
+    hobbies:
+      loves:
+        - "gardening"
+      likes:
+        - "hiking"
     general_interests: [Football, DIY, "Board games", "Washing the family car", Hiking]
     personality:
       traits: [Confident, practical, resourceful, courageous, independent, easy-going]
@@ -753,9 +900,10 @@ students:
       favorite_subject: "P.E."
     birthday: {day: 29, month: "July"}
     zodiac_sign: "Leo"
+    born_in: "Brazil"
     family:
-      mother: {name: "Natalie", job: "Fitness Trainer"}
-      father: {name: "Carlos", job: "Football Coach"}
+      mother: {name: "Jessica", nationality: "American", job: "Fitness Trainer"}
+      father: {name: "Gabriel", nationality: "Brazilian", job: "Football Coach"}
     pet: {has_pet: false}
     relative_height:
       scale: 5
@@ -766,6 +914,11 @@ students:
     default_expression: "Determined smile."
     expression_note: "Rekabetci ama arkadas canlisi."
     signature_activity: "Playing Football"
+    hobbies:
+      loves:
+        - "playing football"
+      likes:
+        - "swimming"
     general_interests: [Basketball, Running, "Board games", "Washing the car", "Outdoor sports"]
     personality:
       traits: [Competitive, athletic, energetic, determined, resilient, fair]
@@ -812,9 +965,10 @@ students:
       favorite_subject: "Literature"
     birthday: {day: 10, month: "October"}
     zodiac_sign: "Libra"
+    born_in: "Türkiye"
     family:
-      mother: {name: "Isabel", job: "Librarian"}
-      father: {name: "Edward", job: "Journalist"}
+      mother: {name: "Giulia", nationality: "Italian", job: "Librarian"}
+      father: {name: "Fırat", nationality: "Turkish", job: "Journalist"}
     pet: {has_pet: true, type: "Rabbit", name: "Coco"}
     relative_height:
       scale: 2
@@ -825,6 +979,11 @@ students:
     default_expression: "Shy, gentle expression."
     expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
     signature_activity: "Writing a Diary"
+    hobbies:
+      loves:
+        - "writing in her diary"
+      likes:
+        - "reading books"
     general_interests: ["Reading novels", "School newspaper", Drawing, "Listening to music", "Writing stories"]
     personality:
       traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
@@ -871,9 +1030,10 @@ students:
       favorite_subject: "Math"
     birthday: {day: 23, month: "January"}
     zodiac_sign: "Aquarius"
+    born_in: "Germany"
     family:
-      mother: {name: "Anna", job: "Scientist"}
-      father: {name: "Philip", job: "Accountant"}
+      mother: {name: "Katharina", nationality: "German", job: "Scientist"}
+      father: {name: "Ethan", nationality: "Canadian", job: "Accountant"}
     pet: {has_pet: false}
     relative_height:
       scale: 1
@@ -884,6 +1044,11 @@ students:
     default_expression: "Thoughtful neutral expression."
     expression_note: "Dusunuyormus gibi. Kaslar hafif odakli."
     signature_activity: "Studying"
+    hobbies:
+      loves:
+        - "studying"
+      likes:
+        - "playing chess"
     general_interests: [Homework, Reading, Science, Library, "Math puzzles"]
     personality:
       traits: [Studious, intelligent, logical, curious, organized, hardworking]
@@ -914,7 +1079,7 @@ students:
       tv_program_type: "Science Documentaries"
     relationships:
       best_friend: "Victoria"
-      reason: "Academic interests, coding, and logic."
+      reason: "Canonical chess duo."
       good_friends: [Ethan, Mia]
       friend_groups: [Academic, STEM]
     hidden_lore:
@@ -930,10 +1095,12 @@ students:
       favorite_subject: "Art"
     birthday: {day: 19, month: "February"}
     zodiac_sign: "Pisces"
+    born_in: "Ireland"
     family:
-      mother: {name: "Camille", job: "Photographer"}
+      mother: {name: "Fiona", nationality: "Irish", job: "Photographer"}
       father:
-        name: "Julian"
+        name: "Patrick"
+        nationality: "Irish"
         job: "Art Gallery Curator"
         status: "deceased"
     pet: {has_pet: false}
@@ -941,11 +1108,16 @@ students:
       scale: 3
       label: "average height"
       note: "Average height."
-    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her long wavy brown hairstyle, green eyes, youthful rounded facial identity, and creative observant identity across all images."
-    canonical_description: "Olivia has long wavy brown hair and green eyes. She does not wear glasses."
+    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length French bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images."
+    canonical_description: "Olivia has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses."
     default_expression: "Curious creative smile."
     expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
     signature_activity: "Photography"
+    hobbies:
+      loves:
+        - "taking photos"
+      likes:
+        - "painting"
     general_interests: [Piano, Painting, "Robotics design", "School newspaper", "Digital art"]
     personality:
       traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
@@ -981,7 +1153,7 @@ students:
       friend_groups: [Creative, Art]
     hidden_lore:
       secret_crush: "none"
-    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: VICTORIA
     name: "Victoria"
@@ -992,9 +1164,10 @@ students:
       favorite_subject: "Computer Science"
     birthday: {day: 5, month: "November"}
     zodiac_sign: "Scorpio"
+    born_in: "United Kingdom"
     family:
-      mother: {name: "Monica", job: "Software Developer"}
-      father: {name: "Arthur", job: "Math Teacher"}
+      mother: {name: "Monica", nationality: "British", job: "Software Developer"}
+      father: {name: "Arthur", nationality: "British", job: "Math Teacher"}
     pet: {has_pet: true, type: "Hamster", name: "Pixel"}
     relative_height:
       scale: 2
@@ -1005,6 +1178,11 @@ students:
     default_expression: "Calm analytical expression."
     expression_note: "Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi."
     signature_activity: "Coding"
+    hobbies:
+      loves:
+        - "coding"
+      likes:
+        - "solving puzzles"
     general_interests: [Robotics, Chess, "Strategy games", Science, Gardening]
     personality:
       traits: [Calm, analytical, intelligent, strategic, composed, logical]
@@ -1034,9 +1212,9 @@ students:
       book_type: "Technology Books"
       tv_program_type: "Science & Technology"
     relationships:
-      best_friend: "Ethan"
+      best_friend: "Noah"
       reason: "Canonical chess duo."
-      good_friends: [Olivia, Noah, Mia]
+      good_friends: [Olivia, Ethan, Mia]
       friend_groups: [STEM, Strategy]
     hidden_lore:
       secret_crush: "none"
@@ -1051,9 +1229,10 @@ students:
       favorite_subject: "Literature"
     birthday: {day: 27, month: "May"}
     zodiac_sign: "Gemini"
+    born_in: "Greece"
     family:
-      mother: {name: "Elena", job: "Book Editor"}
-      father: {name: "Simon", job: "Museum Guide"}
+      mother: {name: "Eleni", nationality: "Greek", job: "Book Editor"}
+      father: {name: "Nikos", nationality: "Greek", job: "Museum Guide"}
     pet: {has_pet: false}
     relative_height:
       scale: 1
@@ -1064,6 +1243,11 @@ students:
     default_expression: "Quiet reflective expression."
     expression_note: "Hafif ciddi. Sakin. Icine donuk."
     signature_activity: "Crossword Puzzles"
+    hobbies:
+      loves:
+        - "solving crossword puzzles"
+      likes:
+        - "stargazing"
     general_interests: [Reading, "Nature walks", Photography, "Logic games", Journaling]
     personality:
       traits: [Independent, thoughtful, introverted, curious, patient, reflective]

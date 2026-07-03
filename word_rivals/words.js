@@ -432,7 +432,7 @@ const QUESTIONS = [
   ["GARDEN",5,5,"../images/5/4/24.webp"],
   ["PLATE",5,5,"../images/8/3/18.webp"],
   ["PLAYGROUND",5,5,"../images/6/3/25.webp"],
-  ["SPOON",5,5,"../images/8/3/9.webp"],
+  ["SPOON",5,5,"TABLESPOON","TEASPOON","../images/8/3/9.webp"],
   ["EXPENSIVE",5,5,"BRAND NEW","../images/6/3/41.webp"],
   // Spor mekanları — görsel karışıklık
   ["GYM",5,5,"SPORTS CENTRE","../images/5/5/1.webp"],
@@ -501,6 +501,121 @@ const QUESTIONS = [
   ["DOUBLE DECKER BUS",5,5,"../images/5/5/53.webp"],
   ["CARAVAN",5,5,"FLAT","../images/5/5/54.webp"],
   ["INFORMATION",5,5,"../images/5/5/55.webp"],
+
+  // ─── GRADE 5 UNIT 6 ──────────────────────────────────────────────────────────
+  // synonyms: DELICIOUS = TASTY (same image)
+  ["DELICIOUS",5,6,"TASTY","../images/6/2/36.webp"],
+  ["TASTY",5,6,"DELICIOUS","../images/6/2/36.webp"],
+  // synonyms: TART = PIE (same image)
+  ["TART",5,6,"PIE","../images/5/6/14.webp"],
+  ["PIE",5,6,"TART","../images/5/6/14.webp"],
+  // synonyms: SLICE = CUT (same image)
+  ["SLICE",5,6,"CUT","../images/5/6/17.webp"],
+  ["CUT",5,6,"SLICE","../images/5/6/17.webp"],
+  // synonyms: HEALTHY = LIGHT (same image)
+  ["HEALTHY",5,6,"LIGHT","../images/5/6/27.webp"],
+  ["LIGHT",5,6,"HEALTHY","../images/5/6/27.webp"],
+  // synonyms: SWEETS = DESSERT; cross-exception with CANDY
+  ["SWEETS",5,6,"DESSERT","CANDY","../images/5/6/28.webp"],
+  ["DESSERT",5,6,"SWEETS","CANDY","../images/5/6/28.webp"],
+  // synonyms: DRINKS = BEVERAGES (same image)
+  ["DRINKS",5,6,"BEVERAGES","../images/5/6/38.webp"],
+  ["BEVERAGES",5,6,"DRINKS","../images/5/6/38.webp"],
+  // synonyms: SERVICE = SERVE (same image)
+  ["SERVICE",5,6,"SERVE","../images/5/6/40.webp"],
+  ["SERVE",5,6,"SERVICE","../images/5/6/40.webp"],
+  // synonyms: STARTER = APETIZER; cross-exception with MAIN DISH, MEAL
+  ["STARTER",5,6,"APETIZER","MAIN DISH","MEAL","../images/5/6/45.webp"],
+  ["APETIZER",5,6,"STARTER","MAIN DISH","MEAL","../images/5/6/45.webp"],
+  // synonyms: RESERVE = BOOK A TABLE; cross-exception with BOOK A ROOM
+  ["RESERVE",5,6,"BOOK A TABLE","BOOK A ROOM","../images/5/6/50.webp"],
+  ["BOOK A TABLE",5,6,"RESERVE","BOOK A ROOM","../images/5/6/50.webp"],
+  ["LETTUCE",5,6,"../images/5/6/56.webp"],
+  ["BEEF",5,6,"GRILLED","../images/5/6/1.webp"],
+  ["BAKING POWDER",5,6,"FLOUR","SALT","SUGAR","../images/5/6/58.webp"],
+  // cross-exceptions: spoons + bowl (kitchen measuring items)
+  ["TABLESPOON",5,6,"TEASPOON","BOWL","../images/8/3/9.webp"],
+  ["TEASPOON",5,6,"TABLESPOON","BOWL","../images/8/3/6.webp"],
+  ["BOWL",5,6,"TABLESPOON","TEASPOON","../images/5/6/36.webp"],
+  // cross-exceptions: sweet snacks
+  ["BISCUIT",5,6,"../images/5/6/5.webp"],
+  ["COOKIE",5,6,"../images/5/6/6.webp"],
+  ["CANDY",5,6,"SWEETS","DESSERT","../images/5/6/3.webp"],
+  // cross-exceptions: cleaning actions
+  ["WASH",5,6,"CLEAN","../images/5/6/19.webp"],
+  ["CLEAN",5,6,"WASH","../images/5/6/20.webp"],
+  // cross-exceptions: cooking actions
+  ["COOK",5,6,"BOIL","STIR","HEAT","../images/5/6/15.webp"],
+  ["BOIL",5,6,"COOK","STIR","HEAT","../images/5/6/16.webp"],
+  ["STIR",5,6,"COOK","BOIL","HEAT","../images/8/3/5.webp"],
+  ["HEAT",5,6,"COOK","BOIL","STIR","../images/8/3/10.webp"],
+  // cross-exceptions: weight change
+  ["PUT ON WEIGHT",5,6,"LOSE WEIGHT","../images/5/6/32.webp"],
+  ["LOSE WEIGHT",5,6,"PUT ON WEIGHT","../images/5/6/33.webp"],
+  // cross-exceptions: restaurant people
+  ["WAITER",5,6,"CHEF","CUSTOMER","../images/sp/16/14.webp"],
+  ["CHEF",5,6,"WAITER","CUSTOMER","../images/5/6/37.webp"],
+  ["CUSTOMER",5,6,"WAITER","CHEF","../images/8/1/51.webp"],
+  // cross-exceptions: meal courses
+  ["MEAL",5,6,"MAIN DISH","STARTER","APETIZER","../images/5/6/43.webp"],
+  ["MAIN DISH",5,6,"MEAL","STARTER","APETIZER","../images/5/6/44.webp"],
+  // cross-exceptions: booking/reservation
+  ["BOOK A ROOM",5,6,"RESERVE","BOOK A TABLE","../images/5/6/47.webp"],
+  // cross-exceptions: food senses
+  ["SMELL",5,6,"TASTE","../images/5/6/49.webp"],
+  ["TASTE",5,6,"SMELL","../images/5/6/22.webp"],
+  // cross-exceptions: white powders/condiments
+  ["SALT",5,6,"SUGAR","FLOUR","BAKING POWDER","../images/6/2/30.webp"],
+  ["SUGAR",5,6,"SALT","FLOUR","BAKING POWDER","../images/6/2/29.webp"],
+  ["FLOUR",5,6,"SALT","SUGAR","BAKING POWDER","../images/8/3/31.webp"],
+  ["TIP",5,6,"../images/5/6/35.webp"],
+  ["RECOMMEND",5,6,"QUALITY","../images/8/7/66.webp"],
+  // cross-exceptions: cooking concepts
+  ["RECIPE",5,6,"INGREDIENT","../images/8/3/58.webp"],
+  ["INGREDIENT",5,6,"RECIPE","../images/8/3/57.webp"],
+  // standalone entries
+  ["BEANS",5,6,"../images/6/2/24.webp"],
+  ["JAM",5,6,"../images/6/2/7.webp"],
+  ["SALAD",5,6,"../images/sp/12/8.webp"],
+  ["BUTTER",5,6,"../images/6/2/2.webp"],
+  ["PASTA",5,6,"../images/8/3/84.webp"],
+  ["GARLIC",5,6,"../images/6/2/23.webp"],
+  ["MEAT",5,6,"../images/8/3/34.webp"],
+  ["CUISINE",5,6,"../images/8/7/37.webp"],
+  ["CROISSANT",5,6,"../images/6/2/4.webp"],
+  ["FRUIT JUICE",5,6,"../images/6/2/6.webp"],
+  ["GRILLED",5,6,"BEEF","../images/6/2/33.webp"],
+  ["MUSHROOM",5,6,"../images/sp/12/10.webp"],
+  ["PANCAKE",5,6,"../images/6/2/10.webp"],
+  ["PEPPER",5,6,"../images/8/3/40.webp"],
+  ["DAIRY",5,6,"../images/5/6/4.webp"],
+  ["OIL",5,6,"../images/5/6/7.webp"],
+  ["LEMON",5,6,"../images/5/6/8.webp"],
+  ["A BIT",5,6,"../images/5/6/9.webp"],
+  ["TOP",5,6,"../images/5/6/10.webp"],
+  ["SOUP",5,6,"../images/5/6/11.webp"],
+  ["SPICES",5,6,"../images/5/6/12.webp"],
+  ["TUNA",5,6,"../images/5/6/13.webp"],
+  ["MASH",5,6,"../images/5/6/18.webp"],
+  ["DRY",5,6,"../images/5/6/21.webp"],
+  ["PREPARE",5,6,"../images/5/6/23.webp"],
+  ["NEED",5,6,"../images/5/6/24.webp"],
+  ["FRESH",5,6,"../images/5/6/25.webp"],
+  ["HOME MADE BREAD",5,6,"../images/5/6/26.webp"],
+  ["FATTY",5,6,"../images/5/6/29.webp"],
+  ["SPECIAL",5,6,"../images/5/6/30.webp"],
+  ["QUICKLY",5,6,"../images/5/6/31.webp"],
+  ["SAUCE",5,6,"../images/5/6/34.webp"],
+  ["ORDER",5,6,"../images/5/6/39.webp"],
+  ["AMOUNT",5,6,"../images/5/6/41.webp"],
+  ["QUALITY",5,6,"RECOMMEND","../images/5/6/42.webp"],
+  ["CONTAIN",5,6,"../images/5/6/46.webp"],
+  ["PAY IN CASH",5,6,"../images/5/6/48.webp"],
+  ["EMPTY",5,6,"../images/5/6/51.webp"],
+  ["CINNAMON",5,6,"../images/5/6/53.webp"],
+  ["CORN",5,6,"../images/5/6/54.webp"],
+  ["DOUGH",5,6,"../images/5/6/55.webp"],
+  ["SODA WATER",5,6,"../images/5/6/57.webp"],
 
   // ─── GRADE 6 UNIT 1 ──────────────────────────────────────────────────────────
   ["LIFE",6,1,"../images/6/1/1.webp"],

@@ -8,6 +8,354 @@
 
 ------------------------------------------------------------------------
 
+# ADILHOCA IMAGE DESIGN BIBLE
+
+## Production Update v1.2
+
+------------------------------------------------------------------------
+
+# CHARACTER IDENTITY LOCK
+
+Whenever a recurring canonical character appears in an illustration, the
+prompt MUST begin by locking the character's identity before describing
+the scene.
+
+Always assume the reference image defines the character.
+
+Example wording:
+
+-   Use the attached reference image as the canonical appearance of
+    [Character].
+-   The reference image defines the character's identity.
+
+------------------------------------------------------------------------
+
+# 4. Character Identity Pipeline
+
+## Purpose
+
+All recurring AdilHoca characters must preserve their recognizable
+identity across every illustration, regardless of clothing, environment,
+camera angle, hairstyle or activity.
+
+Character consistency always has higher priority than scene aesthetics.
+
+## Identity Reference Rule
+
+Every recurring character should have one official identity reference
+portrait.
+
+This portrait becomes the canonical visual identity of the character and
+should be attached to every future scene generation involving that
+character.
+
+The identity reference has higher priority than artistic style.
+
+## Standard Identity Header
+
+Use the attached reference image.
+
+The attached image shows the SAME canonical recurring character.
+
+Study the reference carefully before generating the illustration.
+
+The reference image defines the character's official identity and has
+higher priority than artistic style.
+
+Preserve the character's recognizable identity exactly, including:
+
+-   facial proportions
+-   face shape
+-   hairstyle
+-   hair color
+-   eye color
+-   eyebrow shape
+-   nose shape
+-   mouth shape
+-   skin tone
+-   freckles, if present
+
+Maintain the same recognizable character throughout the illustration.
+
+Do NOT redesign the character.
+
+Do NOT replace the face.
+
+Do NOT create a different child.
+
+Allow only natural variations caused by pose, clothing, hairstyle
+appropriate to the activity, lighting, facial expression and camera
+angle.
+
+Character identity has absolute priority over artistic stylization.
+
+## Standard Rendering Footer
+
+Premium casual educational game asset, Pixar-inspired, modern Disney
+concept art, stylized illustration, child-friendly, realistic anatomy,
+smooth rounded forms, painterly rendering, soft natural lighting,
+believable facial proportions, expressive but realistic eyes, rich
+environmental storytelling, highly readable composition, vibrant yet
+harmonious colors, highly detailed, production-ready, no logos, no
+readable text, --ar 1:1
+
+## Identity Reference Guidelines
+
+-   Use stylized official portraits rather than photorealistic portraits.
+-   Keep the same artistic style for every character.
+-   Prefer clean white backgrounds.
+-   Keep lighting simple and consistent.
+-   Use neutral facial expressions.
+-   Avoid accessories unless they are permanent parts of the character.
+-   The identity portrait should represent the character's default
+    appearance.
+
+## Long-Term Vision
+
+The AdilHoca Character Bible should function similarly to the official
+model sheets used in animated films.
+
+Identity references are not merely example images. They are canonical
+character model sheets that define each recurring student's official
+appearance across the entire AdilHoca educational universe.
+
+------------------------------------------------------------------------
+
+# PRESERVE IDENTITY, NOT PIXELS
+
+The objective is NOT to duplicate the reference portrait.
+
+The objective IS to recreate the same child naturally in a different
+moment.
+
+The character must remain immediately recognizable while allowing natural
+artistic variation.
+
+Never encourage a copy-paste appearance.
+
+Preferred wording:
+
+-   Maintain the same recognizable facial identity.
+-   Redraw the character naturally for this new scene.
+-   Allow subtle natural variations caused by different camera angles,
+    lighting and facial expressions.
+-   The illustration should feel like a new moment rather than a
+    duplicated portrait.
+
+------------------------------------------------------------------------
+
+# NEVER REDESIGN THE CHARACTER
+
+Always explicitly prevent identity drift.
+
+Recommended negative instructions:
+
+-   Do NOT redesign the character.
+-   Do NOT create another child.
+-   Do NOT change facial identity.
+-   Do NOT change hairstyle unless explicitly requested.
+-   Do NOT change hair color.
+-   Do NOT change ethnicity.
+-   Do NOT change age.
+
+Only clothing, pose, facial expression and environment may change unless
+instructed otherwise.
+
+------------------------------------------------------------------------
+
+# AGE-APPROPRIATE ACTION RULE
+
+Every canonical child character must behave in ways that are realistic
+for their age.
+
+Activities involving legal responsibility, financial transactions, hotel
+reservations, driving, or other adult-only actions should be performed by
+an accompanying adult whenever appropriate.
+
+Children may observe, assist, or participate naturally, but should not
+replace adults in age-inappropriate situations.
+
+## Standard Child Age Lock
+
+Use the character's canonical age from the character file. For the
+current canonical student roster, this is 12 years old.
+
+Recommended wording:
+
+[NAME] is a [CANONICAL AGE]-year-old [girl/boy].
+
+Do not make [him/her] look older or younger.
+
+Preserve [his/her] canonical child age, body proportions and overall
+youthful appearance.
+
+------------------------------------------------------------------------
+
+# CAMERA CONSISTENCY
+
+The face must naturally match the camera angle.
+
+Avoid front-facing pasted portraits placed onto three-quarter bodies.
+
+The head, neck and body perspective must always agree.
+
+Every illustration should look like the same child naturally viewed from
+another angle.
+
+------------------------------------------------------------------------
+
+# CAMERA COMPOSITION & VISUAL VARIETY
+
+To prevent repetitive compositions and improve visual storytelling, every
+scene prompt should explicitly define the camera angle and composition.
+
+Do NOT rely on the default eye-level three-quarter portrait for every
+illustration.
+
+The camera should be intentionally selected to best communicate the
+educational focus of the vocabulary item or action.
+
+Possible camera compositions include:
+
+-   Front view
+-   Three-quarter left
+-   Three-quarter right
+-   Side profile
+-   Rear three-quarter
+-   Eye-level medium shot
+-   Full-body shot
+-   Close-up
+-   High-angle view
+-   Low-angle view
+-   Top-down view
+-   Over-the-shoulder view
+-   Wide environmental shot
+-   Dynamic action angle
+-   Ground-level perspective
+
+Each illustration should use a camera angle that naturally supports the
+scene rather than repeating previous compositions.
+
+The camera description should specify whenever appropriate:
+
+-   camera position
+-   viewing angle
+-   framing: close-up, medium, full-body or wide
+-   subject placement
+-   foreground and background emphasis
+-   viewing direction
+-   approximate eye level
+
+The selected camera should reinforce the meaning of the target vocabulary
+whenever possible.
+
+Examples:
+
+-   High-angle view looking down toward the mixing bowl.
+-   Side profile while slicing vegetables.
+-   Low-angle view emphasizing the ladder during climbing.
+-   Over-the-shoulder view focusing on the notebook.
+-   Wide environmental shot showing the entire classroom.
+-   Close-up emphasizing facial expression while tasting the soup.
+
+Avoid generating multiple illustrations of the same character using
+nearly identical camera placement unless visual consistency is explicitly
+required.
+
+------------------------------------------------------------------------
+
+# CHARACTER FIRST
+
+Recurring character prompts should always follow this order:
+
+1.  Character Identity Lock
+2.  Identity Preservation Rules
+3.  Camera Perspective Rules
+4.  Scene Description
+5.  Storytelling Details
+6.  Visual Style Signature
+
+Never begin with the environment.
+
+The character is always the highest priority.
+
+------------------------------------------------------------------------
+
+# CHARACTER DESCRIPTION BALANCE
+
+When recurring characters appear:
+
+Approximately 40-50% of the prompt should describe the character.
+
+The remaining prompt should describe:
+
+-   environment
+-   storytelling
+-   educational focus
+-   composition
+
+Do not spend significantly more prompt space describing props than the
+main character.
+
+------------------------------------------------------------------------
+
+# ENVIRONMENTAL STORYTELLING
+
+Every scene should contain 2-4 subtle storytelling details that make the
+environment feel lived in.
+
+Examples:
+
+-   open book
+-   watering can
+-   family photo
+-   mug of tea
+-   indoor plants
+-   pet sleeping nearby
+-   school backpack
+-   bird on a fence
+-   blanket on a chair
+
+These details should support the scene without distracting from the
+vocabulary target.
+
+------------------------------------------------------------------------
+
+# COZY EVERYDAY PHILOSOPHY
+
+Avoid fantasy interiors and unrealistic luxury.
+
+Every environment should feel like a warm, believable place where a real
+family or student lives.
+
+Target feeling:
+
+"A place children would love to visit."
+
+Think:
+
+Pixar + Scandinavian + Storybook + Everyday Life.
+
+------------------------------------------------------------------------
+
+# PROMPT STRUCTURE
+
+Every production prompt should follow this structure:
+
+1.  Character Identity Lock
+2.  Identity Preservation
+3.  Scene Purpose
+4.  Main Action
+5.  Environment
+6.  Cozy Storytelling Details
+7.  Educational Focus
+8.  Visual Signature
+
+This structure should remain consistent across the entire AdilHoca
+universe.
+
+------------------------------------------------------------------------
+
 # 1. Vision
 
 AdilHoca is a premium educational platform for English learners. Every
@@ -343,7 +691,7 @@ truth for the entire visual identity of the platform.
 | Grace | Girl | Medium | Slim | Long straight red | Brown | Yes | Neutral |
 | Benjamin | Boy | Medium | Medium | Short straight blonde | Blue | No | Slightly sad |
 | Ava | Girl | Medium | Slim | Shoulder-length curly black | Green | No | Big cheerful smile |
-| Daniel | Boy | Medium | Medium | Short wavy blonde | Green | No | Neutral |
+| Daniel | Boy | Medium | Medium | Shoulder-length straight black, middle parted; slightly thick eyebrows | - | No | Neutral |
 | Sophia | Girl | Medium | Slim | Long straight brown | Blue | No | Gentle soft smile |
 | Henry | Boy | Medium | Medium | Short curly red | Brown | No | Big cheerful smile |
 | Ella | Girl | Medium | Slim | Shoulder-length wavy blonde | Green | No | Friendly smile |

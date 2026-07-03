@@ -16,7 +16,7 @@ window.exerciseModules.push({
     { id: 10, name: "Grace",    imagePath: "images/physical-appearance/students/grace.webp",    hasGlasses: true,  glassesType: "round",       description: "S/he has long straight red hair and brown eyes." },
     { id: 11, name: "Benjamin", imagePath: "images/physical-appearance/students/benjamin.webp", hasGlasses: false, glassesType: null,          description: "S/he has short straight blonde hair and blue eyes." },
     { id: 12, name: "Ava",      imagePath: "images/physical-appearance/students/ava.webp",      hasGlasses: false, glassesType: null,          description: "S/he has shoulder-length curly black hair and green eyes." },
-    { id: 13, name: "Daniel",   imagePath: "images/physical-appearance/students/daniel.webp",   hasGlasses: false, glassesType: null,          description: "S/he has short wavy blonde hair and green eyes." },
+    { id: 13, name: "Daniel",   imagePath: "images/physical-appearance/students/daniel.webp",   hasGlasses: false, glassesType: null,          description: "S/he has shoulder-length straight black hair, a middle part, and slightly thick eyebrows." },
     { id: 14, name: "Sophia",   imagePath: "images/physical-appearance/students/sophia.webp",   hasGlasses: false, glassesType: null,          description: "S/he has long straight brown hair and blue eyes." },
     { id: 15, name: "Henry",    imagePath: "images/physical-appearance/students/henry.webp",    hasGlasses: false, glassesType: null,          description: "S/he has short curly red hair and brown eyes." },
     { id: 16, name: "Ella",     imagePath: "images/physical-appearance/students/ella.webp",     hasGlasses: false, glassesType: null,          description: "S/he has shoulder-length wavy blonde hair and green eyes." },

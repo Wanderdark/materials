@@ -36,7 +36,8 @@ Art.
 
 ### Olivia
 
-Appearance: artistic, detail-oriented. Signature: piano, photography.
+Appearance: chin-length French bob brown hair, slightly thick eyebrows;
+green eyes; artistic, detail-oriented. Signature: piano, photography.
 General: design/build. Clubs: STEM, Music, School Newspaper, Art.
 
 ### Victoria
@@ -71,7 +72,8 @@ art. Clubs: Drama.
 
 ### David
 
-Appearance: confident. Signature: brushing teeth. General: beach
+Appearance: very short neatly trimmed black hair with slight natural texture;
+thin eyebrows; brown eyes; confident. Signature: brushing teeth. General: beach
 holidays.
 
 ### Ethan

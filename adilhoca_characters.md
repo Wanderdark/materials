@@ -107,6 +107,10 @@ Yumusak ve icten bir gulumseme. Gozleri sicak bakar.
 Favorite / Signature Activity:
 Pet Care.
 
+Hobbies:
+- Loves: taking care of animals
+- Likes: birdwatching
+
 General Interests:
 - Gardening
 - Nature walks
@@ -166,6 +170,10 @@ Hafif rahat bir gulumseme. Huzurlu gorunur.
 
 Favorite / Signature Activity:
 Swimming.
+
+Hobbies:
+- Loves: riding his scooter
+- Likes: skateboarding
 
 General Interests:
 - Reading books
@@ -227,6 +235,10 @@ Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir.
 Favorite / Signature Activity:
 Dancing.
 
+Hobbies:
+- Loves: dancing
+- Likes: playing the piano
+
 General Interests:
 - Drama
 - Pottery
@@ -273,10 +285,10 @@ Chloe, the SAME canonical 12-year-old student from the AdilHoca educational univ
 
 AI Character Card:
 
-Daniel is a 12-year-old boy from the AdilHoca educational universe. He has short wavy blonde hair and green eyes. He does not wear glasses. His default facial expression is a confident smirk. Preserve his short wavy blonde hairstyle, green eyes, and adventurous confident identity across all images.
+Daniel is a 12-year-old boy from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses. His default facial expression is a confident smirk. Preserve his shoulder-length straight black middle-parted hairstyle, slightly thick eyebrows, and adventurous confident identity across all images.
 
 Canonical description sentence:
-Daniel has short wavy blonde hair and green eyes. He does not wear glasses.
+Daniel has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses.
 
 Default expression:
 Confident smirk.
@@ -286,6 +298,10 @@ Hafif muzip bir siritis. "Hadi bir seyler yapalim." enerjisi.
 
 Favorite / Signature Activity:
 Riding an Electric Scooter.
+
+Hobbies:
+- Loves: playing basketball
+- Likes: playing table tennis
 
 General Interests:
 - Football
@@ -325,7 +341,7 @@ Hidden lore:
 secret_crush: Chloe
 
 Prompt insert:
-Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short wavy blonde hair, green eyes, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly.
+Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part, slightly thick eyebrows, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eyebrows, age, and overall identity exactly.
 
 ---
 
@@ -333,10 +349,10 @@ Daniel, the SAME canonical 12-year-old student from the AdilHoca educational uni
 
 AI Character Card:
 
-David is a 12-year-old boy from the AdilHoca educational universe. He has short black wavy hair and brown eyes. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his short black wavy hairstyle, brown eyes, and dependable caring identity across all images.
+David is a 12-year-old boy from the AdilHoca educational universe. He has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his very short neatly trimmed black hairstyle, slight natural hair texture, thin eyebrows, brown eyes, and dependable caring identity across all images.
 
 Canonical description sentence:
-David has short black wavy hair and brown eyes. He does not wear glasses.
+David has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses.
 
 Default expression:
 Calm, reassuring smile.
@@ -346,6 +362,10 @@ Guven veren sakin bir gulumseme.
 
 Favorite / Signature Activity:
 Family Holidays.
+
+Hobbies:
+- Loves: travelling
+- Likes: camping
 
 General Interests:
 - Beach activities
@@ -385,7 +405,7 @@ Hidden lore:
 secret_crush: none
 
 Prompt insert:
-David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black wavy hair, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly.
+David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has very short neatly trimmed black hair with slight natural texture, thin eyebrows, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly.
 
 ---
 
@@ -406,6 +426,10 @@ Sinifin en pozitif yuzlerinden biri.
 
 Favorite / Signature Activity:
 Singing.
+
+Hobbies:
+- Loves: singing
+- Likes: drawing
 
 General Interests:
 - Music
@@ -470,6 +494,10 @@ Insanlarla konusmaya hazir gibi duran samimi ifade.
 Favorite / Signature Activity:
 Helping Others.
 
+Hobbies:
+- Loves: cooking
+- Likes: baking
+
 General Interests:
 - Organizing events
 - Guitar
@@ -531,6 +559,10 @@ Hafif ciddi ama soguk degil. Sadece dikkatli.
 Favorite / Signature Activity:
 Playing Golf.
 
+Hobbies:
+- Loves: playing the violin
+- Likes: listening to classical music
+
 General Interests:
 - Violin
 - Chess
@@ -562,7 +594,7 @@ Favorite Profile:
 
 Relationships:
 - Best friend: Victoria
-- Relationship reason: Chess, logic, and STEM.
+- Relationship reason: Logic, focused study habits, and STEM interests.
 - Good friends: Noah, Emma, Olivia
 
 Hidden lore:
@@ -590,6 +622,10 @@ Hareket etmeye hazir gibi.
 
 Favorite / Signature Activity:
 Cycling.
+
+Hobbies:
+- Loves: cycling
+- Likes: hiking
 
 General Interests:
 - Camping
@@ -651,6 +687,10 @@ Hafif tek tarafli gulumseme. En belirgin karakter ifadelerinden biri olabilir.
 Favorite / Signature Activity:
 Fishing.
 
+Hobbies:
+- Loves: gardening
+- Likes: hiking
+
 General Interests:
 - Football
 - DIY
@@ -710,6 +750,10 @@ Rekabetci ama arkadas canlisi.
 
 Favorite / Signature Activity:
 Playing Football.
+
+Hobbies:
+- Loves: playing football
+- Likes: swimming
 
 General Interests:
 - Basketball
@@ -771,6 +815,10 @@ Cok hafif gulumser. Bazen hic gulumsemeyebilir.
 Favorite / Signature Activity:
 Writing a Diary.
 
+Hobbies:
+- Loves: writing in her diary
+- Likes: reading books
+
 General Interests:
 - Reading novels
 - School newspaper
@@ -831,6 +879,10 @@ Dusunuyormus gibi. Kaslar hafif odakli.
 Favorite / Signature Activity:
 Studying.
 
+Hobbies:
+- Loves: studying
+- Likes: playing chess
+
 General Interests:
 - Homework
 - Reading
@@ -862,7 +914,7 @@ Favorite Profile:
 
 Relationships:
 - Best friend: Victoria
-- Relationship reason: Academic interests, coding, and logic.
+- Relationship reason: Canonical chess duo.
 - Good friends: Ethan, Mia
 
 Hidden lore:
@@ -877,10 +929,10 @@ Noah, the SAME canonical 12-year-old student from the AdilHoca educational unive
 
 AI Character Card:
 
-Olivia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her long wavy brown hairstyle, green eyes, youthful rounded facial identity, and creative observant identity across all images.
+Olivia is a 12-year-old girl from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length French bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images.
 
 Canonical description sentence:
-Olivia has long wavy brown hair and green eyes. She does not wear glasses.
+Olivia has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses.
 
 Default expression:
 Curious creative smile.
@@ -890,6 +942,10 @@ Bir seyi inceliyormus gibi. Gozleri merakli.
 
 Favorite / Signature Activity:
 Photography.
+
+Hobbies:
+- Loves: taking photos
+- Likes: painting
 
 General Interests:
 - Piano
@@ -929,7 +985,7 @@ Hidden lore:
 secret_crush: none
 
 Prompt insert:
-Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly.
+Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly.
 
 ---
 
@@ -950,6 +1006,10 @@ Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi.
 
 Favorite / Signature Activity:
 Coding.
+
+Hobbies:
+- Loves: coding
+- Likes: solving puzzles
 
 General Interests:
 - Robotics
@@ -981,9 +1041,9 @@ Favorite Profile:
 - Favorite TV program type: Science & Technology
 
 Relationships:
-- Best friend: Ethan
+- Best friend: Noah
 - Relationship reason: Canonical chess duo.
-- Good friends: Olivia, Noah, Mia
+- Good friends: Olivia, Ethan, Mia
 
 Hidden lore:
 secret_crush: none
@@ -1010,6 +1070,10 @@ Hafif ciddi. Sakin. Icine donuk.
 
 Favorite / Signature Activity:
 Crossword Puzzles.
+
+Hobbies:
+- Loves: solving crossword puzzles
+- Likes: stargazing
 
 General Interests:
 - Reading
@@ -1062,6 +1126,9 @@ Use this template for any new image:
 
 [PASTE THAT STUDENT'S PROMPT INSERT HERE.]
 
+Age lock:
+[CHARACTER NAME] is a 12-year-old [girl/boy]. Do not make [him/her] look older or younger. Preserve [his/her] canonical child age, body proportions and overall youthful appearance.
+
 Scene:
 [Describe the action, object, lesson concept, or classroom situation.]
 
@@ -1094,6 +1161,9 @@ Use these exact canonical students and preserve each student's identity exactly:
 4. [Student Name + short description]
 5. [Student Name + short description]
 6. [Student Name + short description]
+
+Age lock:
+All students are canonical 12-year-old middle school children. Do not make any student look older or younger. Preserve each student's canonical child age, body proportions and overall youthful appearance.
 
 Each student must have a clearly distinct facial expression. Avoid repeating the same smile or facial pose. Some students may slightly tilt their head left or right by 5-10 degrees while still facing the camera. Keep all portraits front-facing but introduce subtle natural variations in posture and facial expression to make each student feel like a unique individual.
 

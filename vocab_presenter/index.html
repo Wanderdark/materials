@@ -4,40 +4,36 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vocab Presenter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="app-shell">
     <section id="setupScreen" class="screen setup-screen">
-      <div class="brand">
-        <span class="brand-mark">VP</span>
-        <div>
-          <p class="eyebrow">CLASSROOM TOOL</p>
-          <h1>Vocab Presenter</h1>
-          <p class="subtitle">Present unit vocabulary with images, meanings, and quick checks.</p>
+      <div class="brand-lockup">
+        <span class="brand-kicker"><i></i>CLASSROOM TOOL</span>
+        <h1>VOCAB<br><em>PRESENTER</em></h1>
+        <p>Present unit vocabulary with images, meanings, and quick checks.</p>
+        <div class="brand-chips">
+          <span class="brand-chip">🖼️ Picture-first words</span>
+          <span class="brand-chip">✅ Quick checks every 5 words</span>
+          <span class="brand-chip">🕹️ Exercises &amp; quizzes</span>
+        </div>
+        <div class="brand-steps">
+          <span><b>1</b>GRADE</span><i></i><span><b>2</b>UNIT</span>
         </div>
       </div>
 
-      <div class="setup-card">
-        <div class="selection-block">
-          <div class="section-heading">
-            <div>
-              <span class="step">01</span>
-              <h2>Select grade</h2>
-            </div>
-            <span id="gradeStatus" class="selection-status">Select a grade</span>
-          </div>
+      <div id="setupCard" class="setup-card" data-step="grade">
+        <div class="selection-block step-grade">
+          <div class="selection-heading"><span>01</span><div><h2>Select grade</h2><p id="gradeStatus" class="selection-status">Select a grade</p></div></div>
           <div id="gradeOptions" class="option-grid grade-grid"></div>
         </div>
 
-        <div class="selection-block">
-          <div class="section-heading">
-            <div>
-              <span class="step">02</span>
-              <h2>Select unit</h2>
-            </div>
-            <span id="unitStatus" class="selection-status">Select a grade first</span>
-          </div>
+        <div class="selection-block step-unit">
+          <div class="selection-heading"><button id="unitBackButton" class="step-back" aria-label="Back to grade selection">←</button><span>02</span><div><h2>Select unit</h2><p id="unitStatus" class="selection-status">Select a grade first</p></div></div>
           <div id="unitOptions" class="option-grid unit-grid empty-options">
             <p>Available units will appear here after selecting a grade.</p>
           </div>

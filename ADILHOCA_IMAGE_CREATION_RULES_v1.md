@@ -55,6 +55,24 @@ Never redesign, reinterpret, age-shift, or replace a canonical student unless ex
 
 ---
 
+## RULE 3B — Canonical Child Age Lock
+
+Every recurring canonical student must keep their canonical child age.
+
+Use the student's age from the AdilHoca character file. The current canonical roster uses age 12.
+
+Recommended wording inside prompts:
+
+```text
+[NAME] is a [CANONICAL AGE]-year-old [girl/boy].
+Do not make [him/her] look older or younger.
+Preserve [his/her] canonical child age, body proportions and overall youthful appearance.
+```
+
+Never make a canonical student look older, younger, more adult, or more baby-like than their official age.
+
+---
+
 ## RULE 4 — Reference Images With Students
 
 If a reference image contains students, treat them only as placeholders.
@@ -169,4 +187,3 @@ If a user provides a reference image where a child visually resembles a differen
 The final prompt must always replace the reference child with the correct canonical AdilHoca student.
 
 The character's roster-based appearance must remain unchanged.
-

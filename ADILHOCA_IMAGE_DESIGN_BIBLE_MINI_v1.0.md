@@ -10,6 +10,11 @@ Character Bible.
 
 Never create different children.
 
+Use each student's canonical age from the character file. The current
+canonical roster uses age 12. Do not make a canonical student look older
+or younger. Preserve the student's canonical child age, body proportions
+and overall youthful appearance.
+
 ------------------------------------------------------------------------
 
 ## Reference Images

@@ -5,7 +5,7 @@ const thereIsAreUnit5Function = {
   title: "There Is / There Are",
   description: "",
   exercises: ["there-is-are-unit5-sort", "there-is-are-unit5-true-false"],
-  returnToSetupOnComplete: true,
+  returnToSetupOnComplete: false,
   sentences: [
     {
       id: "chloe-home-intro",
@@ -94,7 +94,7 @@ const thereIsAreUnit5Function = {
           overlayData: {
             imagePath: "images/thereis-thereare/chloe-bedroom.webp",
             sentence: "<There are> two bedrooms in our house.",
-            imageAspect: "1/1",
+            imageAspect: "16/9",
             overlaySize: true
           }
         },
@@ -251,9 +251,12 @@ const thereIsAreUnit5Function = {
       kicker: "BEDROOM",
       title: "What can you see?",
       compactTitle: true,
-      imagePath: "../images/5/5/23.webp",
+      imagePath: "images/thereis-thereare/chloe-room.webp",
+      imageAspect: "16 / 9",
+      imageFit: "cover",
       visualBrief: "A bedroom.",
       listClass: "inline-choice-list",
+      replaceCurrentItem: true,
       items: [
         {
           kind: "inline-choice",
@@ -267,7 +270,7 @@ const thereIsAreUnit5Function = {
           kind: "inline-choice",
           segments: [
             { text: "There is a " },
-            { options: ["television", "wardrobe"], answer: "television" },
+            { options: ["television", "wardrobe"], answer: "wardrobe" },
             { text: "." }
           ]
         },
@@ -275,7 +278,7 @@ const thereIsAreUnit5Function = {
           kind: "inline-choice",
           segments: [
             { text: "There is a " },
-            { options: ["table", "fireplace"], answer: "table" },
+            { options: ["studying desk", "fireplace"], answer: "studying desk" },
             { text: " and " },
             { options: ["a", "two"], answer: "a" },
             { text: " chair." }
@@ -299,7 +302,7 @@ const thereIsAreUnit5Function = {
           kind: "inline-choice",
           segments: [
             { text: "There is a " },
-            { options: ["dishwasher", "cupboard"], answer: "cupboard" },
+            { options: ["dishwasher", "bookcase"], answer: "bookcase" },
             { text: " in the bedroom." }
           ]
         },
@@ -313,8 +316,7 @@ const thereIsAreUnit5Function = {
             { text: "." }
           ]
         }
-      ],
-      exerciseLink: "there-is-are-unit5-sort"
+      ]
     },
     {
       id: "desk-quick-check",

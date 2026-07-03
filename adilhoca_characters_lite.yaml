@@ -5,6 +5,10 @@ purpose: "Compact DALL-e character consistency reference for the canonical AdilH
 canonical_rules:
   signature_activities_are_locked: true
   rule: "A student's signature activity always belongs to that canonical student. Never assign another student's signature activity unless explicitly requested."
+  age_appropriate_action_rule: "Every canonical child character must behave in ways that are realistic for their age. Activities involving legal responsibility, financial transactions, hotel reservations, driving, or other adult-only actions should be performed by an accompanying adult whenever appropriate. Children may observe, assist, or participate naturally, but should not replace adults in age-inappropriate situations."
+  child_age_lock:
+    canonical_age_source: "Use each student's age field. The current canonical roster uses age 12."
+    template: "[NAME] is a [CANONICAL AGE]-year-old [girl/boy]. Do not make [him/her] look older or younger. Preserve [his/her] canonical child age, body proportions and overall youthful appearance."
 
 signature_activity_index:
   pet_care: Ava
@@ -47,6 +51,9 @@ students:
     canonical_description: "Ava has shoulder-length curly black hair and green eyes. She does not wear glasses."
     default_expression: "Warm, gentle smile."
     expression_note: "Yumusak ve icten bir gulumseme. Gozleri sicak bakar."
+    hobbies:
+      loves: ["taking care of animals"]
+      likes: ["birdwatching"]
     personality:
       traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
       note: "Her zaman baskalarina ve hayvanlara sefkatle yaklasir."
@@ -61,6 +68,9 @@ students:
     canonical_description: "Benjamin has short blonde straight hair and blue eyes. He does not wear glasses."
     default_expression: "Relaxed smile."
     expression_note: "Hafif rahat bir gulumseme. Huzurlu gorunur."
+    hobbies:
+      loves: ["riding his scooter"]
+      likes: ["skateboarding"]
     personality:
       traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
       note: "Stres yapmayan, huzurlu cocuk."
@@ -75,6 +85,9 @@ students:
     canonical_description: "Chloe has long curly blonde hair and blue eyes. She does not wear glasses."
     default_expression: "Soft, thoughtful smile."
     expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
+    hobbies:
+      loves: ["dancing"]
+      likes: ["playing the piano"]
     personality:
       traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
       note: "Insanlarin duygularini onemser."
@@ -85,28 +98,34 @@ students:
     gender: "boy"
     age: 12
     relative_height: {scale: 4, label: "above average height", note: "Above average height; adventurous and energetic."}
-    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has short wavy blonde hair and green eyes. He does not wear glasses. His default facial expression is a confident smirk. Preserve his short wavy blonde hairstyle, green eyes, and adventurous confident identity across all images."
-    canonical_description: "Daniel has short wavy blonde hair and green eyes. He does not wear glasses."
+    ai_character_card: "Daniel is a 12-year-old boy from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses. His default facial expression is a confident smirk. Preserve his shoulder-length straight black middle-parted hairstyle, slightly thick eyebrows, and adventurous confident identity across all images."
+    canonical_description: "Daniel has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses."
     default_expression: "Confident smirk."
     expression_note: "Hafif muzip bir siritis. \"Hadi bir seyler yapalim.\" enerjisi."
+    hobbies:
+      loves: ["playing basketball"]
+      likes: ["playing table tennis"]
     personality:
       traits: [Energetic, adventurous, confident, curious, playful, fearless]
       note: "Surekli yeni seyler denemek ister."
-    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short wavy blonde hair, green eyes, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part, slightly thick eyebrows, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eyebrows, age, and overall identity exactly."
 
   - id: DAVID
     name: "David"
     gender: "boy"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
-    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has short black wavy hair and brown eyes. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his short black wavy hairstyle, brown eyes, and dependable caring identity across all images."
-    canonical_description: "David has short black wavy hair and brown eyes. He does not wear glasses."
+    ai_character_card: "David is a 12-year-old boy from the AdilHoca educational universe. He has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his very short neatly trimmed black hairstyle, slight natural hair texture, thin eyebrows, brown eyes, and dependable caring identity across all images."
+    canonical_description: "David has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses."
     default_expression: "Calm, reassuring smile."
     expression_note: "Guven veren sakin bir gulumseme."
+    hobbies:
+      loves: ["travelling"]
+      likes: ["camping"]
     personality:
       traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
       note: "Ailesine cok baglidir."
-    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black wavy hair, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has very short neatly trimmed black hair with slight natural texture, thin eyebrows, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: ELLA
     name: "Ella"
@@ -117,6 +136,9 @@ students:
     canonical_description: "Ella has shoulder-length wavy blonde hair and green eyes. She does not wear glasses."
     default_expression: "Bright cheerful smile."
     expression_note: "Sinifin en pozitif yuzlerinden biri."
+    hobbies:
+      loves: ["singing"]
+      likes: ["drawing"]
     personality:
       traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
       note: "Kalabalik ortamlari sever."
@@ -131,6 +153,9 @@ students:
     canonical_description: "Emma has long straight black hair and brown eyes. She does not wear glasses."
     default_expression: "Friendly smile."
     expression_note: "Insanlarla konusmaya hazir gibi duran samimi ifade."
+    hobbies:
+      loves: ["cooking"]
+      likes: ["baking"]
     personality:
       traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
       note: "Sinifin dogal liderlerinden biri."
@@ -145,6 +170,9 @@ students:
     canonical_description: "Ethan has short curly blonde hair and blue eyes. He does not wear glasses."
     default_expression: "Focused neutral expression."
     expression_note: "Hafif ciddi ama soguk degil. Sadece dikkatli."
+    hobbies:
+      loves: ["playing the violin"]
+      likes: ["listening to classical music"]
     personality:
       traits: [Disciplined, patient, focused, analytical, determined, respectful]
       note: "Once dusunur, sonra hareket eder."
@@ -159,6 +187,9 @@ students:
     canonical_description: "Hannah has long straight blonde hair and blue eyes. She does not wear glasses."
     default_expression: "Energetic grin."
     expression_note: "Hareket etmeye hazir gibi."
+    hobbies:
+      loves: ["cycling"]
+      likes: ["hiking"]
     personality:
       traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
       note: "Yerinde duramayan doga cocugu."
@@ -173,6 +204,9 @@ students:
     canonical_description: "Jack has short straight black hair and brown eyes. He does not wear glasses."
     default_expression: "Self-confident smirk."
     expression_note: "Hafif tek tarafli gulumseme. En belirgin karakter ifadelerinden biri olabilir."
+    hobbies:
+      loves: ["gardening"]
+      likes: ["hiking"]
     personality:
       traits: [Confident, practical, resourceful, courageous, independent, easy-going]
       note: "Elinden her is gelir."
@@ -187,6 +221,9 @@ students:
     canonical_description: "Lucas has short black curly hair and brown eyes. He does not wear glasses."
     default_expression: "Determined smile."
     expression_note: "Rekabetci ama arkadas canlisi."
+    hobbies:
+      loves: ["playing football"]
+      likes: ["swimming"]
     personality:
       traits: [Competitive, athletic, energetic, determined, resilient, fair]
       note: "Kaybetmeyi sevmez ama centilmendir."
@@ -201,6 +238,9 @@ students:
     canonical_description: "Mia has long wavy brown hair and blue eyes. She does not wear glasses."
     default_expression: "Shy, gentle expression."
     expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
+    hobbies:
+      loves: ["writing in her diary"]
+      likes: ["reading books"]
     personality:
       traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
       note: "Konusmaktan cok dinlemeyi sever."
@@ -215,6 +255,9 @@ students:
     canonical_description: "Noah has short straight brown hair and green eyes. He wears rectangular eyeglasses."
     default_expression: "Thoughtful neutral expression."
     expression_note: "Dusunuyormus gibi. Kaslar hafif odakli."
+    hobbies:
+      loves: ["studying"]
+      likes: ["playing chess"]
     personality:
       traits: [Studious, intelligent, logical, curious, organized, hardworking]
       note: "Ogrenmeyi gercekten sever."
@@ -225,14 +268,17 @@ students:
     gender: "girl"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
-    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has long wavy brown hair and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her long wavy brown hairstyle, green eyes, youthful rounded facial identity, and creative observant identity across all images."
-    canonical_description: "Olivia has long wavy brown hair and green eyes. She does not wear glasses."
+    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length French bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images."
+    canonical_description: "Olivia has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses."
     default_expression: "Curious creative smile."
     expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
+    hobbies:
+      loves: ["taking photos"]
+      likes: ["painting"]
     personality:
       traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
       note: "Kucuk detaylari herkesten once fark eder."
-    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
+    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: VICTORIA
     name: "Victoria"
@@ -243,6 +289,9 @@ students:
     canonical_description: "Victoria has long wavy black hair and blue eyes. She wears round eyeglasses."
     default_expression: "Calm analytical expression."
     expression_note: "Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi."
+    hobbies:
+      loves: ["coding"]
+      likes: ["solving puzzles"]
     personality:
       traits: [Calm, analytical, intelligent, strategic, composed, logical]
       note: "Baski altinda bile sakin kalir."
@@ -257,6 +306,9 @@ students:
     canonical_description: "Zoe has long curly black hair and brown eyes. She does not wear glasses."
     default_expression: "Quiet reflective expression."
     expression_note: "Hafif ciddi. Sakin. Icine donuk."
+    hobbies:
+      loves: ["solving crossword puzzles"]
+      likes: ["stargazing"]
     personality:
       traits: [Independent, thoughtful, introverted, curious, patient, reflective]
       note: "Once gozlemler, sonra konusur."

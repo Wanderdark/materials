@@ -247,21 +247,26 @@
     return button;
   }
 
+  function setSetupStep(step) {
+    document.getElementById("setupCard").dataset.step = step;
+  }
+
   function renderGrades() {
     els.grades.replaceChildren();
-    uniqueSorted(records.map((item) => item[3])).forEach((grade) => {
-      const count = records.filter((item) => item[3] === grade).length;
-      els.grades.append(createChoice(
-        `Grade ${grade}`,
-        `${count} words`,
-        state.grade === grade,
-        () => selectGrade(grade)
-      ));
+    const available = new Set(records.map((item) => item[3]));
+    [5, 6, 7, 8].forEach((grade) => {
+      const button = document.createElement("button");
+      const isAvailable = available.has(grade);
+      button.className = `grade-visual-button${isAvailable ? "" : " placeholder"}${state.grade === grade ? " selected" : ""}`;
+      button.innerHTML = `<img src="../func_presenter/images/main/grade${grade}.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
+      if (isAvailable) button.addEventListener("click", () => selectGrade(grade));
+      els.grades.append(button);
     });
   }
 
   function selectGrade(grade) {
     enterFullscreen();
+    if (state.grade === grade) { setSetupStep("unit"); return; }
     state.grade = grade;
     state.unit = null;
     els.gradeStatus.textContent = `Grade ${grade} selected`;
@@ -269,6 +274,7 @@
     renderGrades();
     renderUnits();
     updateSetupSummary();
+    setSetupStep("unit");
   }
 
   function renderUnits() {
@@ -283,17 +289,16 @@
     const units = uniqueSorted(records.filter((item) => item[3] === state.grade).map((item) => item[5]));
     units.forEach((unit) => {
       const count = records.filter((item) => item[3] === state.grade && item[5] === unit).length;
-      els.units.append(createChoice(
-        `Unit ${unit}`,
-        `${count} words`,
-        state.unit === unit,
-        () => {
-          state.unit = unit;
-          els.unitStatus.textContent = `Unit ${unit} selected`;
-          renderUnits();
-          updateSetupSummary();
-        }
-      ));
+      const button = document.createElement("button");
+      button.className = `unit-card-button${state.unit === unit ? " selected" : ""}`;
+      button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong><small class="opt-count">${count} words</small>`;
+      button.addEventListener("click", () => {
+        state.unit = unit;
+        els.unitStatus.textContent = `Unit ${unit} selected`;
+        renderUnits();
+        updateSetupSummary();
+      });
+      els.units.append(button);
     });
   }
 
@@ -2292,6 +2297,14 @@
     if (event.key === "Enter" && state.mode === "categoryIntro") renderWord();
     if (event.key === "ArrowRight" && !els.next.disabled) next();
     if (event.key === "ArrowLeft") previous();
+  });
+
+  document.getElementById("unitBackButton").addEventListener("click", () => {
+    state.unit = null;
+    els.unitStatus.textContent = "Select a unit";
+    renderUnits();
+    updateSetupSummary();
+    setSetupStep("grade");
   });
 
   renderGrades();

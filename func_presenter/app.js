@@ -253,16 +253,36 @@ const els = {
   luckySpinHome: $("luckySpinHomeButton"),
   luckyImageOverlay: $("luckyImageOverlay"),
   luckyImageOverlayClose: $("luckyImageOverlayClose"),
-  luckyImageOverlayImage: $("luckyImageOverlayImage")
+  luckyImageOverlayImage: $("luckyImageOverlayImage"),
+  room: $("roomScreen"),
+  roomBack: $("roomBackButton"),
+  roomGrade: $("roomGradeLabel"),
+  roomTitle: $("roomTitle"),
+  roomProgress: $("roomProgressText"),
+  roomImage: $("roomImage"),
+  roomHitSvg: $("roomHitSvg"),
+  roomFeedback: $("roomFeedback"),
+  roomSpeechBubble: $("roomSpeechBubble"),
+  roomSentence: $("roomSentence"),
+  roomChoices: $("roomChoices"),
+  roomNext: $("roomNextButton"),
+  roomExit: $("roomExitButton"),
+  roomIntroOverlay: $("roomIntroOverlay"),
+  roomIntroText: $("roomIntroText"),
+  roomIntroOk: $("roomIntroOkButton")
 };
 
-const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, luckyItems: [], luckyRemaining: [], luckyCurrent: null, luckyScore: 0, luckyRotation: 0, luckySpinning: false, luckyTickTimer: null, luckyFinishTimer: null, luckyAudioContext: null, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
+const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapTotalTimer: null, pronounSnapDeadline: 0, pronounSnapAnswered: 0, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, luckyItems: [], luckyRemaining: [], luckyCurrent: null, luckyScore: 0, luckyRotation: 0, luckySpinning: false, luckyTickTimer: null, luckyFinishTimer: null, luckyAudioContext: null, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
 let feedbackAudio = null;
 let presenceHotspotPoints = [];
+let presenceHoverNameTagPoint = null;
 let timeStepAudio = null;
+let roomState = null;
+let roomActiveSentenceEl = null;
+const ROOM_DEBUG_HITAREAS = false; // draw hit-area outlines while calibrating rooms; flip to true to recalibrate
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -283,26 +303,243 @@ function playWavFeedback(isCorrect) {
   feedbackAudio.play().catch(() => {});
 }
 
-function renderGrades() {
-  const grades = [...new Set(functionModules.map((module) => module.grade))].sort((a, b) => a - b);
-  els.grades.replaceChildren(...grades.map((grade) => {
+function openCharacterRoom(room, returnIndex) {
+  roomState = { data: room, targetIndex: 0, locked: false, returnIndex };
+  hideAllScreens();
+  els.room.classList.remove("hidden");
+  els.roomGrade.textContent = `GRADE ${state.grade}`;
+  els.roomTitle.textContent = `${room.name}'S ROOM`;
+  els.roomImage.src = room.imagePath;
+  els.roomSpeechBubble.classList.add("hidden");
+  els.roomIntroOverlay.classList.add("hidden");
+  renderRoomTarget();
+}
+
+function renderRoomTarget() {
+  const room = roomState.data;
+  const step = room.targets[roomState.targetIndex];
+  els.roomChoices.replaceChildren();
+  els.roomChoices.classList.add("hidden");
+  delete els.roomChoices.dataset.answered;
+  els.roomNext.classList.add("hidden");
+  els.roomSentence.classList.remove("hidden");
+  els.roomSentence.textContent = "";
+  clearTimeout(roomEasterEggTimer);
+  els.roomSpeechBubble.classList.add("hidden");
+  const shownIndex = Math.min(roomState.targetIndex + 1, room.targets.length);
+  els.roomProgress.textContent = `${shownIndex} / ${room.targets.length}`;
+  if (!step) {
+    els.roomExit.classList.remove("hidden");
+    drawRoomHitAreas(null);
+    return;
+  }
+  els.roomExit.classList.add("hidden");
+  const promptText = step.type === "yesno" ? step.question : step.sentence;
+  const isFirstPerson = !room.noSentenceBubble && promptText.startsWith("I ");
+  if (isFirstPerson) {
+    els.roomSentence.classList.add("hidden");
+    positionRoomSpeechBubble(room.speechPoint);
+    els.roomSpeechBubble.classList.remove("hidden");
+    roomActiveSentenceEl = els.roomSpeechBubble;
+  } else {
+    roomActiveSentenceEl = els.roomSentence;
+  }
+  roomActiveSentenceEl.innerHTML = formatRoomSentence(promptText);
+  if (step.type === "choice" || step.type === "yesno") {
+    drawRoomHitAreas(null);
+    renderRoomChoiceButtons(step);
+  } else {
+    drawRoomHitAreas(step);
+    if (step.showIntro) showRoomIntro(step.introText || "FIND IT AND CLICK");
+  }
+}
+
+function renderRoomChoiceButtons(step) {
+  els.roomChoices.classList.remove("hidden");
+  step.options.forEach((option) => {
     const button = document.createElement("button");
-    button.className = "grade-button";
-    button.textContent = `GRADE ${grade}`;
-    button.addEventListener("click", () => selectGrade(grade));
+    button.className = "presence-choice";
+    button.textContent = option;
+    button.addEventListener("click", () => answerRoomChoice(button, option, step));
+    els.roomChoices.append(button);
+  });
+}
+
+function answerRoomChoice(button, option, step) {
+  if (els.roomChoices.dataset.answered) return;
+  els.roomChoices.dataset.answered = "true";
+  const isCorrect = option === step.answer;
+  [...els.roomChoices.children].forEach((choiceButton) => {
+    choiceButton.disabled = true;
+    if (choiceButton.textContent === step.answer) choiceButton.classList.add("correct");
+  });
+  if (!isCorrect) button.classList.add("wrong");
+  if (roomActiveSentenceEl.innerHTML.includes("____")) {
+    roomActiveSentenceEl.innerHTML = roomActiveSentenceEl.innerHTML.replace("____", `<span class="room-word">${step.answer}</span>`);
+  }
+  playFeedbackSound(isCorrect);
+  if (isCorrect && step.easterEggId) {
+    const egg = (roomState.data.easterEggs || []).find((e) => e.id === step.easterEggId);
+    if (egg) handleRoomEasterEgg(egg);
+  }
+  els.roomNext.classList.remove("hidden");
+}
+
+function formatRoomSentence(sentence) {
+  return sentence.replace(/"([^"]+)"/g, '<span class="room-word">$1</span>');
+}
+
+function showRoomIntro(text) {
+  els.roomIntroText.textContent = text;
+  els.roomIntroOverlay.classList.remove("hidden");
+}
+
+function positionRoomSpeechBubble(point) {
+  const room = roomState.data;
+  const anchor = point || { x: room.imageWidth / 2, y: room.imageHeight * 0.1 };
+  const growLeft = anchor.x / room.imageWidth > 0.5;
+  const lift = room.speechLift ?? 16;
+  els.roomSpeechBubble.style.left = `${(anchor.x / room.imageWidth) * 100}%`;
+  els.roomSpeechBubble.style.top = `${(anchor.y / room.imageHeight) * 100}%`;
+  els.roomSpeechBubble.style.transform = growLeft ? `translate(-104%, -${lift}%)` : `translate(0, -${lift}%)`;
+}
+
+function drawRoomHitAreas(target) {
+  const room = roomState.data;
+  const svg = els.roomHitSvg;
+  svg.setAttribute("viewBox", `0 0 ${room.imageWidth} ${room.imageHeight}`);
+  svg.classList.toggle("debug-outline", ROOM_DEBUG_HITAREAS);
+  svg.replaceChildren();
+  const NS = "http://www.w3.org/2000/svg";
+  if (target) {
+    const background = document.createElementNS(NS, "rect");
+    background.setAttribute("x", "0");
+    background.setAttribute("y", "0");
+    background.setAttribute("width", room.imageWidth);
+    background.setAttribute("height", room.imageHeight);
+    background.setAttribute("fill", "transparent");
+    background.addEventListener("click", () => handleRoomMiss());
+    svg.append(background);
+  }
+  if (!target) return;
+  target.hitAreas.forEach((area) => {
+    const shape = createRoomHitShape(area);
+    shape.classList.add("room-hit-shape");
+    shape.addEventListener("click", (event) => {
+      event.stopPropagation();
+      handleRoomHit();
+    });
+    svg.append(shape);
+  });
+}
+
+let roomEasterEggTimer = null;
+function handleRoomEasterEgg(egg) {
+  clearTimeout(roomEasterEggTimer);
+  positionRoomSpeechBubble(roomState.data.speechPoint);
+  els.roomSpeechBubble.textContent = egg.line;
+  els.roomSpeechBubble.classList.remove("hidden");
+  if (egg.sound) {
+    const playSound = () => new Audio(egg.sound).play().catch(() => {});
+    if (egg.soundDelay) setTimeout(playSound, egg.soundDelay);
+    else playSound();
+  }
+  roomEasterEggTimer = setTimeout(() => els.roomSpeechBubble.classList.add("hidden"), egg.duration || 10000);
+}
+
+function createRoomHitShape(area) {
+  const NS = "http://www.w3.org/2000/svg";
+  if (area.type === "polygon") {
+    const polygon = document.createElementNS(NS, "polygon");
+    polygon.setAttribute("points", area.points.map((point) => point.join(",")).join(" "));
+    return polygon;
+  }
+  const circle = document.createElementNS(NS, "circle");
+  circle.setAttribute("cx", area.x);
+  circle.setAttribute("cy", area.y);
+  circle.setAttribute("r", area.r);
+  return circle;
+}
+
+function handleRoomHit() {
+  if (roomState.locked) return;
+  roomState.locked = true;
+  playFeedbackSound(true);
+  showRoomFeedback("CORRECT!", true);
+  const room = roomState.data;
+  const step = room.targets[roomState.targetIndex];
+  const egg = step?.easterEggId && (room.easterEggs || []).find((e) => e.id === step.easterEggId);
+  if (egg) handleRoomEasterEgg(egg);
+  setTimeout(() => {
+    roomState.locked = false;
+    roomState.targetIndex += 1;
+    renderRoomTarget();
+  }, egg ? (egg.duration || 3000) : 900);
+}
+
+function handleRoomMiss() {
+  if (roomState.locked) return;
+  playFeedbackSound(false);
+  showRoomFeedback("TRY AGAIN!", false);
+}
+
+let roomFeedbackTimer = null;
+function showRoomFeedback(text, isCorrect) {
+  els.roomFeedback.textContent = text;
+  els.roomFeedback.className = `room-feedback ${isCorrect ? "correct" : "wrong"}`;
+  clearTimeout(roomFeedbackTimer);
+  requestAnimationFrame(() => els.roomFeedback.classList.add("show"));
+  roomFeedbackTimer = setTimeout(() => els.roomFeedback.classList.remove("show"), 700);
+}
+
+function exitCharacterRoom() {
+  const room = roomState.data;
+  els.roomExit.classList.add("hidden");
+  positionRoomSpeechBubble(room.speechPoint);
+  els.roomSpeechBubble.textContent = room.exitLine || "Bye!";
+  els.roomSpeechBubble.classList.remove("hidden");
+  if (room.exitSound) setTimeout(() => new Audio(room.exitSound).play().catch(() => {}), room.exitSoundDelay ?? 0);
+  setTimeout(returnToHubFromRoom, room.exitDelay || 2000);
+}
+
+function returnToHubFromRoom() {
+  const returnIndex = roomState?.returnIndex;
+  els.roomSpeechBubble.classList.add("hidden");
+  roomState = null;
+  hideAllScreens();
+  els.presentation.classList.remove("hidden");
+  if (returnIndex != null) state.index = returnIndex;
+  renderExample();
+}
+
+function renderGrades() {
+  const available = new Set(functionModules.map((module) => module.grade));
+  els.grades.replaceChildren(...[5, 6, 7, 8].map((grade) => {
+    const button = document.createElement("button");
+    const isAvailable = available.has(grade);
+    button.className = `grade-button grade-visual${isAvailable ? "" : " placeholder"}`;
+    button.dataset.value = grade;
+    button.innerHTML = `<img src="images/main/grade${grade}.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
+    if (isAvailable) button.addEventListener("click", () => selectGrade(grade));
     return button;
   }));
 }
 
+function setSetupStep(step) {
+  document.getElementById("setupCard").dataset.step = step;
+}
+
 function selectGrade(grade) {
   enterFullscreen();
+  if (state.grade === grade) { setSetupStep("unit"); return; }
   state.grade = grade;
   state.unit = null;
   state.module = null;
-  [...els.grades.children].forEach((button) => button.classList.toggle("selected", button.textContent === `GRADE ${grade}`));
+  [...els.grades.children].forEach((button) => button.classList.toggle("selected", Number(button.dataset.value) === grade));
   renderUnits();
   renderFunctions();
   updateSetup();
+  setSetupStep("unit");
 }
 
 function renderUnits() {
@@ -310,26 +547,29 @@ function renderUnits() {
   els.units.replaceChildren(...units.map((unit) => {
     const button = document.createElement("button");
     button.className = "grade-button";
-    button.textContent = `UNIT ${unit}`;
+    button.dataset.value = unit;
+    button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong>`;
     button.addEventListener("click", () => selectUnit(unit));
     return button;
   }));
 }
 
 function selectUnit(unit) {
+  if (state.unit === unit) { setSetupStep("function"); return; }
   state.unit = unit;
   state.module = null;
-  [...els.units.children].forEach((button) => button.classList.toggle("selected", button.textContent === `UNIT ${unit}`));
+  [...els.units.children].forEach((button) => button.classList.toggle("selected", Number(button.dataset.value) === unit));
   renderFunctions();
   updateSetup();
+  setSetupStep("function");
 }
 
 function renderFunctions() {
   const modules = state.grade && state.unit ? getFunctionsForGradeAndUnit(state.grade, state.unit) : [];
-  els.functions.replaceChildren(...modules.map((module) => {
+  els.functions.replaceChildren(...modules.map((module, index) => {
     const button = document.createElement("button");
     button.className = "function-button";
-    button.innerHTML = `<span>GRAMMAR FUNCTION</span><strong>${module.title}</strong>${module.description ? `<small>${module.description}</small>` : ""}`;
+    button.innerHTML = `<span>GRAMMAR FUNCTION ${String(index + 1).padStart(2, "0")}</span><strong>${module.title}</strong>${module.description ? `<small>${module.description}</small>` : ""}<em class="fn-arrow" aria-hidden="true">→</em>`;
     button.addEventListener("click", () => selectFunction(module));
     return button;
   }));
@@ -401,6 +641,7 @@ function renderFunctionIntro() {
 function renderExample() {
   state.showingFunctionIntro = false;
   clearPresenceHotspots();
+  clearVisualAnnotations();
   els.functionIntro.classList.add("hidden");
   els.exampleCard.classList.remove("hidden");
   const example = state.module.sentences[state.index];
@@ -484,7 +725,19 @@ function renderExample() {
     els.image.className = example.imageClass || "";
     els.image.alt = example.visualBrief;
     els.image.src = example.imagePath;
-    if (isPresenceSlide) requestAnimationFrame(positionPresenceHotspots);
+    els.image.style.aspectRatio = example.imageAspect || "";
+    els.image.style.objectFit = example.imageFit || "";
+    updateVisualAnnotations(example);
+    if (isPresenceSlide) {
+      const firstVisibleRow = els.presenceView.querySelector(".presence-row:not(.hidden)");
+      if (firstVisibleRow?.dataset.imagePathOnShow || firstVisibleRow?.dataset.speechText || firstVisibleRow?.dataset.speakerName) {
+        applyPresenceRowImage(firstVisibleRow);
+      }
+    }
+    if (isPresenceSlide) {
+      requestAnimationFrame(positionPresenceHotspots);
+      requestAnimationFrame(positionPresenceHoverNameTag);
+    }
   }
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
   const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;
@@ -555,8 +808,9 @@ function buildComparisonLayout(comp, hl) {
   return layout;
 }
 
-function openPresenceOverlay({ question, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, overlaySize, revealMode }) {
+function openPresenceOverlay({ question, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, overlaySize, revealMode, steps }) {
   const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+  els.presenceOverlay.querySelector(".presence-overlay-continue")?.remove();
   if (comparison) {
     els.presenceOverlay.classList.add("comparison-mode");
     els.presenceOverlayQuestion.innerHTML = "";
@@ -566,6 +820,36 @@ function openPresenceOverlay({ question, imagePath, sentence, sentences, interac
     return;
   }
   els.presenceOverlay.classList.remove("comparison-mode");
+  if (steps?.length) {
+    let stepIndex = 0;
+    const renderStep = () => {
+      const step = steps[stepIndex];
+      els.presenceOverlayQuestion.innerHTML = highlight(step.question || question || "");
+      els.presenceOverlayImage.classList.toggle("hidden", !step.imagePath);
+      if (step.imagePath) {
+        els.presenceOverlayImage.src = step.imagePath;
+        els.presenceOverlayImage.alt = step.question || question || "";
+        els.presenceOverlayImage.style.aspectRatio = step.imageAspect || imageAspect || "";
+      }
+      els.presenceOverlaySentence.innerHTML = highlight(step.sentence || "");
+    };
+    renderStep();
+    els.presenceOverlay.querySelector(".presence-overlay-card").classList.toggle("overlay-lg", !!overlaySize);
+    if (steps.length > 1) {
+      const continueButton = document.createElement("button");
+      continueButton.type = "button";
+      continueButton.className = "primary-button presence-overlay-continue";
+      continueButton.textContent = "CONTINUE";
+      continueButton.addEventListener("click", () => {
+        stepIndex += 1;
+        renderStep();
+        if (stepIndex >= steps.length - 1) continueButton.remove();
+      });
+      els.presenceOverlay.querySelector(".presence-overlay-card").append(continueButton);
+    }
+    els.presenceOverlay.classList.remove("hidden");
+    return;
+  }
   els.presenceOverlayQuestion.innerHTML = highlight(question || "");
   els.presenceOverlayImage.classList.toggle("hidden", !imagePath);
   if (imagePath) {
@@ -636,6 +920,240 @@ function appendPresenceParts(target, parts = []) {
   target.replaceChildren(...createPresenceParts(parts));
 }
 
+function createCategoryHubOptionButton(item) {
+  const button = document.createElement("button");
+  button.className = "count-noun-item";
+  button.type = "button";
+  button.textContent = item.label;
+  button.addEventListener("click", () => {
+    clearCountNounRepeatVisual();
+    els.fallback.classList.add("hidden");
+    if (item.repeatImagePath && item.repeatCount) {
+      els.image.classList.add("hidden");
+      showCountNounRepeatVisual(item.repeatImagePath, item.repeatCount, item.visualBrief || item.label);
+    } else {
+      els.image.classList.remove("hidden");
+      els.image.src = item.imagePath;
+      els.image.alt = item.visualBrief || item.label;
+    }
+    els.brief.textContent = item.visualBrief || item.label;
+    updateCountNounCaption(item.caption || "");
+    document.querySelectorAll(".count-noun-item").forEach((option) => option.classList.remove("active"));
+    button.classList.add("active");
+  });
+  return button;
+}
+
+function highlightCountNounCaption(text = "") {
+  return text.replace(/<(how many|how much|is there|are there|some|any|a few|many|a little|much|a lot of|is|are|isn't|aren't)>/gi, '<span class="presence-yellow">$1</span>');
+}
+
+function updateCountNounCaption(text = "") {
+  clearCountNounCaption();
+  if (!text) return;
+  const caption = document.createElement("div");
+  caption.id = "countNounVisualCaption";
+  caption.className = "count-noun-visual-caption";
+  if (typeof text === "object") {
+    caption.classList.add("stacked");
+    const question = document.createElement("p");
+    question.innerHTML = highlightCountNounCaption(text.question || "");
+    const answer = document.createElement("p");
+    answer.className = "hidden";
+    answer.innerHTML = highlightCountNounCaption(text.answer || "");
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "count-noun-caption-next";
+    next.textContent = "CONTINUE";
+    next.addEventListener("click", () => {
+      answer.classList.remove("hidden");
+      next.remove();
+    });
+    caption.append(question, next, answer);
+  } else {
+    caption.innerHTML = highlightCountNounCaption(text);
+  }
+  els.exampleVisualPanel.append(caption);
+}
+
+function clearCountNounRepeatVisual() {
+  document.getElementById("countNounRepeatVisual")?.remove();
+}
+
+function showCountNounRepeatVisual(imagePath, count, altText = "") {
+  clearCountNounRepeatVisual();
+  const wrap = document.createElement("div");
+  wrap.id = "countNounRepeatVisual";
+  wrap.className = "count-noun-repeat-visual";
+  wrap.setAttribute("aria-label", altText);
+  Array.from({ length: count }).forEach((_, index) => {
+    const img = document.createElement("img");
+    img.src = imagePath;
+    img.alt = index === 0 ? altText : "";
+    wrap.append(img);
+  });
+  els.exampleVisualPanel.append(wrap);
+}
+
+function clearExerciseRepeatVisual() {
+  document.getElementById("exerciseRepeatVisual")?.remove();
+}
+
+function clearExerciseVisualCaption() {
+  document.getElementById("exerciseVisualCaption")?.remove();
+}
+
+function showExerciseVisualCaption(html = "") {
+  clearExerciseVisualCaption();
+  if (!html) return;
+  const caption = document.createElement("div");
+  caption.id = "exerciseVisualCaption";
+  caption.className = "exercise-visual-caption";
+  caption.innerHTML = html;
+  els.exerciseVisualPanel.append(caption);
+}
+
+function showExerciseRepeatVisual(imagePath, count, altText = "") {
+  clearExerciseRepeatVisual();
+  const wrap = document.createElement("div");
+  wrap.id = "exerciseRepeatVisual";
+  wrap.className = "exercise-repeat-visual";
+  wrap.setAttribute("aria-label", altText);
+  Array.from({ length: count }).forEach((_, index) => {
+    const img = document.createElement("img");
+    img.src = imagePath;
+    img.alt = index === 0 ? altText : "";
+    wrap.append(img);
+  });
+  els.exerciseVisualPanel.append(wrap);
+}
+
+function renderCategoryHub(example) {
+  const hub = example.categoryHub;
+  if (!hub) return false;
+  updateCountNounCaption("");
+  const showCategoryHoverImage = (imagePath, visualBrief = "") => {
+    const targetImage = imagePath || example.imagePath;
+    if (!targetImage) return;
+    clearCountNounRepeatVisual();
+    els.fallback.classList.add("hidden");
+    els.image.classList.remove("hidden");
+    els.image.src = targetImage;
+    els.image.alt = visualBrief || "Category visual";
+    els.brief.textContent = visualBrief || "Category visual";
+    updateCountNounCaption("");
+  };
+  const wrap = document.createElement("div");
+  wrap.className = "count-noun-hub";
+
+  const countableSide = document.createElement("div");
+  countableSide.className = "count-noun-side countable-side";
+  const countableOptions = document.createElement("div");
+  countableOptions.className = "count-noun-options hidden";
+  (hub.countable || []).forEach((item) => countableOptions.append(createCategoryHubOptionButton(item)));
+  const countableButton = document.createElement("button");
+  countableButton.className = "count-noun-main countable-main";
+  countableButton.type = "button";
+  countableButton.textContent = "COUNTABLE";
+  countableButton.addEventListener("click", () => {
+    countableOptions.classList.remove("hidden");
+    uncountableOptions.classList.add("hidden");
+    countableButton.classList.add("active");
+    uncountableButton.classList.remove("active");
+    showCategoryHoverImage(hub.countableHoverImage, "Countable nouns.");
+  });
+  countableSide.append(countableOptions, countableButton);
+
+  const uncountableSide = document.createElement("div");
+  uncountableSide.className = "count-noun-side uncountable-side";
+  const uncountableButton = document.createElement("button");
+  uncountableButton.className = "count-noun-main uncountable-main";
+  uncountableButton.type = "button";
+  uncountableButton.textContent = "UNCOUNTABLE";
+  uncountableButton.addEventListener("click", () => {
+    uncountableOptions.classList.remove("hidden");
+    countableOptions.classList.add("hidden");
+    uncountableButton.classList.add("active");
+    countableButton.classList.remove("active");
+    showCategoryHoverImage(hub.uncountableHoverImage, "Uncountable nouns.");
+  });
+  const uncountableOptions = document.createElement("div");
+  uncountableOptions.className = "count-noun-options hidden";
+  (hub.uncountable || []).forEach((item) => uncountableOptions.append(createCategoryHubOptionButton(item)));
+  uncountableSide.append(uncountableButton, uncountableOptions);
+
+  wrap.append(countableSide, uncountableSide);
+  els.presenceView.append(wrap);
+  return true;
+}
+
+function highlightPieText(text = "") {
+  return text.replace(/<(how many|how much|is there|are there|some|any)>/gi, '<span class="presence-yellow">$1</span>');
+}
+
+function renderPieDialogue(example) {
+  const data = example.pieDialogue;
+  if (!data) return false;
+  const wrap = document.createElement("div");
+  wrap.className = "pie-dialogue-panel";
+  const bubbles = document.createElement("div");
+  bubbles.className = "pie-bubble-stack";
+  const topBubble = document.createElement("p");
+  topBubble.className = "pie-speech-bubble top hidden";
+  const bottomBubble = document.createElement("p");
+  bottomBubble.className = "pie-speech-bubble bottom hidden";
+  const continueButton = document.createElement("button");
+  continueButton.type = "button";
+  continueButton.className = "primary-button pie-dialogue-next";
+  continueButton.textContent = "CONTINUE";
+  bubbles.append(topBubble, continueButton, bottomBubble);
+  const choices = document.createElement("div");
+  choices.className = "pie-inline-choices hidden";
+  wrap.append(bubbles, choices);
+  els.presenceView.append(wrap);
+
+  const dialogues = data.dialogues || [];
+  let dialogueIndex = 0;
+  let phase = "question";
+  const showQuestion = () => {
+    const current = dialogues[dialogueIndex];
+    topBubble.innerHTML = highlightPieText(current.question);
+    topBubble.classList.remove("hidden");
+    bottomBubble.classList.add("hidden");
+    bottomBubble.textContent = "";
+    continueButton.classList.remove("hidden");
+    phase = "answer";
+  };
+  const showAnswer = () => {
+    const current = dialogues[dialogueIndex];
+    bottomBubble.innerHTML = highlightPieText(current.answer);
+    bottomBubble.classList.remove("hidden");
+    phase = "next-question";
+  };
+  const showInlineChoices = () => {
+    bubbles.classList.add("hidden");
+    choices.classList.remove("hidden");
+    choices.replaceChildren(...(data.choices || []).map((sentence) => {
+      const p = document.createElement("p");
+      p.className = "inline-choice-prompt pie-inline-choice";
+      p.append(...createInlineChoiceParts(sentence.segments || []));
+      return p;
+    }));
+  };
+
+  continueButton.addEventListener("click", () => {
+    if (phase === "answer") {
+      showAnswer();
+      return;
+    }
+    dialogueIndex++;
+    if (dialogueIndex < dialogues.length) showQuestion();
+    else showInlineChoices();
+  });
+  showQuestion();
+  return true;
+}
+
 function renderPresenceSlide(example) {
   els.presenceView.replaceChildren();
   if (example.kicker) {
@@ -657,6 +1175,8 @@ function renderPresenceSlide(example) {
     note.textContent = example.note;
     els.presenceView.append(note);
   }
+  if (renderCategoryHub(example)) return;
+  if (renderPieDialogue(example)) return;
   const list = document.createElement("div");
   list.className = `presence-list ${example.listClass || ""}`;
   const shouldReplaceCurrentItem = Boolean(example.replaceCurrentItem || (state.module?.id === "object-pronouns" && !example.showAllItems));
@@ -743,10 +1263,33 @@ function renderPresenceSlide(example) {
         }
       });
     }
+    if (item.room) {
+      row.classList.add("clickable");
+      row.tabIndex = 0;
+      row.setAttribute("role", "button");
+      row.addEventListener("click", () => openCharacterRoom(item.room, state.index));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openCharacterRoom(item.room, state.index);
+        }
+      });
+    }
+    if (item.nameTag) {
+      const label = item.nameTag.label || (item.parts || []).map((part) => part.text || "").join("").trim();
+      const point = { ...item.nameTag, label };
+      row.addEventListener("mouseenter", () => showPresenceHoverNameTag(point));
+      row.addEventListener("focus", () => showPresenceHoverNameTag(point));
+      row.addEventListener("mouseleave", clearPresenceHoverNameTag);
+      row.addEventListener("blur", clearPresenceHoverNameTag);
+    }
     if (index > 0 && !example.showAllItems) row.classList.add("hidden");
     row.dataset.presenceIndex = index;
     if (item.clearPreviousOnShow) row.dataset.clearPreviousOnShow = "true";
     if (item.titleOverride) row.dataset.titleOverride = item.titleOverride;
+    if (item.imagePathOnShow) row.dataset.imagePathOnShow = item.imagePathOnShow;
+    if (item.speechText) row.dataset.speechText = item.speechText;
+    if (item.speakerName) row.dataset.speakerName = item.speakerName;
     if (example.hotspotMode && item.hotspots) {
       row.classList.add("hotspot-step", "pending-hotspot");
       row.dataset.hotspots = JSON.stringify(item.hotspots);
@@ -756,8 +1299,19 @@ function renderPresenceSlide(example) {
     promptLine.className = `presence-prompt-line ${item.kind === "replace-choice" ? "replace-prompt-line" : ""}`;
     if (item.kind === "inline-choice") {
       const prompt = document.createElement("p");
-      prompt.className = "presence-prompt inline-choice-prompt";
-      prompt.append(...createInlineChoiceParts(item.segments || []));
+      prompt.className = `presence-prompt inline-choice-prompt ${item.speakerImage ? "speaker-line" : ""}`;
+      if (item.speakerImage) {
+        const head = document.createElement("img");
+        head.className = "speaker-head";
+        head.src = item.speakerImage;
+        head.alt = item.speaker || "";
+        const textWrap = document.createElement("span");
+        textWrap.className = "speaker-line-text";
+        textWrap.append(...createInlineChoiceParts(item.segments || []));
+        prompt.append(head, textWrap);
+      } else {
+        prompt.append(...createInlineChoiceParts(item.segments || []));
+      }
       promptLine.append(prompt);
     } else if (item.kind === "replace-choice") {
       const source = document.createElement("p");
@@ -770,6 +1324,18 @@ function renderPresenceSlide(example) {
       target.className = "presence-prompt replace-target";
       target.innerHTML = renderPresenceParts(item.targetParts || []);
       promptLine.append(source, arrow, target);
+    } else if (item.speakerImage) {
+      const prompt = document.createElement("p");
+      prompt.className = "presence-prompt speaker-line";
+      const head = document.createElement("img");
+      head.className = "speaker-head";
+      head.src = item.speakerImage;
+      head.alt = item.speaker || "";
+      const textWrap = document.createElement("span");
+      textWrap.className = "speaker-line-text";
+      appendPresenceParts(textWrap, item.parts || [{ text: item.text || "" }]);
+      prompt.append(head, textWrap);
+      promptLine.append(prompt);
     } else {
       const prompt = document.createElement("p");
       prompt.className = "presence-prompt";
@@ -794,7 +1360,7 @@ function renderPresenceSlide(example) {
     if (item.answerParts) {
       const answer = document.createElement("p");
       answer.className = "presence-answer";
-      answer.innerHTML = renderPresenceParts(item.answerParts);
+      appendPresenceParts(answer, item.answerParts);
       if (item.answerReveal) {
         answer.classList.add("hidden");
         const reveal = document.createElement("button");
@@ -828,6 +1394,10 @@ function renderPresenceSlide(example) {
     list.append(row);
   });
   els.presenceView.append(list);
+  const firstVisibleRow = list.querySelector(".presence-row:not(.hidden)");
+  if (firstVisibleRow?.dataset.imagePathOnShow || firstVisibleRow?.dataset.speechText || firstVisibleRow?.dataset.speakerName) {
+    applyPresenceRowImage(firstVisibleRow);
+  }
   if (example.hotspotMode) {
     const firstHotspotRow = list.querySelector(".presence-row:not(.hidden)[data-hotspots]");
     showPresenceHotspots(readRowHotspots(firstHotspotRow));
@@ -993,6 +1563,41 @@ function clearPresenceHotspots() {
   document.getElementById("presenceHotspotLayer")?.remove();
 }
 
+function clearPresenceHoverNameTag() {
+  presenceHoverNameTagPoint = null;
+  document.getElementById("visualHoverNameTag")?.remove();
+}
+
+function clearCountNounCaption() {
+  document.getElementById("countNounVisualCaption")?.remove();
+}
+
+function clearVisualAnnotations() {
+  document.getElementById("visualSpeechBubble")?.remove();
+  document.getElementById("visualNameCaption")?.remove();
+  clearPresenceHoverNameTag();
+  clearCountNounCaption();
+  clearCountNounRepeatVisual();
+}
+
+function updateVisualAnnotations({ speechText = "", speakerName = "" } = {}) {
+  clearVisualAnnotations();
+  if (speechText) {
+    const bubble = document.createElement("div");
+    bubble.id = "visualSpeechBubble";
+    bubble.className = "visual-speech-bubble";
+    bubble.textContent = speechText;
+    els.exampleVisualPanel.append(bubble);
+  }
+  if (speakerName) {
+    const caption = document.createElement("div");
+    caption.id = "visualNameCaption";
+    caption.className = "visual-name-caption";
+    caption.textContent = speakerName;
+    els.exampleVisualPanel.append(caption);
+  }
+}
+
 function showPresenceHotspots(points = []) {
   clearPresenceHotspots();
   if (!points.length || els.image.classList.contains("hidden")) return;
@@ -1023,10 +1628,46 @@ function positionPresenceHotspots() {
   });
 }
 
+function showPresenceHoverNameTag(point) {
+  if (!point || typeof point.x !== "number" || typeof point.y !== "number") return;
+  clearPresenceHoverNameTag();
+  presenceHoverNameTagPoint = point;
+  const tag = document.createElement("div");
+  tag.id = "visualHoverNameTag";
+  tag.className = "visual-hover-nametag";
+  tag.textContent = point.label || "";
+  els.exampleVisualPanel.append(tag);
+  requestAnimationFrame(positionPresenceHoverNameTag);
+}
+
+function positionPresenceHoverNameTag() {
+  const tag = document.getElementById("visualHoverNameTag");
+  if (!tag || !presenceHoverNameTagPoint || els.image.classList.contains("hidden")) return;
+  const imageRect = els.image.getBoundingClientRect();
+  const panelRect = els.exampleVisualPanel.getBoundingClientRect();
+  const baseWidth = presenceHoverNameTagPoint.baseWidth || 500;
+  const baseHeight = presenceHoverNameTagPoint.baseHeight || 500;
+  tag.style.left = `${imageRect.left - panelRect.left + (presenceHoverNameTagPoint.x / baseWidth) * imageRect.width}px`;
+  tag.style.top = `${imageRect.top - panelRect.top + (presenceHoverNameTagPoint.y / baseHeight) * imageRect.height}px`;
+}
+
 function applyPresenceRowTitleOverride(row) {
   if (!row?.dataset.titleOverride) return;
   const title = els.presenceView.querySelector(".presence-title");
   if (title) title.textContent = row.dataset.titleOverride;
+}
+
+function applyPresenceRowImage(row) {
+  if (!row) return;
+  if (row.dataset.imagePathOnShow) {
+    els.fallback.classList.add("hidden");
+    els.image.classList.remove("hidden");
+    els.image.src = row.dataset.imagePathOnShow;
+  }
+  updateVisualAnnotations({
+    speechText: row.dataset.speechText || "",
+    speakerName: row.dataset.speakerName || ""
+  });
 }
 
 function revealPresenceHotspotStep(list, currentIndex) {
@@ -1059,6 +1700,7 @@ function revealPresenceHotspotStep(list, currentIndex) {
   }
   nextRow.classList.remove("hidden");
   applyPresenceRowTitleOverride(nextRow);
+  applyPresenceRowImage(nextRow);
   showPresenceHotspots(readRowHotspots(nextRow));
 }
 
@@ -1073,6 +1715,7 @@ function showNextPresenceRow(list, currentIndex) {
   }
   nextRow.classList.remove("hidden");
   applyPresenceRowTitleOverride(nextRow);
+  applyPresenceRowImage(nextRow);
   showPresenceHotspots(readRowHotspots(nextRow));
   const nextButton = list.querySelector(`[data-presence-index="${currentIndex}"] .presence-next`);
   if (nextButton) nextButton.classList.add("hidden");
@@ -1091,6 +1734,10 @@ function answerPresenceChoice(button, choices, answer, row) {
     choiceButton.disabled = true;
     if (choiceButton.textContent === answer) choiceButton.classList.add("correct");
   });
+  const prompt = row.querySelector(".presence-prompt");
+  if (prompt?.textContent.includes("____")) {
+    prompt.innerHTML = prompt.innerHTML.replace("____", `<span class="presence-yellow">${answer}</span>`);
+  }
   if (!isCorrect) button.classList.add("wrong");
   enablePresenceNext(row);
   playFeedbackSound(isCorrect);
@@ -1148,6 +1795,7 @@ function returnToSetup() {
   clearTimeout(state.pronounMemoryTimer);
   clearTimeout(state.pronounMemoryAnswerTimer);
   clearTimeout(state.pronounSnapTimer);
+  clearInterval(state.pronounSnapTotalTimer);
   clearTimeout(state.timeSetterAdvanceTimer);
   hideAllScreens();
   els.setup.classList.remove("hidden");
@@ -1183,6 +1831,7 @@ function openExerciseMenu() {
       "true-false-grid": "Mark every school rule as true or false.",
       "pronoun-memory": "Memorize the pictures, then choose the pronouns in order.",
       "pronoun-snap": "Choose the pronoun before each Unit 1 + 2 picture changes.",
+      "quantity-snap": "Choose the quantity before the picture changes.",
       "time-setter": "Set the digital clock to match the target time.",
       "fill-blank": "Tap each blank to reveal the correct answer.",
       "mistake-correct-it": "Decide if the sentence is correct. If not, find the mistake.",
@@ -1221,6 +1870,9 @@ function startSelectedExercise(exercise) {
       startPronounMemory(exercise);
       return;
     case "pronoun-snap":
+      startPronounSnap(exercise);
+      return;
+    case "quantity-snap":
       startPronounSnap(exercise);
       return;
     case "time-setter":
@@ -2121,33 +2773,75 @@ function showPronounMemoryResult(isComplete, timedOut = false) {
 
 function startPronounSnap(exercise) {
   clearTimeout(state.pronounSnapTimer);
+  clearInterval(state.pronounSnapTotalTimer);
   state.pronounSnapExercise = exercise;
-  state.pronounSnapRounds = shuffle(exercise.rounds).slice(0, Math.min(exercise.roundCount || exercise.rounds.length, exercise.rounds.length));
+  state.pronounSnapRounds = exercise.totalDurationMs
+    ? shuffle(exercise.rounds)
+    : shuffle(exercise.rounds).slice(0, Math.min(exercise.roundCount || exercise.rounds.length, exercise.rounds.length));
   state.pronounSnapIndex = 0;
   state.pronounSnapScore = 0;
   state.pronounSnapStreak = 0;
   state.pronounSnapBestStreak = 0;
+  state.pronounSnapAnswered = 0;
+  state.pronounSnapDeadline = exercise.totalDurationMs ? Date.now() + exercise.totalDurationMs : 0;
   hideAllScreens();
   els.pronounSnap.classList.remove("hidden");
-  els.pronounSnapGrade.textContent = `GRADE ${state.grade} · UNITS ${(exercise.units || [state.module.unit]).join(" + ")}`;
+  const unitLabel = exercise.units ? `UNITS ${exercise.units.join(" + ")}` : `UNIT ${state.module.unit}`;
+  els.pronounSnapGrade.textContent = `GRADE ${state.grade} · ${unitLabel}`;
+  els.pronounSnapGrade.nextElementSibling.textContent = exercise.title || "SNAP";
+  const instruction = els.pronounSnapCard.querySelector(".reference-type");
+  if (instruction) instruction.textContent = exercise.instruction || "CHOOSE THE ANSWER BEFORE THE PICTURE CHANGES.";
+  els.pronounSnapChoices.classList.toggle("quantity-snap-choices", exercise.activity === "quantity-snap");
+  const labels = exercise.labels || [
+    { label: "HE", answer: "he" },
+    { label: "SHE", answer: "she" },
+    { label: "IT", answer: "it" },
+    { label: "THEY", answer: "they" }
+  ];
+  els.pronounSnapChoices.replaceChildren(...labels.map((label) => {
+    const answer = typeof label === "string" ? label : label.answer || label.value || label.label;
+    const text = typeof label === "string" ? label : label.label || answer;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.snapAnswer = answer;
+    button.textContent = text;
+    return button;
+  }));
+  setupPronounSnapTotalTimer();
   renderPronounSnapRound();
 }
 
 function renderPronounSnapRound() {
   clearTimeout(state.pronounSnapTimer);
+  if (state.pronounSnapExercise.totalDurationMs && Date.now() >= state.pronounSnapDeadline) {
+    showPronounSnapResult();
+    return;
+  }
+  if (state.pronounSnapExercise.totalDurationMs && state.pronounSnapIndex >= state.pronounSnapRounds.length) {
+    state.pronounSnapRounds = shuffle(state.pronounSnapExercise.rounds);
+    state.pronounSnapIndex = 0;
+  }
   const round = state.pronounSnapRounds[state.pronounSnapIndex];
   if (!round) {
     showPronounSnapResult();
     return;
   }
   state.pronounSnapLocked = false;
-  els.pronounSnapProgress.textContent = `${state.pronounSnapIndex + 1} / ${state.pronounSnapRounds.length}`;
-  els.pronounSnapTimer.textContent = "2 SECONDS";
+  els.pronounSnapProgress.textContent = state.pronounSnapExercise.totalDurationMs
+    ? `${state.pronounSnapAnswered} ANSWERED`
+    : `${state.pronounSnapIndex + 1} / ${state.pronounSnapRounds.length}`;
+  els.pronounSnapTimer.textContent = `${Math.round((state.pronounSnapExercise.roundDurationMs || 2000) / 1000)} SECONDS`;
   els.pronounSnapScore.textContent = state.pronounSnapScore;
   els.pronounSnapStreak.textContent = state.pronounSnapStreak;
   els.pronounSnapCard.classList.remove("snap-correct", "snap-wrong");
-  els.pronounSnapImage.src = round.imagePath;
-  els.pronounSnapImage.alt = "Unit 1 vocabulary visual";
+  els.pronounSnapImage.classList.toggle("hidden", Boolean(round.repeatImagePath));
+  clearPronounSnapRepeatVisual();
+  if (round.repeatImagePath && round.repeatCount) {
+    showPronounSnapRepeatVisual(round.repeatImagePath, round.repeatCount, round.visualBrief || round.answer);
+  } else {
+    els.pronounSnapImage.src = round.imagePath;
+    els.pronounSnapImage.alt = round.visualBrief || "Snap visual";
+  }
   [...els.pronounSnapChoices.children].forEach((button) => {
     button.disabled = false;
     button.classList.remove("correct", "wrong");
@@ -2155,12 +2849,18 @@ function renderPronounSnapRound() {
   state.pronounSnapTimer = setTimeout(() => advancePronounSnap(false), state.pronounSnapExercise.roundDurationMs);
 }
 
-function answerPronounSnap(pronoun, button) {
+function answerPronounSnap(answer, button) {
   if (state.pronounSnapLocked) return;
   state.pronounSnapLocked = true;
   clearTimeout(state.pronounSnapTimer);
-  const isCorrect = pronoun === state.pronounSnapRounds[state.pronounSnapIndex].pronoun;
+  const round = state.pronounSnapRounds[state.pronounSnapIndex];
+  const expected = round.answer || round.pronoun;
+  const isCorrect = answer === expected;
   button.classList.add(isCorrect ? "correct" : "wrong");
+  [...els.pronounSnapChoices.children].forEach((choiceButton) => {
+    choiceButton.disabled = true;
+    if (choiceButton.dataset.snapAnswer === expected || choiceButton.dataset.pronoun === expected) choiceButton.classList.add("correct");
+  });
   els.pronounSnapCard.classList.add(isCorrect ? "snap-correct" : "snap-wrong");
   playFeedbackSound(isCorrect);
   advancePronounSnap(isCorrect, 430);
@@ -2175,16 +2875,86 @@ function advancePronounSnap(isCorrect, delay = 0) {
   } else {
     state.pronounSnapStreak = 0;
   }
+  state.pronounSnapAnswered += 1;
   state.pronounSnapIndex += 1;
+  if (state.pronounSnapExercise.totalDurationMs && Date.now() >= state.pronounSnapDeadline) {
+    showPronounSnapResult();
+    return;
+  }
   state.pronounSnapTimer = setTimeout(renderPronounSnapRound, delay);
 }
 
 function showPronounSnapResult() {
   clearTimeout(state.pronounSnapTimer);
+  clearInterval(state.pronounSnapTotalTimer);
+  clearPronounSnapRepeatVisual();
+  hidePronounSnapTotalTimer();
   els.pronounSnap.classList.add("hidden");
+  const resultKicker = els.pronounSnapResult.querySelector(".brand-kicker");
+  if (resultKicker) resultKicker.textContent = `${state.pronounSnapExercise.title || "SNAP"} COMPLETE`;
   els.pronounSnapResultScore.textContent = state.pronounSnapScore;
-  els.pronounSnapResultMessage.textContent = `Best streak: ${state.pronounSnapBestStreak}. ${state.pronounSnapRounds.length} Unit 1 + 2 visuals completed.`;
+  const completedText = state.pronounSnapExercise.totalDurationMs
+    ? `${state.pronounSnapAnswered} visuals completed in ${Math.round(state.pronounSnapExercise.totalDurationMs / 1000)} seconds.`
+    : `${state.pronounSnapRounds.length} visuals completed.`;
+  els.pronounSnapResultMessage.textContent = `Best streak: ${state.pronounSnapBestStreak}. ${completedText}`;
   els.pronounSnapResult.classList.remove("hidden");
+}
+
+function setupPronounSnapTotalTimer() {
+  const timer = getPronounSnapTotalTimer();
+  if (!state.pronounSnapExercise.totalDurationMs) {
+    timer.classList.add("hidden");
+    return;
+  }
+  timer.classList.remove("hidden");
+  updatePronounSnapTotalTimer();
+  state.pronounSnapTotalTimer = setInterval(updatePronounSnapTotalTimer, 200);
+}
+
+function getPronounSnapTotalTimer() {
+  let timer = document.getElementById("pronounSnapTotalTimer");
+  if (timer) return timer;
+  timer = document.createElement("div");
+  timer.id = "pronounSnapTotalTimer";
+  timer.className = "snap-total-timer hidden";
+  timer.innerHTML = '<span class="snap-total-timer-emoji" aria-hidden="true">⌛</span><strong id="pronounSnapTotalSeconds">45</strong>';
+  els.pronounSnapGrade.parentElement.after(timer);
+  return timer;
+}
+
+function updatePronounSnapTotalTimer() {
+  const timer = getPronounSnapTotalTimer();
+  const secondsEl = document.getElementById("pronounSnapTotalSeconds");
+  const totalMs = state.pronounSnapExercise.totalDurationMs || 0;
+  const remainingMs = Math.max(0, state.pronounSnapDeadline - Date.now());
+  const remainingSeconds = Math.ceil(remainingMs / 1000);
+  const progress = totalMs ? remainingMs / totalMs : 0;
+  timer.style.setProperty("--snap-total-angle", `${progress * 360}deg`);
+  if (secondsEl) secondsEl.textContent = remainingSeconds;
+  if (remainingMs <= 0 && !els.pronounSnap.classList.contains("hidden")) showPronounSnapResult();
+}
+
+function hidePronounSnapTotalTimer() {
+  document.getElementById("pronounSnapTotalTimer")?.classList.add("hidden");
+}
+
+function clearPronounSnapRepeatVisual() {
+  document.getElementById("pronounSnapRepeatVisual")?.remove();
+}
+
+function showPronounSnapRepeatVisual(imagePath, count, altText = "") {
+  clearPronounSnapRepeatVisual();
+  const wrap = document.createElement("div");
+  wrap.id = "pronounSnapRepeatVisual";
+  wrap.className = "pronoun-snap-repeat-visual";
+  wrap.setAttribute("aria-label", altText);
+  Array.from({ length: count }).forEach((_, index) => {
+    const img = document.createElement("img");
+    img.src = imagePath;
+    img.alt = index === 0 ? altText : "";
+    wrap.append(img);
+  });
+  els.pronounSnapCard.insertBefore(wrap, els.pronounSnapChoices);
 }
 
 function shuffle(items) {
@@ -2930,6 +3700,9 @@ function showActivityMatchResult() {
 function renderExerciseQuestion() {
   const question = state.exerciseQuestions[state.exerciseIndex];
   const total = state.exerciseQuestions.length;
+  clearExerciseRepeatVisual();
+  clearExerciseVisualCaption();
+  clearExerciseImageFocus();
   els.exerciseGrade.textContent = `GRADE ${state.grade}`;
   els.exerciseTitle.textContent = state.exercise.title;
   els.exerciseProgress.textContent = `${state.exerciseIndex + 1} / ${total}`;
@@ -2943,6 +3716,7 @@ function renderExerciseQuestion() {
   els.exerciseVisualPanel.classList.toggle("hidden", textOnly);
   els.exerciseReferenceType.textContent = question.referenceType || "CHOOSE THE CORRECT ARTICLE";
   els.exerciseReferenceType.classList.toggle("hidden", visualOnly);
+  els.exerciseReferenceType.classList.toggle("choice-mode-prompt", question.referenceClass === "choice-mode-prompt");
   els.exerciseWord.textContent = question.word ? question.word.toUpperCase() : "";
   els.exerciseWord.classList.toggle("hidden", visualOnly || textOnly || !question.word);
   els.exercisePrompt.textContent = question.prompt || "";
@@ -2959,9 +3733,16 @@ function renderExerciseQuestion() {
   if (!textOnly) {
     els.exerciseBrief.textContent = question.visualBrief;
     els.exerciseFallback.classList.add("hidden");
-    els.exerciseImage.classList.remove("hidden");
-    els.exerciseImage.alt = question.visualBrief;
-    els.exerciseImage.src = question.imagePath;
+    if (question.repeatImagePath && question.repeatCount) {
+      els.exerciseImage.classList.add("hidden");
+      showExerciseRepeatVisual(question.repeatImagePath, question.repeatCount, question.visualBrief);
+    } else {
+      els.exerciseImage.classList.remove("hidden");
+      els.exerciseImage.alt = question.visualBrief;
+      els.exerciseImage.src = question.imagePath;
+      applyExerciseImageFocus(question.imageFocus);
+    }
+    showExerciseVisualCaption(question.visualCaptionHtml || "");
   } else {
     els.exerciseImage.removeAttribute("src");
   }
@@ -2979,9 +3760,33 @@ function renderExerciseQuestion() {
   }));
 }
 
+function clearExerciseImageFocus() {
+  els.exerciseVisualPanel.classList.remove("focus-zoom-panel");
+  els.exerciseImage.classList.remove("exercise-focus-zoom");
+  els.exerciseImage.style.removeProperty("--focus-x");
+  els.exerciseImage.style.removeProperty("--focus-y");
+  els.exerciseImage.style.removeProperty("--focus-zoom");
+  els.exerciseImage.style.removeProperty("object-position");
+}
+
+function applyExerciseImageFocus(focus) {
+  if (!focus) return;
+  const baseWidth = focus.baseWidth || focus.width || 500;
+  const baseHeight = focus.baseHeight || focus.height || 500;
+  const x = Math.max(0, Math.min(100, (Number(focus.x) / baseWidth) * 100));
+  const y = Math.max(0, Math.min(100, (Number(focus.y) / baseHeight) * 100));
+  els.exerciseVisualPanel.classList.add("focus-zoom-panel");
+  els.exerciseImage.classList.add("exercise-focus-zoom");
+  els.exerciseImage.style.setProperty("--focus-x", `${x}%`);
+  els.exerciseImage.style.setProperty("--focus-y", `${y}%`);
+  els.exerciseImage.style.setProperty("--focus-zoom", focus.zoom || 2);
+  els.exerciseImage.style.objectPosition = `${x}% ${y}%`;
+}
+
 function answerExercise(article) {
   const question = state.exerciseQuestions[state.exerciseIndex];
   const isCorrect = article === question.answer;
+  if (question.visualCaptionAnswerHtml) showExerciseVisualCaption(question.visualCaptionAnswerHtml);
   [...els.articleOptions.children].forEach((button) => {
     button.disabled = true;
     if (button.dataset.article === question.answer) button.classList.add("correct");
@@ -3035,8 +3840,14 @@ els.image.addEventListener("error", () => {
   els.image.classList.add("hidden");
   els.fallback.classList.remove("hidden");
 });
-els.image.addEventListener("load", positionPresenceHotspots);
-window.addEventListener("resize", positionPresenceHotspots);
+els.image.addEventListener("load", () => {
+  positionPresenceHotspots();
+  positionPresenceHoverNameTag();
+});
+window.addEventListener("resize", () => {
+  positionPresenceHotspots();
+  positionPresenceHoverNameTag();
+});
 els.exerciseImage.addEventListener("error", () => {
   els.exerciseImage.classList.add("hidden");
   els.exerciseFallback.classList.remove("hidden");
@@ -3053,8 +3864,29 @@ els.luckySpinImage.addEventListener("error", () => {
   els.luckySpinVisualPanel.classList.add("hidden");
 });
 els.start.addEventListener("click", startPresentation);
+document.getElementById("unitBackButton").addEventListener("click", () => {
+  state.unit = null;
+  state.module = null;
+  [...els.units.children].forEach((button) => button.classList.remove("selected"));
+  [...els.functions.children].forEach((button) => button.classList.remove("selected"));
+  updateSetup();
+  setSetupStep("grade");
+});
+document.getElementById("functionBackButton").addEventListener("click", () => {
+  state.module = null;
+  [...els.functions.children].forEach((button) => button.classList.remove("selected"));
+  updateSetup();
+  setSetupStep("unit");
+});
 els.setupExercises.addEventListener("click", openExerciseMenu);
 els.presentationExercises.addEventListener("click", openExerciseMenu);
+els.roomBack.addEventListener("click", returnToHubFromRoom);
+els.roomExit.addEventListener("click", exitCharacterRoom);
+els.roomIntroOk.addEventListener("click", () => els.roomIntroOverlay.classList.add("hidden"));
+els.roomNext.addEventListener("click", () => {
+  roomState.targetIndex += 1;
+  renderRoomTarget();
+});
 els.back.addEventListener("click", returnToSetup);
 els.fullscreen.addEventListener("click", toggleFullscreen);
 els.previous.addEventListener("click", previous);
@@ -3169,9 +4001,8 @@ els.pronounSnapExit.addEventListener("click", returnToSetup);
 els.pronounSnapExitResult.addEventListener("click", returnToSetup);
 els.pronounSnapRestart.addEventListener("click", () => startPronounSnap(state.pronounSnapExercise));
 els.pronounSnapChoices.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-pronoun]");
-  if (button) answerPronounSnap(button.dataset.pronoun, button);
+  const button = event.target.closest("button[data-snap-answer], button[data-pronoun]");
+  if (button) answerPronounSnap(button.dataset.snapAnswer || button.dataset.pronoun, button);
 });
-
 renderGrades();
 updateSetup();
