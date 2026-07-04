@@ -86,6 +86,87 @@ const comparativesChoiceSets = [
   }
 ];
 
+const superlativesChoiceQuestions = [
+  {
+    imagePath: "images/comperatives/giraffe-tallest.webp",
+    prompt: "The giraffe is ___ animal in the world.",
+    options: ["the tallest", "taller", "the shortest", "shorter"],
+    answer: "the tallest"
+  },
+  {
+    imagePath: "images/comperatives/shark.webp",
+    prompt: "The shark is ___ sea animal.",
+    options: ["the most dangerous", "more dangerous", "the safest", "safer"],
+    answer: "the most dangerous"
+  },
+  {
+    imagePath: "images/comperatives/elephant-biggest.webp",
+    prompt: "The elephant is ___ animal on land.",
+    options: ["smaller", "the smallest", "the biggest", "bigger"],
+    answer: "the biggest"
+  },
+  {
+    imagePath: "images/comperatives/lion-strongest.webp",
+    prompt: "The lion is ___ animal in the jungle.",
+    options: ["the strongest", "stronger", "the weakest", "weaker"],
+    answer: "the strongest"
+  },
+  {
+    imagePath: "images/comperatives/cheetah-fastest.webp",
+    prompt: "The cheetah is ___ animal on land.",
+    options: ["slower", "the slowest", "faster", "the fastest"],
+    answer: "the fastest"
+  },
+  {
+    imagePath: "images/comperatives/elephant-biggest.webp",
+    prompt: "The elephant is ___ animal on land.",
+    options: ["heavier", "the heaviest", "faster", "fastest"],
+    answer: "the heaviest"
+  },
+  {
+    imagePath: "images/comperatives/turtle-slowest.webp",
+    prompt: "The turtle is ___ animal in the race.",
+    options: ["the slowest", "slower", "the fastest", "faster"],
+    answer: "the slowest"
+  },
+  {
+    imagePath: "images/comperatives/butterfly.webp",
+    prompt: "The butterfly is ___ insect.",
+    options: ["the most beautiful", "more beautiful", "the ugliest", "uglier"],
+    answer: "the most beautiful"
+  },
+  {
+    imagePath: "images/comperatives/parrot.webp",
+    prompt: "The parrot is ___ bird.",
+    options: ["the most colorful", "more colorful", "the dullest", "duller"],
+    answer: "the most colorful"
+  },
+  {
+    imagePath: "images/comperatives/dolphin.webp",
+    prompt: "The dolphin is ___ sea animal.",
+    options: ["the most intelligent", "more intelligent", "the slowest", "slower"],
+    answer: "the most intelligent"
+  },
+  {
+    imagePath: "images/comperatives/winter-colder-than-summer.webp",
+    prompt: "Winter is ___ season.",
+    options: ["the coldest", "colder", "the hottest", "hotter"],
+    answer: "the coldest"
+  },
+  {
+    imagePath: "images/comperatives/hummingbird.webp",
+    prompt: "The hummingbird is ___ bird in the world.",
+    options: ["the smallest", "smaller", "the biggest", "bigger"],
+    answer: "the smallest"
+  },
+  {
+    imagePath: "images/comperatives/giraffe-tallest.webp",
+    prompt: "The giraffe is ___ animal on land.",
+    options: ["the tallest", "taller", "the smallest", "smaller"],
+    answer: "the tallest"
+  }
+];
+
 window.comparativesChoiceSets = comparativesChoiceSets;
 
 let comparativesChoiceRemaining = [];
@@ -134,5 +215,27 @@ const comparativesChoiceExercise = window.exerciseActivityModules.choice({
   }
 });
 
+const superlativesChoiceExercise = window.exerciseActivityModules.choice({
+  id: "superlatives-choice",
+  title: "CHOOSE CORRECT OPTION",
+  compactPrompt: true,
+  wideOptions: true,
+  repeatable: false,
+  supports(functionModule) {
+    return functionModule.id === "superlatives";
+  },
+  buildQuestions() {
+    return shuffleComparativesChoiceItems(superlativesChoiceQuestions).map((question, index) => ({
+      id: `superlatives-choice-${index + 1}`,
+      referenceType: "CHOOSE CORRECT OPTION",
+      visualBrief: "Superlative adjective",
+      instruction: "Choose the correct superlative form.",
+      ...question,
+      options: shuffleComparativesChoiceItems(question.options)
+    }));
+  }
+});
+
 window.exerciseModules = window.exerciseModules || [];
 window.exerciseModules.push(comparativesChoiceExercise);
+window.exerciseModules.push(superlativesChoiceExercise);

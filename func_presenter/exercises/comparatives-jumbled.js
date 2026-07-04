@@ -25,6 +25,22 @@ const comparativesJumbledPool = [
   ["An armchair is more comfortable than a sofa.", "images/comperatives/armchairvssofa.webp"]
 ];
 
+const superlativesJumbledPool = [
+  "The giraffe is the tallest animal.",
+  "The lion is the strongest animal.",
+  "The cheetah is the fastest animal.",
+  "The elephant is the biggest animal.",
+  "The turtle is the slowest animal.",
+  "The butterfly is the most beautiful insect.",
+  "The shark is the most dangerous ocean animal.",
+  "The parrot is the most colorful bird.",
+  "The dolphin is the most intelligent sea animal.",
+  "The cheetah is the fastest animal.",
+  "The giraffe is the tallest animal.",
+  "The shark is the most dangerous sea animal.",
+  "Winter is the coldest season."
+];
+
 let comparativesJumbledRemaining = [];
 
 function shuffleComparativesJumbled(items) {
@@ -42,6 +58,15 @@ function buildComparativesJumbledBank() {
     sentence,
     imagePath,
     type: "STATEMENT",
+    tokens: sentence.trim().split(/\s+/)
+  }));
+}
+
+function buildSuperlativesJumbledBank() {
+  return superlativesJumbledPool.map((sentence, index) => ({
+    id: `superlatives-jumbled-${index + 1}`,
+    sentence,
+    type: "SUPERLATIVE",
     tokens: sentence.trim().split(/\s+/)
   }));
 }
@@ -65,5 +90,19 @@ const comparativesJumbledExercise = window.exerciseActivityModules.jumbledSenten
   }
 });
 
+const superlativesJumbledExercise = window.exerciseActivityModules.jumbledSentences({
+  id: "superlatives-jumbled",
+  title: "JUMBLED SENTENCES",
+  repeatable: false,
+  lives: 3,
+  supports(functionModule) {
+    return functionModule.id === "superlatives";
+  },
+  buildQuestions() {
+    return shuffleComparativesJumbled(buildSuperlativesJumbledBank());
+  }
+});
+
 window.exerciseModules = window.exerciseModules || [];
 window.exerciseModules.push(comparativesJumbledExercise);
+window.exerciseModules.push(superlativesJumbledExercise);

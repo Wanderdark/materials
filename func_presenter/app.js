@@ -2,6 +2,7 @@ const { functionModules, getUnitsForGrade, getFunctionsForGradeAndUnit } = windo
 const { getExercisesForFunction } = window.exerciseRegistry;
 
 const $ = (id) => document.getElementById(id);
+let guessAnimalKeyAudioContext = null;
 const els = {
   setup: $("setupScreen"),
   presentation: $("presentationScreen"),
@@ -72,6 +73,23 @@ const els = {
   exerciseResultMessage: $("exerciseResultMessage"),
   exerciseContinue: $("exerciseContinueButton"),
   exerciseHome: $("exerciseHomeButton"),
+  guessAnimal: $("guessAnimalScreen"),
+  guessAnimalExit: $("guessAnimalExitButton"),
+  guessAnimalGrade: $("guessAnimalGradeLabel"),
+  guessAnimalTitle: $("guessAnimalTitle"),
+  guessAnimalProgress: $("guessAnimalProgressText"),
+  guessAnimalScore: $("guessAnimalScore"),
+  guessAnimalCard: $("guessAnimalCard"),
+  guessAnimalFloatingText: $("guessAnimalFloatingText"),
+  guessAnimalSlots: $("guessAnimalSlots"),
+  guessAnimalHints: $("guessAnimalHints"),
+  guessAnimalGuess: $("guessAnimalGuessButton"),
+  guessAnimalHint: $("guessAnimalHintButton"),
+  guessAnimalReveal: $("guessAnimalRevealButton"),
+  guessAnimalNext: $("guessAnimalNextButton"),
+  guessAnimalKeyboardPanel: $("guessAnimalKeyboardPanel"),
+  guessAnimalKeyboard: $("guessAnimalKeyboard"),
+  guessAnimalFeedback: $("guessAnimalFeedback"),
   sort: $("sortScreen"),
   sortBack: $("sortBackButton"),
   sortGrade: $("sortGradeLabel"),
@@ -272,7 +290,7 @@ const els = {
   roomIntroOk: $("roomIntroOkButton")
 };
 
-const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapTotalTimer: null, pronounSnapDeadline: 0, pronounSnapAnswered: 0, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, luckyItems: [], luckyRemaining: [], luckyCurrent: null, luckyScore: 0, luckyRotation: 0, luckySpinning: false, luckyTickTimer: null, luckyFinishTimer: null, luckyAudioContext: null, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
+const state = { grade: null, unit: null, module: null, index: 0, showingFunctionIntro: false, exercise: null, exerciseIndex: 0, exerciseScore: 0, exerciseQuestions: [], sortBoard: null, sortSorted: 0, sortMistakes: 0, selectedSortCard: null, draggedSortCard: null, conversationRounds: [], conversationIndex: 0, conversationScore: 0, jumbledQuestions: [], jumbledIndex: 0, jumbledScore: 0, jumbledLives: 3, jumbledLivesMax: 3, draggedJumbledTile: null, jumbledSolved: false, jumbledTimer: null, matchingBatches: [], matchingBatchIndex: 0, matchingBatchMatched: 0, matchingScore: 0, selectedMatchingSentence: null, matchingStartedAt: null, matchingElapsedMs: 0, trueFalseQuestions: [], trueFalseAnswered: 0, trueFalseScore: 0, trueFalsePageIndex: 0, trueFalsePageAnswered: 0, trueFalsePages: [], pronounMemoryExercise: null, pronounMemoryLevel: 0, pronounMemoryScore: 0, pronounMemorySequence: [], pronounMemoryIndex: 0, pronounMemoryTimer: null, pronounMemoryAnswerTimer: null, pronounMemoryLocked: false, pronounSnapExercise: null, pronounSnapRounds: [], pronounSnapIndex: 0, pronounSnapScore: 0, pronounSnapStreak: 0, pronounSnapBestStreak: 0, pronounSnapTimer: null, pronounSnapTotalTimer: null, pronounSnapDeadline: 0, pronounSnapAnswered: 0, pronounSnapLocked: false, timeSetterExercise: null, timeSetterTarget: null, timeSetterHour: 12, timeSetterMinute: 0, timeSetterScore: 0, timeSetterRound: 1, timeSetterLocked: false, timeSetterAdvanceTimer: null, fillBlankQuestions: [], fillBlankRevealed: 0, mistakeQuestions: [], mistakeIndex: 0, mistakeScore: 0, mistakeLocked: false, guessAnimalQuestions: [], guessAnimalIndex: 0, guessAnimalScore: 0, guessAnimalHintIndex: 0, guessAnimalInput: "", guessAnimalLocked: false, luckyItems: [], luckyRemaining: [], luckyCurrent: null, luckyScore: 0, luckyRotation: 0, luckySpinning: false, luckyTickTimer: null, luckyFinishTimer: null, luckyAudioContext: null, exerciseReturnScreen: "setup", pcPages: [], pcPageIndex: 0, pcOverallCorrect: 0, pcTotalChoices: 0, pcCurrentPageCorrect: 0, smBatchIndex: 0, smMatched: 0, smSelectedDescId: null, smScore: 0 };
 let feedbackAudio = null;
 let presenceHotspotPoints = [];
 let presenceHoverNameTagPoint = null;
@@ -282,7 +300,7 @@ let roomActiveSentenceEl = null;
 const ROOM_DEBUG_HITAREAS = false; // draw hit-area outlines while calibrating rooms; flip to true to recalibrate
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.guessAnimal, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -808,7 +826,7 @@ function buildComparisonLayout(comp, hl) {
   return layout;
 }
 
-function openPresenceOverlay({ question, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, overlaySize, revealMode, steps }) {
+function openPresenceOverlay({ question, topSentence, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, imageFit, overlaySize, revealMode, steps }) {
   const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
   els.presenceOverlay.querySelector(".presence-overlay-continue")?.remove();
   if (comparison) {
@@ -830,6 +848,12 @@ function openPresenceOverlay({ question, imagePath, sentence, sentences, interac
         els.presenceOverlayImage.src = step.imagePath;
         els.presenceOverlayImage.alt = step.question || question || "";
         els.presenceOverlayImage.style.aspectRatio = step.imageAspect || imageAspect || "";
+        els.presenceOverlayImage.style.objectFit = step.imageFit || imageFit || "";
+      } else {
+        els.presenceOverlayImage.removeAttribute("src");
+        els.presenceOverlayImage.alt = "";
+        els.presenceOverlayImage.style.aspectRatio = "";
+        els.presenceOverlayImage.style.objectFit = "";
       }
       els.presenceOverlaySentence.innerHTML = highlight(step.sentence || "");
     };
@@ -850,30 +874,36 @@ function openPresenceOverlay({ question, imagePath, sentence, sentences, interac
     els.presenceOverlay.classList.remove("hidden");
     return;
   }
-  els.presenceOverlayQuestion.innerHTML = highlight(question || "");
+  els.presenceOverlayQuestion.classList.toggle("as-sentence", Boolean(topSentence));
+  els.presenceOverlayQuestion.innerHTML = highlight(topSentence || question || "");
   els.presenceOverlayImage.classList.toggle("hidden", !imagePath);
   if (imagePath) {
     els.presenceOverlayImage.src = imagePath;
     els.presenceOverlayImage.alt = question;
     els.presenceOverlayImage.style.aspectRatio = imageAspect || "";
+    els.presenceOverlayImage.style.objectFit = imageFit || "";
   } else {
     els.presenceOverlayImage.removeAttribute("src");
     els.presenceOverlayImage.alt = "";
     els.presenceOverlayImage.style.aspectRatio = "";
+    els.presenceOverlayImage.style.objectFit = "";
   }
   els.presenceOverlay.querySelector(".presence-overlay-card").classList.toggle("overlay-lg", !!overlaySize);
   if (revealMode) {
-    const raw = sentence || "";
-    els.presenceOverlaySentence.innerHTML = raw.replace(/<([^>]+)>/g,
-      (_, w) => `<span class="reveal-blank" data-answer="${w}">?</span>`);
-    els.presenceOverlaySentence.querySelectorAll(".reveal-blank").forEach((span) => {
-      span.addEventListener("click", () => {
-        span.textContent = span.dataset.answer;
-        span.classList.remove("reveal-blank");
-        span.classList.add("freq-highlight");
-        playFeedbackSound(true);
+    const bindReveal = (el, raw) => {
+      el.innerHTML = raw.replace(/<([^>]+)>/g,
+        (_, w) => `<span class="reveal-blank" data-answer="${w}">?</span>`);
+      el.querySelectorAll(".reveal-blank").forEach((span) => {
+        span.addEventListener("click", () => {
+          span.textContent = span.dataset.answer;
+          span.classList.remove("reveal-blank");
+          span.classList.add("freq-highlight");
+          playFeedbackSound(true);
+        });
       });
-    });
+    };
+    if (topSentence) bindReveal(els.presenceOverlayQuestion, topSentence);
+    bindReveal(els.presenceOverlaySentence, sentence || "");
     els.presenceOverlay.classList.remove("hidden");
     return;
   }
@@ -1285,6 +1315,8 @@ function renderPresenceSlide(example) {
     }
     if (index > 0 && !example.showAllItems) row.classList.add("hidden");
     row.dataset.presenceIndex = index;
+    if (item.fontSize) row.style.setProperty("--presence-item-font-size", item.fontSize);
+    if (item.letterSpacing) row.style.setProperty("--presence-item-letter-spacing", item.letterSpacing);
     if (item.clearPreviousOnShow) row.dataset.clearPreviousOnShow = "true";
     if (item.titleOverride) row.dataset.titleOverride = item.titleOverride;
     if (item.imagePathOnShow) row.dataset.imagePathOnShow = item.imagePathOnShow;
@@ -1300,6 +1332,7 @@ function renderPresenceSlide(example) {
     if (item.kind === "inline-choice") {
       const prompt = document.createElement("p");
       prompt.className = `presence-prompt inline-choice-prompt ${item.speakerImage ? "speaker-line" : ""}`;
+      applyPresencePromptStyle(prompt, item);
       if (item.speakerImage) {
         const head = document.createElement("img");
         head.className = "speaker-head";
@@ -1316,17 +1349,20 @@ function renderPresenceSlide(example) {
     } else if (item.kind === "replace-choice") {
       const source = document.createElement("p");
       source.className = "presence-prompt replace-source";
+      applyPresencePromptStyle(source, item);
       source.innerHTML = renderPresenceParts(item.sourceParts || []);
       const arrow = document.createElement("span");
       arrow.className = "replace-arrow";
       arrow.textContent = "->";
       const target = document.createElement("p");
       target.className = "presence-prompt replace-target";
+      applyPresencePromptStyle(target, item);
       target.innerHTML = renderPresenceParts(item.targetParts || []);
       promptLine.append(source, arrow, target);
     } else if (item.speakerImage) {
       const prompt = document.createElement("p");
       prompt.className = "presence-prompt speaker-line";
+      applyPresencePromptStyle(prompt, item);
       const head = document.createElement("img");
       head.className = "speaker-head";
       head.src = item.speakerImage;
@@ -1339,6 +1375,7 @@ function renderPresenceSlide(example) {
     } else {
       const prompt = document.createElement("p");
       prompt.className = "presence-prompt";
+      applyPresencePromptStyle(prompt, item);
       if (example.hotspotMode && item.hotspots) prompt.classList.add("hidden");
       appendPresenceParts(prompt, item.parts || [{ text: item.text || "" }]);
       promptLine.append(prompt);
@@ -1490,6 +1527,11 @@ function createInlineChoiceParts(segments) {
     group.append(trigger, popup);
     return group;
   });
+}
+
+function applyPresencePromptStyle(prompt, item = {}) {
+  if (item.fontSize) prompt.style.fontSize = item.fontSize;
+  if (item.letterSpacing) prompt.style.letterSpacing = item.letterSpacing;
 }
 
 function createPresenceStyleMatch(item) {
@@ -1836,6 +1878,7 @@ function openExerciseMenu() {
       "fill-blank": "Tap each blank to reveal the correct answer.",
       "mistake-correct-it": "Decide if the sentence is correct. If not, find the mistake.",
       "paragraph-choice": "Choose the correct word for each blank in the paragraph.",
+      "guess-animal": "Use the hints and keyboard to guess the animal.",
       "lucky-spin": "Spin the wheel, complete the speaking task, and score points."
     };
     const exerciseDescription = exerciseDescriptions[exercise.activity] || "Start this activity.";
@@ -1883,6 +1926,9 @@ function startSelectedExercise(exercise) {
       return;
     case "mistake-correct-it":
       startMistakeCorrectIt(exercise);
+      return;
+    case "guess-animal":
+      startGuessAnimal(exercise);
       return;
     case "paragraph-choice":
       startParagraphChoice(exercise);
@@ -2490,6 +2536,251 @@ function returnFromTimeSetter() {
     return;
   }
   els.setup.classList.remove("hidden");
+}
+
+async function startGuessAnimal(exercise) {
+  state.exercise = exercise;
+  state.guessAnimalIndex = 0;
+  state.guessAnimalScore = 0;
+  state.guessAnimalHintIndex = 0;
+  state.guessAnimalInput = "";
+  state.guessAnimalLocked = false;
+  hideAllScreens();
+  els.guessAnimal.classList.remove("hidden");
+  els.guessAnimalGrade.textContent = `GRADE ${state.grade}`;
+  els.guessAnimalTitle.textContent = exercise.title || "GUESS THE ANIMAL";
+  els.guessAnimalScore.textContent = "0";
+  els.guessAnimalFeedback.textContent = "Loading animals...";
+  try {
+    state.guessAnimalQuestions = await exercise.buildQuestions(state.module);
+  } catch (error) {
+    console.error(error);
+    els.guessAnimalFeedback.textContent = "Animal data could not be loaded.";
+    els.guessAnimalFeedback.className = "exercise-feedback wrong";
+    return;
+  }
+  if (!state.guessAnimalQuestions.length) {
+    els.guessAnimalFeedback.textContent = "No animals found.";
+    els.guessAnimalFeedback.className = "exercise-feedback wrong";
+    return;
+  }
+  renderGuessAnimalRound();
+}
+
+function renderGuessAnimalRound() {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  state.guessAnimalHintIndex = 0;
+  state.guessAnimalInput = "";
+  state.guessAnimalLocked = false;
+  els.guessAnimalCard.classList.remove("wrong-drop");
+  els.guessAnimalProgress.textContent = `${state.guessAnimalIndex + 1} / ${state.guessAnimalQuestions.length}`;
+  els.guessAnimalScore.textContent = state.guessAnimalScore;
+  els.guessAnimalSlots.replaceChildren(...question.name.split("").map(() => {
+    const slot = document.createElement("span");
+    slot.textContent = "";
+    return slot;
+  }));
+  els.guessAnimalKeyboardPanel.classList.add("hidden");
+  els.guessAnimalGuess.classList.remove("hidden");
+  els.guessAnimalGuess.textContent = "GUESS";
+  els.guessAnimalHint.classList.toggle("hidden", question.hints.length <= 1);
+  els.guessAnimalReveal.classList.add("hidden");
+  els.guessAnimalNext.classList.add("hidden");
+  els.guessAnimalFeedback.textContent = "Read the hint. Guess or ask for the next hint.";
+  els.guessAnimalFeedback.className = "exercise-feedback";
+  renderGuessAnimalHints();
+  renderGuessAnimalInput();
+}
+
+function renderGuessAnimalHints() {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  const visibleHints = question.hints.slice(0, state.guessAnimalHintIndex + 1);
+  els.guessAnimalHints.replaceChildren(...visibleHints.map((hint, index) => {
+    const p = document.createElement("p");
+    const label = document.createElement("span");
+    label.textContent = index === 0 ? "FREE HINT" : `-${index * 10} PTS`;
+    p.append(label, document.createTextNode(hint));
+    return p;
+  }));
+}
+
+function showGuessAnimalFloatingText(text, type = "gain") {
+  clearTimeout(els.guessAnimalFloatingText._hideTimer);
+  els.guessAnimalFloatingText.textContent = text;
+  els.guessAnimalFloatingText.className = `guess-animal-floating-text ${type}`;
+  void els.guessAnimalFloatingText.offsetWidth;
+  els.guessAnimalFloatingText.classList.add("show");
+  els.guessAnimalFloatingText._hideTimer = window.setTimeout(() => els.guessAnimalFloatingText.classList.add("hidden"), 950);
+}
+
+function playGuessAnimalKeyTone() {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  try {
+    guessAnimalKeyAudioContext = guessAnimalKeyAudioContext || new AudioContext();
+    const start = guessAnimalKeyAudioContext.currentTime;
+    const oscillator = guessAnimalKeyAudioContext.createOscillator();
+    const gain = guessAnimalKeyAudioContext.createGain();
+    const frequency = 1320 + Math.random() * 760;
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, start);
+    oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.18, start + .055);
+    gain.gain.setValueAtTime(.045, start);
+    gain.gain.exponentialRampToValueAtTime(.001, start + .075);
+    oscillator.connect(gain);
+    gain.connect(guessAnimalKeyAudioContext.destination);
+    oscillator.start(start);
+    oscillator.stop(start + .08);
+  } catch {
+    // The keyboard should stay responsive even when browser audio is blocked.
+  }
+}
+
+function pressGuessAnimalKey(button, handler) {
+  if (state.guessAnimalLocked) return;
+  button.classList.remove("key-pressed");
+  void button.offsetWidth;
+  button.classList.add("key-pressed");
+  playGuessAnimalKeyTone();
+  handler();
+}
+
+function showGuessAnimalKeyboard() {
+  if (state.guessAnimalLocked) return;
+  if (!els.guessAnimalKeyboardPanel.classList.contains("hidden")) {
+    submitGuessAnimal();
+    return;
+  }
+  els.guessAnimalKeyboardPanel.classList.remove("hidden");
+  els.guessAnimalGuess.textContent = "CHECK";
+  if (els.guessAnimalKeyboard.children.length) return;
+  const letters = "QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+  const buttons = letters.map((letter) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = letter;
+    button.addEventListener("click", () => pressGuessAnimalKey(button, () => addGuessAnimalLetter(letter)));
+    return button;
+  });
+  const del = document.createElement("button");
+  del.type = "button";
+  del.className = "wide";
+  del.textContent = "DEL";
+  del.addEventListener("click", () => pressGuessAnimalKey(del, deleteGuessAnimalLetter));
+  const clear = document.createElement("button");
+  clear.type = "button";
+  clear.className = "wide";
+  clear.textContent = "CLEAR";
+  clear.addEventListener("click", () => pressGuessAnimalKey(clear, clearGuessAnimalInput));
+  els.guessAnimalKeyboard.replaceChildren(...buttons, del, clear);
+}
+
+function renderGuessAnimalInput() {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  const chars = state.guessAnimalInput.padEnd(question.name.length, " ").split("");
+  [...els.guessAnimalSlots.children].forEach((slot, index) => {
+    slot.textContent = chars[index]?.trim() || "";
+  });
+}
+
+function addGuessAnimalLetter(letter) {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  if (state.guessAnimalLocked || state.guessAnimalInput.length >= question.name.length) return;
+  state.guessAnimalInput += letter;
+  renderGuessAnimalInput();
+  if (state.guessAnimalInput.length === question.name.length) submitGuessAnimal();
+}
+
+function deleteGuessAnimalLetter() {
+  if (state.guessAnimalLocked || !state.guessAnimalInput.length) return;
+  state.guessAnimalInput = state.guessAnimalInput.slice(0, -1);
+  renderGuessAnimalInput();
+}
+
+function clearGuessAnimalInput() {
+  if (state.guessAnimalLocked) return;
+  state.guessAnimalInput = "";
+  renderGuessAnimalInput();
+}
+
+function nextGuessAnimalHint() {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  if (state.guessAnimalLocked || state.guessAnimalHintIndex >= question.hints.length - 1) return;
+  state.guessAnimalHintIndex += 1;
+  renderGuessAnimalHints();
+  showGuessAnimalFloatingText("-10 PTS", "loss");
+  els.guessAnimalHint.classList.toggle("hidden", state.guessAnimalHintIndex >= question.hints.length - 1);
+  els.guessAnimalFeedback.textContent = `${getGuessAnimalRoundPoints()} points left for this animal.`;
+  els.guessAnimalFeedback.className = "exercise-feedback";
+}
+
+function getGuessAnimalRoundPoints() {
+  return Math.max(10, 50 - (state.guessAnimalHintIndex * 10));
+}
+
+function submitGuessAnimal() {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  const isComplete = state.guessAnimalInput.length === question.name.length;
+  const isCorrect = isComplete && state.guessAnimalInput.toUpperCase() === question.name.toUpperCase();
+  state.guessAnimalLocked = true;
+  els.guessAnimalGuess.classList.add("hidden");
+  els.guessAnimalGuess.textContent = "GUESS";
+  els.guessAnimalHint.classList.add("hidden");
+  els.guessAnimalKeyboardPanel.classList.add("hidden");
+  if (isCorrect) {
+    const points = getGuessAnimalRoundPoints();
+    state.guessAnimalScore += points;
+    els.guessAnimalScore.textContent = state.guessAnimalScore;
+    showGuessAnimalFloatingText(`+${points} PTS`, "gain");
+    playWavFeedback(true);
+    window.exerciseActivityModules?.showStamp?.(true);
+    revealGuessAnimalName("correct");
+    els.guessAnimalFeedback.textContent = `Correct! +${points} points.`;
+    els.guessAnimalFeedback.className = "exercise-feedback correct";
+    els.guessAnimalNext.classList.remove("hidden");
+    return;
+  }
+  playWavFeedback(false);
+  window.exerciseActivityModules?.showStamp?.(false);
+  els.guessAnimalCard.classList.remove("wrong-drop");
+  void els.guessAnimalCard.offsetWidth;
+  els.guessAnimalCard.classList.add("wrong-drop");
+  els.guessAnimalFeedback.textContent = "Wrong answer. Reveal the animal.";
+  els.guessAnimalFeedback.className = "exercise-feedback wrong";
+  els.guessAnimalReveal.classList.remove("hidden");
+}
+
+function revealGuessAnimalName(status = "revealed") {
+  const question = state.guessAnimalQuestions[state.guessAnimalIndex];
+  els.guessAnimalSlots.replaceChildren(...question.name.split("").map((letter) => {
+    const slot = document.createElement("span");
+    slot.className = status === "correct" ? "correct" : "wrong";
+    slot.textContent = letter;
+    return slot;
+  }));
+}
+
+function revealGuessAnimalAnswer() {
+  revealGuessAnimalName("wrong");
+  els.guessAnimalReveal.classList.add("hidden");
+  els.guessAnimalNext.classList.remove("hidden");
+  els.guessAnimalFeedback.textContent = "Remember it for next time.";
+  els.guessAnimalFeedback.className = "exercise-feedback wrong";
+}
+
+function nextGuessAnimalRound() {
+  if (state.guessAnimalIndex >= state.guessAnimalQuestions.length - 1) {
+    hideAllScreens();
+    els.exerciseResultScore.textContent = `${state.guessAnimalScore} POINTS`;
+    els.exerciseResultMessage.textContent = `Final score: ${state.guessAnimalScore} points.`;
+    els.exerciseContinue.classList.add("hidden");
+    els.exerciseHome.textContent = "BACK TO MENU";
+    els.exerciseHome.className = "primary-button";
+    els.exerciseResult.classList.remove("hidden");
+    return;
+  }
+  state.guessAnimalIndex += 1;
+  renderGuessAnimalRound();
 }
 
 function startChoiceExercise(exercise) {
@@ -3927,6 +4218,11 @@ els.exerciseHome.addEventListener("click", () => {
   if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
   else returnToSetup();
 });
+els.guessAnimalExit.addEventListener("click", returnToSetup);
+els.guessAnimalGuess.addEventListener("click", showGuessAnimalKeyboard);
+els.guessAnimalHint.addEventListener("click", nextGuessAnimalHint);
+els.guessAnimalReveal.addEventListener("click", revealGuessAnimalAnswer);
+els.guessAnimalNext.addEventListener("click", nextGuessAnimalRound);
 els.fillBlankBack.addEventListener("click", () => {
   if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
   else returnToSetup();
@@ -3973,6 +4269,7 @@ els.matchingTimeNext.addEventListener("click", continueMatchingAfterTime);
 const closePresenceOverlay = () => {
   els.presenceOverlay.classList.add("hidden");
   els.presenceOverlay.classList.remove("comparison-mode");
+  els.presenceOverlayQuestion.classList.remove("as-sentence");
   els.presenceOverlayImage.style.aspectRatio = "";
   els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg");
 };

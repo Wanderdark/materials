@@ -789,7 +789,7 @@ students:
         - "cycling"
       likes:
         - "hiking"
-    general_interests: [Camping, Barbecue, Picnics, Hiking, "Outdoor games"]
+    general_interests: [Camping, Barbecue, Picnics, Hiking, Climbing, "Outdoor games"]
     personality:
       traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
       note: "Yerinde duramayan doga cocugu."

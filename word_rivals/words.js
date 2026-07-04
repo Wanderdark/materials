@@ -617,6 +617,84 @@ const QUESTIONS = [
   ["DOUGH",5,6,"../images/5/6/55.webp"],
   ["SODA WATER",5,6,"../images/5/6/57.webp"],
 
+  // ─── GRADE 5 UNIT 7 ──────────────────────────────────────────────────────────
+  // synonyms: HUGE = ENORMOUS (same image)
+  ["HUGE",5,7,"ENORMOUS","../images/5/7/4.webp"],
+  ["ENORMOUS",5,7,"HUGE","../images/5/7/4.webp"],
+  // cross-exceptions: opposites
+  ["FAST",5,7,"SLOW","../images/5/7/7.webp"],
+  ["SLOW",5,7,"FAST","../images/5/7/8.webp"],
+  ["STRONG",5,7,"WEAK","../images/5/7/6.webp"],
+  ["WEAK",5,7,"STRONG","../images/5/7/35.webp"],
+  // cross-exceptions: big wild cats
+  ["CHEETAH",5,7,"TIGER","LEOPARD","../images/0/11/17.webp"],
+  ["TIGER",5,7,"CHEETAH","LEOPARD","LION","../images/0/11/10.webp"],
+  ["LEOPARD",5,7,"CHEETAH","TIGER","../images/5/7/12.webp"],
+  ["LION",5,7,"TIGER","../images/0/11/7.webp"],
+  // cross-exceptions: primates
+  ["MONKEY",5,7,"GORILLA","../images/0/11/28.webp"],
+  ["GORILLA",5,7,"MONKEY","../images/5/7/13.webp"],
+  // cross-exceptions: wooded areas
+  ["FOREST",5,7,"JUNGLE","../images/5/7/28.webp"],
+  ["JUNGLE",5,7,"FOREST","../images/5/7/29.webp"],
+  // cross-exceptions: open grassy/farm areas
+  ["SAVANNA",5,7,"FIELD","FARM","../images/5/7/30.webp"],
+  ["FIELD",5,7,"SAVANNA","FARM","../images/5/7/34.webp"],
+  ["FARM",5,7,"SAVANNA","FIELD","../images/5/7/33.webp"],
+  // cross-exceptions: bodies of water
+  ["OCEAN",5,7,"RIVER","../images/5/7/23.webp"],
+  ["RIVER",5,7,"OCEAN","../images/5/7/31.webp"],
+  // cross-exceptions: sea animals
+  ["WHALE",5,7,"SHARK","SEAL","../images/0/11/13.webp"],
+  ["SHARK",5,7,"WHALE","SEAL","../images/0/11/12.webp"],
+  ["SEAL",5,7,"WHALE","SHARK","../images/0/11/41.webp"],
+  ["WING",5,7,"FLIPPER","FLY","../images/5/7/11.webp"],
+  ["FLIPPER",5,7,"WING","../images/5/7/38.webp"],
+  ["PAW",5,7,"../images/5/7/10.webp"],
+  ["TAIL",5,7,"../images/7/4/14.webp"],
+  // cross-exceptions: teeth/tusk
+  ["TUSK",5,7,"SHARP TEETH","../images/5/7/9.webp"],
+  ["SHARP TEETH",5,7,"TUSK","../images/5/7/37.webp"],
+  // cross-exceptions: aggression verbs
+  ["ATTACK",5,7,"HUNT","../images/7/4/1.webp"],
+  ["HUNT",5,7,"ATTACK","../images/7/4/6.webp"],
+  ["MOVE",5,7,"../images/5/7/17.webp"],
+  ["RUN",5,7,"../images/5/7/18.webp"],
+  ["FLY",5,7,"WING","MOUNTAIN","../images/5/7/21.webp"],
+  ["CLIMB",5,7,"../images/5/7/22.webp"],
+  ["PARROT",5,7,"../images/0/11/6.webp"],
+  ["EAGLE",5,7,"../images/0/11/1.webp"],
+  ["PENGUIN",5,7,"../images/5/7/15.webp"],
+  ["SEAGULL",5,7,"../images/5/7/16.webp"],
+  // cross-exceptions: small creature categories
+  ["INSECTS",5,7,"BEE","../images/7/4/8.webp"],
+  ["BEE",5,7,"INSECTS","../images/0/11/45.webp"],
+  // standalone entries
+  ["REPTILES",5,7,"../images/7/4/37.webp"],
+  ["QUIET",5,7,"../images/6/3/46.webp"],
+  ["SCARY",5,7,"../images/8/6/32.webp"],
+  ["DANGEROUS",5,7,"../images/7/4/9.webp"],
+  ["GIRAFFE",5,7,"../images/0/11/5.webp"],
+  ["ELEPHANT",5,7,"../images/0/11/2.webp"],
+  ["CROCODILE",5,7,"../images/0/11/18.webp"],
+  ["BEAR",5,7,"../images/0/11/25.webp"],
+  ["WOLF",5,7,"../images/0/11/26.webp"],
+  ["SNAKE",5,7,"../images/0/11/3.webp"],
+  ["BIRDS",5,7,"../images/5/7/1.webp"],
+  ["MAMMALS",5,7,"../images/5/7/2.webp"],
+  ["WILD",5,7,"../images/5/7/3.webp"],
+  ["FURRY",5,7,"../images/5/7/5.webp"],
+  ["ZEBRA",5,7,"../images/5/7/14.webp"],
+  ["SURVIVE",5,7,"../images/5/7/19.webp"],
+  ["TALK",5,7,"../images/5/7/20.webp"],
+  ["SKY",5,7,"../images/5/7/24.webp"],
+  ["HABITAT",5,7,"../images/5/7/25.webp"],
+  ["NATIONAL PARK",5,7,"../images/5/7/26.webp"],
+  ["ABILITY",5,7,"../images/5/7/27.webp"],
+  ["MOUNTAIN",5,7,"../images/5/7/32.webp"],
+  ["FEATHER",5,7,"../images/5/7/36.webp"],
+  ["GRASS",5,7,"../images/5/7/39.webp"],
+
   // ─── GRADE 6 UNIT 1 ──────────────────────────────────────────────────────────
   ["LIFE",6,1,"../images/6/1/1.webp"],
   ["START",6,1,"../images/6/1/2.webp"],

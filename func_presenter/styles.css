@@ -72,6 +72,9 @@ button { font: inherit; } .hidden { display: none !important; }
 .presence-title.compact { color: var(--muted); font-size: clamp(16px, 1.5vw, 22px); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; line-height: 1.2; }
 .presence-slide .presence-title.compact { color: #f4f7ff; font-size: clamp(24px, 2.8vw, 40px); white-space: normal; }
 .example-card.inline-choice-slide .presence-title.compact { font-size: clamp(18px, 1.9vw, 28px); white-space: normal; }
+.example-card:has(.comparatives-followup-list) .presence-title.compact { font-size: clamp(13px, 1.15vw, 18px); margin-bottom: 0; }
+.comparatives-followup-list .inline-choice-prompt { font-size: clamp(17px, 1.55vw, 24px); line-height: 1.12; }
+.comparatives-followup-list .presence-row { padding: 9px 12px; border-radius: 14px; }
 .example-card.inline-choice-slide .inline-choice-prompt { font-size: clamp(16px, 1.55vw, 24px); }
 .example-card.inline-choice-slide .inline-choice-trigger { font-size: clamp(13px, 1.3vw, 20px); min-height: 32px; padding: 4px 12px; }
 .example-card.inline-choice-slide .inline-choice-popup-option { font-size: clamp(13px, 1.3vw, 20px); min-height: 32px; padding: 5px 12px; }
@@ -88,6 +91,13 @@ button { font: inherit; } .hidden { display: none !important; }
 .presence-question-do { color: #65e6b8; text-shadow: 0 0 16px rgba(101,230,184,.36); }
 .presence-question-does { color: #ffd84d; text-shadow: 0 0 16px rgba(255,216,77,.36); }
 .presence-row.category-list { display: inline-grid; place-items: center; min-height: 74px; padding: 16px 24px; border-color: rgba(255,216,77,.42); color: var(--yellow); background: linear-gradient(135deg, rgba(23,50,103,.92), rgba(9,23,58,.94)); box-shadow: 0 0 18px rgba(255,216,77,.10); }.presence-row.category-list .presence-prompt { color: var(--yellow); font-size: clamp(20px, 2.4vw, 34px); letter-spacing: .08em; }.presence-row.keyword-row { padding: 0; border: 0; background: transparent; }.presence-row.keyword-row .presence-prompt { display: flex; flex-wrap: wrap; gap: 9px; }.presence-row.keyword-row .presence-prompt span { display: inline-grid; place-items: center; min-height: 44px; padding: 8px 14px; border: 2px solid rgba(102,136,255,.62); border-radius: 12px; color: var(--yellow); background: #102650; font-size: clamp(14px, 1.45vw, 21px); letter-spacing: .05em; }.presence-height-tall { color: #65e6b8; text-shadow: 0 0 16px rgba(101,230,184,.30); }.presence-height-medium { color: #ffd84d; text-shadow: 0 0 16px rgba(255,216,77,.30); }.presence-height-short { color: #ff9b86; text-shadow: 0 0 16px rgba(255,155,134,.30); }
+.presence-row.capability-line { padding: clamp(18px, 2.6vw, 30px); border-color: rgba(255,216,77,.30); background: linear-gradient(135deg, rgba(24,49,102,.82), rgba(9,20,48,.76)); }
+.presence-row.capability-line .presence-prompt { color: #f4f7ff; font-size: clamp(26px, 3vw, 44px); line-height: 1.18; }
+.presence-list.can-capability-choice-list { width: min(760px, 100%); }
+.can-capability-choice-list .presence-row { padding: clamp(20px, 3vw, 34px); border-color: rgba(255,216,77,.30); background: linear-gradient(135deg, rgba(24,49,102,.82), rgba(9,20,48,.76)); }
+.can-capability-choice-list .presence-prompt { color: #f4f7ff; font-size: clamp(24px, 2.8vw, 40px); line-height: 1.2; text-align: center; }
+.can-capability-choice-list .presence-choices { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.can-capability-choice-list .presence-choice { min-height: 72px; font-size: clamp(24px, 2.6vw, 38px); text-transform: uppercase; }
 .presence-list.category-grid-list { grid-template-columns: repeat(2, minmax(0, 1fr)); width: min(760px, 100%); }
 .presence-row.category-list.clickable { cursor: pointer; transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }.presence-row.category-list.clickable:hover, .presence-row.category-list.clickable:focus-visible { transform: translateY(-2px); border-color: var(--yellow); box-shadow: 0 0 24px rgba(255,216,77,.22); outline: none; }
 .presence-image-link { display: inline; padding: 0 2px; border: 0; border-bottom: 3px solid currentColor; color: inherit; background: transparent; cursor: pointer; font: inherit; text-decoration: none; text-underline-offset: 5px; }
@@ -804,3 +814,314 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
   transform: none; border-color: var(--tone-dim); box-shadow: none;
 }
 .grade-grid > .grade-button.grade-visual.placeholder:hover .opt-number { color: #fff; }
+
+/* ---------- Standard cross hub ---------- */
+.standard-hub-cross {
+  display: grid;
+  grid-template-columns: repeat(3, clamp(150px, 11vw, 190px));
+  grid-template-areas:
+    ". habitat ."
+    "species lion diet"
+    ". body .";
+  align-items: center;
+  justify-items: center;
+  gap: clamp(14px, 1.25vw, 22px);
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+.standard-hub-cross .presence-row.category-list {
+  width: 100%;
+  min-width: 0;
+  height: clamp(74px, 6vw, 92px);
+  min-height: 0;
+  padding: 10px 12px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow: hidden;
+  border-color: rgba(101, 230, 184, .45);
+  background: linear-gradient(135deg, rgba(101, 230, 184, .16), rgba(26, 49, 107, .72));
+  cursor: pointer;
+}
+.standard-hub-cross .presence-row.category-list .presence-prompt-line {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+.standard-hub-cross .presence-row.category-list .presence-prompt {
+  display: block;
+  width: 100%;
+  margin: 0;
+  color: var(--yellow);
+  font-size: var(--presence-item-font-size, clamp(20px, 2.05vw, 32px));
+  line-height: 1.05;
+  letter-spacing: var(--presence-item-letter-spacing, .08em);
+  text-align: center;
+  text-wrap: balance;
+}
+.standard-hub-cross .presence-row.category-list:nth-child(1) { grid-area: habitat; }
+.standard-hub-cross .presence-row.category-list:nth-child(2) { grid-area: diet; }
+.standard-hub-cross .presence-row.category-list:nth-child(3) {
+  grid-area: lion;
+  height: clamp(112px, 8.5vw, 148px);
+  border-color: rgba(255, 216, 77, .75);
+  background: rgba(255, 216, 77, .12);
+  cursor: default;
+}
+.standard-hub-cross .presence-row.category-list:nth-child(3) {
+  pointer-events: none;
+}
+.standard-hub-cross .presence-row.category-list:nth-child(4) { grid-area: species; }
+.standard-hub-cross .presence-row.category-list:nth-child(5) { grid-area: body; }
+.standard-hub-cross .presence-row.category-list:nth-child(3) .presence-prompt {
+  color: var(--yellow);
+  font-size: var(--presence-item-font-size, clamp(28px, 3vw, 44px));
+}
+
+/* ---------- Wild life Wh-questions hub ---------- */
+.wild-life-wh-grid .presence-row.category-list:nth-child(5) .presence-prompt {
+  font-size: clamp(18px, 1.9vw, 29px);
+}
+
+/* ---------- Guess the animal ---------- */
+.guess-animal-screen {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 20px;
+  min-height: calc(100vh - 48px);
+}
+.guess-animal-card {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 22px;
+  width: min(1120px, 100%);
+  margin: auto;
+  padding: clamp(28px, 5vw, 60px);
+  border: 1px solid rgba(255, 255, 255, .10);
+  border-radius: 30px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+.guess-animal-card.wrong-drop {
+  animation: sortShake .38s ease-in-out;
+  border-color: rgba(255, 128, 102, .85);
+  box-shadow: 0 0 26px rgba(255, 128, 102, .28);
+}
+.guess-animal-slots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+.guess-animal-slots span {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 2px solid #6688ff;
+  border-radius: 13px;
+  background: #173267;
+  color: #f4f7ff;
+  font-size: 32px;
+  font-weight: 950;
+}
+.guess-animal-slots span.correct {
+  border-color: var(--mint);
+  background: #135342;
+  box-shadow: 0 0 15px rgba(101, 230, 184, .32);
+}
+.guess-animal-slots span.wrong {
+  border-color: #ff8066;
+  background: #6e2c25;
+}
+.guess-animal-hints {
+  display: grid;
+  gap: 10px;
+  width: min(760px, 100%);
+}
+.guess-animal-hints p {
+  margin: 0;
+  padding: 14px 18px;
+  border: 1px solid #506ab5;
+  border-radius: 15px;
+  background: #102652;
+  color: #d9e4ff;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 850;
+}
+.guess-animal-hints p span {
+  display: inline-block;
+  margin-right: 14px;
+  color: var(--yellow);
+  font-size: 12px;
+  letter-spacing: .14em;
+  font-weight: 950;
+}
+.guess-animal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.guess-animal-keyboard-panel {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(760px, 100%);
+}
+.guess-animal-keyboard {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(42px, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+.guess-animal-keyboard button {
+  min-height: 48px;
+  border: 2px solid #6688ff;
+  border-radius: 12px;
+  color: #f4f7ff;
+  background: linear-gradient(135deg, #173267, #102652);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 950;
+}
+.guess-animal-keyboard button:nth-child(3n+1) { border-color: #ffd84d; }
+.guess-animal-keyboard button:nth-child(3n+2) { border-color: #65e6b8; }
+.guess-animal-keyboard button:nth-child(3n+3) { border-color: #6fb5ff; }
+.guess-animal-keyboard button.wide {
+  grid-column: span 2;
+  color: var(--yellow);
+}
+@media (max-width: 760px) {
+  .wild-life-wh-grid { grid-template-columns: 1fr; grid-template-areas: "habitat" "diet" "lion" "species" "body"; }
+  .guess-animal-keyboard { grid-template-columns: repeat(6, 1fr); }
+  .guess-animal-slots span { width: 46px; height: 46px; font-size: 25px; }
+}
+
+/* Guess Animal compact classroom layout */
+.guess-animal-card {
+  position: relative;
+  gap: 14px;
+  padding: clamp(18px, 3.2vw, 38px);
+}
+.guess-animal-slots-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+}
+.guess-animal-slots {
+  gap: 7px;
+}
+.guess-animal-slots span {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  font-size: 24px;
+}
+.guess-animal-slots-row #guessAnimalNextButton {
+  min-width: 112px;
+  padding: 14px 20px;
+  border-radius: 16px;
+}
+.guess-animal-hints {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: min(920px, 100%);
+}
+.guess-animal-hints p {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: clamp(15px, 1.45vw, 21px);
+  line-height: 1.18;
+}
+.guess-animal-hints p span {
+  margin-right: 8px;
+  font-size: 9px;
+  letter-spacing: .1em;
+}
+.guess-animal-actions {
+  gap: 10px;
+}
+.guess-animal-actions .primary-button,
+.guess-animal-actions .secondary-button {
+  min-width: 150px;
+  padding: 14px 22px;
+}
+.guess-animal-keyboard-panel {
+  width: min(700px, 100%);
+}
+.guess-animal-keyboard {
+  grid-template-columns: repeat(10, minmax(34px, 1fr));
+  gap: 6px;
+}
+.guess-animal-keyboard button {
+  min-height: 38px;
+  border-radius: 10px;
+  font-size: 17px;
+}
+.guess-animal-keyboard button.key-pressed {
+  animation: guessKeyPress .18s ease-out;
+}
+@keyframes guessKeyPress {
+  0% { transform: scale(1); filter: brightness(1); box-shadow: none; }
+  42% { transform: scale(.9); filter: brightness(1.45); box-shadow: 0 0 18px rgba(255, 216, 77, .46); }
+  100% { transform: scale(1); filter: brightness(1); box-shadow: none; }
+}
+.guess-animal-floating-text {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  top: 52px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  opacity: 0;
+  font-size: clamp(32px, 4.5vw, 62px);
+  font-weight: 950;
+  letter-spacing: .08em;
+  text-shadow: 0 0 16px rgba(255, 216, 77, .55), 0 8px 20px rgba(0, 0, 0, .45);
+}
+.guess-animal-floating-text.gain { color: var(--yellow); }
+.guess-animal-floating-text.loss { color: #ff5d4d; text-shadow: 0 0 16px rgba(255, 93, 77, .55), 0 8px 20px rgba(0, 0, 0, .45); }
+.guess-animal-floating-text.show { animation: guessAnimalFloat .9s ease-out forwards; }
+@keyframes guessAnimalFloat {
+  0% { opacity: 0; transform: translate(-50%, 20px) scale(.82); }
+  18% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -46px) scale(1.08); }
+}
+@media (max-width: 760px) {
+  .guess-animal-slots-row { flex-direction: column; }
+  .guess-animal-hints { grid-template-columns: 1fr; }
+  .guess-animal-keyboard { grid-template-columns: repeat(7, 1fr); }
+}
+
+/* Overlay: sentence above image (superlatives format) */
+.presence-overlay-question.as-sentence { font-size: clamp(20px, 2.6vw, 34px); line-height: 1.3; }
+
+/* Triple-form (adjective -> -er -> the -est) cross layout: tighter cards, smaller type */
+.ppt-comp-triple .presence-row.category-list { padding: 10px 10px; }
+.ppt-comp-triple .presence-row.category-list .presence-prompt { font-size: clamp(11px, 1.15vw, 17px); line-height: 1.25; }
+.ppt-comp-triple .presence-row:nth-child(4) { white-space: nowrap; }
+.ppt-comp-triple .presence-row:nth-child(4) .presence-prompt { font-size: clamp(16px, 1.9vw, 28px); }
+.ppt-comp-triple { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.ppt-comp-triple .presence-row { min-width: 0; }
+
+/* Cross-app nav link, pinned to bottom of the brand panel */
+.brand-lockup { position: relative; padding-bottom: clamp(70px, 9vh, 92px); }
+.app-switch-link {
+  position: absolute; left: clamp(24px, 2.4vw, 42px); right: clamp(24px, 2.4vw, 42px); bottom: clamp(26px, 4vh, 52px);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 18px; border-radius: 16px;
+  border: 1px solid rgba(255, 216, 77, .45);
+  background: rgba(255, 216, 77, .08);
+  color: var(--u2-gold); text-decoration: none;
+  font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: .1em;
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.app-switch-link span { transition: transform .15s ease; }
+.app-switch-link:hover { transform: translateY(-2px); background: rgba(255, 216, 77, .15); border-color: rgba(255, 216, 77, .7); }
+.app-switch-link:hover span { transform: translateX(3px); }

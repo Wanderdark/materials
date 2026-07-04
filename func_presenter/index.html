@@ -28,6 +28,7 @@
         <div class="brand-steps">
           <span><b>1</b>GRADE</span><i></i><span><b>2</b>UNIT</span><i></i><span><b>3</b>FUNCTION</span>
         </div>
+        <a href="../vocab_presenter/index.html" class="app-switch-link">TO VOCABULARY <span>→</span></a>
       </div>
 
       <div id="setupCard" class="setup-card" data-step="grade">
@@ -278,6 +279,32 @@
           <button id="exerciseHomeButton" class="primary-button">BACK TO MENU</button>
         </div>
       </div>
+    </section>
+
+    <section id="guessAnimalScreen" class="guess-animal-screen hidden">
+      <header class="presentation-header">
+        <button id="guessAnimalExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="guessAnimalGradeLabel">GRADE 5</span><strong id="guessAnimalTitle">GUESS THE ANIMAL</strong></div>
+        <div class="progress"><strong id="guessAnimalProgressText">1 / 10</strong><span>ANIMALS</span></div>
+        <div class="exercise-score">SCORE <strong id="guessAnimalScore">0</strong></div>
+      </header>
+      <article id="guessAnimalCard" class="guess-animal-card">
+        <div id="guessAnimalFloatingText" class="guess-animal-floating-text hidden"></div>
+        <div class="guess-animal-slots-row">
+          <div id="guessAnimalSlots" class="guess-animal-slots"></div>
+          <button id="guessAnimalNextButton" class="primary-button hidden">NEXT</button>
+        </div>
+        <div id="guessAnimalHints" class="guess-animal-hints"></div>
+        <div class="guess-animal-actions">
+          <button id="guessAnimalGuessButton" class="primary-button">GUESS</button>
+          <button id="guessAnimalHintButton" class="secondary-button">NEXT HINT</button>
+          <button id="guessAnimalRevealButton" class="secondary-button hidden">REVEAL</button>
+        </div>
+        <div id="guessAnimalKeyboardPanel" class="guess-animal-keyboard-panel hidden">
+          <div id="guessAnimalKeyboard" class="guess-animal-keyboard"></div>
+        </div>
+        <p id="guessAnimalFeedback" class="exercise-feedback" aria-live="polite"></p>
+      </article>
     </section>
 
     <section id="fillBlankScreen" class="fill-blank-screen hidden">
@@ -540,6 +567,9 @@
   <script src="functions/countable-uncountable.js"></script>
   <script src="functions/have-got-has-got.js"></script>
   <script src="functions/can-permission.js"></script>
+  <script src="functions/can-capability.js"></script>
+  <script src="functions/wild-life-wh-questions.js"></script>
+  <script src="functions/superlatives.js"></script>
   <script src="functions/index.js"></script>
   <script src="exercises/activity-modules.js"></script>
   <script src="exercises/article-choice.js"></script>
@@ -590,6 +620,11 @@
   <script src="exercises/countable-uncountable-quantity-choice.js"></script>
   <script src="exercises/countable-uncountable-quantity-snap.js"></script>
   <script src="exercises/have-got-has-got-appearance-choice.js"></script>
+  <script src="yaml/wild-life-wh-questions.yaml.js"></script>
+  <script src="exercises/guess-the-animal.js"></script>
+  <script src="exercises/wild-life-wh-choice.js"></script>
+  <script src="exercises/can-capability-choice.js"></script>
+  <script src="exercises/wild-life-species-sort.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
 </body>

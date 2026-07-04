@@ -264,6 +264,34 @@ required.
 
 ------------------------------------------------------------------------
 
+# CHARACTER PERFORMANCE
+
+The character should behave naturally rather than pose.
+
+Expressions must arise naturally from the activity.
+
+Avoid exaggerated smiles.
+
+Avoid looking directly at the camera.
+
+Body language should support the action.
+
+Hands should perform believable movements.
+
+The character should appear genuinely engaged in the activity.
+
+The illustration should feel like a candid moment rather than a posed
+portrait.
+
+Every pose should communicate the sentence before the viewer reads the
+text.
+
+Favor subtle emotion over exaggerated expression.
+
+Prioritize storytelling over attractiveness.
+
+------------------------------------------------------------------------
+
 # CHARACTER FIRST
 
 Recurring character prompts should always follow this order:

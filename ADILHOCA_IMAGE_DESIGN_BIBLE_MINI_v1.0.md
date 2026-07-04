@@ -53,6 +53,24 @@ Replace every child with the canonical AdilHoca characters.
 
 ------------------------------------------------------------------------
 
+## Character Performance
+
+-   Characters should behave naturally rather than pose.
+-   Expressions must arise naturally from the activity.
+-   Avoid exaggerated smiles.
+-   Avoid looking directly at the camera.
+-   Body language should support the action.
+-   Hands should perform believable movements.
+-   Characters should appear genuinely engaged in the activity.
+-   Illustrations should feel like candid moments rather than posed
+    portraits.
+-   Every pose should communicate the sentence before the viewer reads
+    the text.
+-   Favor subtle emotion over exaggerated expression.
+-   Prioritize storytelling over attractiveness.
+
+------------------------------------------------------------------------
+
 ## Facial Expressions
 
 Expressions must match each character's personality.

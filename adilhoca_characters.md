@@ -632,6 +632,7 @@ General Interests:
 - Barbecue
 - Picnics
 - Hiking
+- Climbing
 - Outdoor games
 
 Personality:

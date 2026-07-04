@@ -1348,3 +1348,19 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
   .setup-actions { flex-wrap: wrap; }
   #gradeOptions.grade-grid { grid-template-columns: 1fr; }
 }
+
+/* Cross-app nav link, pinned to bottom of the brand panel */
+.brand-lockup { position: relative; padding-bottom: clamp(70px, 9vh, 92px); }
+.app-switch-link {
+  position: absolute; left: clamp(24px, 2.4vw, 42px); right: clamp(24px, 2.4vw, 42px); bottom: clamp(26px, 4vh, 52px);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 14px 18px; border-radius: 16px;
+  border: 1px solid rgba(255, 216, 77, .45);
+  background: rgba(255, 216, 77, .08);
+  color: var(--u2-gold); text-decoration: none;
+  font-family: var(--font-display); font-size: 16px; font-weight: 800; letter-spacing: .1em;
+  transition: transform .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.app-switch-link span { transition: transform .15s ease; }
+.app-switch-link:hover { transform: translateY(-2px); background: rgba(255, 216, 77, .15); border-color: rgba(255, 216, 77, .7); }
+.app-switch-link:hover span { transform: translateX(3px); }

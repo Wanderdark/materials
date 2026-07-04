@@ -570,6 +570,42 @@
           "AMOUNT", "SMELL"
         ]
       }
+    ],
+    "5:7": [
+      {
+        id: "species",
+        title: "Species",
+        words: ["INSECTS", "REPTILES", "BIRDS", "MAMMALS"]
+      },
+      {
+        id: "animals-and-animal-groups",
+        title: "Animals",
+        words: [
+          "MONKEY", "GIRAFFE", "ELEPHANT", "LION", "CROCODILE", "BEAR", "WOLF",
+          "PARROT", "SNAKE", "WHALE", "SHARK", "SEAL", "BEE", "CHEETAH",
+          "LEOPARD", "GORILLA", "ZEBRA", "TIGER", "EAGLE", "PENGUIN", "SEAGULL"
+        ]
+      },
+      {
+        id: "animal-body-parts",
+        title: "Animal Body Parts",
+        words: ["TAIL", "TUSK", "PAW", "WING", "FEATHER", "SHARP TEETH", "FLIPPER"]
+      },
+      {
+        id: "adjectives-and-descriptions",
+        title: "Adjectives & Descriptions",
+        words: ["QUIET", "SCARY", "DANGEROUS", "WILD", "HUGE", "ENORMOUS", "FURRY", "STRONG", "FAST", "SLOW", "WEAK"]
+      },
+      {
+        id: "habitats-and-places",
+        title: "Habitats",
+        words: ["OCEAN", "SKY", "HABITAT", "NATIONAL PARK", "FOREST", "JUNGLE", "SAVANNA", "RIVER", "MOUNTAIN", "FARM", "FIELD", "GRASS"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: ["ABILITY", "ATTACK", "HUNT", "MOVE", "RUN", "SURVIVE", "TALK", "FLY", "CLIMB"]
+      }
     ]
   };
 
