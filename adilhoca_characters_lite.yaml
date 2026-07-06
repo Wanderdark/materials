@@ -103,8 +103,8 @@ students:
     default_expression: "Confident smirk."
     expression_note: "Hafif muzip bir siritis. \"Hadi bir seyler yapalim.\" enerjisi."
     hobbies:
-      loves: ["playing basketball"]
-      likes: ["playing table tennis"]
+      loves: ["skiing", "snowboarding"]
+      likes: ["playing basketball", "playing table tennis"]
     personality:
       traits: [Energetic, adventurous, confident, curious, playful, fearless]
       note: "Surekli yeni seyler denemek ister."
@@ -274,7 +274,7 @@ students:
     expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
     hobbies:
       loves: ["taking photos"]
-      likes: ["painting"]
+      likes: ["painting", "going to cinema", "watching movies"]
     personality:
       traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
       note: "Kucuk detaylari herkesten once fark eder."

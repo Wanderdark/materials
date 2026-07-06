@@ -300,8 +300,8 @@ Favorite / Signature Activity:
 Riding an Electric Scooter.
 
 Hobbies:
-- Loves: playing basketball
-- Likes: playing table tennis
+- Loves: skiing, snowboarding
+- Likes: playing basketball, playing table tennis
 
 General Interests:
 - Football
@@ -309,6 +309,7 @@ General Interests:
 - Drama Club
 - Adventure parks
 - Skateboarding
+- Winter sports
 
 Personality:
 Energetic, adventurous, confident, curious, playful, fearless.
@@ -326,7 +327,7 @@ Enerjik cocuk. Spor sonrasi pizza tam ona gore.
 Favorite Profile:
 - Favorite color: Orange
 - Favorite subject: P.E.
-- Favorite season: Summer
+- Favorite season: Winter
 - Favorite animal: Eagle
 - Favorite music type: Rock
 - Favorite book type: Adventure
@@ -946,7 +947,7 @@ Photography.
 
 Hobbies:
 - Loves: taking photos
-- Likes: painting
+- Likes: painting, going to cinema, watching movies
 
 General Interests:
 - Piano
@@ -954,6 +955,8 @@ General Interests:
 - Robotics design
 - School newspaper
 - Digital art
+- Cinema
+- Movies
 
 Personality:
 Artistic, detail-oriented, imaginative, creative, observant, perfectionist.

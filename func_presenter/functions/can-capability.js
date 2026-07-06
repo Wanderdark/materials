@@ -146,7 +146,7 @@ const canCapabilityFunction = {
       kicker: "OUR CLASSROOM UNIVERSE",
       title: "Click a character.",
       compactTitle: true,
-      imagePath: "images/can-ability/collage-photo.webp",
+      imagePath: "images/common/collage-photo-1.webp",
       imageClass: "hub-collage-visual",
       visualBrief: "Characters and their abilities.",
       showAllItems: true,
@@ -161,7 +161,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "SIGNATURE ACTIVITY", imagePath: "images/can-ability/benjamin-swim.webp", sentence: "Benjamin <can> swim very well." }
+              { question: "SIGNATURE ACTIVITY", imagePath: "images/common/swim-benjamin-1.webp", sentence: "Benjamin <can> swim very well." }
             ]
           }
         },
@@ -174,7 +174,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "HOBBY", imagePath: "images/simple-present-like/olivia-painting.webp", sentence: "Olivia <can> draw and paint pictures" }
+              { question: "HOBBY", imagePath: "images/common/paint-olivia-1.webp", sentence: "Olivia <can> draw and paint pictures" }
             ]
           }
         },
@@ -187,7 +187,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "SIGNATURE ACTIVITY", imagePath: "images/can-ability/ethan-violin.webp", sentence: "Ethan <can> play violin." }
+              { question: "SIGNATURE ACTIVITY", imagePath: "images/common/play-violin-ethan-1.webp", sentence: "Ethan <can> play violin." }
             ]
           }
         },
@@ -200,7 +200,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "HOBBY", imagePath: "images/can-ability/chloe-play-piano.webp", sentence: "Chloe <can> play piano." }
+              { question: "HOBBY", imagePath: "images/common/play-piano-chloe-1.webp", sentence: "Chloe <can> play piano." }
             
             ]
           }
@@ -218,7 +218,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "HOBBY", imagePath: "images/simple-present-like/noah-problems.webp", sentence: "Noah <can> do puzzles quickly." }
+              { question: "HOBBY", imagePath: "images/common/solve-puzzles-noah-1.webp", sentence: "Noah <can> do puzzles quickly." }
             ]
           }
         },
@@ -231,7 +231,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "HOBBY", imagePath: "images/can-ability/hannah-bike.webp", sentence: "Hannah <can> ride bicycle very well." }
+              { question: "HOBBY", imagePath: "images/common/ride-bike-hannah-1.webp", sentence: "Hannah <can> ride bicycle very well." }
             ]
           }
         },
@@ -244,7 +244,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "SIGNATURE ACTIVITY", imagePath: "images/simple-present-like/ella-sing-songs.webp", sentence: "Ella <can> sing very well." }
+              { question: "SIGNATURE ACTIVITY", imagePath: "images/common/sing-ella-1.webp", sentence: "Ella <can> sing very well." }
             ]
           }
         },
@@ -257,7 +257,7 @@ const canCapabilityFunction = {
             imageAspect: "1 / 1",
             imageFit: "cover",
             steps: [
-              { question: "HOBBY", imagePath: "../images/5/6/15.webp", sentence: "Emma <can> cook very well " }
+              { question: "HOBBY", imagePath: "images/common/cook-emma-1.webp", sentence: "Emma <can> cook very well " }
             ]
           }
         }

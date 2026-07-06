@@ -1125,3 +1125,49 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
 .app-switch-link span { transition: transform .15s ease; }
 .app-switch-link:hover { transform: translateY(-2px); background: rgba(255, 216, 77, .15); border-color: rgba(255, 216, 77, .7); }
 .app-switch-link:hover span { transform: translateX(3px); }
+
+/* Thought-bubble overlay mode (be going to: plans) */
+.presence-overlay-card.thought-mode .presence-overlay-image {
+  border: 5px solid rgba(255, 255, 255, .92);
+  border-radius: 46px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
+}
+.presence-overlay-portrait {
+  position: absolute; left: -62px; bottom: -40px; z-index: 3;
+  width: clamp(100px, 11vw, 150px); height: clamp(100px, 11vw, 150px);
+}
+.presence-overlay-portrait img {
+  width: 100%; height: 100%; display: block; object-fit: cover;
+  border: 4px solid var(--yellow); border-radius: 50%;
+  background: #0a142f;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .45);
+}
+.presence-overlay-portrait i {
+  position: absolute; border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .3);
+}
+.presence-overlay-portrait i:nth-of-type(1) { width: 14px; height: 14px; right: -10px; top: -18px; }
+.presence-overlay-portrait i:nth-of-type(2) { width: 24px; height: 24px; right: -30px; top: -52px; }
+
+/* Unit theme label (tiny, under the unit number) */
+.opt-theme { display: block; min-width: 0; max-width: 100%; margin-top: 3px; color: #7f97d6; font-size: 9px; font-weight: 800; letter-spacing: .05em; line-height: 1.25; text-align: center; text-transform: uppercase; white-space: normal; transition: color .15s ease; }
+.grade-button.selected .opt-theme { color: rgba(20, 24, 58, .68); }
+
+.going-to-builder-list .presence-prompt-line { display: flex; align-items: center; gap: 12px; }
+.going-to-builder-list .presence-prompt-line .presence-prompt { flex: 1; min-width: 0; }
+.presence-icon-button { flex: 0 0 auto; min-width: 64px; min-height: 48px; border: 2px solid rgba(101, 230, 184, .75); border-radius: 14px; color: #dffdf2; background: rgba(18, 84, 67, .72); cursor: pointer; font-size: 14px; font-weight: 950; letter-spacing: .09em; }
+.presence-icon-button:hover { box-shadow: 0 0 16px rgba(101, 230, 184, .28); transform: translateY(-1px); }
+.presence-inline-reveal { flex: 0 0 auto; margin-top: 0; min-height: 48px; padding: 10px 16px; font-size: 13px; }
+.going-to-builder-list { width: min(840px, 100%); gap: 10px; }
+.going-to-builder-list .presence-row { padding: 10px 12px; }
+.going-to-builder-list .presence-prompt { font-size: clamp(18px, 1.65vw, 26px); }
+.going-to-build-visual { object-fit: cover; }
+.example-card:has(.going-to-builder-list) .presence-title.compact { font-size: clamp(13px, 1.1vw, 17px); color: var(--muted); letter-spacing: .08em; }
+.going-to-plan-check-list { width: min(900px, 100%); gap: 12px; }
+.going-to-plan-check-list .presence-row { padding: 12px 14px; }
+.going-to-plan-check-list .inline-choice-prompt { font-size: clamp(17px, 1.55vw, 24px); line-height: 1.25; }
+.going-to-plan-check-list .presence-icon-button { min-width: 92px; }
+.going-to-portrait-visual { width: min(430px, 78%); aspect-ratio: 1 / 1; object-fit: cover; border-radius: 28px; }

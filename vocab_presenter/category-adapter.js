@@ -606,6 +606,28 @@
         title: "Other Words",
         words: ["ABILITY", "ATTACK", "HUNT", "MOVE", "RUN", "SURVIVE", "TALK", "FLY", "CLIMB"]
       }
+    ],
+    "5:8": [
+      {
+        id: "places",
+        title: "Places",
+        words: ["BEACH", "BRIDGE", "CONTINENT", "DESERT", "VALLEY", "LAKE", "SAND DUNE", "CORAL REEF", "CANYON", "ISLAND", "ZOO", "AMUSEMENT PARK", "HILL"]
+      },
+      {
+        id: "travel-and-tourism",
+        title: "Travel & Tourism",
+        words: ["VACATION", "JOURNEY", "TRIP", "SIGHTSEEING", "DESTINATION", "SEASIDE", "TOURISM", "RIDE A CAMEL", "SCUBA DIVING", "SNORKELLING", "HALF TERM", "PACK", "EXPLORE", "VISIT", "INVITE"]
+      },
+      {
+        id: "seasons-and-weather",
+        title: "Seasons & Weather",
+        words: ["CLIMATE", "SEASON", "WINTER", "SUMMER", "AUTUMN", "FALL", "SPRING", "TEMPERATURE"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: ["AMAZING", "FAMOUS", "MAGICAL", "FUN", "JOLLY", "GIANT", "ROCK", "RISE", "VIEW", "SANDCASTLE", "SEASHELL", "INVOLVE", "MAKE A WISH", "OPPORTUNITY"]
+      }
     ]
   };
 

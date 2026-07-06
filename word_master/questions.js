@@ -9,6 +9,7 @@
 
 const QUESTIONS = [
 
+
 // ─── GRADE 5 THEME 1 ──────────────────────────────────────────────────────────
 ["A person who helps in an office","Ofiste yardımcı olan kişi","SECRETARY",5,1,1,"../images/6/6/2.webp"],
 ["A club for acting","Tiyatro yapılan kulüp","DRAMA CLUB",5,1,1,"../images/5/2/15.webp"],
@@ -604,6 +605,63 @@ const QUESTIONS = [
 ["Teeth that can cut well","İyi kesebilen dişler","SHARP TEETH",5,3,7,"../images/5/7/37.webp"],
 ["A flat body part for swimming","Yüzmek için kullanılan düz vücut parçası","FLIPPER",5,3,7,"../images/5/7/38.webp"],
 ["Green plants on the ground","Yerdeki yeşil bitkiler","GRASS",5,2,7,"../images/5/7/39.webp"],
+
+// ─── GRADE 5 THEME 8 ──────────────────────────────────────────────────────────
+
+["How hot or cold it is","Bir şeyin ne kadar sıcak ya da soğuk olduğu","TEMPERATURE",5,3,8,"../images/7/9/12.webp"],
+["Very surprising and very good","Çok şaşırtıcı ve çok güzel","AMAZING",5,3,8,"../images/6/5/35.webp"],
+["Well-known","Tanınmış","FAMOUS",5,2,8,"../images/7/3/18.webp"],
+["A time away from school or work","Okuldan veya işten uzak zaman","VACATION",5,3,8,"../images/5/4/8.webp"],
+["A place to relax and play near the sea","Deniz kenarında dinlenip oynanacak yer","BEACH",5,1,8,"../images/5/4/8.webp"],
+["A road over water or land","Su veya kara üzerinden geçen yol","BRIDGE",5,1,8,"../images/8/7/19.webp"],
+["The usual weather of a place","Bir yerin normal hava durumu","CLIMATE",5,3,8,"../images/5/8/1.webp"],
+["A very large land area","Çok büyük kara parçası","CONTINENT",5,3,8,"../images/5/8/2.webp"],
+["A very dry sandy place","Çok kuru ve kumlu yer","DESERT",5,2,8,"../images/5/8/3.webp"],
+["Low land between mountains","Dağların arasındaki alçak yer","VALLEY",5,3,8,"../images/5/8/4.webp"],
+["A large area of water","Büyük su alanı","LAKE",5,2,8,"../images/5/8/5.webp"],
+["A hard piece of stone","Sert taş parçası","ROCK",5,2,8,"../images/5/8/6.webp"],
+["One part of the year","Yılın bir bölümü","SEASON",5,1,8,"../images/5/8/7.webp"],
+["A hill of sand","Kumdan oluşan tepe","SAND DUNE",5,3,8,"../images/5/8/8.webp"],
+["A colorful place under the sea","Denizin altında renkli bir yer","CORAL REEF",5,3,8,"../images/5/8/9.webp"],
+["A deep valley with steep sides","Dik kenarlı derin vadi","CANYON",5,2,8,"../images/5/8/10.webp"],
+["Land with water around it","Etrafı suyla çevrili kara","ISLAND",5,2,8,"../images/5/8/11.webp"],
+["Go up","Yukarı çıkmak","RISE",5,3,8,"../images/5/8/12.webp"],
+["Put things into a bag","Eşyaları çantaya koymak","PACK",5,2,8,"../images/5/8/13.webp"],
+["Go and learn about a place","Bir yere gidip orayı öğrenmek","EXPLORE",5,3,8,"../images/5/8/14.webp"],
+["Go to see a place or person","Bir yeri veya kişiyi görmeye gitmek","VISIT",5,2,8,"../images/5/8/15.webp"],
+["Something enjoyable","Eğlenceli bir şey","FUN",5,1,8,"../images/5/8/16.webp"],
+["Like magic","Sihir gibi","MAGICAL",5,2,8,"../images/5/8/17.webp"],
+["A long trip","Uzun yolculuk","JOURNEY",5,3,8,"../images/5/8/18.webp"],
+["A good chance","İyi bir şans","OPPORTUNITY",5,3,8,"../images/5/8/19.webp"],
+["A short journey","Kısa yolculuk","TRIP",5,2,8,"../images/5/8/20.webp"],
+["Visiting famous places","Ünlü yerleri gezmek","SIGHTSEEING",5,3,8,"../images/5/8/20.webp"],
+["Happy and cheerful","Mutlu ve neşeli","JOLLY",5,3,8,"../images/5/8/20.webp"],
+["A place with many animals","Birçok hayvanın olduğu yer","ZOO",5,1,8,"../images/5/8/21.webp"],
+["A fun park with rides","Eğlenceli oyuncakları olan park","AMUSEMENT PARK",5,2,8,"../images/5/8/22.webp"],
+["What you can see from a place","Bir yerden görebildiğin şey","VIEW",5,3,8,"../images/5/8/23.webp"],
+["The place you go to","Gittiğin yer","DESTINATION",5,3,8,"../images/5/8/24.webp"],
+["A place to relax and play near the sea","Deniz kenarında dinlenip oynanacak yer","SEASIDE",5,2,8,"../images/5/8/25.webp"],
+["A castle made of sand","Kumdan yapılan kale","SANDCASTLE",5,3,8,"../images/5/8/26.webp"],
+["Ask someone to come","Birinden gelmesini istemek","INVITE",5,2,8,"../images/5/8/28.webp"],
+["Small objects you find on the beach","Plajda bulduğun küçük şeyler","SEASHELL",5,2,8,"../images/5/8/29.webp"],
+["The coldest season","En soğuk mevsim","WINTER",5,1,8,"../images/5/8/30.webp"],
+["The hottest season","En sıcak mevsim","SUMMER",5,1,8,"../images/5/8/31.webp"],
+["The season after summer","Yazdan sonraki mevsim","AUTUMN",5,3,8,"../images/5/8/32.webp"],
+["The season after summer","Yazdan sonraki mevsim","FALL",5,2,8,"../images/5/8/32.webp"],
+["The season with flowers","Çiçeklerin olduğu mevsim","SPRING",5,2,8,"../images/5/8/33.webp"],
+["Travel for fun","Eğlence için seyahat etmek","TOURISM",5,1,8,"../images/5/8/34.webp"],
+
+// BOOK SPECIFIC WORDS
+
+["Travel on a camel","Deve üzerinde yolculuk yapmak","RIDE A CAMEL",5,2,8,"../images/5/8/35.webp"],
+["Swimming under the sea with equipment","Ekipmanla denizin altında yüzmek","SCUBA DIVING",5,3,8,"../images/5/8/36.webp"],
+["Swimming near the top of the sea","Denizin üst kısmına yakın yüzmek","SNORKELLING",5,2,8,"../images/5/8/37.webp"],
+["Very very big","Çok çok büyük","GIANT",5,2,8,"../images/5/8/38.webp"],
+["A short school holiday","Kısa okul tatili","HALF TERM",5,2,8,"../images/5/8/39.webp"],
+["A small mountain","Küçük dağ","HILL",5,2,8,"../images/5/8/40.webp"],
+["Include or take part in","İçermek veya içinde yer almak","INVOLVE",5,3,8,"../images/5/8/41.webp"],
+["Say what you want in your heart","İçinden istediğin şeyi söylemek","MAKE A WISH",5,2,8,"../images/5/8/42.webp"],
+
 
   // ─── GRADE 7 UNIT 1 ──────────────────────────────────────────────────────────
   ["Very beautiful or handsome.","Güzel görünümlü ve hoş.","ATTRACTIVE",7,2,1,"../images/7/1/1.webp"],

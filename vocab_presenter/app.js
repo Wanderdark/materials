@@ -277,6 +277,19 @@
     setSetupStep("unit");
   }
 
+  const UNIT_THEMES = {
+    5: {
+      1: "School Life",
+      2: "Classroom Life",
+      3: "Personal Life",
+      4: "Family Life",
+      5: "Life in the Neighbourhood & City",
+      6: "Life in the World",
+      7: "Life in Nature",
+      8: "Life in the Universe & Future"
+    }
+  };
+
   function renderUnits() {
     els.units.replaceChildren();
     if (!state.grade) {
@@ -291,7 +304,8 @@
       const count = records.filter((item) => item[3] === state.grade && item[5] === unit).length;
       const button = document.createElement("button");
       button.className = `unit-card-button${state.unit === unit ? " selected" : ""}`;
-      button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong><small class="opt-count">${count} words</small>`;
+      const theme = UNIT_THEMES[state.grade]?.[unit];
+      button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong><small class="opt-count">${count} words</small>${theme ? `<small class="opt-theme">${theme}</small>` : ""}`;
       button.addEventListener("click", () => {
         state.unit = unit;
         els.unitStatus.textContent = `Unit ${unit} selected`;

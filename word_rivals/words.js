@@ -695,6 +695,70 @@ const QUESTIONS = [
   ["FEATHER",5,7,"../images/5/7/36.webp"],
   ["GRASS",5,7,"../images/5/7/39.webp"],
 
+  // ─── GRADE 5 UNIT 8 ──────────────────────────────────────────────────────────
+  // synonyms: BEACH = VACATION (same image); cross-exception with SEASIDE
+  ["BEACH",5,8,"VACATION","SEASIDE","SUMMER","../images/5/4/8.webp"],
+  ["VACATION",5,8,"BEACH","SEASIDE","SUMMER","../images/5/4/8.webp"],
+  // synonyms: TRIP = SIGHTSEEING = JOLLY (same image); cross-exception with JOURNEY
+  ["TRIP",5,8,"SIGHTSEEING","JOLLY","JOURNEY","../images/5/8/20.webp"],
+  ["SIGHTSEEING",5,8,"TRIP","JOLLY","JOURNEY","../images/5/8/20.webp"],
+  ["JOLLY",5,8,"TRIP","SIGHTSEEING","JOURNEY","FUN","../images/5/8/20.webp"],
+  // synonyms: AUTUMN = FALL (same image); cross-exception with other seasons
+  ["AUTUMN",5,8,"FALL","SPRING","../images/5/8/32.webp"],
+  ["FALL",5,8,"AUTUMN","WINTER","SUMMER","SPRING","../images/5/8/32.webp"],
+  // cross-exceptions: seasons
+  ["WINTER",5,8,"SUMMER","AUTUMN","FALL","SPRING","../images/5/8/30.webp"],
+  ["SUMMER",5,8,"BEACH","SEASIDE","VACATION","../images/5/8/31.webp"],
+  ["SPRING",5,8,"AUTUMN","FALL","../images/5/8/33.webp"],
+  // cross-exceptions: seaside destination
+  ["SEASIDE",5,8,"BEACH","VACATION","../images/5/8/25.webp"],
+  // cross-exceptions: travel actions
+  ["EXPLORE",5,8,"VISIT","../images/5/8/14.webp"],
+  ["VISIT",5,8,"EXPLORE","../images/5/8/15.webp"],
+  // cross-exceptions: long journey
+  ["JOURNEY",5,8,"TRIP","SIGHTSEEING","JOLLY","../images/5/8/18.webp"],
+  // cross-exceptions: underwater activities
+  ["SCUBA DIVING",5,8,"SNORKELLING","../images/5/8/36.webp"],
+  ["SNORKELLING",5,8,"SCUBA DIVING","../images/5/8/37.webp"],
+  // cross-exceptions: attractions with animals/rides
+  ["ZOO",5,8,"../images/5/8/21.webp"],
+  ["AMUSEMENT PARK",5,8,"../images/5/8/22.webp"],
+  // cross-exceptions: sandy places/things
+  ["DESERT",5,8,"SAND DUNE","../images/5/8/3.webp"],
+  ["SAND DUNE",5,8,"DESERT","../images/5/8/8.webp"],
+  ["SANDCASTLE",5,8,"../images/5/8/26.webp"],
+  // cross-exceptions: landforms
+  ["VALLEY",5,8,"CANYON","HILL","../images/5/8/4.webp"],
+  ["CANYON",5,8,"VALLEY","HILL","../images/5/8/10.webp"],
+  ["HILL",5,8,"VALLEY","CANYON","../images/5/8/40.webp"],
+  // cross-exceptions: large land masses
+  ["CONTINENT",5,8,"ISLAND","CLIMATE","../images/5/8/2.webp"],
+  ["ISLAND",5,8,"CONTINENT","CLIMATE","../images/5/8/11.webp"],
+  // cross-exceptions: sea findings
+  ["CORAL REEF",5,8,"../images/5/8/9.webp"],
+  ["SEASHELL",5,8,"../images/5/8/29.webp"],
+  // standalone entries
+  ["TEMPERATURE",5,8,"../images/7/9/12.webp"],
+  ["AMAZING",5,8,"../images/6/5/35.webp"],
+  ["FAMOUS",5,8,"../images/7/3/18.webp"],
+  ["BRIDGE",5,8,"../images/8/7/19.webp"],
+  ["CLIMATE",5,8,"CONTINENT","ISLAND","../images/5/8/1.webp"],
+  ["LAKE",5,8,"../images/5/8/5.webp"],
+  ["ROCK",5,8,"../images/5/8/6.webp"],
+  ["SEASON",5,8,"../images/5/8/7.webp"],
+  ["RISE",5,8,"../images/5/8/12.webp"],
+  ["PACK",5,8,"../images/5/8/13.webp"],
+  ["FUN",5,8,"JOLLY","../images/5/8/16.webp"],
+  ["MAGICAL",5,8,"../images/5/8/17.webp"],
+  ["OPPORTUNITY",5,8,"../images/5/8/19.webp"],
+  ["DESTINATION",5,8,"../images/5/8/24.webp"],
+  ["INVITE",5,8,"../images/5/8/28.webp"],
+  ["RIDE A CAMEL",5,8,"../images/5/8/35.webp"],
+  ["GIANT",5,8,"../images/5/8/38.webp"],
+  ["HALF TERM",5,8,"../images/5/8/39.webp"],
+  ["INVOLVE",5,8,"../images/5/8/41.webp"],
+  ["MAKE A WISH",5,8,"../images/5/8/42.webp"],
+
   // ─── GRADE 6 UNIT 1 ──────────────────────────────────────────────────────────
   ["LIFE",6,1,"../images/6/1/1.webp"],
   ["START",6,1,"../images/6/1/2.webp"],

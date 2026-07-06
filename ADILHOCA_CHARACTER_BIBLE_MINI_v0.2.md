@@ -38,7 +38,7 @@ Art.
 
 Appearance: chin-length French bob brown hair, slightly thick eyebrows;
 green eyes; artistic, detail-oriented. Signature: piano, photography.
-General: design/build. Clubs: STEM, Music, School Newspaper, Art.
+General: design/build, cinema, movies. Clubs: STEM, Music, School Newspaper, Art.
 
 ### Victoria
 
@@ -68,7 +68,7 @@ holidays. Clubs: Environmental.
 ### Daniel
 
 Appearance: adventurous. Signature: electric scooter. General: football,
-art. Clubs: Drama.
+winter sports, skiing, snowboarding, art. Clubs: Drama.
 
 ### David
 

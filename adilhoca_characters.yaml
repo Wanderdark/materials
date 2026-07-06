@@ -10,6 +10,10 @@ canonical_rules:
   child_age_lock:
     canonical_age_source: "Use each student's age field. The current canonical roster uses age 12."
     template: "[NAME] is a [CANONICAL AGE]-year-old [girl/boy]. Do not make [him/her] look older or younger. Preserve [his/her] canonical child age, body proportions and overall youthful appearance."
+  parent_identity_rules:
+    parents_are_canonical_supporting_characters: true
+    rule: "Parents must not be generated as generic adults. Each parent has a distinct visual identity and should remain recognizable across family scenes. Parent identity should be included in prompts whenever a parent appears."
+    family_resemblance_rule: "Parent visual identities should share believable DNA cues with the child. Preserve each parent's distinct identity while echoing the child's canonical features through hair texture, eye shape, smile, face shape, eyebrow shape, skin tone family, or overall facial softness."
 
 signature_activity_index:
   pet_care: Ava
@@ -50,6 +54,8 @@ character_hobbies:
       - "taking photos"
     likes:
       - "painting"
+      - "going to cinema"
+      - "watching movies"
   Victoria:
     loves:
       - "coding"
@@ -67,8 +73,10 @@ character_hobbies:
       - "skateboarding"
   Daniel:
     loves:
-      - "playing basketball"
+      - "skiing"
+      - "snowboarding"
     likes:
+      - "playing basketball"
       - "playing table tennis"
   Mia:
     loves:
@@ -244,8 +252,49 @@ students:
     zodiac_sign: "Taurus"
     born_in: "Netherlands"
     family:
-      mother: {name: "Amina", nationality: "Kenyan", job: "Veterinarian"}
-      father: {name: "David", nationality: "Kenyan", job: "Wildlife Photographer"}
+      family_resemblance:
+        child_shared_features:
+          - "curly black hair texture"
+          - "soft eye shape"
+          - "gentle caring smile"
+          - "warm facial expression"
+        resemblance_note: "Ava should look naturally related to both parents, especially through her mother's curly hair and warm expression, while also sharing her father's calm observant gaze and nature-focused presence."
+      mother:
+        name: "Amina"
+        nationality: "Kenyan"
+        job: "Veterinarian"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "warm brown"
+          hair_color: "black"
+          hair_style: "shoulder-length natural curly hair"
+          eye_color: "green-hazel"
+          face_shape: "soft oval face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "warm almond-shaped green-hazel eyes and a gentle caring smile that clearly resembles Ava's warm expression"
+          clothing_style: "practical soft-colored clothes with a light veterinarian coat"
+          professional_visual_cues: ["light veterinarian coat", "stethoscope", "animal-care badge", "gentle hands when handling pets"]
+          dna_cues_from_child: ["curly black hair texture", "soft eye shape", "gentle caring smile"]
+          prompt_insert: "Amina, Ava's mother, is a Kenyan veterinarian in her late 30s. She has warm brown skin, shoulder-length natural curly black hair, green-hazel almond-shaped eyes, a soft oval face, and a gentle caring smile that clearly resembles Ava's warm expression. Her face should share believable family resemblance with Ava through similar curly black hair texture, soft eye shape, and nurturing smile. She wears practical soft-colored clothes with a light veterinarian coat and subtle animal-care details. Preserve her distinct identity as Ava's mother; do not make her look like a generic adult."
+      father:
+        name: "David"
+        nationality: "Kenyan"
+        job: "Wildlife Photographer"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "deep brown"
+          hair_color: "black"
+          hair_style: "very short natural hair"
+          eye_color: "dark brown"
+          face_shape: "long oval face"
+          build: "lean build"
+          height_impression: "slightly tall"
+          distinctive_feature: "short neatly trimmed beard and focused observant eyes"
+          clothing_style: "earth-tone outdoor shirt, utility vest, and comfortable field trousers"
+          professional_visual_cues: ["camera strap", "small field notebook", "wildlife photography bag"]
+          dna_cues_from_child: ["calm gaze", "soft facial warmth", "nature-focused presence"]
+          prompt_insert: "David, Ava's father, is a Kenyan wildlife photographer in his early 40s. He has deep brown skin, very short natural black hair, dark brown focused observant eyes, a long oval face, and a short neatly trimmed beard. His calm observant gaze and soft facial warmth should feel believably related to Ava, even though his outdoor style is more rugged. He wears an earth-tone outdoor shirt, a utility vest, comfortable field trousers, and carries a camera strap or wildlife photography bag. Preserve his distinct identity as Ava's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Dog", name: "Buddy"}
     relative_height:
       scale: 2
@@ -309,8 +358,49 @@ students:
     zodiac_sign: "Cancer"
     born_in: "New Zealand"
     family:
-      mother: {name: "Emily", nationality: "New Zealander", job: "Travel Agent"}
-      father: {name: "Oliver", nationality: "New Zealander", job: "Swimming Coach"}
+      family_resemblance:
+        child_shared_features:
+          - "short blonde hair family"
+          - "blue eyes"
+          - "relaxed smile"
+          - "calm easy-going expression"
+        resemblance_note: "Benjamin should look naturally related to both parents through blonde hair family traits, blue eyes, and the same relaxed friendly facial energy."
+      mother:
+        name: "Emily"
+        nationality: "New Zealander"
+        job: "Travel Agent"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a soft warm undertone"
+          hair_color: "blonde"
+          hair_style: "shoulder-length straight blonde hair with a soft side part"
+          eye_color: "blue"
+          face_shape: "round-soft face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "relaxed blue eyes and a calm friendly smile that clearly resembles Benjamin's easy-going expression"
+          clothing_style: "neat casual blouse and light cardigan"
+          professional_visual_cues: ["travel-agency lanyard", "small map folder", "tidy travel brochure"]
+          dna_cues_from_child: ["blue eyes", "blonde hair family", "relaxed smile"]
+          prompt_insert: "Emily, Benjamin's mother, is a New Zealander travel agent in her late 30s. She has fair warm-toned skin, shoulder-length straight blonde hair with a soft side part, blue relaxed eyes, and a round-soft face with a calm friendly smile that clearly resembles Benjamin's easy-going expression. She wears neat casual clothes, a light cardigan, and subtle travel-agent details such as a lanyard or small map folder. Preserve her distinct identity as Benjamin's mother; do not make her look like a generic adult."
+      father:
+        name: "Oliver"
+        nationality: "New Zealander"
+        job: "Swimming Coach"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light sun-kissed tone"
+          hair_color: "sandy blonde"
+          hair_style: "short straight sandy-blonde hair"
+          eye_color: "blue"
+          face_shape: "longer oval face"
+          build: "athletic but natural adult build"
+          height_impression: "slightly tall"
+          distinctive_feature: "sun-kissed face, friendly coach-like smile, and relaxed posture"
+          clothing_style: "sporty polo and casual coach clothes"
+          professional_visual_cues: ["swim coach whistle", "towel over one shoulder", "poolside clipboard"]
+          dna_cues_from_child: ["blue eyes", "blonde hair family", "calm easy-going posture"]
+          prompt_insert: "Oliver, Benjamin's father, is a New Zealander swimming coach in his early 40s. He has fair lightly sun-kissed skin, short straight sandy-blonde hair, blue eyes, a longer oval face, and a friendly relaxed coach-like smile. He should feel believably related to Benjamin through similar blue eyes, blonde hair family, and calm easy-going posture. He wears a sporty polo with subtle swimming coach details such as a whistle or towel over one shoulder. Preserve his distinct identity as Benjamin's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -374,8 +464,49 @@ students:
     zodiac_sign: "Pisces"
     born_in: "France"
     family:
-      mother: {name: "Camille", nationality: "French", job: "Baker"}
-      father: {name: "Julien", nationality: "French", job: "Interior Designer"}
+      family_resemblance:
+        child_shared_features:
+          - "long curly blonde hair family"
+          - "blue eyes"
+          - "soft expressive smile"
+          - "sensitive emotional facial warmth"
+        resemblance_note: "Chloe should look naturally related to both parents, especially through her mother's curly blonde hair and gentle blue eyes, while also sharing her father's creative softness."
+      mother:
+        name: "Camille"
+        nationality: "French"
+        job: "Baker"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a rosy warm undertone"
+          hair_color: "blonde"
+          hair_style: "long softly curly blonde hair, loosely tied back while baking"
+          eye_color: "blue"
+          face_shape: "soft heart-shaped face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "gentle blue eyes, soft expressive smile, and light flour dust on her apron during baking scenes"
+          clothing_style: "pastel blouse and simple bakery apron"
+          professional_visual_cues: ["bakery apron", "flour-dusted hands", "pastry tray", "warm bakery colors"]
+          dna_cues_from_child: ["curly blonde hair", "blue eyes", "soft emotional expression"]
+          prompt_insert: "Camille, Chloe's mother, is a French baker in her late 30s. She has fair rosy warm-toned skin, long softly curly blonde hair loosely tied back while baking, blue gentle eyes, and a soft heart-shaped face with an expressive kind smile that clearly resembles Chloe's sensitive expression. She should feel believably related to Chloe through similar curly blonde hair, blue eyes, and soft emotional facial warmth. She wears a pastel blouse and a simple bakery apron with subtle baking details. Preserve her distinct identity as Chloe's mother; do not make her look like a generic adult."
+      father:
+        name: "Julien"
+        nationality: "French"
+        job: "Interior Designer"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair neutral undertone"
+          hair_color: "dark blonde"
+          hair_style: "short neatly styled wavy hair"
+          eye_color: "blue-gray"
+          face_shape: "narrow oval face"
+          build: "slim average build"
+          height_impression: "slightly tall"
+          distinctive_feature: "thoughtful artistic smile and precise designer-like posture"
+          clothing_style: "smart casual shirt with rolled sleeves"
+          professional_visual_cues: ["color swatch notebook", "sketch folder", "interior design pencil"]
+          dna_cues_from_child: ["blue-eye family", "soft facial expression", "creative sensitivity"]
+          prompt_insert: "Julien, Chloe's father, is a French interior designer in his early 40s. He has fair neutral-toned skin, short neatly styled wavy dark-blonde hair, blue-gray eyes, a narrow oval face, and a thoughtful artistic smile. He should feel believably related to Chloe through the same blue-eye family, soft facial expression, and creative sensitivity. He wears a smart casual shirt with rolled sleeves and carries subtle interior-design details such as a color swatch notebook or sketch folder. Preserve his distinct identity as Chloe's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Cat", name: "Luna"}
     relative_height:
       scale: 3
@@ -439,8 +570,49 @@ students:
     zodiac_sign: "Leo"
     born_in: "Spain"
     family:
-      mother: {name: "Elena", nationality: "Spanish", job: "Drama Teacher"}
-      father: {name: "Javier", nationality: "Spanish", job: "Mechanic"}
+      family_resemblance:
+        child_shared_features:
+          - "straight black hair family"
+          - "slightly thick eyebrows"
+          - "confident smirk"
+          - "playful energetic expression"
+        resemblance_note: "Daniel should look naturally related to both parents through black hair, expressive eyebrow shape, and confident playful facial energy."
+      mother:
+        name: "Elena"
+        nationality: "Spanish"
+        job: "Drama Teacher"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "warm olive"
+          hair_color: "black"
+          hair_style: "shoulder-length straight black hair with a soft center part"
+          eye_color: "dark brown"
+          face_shape: "expressive oval face"
+          build: "slim average build"
+          height_impression: "medium height"
+          distinctive_feature: "expressive eyebrows and lively theatrical eyes"
+          clothing_style: "comfortable teacher clothes with a colorful scarf"
+          professional_visual_cues: ["drama-class notebook", "script pages", "colorful scarf"]
+          dna_cues_from_child: ["straight black hair", "expressive eyebrows", "playful theatrical energy"]
+          prompt_insert: "Elena, Daniel's mother, is a Spanish drama teacher in her late 30s. She has warm olive skin, shoulder-length straight black hair with a soft center part, expressive dark brown eyes, an oval face, and naturally expressive eyebrows that clearly resemble Daniel's slightly thick eyebrows and lively confidence. She should feel believably related to Daniel through similar black straight hair, expressive eyebrows, and playful theatrical energy. She wears comfortable teacher clothes with a colorful scarf and subtle drama-class details such as a notebook or script pages. Preserve her distinct identity as Daniel's mother; do not make her look like a generic adult."
+      father:
+        name: "Javier"
+        nationality: "Spanish"
+        job: "Mechanic"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "warm tan olive"
+          hair_color: "black"
+          hair_style: "short thick black hair, slightly tousled"
+          eye_color: "dark brown"
+          face_shape: "square-oval face"
+          build: "sturdy practical build"
+          height_impression: "medium-tall"
+          distinctive_feature: "thick eyebrows, confident half-smile, and faint mechanic grease on his hands in workshop scenes"
+          clothing_style: "mechanic work shirt with rolled sleeves"
+          professional_visual_cues: ["tool cloth", "faint grease marks on hands", "workshop details"]
+          dna_cues_from_child: ["thick eyebrow family", "confident smirk", "action-practical energy"]
+          prompt_insert: "Javier, Daniel's father, is a Spanish mechanic in his early 40s. He has warm tan olive skin, short thick black hair, dark brown eyes, a square-oval face, thick eyebrows, and a confident half-smile that feels believably related to Daniel's playful smirk. He has a sturdy practical build and a medium-tall presence. He wears a mechanic work shirt with rolled sleeves and subtle workshop details such as a tool cloth or faint grease marks on his hands. Preserve his distinct identity as Daniel's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 4
@@ -453,10 +625,12 @@ students:
     signature_activity: "Riding an Electric Scooter"
     hobbies:
       loves:
-        - "playing basketball"
+        - "skiing"
+        - "snowboarding"
       likes:
+        - "playing basketball"
         - "playing table tennis"
-    general_interests: [Football, Drawing, "Drama Club", "Adventure parks", Skateboarding]
+    general_interests: [Football, Drawing, "Drama Club", "Adventure parks", Skateboarding, "Winter sports"]
     personality:
       traits: [Energetic, adventurous, confident, curious, playful, fearless]
       note: "Surekli yeni seyler denemek ister."
@@ -479,7 +653,7 @@ students:
     favorite_profile:
       color: "Orange"
       subject: "P.E."
-      season: "Summer"
+      season: "Winter"
       animal: "Eagle"
       music_type: "Rock"
       book_type: "Adventure"
@@ -504,12 +678,51 @@ students:
     zodiac_sign: "Gemini"
     born_in: "Mexico"
     family:
-      mother: {name: "Valeria", nationality: "Mexican", job: "Hotel Manager"}
+      family_resemblance:
+        child_shared_features:
+          - "very short neat black hair family"
+          - "thin eyebrows"
+          - "brown eyes"
+          - "calm reassuring expression"
+        resemblance_note: "David should look naturally related to both parents through brown eyes, neat black hair family traits, thin eyebrows, and a calm dependable facial presence. His father is deceased in canon and should appear only in respectful memory or photo contexts unless explicitly requested."
+      mother:
+        name: "Valeria"
+        nationality: "Mexican"
+        job: "Hotel Manager"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "warm medium tan"
+          hair_color: "black"
+          hair_style: "neat black hair in a low bun or smooth shoulder-length style"
+          eye_color: "brown"
+          face_shape: "soft oval face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "calm reassuring smile and tidy professional presence"
+          clothing_style: "elegant but simple hotel-manager outfit with a soft blazer"
+          professional_visual_cues: ["subtle name badge", "hotel folder", "tidy professional posture"]
+          dna_cues_from_child: ["brown eyes", "calm reassuring smile", "neat appearance"]
+          prompt_insert: "Valeria, David's mother, is a Mexican hotel manager in her late 30s. She has warm medium tan skin, brown eyes, a soft oval face, and neat black hair styled in a low bun or smooth shoulder-length style. Her calm reassuring smile and tidy professional presence should clearly feel related to David's dependable expression and neat appearance. She wears an elegant but simple hotel-manager outfit with a soft blazer and subtle name badge. Preserve her distinct identity as David's mother; do not make her look like a generic adult."
       father:
         name: "Alejandro"
         nationality: "Mexican"
         job: "Sea Captain"
         status: "deceased"
+        visual_identity:
+          age_range_in_memory: "early 40s"
+          skin_tone: "warm tan"
+          hair_color: "black"
+          hair_style: "very short neatly trimmed black hair with slight natural texture"
+          eye_color: "brown"
+          face_shape: "strong oval face"
+          build: "sturdy calm build"
+          height_impression: "tall"
+          distinctive_feature: "thin eyebrows and a calm protective captain-like gaze"
+          clothing_style: "simple sea-captain shirt or navy jacket"
+          professional_visual_cues: ["subtle maritime details", "captain shirt", "navy jacket"]
+          dna_cues_from_child: ["very short neat black hair", "thin eyebrows", "brown eyes", "calm reassuring expression"]
+          usage_rule: "Alejandro is deceased in canon. Show him only in respectful memory, family photo, framed portrait, or past holiday context unless the user explicitly requests otherwise."
+          prompt_insert: "Alejandro, David's father, is a Mexican sea captain shown only in respectful memory, family photo, framed portrait, or past holiday context because he is deceased in the canon. In memory images, he appears in his early 40s with warm tan skin, very short neatly trimmed black hair with slight natural texture, brown eyes, thin eyebrows, and a strong oval face. His calm protective captain-like gaze should clearly resemble David's calm reassuring expression, neat black hair, thin eyebrows, and brown eyes. He wears a simple sea-captain shirt or navy jacket with subtle maritime details. Preserve his distinct identity as David's father; do not make him look like a generic adult and do not show him as currently present unless explicitly requested."
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -573,8 +786,49 @@ students:
     zodiac_sign: "Gemini"
     born_in: "Australia"
     family:
-      mother: {name: "Charlotte", nationality: "Australian", job: "Music Teacher"}
-      father: {name: "Liam", nationality: "Australian", job: "Radio Presenter"}
+      family_resemblance:
+        child_shared_features:
+          - "wavy blonde hair family"
+          - "green eyes"
+          - "bright cheerful smile"
+          - "outgoing public-facing energy"
+        resemblance_note: "Ella should look naturally related to both parents through wavy blonde hair, green-eye family traits, a tall cheerful presence, and expressive performance energy."
+      mother:
+        name: "Charlotte"
+        nationality: "Australian"
+        job: "Music Teacher"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a warm peach undertone"
+          hair_color: "blonde"
+          hair_style: "shoulder-length softly layered wavy blonde hair"
+          eye_color: "green"
+          face_shape: "bright oval face"
+          build: "average build"
+          height_impression: "slightly tall"
+          distinctive_feature: "bright musical smile and expressive green eyes"
+          clothing_style: "tasteful colorful music-teacher outfit with a cardigan"
+          professional_visual_cues: ["music-note scarf", "sheet music folder", "music classroom details"]
+          dna_cues_from_child: ["wavy blonde hair", "green eyes", "bright cheerful smile"]
+          prompt_insert: "Charlotte, Ella's mother, is an Australian music teacher in her late 30s. She has fair warm peach-toned skin, shoulder-length softly layered wavy blonde hair, green expressive eyes, and a bright oval face with a musical cheerful smile that clearly resembles Ella's positive expression. She should feel believably related to Ella through similar wavy blonde hair, green eyes, and bright outgoing facial energy. She wears a tasteful colorful music-teacher outfit with a cardigan and subtle music-class details such as a music-note scarf or sheet music folder. Preserve her distinct identity as Ella's mother; do not make her look like a generic adult."
+      father:
+        name: "Liam"
+        nationality: "Australian"
+        job: "Radio Presenter"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light sun-kissed tone"
+          hair_color: "sandy blonde"
+          hair_style: "short wavy sandy-blonde hair"
+          eye_color: "green-hazel"
+          face_shape: "friendly rectangular-oval face"
+          build: "average build"
+          height_impression: "tall"
+          distinctive_feature: "warm broadcaster smile and expressive eyebrows"
+          clothing_style: "smart casual shirt"
+          professional_visual_cues: ["headphones around his neck", "small studio microphone", "radio studio cue"]
+          dna_cues_from_child: ["blonde hair family", "green-eye family", "tall presence", "cheerful public-facing energy"]
+          prompt_insert: "Liam, Ella's father, is an Australian radio presenter in his early 40s. He has fair lightly sun-kissed skin, short wavy sandy-blonde hair, green-hazel eyes, a friendly rectangular-oval face, expressive eyebrows, and a warm broadcaster smile. He should feel believably related to Ella through the same blonde hair family, green-eye family, tall presence, and cheerful public-facing energy. He wears a smart casual shirt with subtle radio-presenter details such as headphones around his neck or a small studio microphone nearby. Preserve his distinct identity as Ella's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Canary", name: "Sunny"}
     relative_height:
       scale: 5
@@ -639,8 +893,49 @@ students:
     zodiac_sign: "Virgo"
     born_in: "Canada"
     family:
-      mother: {name: "Sophie", nationality: "Canadian", job: "Nurse"}
-      father: {name: "Haruto", nationality: "Japanese", job: "School Principal"}
+      family_resemblance:
+        child_shared_features:
+          - "straight black hair family"
+          - "brown eyes"
+          - "friendly supportive smile"
+          - "organized leadership presence"
+        resemblance_note: "Emma should look naturally related to both parents through warm brown eyes, supportive facial warmth, and a calm leadership presence, with her straight black hair strongly echoing her father."
+      mother:
+        name: "Sophie"
+        nationality: "Canadian"
+        job: "Nurse"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a soft neutral undertone"
+          hair_color: "dark brown"
+          hair_style: "shoulder-length straight dark brown hair, neatly tied back at work"
+          eye_color: "warm brown"
+          face_shape: "soft round-oval face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "caring nurse-like eyes and a gentle supportive smile"
+          clothing_style: "simple nurse scrubs or a soft cardigan outside work"
+          professional_visual_cues: ["nurse scrubs", "simple badge", "gentle helping posture"]
+          dna_cues_from_child: ["warm brown eyes", "supportive facial warmth", "approachable smile"]
+          prompt_insert: "Sophie, Emma's mother, is a Canadian nurse in her late 30s. She has fair neutral-toned skin, shoulder-length straight dark brown hair usually tied back neatly at work, warm brown caring eyes, and a soft round-oval face with a gentle supportive smile that clearly resembles Emma's friendly expression. She should feel believably related to Emma through warm brown eyes, calm supportive facial warmth, and an approachable smile. She wears simple nurse scrubs or a soft cardigan outside work, with subtle nurse details when appropriate. Preserve her distinct identity as Emma's mother; do not make her look like a generic adult."
+      father:
+        name: "Haruto"
+        nationality: "Japanese"
+        job: "School Principal"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "light-medium warm beige"
+          hair_color: "black"
+          hair_style: "short straight black hair, neatly combed"
+          eye_color: "dark brown"
+          face_shape: "refined oval face"
+          build: "slim average build"
+          height_impression: "medium-tall"
+          distinctive_feature: "calm principal posture, neat eyebrows, and a composed but kind smile"
+          clothing_style: "neat blazer"
+          professional_visual_cues: ["school ID badge", "clipboard", "organized principal posture"]
+          dna_cues_from_child: ["straight black hair", "brown eyes", "organized leadership presence", "calm supportive warmth"]
+          prompt_insert: "Haruto, Emma's father, is a Japanese school principal in his early 40s. He has light-medium warm beige skin, short straight black hair neatly combed, dark brown eyes, a refined oval face, neat eyebrows, and a composed but kind smile. He should feel believably related to Emma through straight black hair, brown eyes, organized leadership presence, and calm supportive warmth. He wears a neat blazer with subtle school-principal details such as a school ID badge or clipboard. Preserve his distinct identity as Emma's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 4
@@ -704,8 +999,49 @@ students:
     zodiac_sign: "Capricorn"
     born_in: "England"
     family:
-      mother: {name: "Elizabeth", nationality: "British", job: "Architect"}
-      father: {name: "James", nationality: "British", job: "Engineer"}
+      family_resemblance:
+        child_shared_features:
+          - "curly blonde hair family"
+          - "blue eyes"
+          - "focused neutral expression"
+          - "disciplined analytical presence"
+        resemblance_note: "Ethan should look naturally related to both parents through blue eyes, blonde hair family traits, and a calm focused analytical expression."
+      mother:
+        name: "Elizabeth"
+        nationality: "British"
+        job: "Architect"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a cool neutral undertone"
+          hair_color: "dark blonde"
+          hair_style: "tidy softly curly dark-blonde hair kept short-to-shoulder length"
+          eye_color: "blue"
+          face_shape: "long oval face"
+          build: "slim average build"
+          height_impression: "slightly tall"
+          distinctive_feature: "precise thoughtful eyes and composed posture"
+          clothing_style: "clean architect-style clothes such as a simple blazer or structured cardigan"
+          professional_visual_cues: ["sketchbook", "ruler", "rolled plans"]
+          dna_cues_from_child: ["blue eyes", "focused analytical expression", "slim tall-looking face"]
+          prompt_insert: "Elizabeth, Ethan's mother, is a British architect in her late 30s. She has fair cool neutral-toned skin, blue precise thoughtful eyes, a long oval face, and tidy softly curly dark-blonde hair kept short-to-shoulder length. Her composed posture and focused expression should clearly feel related to Ethan's attentive neutral expression and slim youthful face. She wears clean architect-style clothes such as a simple blazer or structured cardigan, with subtle architecture details like a sketchbook, ruler, or rolled plans. Preserve her distinct identity as Ethan's mother; do not make her look like a generic adult."
+      father:
+        name: "James"
+        nationality: "British"
+        job: "Engineer"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light warm undertone"
+          hair_color: "blonde"
+          hair_style: "short neatly kept curly blonde hair"
+          eye_color: "blue"
+          face_shape: "narrow oval face"
+          build: "lean average build"
+          height_impression: "medium-tall"
+          distinctive_feature: "analytical blue eyes, neat curly hair, and a calm measured expression"
+          clothing_style: "neat button-up shirt or practical engineer jacket"
+          professional_visual_cues: ["tablet", "small blueprint", "technical notebook"]
+          dna_cues_from_child: ["curly blonde hair", "blue eyes", "disciplined analytical presence"]
+          prompt_insert: "James, Ethan's father, is a British engineer in his early 40s. He has fair light warm-toned skin, short neatly kept curly blonde hair, blue analytical eyes, a narrow oval face, and a calm measured expression that clearly resembles Ethan's focused neutral look. He should feel believably related to Ethan through similar curly blonde hair, blue eyes, and disciplined analytical presence. He wears a neat button-up shirt or practical engineer jacket with subtle technical details such as a tablet, small blueprint, or notebook. Preserve his distinct identity as Ethan's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -769,11 +1105,49 @@ students:
     zodiac_sign: "Sagittarius"
     born_in: "Norway"
     family:
+      family_resemblance:
+        child_shared_features:
+          - "straight blonde hair family"
+          - "blue eyes"
+          - "energetic grin"
+          - "tall active outdoor presence"
+        resemblance_note: "Hannah should look naturally related to both parents through blonde hair family traits, blue-eye family traits, athletic posture, and confident outdoorsy energy."
       mother:
         name: "Ingrid"
         nationality: "Norwegian"
-        job: "Cycling Instructor"
-      father: {name: "Lars", nationality: "Norwegian", job: "Camping Store Owner"}
+        job: "Waiter"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a cool rosy undertone"
+          hair_color: "blonde"
+          hair_style: "long straight blonde hair, usually tied in a sporty ponytail"
+          eye_color: "blue"
+          face_shape: "bright oval face"
+          build: "athletic but natural adult build"
+          height_impression: "tall"
+          distinctive_feature: "energetic grin and friendly attentive waiter presence"
+          clothing_style: "neat waiter uniform with a simple apron"
+          professional_visual_cues: ["serving tray", "order pad", "simple apron", "friendly restaurant posture"]
+          dna_cues_from_child: ["straight blonde hair", "blue eyes", "athletic posture", "cheerful adventurous expression"]
+          prompt_insert: "Ingrid, Hannah's mother, is a Norwegian waiter in her late 30s. She has fair cool rosy-toned skin, long straight blonde hair usually tied in a neat ponytail, blue energetic eyes, and a bright oval face with an active confident grin that clearly resembles Hannah's outdoor energy. She should feel believably related to Hannah through similar straight blonde hair, blue eyes, athletic posture, and cheerful adventurous expression. She wears a neat waiter uniform with a simple apron and subtle restaurant details such as a serving tray or order pad. Preserve her distinct identity as Hannah's mother; do not make her look like a generic adult."
+      father:
+        name: "Lars"
+        nationality: "Norwegian"
+        job: "Camping Store Owner"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light weathered outdoor tone"
+          hair_color: "sandy blonde"
+          hair_style: "short straight sandy-blonde hair"
+          eye_color: "blue-gray"
+          face_shape: "broad oval face"
+          build: "sturdy outdoorsy build"
+          height_impression: "tall"
+          distinctive_feature: "kind outdoorsman smile and slightly weathered cheeks"
+          clothing_style: "flannel shirt, outdoor vest, and practical hiking boots"
+          professional_visual_cues: ["camping gear", "compass", "folded tent fabric", "store tag"]
+          dna_cues_from_child: ["blue-eye family", "tall active presence", "confident outdoorsy energy"]
+          prompt_insert: "Lars, Hannah's father, is a Norwegian camping store owner in his early 40s. He has fair lightly weathered outdoor-toned skin, short straight sandy-blonde hair, blue-gray eyes, a broad oval face, and a kind outdoorsman smile. He should feel believably related to Hannah through the same blue-eye family, tall active presence, and confident outdoorsy energy. He wears a flannel shirt, outdoor vest, and practical hiking boots, with subtle camping-store details such as a compass, folded tent fabric, or gear tag. Preserve his distinct identity as Hannah's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Horse", name: "Storm"}
     relative_height:
       scale: 4
@@ -837,8 +1211,49 @@ students:
     zodiac_sign: "Scorpio"
     born_in: "Scotland"
     family:
-      mother: {name: "Isla", nationality: "Scottish", job: "Carpenter"}
-      father: {name: "Callum", nationality: "Scottish", job: "Fisherman"}
+      family_resemblance:
+        child_shared_features:
+          - "short straight black hair family"
+          - "brown eyes"
+          - "self-confident smirk"
+          - "practical resourceful body language"
+        resemblance_note: "Jack should look naturally related to both parents through dark straight hair, brown eyes, confident half-smile, and practical outdoorsy confidence."
+      mother:
+        name: "Isla"
+        nationality: "Scottish"
+        job: "Postman"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a light freckled warm undertone"
+          hair_color: "black"
+          hair_style: "short straight black hair with a practical side part"
+          eye_color: "brown"
+          face_shape: "strong oval face"
+          build: "active average build"
+          height_impression: "medium height"
+          distinctive_feature: "confident half-smile and small freckles across the nose"
+          clothing_style: "practical postal uniform jacket with a crossbody mail bag"
+          professional_visual_cues: ["letters", "small parcel", "route satchel", "postal uniform jacket"]
+          dna_cues_from_child: ["straight black hair", "brown eyes", "confident smirk", "resourceful body language"]
+          prompt_insert: "Isla, Jack's mother, is a Scottish postman in her late 30s. She has fair lightly freckled warm-toned skin, short straight black hair with a practical side part, brown eyes, a strong oval face, and a confident half-smile that clearly resembles Jack's self-confident smirk. She should feel believably related to Jack through similar straight black hair, brown eyes, practical confidence, and resourceful body language. She wears a practical postal uniform jacket with a crossbody mail bag and subtle postal details such as letters or a small parcel. Preserve her distinct identity as Jack's mother; do not make her look like a generic adult."
+      father:
+        name: "Callum"
+        nationality: "Scottish"
+        job: "Farmer"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a weathered outdoor tone"
+          hair_color: "dark brown-black"
+          hair_style: "short straight dark hair, slightly wind-tousled"
+          eye_color: "brown"
+          face_shape: "broad square-oval face"
+          build: "sturdy outdoorsy build"
+          height_impression: "tall"
+          distinctive_feature: "weathered cheeks, calm tough smile, and practical farmer hands"
+          clothing_style: "flannel shirt, work vest, and farm boots"
+          professional_visual_cues: ["work gloves", "hay bale", "vegetable crate", "farm tool"]
+          dna_cues_from_child: ["brown eyes", "dark hair family", "confident practical outdoor aura"]
+          prompt_insert: "Callum, Jack's father, is a Scottish farmer in his early 40s. He has fair weathered outdoor-toned skin, short straight dark brown-black hair slightly tousled by the wind, brown eyes, a broad square-oval face, and a calm tough smile that feels believably related to Jack's confident outdoor expression. He has a sturdy outdoorsy build and practical farmer hands. He wears a flannel shirt, work vest, and farm boots, with subtle farm details such as work gloves, a vegetable crate, or a farm tool. Preserve his distinct identity as Jack's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Golden Retriever", name: "Max"}
     relative_height:
       scale: 4
@@ -902,8 +1317,49 @@ students:
     zodiac_sign: "Leo"
     born_in: "Brazil"
     family:
-      mother: {name: "Jessica", nationality: "American", job: "Fitness Trainer"}
-      father: {name: "Gabriel", nationality: "Brazilian", job: "Football Coach"}
+      family_resemblance:
+        child_shared_features:
+          - "short curly black hair family"
+          - "brown eyes"
+          - "athletic tall presence"
+          - "determined but friendly expression"
+        resemblance_note: "Lucas should look naturally related to both parents through curly dark hair, brown eyes, athletic build, tall presence, and determined protective energy."
+      mother:
+        name: "Jessica"
+        nationality: "American"
+        job: "Police Officer"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "medium warm tan"
+          hair_color: "dark brown-black"
+          hair_style: "short-to-shoulder-length curly dark hair, tied back neatly for work"
+          eye_color: "brown"
+          face_shape: "athletic oval face"
+          build: "athletic but natural adult build"
+          height_impression: "tall"
+          distinctive_feature: "alert determined eyes and confident protective posture"
+          clothing_style: "neat police officer uniform or dark professional jacket"
+          professional_visual_cues: ["badge", "radio", "simple utility belt"]
+          dna_cues_from_child: ["dark curly hair", "brown eyes", "athletic presence", "determined friendly expression"]
+          prompt_insert: "Jessica, Lucas's mother, is an American police officer in her late 30s. She has medium warm tan skin, dark brown-black curly hair tied back neatly for work, brown alert eyes, an athletic oval face, and a confident protective posture that clearly resembles Lucas's determined energy. She should feel believably related to Lucas through similar dark curly hair, brown eyes, athletic presence, and determined but friendly expression. She wears a neat police officer uniform or dark professional jacket with subtle police details such as a badge or radio. Preserve her distinct identity as Lucas's mother; do not make her look like a generic adult."
+      father:
+        name: "Gabriel"
+        nationality: "Brazilian"
+        job: "Firefighter"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "medium brown"
+          hair_color: "black"
+          hair_style: "short curly black hair"
+          eye_color: "brown"
+          face_shape: "strong round-oval face"
+          build: "athletic sturdy build"
+          height_impression: "tall"
+          distinctive_feature: "strong protective smile and thick curly hairline"
+          clothing_style: "firefighter station shirt or jacket"
+          professional_visual_cues: ["firefighter helmet nearby", "reflective jacket stripes", "rescue gloves"]
+          dna_cues_from_child: ["curly black hair family", "brown eyes", "sporty strength", "resilient energy"]
+          prompt_insert: "Gabriel, Lucas's father, is a Brazilian firefighter in his early 40s. He has medium brown skin, short curly black hair, brown eyes, a strong round-oval face, and a protective confident smile that feels believably related to Lucas's determined but friendly expression. He has an athletic sturdy build and tall presence. He should clearly share Lucas's curly black hair family, brown eyes, sporty strength, and resilient energy. He wears a firefighter station shirt or jacket with subtle firefighter details such as a helmet nearby, reflective jacket stripes, or rescue gloves. Preserve his distinct identity as Lucas's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 5
@@ -967,8 +1423,52 @@ students:
     zodiac_sign: "Libra"
     born_in: "Türkiye"
     family:
-      mother: {name: "Giulia", nationality: "Italian", job: "Librarian"}
-      father: {name: "Fırat", nationality: "Turkish", job: "Journalist"}
+      family_resemblance:
+        child_shared_features:
+          - "wavy brown hair family"
+          - "brown hair tone"
+          - "soft thoughtful expression"
+          - "quiet observant facial warmth"
+        resemblance_note: "Mia should look naturally related to both parents through brown hair family traits, soft thoughtful facial energy, and a quiet observant expression. Her blue eyes echo her mother, while her thicker eyebrow family and reflective calm can echo her father."
+      mother:
+        name: "Giulia"
+        nationality: "Italian"
+        job: "Chef"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair olive"
+          hair_color: "brown"
+          hair_style: "long wavy brown hair, loosely tied back while cooking"
+          eye_color: "blue"
+          face_shape: "soft oval face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "gentle thoughtful smile and expressive blue eyes"
+          clothing_style: "simple chef jacket or kitchen apron"
+          professional_visual_cues: ["wooden spoon", "recipe notebook", "kitchen towel"]
+          dna_cues_from_child: ["wavy brown hair", "blue eyes", "gentle expression", "quiet creative warmth"]
+          prompt_insert: "Giulia, Mia's mother, is an Italian chef in her late 30s. She has fair olive skin, long wavy brown hair loosely tied back while cooking, blue expressive eyes, and a soft oval face with a gentle thoughtful smile that clearly resembles Mia's shy softness. She should feel believably related to Mia through similar wavy brown hair, blue eyes, gentle expression, and quiet creative warmth. She wears a simple chef jacket or kitchen apron with subtle cooking details such as a wooden spoon, recipe notebook, or kitchen towel. Preserve her distinct identity as Mia's mother; do not make her look like a generic adult."
+      father:
+        name: "Fırat"
+        nationality: "Turkish"
+        job: "English Teacher"
+        visual_identity:
+          age_range: "late 40s"
+          skin_tone: "esmer / warm medium brown"
+          hair_color: "brown"
+          hair_style: "short balding brown hair"
+          eye_color: "brown"
+          eyewear: "no glasses"
+          facial_hair: "stubble beard, no moustache"
+          face_shape: "broad oval face"
+          build: "broad heavy build"
+          height_impression: "medium-tall, about 1.79 m"
+          weight_impression: "solid build, about 95 kg"
+          distinctive_feature: "thick eyebrows"
+          clothing_style: "sport casual clothes"
+          professional_visual_cues: ["English book", "teacher notebook", "simple classroom marker"]
+          dna_cues_from_child: ["brown hair family", "thick eyebrow family", "thoughtful calm expression", "quiet observant presence"]
+          prompt_insert: "Fırat, Mia's father, is a Turkish English teacher in his late 40s. He has esmer warm medium-brown skin, short balding brown hair, brown eyes, no glasses, thick eyebrows, and a stubble beard with no moustache. He has a broad oval face, a medium-tall presence, and a solid broad build. He should feel believably related to Mia through the brown hair family, thoughtful calm expression, thick eyebrow family, and quiet observant presence. He wears sport casual clothes with subtle English-teacher details such as an English book, teacher notebook, or simple classroom marker. Preserve his distinct identity as Mia's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Rabbit", name: "Coco"}
     relative_height:
       scale: 2
@@ -1032,8 +1532,49 @@ students:
     zodiac_sign: "Aquarius"
     born_in: "Germany"
     family:
-      mother: {name: "Katharina", nationality: "German", job: "Scientist"}
-      father: {name: "Ethan", nationality: "Canadian", job: "Accountant"}
+      family_resemblance:
+        child_shared_features:
+          - "green-eye family"
+          - "short straight brown hair family"
+          - "thoughtful neutral expression"
+          - "organized academic presence"
+        resemblance_note: "Noah should look naturally related to both parents through green-eye family traits, short straight brown hair, logical calm, and a focused organized expression."
+      mother:
+        name: "Katharina"
+        nationality: "German"
+        job: "Doctor"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a cool neutral undertone"
+          hair_color: "light brown"
+          hair_style: "short straight light-brown hair, neatly tucked behind the ears"
+          eye_color: "green"
+          face_shape: "narrow oval face"
+          build: "slim average build"
+          height_impression: "medium height"
+          distinctive_feature: "calm intelligent eyes and precise, reassuring doctor-like expression"
+          clothing_style: "clean doctor coat over simple professional clothes"
+          professional_visual_cues: ["stethoscope", "doctor badge", "small medical notebook"]
+          dna_cues_from_child: ["green eyes", "logical calm", "organized presence", "thoughtful facial focus"]
+          prompt_insert: "Katharina, Noah's mother, is a German doctor in her late 30s. She has fair cool neutral-toned skin, short straight light-brown hair neatly tucked behind the ears, green calm intelligent eyes, and a narrow oval face with a precise reassuring expression. She should feel believably related to Noah through similar green eyes, logical calm, organized presence, and thoughtful facial focus. She wears a clean doctor coat over simple professional clothes with subtle medical details such as a stethoscope, doctor badge, or small medical notebook. Preserve her distinct identity as Noah's mother; do not make her look like a generic adult."
+      father:
+        name: "Ethan"
+        nationality: "Canadian"
+        job: "Dentist"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light warm undertone"
+          hair_color: "brown"
+          hair_style: "short straight brown hair, neatly combed"
+          eye_color: "green-brown"
+          face_shape: "soft rectangular-oval face"
+          build: "average build"
+          height_impression: "medium-tall"
+          distinctive_feature: "careful gentle smile and very neat professional appearance"
+          clothing_style: "dentist coat or neat clinic shirt"
+          professional_visual_cues: ["dental mask around neck", "dental clipboard", "small mirror tool"]
+          dna_cues_from_child: ["short straight brown hair", "thoughtful neutral expression", "organized academic presence", "careful attention to detail"]
+          prompt_insert: "Ethan, Noah's father, is a Canadian dentist in his early 40s. He has fair light warm-toned skin, short straight brown hair neatly combed, green-brown careful eyes, and a soft rectangular-oval face with a gentle precise smile. He should feel believably related to Noah through similar short straight brown hair, thoughtful neutral expression, organized academic presence, and careful attention to detail. He wears a dentist coat or neat clinic shirt with subtle dental details such as a dental mask around his neck, a clipboard, or a small mirror tool. Preserve his distinct identity as Noah's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 1
@@ -1097,12 +1638,51 @@ students:
     zodiac_sign: "Pisces"
     born_in: "Ireland"
     family:
-      mother: {name: "Fiona", nationality: "Irish", job: "Photographer"}
+      family_resemblance:
+        child_shared_features:
+          - "brown hair color family"
+          - "green eyes"
+          - "slightly thick eyebrows"
+          - "observant creative expression"
+        resemblance_note: "Olivia should look naturally related to both parents through green-eye family traits, brown hair color, slightly thick eyebrows, and observant creative focus. Her mother's hair should not copy Olivia's chin-length French bob; Olivia's bob remains her own signature silhouette."
+      mother:
+        name: "Fiona"
+        nationality: "Irish"
+        job: "Hairdresser"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a soft rosy undertone"
+          hair_color: "brown"
+          hair_style: "shoulder-length layered brown hair with soft waves"
+          eye_color: "green"
+          face_shape: "youthful oval face"
+          build: "slim average build"
+          height_impression: "medium height"
+          distinctive_feature: "stylish layered hair, slightly thick eyebrows, and observant creative eyes"
+          clothing_style: "stylish but simple salon outfit"
+          professional_visual_cues: ["comb", "scissors pouch", "salon apron"]
+          dna_cues_from_child: ["brown hair color", "green eyes", "slightly thick eyebrows", "artistic attention to detail"]
+          prompt_insert: "Fiona, Olivia's mother, is an Irish hairdresser in her late 30s. She has fair rosy-toned skin, shoulder-length layered brown hair with soft waves, green observant eyes, slightly thick eyebrows, and a youthful oval face with a creative warm smile. She should feel believably related to Olivia through brown hair color, green eyes, slightly thick eyebrows, and artistic attention to detail, without having the same haircut as Olivia. She wears a stylish but simple salon outfit with subtle hairdresser details such as a comb, scissors pouch, or salon apron. Preserve her distinct identity as Olivia's mother; do not make her look like a generic adult."
       father:
         name: "Patrick"
         nationality: "Irish"
-        job: "Art Gallery Curator"
+        job: "Pilot"
         status: "deceased"
+        visual_identity:
+          age_range_in_memory: "early 40s"
+          skin_tone: "fair with a light warm undertone"
+          hair_color: "dark brown"
+          hair_style: "short neatly combed dark brown hair"
+          eye_color: "green-gray"
+          face_shape: "neat rectangular-oval face"
+          build: "average build"
+          height_impression: "tall"
+          distinctive_feature: "calm focused pilot gaze and neat professional posture"
+          clothing_style: "pilot uniform shirt or navy jacket"
+          professional_visual_cues: ["pilot wings pin", "cap", "travel bag", "airport memory photo"]
+          dna_cues_from_child: ["observant eyes", "neat visual precision", "calm creative-travel presence"]
+          usage_rule: "Patrick is deceased in canon. Show him only in respectful memory, family photo, framed portrait, or past travel context unless the user explicitly requests otherwise."
+          prompt_insert: "Patrick, Olivia's father, is an Irish pilot shown only in respectful memory, family photo, framed portrait, or past travel context because he is deceased in the canon. In memory images, he appears in his early 40s with fair light warm-toned skin, short neatly combed dark brown hair, green-gray focused eyes, and a neat rectangular-oval face with calm professional posture. He should feel believably related to Olivia through observant eyes, neat visual precision, and a calm creative-travel presence. He wears a pilot uniform shirt or navy jacket with subtle pilot details such as a wings pin, cap, or travel bag. Preserve his distinct identity as Olivia's father; do not make him look like a generic adult and do not show him as currently present unless explicitly requested."
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -1118,7 +1698,9 @@ students:
         - "taking photos"
       likes:
         - "painting"
-    general_interests: [Piano, Painting, "Robotics design", "School newspaper", "Digital art"]
+        - "going to cinema"
+        - "watching movies"
+    general_interests: [Piano, Painting, "Robotics design", "School newspaper", "Digital art", Cinema, Movies]
     personality:
       traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
       note: "Kucuk detaylari herkesten once fark eder."
@@ -1166,8 +1748,51 @@ students:
     zodiac_sign: "Scorpio"
     born_in: "United Kingdom"
     family:
-      mother: {name: "Monica", nationality: "British", job: "Software Developer"}
-      father: {name: "Arthur", nationality: "British", job: "Math Teacher"}
+      family_resemblance:
+        child_shared_features:
+          - "wavy black hair family"
+          - "blue eyes"
+          - "calm analytical expression"
+          - "composed strategic presence"
+        resemblance_note: "Victoria should look naturally related to both parents through blue-eye family traits, dark hair family traits, composed focus, logical patience, and calm analytical energy. Victoria's round eyeglasses remain her own distinctive feature."
+      mother:
+        name: "Monica"
+        nationality: "British"
+        job: "Lawyer"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "fair with a cool undertone"
+          hair_color: "black"
+          hair_style: "shoulder-length wavy black hair, neatly styled"
+          eye_color: "blue"
+          eyewear: "no glasses"
+          face_shape: "elegant oval face"
+          build: "slim average build"
+          height_impression: "medium height"
+          distinctive_feature: "calm analytical eyes and precise composed expression"
+          clothing_style: "smart lawyer blazer with simple blouse"
+          professional_visual_cues: ["law folder", "pen", "neat document stack"]
+          dna_cues_from_child: ["wavy black hair", "blue eyes", "calm analytical presence", "strategic facial focus"]
+          prompt_insert: "Monica, Victoria's mother, is a British lawyer in her late 30s. She has fair cool-toned skin, shoulder-length wavy black hair neatly styled, blue calm analytical eyes, and an elegant oval face with a precise composed expression. She does not wear glasses, so Victoria's round eyeglasses remain her own distinctive feature. Monica should feel believably related to Victoria through similar wavy black hair, blue eyes, calm analytical presence, and strategic facial focus. She wears a smart lawyer blazer with subtle legal details such as a law folder, pen, or neat document stack. Preserve her distinct identity as Victoria's mother; do not make her look like a generic adult."
+      father:
+        name: "Arthur"
+        nationality: "British"
+        job: "Bus Driver"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "fair with a light warm undertone"
+          hair_color: "dark brown-black"
+          hair_style: "short straight dark hair, neatly combed"
+          eye_color: "blue-gray"
+          eyewear: "rectangular eyeglasses"
+          face_shape: "broad oval face"
+          build: "average build"
+          height_impression: "medium-tall"
+          distinctive_feature: "rectangular eyeglasses, patient focused eyes, and calm reliable smile"
+          clothing_style: "bus driver uniform shirt or neat jacket"
+          professional_visual_cues: ["route card", "driver badge", "bus steering wheel cue"]
+          dna_cues_from_child: ["blue-eye family", "eyeglasses family trait", "composed focus", "logical patience", "quiet reliability"]
+          prompt_insert: "Arthur, Victoria's father, is a British bus driver in his early 40s. He has fair light warm-toned skin, short straight dark brown-black hair neatly combed, blue-gray patient eyes, rectangular eyeglasses, and a broad oval face with a calm reliable smile. He should feel believably related to Victoria through the same blue-eye family, eyeglasses family trait, composed focus, logical patience, and quiet reliability. He wears a bus driver uniform shirt or neat jacket with subtle bus-driver details such as a route card, driver badge, or steering wheel cue. Preserve his distinct identity as Victoria's father; do not make him look like a generic adult."
     pet: {has_pet: true, type: "Hamster", name: "Pixel"}
     relative_height:
       scale: 2
@@ -1231,8 +1856,49 @@ students:
     zodiac_sign: "Gemini"
     born_in: "Greece"
     family:
-      mother: {name: "Eleni", nationality: "Greek", job: "Book Editor"}
-      father: {name: "Nikos", nationality: "Greek", job: "Museum Guide"}
+      family_resemblance:
+        child_shared_features:
+          - "curly black hair family"
+          - "brown eyes"
+          - "quiet reflective expression"
+          - "calm patient presence"
+        resemblance_note: "Zoe should look naturally related to both parents through curly black hair, brown eyes, quiet thoughtful gaze, and reflective calm."
+      mother:
+        name: "Eleni"
+        nationality: "Greek"
+        job: "Saleswoman"
+        visual_identity:
+          age_range: "late 30s"
+          skin_tone: "warm olive"
+          hair_color: "black"
+          hair_style: "shoulder-length curly black hair, softly pinned on one side"
+          eye_color: "brown"
+          face_shape: "soft oval face"
+          build: "average build"
+          height_impression: "medium height"
+          distinctive_feature: "calm observant eyes and gentle customer-friendly smile"
+          clothing_style: "neat shop outfit with a soft blouse or simple cardigan"
+          professional_visual_cues: ["store name badge", "folded scarf", "small product display"]
+          dna_cues_from_child: ["curly black hair", "brown eyes", "quiet reflective expression", "calm patient presence"]
+          prompt_insert: "Eleni, Zoe's mother, is a Greek saleswoman in her late 30s. She has warm olive skin, shoulder-length curly black hair softly pinned on one side, brown calm observant eyes, and a soft oval face with a gentle customer-friendly smile. She should feel believably related to Zoe through similar curly black hair, brown eyes, quiet reflective expression, and calm patient presence. She wears a neat shop outfit with a soft blouse or simple cardigan and subtle sales details such as a store name badge, folded scarf, or small product display. Preserve her distinct identity as Zoe's mother; do not make her look like a generic adult."
+      father:
+        name: "Nikos"
+        nationality: "Greek"
+        job: "Salesman"
+        visual_identity:
+          age_range: "early 40s"
+          skin_tone: "warm tan olive"
+          hair_color: "black"
+          hair_style: "short curly black hair, neatly kept"
+          eye_color: "brown"
+          face_shape: "broad oval face"
+          build: "average build"
+          height_impression: "medium-tall"
+          distinctive_feature: "thoughtful serious eyes and calm polite smile"
+          clothing_style: "neat shirt with a simple jacket"
+          professional_visual_cues: ["product catalog", "sales notebook", "shop counter cue"]
+          dna_cues_from_child: ["curly black hair family", "brown eyes", "quiet thoughtful gaze", "reflective calm"]
+          prompt_insert: "Nikos, Zoe's father, is a Greek salesman in his early 40s. He has warm tan olive skin, short curly black hair neatly kept, brown thoughtful eyes, and a broad oval face with a calm polite smile. He should feel believably related to Zoe through the same curly black hair family, brown eyes, quiet thoughtful gaze, and reflective calm. He wears a neat shirt with a simple jacket and subtle sales details such as a product catalog, sales notebook, or shop counter cue. Preserve his distinct identity as Zoe's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 1

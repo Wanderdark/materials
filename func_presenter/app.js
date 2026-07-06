@@ -560,13 +560,27 @@ function selectGrade(grade) {
   setSetupStep("unit");
 }
 
+const UNIT_THEMES = {
+  5: {
+    1: "School Life",
+    2: "Classroom Life",
+    3: "Personal Life",
+    4: "Family Life",
+    5: "Life in the Neighbourhood & City",
+    6: "Life in the World",
+    7: "Life in Nature",
+    8: "Life in the Universe & Future"
+  }
+};
+
 function renderUnits() {
   const units = state.grade ? getUnitsForGrade(state.grade) : [];
   els.units.replaceChildren(...units.map((unit) => {
     const button = document.createElement("button");
     button.className = "grade-button";
     button.dataset.value = unit;
-    button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong>`;
+    const theme = UNIT_THEMES[state.grade]?.[unit];
+    button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong>${theme ? `<small class="opt-theme">${theme}</small>` : ""}`;
     button.addEventListener("click", () => selectUnit(unit));
     return button;
   }));
@@ -692,7 +706,7 @@ function renderExample() {
   els.exampleCard.classList.toggle("no-visual-slide", noVisual);
   els.exampleCard.classList.toggle("speech-bubble-slide", example.visualStyle === "speech-bubble");
   els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
-  els.exampleCard.classList.toggle("inline-choice-slide", example.listClass === "inline-choice-list");
+  els.exampleCard.classList.toggle("inline-choice-slide", (example.listClass || "").split(/\s+/).includes("inline-choice-list"));
   els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
@@ -826,9 +840,11 @@ function buildComparisonLayout(comp, hl) {
   return layout;
 }
 
-function openPresenceOverlay({ question, topSentence, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, imageFit, overlaySize, revealMode, steps }) {
+function openPresenceOverlay({ question, topSentence, imagePath, sentence, sentences, interactiveSentences, comparison, imageAspect, imageFit, overlaySize, revealMode, steps, thoughtPortrait }) {
   const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
   els.presenceOverlay.querySelector(".presence-overlay-continue")?.remove();
+  els.presenceOverlay.querySelector(".presence-overlay-portrait")?.remove();
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("thought-mode");
   if (comparison) {
     els.presenceOverlay.classList.add("comparison-mode");
     els.presenceOverlayQuestion.innerHTML = "";
@@ -889,6 +905,21 @@ function openPresenceOverlay({ question, topSentence, imagePath, sentence, sente
     els.presenceOverlayImage.style.objectFit = "";
   }
   els.presenceOverlay.querySelector(".presence-overlay-card").classList.toggle("overlay-lg", !!overlaySize);
+  if (thoughtPortrait) {
+    const card = els.presenceOverlay.querySelector(".presence-overlay-card");
+    card.classList.add("thought-mode");
+    const portrait = document.createElement("div");
+    portrait.className = "presence-overlay-portrait";
+    const portraitImage = document.createElement("img");
+    portraitImage.src = thoughtPortrait;
+    portraitImage.alt = "";
+    portraitImage.addEventListener("error", () => {
+      portrait.remove();
+      card.classList.remove("thought-mode");
+    });
+    portrait.append(portraitImage, document.createElement("i"), document.createElement("i"));
+    card.append(portrait);
+  }
   if (revealMode) {
     const bindReveal = (el, raw) => {
       el.innerHTML = raw.replace(/<([^>]+)>/g,
@@ -1248,7 +1279,7 @@ function renderPresenceSlide(example) {
       row.addEventListener("click", doToggle);
       row.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); doToggle(); } });
     }
-    if (item.revealSentence) {
+    if (item.revealSentence && !item.revealButton) {
       row.classList.add("clickable");
       row.tabIndex = 0;
       row.setAttribute("role", "button");
@@ -1380,6 +1411,36 @@ function renderPresenceSlide(example) {
       appendPresenceParts(prompt, item.parts || [{ text: item.text || "" }]);
       promptLine.append(prompt);
     }
+    if (item.imageButton && item.imagePathOnShow) {
+      const imageButton = document.createElement("button");
+      imageButton.className = "presence-icon-button";
+      imageButton.type = "button";
+      imageButton.textContent = item.imageButtonLabel || "IMG";
+      imageButton.setAttribute("aria-label", "Show image");
+      imageButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        els.image.src = item.imagePathOnShow;
+        if (item.visualBrief) els.visualBrief.textContent = item.visualBrief;
+      });
+      promptLine.append(imageButton);
+    }
+    if (item.revealButton && item.revealSentence) {
+      const reveal = document.createElement("button");
+      reveal.className = "primary-button presence-reveal presence-inline-reveal";
+      reveal.type = "button";
+      reveal.textContent = item.revealButtonLabel || "REVEAL";
+      reveal.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (row.classList.contains("revealed")) return;
+        playFeedbackSound(true);
+        const hl = (s) => s.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+        const prompt = row.querySelector(".presence-prompt");
+        if (prompt) prompt.innerHTML = hl(item.revealSentence);
+        row.classList.add("revealed");
+        reveal.disabled = true;
+      });
+      promptLine.append(reveal);
+    }
     if (index < items.length - 1 && !example.showAllItems) {
       const nextButton = document.createElement("button");
       nextButton.className = "presence-next";
@@ -1506,6 +1567,7 @@ function createInlineChoiceParts(segments) {
         const row = group.closest(".presence-row");
         if (row && [...row.querySelectorAll(".inline-choice-group")].every((choiceGroup) => choiceGroup.dataset.answered === "true")) {
           enablePresenceNext(row);
+          applyNextPlanCheckRowImage(row);
         }
       });
       popup.append(btn);
@@ -1710,6 +1772,15 @@ function applyPresenceRowImage(row) {
     speechText: row.dataset.speechText || "",
     speakerName: row.dataset.speakerName || ""
   });
+}
+
+function applyNextPlanCheckRowImage(row) {
+  const list = row?.closest(".going-to-plan-check-list");
+  if (!list) return;
+  const currentIndex = Number(row.dataset.presenceIndex);
+  if (!Number.isFinite(currentIndex)) return;
+  const nextRow = list.querySelector(`[data-presence-index="${currentIndex + 1}"]`);
+  if (nextRow?.dataset.imagePathOnShow) applyPresenceRowImage(nextRow);
 }
 
 function revealPresenceHotspotStep(list, currentIndex) {
@@ -4271,7 +4342,8 @@ const closePresenceOverlay = () => {
   els.presenceOverlay.classList.remove("comparison-mode");
   els.presenceOverlayQuestion.classList.remove("as-sentence");
   els.presenceOverlayImage.style.aspectRatio = "";
-  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg");
+  els.presenceOverlay.querySelector(".presence-overlay-portrait")?.remove();
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg", "thought-mode");
 };
 els.presenceOverlayClose.addEventListener("click", closePresenceOverlay);
 els.presenceOverlay.addEventListener("click", (e) => { if (e.target === els.presenceOverlay) closePresenceOverlay(); });
