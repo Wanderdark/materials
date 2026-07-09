@@ -290,6 +290,38 @@ Favor subtle emotion over exaggerated expression.
 
 Prioritize storytelling over attractiveness.
 
+## Age-Based Scene Expression Guide
+
+When creating scene illustrations for canonical students at different
+ages, adjust facial expressions by age while preserving the student's
+canonical personality and identity.
+
+Age 12:
+
+-   soft smile
+-   cheerful
+-   friendly
+-   curious
+-   energetic
+
+Age 13:
+
+-   slight smile
+-   relaxed
+-   natural
+-   composed
+
+Age 14:
+
+-   neutral
+-   relaxed
+-   thoughtful
+
+These are scene-expression tendencies, not redesign instructions. Do not
+force a smile unless the activity naturally calls for it. Expressions
+must remain subtle, believable, age-appropriate and connected to the
+character's action.
+
 ------------------------------------------------------------------------
 
 # CHARACTER FIRST

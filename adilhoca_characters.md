@@ -119,10 +119,10 @@ General Interests:
 - Visiting animal shelters
 
 Personality:
-Gentle, compassionate, patient, nurturing, responsible, animal lover.
+Polite, thoughtful, responsible.
 
 Personality note:
-Her zaman baskalarina ve hayvanlara sefkatle yaklasir.
+Kibar, dusunceli ve sorumluluk sahibi bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Salad
@@ -183,10 +183,10 @@ General Interests:
 - Environmental activities
 
 Personality:
-Easy-going, relaxed, optimistic, friendly, calm, enjoys simple moments.
+Easy-going, laid-back, friendly, funny.
 
 Personality note:
-Stres yapmayan, huzurlu cocuk.
+Rahat, arkadas canlisi ve komik bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Hamburger
@@ -247,10 +247,10 @@ General Interests:
 - Singing
 
 Personality:
-Sensitive, empathetic, creative, expressive, kind-hearted, emotional.
+Sensitive, polite.
 
 Personality note:
-Insanlarin duygularini onemser.
+Duygulari kolay incinen ama kibar bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Cupcake
@@ -312,10 +312,10 @@ General Interests:
 - Winter sports
 
 Personality:
-Energetic, adventurous, confident, curious, playful, fearless.
+Clumsy, energetic, confident.
 
 Personality note:
-Surekli yeni seyler denemek ister.
+Enerjik, kendine guvenen ve bazen sakar bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Pizza
@@ -376,10 +376,10 @@ General Interests:
 - Good daily habits
 
 Personality:
-Responsible, dependable, family-oriented, mature, caring, thoughtful.
+Honest, thoughtful, responsible, reliable.
 
 Personality note:
-Ailesine cok baglidir.
+Durust, dusunceli, sorumlu ve guvenilir bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Grilled Fish
@@ -440,10 +440,10 @@ General Interests:
 - Choir
 
 Personality:
-Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic.
+Cheerful, outgoing, sociable, forgetful.
 
 Personality note:
-Kalabalik ortamlari sever.
+Neseli, sosyal ve bazen unutkan bir ogrenci.
 
 Character usage note:
 Ella can be used as a backup Music Club student when needed.
@@ -508,10 +508,10 @@ General Interests:
 - Leadership
 
 Personality:
-Friendly, supportive, reliable, natural leader, organized, encouraging.
+Friendly, helpful, generous, reliable.
 
 Personality note:
-Sinifin dogal liderlerinden biri.
+Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Vegetable Soup
@@ -572,10 +572,10 @@ General Interests:
 - Reading
 
 Personality:
-Disciplined, patient, focused, analytical, determined, respectful.
+Determined, punctual.
 
 Personality note:
-Once dusunur, sonra hareket eder.
+Kararli ve dakik bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Steak
@@ -621,6 +621,11 @@ Energetic grin.
 Expression note:
 Hareket etmeye hazir gibi.
 
+Age-specific expression canon:
+
+- Age 13: Maintain Hannah's canonical default expression: Energetic grin. Maintain Hannah's default personality. Use a relaxed, believable expression. Since Hannah is now 13, the expression should feel slightly more relaxed, natural, and composed than her age-12 version. Keep her energetic outdoor confidence, but change the grin to a bright more subtle and effortless smile. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, confident, and age-appropriate for 13.
+- Age 14: Maintain Hannah's canonical default personality. Hannah's canonical default expression is: Energetic grin. Since Hannah is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Use a calm, relaxed, warm and confident smile with only a subtle trace of Hannah's original outdoor confidence. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, understated, confident, composed, and age-appropriate for 14.
+
 Favorite / Signature Activity:
 Cycling.
 
@@ -637,10 +642,10 @@ General Interests:
 - Outdoor games
 
 Personality:
-Energetic, adventurous, cheerful, active, outdoorsy, confident.
+Adventurous, energetic, cheerful.
 
 Personality note:
-Yerinde duramayan doga cocugu.
+Maceraci, enerjik ve neseli bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Barbecue
@@ -701,10 +706,10 @@ General Interests:
 - Hiking
 
 Personality:
-Confident, practical, resourceful, courageous, independent, easy-going.
+Selfish, stubborn, patient.
 
 Personality note:
-Elinden her is gelir.
+Inatci, sabirli ve bazen bencil davranabilen bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Sandwich
@@ -765,10 +770,10 @@ General Interests:
 - Outdoor sports
 
 Personality:
-Competitive, athletic, energetic, determined, resilient, fair.
+Determined, energetic.
 
 Personality note:
-Kaybetmeyi sevmez ama centilmendir.
+Kararli ve enerjik bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Spaghetti
@@ -814,6 +819,11 @@ Shy, gentle expression.
 Expression note:
 Cok hafif gulumser. Bazen hic gulumsemeyebilir.
 
+Age-specific expression canon:
+
+- Age 13: Maintain Mia's canonical default expression: gentle expression. Use a relaxed, more confident, believable expression. Since Mia is now 13, the expression should feel slightly more relaxed, more confident, natural, and composed than her age-12 shy version. Keep her gentle softness, but make the expression more subtle, more confident and effortless. Avoid exaggerated smiles. Avoid oversized teeth. Avoid AI-style perfect grin.
+- Age 14: Since Mia is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Her confident expression is now even more noticeable. She is smiling a bit warmer than ever before without the hint of shyness. Keep the expression natural, understated, relaxed, thoughtful, and age-appropriate.
+
 Favorite / Signature Activity:
 Writing a Diary.
 
@@ -829,10 +839,10 @@ General Interests:
 - Writing stories
 
 Personality:
-Shy, quiet, thoughtful, gentle, observant, imaginative.
+Shy, thoughtful.
 
 Personality note:
-Konusmaktan cok dinlemeyi sever.
+Utangac ve dusunceli bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Chocolate Cookies
@@ -893,10 +903,10 @@ General Interests:
 - Math puzzles
 
 Personality:
-Studious, intelligent, logical, curious, organized, hardworking.
+Intelligent, hardworking.
 
 Personality note:
-Ogrenmeyi gercekten sever.
+Zeki ve caliskan bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Chicken Wrap
@@ -959,10 +969,10 @@ General Interests:
 - Movies
 
 Personality:
-Artistic, detail-oriented, imaginative, creative, observant, perfectionist.
+Funny, creative.
 
 Personality note:
-Kucuk detaylari herkesten once fark eder.
+Yaratici ve komik bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Blueberry Pancakes
@@ -1023,10 +1033,10 @@ General Interests:
 - Gardening
 
 Personality:
-Calm, analytical, intelligent, strategic, composed, logical.
+Intelligent, stingy.
 
 Personality note:
-Baski altinda bile sakin kalir.
+Zeki ama bazen cimri davranabilen bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Sushi
@@ -1087,10 +1097,10 @@ General Interests:
 - Journaling
 
 Personality:
-Independent, thoughtful, introverted, curious, patient, reflective.
+Shy, thoughtful, patient.
 
 Personality note:
-Once gozlemler, sonra konusur.
+Utangac, dusunceli ve sabirli bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Mushroom Pizza

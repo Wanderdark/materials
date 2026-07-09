@@ -35,7 +35,7 @@ window.exerciseModules.push(window.exerciseActivityModules.jumbledSentences({
   repeatable: true,
   lives: 3,
   supports(functionModule) {
-    return functionModule.id === "frequency-adverbs";
+    return functionModule.id === "frequency-adverbs" || functionModule.id === "frequency-adverbs-grade7";
   },
   reset() {
     _freqJumbledRemaining = _shuffleFreqJumbled(_freqJumbledPool.map((sentence, index) => ({

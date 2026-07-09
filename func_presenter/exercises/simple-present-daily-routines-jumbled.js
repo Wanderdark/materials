@@ -43,7 +43,8 @@ const simplePresentDailyRoutinesJumbledExercise = window.exerciseActivityModules
   repeatable: true,
   lives: 3,
   supports(functionModule) {
-    return functionModule.id === "simple-present-daily-routines";
+    return functionModule.id === "simple-present-daily-routines"
+      || functionModule.id === "simple-present-daily-routines-grade7";
   },
   reset() {
     simplePresentDailyRoutineJumbledRemaining = shuffleDailyRoutineJumbled(buildDailyRoutineJumbledBank());

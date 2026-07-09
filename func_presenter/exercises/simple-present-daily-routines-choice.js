@@ -67,7 +67,8 @@ const simplePresentDailyRoutinesChoiceExercise = window.exerciseActivityModules.
   wideOptions: true,
   repeatable: true,
   supports(functionModule) {
-    return functionModule.id === "simple-present-daily-routines";
+    return functionModule.id === "simple-present-daily-routines"
+      || functionModule.id === "simple-present-daily-routines-grade7";
   },
   reset() {
     simplePresentDailyRoutineRemaining = shuffleSimplePresentDailyRoutineQuestions(simplePresentDailyRoutineChoiceBank);

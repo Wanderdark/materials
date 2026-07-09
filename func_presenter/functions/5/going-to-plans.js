@@ -11,7 +11,7 @@ const goingToPlansNameTags = {
 
 const goingToPlansSentenceBuildItems = [
   {
-    imagePathOnShow: "images/goingto-plans/go-skiing.webp",
+    imagePathOnShow: "images/common/skiing-daniel-1.webp",
     imageButton: true,
     revealButton: true,
     parts: [{ text: "I / go skiing" }],

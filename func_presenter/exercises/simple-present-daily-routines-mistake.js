@@ -79,7 +79,8 @@ const simplePresentDailyRoutinesMistakeExercise = window.exerciseActivityModules
   title: "MISTAKE? CORRECT IT",
   repeatable: true,
   supports(functionModule) {
-    return functionModule.id === "simple-present-daily-routines";
+    return functionModule.id === "simple-present-daily-routines"
+      || functionModule.id === "simple-present-daily-routines-grade7";
   },
   reset() {
     const bank = buildDailyRoutineMistakeBank();

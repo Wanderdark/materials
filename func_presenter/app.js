@@ -223,6 +223,7 @@ const els = {
   pcGradeLabel: $("pcGradeLabel"),
   pcTitle: $("pcTitle"),
   pcScore: $("pcScore"),
+  pcCard: document.querySelector(".pc-card"),
   pcImage: $("pcImage"),
   pcParagraph: $("pcParagraph"),
   pcResult: $("pcResult"),
@@ -304,6 +305,8 @@ function hideAllScreens() {
 }
 
 function playFeedbackSound(isCorrect) {
+  if (isCorrect) window.StudentGame?.onCorrect();
+  else window.StudentGame?.onWrong();
   if (feedbackAudio) {
     feedbackAudio.pause();
     feedbackAudio.currentTime = 0;
@@ -313,6 +316,8 @@ function playFeedbackSound(isCorrect) {
 }
 
 function playWavFeedback(isCorrect) {
+  if (isCorrect) window.StudentGame?.onCorrect();
+  else window.StudentGame?.onWrong();
   if (feedbackAudio) {
     feedbackAudio.pause();
     feedbackAudio.currentTime = 0;
@@ -674,6 +679,7 @@ function renderExample() {
   state.showingFunctionIntro = false;
   clearPresenceHotspots();
   clearVisualAnnotations();
+  clearPersonalityHubVisual();
   els.functionIntro.classList.add("hidden");
   els.exampleCard.classList.remove("hidden");
   const example = state.module.sentences[state.index];
@@ -707,6 +713,7 @@ function renderExample() {
   els.exampleCard.classList.toggle("speech-bubble-slide", example.visualStyle === "speech-bubble");
   els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
   els.exampleCard.classList.toggle("inline-choice-slide", (example.listClass || "").split(/\s+/).includes("inline-choice-list"));
+  els.exampleCard.classList.toggle("personality-hub-slide", Boolean(example.personalityHub));
   els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
@@ -750,7 +757,12 @@ function renderExample() {
     els.timetableReveal.disabled = false;
   }
   if (isPresenceSlide) renderPresenceSlide(example);
-  if (!isTimePrompt && !noVisual) {
+  if (example.personalityHub) {
+    const hubState = getPersonalityHubState(example);
+    const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
+    renderPersonalityHubVisual(example, activeTrait);
+  }
+  if (!isTimePrompt && !noVisual && !example.personalityHub) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");
@@ -780,6 +792,320 @@ function renderExample() {
     dot.className = actualIdx === state.index ? "active" : actualIdx < state.index ? "complete" : "";
     return dot;
   }));
+}
+
+function clearPersonalityHubVisual() {
+  document.getElementById("personalityCharacterZone")?.remove();
+}
+
+function getPersonalityHubState(example) {
+  if (!example._personalityHubState) {
+    example._personalityHubState = {
+      activeTraitKey: example.traits?.[0]?.key || "",
+      completed: {},
+      cooldowns: {},
+      correctCount: 0
+    };
+  }
+  return example._personalityHubState;
+}
+
+function getPersonalityTraitKeys(trait) {
+  return new Set(trait?.keys || [trait?.key].filter(Boolean));
+}
+
+function getPersonalityTraitCharacters(example, trait) {
+  const keys = getPersonalityTraitKeys(trait);
+  return (example.characters || []).filter((character) => character.traits?.some((key) => keys.has(key)));
+}
+
+function getPersonalityCompletionKey(trait, character) {
+  return `${trait?.key || "trait"}::${character?.name || "character"}`;
+}
+
+function getPersonalityBookmarkPath(character) {
+  const slug = (character?.bookmarkSlug || character?.name || "").toLowerCase();
+  return character?.bookmarkPath || `images/common/bookmarks/${slug}.webp`;
+}
+
+function setPersonalityCharacterImage(img, character, useBookmark = true) {
+  img.classList.remove("fallback-portrait");
+  img.src = useBookmark ? getPersonalityBookmarkPath(character) : character.imagePath;
+  img.alt = character.name;
+  img.dataset.fallbackSrc = character.imagePath || "";
+  img.addEventListener("error", () => {
+    if (img.dataset.fallbackSrc && img.src !== img.dataset.fallbackSrc) {
+      img.src = img.dataset.fallbackSrc;
+      img.classList.add("fallback-portrait");
+    }
+  }, { once: true });
+}
+
+function getPersonalityTraitImagePath(character, traitKey) {
+  if (character.traitImages?.[traitKey]) return character.traitImages[traitKey];
+  const nameSlug = (character.name || "").toLowerCase();
+  const traitSlug = traitKey.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+  return `images/personality/${nameSlug}-${traitSlug}.webp`;
+}
+
+function isPersonalityTraitComplete(example, trait) {
+  const hubState = getPersonalityHubState(example);
+  const characters = getPersonalityTraitCharacters(example, trait);
+  return characters.length > 0 && characters.every((character) => hubState.completed[getPersonalityCompletionKey(trait, character)]);
+}
+
+function isPersonalityTraitCooling(example, trait) {
+  const hubState = getPersonalityHubState(example);
+  return !isPersonalityTraitComplete(example, trait) && (hubState.cooldowns[trait.key] || 0) > hubState.correctCount;
+}
+
+function resolvePersonalityTraitKey(character, trait) {
+  return character.traits?.includes(trait.key)
+    ? trait.key
+    : (trait.keys || []).find((key) => character.traits?.includes(key)) || trait.key;
+}
+
+function applyPersonalityPronouns(text, character, sentenceStart = false) {
+  const subjectPronoun = character.gender === "boy" ? "He" : "She";
+  const reflexive = character.gender === "boy" ? "himself" : "herself";
+  const possessive = character.gender === "boy" ? "his" : "her";
+  const objectPronoun = character.gender === "boy" ? "him" : "her";
+  const result = (text || "")
+    .replace(/\bhimself\/herself\b/g, reflexive)
+    .replace(/\bhis\/her\b/g, possessive)
+    .replace(/\bhim\/her\b/g, objectPronoun)
+    .replace(/\bhe\/she\b/g, subjectPronoun.toLowerCase());
+  return sentenceStart ? `${subjectPronoun} ${result}` : result;
+}
+
+const personalityDistractorBlacklist = {
+  polite: ["thoughtful", "helpful", "friendly", "sensitive"],
+  thoughtful: ["polite", "helpful", "sensitive", "friendly", "responsible"],
+  helpful: ["polite", "thoughtful", "friendly", "generous", "supportive"],
+  friendly: ["polite", "helpful", "outgoing", "sociable", "cheerful"],
+  sensitive: ["thoughtful", "polite", "shy"],
+  funny: ["cheerful", "outgoing", "sociable"],
+  cheerful: ["funny", "friendly", "outgoing", "sociable"],
+  outgoing: ["friendly", "cheerful", "sociable", "funny"],
+  sociable: ["friendly", "cheerful", "outgoing", "funny"],
+  determined: ["hardworking", "responsible", "patient"],
+  hardworking: ["determined", "responsible", "patient"],
+  responsible: ["thoughtful", "hardworking", "determined", "reliable"],
+  reliable: ["responsible", "honest", "thoughtful"],
+  honest: ["reliable", "responsible"],
+  easyGoing: ["laidBack", "friendly", "cheerful"],
+  laidBack: ["easyGoing", "patient"],
+  patient: ["laidBack", "thoughtful", "responsible"],
+  confident: ["outgoing", "energetic", "determined"],
+  energetic: ["cheerful", "adventurous", "outgoing", "confident"],
+  adventurous: ["energetic", "confident"],
+  selfish: ["stingy", "stubborn"],
+  stingy: ["selfish"],
+  stubborn: ["selfish", "determined"],
+  shy: ["sensitive"],
+  intelligent: ["creative", "hardworking"],
+  creative: ["intelligent"],
+  clumsy: ["forgetful"],
+  forgetful: ["clumsy"]
+};
+
+function getPersonalityBlockedDistractors(traitKey) {
+  return new Set(personalityDistractorBlacklist[traitKey] || []);
+}
+
+function buildPersonalityDefinitionOptions(example, character, trait) {
+  const traitKey = resolvePersonalityTraitKey(character, trait);
+  const correctRaw = example.definitions?.[traitKey] || example.definitions?.[trait.key] || "";
+  const correct = applyPersonalityPronouns(correctRaw, character, true);
+  const blocked = getPersonalityBlockedDistractors(traitKey);
+  const distractors = Object.entries(example.definitions || {})
+    .filter(([key, value], index, entries) => key !== traitKey && !blocked.has(key) && value !== correctRaw && entries.findIndex(([, otherValue]) => otherValue === value) === index)
+    .map(([, value]) => applyPersonalityPronouns(value, character, true));
+  return shuffle([
+    { text: correct, correct: true },
+    ...shuffle(distractors).slice(0, 2).map((text) => ({ text, correct: false }))
+  ]);
+}
+
+function renderPersonalityHubControls(example) {
+  const hubState = getPersonalityHubState(example);
+  const grid = document.createElement("div");
+  grid.id = "personalityTraitGrid";
+  grid.className = "personality-trait-grid";
+  (example.traits || []).forEach((trait, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "personality-trait-button";
+    button.textContent = trait.label;
+    button.dataset.traitKey = trait.key;
+    if (isPersonalityTraitComplete(example, trait)) button.classList.add("completed");
+    if (isPersonalityTraitCooling(example, trait)) {
+      button.classList.add("cooling");
+      button.disabled = true;
+    }
+    button.addEventListener("click", () => {
+      if (button.disabled) return;
+      hubState.activeTraitKey = trait.key;
+      grid.querySelectorAll(".personality-trait-button").forEach((btn) => btn.classList.remove("active"));
+      button.classList.add("active");
+      renderPersonalityHubVisual(example, trait);
+    });
+    if ((hubState.activeTraitKey && hubState.activeTraitKey === trait.key) || (!hubState.activeTraitKey && index === 0)) button.classList.add("active");
+    grid.append(button);
+  });
+  els.presenceView.append(grid);
+}
+
+function updatePersonalityTraitButtons(example) {
+  const grid = document.getElementById("personalityTraitGrid");
+  if (!grid) return;
+  grid.querySelectorAll(".personality-trait-button").forEach((button) => {
+    const trait = (example.traits || []).find((item) => item.key === button.dataset.traitKey);
+    if (!trait) return;
+    const complete = isPersonalityTraitComplete(example, trait);
+    const cooling = isPersonalityTraitCooling(example, trait);
+    button.classList.toggle("completed", complete);
+    button.classList.toggle("cooling", cooling);
+    button.disabled = cooling;
+  });
+}
+
+function renderPersonalityHubVisual(example, trait) {
+  const hubState = getPersonalityHubState(example);
+  clearPersonalityHubVisual();
+  els.image.classList.add("hidden");
+  els.fallback.classList.add("hidden");
+  const zone = document.createElement("div");
+  zone.id = "personalityCharacterZone";
+  zone.className = "personality-character-zone";
+  const heading = document.createElement("div");
+  heading.className = "personality-character-heading";
+  heading.textContent = trait ? trait.label : "Choose a personality";
+  zone.append(heading);
+  const characters = getPersonalityTraitCharacters(example, trait);
+  const traitCooling = isPersonalityTraitCooling(example, trait);
+  const grid = document.createElement("div");
+  grid.className = "personality-character-grid";
+  characters.forEach((character) => {
+    const completionKey = getPersonalityCompletionKey(trait, character);
+    const completed = Boolean(hubState.completed[completionKey]);
+    const cooling = traitCooling && !completed;
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "personality-character-card";
+    card.classList.toggle("completed", completed);
+    card.classList.toggle("cooling", cooling);
+    card.disabled = cooling;
+    const img = document.createElement("img");
+    setPersonalityCharacterImage(img, character);
+    const name = document.createElement("strong");
+    name.textContent = character.name;
+    card.append(img, name);
+    card.addEventListener("click", () => {
+      if (card.disabled) return;
+      openPersonalityCharacterOverlay(example, character, trait);
+    });
+    grid.append(card);
+  });
+  if (!characters.length) {
+    const empty = document.createElement("p");
+    empty.className = "personality-empty";
+    empty.textContent = "No character is linked yet.";
+    grid.append(empty);
+  }
+  zone.append(grid);
+  els.exampleVisualPanel.append(zone);
+}
+
+function openPersonalityCharacterOverlay(example, character, trait) {
+  const hubState = getPersonalityHubState(example);
+  const traitKey = resolvePersonalityTraitKey(character, trait);
+  const definition = example.definitions?.[traitKey] || example.definitions?.[trait.key] || "";
+  const displayTrait = example.displayNames?.[traitKey] || trait.label;
+  const rootSentence = `${character.name} is <${displayTrait}>.`;
+  const fullSentence = `${rootSentence} ${applyPersonalityPronouns(definition, character, true)}`;
+  const options = buildPersonalityDefinitionOptions(example, character, trait);
+  const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
+  const completionKey = getPersonalityCompletionKey(trait, character);
+  const alreadyCompleted = Boolean(hubState.completed[completionKey]);
+
+  els.presenceOverlay.querySelector(".presence-overlay-continue")?.remove();
+  els.presenceOverlay.querySelector(".presence-overlay-portrait")?.remove();
+  els.presenceOverlay.classList.remove("comparison-mode");
+  els.presenceOverlayQuestion.classList.add("as-sentence");
+  els.presenceOverlayQuestion.innerHTML = highlight(rootSentence);
+  els.presenceOverlayImage.classList.remove("hidden");
+  const overlayImage = els.presenceOverlayImage;
+  overlayImage.classList.remove("fallback-portrait");
+  overlayImage.src = getPersonalityTraitImagePath(character, traitKey);
+  overlayImage.alt = `${character.name} – ${displayTrait}`;
+  overlayImage.dataset.fallbackSrc = character.imagePath || "";
+  overlayImage.addEventListener("error", () => {
+    if (overlayImage.dataset.fallbackSrc && overlayImage.src !== overlayImage.dataset.fallbackSrc) {
+      overlayImage.src = overlayImage.dataset.fallbackSrc;
+    }
+  }, { once: true });
+  els.presenceOverlayImage.style.aspectRatio = "1 / 1";
+  els.presenceOverlayImage.style.objectFit = "cover";
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.add("overlay-lg", "personality-quiz-overlay");
+
+  if (alreadyCompleted) {
+    els.presenceOverlaySentence.innerHTML = `<p class="personality-definition-result">${highlight(fullSentence)}</p>`;
+    els.presenceOverlay.classList.remove("hidden");
+    return;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.className = "personality-definition-quiz";
+  const instruction = document.createElement("p");
+  instruction.className = "personality-definition-instruction";
+  instruction.textContent = "Choose the correct description.";
+  const optionWrap = document.createElement("div");
+  optionWrap.className = "personality-definition-options";
+  const result = document.createElement("p");
+  result.className = "personality-definition-result hidden";
+  options.forEach((option) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "personality-definition-option";
+    button.textContent = option.text;
+    button.addEventListener("click", () => {
+      if (wrap.dataset.locked === "true") return;
+      if (!option.correct) {
+        playFeedbackSound(false);
+        button.classList.add("wrong");
+        return;
+      }
+      wrap.dataset.locked = "true";
+      playFeedbackSound(true);
+      button.classList.add("correct");
+      if (!hubState.completed[completionKey]) {
+        hubState.completed[completionKey] = true;
+        hubState.correctCount += 1;
+        const traitCharacters = getPersonalityTraitCharacters(example, trait);
+        const allTraitCardsComplete = traitCharacters.every((item) => hubState.completed[getPersonalityCompletionKey(trait, item)]);
+        if (traitCharacters.length > 1 && !allTraitCardsComplete) {
+          hubState.cooldowns[trait.key] = hubState.correctCount + 3;
+        }
+      }
+      instruction.remove();
+      optionWrap.remove();
+      result.innerHTML = highlight(fullSentence);
+      result.classList.remove("hidden");
+      const continueButton = document.createElement("button");
+      continueButton.type = "button";
+      continueButton.className = "primary-button presence-overlay-continue";
+      continueButton.textContent = "CONTINUE";
+      continueButton.addEventListener("click", closePresenceOverlay);
+      els.presenceOverlay.querySelector(".presence-overlay-card").append(continueButton);
+      updatePersonalityTraitButtons(example);
+      renderPersonalityHubVisual(example, trait);
+    });
+    optionWrap.append(button);
+  });
+  wrap.append(instruction, optionWrap, result);
+  els.presenceOverlaySentence.replaceChildren(wrap);
+  els.presenceOverlay.classList.remove("hidden");
 }
 
 function revealTimeAnswer() {
@@ -844,7 +1170,7 @@ function openPresenceOverlay({ question, topSentence, imagePath, sentence, sente
   const highlight = (str) => str.replace(/<([^>]+)>/g, '<span class="freq-highlight">$1</span>');
   els.presenceOverlay.querySelector(".presence-overlay-continue")?.remove();
   els.presenceOverlay.querySelector(".presence-overlay-portrait")?.remove();
-  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("thought-mode");
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("thought-mode", "personality-quiz-overlay");
   if (comparison) {
     els.presenceOverlay.classList.add("comparison-mode");
     els.presenceOverlayQuestion.innerHTML = "";
@@ -1236,6 +1562,10 @@ function renderPresenceSlide(example) {
     note.textContent = example.note;
     els.presenceView.append(note);
   }
+  if (example.personalityHub) {
+    renderPersonalityHubControls(example);
+    return;
+  }
   if (renderCategoryHub(example)) return;
   if (renderPieDialogue(example)) return;
   const list = document.createElement("div");
@@ -1589,6 +1919,30 @@ function createInlineChoiceParts(segments) {
     group.append(trigger, popup);
     return group;
   });
+}
+
+function parseInlineChoiceSentence(raw = "") {
+  const segments = [];
+  const pattern = /<<([^<>]+)>|<([^<>]+)>>/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = pattern.exec(raw)) !== null) {
+    if (match.index > lastIndex) {
+      segments.push({ text: raw.slice(lastIndex, match.index) });
+    }
+    const leftIsCorrect = Boolean(match[1]);
+    const options = (match[1] || match[2] || "").split("/").map((option) => option.trim()).filter(Boolean);
+    if (options.length >= 2) {
+      segments.push({ options, answer: leftIsCorrect ? options[0] : options[1] });
+    } else {
+      segments.push({ text: match[0] });
+    }
+    lastIndex = pattern.lastIndex;
+  }
+  if (lastIndex < raw.length) {
+    segments.push({ text: raw.slice(lastIndex) });
+  }
+  return segments;
 }
 
 function applyPresencePromptStyle(prompt, item = {}) {
@@ -1995,6 +2349,9 @@ function startSelectedExercise(exercise) {
     case "fill-blank":
       startFillBlank(exercise);
       return;
+    case "word-bank-fill-blank":
+      startWordBankFillBlank(exercise);
+      return;
     case "mistake-correct-it":
       startMistakeCorrectIt(exercise);
       return;
@@ -2006,6 +2363,9 @@ function startSelectedExercise(exercise) {
       return;
     case "student-match":
       startStudentMatch(exercise);
+      return;
+    case "character-hub-popup":
+      startCharacterHubPopup(exercise);
       return;
     case "lucky-spin":
       startLuckySpin(exercise);
@@ -2034,6 +2394,7 @@ function startParagraphChoice(exercise) {
   els.pcGradeLabel.textContent = `GRADE ${state.module.grade}`;
   els.pcTitle.textContent = exercise.title;
   els.pcScore.textContent = `0 / ${state.pcTotalChoices}`;
+  els.pcCard.classList.toggle("pc-text-only", Boolean(exercise.textOnly));
   els.pcResult.classList.add("hidden");
   els.pcSkip.classList.toggle("hidden", state.postExerciseIndex === undefined);
   els.pcScreen.classList.remove("hidden");
@@ -2042,8 +2403,17 @@ function startParagraphChoice(exercise) {
 
 function renderPcPage() {
   const page = state.pcPages[state.pcPageIndex];
-  els.pcImage.src = page.imagePath;
-  els.pcImage.alt = state.exercise.title;
+  page._personalityMatchComplete = false;
+  page._personalityMatchRendered = false;
+  const imagePath = page.imagePath || state.exercise.imagePath;
+  els.pcImage.closest(".visual-panel").classList.toggle("hidden", Boolean(state.exercise.textOnly) || !imagePath);
+  if (imagePath) {
+    els.pcImage.src = imagePath;
+    els.pcImage.alt = state.exercise.title;
+  } else {
+    els.pcImage.removeAttribute("src");
+    els.pcImage.alt = "";
+  }
   els.pcResult.classList.add("hidden");
   els.pcDone.dataset.pcAction = "done";
   els.pcDone.textContent = "BACK TO MENU";
@@ -2062,6 +2432,61 @@ function advancePcPage() {
   renderPcPage();
 }
 
+function showPcPageResult(overallCorrect) {
+  const isLastPage = state.pcPageIndex >= state.pcPages.length - 1;
+  setTimeout(() => {
+    if (isLastPage) {
+      els.pcResultText.textContent = overallCorrect === state.pcTotalChoices
+        ? `Perfect! All ${state.pcTotalChoices} correct!`
+        : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
+      els.pcDone.textContent = state.postExerciseIndex !== undefined ? "CONTINUE ->" : "BACK TO MENU";
+      els.pcDone.dataset.pcAction = "done";
+    } else {
+      els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
+      els.pcDone.textContent = "NEXT PAGE ->";
+      els.pcDone.dataset.pcAction = "next";
+    }
+    els.pcResult.classList.remove("hidden");
+  }, 500);
+}
+
+function renderPcPersonalityMatch(page, overallCorrect) {
+  if (!page.personalityMatch || page._personalityMatchRendered) return;
+  page._personalityMatchRendered = true;
+  const match = page.personalityMatch;
+  const wrap = document.createElement("section");
+  wrap.className = "pc-personality-match";
+  const title = document.createElement("h2");
+  title.textContent = `Who is ${match.trait}?`;
+  const grid = document.createElement("div");
+  grid.className = "pc-personality-match-grid";
+  (match.options || []).forEach((character) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "pc-personality-character-option";
+    const img = document.createElement("img");
+    img.src = character.imagePath;
+    img.alt = character.name;
+    const name = document.createElement("strong");
+    name.textContent = character.name;
+    button.append(img, name);
+    button.addEventListener("click", () => {
+      if (page._personalityMatchComplete) return;
+      const isCorrect = character.name === match.answer;
+      playFeedbackSound(isCorrect);
+      button.classList.add(isCorrect ? "correct" : "wrong");
+      if (!isCorrect) return;
+      page._personalityMatchComplete = true;
+      grid.querySelectorAll("button").forEach((item) => { item.disabled = true; });
+      state.pcCurrentPageCorrect = overallCorrect - state.pcOverallCorrect;
+      showPcPageResult(overallCorrect);
+    });
+    grid.append(button);
+  });
+  wrap.append(title, grid);
+  els.pcParagraph.append(wrap);
+}
+
 function checkPcProgress() {
   const groups = [...els.pcParagraph.querySelectorAll(".inline-choice-group")];
   const total = groups.length;
@@ -2071,6 +2496,11 @@ function checkPcProgress() {
   els.pcScore.textContent = `${overallCorrect} / ${state.pcTotalChoices}`;
   if (answered === total && total > 0) {
     state.pcCurrentPageCorrect = correct;
+    const page = state.pcPages[state.pcPageIndex];
+    if (page?.personalityMatch && correct === total && !page._personalityMatchComplete) {
+      renderPcPersonalityMatch(page, overallCorrect);
+      return;
+    }
     const isLastPage = state.pcPageIndex >= state.pcPages.length - 1;
     setTimeout(() => {
       if (isLastPage) {
@@ -2099,10 +2529,13 @@ function startStudentMatch(exercise) {
   const normalStudents = shuffle(exercise.students.filter((s) => !s.hasGlasses));
   const batches = [];
   for (let i = 0; i < glassStudents.length; i += 2) {
-    batches.push(shuffle([glassStudents[i], glassStudents[i + 1], normalStudents.pop(), normalStudents.pop()]));
+    batches.push(shuffle([glassStudents[i], glassStudents[i + 1], normalStudents.pop(), normalStudents.pop()].filter(Boolean)));
   }
   while (normalStudents.length >= 4) {
     batches.push(shuffle(normalStudents.splice(0, 4)));
+  }
+  if (normalStudents.length) {
+    batches.push(shuffle(normalStudents.splice(0)));
   }
   state.smBatches = shuffle(batches);
   hideAllScreens();
@@ -2111,6 +2544,124 @@ function startStudentMatch(exercise) {
   els.smResult.classList.add("hidden");
   els.smScreen.classList.remove("hidden");
   renderSmBatch();
+}
+
+function startCharacterHubPopup(exercise) {
+  state.exercise = exercise;
+  state.exerciseQuestions = exercise.pages || [];
+  state.exerciseIndex = 0;
+  state.exerciseScore = 0;
+  state.characterHubCompleted = new Set();
+  hideAllScreens();
+  els.exerciseScore.closest(".exercise-score")?.classList.add("hidden");
+  els.exercise.classList.remove("hidden");
+  renderCharacterHubPopupPage();
+}
+
+function renderCharacterHubPopupPage() {
+  const pages = state.exercise.pages || [];
+  const page = pages[state.exerciseIndex] || [];
+  const total = Math.max(pages.length, 1);
+  clearExerciseRepeatVisual();
+  clearExerciseVisualCaption();
+  clearExerciseImageFocus();
+  els.exerciseGrade.textContent = `GRADE ${state.grade}`;
+  els.exerciseTitle.textContent = state.exercise.title;
+  els.exerciseProgress.textContent = `${state.exerciseIndex + 1} / ${total}`;
+  els.exerciseProgressBar.style.width = `${((state.exerciseIndex + 1) / total) * 100}%`;
+  els.exerciseScore.textContent = `${page.length}`;
+  els.exerciseCard.className = "exercise-card character-hub-exercise";
+  els.exerciseVisualPanel.classList.remove("hidden");
+  const pageVisual = state.exercise.pageVisuals?.[state.exerciseIndex];
+  els.exerciseImage.classList.toggle("hidden", !pageVisual);
+  els.exerciseFallback.classList.toggle("hidden", Boolean(pageVisual));
+  if (pageVisual) {
+    els.exerciseImage.src = pageVisual;
+    els.exerciseImage.alt = state.exercise.visualBrief || "Character collage";
+    els.exerciseImage.style.aspectRatio = state.exercise.pageVisualAspect || "";
+    els.exerciseImage.style.objectFit = state.exercise.pageVisualFit || "";
+  } else {
+    els.exerciseImage.removeAttribute("src");
+    els.exerciseImage.style.aspectRatio = "";
+    els.exerciseImage.style.objectFit = "";
+    els.exerciseBrief.textContent = state.exercise.visualBrief || "Choose a student.";
+  }
+  els.exerciseReferenceType.textContent = state.exercise.referenceType || "CHARACTER HUB";
+  els.exerciseReferenceType.classList.remove("hidden");
+  els.exerciseWord.classList.add("hidden");
+  els.exercisePrompt.textContent = "CLICK A STUDENT.";
+  els.exercisePrompt.classList.remove("hidden");
+  els.exercisePrompt.classList.add("compact-prompt");
+  els.exerciseSentence.textContent = `GROUP ${state.exerciseIndex + 1}`;
+  els.exerciseSentence.classList.remove("hidden");
+  els.exerciseFeedback.textContent = "Complete the sentence in the popup.";
+  els.exerciseFeedback.className = "exercise-feedback";
+  els.exerciseNext.disabled = false;
+  els.exerciseNext.textContent = state.exerciseIndex >= total - 1 ? "SEE RESULT" : "NEXT GROUP";
+
+  const hub = document.createElement("div");
+  hub.className = "exercise-character-hub-grid";
+  page.forEach((student, index) => {
+    if (index === 4) hub.append(createCharacterHubCenter());
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "exercise-character-hub-button";
+    button.textContent = student.name;
+    const completionKey = `${state.exerciseIndex}:${student.name}`;
+    if (state.characterHubCompleted?.has(completionKey)) {
+      markCharacterHubButtonComplete(button);
+    }
+    button.addEventListener("click", () => {
+      if (button.disabled) return;
+      openPresenceOverlay({
+        question: student.name,
+        imagePath: student.imagePath,
+        imageAspect: "1 / 1",
+        imageFit: "cover",
+        overlaySize: true,
+        interactiveSentences: [{ segments: parseInlineChoiceSentence(student.sentence) }]
+      });
+      bindCharacterHubOverlayCompletion(button, completionKey);
+    });
+    hub.append(button);
+  });
+  els.articleOptions.className = "article-options exercise-character-hub-options";
+  els.articleOptions.replaceChildren(hub);
+}
+
+function bindCharacterHubOverlayCompletion(button, completionKey) {
+  if (state.characterHubOverlayCleanup) {
+    state.characterHubOverlayCleanup();
+    state.characterHubOverlayCleanup = null;
+  }
+  const sentenceArea = els.presenceOverlaySentence;
+  const checkComplete = () => {
+    const groups = [...sentenceArea.querySelectorAll(".inline-choice-group")];
+    if (!groups.length) return;
+    const allAnswered = groups.every((group) => group.dataset.answered === "true");
+    const allCorrect = groups.every((group) => group.querySelector(".inline-choice-trigger")?.classList.contains("correct"));
+    if (allAnswered && allCorrect) {
+      state.characterHubCompleted?.add(completionKey);
+      markCharacterHubButtonComplete(button);
+      sentenceArea.removeEventListener("click", onChoiceClick, true);
+    }
+  };
+  const onChoiceClick = () => setTimeout(checkComplete, 40);
+  sentenceArea.addEventListener("click", onChoiceClick, true);
+  state.characterHubOverlayCleanup = () => sentenceArea.removeEventListener("click", onChoiceClick, true);
+}
+
+function markCharacterHubButtonComplete(button) {
+  button.classList.add("completed");
+  button.disabled = true;
+  button.setAttribute("aria-label", `${button.textContent} completed`);
+}
+
+function createCharacterHubCenter() {
+  const center = document.createElement("div");
+  center.className = "exercise-character-hub-center";
+  center.textContent = "CHOOSE\nONE";
+  return center;
 }
 
 function renderSmBatch() {
@@ -2125,14 +2676,21 @@ function renderSmBatch() {
     const card = document.createElement("div");
     card.className = "sm-student-card";
     card.dataset.studentId = student.id;
+    const imageFrame = document.createElement("div");
+    imageFrame.className = "sm-student-img-frame";
     const img = document.createElement("img");
     img.className = "sm-student-img";
     img.src = student.imagePath;
     img.alt = student.name;
+    const imageZoom = Number(state.exercise?.studentImageZoom || 1);
+    if (imageZoom !== 1) {
+      img.style.transform = `scale(${imageZoom})`;
+    }
+    imageFrame.append(img);
     const nameEl = document.createElement("span");
     nameEl.className = "sm-student-name";
     nameEl.textContent = student.name;
-    card.append(img, nameEl);
+    card.append(imageFrame, nameEl);
     card.addEventListener("click", () => handleSmStudentClick(student.id));
     return card;
   }));
@@ -2178,7 +2736,7 @@ function handleSmStudentClick(studentId) {
     state.smSelectedDescId = null;
     state.smMatched++;
     state.smScore++;
-    if (state.smMatched === 4) {
+    if (state.smMatched === Number(studentCard.closest(".sm-student-grid")?.children.length || 4)) {
       const isLast = state.smBatchIndex >= state.smBatches.length - 1;
       setTimeout(() => {
         if (isLast) {
@@ -2295,6 +2853,194 @@ function revealFillBlankAnswer(button) {
 
 function updateFillBlankProgress() {
   els.fillBlankProgress.textContent = `${state.fillBlankRevealed} / ${state.fillBlankTotalBlanks}`;
+}
+
+function startWordBankFillBlank(exercise) {
+  state.exercise = exercise;
+  state.wordBankFillPages = typeof exercise.buildPages === "function"
+    ? exercise.buildPages(state.module)
+    : exercise.pages || [];
+  state.wordBankFillPageIndex = 0;
+  state.wordBankFillMatched = 0;
+  state.wordBankFillSelected = null;
+  state.wordBankFillDragged = null;
+  hideAllScreens();
+  els.fillBlank.classList.remove("hidden");
+  els.fillBlankGrade.textContent = `GRADE ${state.grade}`;
+  els.fillBlankTitle.textContent = exercise.title || "FILL THE BLANKS";
+  els.fillBlankInstruction.textContent = exercise.instruction || "Choose a word, then choose the correct blank.";
+  els.fillBlankFeedback.textContent = "Complete the set.";
+  els.fillBlankFeedback.className = "exercise-feedback";
+  renderWordBankFillBlankPage();
+}
+
+function renderWordBankFillBlankPage() {
+  const page = state.wordBankFillPages[state.wordBankFillPageIndex];
+  if (!page) {
+    if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
+    else returnToSetup();
+    return;
+  }
+  state.wordBankFillMatched = 0;
+  state.wordBankFillSelected = null;
+  state.wordBankFillDragged = null;
+  els.fillBlankProgress.textContent = `${state.wordBankFillPageIndex + 1} / ${state.wordBankFillPages.length}`;
+  els.fillBlankInstruction.textContent = page.instruction || state.exercise.instruction || "Choose a word, then choose the correct blank.";
+  els.fillBlankFeedback.textContent = "Select a word from the left.";
+  els.fillBlankFeedback.className = "exercise-feedback";
+  els.fillBlankGrid.className = "fill-blank-grid word-bank-fill-grid";
+
+  const layout = document.createElement("div");
+  layout.className = "word-bank-fill-layout";
+
+  const bank = document.createElement("div");
+  bank.className = "word-bank-fill-bank";
+  (page.words || []).forEach((word) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "word-bank-fill-word";
+    button.textContent = word;
+    button.dataset.word = word;
+    button.draggable = true;
+    button.addEventListener("click", () => selectWordBankFillWord(button));
+    button.addEventListener("dragstart", (event) => {
+      state.wordBankFillDragged = word;
+      event.dataTransfer.setData("text/plain", word);
+      button.classList.add("dragging");
+    });
+    button.addEventListener("dragend", () => {
+      state.wordBankFillDragged = null;
+      button.classList.remove("dragging");
+    });
+    bank.append(button);
+  });
+
+  const sentences = document.createElement("div");
+  sentences.className = "word-bank-fill-sentences";
+  (page.blanks || []).forEach((blank, index) => {
+    const row = document.createElement("section");
+    row.className = "word-bank-fill-row";
+    row.dataset.answer = blank.answer;
+
+    const number = document.createElement("strong");
+    number.className = "word-bank-fill-number";
+    number.textContent = `${index + 1}`;
+
+    const text = document.createElement("p");
+    text.className = "word-bank-fill-sentence";
+    text.append(document.createTextNode(`${blank.clue} `));
+
+    const target = document.createElement("button");
+    target.type = "button";
+    target.className = "word-bank-fill-target";
+    target.textContent = "______";
+    target.dataset.answer = blank.answer;
+    target.addEventListener("click", () => answerWordBankFillBlank(target));
+    target.addEventListener("dragover", (event) => {
+      event.preventDefault();
+      target.classList.add("drag-over");
+    });
+    target.addEventListener("dragleave", () => target.classList.remove("drag-over"));
+    target.addEventListener("drop", (event) => {
+      event.preventDefault();
+      target.classList.remove("drag-over");
+      const word = event.dataTransfer.getData("text/plain") || state.wordBankFillDragged;
+      answerWordBankFillBlank(target, word);
+    });
+    text.append(target);
+    text.append(document.createTextNode("."));
+
+    row.append(number, text);
+    sentences.append(row);
+  });
+
+  layout.append(bank, sentences);
+  els.fillBlankGrid.replaceChildren(layout);
+}
+
+function selectWordBankFillWord(button) {
+  if (button.disabled) return;
+  els.fillBlankGrid.querySelectorAll(".word-bank-fill-word.selected").forEach((item) => item.classList.remove("selected"));
+  button.classList.add("selected");
+  state.wordBankFillSelected = button.dataset.word;
+  els.fillBlankFeedback.textContent = `Selected: ${button.dataset.word}`;
+  els.fillBlankFeedback.className = "exercise-feedback";
+}
+
+function answerWordBankFillBlank(target, droppedWord) {
+  if (target.disabled) return;
+  const selectedWord = droppedWord || state.wordBankFillSelected;
+  if (!selectedWord) {
+    els.fillBlankFeedback.textContent = "Choose a word first.";
+    els.fillBlankFeedback.className = "exercise-feedback";
+    return;
+  }
+  const correct = selectedWord === target.dataset.answer;
+  if (!correct) {
+    playFeedbackSound(false);
+    target.classList.add("wrong");
+    const selectedButton = findWordBankFillWordButton(selectedWord);
+    if (selectedButton) selectedButton.classList.add("wrong");
+    els.fillBlankFeedback.textContent = "Try another blank.";
+    els.fillBlankFeedback.className = "exercise-feedback wrong";
+    setTimeout(() => {
+      target.classList.remove("wrong");
+      if (selectedButton) selectedButton.classList.remove("wrong");
+    }, 500);
+    return;
+  }
+  playFeedbackSound(true);
+  target.textContent = selectedWord;
+  target.classList.add("revealed");
+  target.disabled = true;
+  const wordButton = findWordBankFillWordButton(selectedWord);
+  if (wordButton) {
+    wordButton.classList.remove("selected");
+    wordButton.classList.add("used");
+    wordButton.disabled = true;
+    wordButton.draggable = false;
+  }
+  state.wordBankFillSelected = null;
+  state.wordBankFillMatched += 1;
+  els.fillBlankFeedback.textContent = "Correct.";
+  els.fillBlankFeedback.className = "exercise-feedback correct";
+  if (state.wordBankFillMatched >= (state.wordBankFillPages[state.wordBankFillPageIndex].blanks || []).length) {
+    showWordBankFillBlankActions();
+  }
+}
+
+function findWordBankFillWordButton(word) {
+  return [...els.fillBlankGrid.querySelectorAll(".word-bank-fill-word")]
+    .find((button) => button.dataset.word === word && !button.disabled);
+}
+
+function showWordBankFillBlankActions() {
+  const hasNext = state.wordBankFillPageIndex < state.wordBankFillPages.length - 1;
+  els.fillBlankFeedback.textContent = hasNext ? "Great set. Continue?" : "Great! All sets are complete.";
+  els.fillBlankFeedback.className = "exercise-feedback correct";
+  const actions = document.createElement("div");
+  actions.className = "word-bank-fill-actions";
+  if (hasNext) {
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "primary-button";
+    next.textContent = "CONTINUE";
+    next.addEventListener("click", () => {
+      state.wordBankFillPageIndex += 1;
+      renderWordBankFillBlankPage();
+    });
+    actions.append(next);
+  }
+  const exit = document.createElement("button");
+  exit.type = "button";
+  exit.className = "secondary-button";
+  exit.textContent = "EXIT";
+  exit.addEventListener("click", () => {
+    if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();
+    else returnToSetup();
+  });
+  actions.append(exit);
+  els.fillBlankGrid.append(actions);
 }
 
 function startMistakeCorrectIt(exercise) {
@@ -4073,6 +4819,8 @@ function renderExerciseQuestion() {
   const visualOnly = Boolean(question.visualOnly);
   const textOnly = Boolean(question.textOnly);
   const wideOptions = Boolean(state.exercise.wideOptions);
+  els.exerciseScore.closest(".exercise-score")?.classList.remove("hidden");
+  els.exerciseCard.className = "exercise-card";
   els.exerciseCard.classList.toggle("text-only-choice", textOnly);
   els.exerciseCard.classList.toggle("wide-options-choice", wideOptions);
   els.exerciseVisualPanel.classList.toggle("hidden", textOnly);
@@ -4086,6 +4834,7 @@ function renderExerciseQuestion() {
   els.exercisePrompt.classList.toggle("compact-prompt", Boolean(state.exercise.compactPrompt));
   els.exerciseSentence.textContent = question.exerciseSentence || "";
   els.exerciseSentence.classList.toggle("hidden", visualOnly || textOnly);
+  els.articleOptions.className = "article-options";
   els.articleOptions.classList.toggle("sentence-choice-options", visualOnly || textOnly);
   els.articleOptions.classList.toggle("wide-sentence-options", wideOptions);
   els.exerciseFeedback.textContent = visualOnly || textOnly ? "" : question.instruction || "Choose the correct article.";
@@ -4102,6 +4851,8 @@ function renderExerciseQuestion() {
       els.exerciseImage.classList.remove("hidden");
       els.exerciseImage.alt = question.visualBrief;
       els.exerciseImage.src = question.imagePath;
+      els.exerciseImage.style.aspectRatio = "";
+      els.exerciseImage.style.objectFit = "";
       applyExerciseImageFocus(question.imageFocus);
     }
     showExerciseVisualCaption(question.visualCaptionHtml || "");
@@ -4169,6 +4920,20 @@ function answerExercise(article) {
 }
 
 function nextExerciseQuestion() {
+  if (state.exercise?.activity === "character-hub-popup") {
+    if (state.exerciseIndex >= (state.exercise.pages || []).length - 1) {
+      hideAllScreens();
+      els.exerciseResultScore.textContent = "DONE";
+      els.exerciseResultMessage.textContent = "Character descriptions completed.";
+      els.exerciseContinue.classList.add("hidden");
+      els.exerciseHome.textContent = "BACK TO MENU";
+      els.exerciseResult.classList.remove("hidden");
+      return;
+    }
+    state.exerciseIndex += 1;
+    renderCharacterHubPopupPage();
+    return;
+  }
   if (state.exerciseIndex === state.exerciseQuestions.length - 1) {
     showExerciseResult();
     return;
@@ -4343,7 +5108,7 @@ const closePresenceOverlay = () => {
   els.presenceOverlayQuestion.classList.remove("as-sentence");
   els.presenceOverlayImage.style.aspectRatio = "";
   els.presenceOverlay.querySelector(".presence-overlay-portrait")?.remove();
-  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg", "thought-mode");
+  els.presenceOverlay.querySelector(".presence-overlay-card").classList.remove("overlay-lg", "thought-mode", "personality-quiz-overlay");
 };
 els.presenceOverlayClose.addEventListener("click", closePresenceOverlay);
 els.presenceOverlay.addEventListener("click", (e) => { if (e.target === els.presenceOverlay) closePresenceOverlay(); });

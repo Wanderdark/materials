@@ -312,8 +312,8 @@ students:
         - "birdwatching"
     general_interests: [Gardening, "Nature walks", "Feeding animals", "Environmental activities", "Visiting animal shelters"]
     personality:
-      traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
-      note: "Her zaman baskalarina ve hayvanlara sefkatle yaklasir."
+      traits: [Polite, thoughtful, responsible]
+      note: "Kibar, dusunceli ve sorumluluk sahibi bir ogrenci."
     behavior_profile:
       goals:
         - "care for animals"
@@ -418,8 +418,8 @@ students:
         - "skateboarding"
     general_interests: ["Reading books", "Beach holidays", Picnics, "Orange juice", "Environmental activities"]
     personality:
-      traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
-      note: "Stres yapmayan, huzurlu cocuk."
+      traits: [Easy-going, laid-back, friendly, funny]
+      note: "Rahat, arkadas canlisi ve komik bir ogrenci."
     behavior_profile:
       goals:
         - "enjoy life"
@@ -524,8 +524,8 @@ students:
         - "playing the piano"
     general_interests: [Drama, Pottery, "Birthday parties", "Baking desserts", Singing]
     personality:
-      traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
-      note: "Insanlarin duygularini onemser."
+      traits: [Sensitive, polite]
+      note: "Duygulari kolay incinen ama kibar bir ogrenci."
     behavior_profile:
       goals:
         - "make people happy"
@@ -632,8 +632,8 @@ students:
         - "playing table tennis"
     general_interests: [Football, Drawing, "Drama Club", "Adventure parks", Skateboarding, "Winter sports"]
     personality:
-      traits: [Energetic, adventurous, confident, curious, playful, fearless]
-      note: "Surekli yeni seyler denemek ister."
+      traits: [Clumsy, energetic, confident]
+      note: "Enerjik, kendine guvenen ve bazen sakar bir ogrenci."
     behavior_profile:
       goals:
         - "try new things"
@@ -740,8 +740,8 @@ students:
         - "camping"
     general_interests: ["Beach activities", Camping, Hiking, Travelling, "Good daily habits"]
     personality:
-      traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
-      note: "Ailesine cok baglidir."
+      traits: [Honest, thoughtful, responsible, reliable]
+      note: "Durust, dusunceli, sorumlu ve guvenilir bir ogrenci."
     behavior_profile:
       goals:
         - "take responsibility"
@@ -846,8 +846,8 @@ students:
         - "drawing"
     general_interests: [Music, Guitar, "School performances", Karaoke, Choir]
     personality:
-      traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
-      note: "Kalabalik ortamlari sever."
+      traits: [Cheerful, outgoing, sociable, forgetful]
+      note: "Neseli, sosyal ve bazen unutkan bir ogrenci."
     behavior_profile:
       goals:
         - "entertain people"
@@ -953,8 +953,8 @@ students:
         - "baking"
     general_interests: ["Organizing events", Guitar, Cooking, Drama, Teamwork, Leadership]
     personality:
-      traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
-      note: "Sinifin dogal liderlerinden biri."
+      traits: [Friendly, helpful, generous, reliable]
+      note: "Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci."
     behavior_profile:
       goals:
         - "help friends"
@@ -1059,8 +1059,8 @@ students:
         - "listening to classical music"
     general_interests: [Violin, Chess, Football, Homework, Reading]
     personality:
-      traits: [Disciplined, patient, focused, analytical, determined, respectful]
-      note: "Once dusunur, sonra hareket eder."
+      traits: [Determined, punctual]
+      note: "Kararli ve dakik bir ogrenci."
     behavior_profile:
       goals:
         - "improve himself"
@@ -1157,6 +1157,9 @@ students:
     canonical_description: "Hannah has long straight blonde hair and blue eyes. She does not wear glasses."
     default_expression: "Energetic grin."
     expression_note: "Hareket etmeye hazir gibi."
+    age_specific_expressions:
+      age_13: "Maintain Hannah's canonical default expression: Energetic grin. Maintain Hannah's default personality. Use a relaxed, believable expression. Since Hannah is now 13, the expression should feel slightly more relaxed, natural, and composed than her age-12 version. Keep her energetic outdoor confidence, but change the grin to a bright more subtle and effortless smile. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, confident, and age-appropriate for 13."
+      age_14: "Maintain Hannah's canonical default personality. Hannah's canonical default expression is: Energetic grin. Since Hannah is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Use a calm, relaxed, warm and confident smile with only a subtle trace of Hannah's original outdoor confidence. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, understated, confident, composed, and age-appropriate for 14."
     signature_activity: "Cycling"
     hobbies:
       loves:
@@ -1165,8 +1168,8 @@ students:
         - "hiking"
     general_interests: [Camping, Barbecue, Picnics, Hiking, Climbing, "Outdoor games"]
     personality:
-      traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
-      note: "Yerinde duramayan doga cocugu."
+      traits: [Adventurous, energetic, cheerful]
+      note: "Maceraci, enerjik ve neseli bir ogrenci."
     behavior_profile:
       goals:
         - "explore outdoors"
@@ -1271,8 +1274,8 @@ students:
         - "hiking"
     general_interests: [Football, DIY, "Board games", "Washing the family car", Hiking]
     personality:
-      traits: [Confident, practical, resourceful, courageous, independent, easy-going]
-      note: "Elinden her is gelir."
+      traits: [Selfish, stubborn, patient]
+      note: "Inatci, sabirli ve bazen bencil davranabilen bir ogrenci."
     behavior_profile:
       goals:
         - "fix problems"
@@ -1377,8 +1380,8 @@ students:
         - "swimming"
     general_interests: [Basketball, Running, "Board games", "Washing the car", "Outdoor sports"]
     personality:
-      traits: [Competitive, athletic, energetic, determined, resilient, fair]
-      note: "Kaybetmeyi sevmez ama centilmendir."
+      traits: [Determined, energetic]
+      note: "Kararli ve enerjik bir ogrenci."
     behavior_profile:
       goals:
         - "win fairly"
@@ -1478,6 +1481,9 @@ students:
     canonical_description: "Mia has long wavy brown hair and blue eyes. She does not wear glasses."
     default_expression: "Shy, gentle expression."
     expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
+    age_specific_expressions:
+      age_13: "Maintain Mia's canonical default expression: gentle expression. Use a relaxed, more confident, believable expression. Since Mia is now 13, the expression should feel slightly more relaxed, more confident, natural, and composed than her age-12 shy version. Keep her gentle softness, but make the expression more subtle, more confident and effortless. Avoid exaggerated smiles. Avoid oversized teeth. Avoid AI-style perfect grin."
+      age_14: "Since Mia is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Her confident expression is now even more noticeable. She is smiling a bit warmer than ever before without the hint of shyness. Keep the expression natural, understated, relaxed, thoughtful, and age-appropriate."
     signature_activity: "Writing a Diary"
     hobbies:
       loves:
@@ -1486,8 +1492,8 @@ students:
         - "reading books"
     general_interests: ["Reading novels", "School newspaper", Drawing, "Listening to music", "Writing stories"]
     personality:
-      traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
-      note: "Konusmaktan cok dinlemeyi sever."
+      traits: [Shy, thoughtful]
+      note: "Utangac ve dusunceli bir ogrenci."
     behavior_profile:
       goals:
         - "understand people"
@@ -1592,8 +1598,8 @@ students:
         - "playing chess"
     general_interests: [Homework, Reading, Science, Library, "Math puzzles"]
     personality:
-      traits: [Studious, intelligent, logical, curious, organized, hardworking]
-      note: "Ogrenmeyi gercekten sever."
+      traits: [Intelligent, hardworking]
+      note: "Zeki ve caliskan bir ogrenci."
     behavior_profile:
       goals:
         - "learn something new"
@@ -1702,8 +1708,8 @@ students:
         - "watching movies"
     general_interests: [Piano, Painting, "Robotics design", "School newspaper", "Digital art", Cinema, Movies]
     personality:
-      traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
-      note: "Kucuk detaylari herkesten once fark eder."
+      traits: [Funny, creative]
+      note: "Yaratici ve komik bir ogrenci."
     behavior_profile:
       goals:
         - "create beautiful things"
@@ -1810,8 +1816,8 @@ students:
         - "solving puzzles"
     general_interests: [Robotics, Chess, "Strategy games", Science, Gardening]
     personality:
-      traits: [Calm, analytical, intelligent, strategic, composed, logical]
-      note: "Baski altinda bile sakin kalir."
+      traits: [Intelligent, stingy]
+      note: "Zeki ama bazen cimri davranabilen bir ogrenci."
     behavior_profile:
       goals:
         - "find the best solution"
@@ -1916,8 +1922,8 @@ students:
         - "stargazing"
     general_interests: [Reading, "Nature walks", Photography, "Logic games", Journaling]
     personality:
-      traits: [Independent, thoughtful, introverted, curious, patient, reflective]
-      note: "Once gozlemler, sonra konusur."
+      traits: [Shy, thoughtful, patient]
+      note: "Utangac, dusunceli ve sabirli bir ogrenci."
     behavior_profile:
       goals:
         - "keep learning"

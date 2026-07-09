@@ -55,8 +55,8 @@ students:
       loves: ["taking care of animals"]
       likes: ["birdwatching"]
     personality:
-      traits: [Gentle, compassionate, patient, nurturing, responsible, "animal lover"]
-      note: "Her zaman baskalarina ve hayvanlara sefkatle yaklasir."
+      traits: [Polite, thoughtful, responsible]
+      note: "Kibar, dusunceli ve sorumluluk sahibi bir ogrenci."
     prompt_insert: "Ava, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length curly black hair, green eyes, no glasses, and a warm, gentle smile with kind eyes. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: BENJAMIN
@@ -72,8 +72,8 @@ students:
       loves: ["riding his scooter"]
       likes: ["skateboarding"]
     personality:
-      traits: [Easy-going, relaxed, optimistic, friendly, calm, "enjoys simple moments"]
-      note: "Stres yapmayan, huzurlu cocuk."
+      traits: [Easy-going, laid-back, friendly, funny]
+      note: "Rahat, arkadas canlisi ve komik bir ogrenci."
     prompt_insert: "Benjamin, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short blonde straight hair, blue eyes, no glasses, and a relaxed, peaceful smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: CHLOE
@@ -89,8 +89,8 @@ students:
       loves: ["dancing"]
       likes: ["playing the piano"]
     personality:
-      traits: [Sensitive, empathetic, creative, expressive, kind-hearted, emotional]
-      note: "Insanlarin duygularini onemser."
+      traits: [Sensitive, polite]
+      note: "Duygulari kolay incinen ama kibar bir ogrenci."
     prompt_insert: "Chloe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly blonde hair, blue eyes, no glasses, and a soft, thoughtful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: DANIEL
@@ -106,8 +106,8 @@ students:
       loves: ["skiing", "snowboarding"]
       likes: ["playing basketball", "playing table tennis"]
     personality:
-      traits: [Energetic, adventurous, confident, curious, playful, fearless]
-      note: "Surekli yeni seyler denemek ister."
+      traits: [Clumsy, energetic, confident]
+      note: "Enerjik, kendine guvenen ve bazen sakar bir ogrenci."
     prompt_insert: "Daniel, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part, slightly thick eyebrows, no glasses, and a confident, playful smirk. Preserve his face, hairstyle, hair color, eyebrows, age, and overall identity exactly."
 
   - id: DAVID
@@ -123,8 +123,8 @@ students:
       loves: ["travelling"]
       likes: ["camping"]
     personality:
-      traits: [Responsible, dependable, family-oriented, mature, caring, thoughtful]
-      note: "Ailesine cok baglidir."
+      traits: [Honest, thoughtful, responsible, reliable]
+      note: "Durust, dusunceli, sorumlu ve guvenilir bir ogrenci."
     prompt_insert: "David, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has very short neatly trimmed black hair with slight natural texture, thin eyebrows, brown eyes, no glasses, and a calm, reassuring smile. Preserve his face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: ELLA
@@ -140,8 +140,8 @@ students:
       loves: ["singing"]
       likes: ["drawing"]
     personality:
-      traits: [Cheerful, outgoing, sociable, optimistic, expressive, enthusiastic]
-      note: "Kalabalik ortamlari sever."
+      traits: [Cheerful, outgoing, sociable, forgetful]
+      note: "Neseli, sosyal ve bazen unutkan bir ogrenci."
     prompt_insert: "Ella, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has shoulder-length wavy blonde hair, green eyes, no glasses, and a bright cheerful smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: EMMA
@@ -157,8 +157,8 @@ students:
       loves: ["cooking"]
       likes: ["baking"]
     personality:
-      traits: [Friendly, supportive, reliable, "natural leader", organized, encouraging]
-      note: "Sinifin dogal liderlerinden biri."
+      traits: [Friendly, helpful, generous, reliable]
+      note: "Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci."
     prompt_insert: "Emma, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight black hair, brown eyes, no glasses, and a friendly, approachable smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: ETHAN
@@ -174,8 +174,8 @@ students:
       loves: ["playing the violin"]
       likes: ["listening to classical music"]
     personality:
-      traits: [Disciplined, patient, focused, analytical, determined, respectful]
-      note: "Once dusunur, sonra hareket eder."
+      traits: [Determined, punctual]
+      note: "Kararli ve dakik bir ogrenci."
     prompt_insert: "Ethan, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short curly blonde hair, blue eyes, no glasses, and a focused neutral expression that feels attentive, not cold. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: HANNAH
@@ -191,8 +191,8 @@ students:
       loves: ["cycling"]
       likes: ["hiking"]
     personality:
-      traits: [Energetic, adventurous, cheerful, active, outdoorsy, confident]
-      note: "Yerinde duramayan doga cocugu."
+      traits: [Adventurous, energetic, cheerful]
+      note: "Maceraci, enerjik ve neseli bir ogrenci."
     prompt_insert: "Hannah, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight blonde hair, blue eyes, no glasses, and an energetic grin like she is ready to move. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: JACK
@@ -208,8 +208,8 @@ students:
       loves: ["gardening"]
       likes: ["hiking"]
     personality:
-      traits: [Confident, practical, resourceful, courageous, independent, easy-going]
-      note: "Elinden her is gelir."
+      traits: [Selfish, stubborn, patient]
+      note: "Inatci, sabirli ve bazen bencil davranabilen bir ogrenci."
     prompt_insert: "Jack, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight black hair, brown eyes, no glasses, and a self-confident, slightly one-sided smirk. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: LUCAS
@@ -225,8 +225,8 @@ students:
       loves: ["playing football"]
       likes: ["swimming"]
     personality:
-      traits: [Competitive, athletic, energetic, determined, resilient, fair]
-      note: "Kaybetmeyi sevmez ama centilmendir."
+      traits: [Determined, energetic]
+      note: "Kararli ve enerjik bir ogrenci."
     prompt_insert: "Lucas, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short black curly hair, brown eyes, no glasses, and a determined but friendly smile. Preserve his face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: MIA
@@ -242,8 +242,8 @@ students:
       loves: ["writing in her diary"]
       likes: ["reading books"]
     personality:
-      traits: [Shy, quiet, thoughtful, gentle, observant, imaginative]
-      note: "Konusmaktan cok dinlemeyi sever."
+      traits: [Shy, thoughtful]
+      note: "Utangac ve dusunceli bir ogrenci."
     prompt_insert: "Mia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, blue eyes, no glasses, and a shy, gentle expression with a very slight smile or no smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: NOAH
@@ -259,8 +259,8 @@ students:
       loves: ["studying"]
       likes: ["playing chess"]
     personality:
-      traits: [Studious, intelligent, logical, curious, organized, hardworking]
-      note: "Ogrenmeyi gercekten sever."
+      traits: [Intelligent, hardworking]
+      note: "Zeki ve caliskan bir ogrenci."
     prompt_insert: "Noah, the SAME canonical 12-year-old student from the AdilHoca educational universe. He has short straight brown hair, green eyes, rectangular eyeglasses, and a thoughtful neutral expression with slightly focused eyebrows. Preserve his face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
 
   - id: OLIVIA
@@ -276,8 +276,8 @@ students:
       loves: ["taking photos"]
       likes: ["painting", "going to cinema", "watching movies"]
     personality:
-      traits: [Artistic, detail-oriented, imaginative, creative, observant, perfectionist]
-      note: "Kucuk detaylari herkesten once fark eder."
+      traits: [Funny, creative]
+      note: "Yaratici ve komik bir ogrenci."
     prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
 
   - id: VICTORIA
@@ -293,8 +293,8 @@ students:
       loves: ["coding"]
       likes: ["solving puzzles"]
     personality:
-      traits: [Calm, analytical, intelligent, strategic, composed, logical]
-      note: "Baski altinda bile sakin kalir."
+      traits: [Intelligent, stingy]
+      note: "Zeki ama bazen cimri davranabilen bir ogrenci."
     prompt_insert: "Victoria, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy black hair, blue eyes, round eyeglasses, and a calm analytical expression with a very slight smile and thoughtful eyes. Preserve her face, hairstyle, hair color, eye color, glasses, age, and overall identity exactly."
 
   - id: ZOE
@@ -310,6 +310,6 @@ students:
       loves: ["solving crossword puzzles"]
       likes: ["stargazing"]
     personality:
-      traits: [Independent, thoughtful, introverted, curious, patient, reflective]
-      note: "Once gozlemler, sonra konusur."
+      traits: [Shy, thoughtful, patient]
+      note: "Utangac, dusunceli ve sabirli bir ogrenci."
     prompt_insert: "Zoe, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long curly black hair, brown eyes, no glasses, and a quiet reflective expression that feels calm and slightly serious. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
