@@ -5,7 +5,7 @@ const jumbledSentencesExercise = window.exerciseActivityModules.jumbledSentences
     return functionModule.id === "simple-present-do-you-like";
   },
   buildQuestions(functionModule) {
-    return functionModule.sentences.map((example) => ({
+    return functionModule.sentences.filter((example) => typeof example.sentence === "string").map((example) => ({
       id: example.id,
       sentence: example.sentence,
       imagePath: example.imagePath,

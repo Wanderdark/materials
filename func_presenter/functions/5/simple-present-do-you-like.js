@@ -15,8 +15,8 @@ const simplePresentDoYouLikeFunction = {
     { id: "chess-club-answer", focus: "ANSWER", referenceType: "FAVORITE CLUB", sentence: "My favorite club is Chess Club.", highlight: "Chess Club", imagePath: "images/simple-present-like/07-chess-club.webp", visualBrief: "Students playing chess in a school chess club." },
     { id: "like-chess", focus: "LIKES", referenceType: "I LIKE + -ING", sentence: "I like playing chess.", highlight: "I like", imagePath: "images/simple-present-like/noah-victoria-chess.webp", visualBrief: "Noah and Victoria playing chess in a school chess club." },
     { id: "experiments-question", focus: "QUESTION", referenceType: "DO YOU LOVE + -ING?", sentence: "Do you love doing experiments?", highlight: "Do you love", imagePath: "images/simple-present-like/emma-experiment.webp", visualBrief: "Emma is doing a simple science experiment." },
-    { id: "solving-problems", focus: "ENJOYS", referenceType: "I ENJOY + -ING", sentence: "I enjoy solving problems.", highlight: "I enjoy", imagePath: "images/simple-present-like/noah-problems.webp", visualBrief: "Noah happily solving a puzzle or a problem." },
-    { id: "drawing-question", focus: "QUESTION", referenceType: "DO YOU ENJOY + -ING?", sentence: "Do you enjoy drawing pictures and painting?", highlight: "Do you enjoy", imagePath: "images/simple-present-like/olivia-painting.webp", visualBrief: "Olivia drawing pictures and painting." },
+    { id: "solving-problems", focus: "ENJOYS", referenceType: "I ENJOY + -ING", sentence: "I enjoy solving problems.", highlight: "I enjoy", imagePath: "images/common/solve-puzzles-noah-1.webp", visualBrief: "Noah happily solving a puzzle or a problem." },
+    { id: "drawing-question", focus: "QUESTION", referenceType: "DO YOU ENJOY + -ING?", sentence: "Do you enjoy drawing pictures and painting?", highlight: "Do you enjoy", imagePath: "images/common/paint-olivia-1.webp", visualBrief: "Olivia drawing pictures and painting." },
     { id: "football", focus: "LOVES", referenceType: "I LOVE + -ING", sentence: "I love playing football.", highlight: "I love", imagePath: "images/simple-present-like/lucas-playing-football.webp", visualBrief: "A child playing football." },
     { id: "singing-question", focus: "QUESTION", referenceType: "DO YOU LOVE + -ING?", sentence: "Do you love singing songs?", highlight: "Do you love", imagePath: "images/simple-present-like/ella-sing-songs.webp", visualBrief: "A student singing a song." },
     { id: "swimming-question", focus: "QUESTION", referenceType: "DO YOU ENJOY + -ING?", sentence: "Do you enjoy swimming?", highlight: "Do you enjoy", imagePath: "images/simple-present-like/benjamin-swimming.webp", visualBrief: "Benjamin swimming in a pool." },
@@ -53,7 +53,7 @@ const simplePresentDoYouLikeFunction = {
           overlayData: {
             overlaySize: true,
             steps: [
-              { question: "HOBBY", imagePath: "images/simple-present-like/olivia-painting.webp", sentence: "Olivia <enjoys> painting." }
+              { question: "HOBBY", imagePath: "images/common/paint-olivia-1.webp", sentence: "Olivia <enjoys> painting." }
             ]
           }
         },
@@ -90,7 +90,7 @@ const simplePresentDoYouLikeFunction = {
           overlayData: {
             overlaySize: true,
             steps: [
-              { question: "HOBBY", imagePath: "images/simple-present-like/noah-problems.webp", sentence: "Noah <likes> solving problems." }
+              { question: "HOBBY", imagePath: "images/common/solve-puzzles-noah-1.webp", sentence: "Noah <likes> solving problems." }
             ]
           }
         },

@@ -87,6 +87,7 @@
     luckySpinHome: $("luckySpinHomeButton"),
     back: $("backButton"),
     fullscreen: $("fullscreenButton"),
+    headerNext: $("headerNextButton"),
     sessionLabel: $("sessionLabel"),
     categoryHeader: $("categoryHeader"),
     progressText: $("progressText"),
@@ -154,6 +155,13 @@
     memoryPlayAgain: $("memoryPlayAgainButton"),
     memoryHome: $("memoryHomeButton")
   };
+
+  function syncHeaderNextButton() {
+    if (!els.headerNext) return;
+    els.headerNext.innerHTML = els.next.innerHTML;
+    els.headerNext.disabled = els.next.disabled;
+    els.headerNext.classList.toggle("hidden", els.next.classList.contains("hidden"));
+  }
 
   const records = typeof QUESTIONS === "undefined"
     ? []
@@ -1681,6 +1689,7 @@
     els.next.textContent = state.mode !== "word" ? "Continue →" : atEnd ? "Finish Presentation ✓" : "Next →";
     els.next.classList.toggle("hidden", state.mode === "word" && state.wordStage !== "turkish");
     els.next.disabled = state.mode !== "word" || state.wordStage !== "turkish";
+    syncHeaderNextButton();
     renderDots();
   }
 
@@ -1934,6 +1943,7 @@
     els.quizFeedback.textContent = isCorrect ? "Great, correct answer!" : `Correct answer: ${answer}`;
     els.quizFeedback.style.color = isCorrect ? "#13795b" : "#a83a25";
     els.next.disabled = false;
+    syncHeaderNextButton();
   }
 
   function finishPresentation() {
@@ -1995,6 +2005,7 @@
     els.next.textContent = state.finalQuizIndex === 19 ? "SEE RESULTS →" : "NEXT QUESTION →";
     els.next.classList.remove("hidden");
     els.next.disabled = true;
+    syncHeaderNextButton();
   }
 
   function showQuizResults() {
@@ -2288,6 +2299,7 @@
     }
   });
   els.next.addEventListener("click", next);
+  els.headerNext?.addEventListener("click", next);
   els.previous.addEventListener("click", previous);
   els.revealTurkish.addEventListener("click", revealTurkish);
   els.speakWord.addEventListener("click", speakWord);

@@ -71,7 +71,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/14.webp",
+      imagePath: "images/daily-routines/playsguitar.webp",
       sentences: [
         {
           segments: [
@@ -111,7 +111,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/14.webp",
+      imagePath: "../images/5/4/4.webp",
       sentences: [
         {
           segments: [
@@ -153,7 +153,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "images/present-progressive/helpmother.webp",
+      imagePath: "images/common/help-mother-emma-11-1.webp",
       sentences: [
         {
           segments: [

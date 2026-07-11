@@ -133,7 +133,7 @@ const presentProgressiveFunction = {
           parts: [{ text: "swim  →  swimm" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
             question: "What is Benjamin doing?",
-            imagePath: "../images/5/4/20.webp",
+            imagePath: "images/common/swim-benjamin-1.webp",
             sentence: "He <is> swimm<ing>."
           }
         },
@@ -162,8 +162,8 @@ const presentProgressiveFunction = {
           kind: "category-list",
           parts: [{ text: "ride  →  rid" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
-            question: "What is Olivia doing?",
-            imagePath: "../images/5/4/14.webp",
+            question: "What is Hannah doing?",
+            imagePath: "images/common/ride-bike-hannah-1.webp",
             interactiveSentences: [
               {
                 segments: [
@@ -204,12 +204,12 @@ const presentProgressiveFunction = {
           kind: "category-list",
           parts: [{ text: "water  →  water" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
-            question: "What is Ava doing?",
-            imagePath: "../images/5/4/24.webp",
+            question: "What is Jack doing?",
+            imagePath: "images/common/water-flowers-jack-13-1.webp",
             interactiveSentences: [
               {
                 segments: [
-                  { text: "Ava " },
+                  { text: "Jack " },
                   { options: ["am", "is", "are"], answer: "is" },
                   { text: " " },
                   { options: ["waters", "watering", "wateri"], answer: "watering" },

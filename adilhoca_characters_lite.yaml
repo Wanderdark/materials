@@ -155,7 +155,7 @@ students:
     expression_note: "Insanlarla konusmaya hazir gibi duran samimi ifade."
     hobbies:
       loves: ["cooking"]
-      likes: ["baking"]
+      likes: ["baking", "doing science experiments"]
     personality:
       traits: [Friendly, helpful, generous, reliable]
       note: "Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci."

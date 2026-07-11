@@ -247,7 +247,7 @@ students:
     age: 12
     school_profile:
       grade: 5
-      favorite_subject: "Science"
+      favorite_subject: "English"
     birthday: {day: 21, month: "April"}
     zodiac_sign: "Taurus"
     born_in: "Netherlands"
@@ -332,7 +332,7 @@ students:
       note: "Dogayi ve saglikli yasami seviyor."
     favorite_profile:
       color: "Green"
-      subject: "Science"
+      subject: "English"
       season: "Spring"
       animal: "Dog"
       music_type: "Acoustic"
@@ -648,8 +648,8 @@ students:
       conflict_resolution: "improvise"
     favorite_food_drink:
       food: "Pizza"
-      drink: "Cola"
-      note: "Enerjik cocuk. Spor sonrasi pizza tam ona gore."
+      drink: "Tea"
+      note: "Enerjik cocuk. Pizza sever; tea daha sade ve yasina uygun bir icecek secimi."
     favorite_profile:
       color: "Orange"
       subject: "P.E."
@@ -829,7 +829,7 @@ students:
           professional_visual_cues: ["headphones around his neck", "small studio microphone", "radio studio cue"]
           dna_cues_from_child: ["blonde hair family", "green-eye family", "tall presence", "cheerful public-facing energy"]
           prompt_insert: "Liam, Ella's father, is an Australian radio presenter in his early 40s. He has fair lightly sun-kissed skin, short wavy sandy-blonde hair, green-hazel eyes, a friendly rectangular-oval face, expressive eyebrows, and a warm broadcaster smile. He should feel believably related to Ella through the same blonde hair family, green-eye family, tall presence, and cheerful public-facing energy. He wears a smart casual shirt with subtle radio-presenter details such as headphones around his neck or a small studio microphone nearby. Preserve his distinct identity as Ella's father; do not make him look like a generic adult."
-    pet: {has_pet: true, type: "Canary", name: "Sunny"}
+    pet: {has_pet: true, type: "Parrot", name: "Sunny"}
     relative_height:
       scale: 5
       label: "tallest students"
@@ -869,7 +869,7 @@ students:
       color: "Yellow"
       subject: "Music"
       season: "Summer"
-      animal: "Canary"
+      animal: "Parrot"
       music_type: "Pop"
       book_type: "Musicals"
       tv_program_type: "Music Shows"
@@ -888,7 +888,7 @@ students:
     age: 12
     school_profile:
       grade: 5
-      favorite_subject: "English"
+      favorite_subject: "Science"
     birthday: {day: 6, month: "September"}
     zodiac_sign: "Virgo"
     born_in: "Canada"
@@ -951,7 +951,8 @@ students:
         - "cooking"
       likes:
         - "baking"
-    general_interests: ["Organizing events", Guitar, Cooking, Drama, Teamwork, Leadership]
+        - "doing science experiments"
+    general_interests: ["Organizing events", Guitar, Cooking, Drama, Teamwork, Leadership, "Science experiments", "STEM Club"]
     personality:
       traits: [Friendly, helpful, generous, reliable]
       note: "Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci."
@@ -973,7 +974,7 @@ students:
       note: "Yardimsever ve duzenli. Ev yemeklerini sever."
     favorite_profile:
       color: "Purple"
-      subject: "English"
+      subject: "Science"
       season: "Spring"
       animal: "Horse"
       music_type: "Pop"
@@ -983,7 +984,7 @@ students:
       best_friend: "Chloe"
       reason: "Emma and Chloe are canon best friends."
       good_friends: [Hannah, Ava, Olivia, Ethan]
-      friend_groups: [Creative, Leaders]
+      friend_groups: [Creative, Leaders, STEM]
     hidden_lore:
       secret_crush: "Ethan"
     prompt_insert: "Emma, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long straight black hair, brown eyes, no glasses, and a friendly, approachable smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
@@ -1209,7 +1210,7 @@ students:
     age: 12
     school_profile:
       grade: 5
-      favorite_subject: "Science"
+      favorite_subject: "P.E."
     birthday: {day: 17, month: "November"}
     zodiac_sign: "Scorpio"
     born_in: "Scotland"
@@ -1294,7 +1295,7 @@ students:
       note: "Balik tutarken, disarida pratik yemekler."
     favorite_profile:
       color: "Dark Green"
-      subject: "Science"
+      subject: "P.E."
       season: "Autumn"
       animal: "Golden Retriever"
       music_type: "Rock"
@@ -1396,8 +1397,8 @@ students:
       conflict_resolution: "never_give_up"
     favorite_food_drink:
       food: "Spaghetti"
-      drink: "Sports Drink"
-      note: "Futbolcu enerjisi."
+      drink: "Orange Juice"
+      note: "Futbolcu enerjisine uygun, ferah ve yasina uygun bir secim."
     favorite_profile:
       color: "Red"
       subject: "P.E."

@@ -133,7 +133,7 @@ Dogayi ve saglikli yasami seviyor.
 
 Favorite Profile:
 - Favorite color: Green
-- Favorite subject: Science
+- Favorite subject: English
 - Favorite season: Spring
 - Favorite animal: Dog
 - Favorite music type: Acoustic
@@ -319,10 +319,10 @@ Enerjik, kendine guvenen ve bazen sakar bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Pizza
-- Favorite drink: Cola
+- Favorite drink: Tea
 
 Food / Drink note:
-Enerjik cocuk. Spor sonrasi pizza tam ona gore.
+Enerjik cocuk. Pizza sever; tea daha sade ve yasina uygun bir icecek secimi.
 
 Favorite Profile:
 - Favorite color: Orange
@@ -459,7 +459,7 @@ Favorite Profile:
 - Favorite color: Yellow
 - Favorite subject: Music
 - Favorite season: Summer
-- Favorite animal: Canary
+- Favorite animal: Parrot
 - Favorite music type: Pop
 - Favorite book type: Musicals
 - Favorite TV program type: Music Shows
@@ -497,7 +497,7 @@ Helping Others.
 
 Hobbies:
 - Loves: cooking
-- Likes: baking
+- Likes: baking, doing science experiments
 
 General Interests:
 - Organizing events
@@ -506,6 +506,8 @@ General Interests:
 - Drama
 - Teamwork
 - Leadership
+- Science experiments
+- STEM Club
 
 Personality:
 Friendly, helpful, generous, reliable.
@@ -522,7 +524,7 @@ Yardimsever ve duzenli. Ev yemeklerini sever.
 
 Favorite Profile:
 - Favorite color: Purple
-- Favorite subject: English
+- Favorite subject: Science
 - Favorite season: Spring
 - Favorite animal: Horse
 - Favorite music type: Pop
@@ -533,6 +535,7 @@ Relationships:
 - Best friend: Chloe
 - Relationship reason: Emma and Chloe are canon best friends.
 - Good friends: Hannah, Ava, Olivia, Ethan
+- Friend groups: Creative, Leaders, STEM
 
 Hidden lore:
 secret_crush: Ethan
@@ -720,7 +723,7 @@ Balik tutarken, disarida pratik yemekler.
 
 Favorite Profile:
 - Favorite color: Dark Green
-- Favorite subject: Science
+- Favorite subject: P.E.
 - Favorite season: Autumn
 - Favorite animal: Golden Retriever
 - Favorite music type: Rock
@@ -777,10 +780,10 @@ Kararli ve enerjik bir ogrenci.
 
 Favorite Food / Drink:
 - Favorite food: Spaghetti
-- Favorite drink: Sports Drink
+- Favorite drink: Orange Juice
 
 Food / Drink note:
-Futbolcu enerjisi.
+Futbolcu enerjisine uygun, ferah ve yasina uygun bir secim.
 
 Favorite Profile:
 - Favorite color: Red
