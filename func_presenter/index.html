@@ -310,6 +310,41 @@
       </article>
     </section>
 
+    <section id="verbCardScreen" class="verb-card-screen hidden">
+      <header class="presentation-header">
+        <button id="verbCardExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="verbCardGradeLabel">GRADE 7</span><strong id="verbCardTitle">VERB CARDS</strong></div>
+        <div class="progress"><strong id="verbCardProgressText">0</strong><span>CARDS</span></div>
+      </header>
+      <article class="verb-card-stage">
+        <section id="verbCardLevelPanel" class="verb-card-level-panel">
+          <p class="reference-type">CHOOSE LEVEL</p>
+          <div class="verb-card-level-buttons">
+            <button id="verbCardBasicButton" class="primary-button" type="button">BASIC</button>
+            <button id="verbCardAdvancedButton" class="secondary-button" type="button">ADVANCED</button>
+          </div>
+        </section>
+        <section id="verbCardPlayPanel" class="verb-card-play-panel hidden">
+          <p id="verbCardPoolMessage" class="verb-card-pool-message hidden">VERB POOL EMPTY - SHUFFLING...</p>
+          <div id="verbCardFlip" class="verb-card-flip">
+            <div class="verb-card-inner">
+              <div id="verbCardFront" class="verb-card-face verb-card-front">GO</div>
+              <div id="verbCardBack" class="verb-card-face verb-card-back">WENT</div>
+            </div>
+          </div>
+          <div id="verbCardInput" class="verb-card-input empty">TYPE THE PAST FORM</div>
+          <div id="verbCardKeyboardPanel" class="verb-card-keyboard-panel">
+            <div id="verbCardKeyboard"></div>
+          </div>
+          <p id="verbCardFeedback" class="exercise-feedback" aria-live="polite"></p>
+          <div class="verb-card-actions">
+            <button id="verbCardNextButton" class="primary-button hidden" type="button">NEXT</button>
+            <button id="verbCardInlineExitButton" class="secondary-button hidden" type="button">EXIT</button>
+          </div>
+        </section>
+      </article>
+    </section>
+
     <section id="fillBlankScreen" class="fill-blank-screen hidden">
       <header class="presentation-header">
         <button id="fillBlankBackButton" class="icon-button">EXIT</button>
@@ -608,6 +643,7 @@
   <script src="exercises/simple-present-daily-routines-mistake.js"></script>
   <script src="exercises/simple-present-daily-routines-jumbled.js"></script>
   <script src="../modules/stamp.js"></script>
+  <script src="../modules/rgbkeyboard.js"></script>
   <script src="exercises/physical-appearance-paragraph-combined.js"></script>
   <script src="exercises/physical-appearance-student-match.js"></script>
   <script src="exercises/physical-appearance-student-match-grade7.js"></script>
@@ -640,6 +676,9 @@
   <script src="exercises/wild-life-wh-choice.js"></script>
   <script src="exercises/can-capability-choice.js"></script>
   <script src="exercises/wild-life-species-sort.js"></script>
+  <script src="exercises/simple-past-choice.js"></script>
+  <script src="exercises/simple-past-mistake.js"></script>
+  <script src="exercises/simple-past-verb-cards.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
   <script src="../modules/profanity-filter.js"></script>

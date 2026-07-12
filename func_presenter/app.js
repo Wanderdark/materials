@@ -91,6 +91,7 @@ const els = {
   guessAnimalKeyboardPanel: $("guessAnimalKeyboardPanel"),
   guessAnimalKeyboard: $("guessAnimalKeyboard"),
   guessAnimalFeedback: $("guessAnimalFeedback"),
+  verbCard: $("verbCardScreen"),
   sort: $("sortScreen"),
   sortBack: $("sortBackButton"),
   sortGrade: $("sortGradeLabel"),
@@ -310,7 +311,7 @@ let roomActiveSentenceEl = null;
 const ROOM_DEBUG_HITAREAS = false; // draw hit-area outlines while calibrating rooms; flip to true to recalibrate
 
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.guessAnimal, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.guessAnimal, els.verbCard, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -2533,6 +2534,12 @@ function startSelectedExercise(exercise) {
     case "guess-animal":
       startGuessAnimal(exercise);
       return;
+    case "simple-past-verb-cards":
+      window.startSimplePastVerbCards?.(exercise, { state, hideAllScreens, returnToSetup });
+      return;
+    case "simple-past-choice":
+      window.startSimplePastChoice?.(exercise, { state, hideAllScreens, returnToSetup });
+      return;
     case "paragraph-choice":
       startParagraphChoice(exercise);
       return;
@@ -3272,6 +3279,7 @@ function answerMistakeDecision(userSaysCorrect) {
   els.mistakeFeedback.textContent = isSentenceCorrect ? "This sentence is correct." : "There is a mistake. Tap WRONG first.";
   els.mistakeFeedback.className = "exercise-feedback wrong";
   playFeedbackSound(false);
+  if (!isSentenceCorrect && userSaysCorrect) return;
   finishMistakeQuestion();
 }
 
