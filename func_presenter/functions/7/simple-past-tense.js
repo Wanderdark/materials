@@ -15,7 +15,7 @@ const simplePastTenseGrade7Function = {
   unit: 3,
   title: "Simple Past Tense",
   description: "",
-  exercises: ["simple-past-choice", "simple-past-mistake", "simple-past-verb-cards"],
+  exercises: ["simple-past-choice", "simple-past-mistake", "simple-past-verb-cards", "simple-past-memory-chain"],
   sentences: [
     {
       id: "simplepast-intro",
@@ -1395,19 +1395,14 @@ const simplePastTenseGrade7Function = {
       showAllItems: true,
       items: [
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "HAVE", className: "verb-review-v1" }, { text: "HAD", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "CALL", className: "verb-review-v1" }, { text: "CALLED", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "EAT", className: "verb-review-v1" }, { text: "ATE", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "READ", className: "verb-review-v1" }, { text: "READ", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "RIDE", className: "verb-review-v1" }, { text: "RODE", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "LIVE", className: "verb-review-v1" }, { text: "LIVED", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "BUY", className: "verb-review-v1" }, { text: "BOUGHT", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "GET", className: "verb-review-v1" }, { text: "GOT", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SWIM", className: "verb-review-v1" }, { text: "SWAM", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "USE", className: "verb-review-v1" }, { text: "USED", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "MAKE", className: "verb-review-v1" }, { text: "MADE", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "ASK", className: "verb-review-v1" }, { text: "ASKED", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "LIKE", className: "verb-review-v1" }, { text: "LIKED", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "HELP", className: "verb-review-v1" }, { text: "HELPED", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "WRITE", className: "verb-review-v1" }, { text: "WROTE", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "LISTEN", className: "verb-review-v1" }, { text: "LISTENED", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SELL", className: "verb-review-v1" }, { text: "SOLD", className: "verb-review-v2" }] },
@@ -1418,7 +1413,10 @@ const simplePastTenseGrade7Function = {
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "GO", className: "verb-review-v1" }, { text: "WENT", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "TAKE", className: "verb-review-v1" }, { text: "TOOK", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "PLAY", className: "verb-review-v1" }, { text: "PLAYED", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SEE", className: "verb-review-v1" }, { text: "SAW", className: "verb-review-v2" }] }
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SEE", className: "verb-review-v1" }, { text: "SAW", className: "verb-review-v2" }] },
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "STUDY", className: "verb-review-v1" }, { text: "STUDIED", className: "verb-review-v2" }] },
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "COOK", className: "verb-review-v1" }, { text: "COOKED", className: "verb-review-v2" }] },
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "TRAVEL", className: "verb-review-v1" }, { text: "TRAVELLED", className: "verb-review-v2" }] }
       ]
     },
     {
@@ -1449,7 +1447,9 @@ const simplePastTenseGrade7Function = {
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "DRIVE", className: "verb-review-v1" }, { text: "DROVE", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "FLY", className: "verb-review-v1" }, { text: "FLEW", className: "verb-review-v2" }] },
         { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SLEEP", className: "verb-review-v1" }, { text: "SLEPT", className: "verb-review-v2" }] },
-        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "WAKE", className: "verb-review-v1" }, { text: "WOKE", className: "verb-review-v2" }] }
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "WAKE", className: "verb-review-v1" }, { text: "WOKE", className: "verb-review-v2" }] },
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "SING", className: "verb-review-v1" }, { text: "SANG", className: "verb-review-v2" }] },
+        { kind: "category-list", disableVisitedTick: true, parts: [{ text: "THROW", className: "verb-review-v1" }, { text: "THREW", className: "verb-review-v2" }] }
       ]
     }
   ]

@@ -328,8 +328,14 @@
           <p id="verbCardPoolMessage" class="verb-card-pool-message hidden">VERB POOL EMPTY - SHUFFLING...</p>
           <div id="verbCardFlip" class="verb-card-flip">
             <div class="verb-card-inner">
-              <div id="verbCardFront" class="verb-card-face verb-card-front">GO</div>
-              <div id="verbCardBack" class="verb-card-face verb-card-back">WENT</div>
+              <div id="verbCardFront" class="verb-card-face verb-card-front">
+                <img id="verbCardImage" class="verb-card-image hidden" alt="">
+                <span id="verbCardFrontLabel" class="verb-card-front-label hidden"></span>
+              </div>
+              <div id="verbCardBack" class="verb-card-face verb-card-back">
+                <img id="verbCardBackImage" class="verb-card-image hidden" alt="">
+                <span id="verbCardBackLabel" class="verb-card-front-label hidden"></span>
+              </div>
             </div>
           </div>
           <div id="verbCardInput" class="verb-card-input empty">TYPE THE PAST FORM</div>
@@ -679,9 +685,11 @@
   <script src="exercises/simple-past-choice.js"></script>
   <script src="exercises/simple-past-mistake.js"></script>
   <script src="exercises/simple-past-verb-cards.js"></script>
+  <script src="exercises/simple-past-memory-chain.js"></script>
   <script src="exercises/index.js"></script>
   <script src="app.js"></script>
   <script src="../modules/profanity-filter.js"></script>
+  <script src="../modules/penalty-shootout.js"></script>
   <script src="toast.js"></script>
   <script src="student.js"></script>
 </body>

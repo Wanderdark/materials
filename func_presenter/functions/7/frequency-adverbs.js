@@ -22,7 +22,7 @@ const frequencyAdverbsGrade7Function = {
           parts: [{ text: "ALWAYS" }],
           overlayData: {
             question: "How often do you brush your teeth?",
-            imagePath: "../images/6/1/31.webp",
+            imagePath: "images/common/brush-teeth-benjamin-13-1.webp",
             sentence: "I <always> brush my teeth."
           }
         },
@@ -31,7 +31,7 @@ const frequencyAdverbsGrade7Function = {
           parts: [{ text: "USUALLY" }],
           overlayData: {
             question: "How often do you read books?",
-            imagePath: "../images/6/1/37.webp",
+            imagePath: "images/common/read-book-mia-13-1.webp",
             sentence: "I <usually> read books after dinner."
           }
         },
@@ -40,8 +40,8 @@ const frequencyAdverbsGrade7Function = {
           parts: [{ text: "OFTEN" }],
           overlayData: {
             question: "How often do you do homework?",
-            imagePath: "images/daily-routines/dohomework.webp",
-            sentence: "I <often> do homework in the evenings."
+            imagePath: "images/common/study-noah-1.webp",
+            sentence: "I <often> do homework after school."
           }
         },
         {
@@ -49,7 +49,7 @@ const frequencyAdverbsGrade7Function = {
           parts: [{ text: "SOMETIMES" }],
           overlayData: {
             question: "How often do you play video games?",
-            imagePath: "../images/6/1/40.webp",
+            imagePath: "images/common/play-video-games-victoria-13-1.webp",
             sentence: "I <sometimes> play video games after school."
           }
         },
@@ -160,7 +160,7 @@ const frequencyAdverbsGrade7Function = {
           parts: [{ text: "ALWAYS · EVERYDAY" }],
           overlayData: {
             question: "<How often> do you play video games?",
-            imagePath: "../images/6/1/9.webp",
+            imagePath: "images/common/play-video-games-victoria-13-1.webp",
             sentences: [
               "I <always> play video games.",
               "I play video games <every day.>"

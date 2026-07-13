@@ -2537,6 +2537,9 @@ function startSelectedExercise(exercise) {
     case "simple-past-verb-cards":
       window.startSimplePastVerbCards?.(exercise, { state, hideAllScreens, returnToSetup });
       return;
+    case "simple-past-memory-chain":
+      window.startSimplePastMemoryChain?.(exercise, { state, hideAllScreens, returnToSetup });
+      return;
     case "simple-past-choice":
       window.startSimplePastChoice?.(exercise, { state, hideAllScreens, returnToSetup });
       return;

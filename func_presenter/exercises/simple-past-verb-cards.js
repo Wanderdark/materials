@@ -1,17 +1,37 @@
 const simplePastVerbCardBasicPool = [
-  ["HAVE", "HAD"], ["CALL", "CALLED"], ["EAT", "ATE"], ["READ", "READ"], ["RIDE", "RODE"],
-  ["LIVE", "LIVED"], ["BUY", "BOUGHT"], ["GET", "GOT"], ["SWIM", "SWAM"], ["USE", "USED"],
-  ["MAKE", "MADE"], ["ASK", "ASKED"], ["LIKE", "LIKED"], ["HELP", "HELPED"], ["WRITE", "WROTE"],
+  ["HAVE", "HAD"], ["EAT", "ATE"], ["READ", "READ"], ["RIDE", "RODE"],
+  ["BUY", "BOUGHT"], ["GET", "GOT"], ["SWIM", "SWAM"], ["USE", "USED"],
+  ["MAKE", "MADE"], ["WRITE", "WROTE"],
   ["LISTEN", "LISTENED"], ["SELL", "SOLD"], ["DRINK", "DRANK"], ["DO", "DID"], ["LOSE", "LOST"],
-  ["WATCH", "WATCHED"], ["GO", "WENT"], ["TAKE", "TOOK"], ["PLAY", "PLAYED"], ["SEE", "SAW"]
+  ["WATCH", "WATCHED"], ["GO", "WENT"], ["TAKE", "TOOK"], ["PLAY", "PLAYED"], ["SEE", "SAW"],
+  ["STUDY", "STUDIED"], ["COOK", "COOKED"], ["TRAVEL", "TRAVELLED", ["TRAVELLED", "TRAVELED"]]
 ];
 
 const simplePastVerbCardAdvancedPool = [
   ["SIT", "SAT"], ["FEED", "FED"], ["SAY", "SAID"], ["FALL", "FELL"], ["GIVE", "GAVE"],
   ["DRAW", "DREW"], ["LEAVE", "LEFT"], ["FEEL", "FELT"], ["BRING", "BROUGHT"], ["CATCH", "CAUGHT"],
   ["SPEAK", "SPOKE"], ["WIN", "WON"], ["BREAK", "BROKE"], ["COME", "CAME"], ["RUN", "RAN"],
-  ["TELL", "TOLD"], ["DRIVE", "DROVE"], ["FLY", "FLEW"], ["SLEEP", "SLEPT"], ["WAKE", "WOKE"]
+  ["TELL", "TOLD"], ["DRIVE", "DROVE"], ["FLY", "FLEW"], ["SLEEP", "SLEPT"], ["WAKE", "WOKE"],
+  ["SING", "SANG"], ["THROW", "THREW"]
 ];
+
+function simplePastOneLetterOff(a, b) {
+  if (a === b) return false;
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) { i += 1; j += 1; continue; }
+    edits += 1;
+    if (edits > 1) return false;
+    if (a.length === b.length) { i += 1; j += 1; }
+    else if (a.length > b.length) { i += 1; }
+    else { j += 1; }
+  }
+  edits += (a.length - i) + (b.length - j);
+  return edits === 1;
+}
 
 function shuffleSimplePastVerbCards(items) {
   const copy = [...items];
@@ -30,7 +50,11 @@ function startSimplePastVerbCards(exercise, api) {
   const keyboardPanel = $("verbCardKeyboardPanel");
   const keyboard = $("verbCardKeyboard");
   const front = $("verbCardFront");
+  const frontImage = $("verbCardImage");
+  const frontLabel = $("verbCardFrontLabel");
   const back = $("verbCardBack");
+  const backImage = $("verbCardBackImage");
+  const backLabel = $("verbCardBackLabel");
   const flip = $("verbCardFlip");
   const input = $("verbCardInput");
   const feedback = $("verbCardFeedback");
@@ -53,9 +77,48 @@ function startSimplePastVerbCards(exercise, api) {
     round: 0
   };
 
+  function verbImagePath(base) {
+    return `../images/snapwords/${base.toLowerCase()}.webp`;
+  }
+
+  function verbBackImagePath(word) {
+    return `../images/snapwords/v2/${word.toLowerCase()}.webp`;
+  }
+
+  function loadCardImage(face, imgEl, labelEl, candidates, displayText) {
+    let index = 0;
+    const tryNext = () => {
+      if (index >= candidates.length) {
+        imgEl.classList.add("hidden");
+        labelEl.textContent = displayText;
+        labelEl.classList.remove("hidden");
+        requestAnimationFrame(() => fitCardText(face));
+        return;
+      }
+      imgEl.src = candidates[index];
+      index += 1;
+    };
+    labelEl.classList.add("hidden");
+    imgEl.classList.remove("hidden");
+    imgEl.onerror = tryNext;
+    tryNext();
+  }
+
+  function renderCardFront(base) {
+    frontImage.alt = base;
+    loadCardImage(front, frontImage, frontLabel, [verbImagePath(base)], base);
+  }
+
+  function renderCardBack(past, variants) {
+    backImage.alt = past;
+    const candidates = [past, ...(variants || [])].map(verbBackImagePath);
+    loadCardImage(back, backImage, backLabel, candidates, past);
+  }
+
   function setInput(value) {
     state.input = value.slice(0, 18).toUpperCase();
-    input.textContent = state.input || "TYPE THE PAST FORM";
+    const base = state.current ? state.current[0] : "";
+    input.textContent = `${base} - ${state.input || "TYPE THE PAST FORM"}`;
     input.classList.toggle("empty", !state.input);
     RGBKeyboard?.resetSubmit?.();
   }
@@ -84,12 +147,8 @@ function startSimplePastVerbCards(exercise, api) {
     state.round += 1;
     state.answered = false;
     flip.classList.remove("flipped");
-    front.textContent = state.current[0];
-    back.textContent = state.current[1];
-    requestAnimationFrame(() => {
-      fitCardText(front);
-      fitCardText(back);
-    });
+    renderCardFront(state.current[0]);
+    renderCardBack(state.current[1], state.current[2]);
     progress.textContent = `${state.round}`;
     feedback.textContent = "";
     feedback.className = "exercise-feedback";
@@ -102,7 +161,10 @@ function startSimplePastVerbCards(exercise, api) {
   function submitAnswer() {
     if (state.answered) return;
     state.answered = true;
-    const isCorrect = state.input.trim() === state.current[1];
+    const acceptedAnswers = state.current[2] || [state.current[1]];
+    const guess = state.input.trim();
+    const isCorrect = acceptedAnswers.includes(guess);
+    const isPartial = !isCorrect && acceptedAnswers.some((answer) => simplePastOneLetterOff(guess, answer));
     flip.classList.add("flipped");
     keyboardPanel.classList.add("hidden");
     nextButton.classList.remove("hidden");
@@ -110,8 +172,18 @@ function startSimplePastVerbCards(exercise, api) {
     feedback.textContent = isCorrect ? "Correct!" : `Wrong. Correct answer: ${state.current[1]}`;
     feedback.className = `exercise-feedback ${isCorrect ? "correct" : "wrong"}`;
     window.exerciseActivityModules?.showStamp?.(isCorrect);
-    if (isCorrect) window.StudentGame?.onCorrect?.();
-    else window.StudentGame?.onWrong?.();
+    playFeedbackSound(isCorrect);
+    if (window.PenaltyShootout) {
+      const state = isCorrect ? "correct" : isPartial ? "partial" : "wrong";
+      const stateLabel = isCorrect
+        ? "✅ CORRECT ANSWER — FULL POWER!"
+        : isPartial
+          ? "🟡 SO CLOSE! (1 letter off)"
+          : "❌ WRONG ANSWER";
+      setTimeout(() => {
+        window.PenaltyShootout.open({ state, stateLabel });
+      }, 1200);
+    }
   }
 
   function handleKey(key) {

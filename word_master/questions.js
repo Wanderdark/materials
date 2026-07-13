@@ -8,6 +8,48 @@
 //           image_reveal oyununda da kabul edilir; word_master bu alanı kullanmaz.
 
 const QUESTIONS = [
+
+// ─── GRADE 6 THEME 3 YENİ MÜFREDAT ───────────────────────────────────────────────
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/53.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+// ["English definition","Turkish definition","",6,2,3,"../images/6/3/.webp"],
+
+
+
 // ─── GRADE 6 THEME 1 YENİ MÜFREDAT ───────────────────────────────────────────────
 //["Earlier than something else in time.","Zamanlama olarak başka bir şeyden önce.","BEFORE",6,2,1,"../images/8/3/53.webp"],
 // ["A special day with fun activities","Festival","FESTIVAL",6,1,1,"../images/5/1/30.webp"],
