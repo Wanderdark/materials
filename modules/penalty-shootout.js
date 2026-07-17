@@ -160,12 +160,26 @@
       activeAudio.push(audio);
       return audio;
     }
+    function fadeOutAudio(audio, duration = 350) {
+      const steps = 12;
+      const stepTime = duration / steps;
+      const startVolume = audio.volume;
+      let step = 0;
+      const fade = setInterval(() => {
+        step += 1;
+        if (step >= steps) {
+          clearInterval(fade);
+          audio.pause();
+          audio.currentTime = 0;
+          return;
+        }
+        audio.volume = Math.max(0, startVolume * (1 - step / steps));
+      }, stepTime);
+    }
     function stopAllSounds() {
-      activeAudio.forEach((audio) => {
-        audio.pause();
-        audio.currentTime = 0;
-      });
+      const audios = activeAudio.slice();
       activeAudio.length = 0;
+      audios.forEach((audio) => fadeOutAudio(audio));
     }
 
     let finished = false;

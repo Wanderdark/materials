@@ -164,7 +164,7 @@ function startSimplePastVerbCards(exercise, api) {
     const acceptedAnswers = state.current[2] || [state.current[1]];
     const guess = state.input.trim();
     const isCorrect = acceptedAnswers.includes(guess);
-    const isPartial = !isCorrect && acceptedAnswers.some((answer) => simplePastOneLetterOff(guess, answer));
+    const isPartial = !isCorrect && acceptedAnswers.some((answer) => answer.length >= 6 && simplePastOneLetterOff(guess, answer));
     flip.classList.add("flipped");
     keyboardPanel.classList.add("hidden");
     nextButton.classList.remove("hidden");

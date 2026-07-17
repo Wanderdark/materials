@@ -28,6 +28,8 @@
     startSort: $("startSortButton"),
     startOddOneOut: $("startOddOneOutButton"),
     startLuckySpin: $("startLuckySpinButton"),
+    startPossSimon: $("startPossSimonButton"),
+    possSimonScreen: $("possSimonScreen"),
     anagramCategoryModal: $("anagramCategoryModal"),
     closeAnagramCategories: $("closeAnagramCategoriesButton"),
     anagramCategoryOptions: $("anagramCategoryOptions"),
@@ -407,12 +409,25 @@
     activateCategory(0);
   }
 
+  function isPossSimonAvailable() {
+    return (state.grade === 5 || state.grade === 6) && state.unit === 3;
+  }
+
   function openExercises() {
     els.startMatch.classList.toggle("hidden", !getMatchCategories().length);
     els.startSort.classList.toggle("hidden", getSortCategories().length < 2);
     els.startOddOneOut.classList.toggle("hidden", getCategories().length < 2);
     els.startLuckySpin.classList.toggle("hidden", !getLuckySpinItems().length);
+    els.startPossSimon.classList.toggle("hidden", !isPossSimonAvailable());
     els.exercisesModal.classList.remove("hidden");
+  }
+
+  function startPossSimonGame() {
+    if (!isPossSimonAvailable()) return;
+    closeExercises();
+    els.setup.classList.add("hidden");
+    els.presentation.classList.add("hidden");
+    window.startPossSimon({ grade: state.grade, playFeedbackSound, onExit: returnToSetup });
   }
 
   function closeExercises() {
@@ -830,6 +845,8 @@
   }
 
   function playMemoryFile(name) {
+    if (name === "correct.mp3") window.StudentGame?.onCorrect();
+    else if (name === "wrong.mp3") window.StudentGame?.onWrong();
     try {
       const a = new Audio(`sounds/${name}`);
       a.volume = .8;
@@ -1628,6 +1645,8 @@
   }
 
   function playFeedbackSound(isCorrect) {
+    if (isCorrect) window.StudentGame?.onCorrect();
+    else window.StudentGame?.onWrong();
     window.speechSynthesis?.cancel();
     clearTimeout(state.speechTimer);
     stopFeedbackAudio();
@@ -2225,6 +2244,7 @@
     els.matchResult.classList.add("hidden");
     els.sortScreen.classList.add("hidden");
     els.sortResult.classList.add("hidden");
+    els.possSimonScreen.classList.add("hidden");
     clearTimeout(state.luckyTickTimer);
     state.luckySpinning = false;
     els.luckySpinScreen.classList.add("hidden");
@@ -2261,6 +2281,7 @@
   els.startSort.addEventListener("click", startSort);
   els.startOddOneOut.addEventListener("click", startOddOneOut);
   els.startLuckySpin.addEventListener("click", startLuckySpin);
+  els.startPossSimon.addEventListener("click", startPossSimonGame);
   els.luckySpinBack.addEventListener("click", returnToSetup);
   els.luckySpinButton.addEventListener("click", spinLuckyWheel);
   els.luckyCorrect.addEventListener("click", () => judgeLuckySpin(true));

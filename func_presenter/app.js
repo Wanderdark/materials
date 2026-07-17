@@ -92,6 +92,7 @@ const els = {
   guessAnimalKeyboard: $("guessAnimalKeyboard"),
   guessAnimalFeedback: $("guessAnimalFeedback"),
   verbCard: $("verbCardScreen"),
+  possSimon: $("possSimonScreen"),
   sort: $("sortScreen"),
   sortBack: $("sortBackButton"),
   sortGrade: $("sortGradeLabel"),
@@ -310,8 +311,66 @@ let roomState = null;
 let roomActiveSentenceEl = null;
 const ROOM_DEBUG_HITAREAS = false; // draw hit-area outlines while calibrating rooms; flip to true to recalibrate
 
+function pickRoomVoice(gender) {
+  const voices = window.speechSynthesis.getVoices().filter((voice) => voice.lang.startsWith("en"));
+  if (!voices.length) return { voice: null, isFallback: true };
+  const malePattern = /male|david|mark|guy|daniel|george|ryan|james|fred/i;
+  const femalePattern = /female|zira|susan|samantha|victoria|karen|linda|hazel|aria|jenny/i;
+  const pattern = gender === "male" ? malePattern : femalePattern;
+  const opposite = gender === "male" ? femalePattern : malePattern;
+  const matched = voices.find((voice) => pattern.test(voice.name) && !opposite.test(voice.name));
+  return matched ? { voice: matched, isFallback: false } : { voice: voices[0], isFallback: true };
+}
+
+function speakRoomLine(text, room, onEnd) {
+  if (!text || text.includes("____") || !("speechSynthesis" in window)) {
+    onEnd?.();
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text.replace(/"/g, ""));
+  utterance.lang = "en-US";
+  utterance.rate = .92;
+  const isMale = room?.gender === "male";
+  const { voice, isFallback } = pickRoomVoice(isMale ? "male" : "female");
+  // room.pitch is a per-character manual override; falls back to the generic gender pitch when unset.
+  utterance.pitch = room?.pitch ?? (isMale ? (isFallback ? .3 : .75) : 1.27);
+  if (voice) utterance.voice = voice;
+  utterance.onend = () => onEnd?.();
+  utterance.onerror = () => onEnd?.();
+  window.speechSynthesis.speak(utterance);
+}
+
+/* Per-character voice profiles for spoken dialogue lines in presence slides
+   (e.g. "Can for Permission"). Reused by name against each line's speaker. */
+const presenceDialogueVoices = {
+  VICTORIA: { gender: "female", pitch: 1.1 },
+  HANNAH: { gender: "female", pitch: 1.25 },
+  ELLA: { gender: "female", pitch: 1.15 },
+  MIA: { gender: "female", pitch: 1.34 },
+  NOAH: { gender: "female", pitch: .7 },
+  BENJAMIN: { gender: "female", pitch: .8 },
+  CHLOE: { gender: "female", pitch: 1.27 },
+  ZOE: { gender: "female", pitch: 1.2 },
+  ETHAN: { gender: "female", pitch: .75 },
+  TEACHER: { gender: "female", pitch: 1 }
+};
+
+function speakPresenceRow(row) {
+  const textEl = row?.querySelector(".speaker-line-text");
+  const headEl = row?.querySelector(".speaker-head");
+  if (!textEl || !headEl) return;
+  if (row.querySelector(".inline-choice-group")) return; // popup-choice lines: skip, reading both options sounds wrong
+  const rawText = (textEl.textContent || "").trim();
+  if (!rawText || rawText.includes("____")) return;
+  const speakerName = (headEl.alt || "").trim();
+  const text = speakerName ? rawText.replace(new RegExp(`^${speakerName}:\\s*`), "") : rawText;
+  const profile = presenceDialogueVoices[speakerName.toUpperCase()];
+  speakRoomLine(text, profile);
+}
+
 function hideAllScreens() {
-  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.guessAnimal, els.verbCard, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
+  [els.setup, els.presentation, els.complete, els.exercise, els.exerciseResult, els.guessAnimal, els.verbCard, els.possSimon, els.sort, els.conversation, els.jumbled, els.matching, els.matchingTime, els.trueFalse, els.pronounMemory, els.pronounMemoryResult, els.pronounSnap, els.pronounSnapResult, els.timeSetter, els.fillBlank, els.mistake, els.luckySpin, els.pcScreen, els.smScreen, els.exerciseMenu, els.room].forEach((screen) => screen.classList.add("hidden"));
 }
 
 function playFeedbackSound(isCorrect) {
@@ -374,6 +433,7 @@ function renderRoomTarget() {
     positionRoomSpeechBubble(room.speechPoint);
     els.roomSpeechBubble.classList.remove("hidden");
     roomActiveSentenceEl = els.roomSpeechBubble;
+    speakRoomLine(promptText, room);
   } else {
     roomActiveSentenceEl = els.roomSentence;
   }
@@ -411,11 +471,9 @@ function answerRoomChoice(button, option, step) {
     roomActiveSentenceEl.innerHTML = roomActiveSentenceEl.innerHTML.replace("____", `<span class="room-word">${step.answer}</span>`);
   }
   playFeedbackSound(isCorrect);
-  if (isCorrect && step.easterEggId) {
-    const egg = (roomState.data.easterEggs || []).find((e) => e.id === step.easterEggId);
-    if (egg) handleRoomEasterEgg(egg);
-  }
-  els.roomNext.classList.remove("hidden");
+  const egg = isCorrect && step.easterEggId && (roomState.data.easterEggs || []).find((e) => e.id === step.easterEggId);
+  if (egg) handleRoomEasterEgg(egg, () => els.roomNext.classList.remove("hidden"));
+  else els.roomNext.classList.remove("hidden");
 }
 
 function formatRoomSentence(sentence) {
@@ -467,16 +525,24 @@ function drawRoomHitAreas(target) {
 }
 
 let roomEasterEggTimer = null;
-function handleRoomEasterEgg(egg) {
+function handleRoomEasterEgg(egg, onDone) {
   clearTimeout(roomEasterEggTimer);
   positionRoomSpeechBubble(roomState.data.speechPoint);
   els.roomSpeechBubble.textContent = egg.line;
   els.roomSpeechBubble.classList.remove("hidden");
-  if (egg.sound) {
-    const playSound = () => new Audio(egg.sound).play().catch(() => {});
+  speakRoomLine(egg.line, roomState.data, () => {
+    if (!egg.sound) {
+      onDone?.();
+      return;
+    }
+    const audio = new Audio(egg.sound);
+    const afterSound = () => setTimeout(() => onDone?.(), 2000);
+    audio.addEventListener("ended", afterSound, { once: true });
+    audio.addEventListener("error", afterSound, { once: true });
+    const playSound = () => audio.play().catch(afterSound);
     if (egg.soundDelay) setTimeout(playSound, egg.soundDelay);
     else playSound();
-  }
+  });
   roomEasterEggTimer = setTimeout(() => els.roomSpeechBubble.classList.add("hidden"), egg.duration || 10000);
 }
 
@@ -502,12 +568,13 @@ function handleRoomHit() {
   const room = roomState.data;
   const step = room.targets[roomState.targetIndex];
   const egg = step?.easterEggId && (room.easterEggs || []).find((e) => e.id === step.easterEggId);
-  if (egg) handleRoomEasterEgg(egg);
-  setTimeout(() => {
+  const advance = () => {
     roomState.locked = false;
     roomState.targetIndex += 1;
     renderRoomTarget();
-  }, egg ? (egg.duration || 3000) : 900);
+  };
+  if (egg) handleRoomEasterEgg(egg, advance);
+  else setTimeout(advance, 900);
 }
 
 function handleRoomMiss() {
@@ -531,6 +598,7 @@ function exitCharacterRoom() {
   positionRoomSpeechBubble(room.speechPoint);
   els.roomSpeechBubble.textContent = room.exitLine || "Bye!";
   els.roomSpeechBubble.classList.remove("hidden");
+  speakRoomLine(room.exitLine || "Bye!", room);
   if (room.exitSound) setTimeout(() => new Audio(room.exitSound).play().catch(() => {}), room.exitSoundDelay ?? 0);
   setTimeout(returnToHubFromRoom, room.exitDelay || 2000);
 }
@@ -2002,6 +2070,7 @@ function renderPresenceSlide(example) {
   if (firstVisibleRow?.dataset.imagePathOnShow || firstVisibleRow?.dataset.speechText || firstVisibleRow?.dataset.speakerName) {
     applyPresenceRowImage(firstVisibleRow);
   }
+  speakPresenceRow(firstVisibleRow);
   if (example.hotspotMode) {
     const firstHotspotRow = list.querySelector(".presence-row:not(.hidden)[data-hotspots]");
     showPresenceHotspots(readRowHotspots(firstHotspotRow));
@@ -2345,6 +2414,7 @@ function revealPresenceHotspotStep(list, currentIndex) {
   applyPresenceRowTitleOverride(nextRow);
   applyPresenceRowImage(nextRow);
   showPresenceHotspots(readRowHotspots(nextRow));
+  speakPresenceRow(nextRow);
 }
 
 function showNextPresenceRow(list, currentIndex) {
@@ -2360,6 +2430,7 @@ function showNextPresenceRow(list, currentIndex) {
   applyPresenceRowTitleOverride(nextRow);
   applyPresenceRowImage(nextRow);
   showPresenceHotspots(readRowHotspots(nextRow));
+  speakPresenceRow(nextRow);
   const nextButton = list.querySelector(`[data-presence-index="${currentIndex}"] .presence-next`);
   if (nextButton) nextButton.classList.add("hidden");
 }
@@ -2480,7 +2551,8 @@ function openExerciseMenu() {
       "mistake-correct-it": "Decide if the sentence is correct. If not, find the mistake.",
       "paragraph-choice": "Choose the correct word for each blank in the paragraph.",
       "guess-animal": "Use the hints and keyboard to guess the animal.",
-      "lucky-spin": "Spin the wheel, complete the speaking task, and score points."
+      "lucky-spin": "Spin the wheel, complete the speaking task, and score points.",
+      "possessive-adjectives-simon-says": "Listen to the voice commands and click the correct body part in order."
     };
     const exerciseDescription = exerciseDescriptions[exercise.activity] || "Start this activity.";
     button.innerHTML = `<span>EXERCISE</span><strong>${exercise.title}</strong><small>${exerciseDescription}</small>`;
@@ -2536,6 +2608,9 @@ function startSelectedExercise(exercise) {
       return;
     case "simple-past-verb-cards":
       window.startSimplePastVerbCards?.(exercise, { state, hideAllScreens, returnToSetup });
+      return;
+    case "possessive-adjectives-simon-says":
+      window.startPossessiveAdjectivesSimonSays?.(exercise, { state, hideAllScreens, returnToSetup });
       return;
     case "simple-past-memory-chain":
       window.startSimplePastMemoryChain?.(exercise, { state, hideAllScreens, returnToSetup });
@@ -3505,12 +3580,19 @@ function checkTimeSetter() {
     els.timeSetterFeedback.className = "exercise-feedback correct";
     els.timeSetterActions.replaceChildren();
     state.timeSetterAdvanceTimer = window.setTimeout(() => {
-      state.timeSetterRound += 1;
-      state.timeSetterTarget = createTimeSetterTarget(state.timeSetterTarget, state.timeSetterRound, state.timeSetterExercise);
-      state.timeSetterHour = 12;
-      state.timeSetterMinute = 0;
-      state.timeSetterLocked = false;
-      renderTimeSetter(true);
+      const advanceRound = () => {
+        state.timeSetterRound += 1;
+        state.timeSetterTarget = createTimeSetterTarget(state.timeSetterTarget, state.timeSetterRound, state.timeSetterExercise);
+        state.timeSetterHour = 12;
+        state.timeSetterMinute = 0;
+        state.timeSetterLocked = false;
+        renderTimeSetter(true);
+      };
+      if (window.PenaltyShootout) {
+        window.PenaltyShootout.open({ state: "correct", stateLabel: "✅ CORRECT TIME — FULL POWER!", onClose: advanceRound });
+      } else {
+        advanceRound();
+      }
     }, 1200);
     return;
   }
@@ -3518,6 +3600,11 @@ function checkTimeSetter() {
   window.exerciseActivityModules.showStamp(false);
   els.timeSetterFeedback.textContent = "Not quite. Try the same target again.";
   els.timeSetterFeedback.className = "exercise-feedback wrong";
+  if (window.PenaltyShootout) {
+    setTimeout(() => {
+      window.PenaltyShootout.open({ state: "wrong", stateLabel: "❌ WRONG TIME" });
+    }, 600);
+  }
 }
 
 function retryTimeSetter() {

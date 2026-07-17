@@ -168,6 +168,9 @@ Relaxed smile.
 Expression note:
 Hafif rahat bir gulumseme. Huzurlu gorunur.
 
+Default voice pitch:
+0.8
+
 Favorite / Signature Activity:
 Swimming.
 
@@ -231,6 +234,9 @@ Soft, thoughtful smile.
 
 Expression note:
 Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir.
+
+Default voice pitch:
+1.27
 
 Favorite / Signature Activity:
 Dancing.
@@ -424,6 +430,9 @@ Bright cheerful smile.
 
 Expression note:
 Sinifin en pozitif yuzlerinden biri.
+
+Default voice pitch:
+1.15
 
 Favorite / Signature Activity:
 Singing.
@@ -624,6 +633,9 @@ Energetic grin.
 Expression note:
 Hareket etmeye hazir gibi.
 
+Default voice pitch:
+1.25
+
 Age-specific expression canon:
 
 - Age 13: Maintain Hannah's canonical default expression: Energetic grin. Maintain Hannah's default personality. Use a relaxed, believable expression. Since Hannah is now 13, the expression should feel slightly more relaxed, natural, and composed than her age-12 version. Keep her energetic outdoor confidence, but change the grin to a bright more subtle and effortless smile. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, confident, and age-appropriate for 13.
@@ -822,6 +834,9 @@ Shy, gentle expression.
 Expression note:
 Cok hafif gulumser. Bazen hic gulumsemeyebilir.
 
+Default voice pitch:
+1.34
+
 Age-specific expression canon:
 
 - Age 13: Maintain Mia's canonical default expression: gentle expression. Use a relaxed, more confident, believable expression. Since Mia is now 13, the expression should feel slightly more relaxed, more confident, natural, and composed than her age-12 shy version. Keep her gentle softness, but make the expression more subtle, more confident and effortless. Avoid exaggerated smiles. Avoid oversized teeth. Avoid AI-style perfect grin.
@@ -890,6 +905,9 @@ Thoughtful neutral expression.
 
 Expression note:
 Dusunuyormus gibi. Kaslar hafif odakli.
+
+Default voice pitch:
+0.7
 
 Favorite / Signature Activity:
 Studying.
@@ -1020,6 +1038,9 @@ Calm analytical expression.
 
 Expression note:
 Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi.
+
+Default voice pitch:
+1.1
 
 Favorite / Signature Activity:
 Coding.

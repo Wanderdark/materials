@@ -25,6 +25,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 130, y: 150, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "BENJAMIN",
+            gender: "male",
+            pitch: 0.8,
             imagePath: "images/havegot-hasgot/benjamin-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -79,6 +81,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 480, y: 170, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "VICTORIA",
+            gender: "female",
+            pitch: 1.1,
             imagePath: "images/havegot-hasgot/victoria-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -133,6 +137,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 110, y: 30, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "LUCAS",
+            gender: "male",
+            pitch: 0.6,
             imagePath: "images/havegot-hasgot/lucas-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -182,6 +188,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 250, y: 30, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "CHLOE",
+            gender: "female",
+            pitch: 1.27,
             imagePath: "images/havegot-hasgot/chloe-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -257,6 +265,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 390, y: 155, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "NOAH",
+            gender: "male",
+            pitch: 0.7,
             imagePath: "images/havegot-hasgot/noah-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -311,6 +321,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 280, y: 155, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "MIA",
+            gender: "female",
+            pitch: 1.34,
             imagePath: "images/havegot-hasgot/mia-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -373,6 +385,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 375, y: 40, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "ELLA",
+            gender: "female",
+            pitch: 1.15,
             imagePath: "images/havegot-hasgot/ella-room.webp",
             imageWidth: 1672,
             imageHeight: 941,
@@ -431,6 +445,8 @@ const haveGotHasGotFunction = {
           nameTag: { x: 500, y: 30, baseWidth: 650, baseHeight: 370 },
           room: {
             name: "HANNAH",
+            gender: "female",
+            pitch: 1.25,
             imagePath: "images/havegot-hasgot/hannah-room.webp",
             imageWidth: 1672,
             imageHeight: 941,

@@ -324,6 +324,32 @@ character's action.
 
 ------------------------------------------------------------------------
 
+# CHARACTER USAGE DECISION FLOW
+
+Before adding a canonical student to an image, decide whether the word
+or lesson concept truly benefits from a character.
+
+Decision flow:
+
+1.  Word
+2.  What is the strongest single-frame composition for this word?
+3.  Does adding a character make the scene stronger?
+
+If the answer is no:
+
+-   Do not use a character.
+
+If the answer is yes:
+
+-   Choose the most canonical and natural student for that word or
+    activity.
+-   Use that student.
+
+Do not add a recurring character only for decoration. A character should
+make the vocabulary meaning, action, emotion or storytelling clearer.
+
+------------------------------------------------------------------------
+
 # CHARACTER FIRST
 
 Recurring character prompts should always follow this order:

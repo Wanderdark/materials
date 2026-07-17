@@ -410,6 +410,7 @@ students:
     canonical_description: "Benjamin has short blonde straight hair and blue eyes. He does not wear glasses."
     default_expression: "Relaxed smile."
     expression_note: "Hafif rahat bir gulumseme. Huzurlu gorunur."
+    default_voice_pitch: 0.8
     signature_activity: "Swimming"
     hobbies:
       loves:
@@ -516,6 +517,7 @@ students:
     canonical_description: "Chloe has long curly blonde hair and blue eyes. She does not wear glasses."
     default_expression: "Soft, thoughtful smile."
     expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
+    default_voice_pitch: 1.27
     signature_activity: "Dancing"
     hobbies:
       loves:
@@ -838,6 +840,7 @@ students:
     canonical_description: "Ella has shoulder-length wavy blonde hair and green eyes. She does not wear glasses."
     default_expression: "Bright cheerful smile."
     expression_note: "Sinifin en pozitif yuzlerinden biri."
+    default_voice_pitch: 1.15
     signature_activity: "Singing"
     hobbies:
       loves:
@@ -1158,6 +1161,7 @@ students:
     canonical_description: "Hannah has long straight blonde hair and blue eyes. She does not wear glasses."
     default_expression: "Energetic grin."
     expression_note: "Hareket etmeye hazir gibi."
+    default_voice_pitch: 1.25
     age_specific_expressions:
       age_13: "Maintain Hannah's canonical default expression: Energetic grin. Maintain Hannah's default personality. Use a relaxed, believable expression. Since Hannah is now 13, the expression should feel slightly more relaxed, natural, and composed than her age-12 version. Keep her energetic outdoor confidence, but change the grin to a bright more subtle and effortless smile. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, confident, and age-appropriate for 13."
       age_14: "Maintain Hannah's canonical default personality. Hannah's canonical default expression is: Energetic grin. Since Hannah is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Use a calm, relaxed, warm and confident smile with only a subtle trace of Hannah's original outdoor confidence. Avoid exaggerated grins. Avoid oversized teeth. Avoid AI-style perfect grin. The expression should feel natural, understated, confident, composed, and age-appropriate for 14."
@@ -1258,7 +1262,7 @@ students:
           professional_visual_cues: ["work gloves", "hay bale", "vegetable crate", "farm tool"]
           dna_cues_from_child: ["brown eyes", "dark hair family", "confident practical outdoor aura"]
           prompt_insert: "Callum, Jack's father, is a Scottish farmer in his early 40s. He has fair weathered outdoor-toned skin, short straight dark brown-black hair slightly tousled by the wind, brown eyes, a broad square-oval face, and a calm tough smile that feels believably related to Jack's confident outdoor expression. He has a sturdy outdoorsy build and practical farmer hands. He wears a flannel shirt, work vest, and farm boots, with subtle farm details such as work gloves, a vegetable crate, or a farm tool. Preserve his distinct identity as Jack's father; do not make him look like a generic adult."
-    pet: {has_pet: true, type: "Golden Retriever", name: "Max"}
+    pet: {has_pet: false}
     relative_height:
       scale: 4
       label: "above average height"
@@ -1482,6 +1486,7 @@ students:
     canonical_description: "Mia has long wavy brown hair and blue eyes. She does not wear glasses."
     default_expression: "Shy, gentle expression."
     expression_note: "Cok hafif gulumser. Bazen hic gulumsemeyebilir."
+    default_voice_pitch: 1.34
     age_specific_expressions:
       age_13: "Maintain Mia's canonical default expression: gentle expression. Use a relaxed, more confident, believable expression. Since Mia is now 13, the expression should feel slightly more relaxed, more confident, natural, and composed than her age-12 shy version. Keep her gentle softness, but make the expression more subtle, more confident and effortless. Avoid exaggerated smiles. Avoid oversized teeth. Avoid AI-style perfect grin."
       age_14: "Since Mia is now 14, adapt the expression to the age-14 scene/portrait tendency: neutral, relaxed, thoughtful. Her confident expression is now even more noticeable. She is smiling a bit warmer than ever before without the hint of shyness. Keep the expression natural, understated, relaxed, thoughtful, and age-appropriate."
@@ -1591,6 +1596,7 @@ students:
     canonical_description: "Noah has short straight brown hair and green eyes. He wears rectangular eyeglasses."
     default_expression: "Thoughtful neutral expression."
     expression_note: "Dusunuyormus gibi. Kaslar hafif odakli."
+    default_voice_pitch: 0.7
     signature_activity: "Studying"
     hobbies:
       loves:
@@ -1809,6 +1815,7 @@ students:
     canonical_description: "Victoria has long wavy black hair and blue eyes. She wears round eyeglasses."
     default_expression: "Calm analytical expression."
     expression_note: "Cok hafif gulumseme. Asil ifade gozlerinde. Surekli dusunuyor hissi."
+    default_voice_pitch: 1.1
     signature_activity: "Coding"
     hobbies:
       loves:

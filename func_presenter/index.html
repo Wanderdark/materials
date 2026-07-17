@@ -351,6 +351,50 @@
       </article>
     </section>
 
+    <section id="possSimonScreen" class="poss-simon-screen hidden">
+      <header class="presentation-header">
+        <button id="possSimonExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="possSimonGradeLabel">GRADE 5</span><strong>SIMON SAYS: CLICK IT!</strong></div>
+        <div class="progress"><strong id="possSimonStageText">STAGE 1 / 6</strong><span>COMMANDS</span></div>
+      </header>
+      <div class="poss-simon-stage">
+        <div id="possSimonImageWrap" class="room-image-wrap poss-simon-image-wrap">
+          <img id="possSimonImage" src="images/possessive-adjectives/oliver-ingrid.webp" alt="Oliver and Ingrid">
+          <img id="possSimonBreatheOliver" class="poss-simon-breathe poss-simon-breathe-oliver" src="images/possessive-adjectives/oliver-ingrid.webp" alt="" aria-hidden="true">
+          <img id="possSimonBreatheIngrid" class="poss-simon-breathe poss-simon-breathe-ingrid" src="images/possessive-adjectives/oliver-ingrid.webp" alt="" aria-hidden="true">
+          <img id="possSimonBlinkOliver" class="poss-simon-blink" alt="" aria-hidden="true">
+          <img id="possSimonBlinkIngrid" class="poss-simon-blink" alt="" aria-hidden="true">
+          <svg id="possSimonHitSvg" class="room-hit-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"></svg>
+          <div id="possSimonFeedback" class="room-feedback hidden"></div>
+        </div>
+        <p id="possSimonCaption" class="poss-simon-caption">Listen carefully...</p>
+      </div>
+      <div id="possSimonStartOverlay" class="room-intro-overlay">
+        <div class="room-intro-card">
+          <p>LISTEN AND CLICK THE RIGHT BODY PART!</p>
+          <div class="setup-actions">
+            <button id="possSimonBasicButton" class="primary-button">BASIC</button>
+            <button id="possSimonAdvancedButton" class="secondary-button">ADVANCED</button>
+          </div>
+        </div>
+      </div>
+      <div id="possSimonFailOverlay" class="room-intro-overlay hidden">
+        <div class="room-intro-card">
+          <p>Sorry, you failed! 😢</p>
+          <button id="possSimonRetryButton" class="primary-button">NEXT STUDENT</button>
+        </div>
+      </div>
+      <div id="possSimonWinOverlay" class="room-intro-overlay hidden">
+        <div class="room-intro-card">
+          <p>Well done! 🎉</p>
+          <div class="setup-actions">
+            <button id="possSimonPlayAgainButton" class="primary-button">PLAY AGAIN</button>
+            <button id="possSimonWinExitButton" class="secondary-button">EXIT</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="fillBlankScreen" class="fill-blank-screen hidden">
       <header class="presentation-header">
         <button id="fillBlankBackButton" class="icon-button">EXIT</button>
@@ -659,6 +703,7 @@
   <script src="exercises/physical-appearance-true-false-combined.js"></script>
   <script src="exercises/possessive-adjectives-fill-blank.js"></script>
   <script src="exercises/possessive-adjectives-choice.js"></script>
+  <script src="exercises/possessive-adjectives-simon.js"></script>
   <script src="exercises/present-progressive-fill-blank.js"></script>
   <script src="exercises/present-progressive-choice.js"></script>
   <script src="exercises/present-progressive-jumbled.js"></script>

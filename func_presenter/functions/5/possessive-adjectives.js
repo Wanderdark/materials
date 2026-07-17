@@ -4,7 +4,7 @@ const possessiveAdjectivesFunction = {
   unit: 3,
   title: "Possessive Adjectives",
   description: "",
-  exercises: ["possessive-adjectives-fill-blank", "possessive-adjectives-choice"],
+  exercises: ["possessive-adjectives-fill-blank", "possessive-adjectives-choice", "possessive-adjectives-simon-says"],
   sentences: [
     {
       id: "possessive-adjectives-table",

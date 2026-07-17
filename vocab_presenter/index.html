@@ -57,6 +57,50 @@
       <p class="keyboard-tip">Use the <kbd>←</kbd> <kbd>→</kbd> keys during the presentation.</p>
     </section>
 
+    <section id="possSimonScreen" class="screen poss-simon-screen hidden">
+      <header class="presentation-header">
+        <button id="possSimonExitButton" class="icon-button">EXIT</button>
+        <div class="session-info"><span id="possSimonGradeLabel">GRADE 5</span><strong>SIMON SAYS: CLICK IT!</strong></div>
+        <div class="progress"><strong id="possSimonStageText">STAGE 1 / 6</strong><span>COMMANDS</span></div>
+      </header>
+      <div class="poss-simon-stage">
+        <div id="possSimonImageWrap" class="room-image-wrap poss-simon-image-wrap">
+          <img id="possSimonImage" src="../func_presenter/images/possessive-adjectives/oliver-ingrid.webp" alt="Oliver and Ingrid">
+          <img id="possSimonBreatheOliver" class="poss-simon-breathe poss-simon-breathe-oliver" src="../func_presenter/images/possessive-adjectives/oliver-ingrid.webp" alt="" aria-hidden="true">
+          <img id="possSimonBreatheIngrid" class="poss-simon-breathe poss-simon-breathe-ingrid" src="../func_presenter/images/possessive-adjectives/oliver-ingrid.webp" alt="" aria-hidden="true">
+          <img id="possSimonBlinkOliver" class="poss-simon-blink" alt="" aria-hidden="true">
+          <img id="possSimonBlinkIngrid" class="poss-simon-blink" alt="" aria-hidden="true">
+          <svg id="possSimonHitSvg" class="room-hit-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941"></svg>
+          <div id="possSimonFeedback" class="room-feedback hidden"></div>
+        </div>
+        <p id="possSimonCaption" class="poss-simon-caption">Listen carefully...</p>
+      </div>
+      <div id="possSimonStartOverlay" class="room-intro-overlay">
+        <div class="room-intro-card">
+          <p>LISTEN AND CLICK THE RIGHT BODY PART!</p>
+          <div class="setup-actions">
+            <button id="possSimonBasicButton" class="primary-button">BASIC</button>
+            <button id="possSimonAdvancedButton" class="secondary-button">ADVANCED</button>
+          </div>
+        </div>
+      </div>
+      <div id="possSimonFailOverlay" class="room-intro-overlay hidden">
+        <div class="room-intro-card">
+          <p>Sorry, you failed! 😢</p>
+          <button id="possSimonRetryButton" class="primary-button">NEXT STUDENT</button>
+        </div>
+      </div>
+      <div id="possSimonWinOverlay" class="room-intro-overlay hidden">
+        <div class="room-intro-card">
+          <p>Well done! 🎉</p>
+          <div class="setup-actions">
+            <button id="possSimonPlayAgainButton" class="primary-button">PLAY AGAIN</button>
+            <button id="possSimonWinExitButton" class="secondary-button">EXIT</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div id="exercisesModal" class="exercise-modal hidden" role="dialog" aria-modal="true" aria-label="Exercises">
       <div class="exercise-menu">
         <button id="closeExercisesButton" class="icon-button exercise-close" aria-label="Close exercises">×</button>
@@ -91,6 +135,11 @@
           <span>06</span>
           <strong>LUCKY SPIN</strong>
           <small>Spin the wheel, complete the task, and score points.</small>
+        </button>
+        <button id="startPossSimonButton" class="exercise-choice hidden">
+          <span>07</span>
+          <strong>SIMON SAYS</strong>
+          <small>Listen to the voice command and click the right body part in order.</small>
         </button>
       </div>
     </div>
@@ -442,6 +491,10 @@
   <script src="rivals-distractor-adapter.js"></script>
   <script src="category-adapter.js"></script>
   <script src="lucky-spin-adapter.js"></script>
+  <script src="poss-simon.js"></script>
   <script src="app.js"></script>
+  <script src="../modules/profanity-filter.js"></script>
+  <script src="../func_presenter/toast.js"></script>
+  <script src="../func_presenter/student.js"></script>
 </body>
 </html>
