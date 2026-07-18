@@ -376,6 +376,7 @@ function hideAllScreens() {
 function playFeedbackSound(isCorrect) {
   if (isCorrect) window.StudentGame?.onCorrect();
   else window.StudentGame?.onWrong();
+  if (isCorrect) window.TeacherControl?.onCorrect();
   if (feedbackAudio) {
     feedbackAudio.pause();
     feedbackAudio.currentTime = 0;
@@ -387,6 +388,7 @@ function playFeedbackSound(isCorrect) {
 function playWavFeedback(isCorrect) {
   if (isCorrect) window.StudentGame?.onCorrect();
   else window.StudentGame?.onWrong();
+  if (isCorrect) window.TeacherControl?.onCorrect();
   if (feedbackAudio) {
     feedbackAudio.pause();
     feedbackAudio.currentTime = 0;
@@ -1201,7 +1203,7 @@ function renderTimetableParts(parts = []) {
 }
 
 function hasOverlaySentenceContent(data = {}) {
-  return Boolean(data.sentenceParts.length || data.sentence || data.sentences.length);
+  return Boolean((data.sentenceParts || []).length || data.sentence || (data.sentences || []).length);
 }
 
 function createOverlaySentenceParts(parts = [], highlight) {

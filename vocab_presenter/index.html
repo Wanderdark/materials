@@ -388,7 +388,10 @@
           <div id="meaningBlock" class="meaning-block hidden">
             <span>Turkish meaning</span>
             <button id="revealTurkishButton" class="reveal-button">REVEAL TURKISH</button>
-            <strong id="turkishMeaning" class="hidden"></strong>
+            <div id="turkishMeaningRow" class="turkish-meaning-row hidden">
+              <strong id="turkishMeaning"></strong>
+              <button id="turkishPointButton" class="turkish-point-button" type="button" aria-label="Award one point" title="Award +1 point">✓</button>
+            </div>
           </div>
           <div id="definitionBlock" class="definition-block hidden">
             <span>English definition</span>
@@ -496,5 +499,6 @@
   <script src="../modules/profanity-filter.js"></script>
   <script src="../func_presenter/toast.js"></script>
   <script src="../func_presenter/student.js"></script>
+  <script src="../func_presenter/teacher-control.js"></script>
 </body>
 </html>

@@ -108,7 +108,9 @@
     englishWord: $("englishWord"),
     speakWord: $("speakWordButton"),
     meaningBlock: $("meaningBlock"),
+    turkishMeaningRow: $("turkishMeaningRow"),
     turkishMeaning: $("turkishMeaning"),
+    turkishPoint: $("turkishPointButton"),
     definitionBlock: $("definitionBlock"),
     englishDefinition: $("englishDefinition"),
     wordRelations: $("wordRelations"),
@@ -182,6 +184,7 @@
     index: 0,
     mode: "word",
     wordStage: "guess",
+    turkishPointAwarded: false,
     revealTimer: null,
     categoryIntroTimer: null,
     speechTimer: null,
@@ -845,7 +848,10 @@
   }
 
   function playMemoryFile(name) {
-    if (name === "correct.mp3") window.StudentGame?.onCorrect();
+    if (name === "correct.mp3") {
+      window.StudentGame?.onCorrect();
+      window.TeacherControl?.onCorrect();
+    }
     else if (name === "wrong.mp3") window.StudentGame?.onWrong();
     try {
       const a = new Audio(`sounds/${name}`);
@@ -1544,6 +1550,7 @@
     stopFeedbackAudio();
     state.mode = "word";
     state.wordStage = "guess";
+    state.turkishPointAwarded = false;
     const record = state.pool[state.index];
     els.categoryIntro.classList.add("hidden");
     els.wordView.classList.remove("hidden");
@@ -1556,7 +1563,9 @@
     els.wordTitleRow.classList.add("hidden");
     els.meaningBlock.classList.add("hidden");
     els.revealTurkish.classList.remove("hidden");
-    els.turkishMeaning.classList.add("hidden");
+    els.turkishMeaningRow.classList.add("hidden");
+    els.turkishPoint.classList.remove("is-awarded");
+    els.turkishPoint.disabled = false;
     els.definitionBlock.classList.add("hidden");
     els.wordRelations.classList.add("hidden");
     renderWordGuessOptions(record);
@@ -1645,7 +1654,10 @@
   }
 
   function playFeedbackSound(isCorrect) {
-    if (isCorrect) window.StudentGame?.onCorrect();
+    if (isCorrect) {
+      window.StudentGame?.onCorrect();
+      window.TeacherControl?.onCorrect();
+    }
     else window.StudentGame?.onWrong();
     window.speechSynthesis?.cancel();
     clearTimeout(state.speechTimer);
@@ -1669,8 +1681,34 @@
     if (state.mode !== "word" || state.wordStage !== "english") return;
     state.wordStage = "turkish";
     els.revealTurkish.classList.add("hidden");
-    els.turkishMeaning.classList.remove("hidden");
+    els.turkishMeaningRow.classList.remove("hidden");
+    els.turkishPoint.classList.toggle("hidden", !window.TeacherControl);
     updateChrome();
+  }
+
+  function awardTurkishMeaningPoint() {
+    if (state.mode !== "word" || state.wordStage !== "turkish" || state.turkishPointAwarded) return;
+    if (!window.TeacherControl) return;
+    state.turkishPointAwarded = true;
+    els.turkishPoint.disabled = true;
+    els.turkishPoint.classList.add("is-awarded");
+    window.TeacherControl.onCorrect();
+    playTurkishPointSound();
+  }
+
+  function playTurkishPointSound() {
+    window.speechSynthesis?.cancel();
+    clearTimeout(state.speechTimer);
+    stopFeedbackAudio();
+    const audio = new Audio("sounds/correct.mp3");
+    state.feedbackAudio = audio;
+    audio.addEventListener("ended", () => {
+      if (state.feedbackAudio === audio) state.feedbackAudio = null;
+    }, { once: true });
+    audio.addEventListener("error", () => {
+      if (state.feedbackAudio === audio) state.feedbackAudio = null;
+    }, { once: true });
+    audio.play().catch(() => {});
   }
 
   function renderWordRelations(record) {
@@ -2323,6 +2361,7 @@
   els.headerNext?.addEventListener("click", next);
   els.previous.addEventListener("click", previous);
   els.revealTurkish.addEventListener("click", revealTurkish);
+  els.turkishPoint.addEventListener("click", awardTurkishMeaningPoint);
   els.speakWord.addEventListener("click", speakWord);
   els.categoryContinue.addEventListener("click", () => {
     if (state.mode === "categoryIntro") renderWord();
