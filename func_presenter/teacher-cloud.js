@@ -5,6 +5,7 @@
   const SESSION_KEY = "fpTeacherSupabaseSessionV1";
   const CLASSROOM_KEY = "fpTeacherSupabaseClassroomIdV1";
   const POINTS_DIRTY_KEY = "fpTeacherSupabasePointsDirtyV1";
+  const PROFILE_TABLE = "teacher_profiles";
   const POINT_SYNC_DELAY = 120000;
   let session = null;
   let hooks = null;
@@ -25,9 +26,29 @@
   const clear = (key) => localStorage.removeItem(key);
   const notify = () => hooks?.onStatusChange?.(getAccount());
 
+  function clearCloudSession() {
+    session = null;
+    clearTimeout(pointSyncTimer);
+    knownStudentIds = new Set();
+    knownClassroomIds = new Set();
+    clear(SESSION_KEY);
+    clear(CLASSROOM_KEY);
+    clear(POINTS_DIRTY_KEY);
+  }
+
   async function responseJson(response) {
     const payload = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(payload?.msg || payload?.message || payload?.error_description || "Cloud request failed.");
+    if (!response.ok) {
+      const message = payload?.msg || payload?.message || payload?.error_description || payload?.error || "Cloud request failed.";
+      const details = [message, payload?.details, payload?.hint, payload?.code].filter(Boolean).join(" ");
+      const missingUser = /classrooms_owner_id_fkey|User from sub claim in JWT does not exist|JWT.*user/i.test(details);
+      if (missingUser) {
+        clearCloudSession();
+        notify();
+        throw new Error("User doesn't exist. Please sign in again.");
+      }
+      throw new Error(message);
+    }
     return payload;
   }
 
@@ -61,6 +82,42 @@
       headers: { ...jsonHeaders(token), ...(options.headers || {}) }
     });
     return responseJson(response);
+  }
+
+  async function readTeacherProfile() {
+    const userId = session?.user?.id;
+    if (!userId) throw new Error("Your session is missing a user.");
+    const rows = await rest(`${PROFILE_TABLE}?select=id,email,display_name,approved&id=eq.${encodeURIComponent(userId)}&limit=1`);
+    return Array.isArray(rows) ? rows[0] || null : null;
+  }
+
+  async function createPendingProfile(displayName = "") {
+    const user = session?.user || {};
+    if (!user.id) throw new Error("Your session is missing a user.");
+    await rest(`${PROFILE_TABLE}?on_conflict=id`, {
+      method: "POST",
+      headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify({
+        id: user.id,
+        email: user.email || "",
+        display_name: displayName || user.user_metadata?.display_name || "",
+        approved: false
+      })
+    });
+  }
+
+  async function requireApprovedTeacher() {
+    let profile = await readTeacherProfile();
+    if (!profile) {
+      await createPendingProfile();
+      profile = await readTeacherProfile();
+    }
+    if (!profile?.approved) {
+      clearCloudSession();
+      notify();
+      throw new Error("Your teacher account is waiting for approval.");
+    }
+    return profile;
   }
 
   function localClassrooms(state) {
@@ -195,13 +252,10 @@
       const response = await fetch(`${PROJECT_URL}/auth/v1/user`, { headers: jsonHeaders(token) });
       session.user = await responseJson(response);
       write(SESSION_KEY, session);
+      await requireApprovedTeacher();
       await ensureClassroomsAndHydrate();
     } catch {
-      session = null;
-      knownStudentIds = new Set();
-      knownClassroomIds = new Set();
-      clear(SESSION_KEY);
-      clear(CLASSROOM_KEY);
+      clearCloudSession();
     }
     notify();
   }
@@ -210,19 +264,31 @@
     const payload = await auth("token?grant_type=password", { email, password });
     session = { ...payload, expires_at: Math.floor(Date.now() / 1000) + (payload.expires_in || 3600) };
     write(SESSION_KEY, session);
+    await requireApprovedTeacher();
     await ensureClassroomsAndHydrate();
     notify();
     return getAccount();
   }
 
+  async function signUp(email, password, displayName = "") {
+    const payload = await auth("signup", {
+      email,
+      password,
+      data: { display_name: displayName || "" }
+    });
+    if (payload?.access_token) {
+      session = { ...payload, expires_at: Math.floor(Date.now() / 1000) + (payload.expires_in || 3600) };
+      write(SESSION_KEY, session);
+      await createPendingProfile(displayName);
+      clearCloudSession();
+      notify();
+    }
+    return { pending: true, email };
+  }
+
   async function signOut() {
     try { if (session?.access_token) await auth("logout", {}, session.access_token); } catch { /* local sign-out is enough */ }
-    session = null;
-    clearTimeout(pointSyncTimer);
-    knownStudentIds = new Set();
-    knownClassroomIds = new Set();
-    clear(SESSION_KEY);
-    clear(CLASSROOM_KEY);
+    clearCloudSession();
     notify();
   }
 
@@ -244,6 +310,7 @@
   window.TeacherCloud = {
     initialize(nextHooks) { hooks = nextHooks; restoreSession(); },
     signIn,
+    signUp,
     signOut,
     scheduleSync,
     schedulePointSync,

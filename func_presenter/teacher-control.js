@@ -157,6 +157,7 @@
     .tc-auth-form { display: grid; gap: 10px; margin-top: 18px; }
     .tc-auth-form input { width: 100%; min-height: 46px; box-sizing: border-box; border: 1px solid #2f4d9a; border-radius: 12px; outline: none; background: #0d1a3d; color: #f4f7ff; padding: 0 14px; font: 800 14px/1 var(--font-ui, sans-serif); }
     .tc-auth-form input:focus { border-color: #ffd84d; box-shadow: 0 0 0 3px rgba(255, 216, 77, .16); }
+    .tc-auth-note { color: #a9bbef; font: 700 13px/1.45 var(--font-ui, sans-serif); margin: 10px 0 0; }
     .tc-hud .tc-account.is-connected { border-color: #61e7b6; color: #d9fff0; box-shadow: 0 0 12px rgba(97, 231, 182, .32); }
     .tc-action { padding: 12px 17px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 15px; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
     .tc-action.primary { border: 0; background: var(--u2-grad-gold, #ffd84d); color: #14183a; }
@@ -774,8 +775,12 @@
     }
     const card = makeOverlay("CLOUD BACKUP", "TEACHER SIGN IN", "Sign in to back up your roster, points, stars, and avatars.");
     const form = el("form", "tc-auth-form");
+    const displayName = el("input", "", "");
     const email = el("input", "", "");
     const password = el("input", "", "");
+    displayName.type = "text";
+    displayName.placeholder = "Teacher name (optional)";
+    displayName.autocomplete = "name";
     email.type = "email";
     email.placeholder = "Email address";
     email.autocomplete = "email";
@@ -783,11 +788,16 @@
     password.placeholder = "Password";
     password.autocomplete = "current-password";
     const submit = el("button", "tc-action primary", "SIGN IN");
+    const request = el("button", "tc-action", "REQUEST ACCOUNT");
     submit.type = "submit";
-    form.append(email, password, submit);
+    request.type = "button";
+    const actions = el("div", "tc-actions");
+    actions.append(submit, request);
+    form.append(displayName, email, password, actions);
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       submit.disabled = true;
+      request.disabled = true;
       try {
         await cloud.signIn(email.value.trim(), password.value);
         closeOverlays();
@@ -795,9 +805,32 @@
         showToast("Cloud backup connected.");
       } catch (error) {
         showToast(error.message || "Sign-in failed.");
-      } finally { submit.disabled = false; }
+      } finally {
+        submit.disabled = false;
+        request.disabled = false;
+      }
     });
-    card.append(form);
+    request.addEventListener("click", async () => {
+      const teacherEmail = email.value.trim();
+      if (!teacherEmail || !password.value) {
+        showToast("Enter email and password first.");
+        return;
+      }
+      submit.disabled = true;
+      request.disabled = true;
+      try {
+        await cloud.signUp(teacherEmail, password.value, displayName.value.trim());
+        closeOverlays();
+        showToast("Request sent. Waiting for approval.");
+      } catch (error) {
+        showToast(error.message || "Account request failed.");
+      } finally {
+        submit.disabled = false;
+        request.disabled = false;
+      }
+    });
+    const note = el("p", "tc-auth-note", "No approved account yet? Request one, then approve it from the local admin panel.");
+    card.append(form, note);
   }
 
   function floatFrom(target, text, className = "") {
