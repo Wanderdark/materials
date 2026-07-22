@@ -356,7 +356,7 @@ students:
       favorite_subject: "P.E."
     birthday: {day: 8, month: "July"}
     zodiac_sign: "Cancer"
-    born_in: "New Zealand"
+    born_in: "Denmark"
     family:
       family_resemblance:
         child_shared_features:
@@ -367,7 +367,7 @@ students:
         resemblance_note: "Benjamin should look naturally related to both parents through blonde hair family traits, blue eyes, and the same relaxed friendly facial energy."
       mother:
         name: "Emily"
-        nationality: "New Zealander"
+        nationality: "Danish"
         job: "Travel Agent"
         visual_identity:
           age_range: "late 30s"
@@ -382,10 +382,10 @@ students:
           clothing_style: "neat casual blouse and light cardigan"
           professional_visual_cues: ["travel-agency lanyard", "small map folder", "tidy travel brochure"]
           dna_cues_from_child: ["blue eyes", "blonde hair family", "relaxed smile"]
-          prompt_insert: "Emily, Benjamin's mother, is a New Zealander travel agent in her late 30s. She has fair warm-toned skin, shoulder-length straight blonde hair with a soft side part, blue relaxed eyes, and a round-soft face with a calm friendly smile that clearly resembles Benjamin's easy-going expression. She wears neat casual clothes, a light cardigan, and subtle travel-agent details such as a lanyard or small map folder. Preserve her distinct identity as Benjamin's mother; do not make her look like a generic adult."
+          prompt_insert: "Emily, Benjamin's mother, is a Danish travel agent in her late 30s. She has fair warm-toned skin, shoulder-length straight blonde hair with a soft side part, blue relaxed eyes, and a round-soft face with a calm friendly smile that clearly resembles Benjamin's easy-going expression. She wears neat casual clothes, a light cardigan, and subtle travel-agent details such as a lanyard or small map folder. Preserve her distinct identity as Benjamin's mother; do not make her look like a generic adult."
       father:
         name: "Oliver"
-        nationality: "New Zealander"
+        nationality: "Danish"
         job: "Swimming Coach"
         visual_identity:
           age_range: "early 40s"
@@ -400,7 +400,7 @@ students:
           clothing_style: "sporty polo and casual coach clothes"
           professional_visual_cues: ["swim coach whistle", "towel over one shoulder", "poolside clipboard"]
           dna_cues_from_child: ["blue eyes", "blonde hair family", "calm easy-going posture"]
-          prompt_insert: "Oliver, Benjamin's father, is a New Zealander swimming coach in his early 40s. He has fair lightly sun-kissed skin, short straight sandy-blonde hair, blue eyes, a longer oval face, and a friendly relaxed coach-like smile. He should feel believably related to Benjamin through similar blue eyes, blonde hair family, and calm easy-going posture. He wears a sporty polo with subtle swimming coach details such as a whistle or towel over one shoulder. Preserve his distinct identity as Benjamin's father; do not make him look like a generic adult."
+          prompt_insert: "Oliver, Benjamin's father, is a Danish swimming coach in his early 40s. He has fair lightly sun-kissed skin, short straight sandy-blonde hair, blue eyes, a longer oval face, and a friendly relaxed coach-like smile. He should feel believably related to Benjamin through similar blue eyes, blonde hair family, and calm easy-going posture. He wears a sporty polo with subtle swimming coach details such as a whistle or towel over one shoulder. Preserve his distinct identity as Benjamin's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 3
@@ -894,7 +894,7 @@ students:
       favorite_subject: "Science"
     birthday: {day: 6, month: "September"}
     zodiac_sign: "Virgo"
-    born_in: "Canada"
+    born_in: "Japan"
     family:
       family_resemblance:
         child_shared_features:
@@ -1649,7 +1649,7 @@ students:
       favorite_subject: "Art"
     birthday: {day: 19, month: "February"}
     zodiac_sign: "Pisces"
-    born_in: "Ireland"
+    born_in: "Sweden"
     family:
       family_resemblance:
         child_shared_features:

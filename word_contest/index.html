@@ -1548,6 +1548,13 @@
     color:#fff;cursor:pointer;white-space:nowrap;transition:transform .15s;
   }
   .std-balance:hover{transform:translateY(-2px)}
+  .std-roster-import{
+    flex:0 0 auto;padding:11px 16px;font-family:'Barlow Condensed',sans-serif;
+    font-size:clamp(13px,1.7vw,16px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    background:linear-gradient(135deg,#5135a5,#8054d7);border:2px solid #a68aff;border-radius:11px;
+    color:#fff;cursor:pointer;white-space:nowrap;transition:transform .15s,filter .15s;
+  }
+  .std-roster-import:hover{transform:translateY(-2px);filter:brightness(1.12)}
   .std-start{
     flex:1;padding:11px;font-family:'Barlow Condensed',sans-serif;
     font-size:clamp(15px,2vw,20px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
@@ -1555,6 +1562,20 @@
     color:#fff;cursor:pointer;transition:transform .15s;
   }
   .std-start:hover{transform:translateY(-2px)}
+
+  /* ── TEACHER HUD: ROSTER IMPORT ── */
+  .wc-roster-overlay{position:fixed;inset:0;z-index:9835;background:rgba(2,8,26,.82);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:20px}
+  .wc-roster-overlay.hidden{display:none}
+  .wc-roster-modal{position:relative;width:min(92vw,560px);max-height:min(82vh,720px);overflow:auto;padding:30px;border:2px solid #8069db;border-radius:24px;background:linear-gradient(145deg,#112957,#0a1739);box-shadow:0 20px 60px rgba(0,0,0,.48);color:#eff4ff}
+  .wc-roster-eyebrow{color:#ffe15c;font-size:13px;font-weight:1000;letter-spacing:.16em;margin-bottom:8px}
+  .wc-roster-modal h2{margin:0;font-size:clamp(25px,4vw,37px);line-height:1.05}
+  .wc-roster-modal p{margin:12px 0 22px;color:#afc5f5;font-size:16px;line-height:1.45}
+  .wc-roster-close{position:absolute;right:16px;top:15px;width:42px;height:42px;border-radius:12px;border:1px solid #5374c9;background:#142b5d;color:#dce8ff;font-size:27px;cursor:pointer}
+  .wc-roster-class-list{display:grid;gap:10px}
+  .wc-roster-class-btn{display:flex;justify-content:space-between;gap:12px;align-items:center;width:100%;padding:15px 17px;border:2px solid #416ab4;border-radius:14px;background:#102658;color:#fff;text-align:left;cursor:pointer;font-weight:900;font-size:18px}
+  .wc-roster-class-btn:hover{border-color:#ffe15c;background:#17336b;transform:translateY(-1px)}
+  .wc-roster-class-meta{color:#8fb2ef;font-size:13px;white-space:nowrap}
+  .wc-roster-message{min-height:20px;margin-top:14px;color:#ffd15c;font-size:14px;font-weight:800}
 
   /* ── YOKLAMA (Attendance) ── */
   #attendance-overlay{position:fixed;inset:0;z-index:9830;background:rgba(2,8,30,0.97);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
@@ -1652,10 +1673,23 @@
       <div class="std-kb-row" id="std-kb-3"></div>
     </div>
     <div class="std-actions">
+      <button class="std-roster-import" type="button" onclick="openWcRosterClassPicker()">👥 ROSTERDEN AKTAR</button>
       <button class="std-balance" onclick="publicClearAll()">🗑 CLEAR ALL</button>
       <button class="std-balance" onclick="publicFillAll()">⚡ FILL ALL</button>
       <button class="std-start" onclick="applyStudentsAndContinue()">✓ Tamam, Devam Et</button>
     </div>
+  </div>
+</div>
+
+<!-- Teacher HUD: roster import -->
+<div id="wc-roster-class-overlay" class="wc-roster-overlay hidden" onclick="if(event.target===this)closeWcRosterClassPicker()">
+  <div class="wc-roster-modal" role="dialog" aria-modal="true" aria-labelledby="wc-roster-class-title">
+    <button class="wc-roster-close" type="button" aria-label="Close" onclick="closeWcRosterClassPicker()">×</button>
+    <div class="wc-roster-eyebrow">TEACHER HUD</div>
+    <h2 id="wc-roster-class-title">SELECT A ROSTER</h2>
+    <p>Present students will be shared fairly between the active groups according to their total points and stars.</p>
+    <div id="wc-roster-class-list" class="wc-roster-class-list"></div>
+    <div id="wc-roster-class-message" class="wc-roster-message"></div>
   </div>
 </div>
 
@@ -1838,6 +1872,7 @@
       <div class="winner-ann-pts"   id="wl-pts"></div>
       <div class="winner-ann-sub">points</div>
       <div class="winner-ann-all"   id="wl-all"></div>
+      <button class="winner-home" id="wc-transfer-stars" type="button" onclick="transferWcFinalStarsToRoster()" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
       <button class="winner-home" onclick="window.location.href='../'">🏠 Ana Sayfa</button>
       <button class="winner-exit" onclick="exitGame()">✕ Tam Ekrandan Çık</button>
     </div>
@@ -2008,6 +2043,9 @@
 <script src="wrong-images.js"></script>
 <script src="words.js"></script>
 <script src="ufo.js"></script>
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script>
 
 const _FPS60_MS = 1000 / 60; // ~16.67ms — tüm rAF loop'larında 60fps sınırı
@@ -2878,6 +2916,7 @@ function announceWinner() {
 
   // Orta + sağ: skor detayları
   renderScoresPanels('winner-scores-list', 'winner-group-grid');
+  updateWcFinalStarsTransferButton();
 
   document.getElementById('winner-overlay').classList.add('open');
   stopAllMusic();
@@ -3575,6 +3614,8 @@ let STD_SLOTS = 6; // groupCount=2 → 9, groupCount=3 → 6 (applyGroupCountUI 
 let studentInputs   = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
 let groupStudents   = [[],[],[]];
 let studentIndex    = [0,0,0];
+let wcImportedRosterClassroomId = '';
+let wcFinalStarsTransferred = false;
 
 // Modül state
 let _slotRevealed      = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
@@ -3588,6 +3629,141 @@ let activeStdSlot  = 0;
 let stdNumMode     = false;
 
 function getActiveStudentsPool() { return []; }
+
+function wcRosterTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function wcRosterEffectiveScore(student) {
+  return (Number(student?.points) || 0) + (Number(student?.stars) || 0) * 10;
+}
+
+function closeWcRosterClassPicker() {
+  document.getElementById('wc-roster-class-overlay')?.classList.add('hidden');
+}
+
+function openWcRosterClassPicker() {
+  const overlay = document.getElementById('wc-roster-class-overlay');
+  const list = document.getElementById('wc-roster-class-list');
+  const message = document.getElementById('wc-roster-class-message');
+  if (!overlay || !list || !message) return;
+
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.length);
+  list.replaceChildren();
+  message.textContent = '';
+
+  if (!usable.length) {
+    message.textContent = 'Create a roster from the Teacher HUD first.';
+  } else {
+    usable.forEach((classroom) => {
+      const absentIds = classroom.attendanceDate === wcRosterTodayKey()
+        ? new Set(classroom.absentStudentIds || [])
+        : new Set();
+      const presentCount = classroom.roster.filter((student) => !absentIds.has(student.id)).length;
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      const meta = document.createElement('span');
+      button.type = 'button';
+      button.className = 'wc-roster-class-btn';
+      name.textContent = classroom.name || 'MY CLASS';
+      meta.className = 'wc-roster-class-meta';
+      meta.textContent = `${presentCount} present`;
+      button.append(name, meta);
+      button.addEventListener('click', () => importWcRosterClass(classroom.id));
+      list.append(button);
+    });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function importWcRosterClass(classroomId) {
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const classroom = classrooms.find((item) => item.id === classroomId);
+  const message = document.getElementById('wc-roster-class-message');
+  if (!classroom || !Array.isArray(classroom.roster)) return;
+
+  const absentIds = classroom.attendanceDate === wcRosterTodayKey()
+    ? new Set(classroom.absentStudentIds || [])
+    : new Set();
+  const students = classroom.roster
+    .filter((student) => student?.name && !absentIds.has(student.id))
+    .sort((a, b) => wcRosterEffectiveScore(b) - wcRosterEffectiveScore(a)
+      || a.name.localeCompare(b.name, 'tr'));
+
+  if (students.length < groupCount) {
+    if (message) message.textContent = `At least ${groupCount} present students are needed.`;
+    return;
+  }
+  if (students.length > STD_SLOTS * groupCount) {
+    if (message) message.textContent = `This game supports up to ${STD_SLOTS * groupCount} students.`;
+    return;
+  }
+
+  const groups = Array.from({ length: groupCount }, () => []);
+  const balanceOrder = groupCount === 2 ? [0, 1, 1, 0] : [0, 1, 2, 2, 1, 0];
+  students.forEach((student, index) => {
+    groups[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
+  });
+
+  studentInputs = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(''));
+  groups.forEach((group, groupIndex) => {
+    group.forEach((name, studentIndex) => {
+      studentInputs[groupIndex][studentIndex] = name;
+    });
+  });
+  _slotRevealed = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(true));
+  _silentDistributed = false;
+  _rebuildStdCols();
+  selectStdField(0, 0);
+
+  wcImportedRosterClassroomId = classroom.id;
+  wcFinalStarsTransferred = false;
+  updateWcFinalStarsTransferButton();
+  closeWcRosterClassPicker();
+}
+
+function wcFinalStarAwards() {
+  const activeGroups = grpIdxs();
+  const ranking = activeGroups.slice().sort((a, b) => groupScores[b] - groupScores[a]);
+  const overallTop = Math.max(0, ...activeGroups.flatMap((gi) => studentScoreMap[gi] || []));
+  const awards = [];
+
+  activeGroups.forEach((gi) => {
+    const rank = ranking.indexOf(gi) + 1;
+    const groupTop = Math.max(0, ...(studentScoreMap[gi] || []));
+    groupStudents[gi].forEach((name, studentIndex) => {
+      const points = Number(studentScoreMap[gi][studentIndex]) || 0;
+      let stars = points === 0 ? (rank === 1 ? 1 : 0) : 4 - rank;
+      if (points > 0 && points === groupTop) stars += 1;
+      if (points > 0 && points === overallTop && rank !== 1) stars += 1;
+      if (name && stars > 0) awards.push({ name, stars });
+    });
+  });
+  return awards;
+}
+
+function updateWcFinalStarsTransferButton() {
+  const button = document.getElementById('wc-transfer-stars');
+  if (!button) return;
+  const canTransfer = !!wcImportedRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  button.hidden = !canTransfer;
+  button.disabled = wcFinalStarsTransferred;
+  button.textContent = wcFinalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
+}
+
+function transferWcFinalStarsToRoster() {
+  if (wcFinalStarsTransferred || !wcImportedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
+  const awards = wcFinalStarAwards()
+    .filter((award) => award.name && award.stars > 0)
+    .map((award) => ({ name: award.name, points: award.stars * 5 }));
+  const result = window.TeacherControl.awardFinalPoints(awards, wcImportedRosterClassroomId);
+  if (result?.awarded?.length) {
+    wcFinalStarsTransferred = true;
+    updateWcFinalStarsTransferButton();
+  }
+}
 
 /* ── Grup kolonu oluştur ── */
 function buildStdGroupCol(gi) {
@@ -3643,6 +3819,9 @@ function showStudentOverlay() {
   _silentDistributed = false;
   _pairNames         = new Set();
   studentInputs      = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
+  wcImportedRosterClassroomId = '';
+  wcFinalStarsTransferred = false;
+  updateWcFinalStarsTransferButton();
 
   const cols = document.getElementById('std-cols');
   cols.innerHTML = '';

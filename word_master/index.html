@@ -1937,6 +1937,15 @@
     margin-top:6px;
   }
   .winner-home:hover { transform:translateY(-2px); background:rgba(120,80,0,0.2); border-color:#fbbf24; color:#fbbf24; }
+  .winner-transfer-stars {
+    width:100%; padding:11px; font-family:'Barlow Condensed',sans-serif;
+    font-size:15px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    background:linear-gradient(135deg,#14532d,#166534); border:1.5px solid #4ade80;
+    border-radius:12px; color:#ecfdf5; cursor:pointer;
+    transition:transform .15s, opacity .15s, filter .15s; margin-top:6px;
+  }
+  .winner-transfer-stars:hover:not(:disabled) { transform:translateY(-2px); filter:brightness(1.13); }
+  .winner-transfer-stars:disabled { cursor:default; opacity:.72; }
 
   /* ── WINNER VFX — bkz. F:\MODULES\finalscreen.js ── */
   /* Crown pulse */
@@ -2333,7 +2342,7 @@
   }
   #student-overlay .kb-key.kb-wide { min-width: 88px; font-size: 16px; }
   #student-overlay .kb-key.kb-space { min-width: 220px; }
-  .std-actions{display:flex;gap:12px;width:100%}
+  .std-actions{display:flex;flex-wrap:wrap;gap:12px;width:100%}
   .std-clear-all,.std-fill-all{
     flex:0 0 auto;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;
     font-size:clamp(15px,1.7vw,20px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
@@ -2347,6 +2356,41 @@
     background:rgba(251,191,36,0.12);border:1.5px solid rgba(251,191,36,0.4);color:#fbbf24;
   }
   .std-fill-all:hover{background:rgba(251,191,36,0.24);transform:translateY(-2px);}
+  .std-roster-import{
+    flex:1 1 250px;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;
+    font-size:clamp(15px,1.7vw,20px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    background:linear-gradient(135deg,rgba(29,185,84,.24),rgba(20,120,76,.3));
+    border:1.5px solid rgba(74,222,128,.55);border-radius:13px;color:#9ff5bd;cursor:pointer;
+    transition:transform .15s,box-shadow .15s,background .15s;
+  }
+  .std-roster-import:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(29,185,84,.36),rgba(20,120,76,.42));box-shadow:0 8px 24px rgba(29,185,84,.2)}
+
+  #roster-class-overlay{
+    position:fixed;inset:0;z-index:520;background:rgba(2,6,24,.92);display:flex;align-items:center;justify-content:center;
+    padding:22px;backdrop-filter:blur(14px);
+  }
+  #roster-class-overlay.hidden{display:none}
+  .roster-class-modal{
+    position:relative;width:min(94vw,720px);max-height:88vh;overflow-y:auto;padding:34px;
+    border:1.5px solid rgba(255,215,0,.45);border-radius:24px;
+    background:linear-gradient(145deg,#3D0A00,#1A0300);box-shadow:0 24px 80px rgba(0,0,0,.55);
+  }
+  .roster-class-close{
+    position:absolute;right:18px;top:16px;width:46px;height:46px;border:1px solid rgba(255,215,0,.25);
+    border-radius:12px;background:#15265b;color:#fff;font-size:24px;cursor:pointer;
+  }
+  .roster-class-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,5vw,54px);letter-spacing:.12em;color:var(--gold);text-align:center}
+  .roster-class-sub{margin:6px auto 22px;max-width:580px;color:rgba(255,235,210,.62);font-family:'Barlow Condensed',sans-serif;font-size:17px;text-align:center}
+  .roster-class-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .roster-class-card{
+    min-height:96px;padding:16px;border:1.5px solid rgba(96,165,250,.42);border-radius:16px;
+    background:rgba(20,42,104,.58);color:#fff;text-align:left;cursor:pointer;transition:transform .15s,border-color .15s,background .15s;
+  }
+  .roster-class-card:hover{transform:translateY(-2px);border-color:var(--gold);background:rgba(32,61,139,.7)}
+  .roster-class-name{display:block;font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.08em;color:var(--gold)}
+  .roster-class-count{display:block;margin-top:4px;font-family:'Barlow Condensed',sans-serif;font-size:16px;color:rgba(255,255,255,.65)}
+  .roster-class-message{padding:20px;text-align:center;color:#fca5a5;font-family:'Barlow Condensed',sans-serif;font-size:19px}
+  @media (max-width:650px){.roster-class-list{grid-template-columns:1fr}.roster-class-modal{padding:28px 20px}}
   /* ── eski balance stili (kullanılmıyor ama hata vermesin) ── */
   .std-balance{
     flex:0 0 auto;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;
@@ -2592,8 +2636,19 @@
       <button id="att-btn"          class="std-attendance" style="display:none" onclick="openAttendance()">📋 Yoklama</button>
       <button id="std-balance-btn"  class="std-balance"    style="display:none" onclick="balanceDistribute()">⚖ Dengeli Dağıt</button>
       <!-- her zaman -->
+      <button id="std-roster-btn" class="std-roster-import" onclick="openRosterClassPicker()">👥 GET CLASS FROM ROSTER</button>
       <button class="std-start" onclick="applyStudentsAndContinue()">✓ Tamam, Devam Et</button>
     </div>
+  </div>
+</div>
+
+<div id="roster-class-overlay" class="hidden">
+  <div class="roster-class-modal">
+    <button class="roster-class-close" type="button" onclick="closeRosterClassPicker()">×</button>
+    <div class="roster-class-title">CHOOSE A CLASS</div>
+    <div class="roster-class-sub">Present students will be balanced across the teams by their total roster score.</div>
+    <div id="roster-class-list" class="roster-class-list"></div>
+    <div id="roster-class-message" class="roster-class-message" style="display:none"></div>
   </div>
 </div>
 
@@ -2856,6 +2911,7 @@
       <div class="winner-ann-pts"   id="wl-pts"></div>
       <div class="winner-ann-sub">points</div>
       <div class="winner-ann-all"   id="wl-all"></div>
+      <button class="winner-transfer-stars" id="winner-transfer-stars" type="button" onclick="transferFinalStarsToRoster()">⭐ YILDIZLARI PUANA AKTAR</button>
       <button class="winner-exit" onclick="exitGame()">✕ Tam Ekrandan Çık</button>
       <button class="winner-home" onclick="window.location.href='../index.html'">🏠 Ana Sayfaya Dön</button>
     </div>
@@ -2961,6 +3017,10 @@
 <script src="../modules/rgbkeyboard.js"></script>
 <script src="../modules/finalscreen.js"></script>
 <script src="questions.js"></script>
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/names.js"></script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script>
 /* ── QUESTIONS.JS POOL ── */
 // Format: [eng_def(0), tr_def(1), answer(2), grade(3), difficulty(4), unit(5), imagePath(6)]
@@ -3107,9 +3167,18 @@ function loadStudentNames() {
     if(!raw) return;
     const s = JSON.parse(raw);
     if(!Array.isArray(s.inputs)) return;
+    const storedSlots = s.inputs
+      .slice(0, groupCount)
+      .filter(Array.isArray)
+      .reduce((max, col) => Math.max(max, col.length), 0);
+    if(storedSlots > STD_SLOTS) {
+      STD_SLOTS = storedSlots;
+      studentInputs = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
+      _slotRevealed = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
+    }
     // groupCount eşleşmesi gerekmiyor — mevcut slotlara sığdır
     s.inputs.forEach((col, gi) => {
-      if(!Array.isArray(col)) return;
+      if(!Array.isArray(col) || gi >= groupCount) return;
       col.forEach((name, si) => {
         if(si < STD_SLOTS && typeof name === 'string') {
           studentInputs[gi][si]  = name;
@@ -3606,6 +3675,8 @@ function startGameDirect() {
   const hdr = document.querySelector('header');
   if(hdr) hdr.style.display = 'flex';
   answers = {};
+  finalStarsTransferred = false;
+  updateFinalStarsTransferButton();
   questionHints   = {};
   questionTurkish = {};
   roundNumber = 1;
@@ -4823,6 +4894,7 @@ function announceWinner() {
 
   // Orta + sağ: skor detayları
   renderScoresPanels('winner-scores-list', 'winner-group-grid', true);
+  updateFinalStarsTransferButton();
 
   document.getElementById('winner-overlay').classList.add('open');
   stopAllMusic();
@@ -5294,6 +5366,8 @@ let STD_SLOTS = 6; // groupCount=2 → 9, groupCount=3 → 6 (applyGroupCountUI 
 
 let studentInputs   = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
 let groupStudents   = [[],[],[]];
+let importedRosterClassroomId = '';
+let finalStarsTransferred = false;
 let studentIndex    = [0,0,0];
 
 // Modül state
@@ -5356,19 +5430,9 @@ function buildSwapCol(gi1, gi2) {
   return col;
 }
 
-/* ── Overlay aç ── */
-function showStudentOverlay() {
-  applyGroupCountUI(); // STD_SLOTS + two-groups class güncellensin
-  _slotRevealed      = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
-  _silentDistributed = false;
-  _pairNames         = new Set();
-  studentInputs      = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
-  loadStudentNames(); // 💾 kayıtlı isimler varsa geri yükle
-
+function renderStudentColumns() {
   const cols = document.getElementById('std-cols');
   cols.innerHTML = '';
-
-  // groupCount'a göre grid ve kolonları dinamik oluştur
   if(groupCount === 2) {
     cols.style.gridTemplateColumns = '1fr 26px 1fr';
     cols.appendChild(buildStdGroupCol(0));
@@ -5382,9 +5446,124 @@ function showStudentOverlay() {
     cols.appendChild(buildSwapCol(1, 2));
     cols.appendChild(buildStdGroupCol(2));
   }
+}
+
+/* ── Overlay aç ── */
+function showStudentOverlay() {
+  applyGroupCountUI(); // STD_SLOTS + two-groups class güncellensin
+  _slotRevealed      = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
+  _silentDistributed = false;
+  _pairNames         = new Set();
+  studentInputs      = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
+  loadStudentNames(); // 💾 kayıtlı isimler varsa geri yükle
+  renderStudentColumns();
 
   document.getElementById('student-overlay').style.display = 'flex';
   buildStdKeyboard();
+  selectStdField(0, 0);
+}
+
+function rosterTodayKey() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+
+function rosterEffectiveScore(student) {
+  return (Number(student?.points) || 0) + ((Number(student?.stars) || 0) * 10);
+}
+
+function closeRosterClassPicker() {
+  document.getElementById('roster-class-overlay')?.classList.add('hidden');
+}
+
+function openRosterClassPicker() {
+  const overlay = document.getElementById('roster-class-overlay');
+  const list = document.getElementById('roster-class-list');
+  const message = document.getElementById('roster-class-message');
+  if(!overlay || !list || !message) return;
+
+  overlay.classList.remove('hidden');
+  list.innerHTML = '';
+  message.style.display = 'none';
+
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const usable = classrooms.filter(classroom =>
+    Array.isArray(classroom.roster) && classroom.roster.some(student => String(student?.name || '').trim())
+  );
+  if(!usable.length) {
+    message.textContent = 'Create or sync a class roster from the teacher HUD first.';
+    message.style.display = 'block';
+    return;
+  }
+
+  usable.forEach(classroom => {
+    const absentIds = classroom.attendanceDate === rosterTodayKey()
+      ? new Set(classroom.absentStudentIds || [])
+      : new Set();
+    const total = classroom.roster.filter(student => String(student?.name || '').trim()).length;
+    const present = classroom.roster.filter(student =>
+      String(student?.name || '').trim() && !absentIds.has(student.id)
+    ).length;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'roster-class-card';
+    button.innerHTML = `<span class="roster-class-name"></span><span class="roster-class-count"></span>`;
+    button.querySelector('.roster-class-name').textContent = classroom.name || 'CLASS';
+    button.querySelector('.roster-class-count').textContent = `${present} present · ${total} students`;
+    button.addEventListener('click', () => importRosterClass(classroom.id));
+    list.appendChild(button);
+  });
+}
+
+function importRosterClass(classroomId) {
+  const classroom = (window.TeacherControl?.getClassrooms?.() || [])
+    .find(item => item.id === classroomId);
+  if(!classroom) return;
+  importedRosterClassroomId = classroomId;
+
+  const absentIds = classroom.attendanceDate === rosterTodayKey()
+    ? new Set(classroom.absentStudentIds || [])
+    : new Set();
+  const students = (classroom.roster || [])
+    .filter(student => String(student?.name || '').trim() && !absentIds.has(student.id))
+    .map(student => ({
+      name: String(student.name).trim(),
+      score: rosterEffectiveScore(student)
+    }))
+    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'tr', { sensitivity:'base' }));
+
+  const message = document.getElementById('roster-class-message');
+  if(!students.length) {
+    message.textContent = 'There are no present students in this class today.';
+    message.style.display = 'block';
+    return;
+  }
+
+  const teams = Array.from({ length:groupCount }, () => []);
+  const forward = Array.from({ length:groupCount }, (_, index) => index);
+  const snakeOrder = forward.concat([...forward].reverse());
+  students.forEach((student, index) => {
+    teams[snakeOrder[index % snakeOrder.length]].push(student.name);
+  });
+
+  const minimumSlots = groupCount === 2 ? 9 : 6;
+  STD_SLOTS = Math.max(minimumSlots, ...teams.map(team => team.length));
+  studentInputs = [0,1,2].map((_, groupIndex) => {
+    const values = teams[groupIndex] || [];
+    return Array.from({ length:STD_SLOTS }, (_, slotIndex) => values[slotIndex] || '');
+  });
+  _slotRevealed = [0,1,2].map((_, groupIndex) =>
+    Array.from({ length:STD_SLOTS }, (_, slotIndex) => Boolean(studentInputs[groupIndex][slotIndex]))
+  );
+  _silentDistributed = false;
+  _pairNames = new Set();
+  renderStudentColumns();
+  saveStudentNames();
+  closeRosterClassPicker();
+
+  const sub = document.querySelector('#student-overlay .std-sub');
+  if(sub) sub.textContent = `${classroom.name}: ${students.length} present students balanced by total roster score`;
   selectStdField(0, 0);
 }
 
@@ -5588,6 +5767,55 @@ function getAllStudentEntries() {
   return entries;
 }
 
+function getFinalStudentStarAwards() {
+  const activeGIs = grpIdxs();
+  const groupRanking = activeGIs.slice().sort((a, b) => groupScores[b] - groupScores[a]);
+  const groupRank = [0, 1, 2].map(gi => groupRanking.indexOf(gi) + 1 || activeGIs.length + 1);
+  const overallTop = Math.max(0, ...activeGIs.flatMap(gi => studentScoreMap[gi] || []));
+
+  return activeGIs.flatMap(gi => {
+    const rank = groupRank[gi];
+    const groupScoresForStudents = studentScoreMap[gi] || [];
+    const topPts = Math.max(0, ...groupScoresForStudents);
+
+    return groupStudents[gi].map((name, si) => {
+      const pts = Number(groupScoresForStudents[si]) || 0;
+      let stars = pts === 0 ? (rank === 1 ? 1 : 0) : 4 - rank;
+      if(pts > 0 && pts === topPts) stars += 1;
+      if(pts > 0 && pts === overallTop && rank !== 1) stars += 1;
+      return { key: `${gi}-${si}`, name, stars };
+    });
+  });
+}
+
+function updateFinalStarsTransferButton() {
+  const button = document.getElementById('winner-transfer-stars');
+  if(!button) return;
+  button.disabled = finalStarsTransferred;
+  button.textContent = finalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
+}
+
+function transferFinalStarsToRoster() {
+  if(finalStarsTransferred) return;
+  const awardFinalPoints = window.TeacherControl?.awardFinalPoints;
+  if(typeof awardFinalPoints !== 'function') {
+    showToast('Teacher roster is not ready.');
+    return;
+  }
+
+  const awards = getFinalStudentStarAwards()
+    .filter(award => award.name && award.stars > 0)
+    .map(award => ({ name: award.name, points: award.stars * 5 }));
+  const result = awardFinalPoints(awards, importedRosterClassroomId);
+  if(!result?.awarded?.length) {
+    showToast('No matching roster students were found.');
+    return;
+  }
+
+  finalStarsTransferred = true;
+  updateFinalStarsTransferButton();
+}
+
 function showAutoLeaderboard() {
   const total = grpIdxs().reduce((s,gi) => s + groupStudents[gi].length, 0);
   if(total === 0) return;
@@ -5699,6 +5927,8 @@ function renderScoresPanels(listElId, gridElId, singleColStudents) {
     });
   }
 
+  const finalStarCounts = new Map(getFinalStudentStarAwards().map(award => [award.key, award.stars]));
+
   // Grup sıralaması hesapla (aktif gruplara göre)
   const activeGIs   = grpIdxs();
   const groupRanking = activeGIs.slice().sort((a,b) => groupScores[b] - groupScores[a]);
@@ -5732,9 +5962,7 @@ function renderScoresPanels(listElId, gridElId, singleColStudents) {
     groupStudents[g].map((_, si) => studentScoreMap[g][si])
   ));
   function buildStudentRow(s, idx, rank, topPts) {
-    let stars = calcStars(s.pts, rank);
-    if(s.pts > 0 && s.pts === topPts) stars += 1;
-    if(s.pts > 0 && s.pts === overallTop && rank !== 1) stars += 1;
+    const stars = finalStarCounts.get(s.key) ?? 0;
     const maxStars = rank === 1 ? 4 : rank === 2 ? 4 : 3;
     const row = document.createElement('div');
     row.className = 'sg-row' + (idx === 0 ? ' sg-top' : '');
@@ -5765,7 +5993,7 @@ function renderScoresPanels(listElId, gridElId, singleColStudents) {
     col.appendChild(total);
 
     const students = groupStudents[gi]
-      .map((name, si) => ({ name, pts: studentScoreMap[gi][si] }))
+      .map((name, si) => ({ name, pts: studentScoreMap[gi][si], key: `${gi}-${si}` }))
       .sort((a,b) => b.pts - a.pts);
 
     if(students.length === 0) {

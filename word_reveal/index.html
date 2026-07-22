@@ -127,8 +127,22 @@ html,body{user-select:none;-webkit-user-select:none}
 .std-clear-all:hover{background:rgba(239,68,68,.28);transform:translateY(-2px)}
 .std-fill-all{background:rgba(251,191,36,.12);border:1.5px solid rgba(251,191,36,.4);color:#fbbf24}
 .std-fill-all:hover{background:rgba(251,191,36,.24);transform:translateY(-2px)}
+.std-roster-import{flex:0 0 auto;padding:12px 16px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.6vw,17px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:11px;cursor:pointer;border:1.5px solid #a68aff;background:linear-gradient(135deg,#5135a5,#8054d7);color:#fff;white-space:nowrap;transition:transform .15s,filter .15s}
+.std-roster-import:hover{transform:translateY(-2px);filter:brightness(1.12)}
 .std-start{flex:1;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2vw,22px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:linear-gradient(135deg,#4c1d95,#7c3aed);border:1px solid rgba(255,215,0,.35);border-radius:11px;color:#e9d5ff;cursor:pointer;box-shadow:0 4px 18px rgba(124,58,237,.5);transition:transform .15s}
 .std-start:hover{transform:translateY(-2px)}
+.wr-roster-overlay{position:fixed;inset:0;z-index:650;background:rgba(8,4,24,.78);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px}
+.wr-roster-overlay.hidden{display:none}
+.wr-roster-modal{position:relative;width:min(92vw,560px);padding:30px;border-radius:22px;border:1.5px solid rgba(255,215,0,.45);background:linear-gradient(145deg,#211055,#0f0628);box-shadow:0 0 60px rgba(124,58,237,.3)}
+.wr-roster-eyebrow{font-family:'Barlow Condensed',sans-serif;color:var(--gold);font-weight:800;letter-spacing:.16em;font-size:14px}
+.wr-roster-modal h2{margin:5px 0 0;font-family:'Bebas Neue',sans-serif;color:#fff;font-size:clamp(28px,4vw,40px);letter-spacing:.08em}
+.wr-roster-modal p{margin:12px 0 22px;color:#afc5f5;font-size:16px;line-height:1.45}
+.wr-roster-close{position:absolute;right:16px;top:15px;width:42px;height:42px;border-radius:12px;border:1px solid #5374c9;background:#142b5d;color:#dce8ff;font-size:27px;cursor:pointer}
+.wr-roster-class-list{display:grid;gap:10px}
+.wr-roster-class-btn{display:flex;justify-content:space-between;gap:12px;align-items:center;width:100%;padding:15px 17px;border:2px solid #416ab4;border-radius:14px;background:#102658;color:#fff;text-align:left;cursor:pointer;font-weight:900;font-size:18px}
+.wr-roster-class-btn:hover{border-color:var(--gold);background:#17336b;transform:translateY(-1px)}
+.wr-roster-class-meta{color:#8fb2ef;font-size:13px;white-space:nowrap}
+.wr-roster-message{min-height:20px;margin-top:14px;color:#ffd15c;font-size:14px;font-weight:800}
 /* 2-group mode: always render 3 cols in JS, hide col 4+5 via nth-child */
 #student-overlay.two-groups .std-cols{grid-template-columns:1fr 30px 1fr}
 #student-overlay.two-groups .std-cols>*:nth-child(n+4){display:none}
@@ -695,10 +709,23 @@ body.game-active #lite-btn{display:flex!important}
       <div class="std-kb-row" id="std-kb-3"></div>
     </div>
     <div class="std-actions">
+      <button class="std-roster-import" type="button" onclick="openWrRosterClassPicker()">👥 ROSTERDEN AKTAR</button>
       <button class="std-clear-all" onclick="clearAllStudents()">✕ CLEAR ALL</button>
       <button class="std-fill-all"  onclick="fillAllStudents()">⚡ FILL ALL</button>
       <button class="std-start" onclick="applyStudentsAndStart()">✓ Oyuna Başla</button>
     </div>
+  </div>
+</div>
+
+<!-- Teacher HUD: roster import -->
+<div id="wr-roster-class-overlay" class="wr-roster-overlay hidden" onclick="if(event.target===this)closeWrRosterClassPicker()">
+  <div class="wr-roster-modal" role="dialog" aria-modal="true" aria-labelledby="wr-roster-class-title">
+    <button class="wr-roster-close" type="button" aria-label="Close" onclick="closeWrRosterClassPicker()">×</button>
+    <div class="wr-roster-eyebrow">TEACHER HUD</div>
+    <h2 id="wr-roster-class-title">SELECT A ROSTER</h2>
+    <p>Present students will be shared fairly between the active groups according to their total points and stars.</p>
+    <div id="wr-roster-class-list" class="wr-roster-class-list"></div>
+    <div id="wr-roster-class-message" class="wr-roster-message"></div>
   </div>
 </div>
 
@@ -904,6 +931,7 @@ body.game-active #lite-btn{display:flex!important}
       <div class="winner-ann-pts" id="wl-pts"></div>
       <div class="winner-ann-sub">points</div>
       <div class="winner-ann-all" id="wl-all"></div>
+      <button class="winner-home" id="wr-transfer-stars" type="button" onclick="transferWrFinalStarsToRoster()" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
       <button class="winner-play-again" onclick="playAgain()">🔄 Tekrar Oyna</button>
       <button class="winner-exit" onclick="exitGame()">✕ Yeniden Başlat</button>
       <button class="winner-home" onclick="location.href='../index.html'">🏠 Ana Sayfa</button>
@@ -953,6 +981,9 @@ body.game-active #lite-btn{display:flex!important}
 <div id="toast"></div>
 
 <script src="../modules/rgbkeyboard.js"></script>
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script src="../word_master/questions.js"></script>
 <script src="words.js"></script>
 <script>
@@ -1053,6 +1084,8 @@ let currentSlotIdx     = [0,0,0];
 let activeGroup        = 0;
 let groupScores        = [0,0,0];
 let studentScoreMap    = [[],[],[]]; // [{name, pts}]
+let wrImportedRosterClassroomId = '';
+let wrFinalStarsTransferred = false;
 let roundNumber        = 1;
 let turnsThisRound     = 0;
 let _slotRevealed      = [new Array(8).fill(false),new Array(8).fill(false),new Array(8).fill(false)];
@@ -1536,6 +1569,148 @@ function showStudentOverlay() {
   document.getElementById('student-overlay').style.display='flex';
 }
 
+function wrRosterTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function wrRosterEffectiveScore(student) {
+  return (Number(student?.points) || 0) + (Number(student?.stars) || 0) * 10;
+}
+
+function closeWrRosterClassPicker() {
+  document.getElementById('wr-roster-class-overlay')?.classList.add('hidden');
+}
+
+function openWrRosterClassPicker() {
+  const overlay = document.getElementById('wr-roster-class-overlay');
+  const list = document.getElementById('wr-roster-class-list');
+  const message = document.getElementById('wr-roster-class-message');
+  if (!overlay || !list || !message) return;
+
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.length);
+  list.replaceChildren();
+  message.textContent = '';
+
+  if (!usable.length) {
+    message.textContent = 'Create a roster from the Teacher HUD first.';
+  } else {
+    usable.forEach((classroom) => {
+      const absentIds = classroom.attendanceDate === wrRosterTodayKey()
+        ? new Set(classroom.absentStudentIds || [])
+        : new Set();
+      const presentCount = classroom.roster.filter((student) => !absentIds.has(student.id)).length;
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      const meta = document.createElement('span');
+      button.type = 'button';
+      button.className = 'wr-roster-class-btn';
+      name.textContent = classroom.name || 'MY CLASS';
+      meta.className = 'wr-roster-class-meta';
+      meta.textContent = `${presentCount} present`;
+      button.append(name, meta);
+      button.addEventListener('click', () => importWrRosterClass(classroom.id));
+      list.append(button);
+    });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function importWrRosterClass(classroomId) {
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const classroom = classrooms.find((item) => item.id === classroomId);
+  const message = document.getElementById('wr-roster-class-message');
+  if (!classroom || !Array.isArray(classroom.roster)) return;
+
+  const absentIds = classroom.attendanceDate === wrRosterTodayKey()
+    ? new Set(classroom.absentStudentIds || [])
+    : new Set();
+  const students = classroom.roster
+    .filter((student) => student?.name && !absentIds.has(student.id))
+    .sort((a, b) => wrRosterEffectiveScore(b) - wrRosterEffectiveScore(a)
+      || a.name.localeCompare(b.name, 'tr'));
+
+  if (students.length < groupCount) {
+    if (message) message.textContent = `At least ${groupCount} present students are needed.`;
+    return;
+  }
+  if (students.length > STD_SLOTS * groupCount) {
+    if (message) message.textContent = `This game supports up to ${STD_SLOTS * groupCount} students.`;
+    return;
+  }
+
+  const groups = Array.from({ length: groupCount }, () => []);
+  const balanceOrder = groupCount === 2 ? [0, 1, 1, 0] : [0, 1, 2, 2, 1, 0];
+  students.forEach((student, index) => {
+    groups[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
+  });
+
+  studentInputs = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(''));
+  groups.forEach((group, groupIndex) => {
+    group.forEach((name, studentIndex) => {
+      studentInputs[groupIndex][studentIndex] = name;
+    });
+  });
+  _slotRevealed = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(true));
+  activeStdSlot = { gi: 0, si: 0 };
+  buildStudentColumns();
+
+  wrImportedRosterClassroomId = classroom.id;
+  wrFinalStarsTransferred = false;
+  updateWrFinalStarsTransferButton();
+  closeWrRosterClassPicker();
+}
+
+function wrFinalStarAwards() {
+  const activeGIs = [0, 1, 2].slice(0, groupCount);
+  const ranking = activeGIs.slice().sort((a, b) => groupScores[b] - groupScores[a]);
+  const all = activeGIs.flatMap((gi) => (groupStudents[gi] || []).map((name, si) => ({
+    name,
+    pts: Number(studentScoreMap[gi][si]?.pts) || 0,
+    gi
+  })));
+  const overallTop = Math.max(0, ...all.map((student) => student.pts));
+  const awards = [];
+
+  activeGIs.forEach((gi) => {
+    const rank = ranking.indexOf(gi) + 1;
+    const students = (groupStudents[gi] || []).map((name, si) => ({
+      name,
+      pts: Number(studentScoreMap[gi][si]?.pts) || 0
+    }));
+    const groupTop = Math.max(0, ...students.map((student) => student.pts));
+    students.forEach((student) => {
+      let stars = student.pts === 0 ? 0 : 3 - rank;
+      if (student.pts > 0 && student.pts === groupTop) stars += 1;
+      if (student.pts > 0 && student.pts === overallTop && rank !== 1) stars += 1;
+      if (student.name && stars > 0) awards.push({ name: student.name, stars });
+    });
+  });
+  return awards;
+}
+
+function updateWrFinalStarsTransferButton() {
+  const button = document.getElementById('wr-transfer-stars');
+  if (!button) return;
+  const canTransfer = !!wrImportedRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  button.hidden = !canTransfer;
+  button.disabled = wrFinalStarsTransferred;
+  button.textContent = wrFinalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
+}
+
+function transferWrFinalStarsToRoster() {
+  if (wrFinalStarsTransferred || !wrImportedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
+  const awards = wrFinalStarAwards()
+    .filter((award) => award.name && award.stars > 0)
+    .map((award) => ({ name: award.name, points: award.stars * 5 }));
+  const result = window.TeacherControl.awardFinalPoints(awards, wrImportedRosterClassroomId);
+  if (result?.awarded?.length) {
+    wrFinalStarsTransferred = true;
+    updateWrFinalStarsTransferButton();
+  }
+}
+
 function buildStudentColumns() {
   const cols = document.getElementById('std-cols');
   if(!cols) return;
@@ -1597,6 +1772,8 @@ function selectStdSlot(gi,si) {
 }
 
 function studentKey(k) {
+  wrImportedRosterClassroomId = '';
+  wrFinalStarsTransferred = false;
   const {gi,si} = activeStdSlot;
   let val = studentInputs[gi][si]||'';
   if(k==='⌫') val = val.slice(0,-1);
@@ -1636,6 +1813,8 @@ function swapStudents(gi1,si1,gi2,si2) {
 }
 
 function clearStdSlot(gi, si) {
+  wrImportedRosterClassroomId = '';
+  wrFinalStarsTransferred = false;
   studentInputs[gi][si] = '';
   _slotRevealed[gi][si] = false;
   const slot = document.getElementById(`std-${gi}-${si}`);
@@ -1648,12 +1827,16 @@ function clearStdSlot(gi, si) {
 }
 
 function clearAllStudents() {
+  wrImportedRosterClassroomId = '';
+  wrFinalStarsTransferred = false;
   studentInputs = [new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill('')];
   _slotRevealed  = [new Array(STD_SLOTS).fill(false),new Array(STD_SLOTS).fill(false),new Array(STD_SLOTS).fill(false)];
   buildStudentColumns();
 }
 
 function fillAllStudents() {
+  wrImportedRosterClassroomId = '';
+  wrFinalStarsTransferred = false;
   const prefixes = ['A','B','C'];
   const groups = groupCount===2 ? [0,1] : [0,1,2];
   groups.forEach(gi => {
@@ -3359,6 +3542,7 @@ function showWinner() {
     });
   }
 
+  updateWrFinalStarsTransferButton();
   document.getElementById('winner-overlay').classList.add('open');
   document.getElementById('game-area').style.display='none';
   document.body.classList.remove('game-active');
@@ -3366,6 +3550,8 @@ function showWinner() {
 
 function playAgain() {
   document.getElementById('winner-overlay').classList.remove('open');
+  wrFinalStarsTransferred=false;
+  updateWrFinalStarsTransferButton();
   // reset state
   groupScores=[0,0,0];
   currentSlotIdx=[0,0,0];

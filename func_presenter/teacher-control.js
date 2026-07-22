@@ -8,16 +8,18 @@
 
   const params = new URLSearchParams(location.search);
   const mode = params.get("mode");
+  const forceTeacherMode = window.__forceTeacherControl === true;
   if (mode === "teacher") sessionStorage.setItem("fpTeacherMode", "1");
   if (mode === "student") sessionStorage.removeItem("fpTeacherMode");
-  if (sessionStorage.getItem("fpTeacherMode") !== "1") return;
+  if (!forceTeacherMode && sessionStorage.getItem("fpTeacherMode") !== "1") return;
 
   const STORE_KEY = "fpTeacherClassroomV1";
+  const CLOUD_STORE_KEY = "fpTeacherCloudClassroomsV1";
   const HELP_SEEN_KEY = "fpTeacherControlHelpSeenV1";
-  const canonicalAvatarBase = /\/vocab_presenter\//i.test(location.pathname)
-    ? "../func_presenter/images/avatars/"
-    : "images/avatars/";
-  const canonicalAvatarPath = (name) => new URL(`${canonicalAvatarBase}${name.toLowerCase()}.webp`, location.href).href;
+  const controlScriptUrl = document.currentScript?.src || location.href;
+  const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
+  const canonicalAvatarPath = (name) => new URL(`images/avatars/${name.toLowerCase()}.webp`, controlScriptUrl).href;
+  const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
   const normalizeAvatarPath = (path = "") => {
     const value = String(path || "");
     if (/^(?:\.\.\/func_presenter\/)?images\/avatars\//i.test(value)) {
@@ -26,7 +28,9 @@
     return value;
   };
   const state = {
-    version: 3,
+    version: 4,
+    classrooms: [],
+    activeClassroomId: "",
     roster: [],
     pointBank: 0,
     selectedStudentId: "",
@@ -43,7 +47,7 @@
   const shouldFlipAvatar = (path = "") => /AV_Anime_(Nova|Terra)_head\.webp$/i.test(path);
 
   const css = `
-    .tc-hud { position: fixed; left: 8px; bottom: 10px; z-index: 9600; display: flex; align-items: center; gap: 5px; width: calc(var(--tc-controls-width, 220px) + 25px); padding: 6px; overflow: visible; border: 1px solid rgba(255, 216, 77, .48); border-radius: 15px; background: rgba(8, 16, 40, .94); box-shadow: 0 14px 34px rgba(0, 0, 0, .42); transition: width .28s ease, padding .28s ease, gap .28s ease, border-radius .28s ease; }
+    .tc-hud { position: fixed; left: 8px; bottom: 10px; z-index: 11000; display: flex; align-items: center; gap: 5px; width: calc(var(--tc-controls-width, 220px) + 25px); padding: 6px; overflow: visible; border: 1px solid rgba(255, 216, 77, .48); border-radius: 15px; background: rgba(8, 16, 40, .94); box-shadow: 0 14px 34px rgba(0, 0, 0, .42); transition: width .28s ease, padding .28s ease, gap .28s ease, border-radius .28s ease; }
     .tc-hud button { width: 34px; height: 34px; border: 1px solid #2b4084; border-radius: 10px; background: #12234e; color: #f4f7ff; font-size: 16px; cursor: pointer; transition: transform .14s ease, border-color .14s ease, background-color .14s ease; }
     .tc-hud button:hover { transform: translateY(-2px); border-color: rgba(255, 216, 77, .85); background: #18336e; }
     .tc-hud .tc-roster.has-chosen-avatar { padding: 2px; overflow: hidden; }
@@ -67,16 +71,23 @@
     .tc-hud .tc-help-tip button { justify-self: end; width: auto; height: 24px; padding: 0 12px; border-color: rgba(255, 216, 77, .86); border-radius: 8px; color: #111833; background: #ffd84d; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .08em; }
     .tc-hud .tc-help-tip::after { position: absolute; bottom: -6px; left: 112px; width: 10px; height: 10px; border-right: 1px solid rgba(255, 216, 77, .74); border-bottom: 1px solid rgba(255, 216, 77, .74); background: rgba(22, 32, 68, .98); content: ""; transform: rotate(45deg); }
     .tc-hud.is-collapsed .tc-chosen-banner { opacity: 0; pointer-events: none; transform: translateY(6px); }
-    .tc-float { position: fixed; z-index: 9610; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 30px; font-weight: 800; letter-spacing: .06em; pointer-events: none; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 18px rgba(101, 230, 184, .48); animation: tcPointFloat 1s ease-out forwards; }
+    .tc-float { position: fixed; z-index: 11010; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 30px; font-weight: 800; letter-spacing: .06em; pointer-events: none; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 18px rgba(101, 230, 184, .48); animation: tcPointFloat 1s ease-out forwards; }
     .tc-float.tc-notice { color: var(--u2-gold, #ffd84d); font-size: 16px; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 16px rgba(255, 216, 77, .45); }
     .tc-float.tc-warning { color: #ffab9b; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 16px rgba(255, 128, 102, .42); }
     @keyframes tcPointFloat { from { opacity: 0; transform: translate(-50%, 8px) scale(.8); } 18% { opacity: 1; transform: translate(-50%, 0) scale(1.08); } to { opacity: 0; transform: translate(-50%, -58px) scale(1); } }
     @keyframes tcHelpPromptGlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
-    .tc-overlay { position: fixed; inset: 0; z-index: 9605; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(2, 7, 23, .88); }
+    .tc-overlay { position: fixed; inset: 0; z-index: 11005; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(2, 7, 23, .88); }
     .tc-card { position: relative; width: min(624px, 100%); max-height: 88vh; overflow-y: auto; padding: clamp(19px, 3.2vh, 32px) clamp(16px, 2.4vw, 30px); border: 1px solid rgba(255, 216, 77, .44); border-radius: 22px; background: #0d1b39; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
     .tc-kicker { margin: 0 0 6px; color: var(--u2-gold, #ffd84d); font-size: 12px; font-weight: 900; letter-spacing: .2em; }
     .tc-title { margin: 0 0 12px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(26px, 3vw, 38px); font-weight: 800; letter-spacing: .04em; }
     .tc-copy { margin: 0 0 18px; color: #9db2e3; font-size: 14px; font-weight: 700; line-height: 1.5; }
+    .tc-class-bar { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; padding: 8px; overflow-x: auto; border: 1px solid rgba(143, 166, 255, .22); border-radius: 14px; background: rgba(5, 14, 38, .52); }
+    .tc-class-tab { flex: 0 0 auto; min-width: 100px; padding: 9px 13px; border: 1px solid #36549d; border-radius: 10px; background: #14295a; color: #dce6ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; letter-spacing: .06em; cursor: pointer; }
+    .tc-class-tab.is-active { border-color: #ffd84d; background: #25376d; color: #ffd84d; box-shadow: 0 0 14px rgba(255, 216, 77, .2); }
+    .tc-class-tab.is-add { min-width: 42px; color: #65e6b8; font-size: 18px; }
+    .tc-class-name-form { display: grid; gap: 12px; margin-top: 14px; }
+    .tc-class-name-form input { width: 100%; padding: 12px 14px; border: 1px solid #36549d; border-radius: 11px; background: #081632; color: #f4f7ff; font: 800 16px var(--font-display, sans-serif); outline: none; }
+    .tc-class-name-form input:focus { border-color: #ffd84d; box-shadow: 0 0 0 3px rgba(255, 216, 77, .14); }
     .tc-help-guide { display: grid; gap: 9px; }
     .tc-help-row { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: 10px; align-items: center; width: 100%; padding: 10px 12px; border: 1px solid rgba(143, 166, 255, .25); border-radius: 13px; background: rgba(7, 19, 48, .62); text-align: left; cursor: pointer; }
     .tc-help-row:hover { border-color: rgba(255, 216, 77, .58); background: rgba(18, 35, 78, .78); transform: translateY(-1px); }
@@ -86,7 +97,7 @@
     .tc-help-row div span { color: #9db2e3; font-size: 12px; font-weight: 700; line-height: 1.35; }
     .tc-help-detail-list { display: grid; gap: 10px; margin: 16px 0 0; padding: 0; list-style: none; }
     .tc-help-detail-list li { padding: 10px 12px; border: 1px solid rgba(143, 166, 255, .25); border-radius: 12px; background: rgba(7, 19, 48, .62); color: #dce6ff; font-size: 13px; font-weight: 800; line-height: 1.42; }
-    .tc-guided-coach { position: fixed; z-index: 9700; display: grid; box-sizing: border-box; gap: 5px; width: min(300px, calc(100vw - 24px)); padding: 10px 14px; border: 1px solid rgba(255, 216, 77, .94); border-radius: 13px; background: rgba(12, 25, 58, .98); box-shadow: 0 0 0 1px rgba(255, 216, 77, .18), 0 12px 32px rgba(0, 0, 0, .5); color: #f4f7ff; font-family: var(--font-display, sans-serif); text-align: center; pointer-events: none; }
+    .tc-guided-coach { position: fixed; z-index: 11100; display: grid; box-sizing: border-box; gap: 5px; width: min(300px, calc(100vw - 24px)); padding: 10px 14px; border: 1px solid rgba(255, 216, 77, .94); border-radius: 13px; background: rgba(12, 25, 58, .98); box-shadow: 0 0 0 1px rgba(255, 216, 77, .18), 0 12px 32px rgba(0, 0, 0, .5); color: #f4f7ff; font-family: var(--font-display, sans-serif); text-align: center; pointer-events: none; }
     .tc-guided-coach small { color: var(--u2-gold, #ffd84d); font-size: 10px; font-weight: 900; letter-spacing: .15em; }
     .tc-guided-coach strong { font-size: 14px; font-weight: 900; line-height: 1.35; }
     .tc-guided-coach button { justify-self: center; min-height: 30px; margin-top: 3px; padding: 0 14px; border: 0; border-radius: 9px; background: var(--u2-grad-gold, #ffd84d); color: #14183a; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .08em; cursor: pointer; pointer-events: auto; }
@@ -109,21 +120,33 @@
     .tc-student.is-rank-gold-glow strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 12px rgba(255, 216, 77, .88), 0 0 28px rgba(255, 216, 77, .58); animation: tcNamePulse 1.2s ease-in-out infinite; }
     .tc-student.is-rank-gold-aura { border-color: #fff0a6; background: linear-gradient(135deg, rgba(154, 104, 8, .99), rgba(70, 46, 8, .97)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
     .tc-student.is-rank-gold-aura strong { font-size: 20px; color: #fffbe2; text-shadow: 0 0 14px rgba(255, 216, 77, .96), 0 0 32px rgba(255, 216, 77, .68); animation: tcNamePulse 1.1s ease-in-out infinite; }
-    .tc-student.is-absent { border-color: rgba(154, 169, 194, .7); background: linear-gradient(135deg, rgba(44, 53, 73, .94), rgba(24, 31, 47, .96)); box-shadow: none; filter: grayscale(1); opacity: .7; }
+    .tc-student.is-absent { border-color: rgba(154, 169, 194, .7); background: linear-gradient(135deg, rgba(44, 53, 73, .94), rgba(24, 31, 47, .96)); box-shadow: none; }
+    .tc-student.is-absent .tc-student-details,
+    .tc-student.is-absent .tc-student-avatar img { filter: grayscale(1); opacity: .7; }
     .tc-student.is-absent:hover { border-color: rgba(187, 198, 217, .82); background: linear-gradient(135deg, rgba(56, 65, 86, .96), rgba(30, 38, 57, .98)); }
     .tc-student.is-absent .tc-student-stars { color: #c0c6d2; }
-    .tc-attendance-status { position: absolute; top: 10px; right: 11px; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 10px; font-style: normal; font-weight: 900; letter-spacing: .06em; }
-    .tc-student.is-absent .tc-attendance-status { color: #d4d9e3; }
+    .tc-attendance-status { position: absolute; top: -7px; right: -7px; z-index: 2; display: grid; width: 22px; height: 22px; place-items: center; border: 2px solid #d8fff1; border-radius: 50%; background: #178b63; color: #fff; font-family: var(--font-display, sans-serif); font-size: 14px; font-style: normal; font-weight: 900; line-height: 1; box-shadow: 0 2px 8px rgba(0, 0, 0, .34); }
+    .tc-attendance-status.is-absent { border-color: #ffd1ca; background: #bd4c4c; }
     .tc-student strong { display: block; font-size: 15px; font-weight: 900; letter-spacing: .03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .tc-student span { display: block; margin-top: 7px; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 20px; font-weight: 800; }
     .tc-student-stars { min-height: 14px; margin-top: 2px; color: #fff0a6; font-size: 11px; letter-spacing: 0; line-height: 1.2; white-space: nowrap; }
     .tc-student em { position: absolute; top: 10px; right: 11px; color: #65e6b8; font-size: 14px; font-style: normal; }
+    .tc-student-name-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .tc-student-name-row strong { min-width: 0; flex: 1 1 auto; }
     .tc-student.has-avatar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
-    .tc-student-avatar { display: grid; width: 46px; aspect-ratio: 1; overflow: hidden; place-items: center; border: 1px solid rgba(255, 216, 77, .56); border-radius: 10px; background: #09132c; color: #dbe7ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; }
-    .tc-student-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .tc-student-avatar { position: relative; display: grid; width: 55px; aspect-ratio: 1; overflow: visible; place-items: center; border: 1px solid rgba(255, 216, 77, .56); border-radius: 10px; background: #09132c; color: #dbe7ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; }
+    .tc-student-avatar img { width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
+    .tc-avatar-media { position: relative; }
+    .tc-avatar-image-crop { width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
+    .tc-level-badge, .tc-student .tc-level-badge { position: absolute; top: -8px; right: -8px; z-index: 4; display: grid; width: 25px; height: 25px; box-sizing: border-box; margin: 0; place-items: center; border: 2px solid #fff0a6; border-radius: 50%; background: #173671; color: #fff8cf; font-family: var(--font-display, sans-serif); font-size: 10px; font-weight: 900; letter-spacing: 0; line-height: 1; box-shadow: 0 2px 9px rgba(0, 0, 0, .46), 0 0 10px rgba(255, 216, 77, .26); }
+    .tc-level-badge.is-inline { position: static; display: grid; flex: 0 0 auto; width: 22px; height: 22px; margin: 0; place-items: center; border-width: 1px; color: #fff8cf; font-size: 9px; line-height: 1; }
     .tc-avatar-flipped { transform: scaleX(-1); }
     @keyframes tcNamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
     .tc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .tc-auth-form { display: grid; gap: 10px; margin-top: 18px; }
+    .tc-auth-form input { width: 100%; min-height: 46px; box-sizing: border-box; border: 1px solid #2f4d9a; border-radius: 12px; outline: none; background: #0d1a3d; color: #f4f7ff; padding: 0 14px; font: 800 14px/1 var(--font-ui, sans-serif); }
+    .tc-auth-form input:focus { border-color: #ffd84d; box-shadow: 0 0 0 3px rgba(255, 216, 77, .16); }
+    .tc-hud .tc-account.is-connected { border-color: #61e7b6; color: #d9fff0; box-shadow: 0 0 12px rgba(97, 231, 182, .32); }
     .tc-action { padding: 12px 17px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 15px; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
     .tc-action.primary { border: 0; background: var(--u2-grad-gold, #ffd84d); color: #14183a; }
     .tc-action.danger { border-color: rgba(255, 128, 102, .64); color: #ffab9b; }
@@ -140,17 +163,17 @@
     .tc-key:hover { border-color: var(--u2-gold, #ffd84d); background: #1c3979; }
     .tc-key.is-wide { width: 66px; min-width: 66px; }
     .tc-key.is-space { width: 150px; min-width: 150px; }
-    .tc-name-suggestions { position: fixed; z-index: 9615; display: flex; flex-wrap: wrap; gap: 6px; max-width: min(520px, calc(100vw - 24px)); padding: 7px; border: 1px solid rgba(255, 216, 77, .58); border-radius: 12px; background: rgba(9, 19, 44, .98); box-shadow: 0 12px 30px rgba(0, 0, 0, .45); transform: translateY(-8px); }
+    .tc-name-suggestions { position: fixed; z-index: 11015; display: flex; flex-wrap: wrap; gap: 6px; max-width: min(520px, calc(100vw - 24px)); padding: 7px; border: 1px solid rgba(255, 216, 77, .58); border-radius: 12px; background: rgba(9, 19, 44, .98); box-shadow: 0 12px 30px rgba(0, 0, 0, .45); }
     .tc-name-suggestion { min-height: 30px; padding: 0 11px; border: 1px solid #3a579e; border-radius: 8px; background: #14295a; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 13px; font-weight: 800; letter-spacing: .04em; cursor: pointer; }
     .tc-name-suggestion:hover { border-color: var(--u2-gold, #ffd84d); background: #1c3979; color: var(--u2-gold, #ffd84d); }
-    .tc-confirm-overlay { position: fixed; inset: 0; z-index: 9620; display: grid; place-items: center; padding: 18px; background: rgba(2, 7, 23, .64); }
+    .tc-confirm-overlay { position: fixed; inset: 0; z-index: 11020; display: grid; place-items: center; padding: 18px; background: rgba(2, 7, 23, .64); }
     .tc-confirm-card { width: min(380px, 100%); padding: 24px; border: 1px solid rgba(255, 128, 102, .58); border-radius: 18px; background: #101d3d; box-shadow: 0 24px 64px rgba(0, 0, 0, .56); }
     .tc-confirm-card h3 { margin: 0 0 9px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 24px; letter-spacing: .04em; }
     .tc-confirm-card p { margin: 0; color: #9db2e3; font-weight: 700; line-height: 1.5; }
     .tc-award-title-row { display: flex; align-items: center; gap: 10px; margin: 0 0 9px; }
     .tc-award-title-row .tc-title { margin: 0; }
     .tc-award-customize { width: 38px; height: 38px; border: 1px solid rgba(255, 216, 77, .72); border-radius: 10px; background: #172d63; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 18px; font-weight: 900; cursor: pointer; }
-    .tc-numpad-overlay { z-index: 9630; }
+    .tc-numpad-overlay { z-index: 11030; }
     .tc-numpad-card { width: min(330px, 100%); border-color: rgba(255, 216, 77, .62); }
     .tc-numpad-display { min-height: 64px; display: grid; place-items: center; margin: 16px 0 12px; padding: 8px 14px; border: 1px solid #2b4084; border-radius: 12px; background: #09132c; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 38px; font-weight: 900; letter-spacing: .06em; }
     .tc-numpad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -179,11 +202,12 @@
     .tc-profile-summary.is-rank-purple .tc-profile-meta h3, .tc-profile-summary.is-rank-purple-gold .tc-profile-meta h3 { color: #f4e7ff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
     .tc-profile-summary.is-rank-gold .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-glow .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fff8cf; text-shadow: 0 0 12px rgba(255, 216, 77, .88), 0 0 28px rgba(255, 216, 77, .58); animation: tcNamePulse 1.2s ease-in-out infinite; }
     .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fffbe2; text-shadow: 0 0 14px rgba(255, 216, 77, .96), 0 0 32px rgba(255, 216, 77, .68); animation-duration: 1.1s; }
-    .tc-profile-avatar { display: grid; width: 150px; aspect-ratio: 1; padding: 0; overflow: hidden; place-items: center; border: 2px solid rgba(255, 216, 77, .78); border-radius: 18px; background: #09132c; color: #dbe7ff; cursor: pointer; box-shadow: 0 0 24px rgba(255, 216, 77, .16); }
+    .tc-profile-avatar { display: grid; width: 150px; aspect-ratio: 1; padding: 0; overflow: visible; place-items: center; border: 2px solid rgba(255, 216, 77, .78); border-radius: 18px; background: #09132c; color: #dbe7ff; cursor: pointer; box-shadow: 0 0 24px rgba(255, 216, 77, .16); }
     .tc-profile-avatar:hover { border-color: #fff0a6; box-shadow: 0 0 30px rgba(255, 216, 77, .34); }
     .tc-avatar-media { display: block; width: 100%; height: 100%; }
+    .tc-profile-avatar .tc-avatar-media { overflow: visible; border-radius: 16px; }
     .tc-profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .tc-profile-avatar span { padding: 12px; text-align: center; font-family: var(--font-display, sans-serif); font-size: 17px; font-weight: 900; }
+    .tc-profile-avatar span:not(.tc-level-badge) { padding: 12px; text-align: center; font-family: var(--font-display, sans-serif); font-size: 17px; font-weight: 900; }
     .tc-avatar-choose-copy { display: grid; place-content: center; gap: 2px; }
     .tc-avatar-choose-copy span { display: block; padding: 0; color: #9db2e3; font-size: 15px; letter-spacing: .08em; line-height: 1.05; }
     .tc-profile-meta h3 { margin: 0; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 4vw, 48px); letter-spacing: .04em; }
@@ -200,6 +224,7 @@
     .tc-avatar-page-count { margin: 10px 0 0; color: #9db2e3; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; letter-spacing: .12em; text-align: center; }
     .tc-avatar-choice { padding: 5px; border: 1px solid rgba(147, 197, 253, .3); border-radius: 10px; background: rgba(0, 0, 0, .22); color: #dbeafe; font-family: var(--font-display, sans-serif); font-size: 10px; font-weight: 800; letter-spacing: .04em; text-align: center; cursor: pointer; }
     .tc-avatar-choice img { display: block; width: 100%; aspect-ratio: 1; margin-bottom: 4px; border-radius: 8px; object-fit: cover; }
+    .tc-avatar-choice.is-no-photo .tc-no-photo-frame { display: grid; width: 100%; aspect-ratio: 1; margin-bottom: 4px; place-items: center; border: 1px dashed rgba(219, 234, 254, .52); border-radius: 8px; color: #93a8d8; font-family: Arial, sans-serif; font-size: 22px; font-weight: 400; }
     .tc-avatar-choice:hover, .tc-avatar-choice.is-active { border-color: #ffd700; box-shadow: 0 0 18px rgba(255, 215, 0, .25); }
     @media (max-width: 520px) { .tc-profile-summary { grid-template-columns: 1fr; justify-items: center; text-align: center; } .tc-profile-avatar { width: 126px; } }
     @media (max-width: 700px) { .tc-hud { bottom: 6px; left: 6px; gap: 4px; padding: 5px; } .tc-hud button { width: 32px; height: 32px; font-size: 15px; } .tc-hud .tc-bank { min-width: 54px; height: 32px; font-size: 14px; } .tc-hud-controls { gap: 4px; } .tc-hud.is-collapsed { width: 20px; } .tc-hud .tc-collapse { width: 18px; flex-basis: 18px; height: 32px; font-size: 19px; } .tc-key { width: 26px; min-width: 26px; height: 30px; font-size: 11px; } .tc-key.is-wide { width: 60px; min-width: 60px; } .tc-key.is-space { width: 126px; min-width: 126px; } .tc-overlay { padding: 12px; } }
@@ -221,9 +246,81 @@
     return node;
   };
 
-  function showToast(message) {
-    window.ToastManager?.show?.(message);
+  const normalizeStudent = (student) => ({
+    id: student?.id || createId(),
+    name: typeof student?.name === "string" ? student.name.trim() : "",
+    points: Number.isFinite(Number(student?.points)) ? Number(student.points) : 0,
+    stars: Math.max(0, Math.floor(Number(student?.stars) || 0)),
+    avatarPath: typeof student?.avatarPath === "string" ? normalizeAvatarPath(student.avatarPath) : ""
+  });
+
+  function createClassroom(name = "MY CLASS", source = {}) {
+    const attendanceDate = source.attendanceDate === todayKey() ? todayKey() : todayKey();
+    const roster = Array.isArray(source.roster) ? source.roster.map(normalizeStudent).filter((student) => student.name) : [];
+    const rosterIds = new Set(roster.map((student) => student.id));
+    return {
+      id: source.id || createId(),
+      name: String(source.name || name).trim() || name,
+      roster,
+      pointBank: Math.max(0, Number(source.pointBank) || 0),
+      attendanceDate,
+      absentStudentIds: source.attendanceDate === todayKey() && Array.isArray(source.absentStudentIds)
+        ? [...new Set(source.absentStudentIds)].filter((id) => rosterIds.has(id))
+        : []
+    };
   }
+
+  function activeClassroom() {
+    return state.classrooms.find((classroom) => classroom.id === state.activeClassroomId) || null;
+  }
+
+  function commitActiveClassroom() {
+    const classroom = activeClassroom();
+    if (!classroom) return;
+    classroom.roster = state.roster;
+    classroom.pointBank = state.pointBank;
+    classroom.attendanceDate = state.attendanceDate;
+    classroom.absentStudentIds = state.absentStudentIds;
+  }
+
+  function activateClassroom(classroomId, commitCurrent = true) {
+    if (commitCurrent) commitActiveClassroom();
+    const classroom = state.classrooms.find((item) => item.id === classroomId) || state.classrooms[0];
+    if (!classroom) return;
+    state.activeClassroomId = classroom.id;
+    state.roster = classroom.roster;
+    state.pointBank = classroom.pointBank;
+    state.attendanceDate = classroom.attendanceDate || todayKey();
+    state.absentStudentIds = classroom.attendanceDate === todayKey() ? classroom.absentStudentIds : [];
+    classroom.attendanceDate = state.attendanceDate = todayKey();
+    classroom.absentStudentIds = state.absentStudentIds;
+    state.selectedStudentId = "";
+  }
+
+  let teacherToastLoadPromise = null;
+
+  function loadTeacherToastManager() {
+    if (window.ToastManager?.show) return Promise.resolve(window.ToastManager);
+    if (teacherToastLoadPromise) return teacherToastLoadPromise;
+
+    teacherToastLoadPromise = new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = teacherToastScriptUrl;
+      script.dataset.global = "false";
+      script.addEventListener("load", () => resolve(window.ToastManager || null), { once: true });
+      script.addEventListener("error", () => resolve(null), { once: true });
+      document.head.appendChild(script);
+    });
+    return teacherToastLoadPromise;
+  }
+
+  function showToast(message, tone = "info") {
+    loadTeacherToastManager().then((manager) => {
+      manager?.show(message, tone === "danger" ? "warn" : undefined, 10000);
+    });
+  }
+
+  loadTeacherToastManager();
 
   let teacherFeedbackAudio = null;
   let randomBeepContext = null;
@@ -233,7 +330,7 @@
       teacherFeedbackAudio.pause();
       teacherFeedbackAudio.currentTime = 0;
     }
-    teacherFeedbackAudio = new Audio(`sounds/${isCorrect ? "correct" : "wrong"}.mp3`);
+    teacherFeedbackAudio = new Audio(teacherSoundPath(isCorrect ? "correct" : "wrong"));
     teacherFeedbackAudio.play().catch(() => {});
   }
 
@@ -254,33 +351,60 @@
     oscillator.stop(now + .055);
   }
 
-  function load() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
-      if (!saved || !Array.isArray(saved.roster)) return;
-      state.roster = saved.roster
-        .filter((student) => student && typeof student.name === "string")
-        .map((student) => ({
-          id: student.id || createId(),
-          name: student.name.trim(),
-          points: Number.isFinite(Number(student.points)) ? Number(student.points) : 0,
-          stars: Math.max(0, Math.floor(Number(student.stars) || 0)),
-          avatarPath: typeof student.avatarPath === "string" ? normalizeAvatarPath(student.avatarPath) : ""
-        }))
-        .filter((student) => student.name);
-      state.pointBank = Math.max(0, Number(saved.pointBank) || 0);
-      state.selectedStudentId = "";
-      state.attendanceDate = todayKey();
-      const rosterIds = new Set(state.roster.map((student) => student.id));
-      state.absentStudentIds = saved.attendanceDate === state.attendanceDate && Array.isArray(saved.absentStudentIds)
-        ? [...new Set(saved.absentStudentIds)].filter((id) => rosterIds.has(id))
-        : [];
-    } catch { /* corrupt saved roster -> start fresh */ }
+  function applyStoredState(saved) {
+    state.classrooms = [];
+    state.activeClassroomId = "";
+    if (Array.isArray(saved?.classrooms) && saved.classrooms.length) {
+      state.classrooms = saved.classrooms.map((classroom, index) => createClassroom(`CLASS ${index + 1}`, classroom));
+      state.activeClassroomId = state.classrooms.some((classroom) => classroom.id === saved.activeClassroomId)
+        ? saved.activeClassroomId
+        : state.classrooms[0].id;
+    } else if (Array.isArray(saved?.roster)) {
+      const classroom = createClassroom("MY CLASS", saved);
+      state.classrooms = [classroom];
+      state.activeClassroomId = classroom.id;
+    }
+    if (!state.classrooms.length) {
+      const classroom = createClassroom();
+      state.classrooms = [classroom];
+      state.activeClassroomId = classroom.id;
+    }
+    activateClassroom(state.activeClassroomId, false);
   }
 
-  function save() {
+  function loadFromStorage(storageKey) {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(storageKey) || "null"); } catch { /* corrupt saved roster -> start fresh */ }
+    applyStoredState(saved);
+  }
+
+  function load() {
+    // A remembered cloud session must resume from its separate local snapshot.
+    // This lets pending score changes reach Supabase before cloud hydration.
+    loadFromStorage(localStorage.getItem("fpTeacherSupabaseSessionV1") ? CLOUD_STORE_KEY : STORE_KEY);
+  }
+
+  const cloudClassroomsEnabled = () => Boolean(window.TeacherCloud?.isSignedIn?.());
+
+  function restoreGuestClassroom() {
+    loadFromStorage(STORE_KEY);
+    state.selectedStudentId = "";
+    resetRandomPool();
+    syncSelectedTrigger();
+    updateHud();
+  }
+
+  function persistLocal() {
     if (guidedTutorial?.restoreState) return;
-    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch { /* local storage unavailable */ }
+    commitActiveClassroom();
+    const storageKey = cloudClassroomsEnabled() ? CLOUD_STORE_KEY : STORE_KEY;
+    try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch { /* local storage unavailable */ }
+  }
+
+  function save(options = {}) {
+    persistLocal();
+    if (options.deferPoints) window.TeacherCloud?.schedulePointSync?.(state);
+    else window.TeacherCloud?.scheduleSync?.(state);
   }
 
   const getStudent = (id = state.selectedStudentId) => state.roster.find((student) => student.id === id) || null;
@@ -309,6 +433,35 @@
     return shuffled;
   };
   const effectiveScore = (student) => (Number(student?.points) || 0) + Math.max(0, Math.floor(Number(student?.stars) || 0)) * 10;
+  const studentLevel = (student) => {
+    const score = Math.max(0, effectiveScore(student));
+    const earlyLevelStarts = [0, 11, 31, 61, 101, 151, 211, 281, 361, 461];
+    let level = 1;
+    earlyLevelStarts.forEach((start, index) => {
+      if (score >= start) level = index + 1;
+    });
+    if (level < 10 || score < 571) return level;
+
+    let nextStart = 571;
+    let nextRange = 120;
+    for (let nextLevel = 11; nextLevel <= 99; nextLevel += 1) {
+      if (score < nextStart) return nextLevel - 1;
+      level = nextLevel;
+      nextStart += nextRange;
+      nextRange += 10;
+    }
+    return 99;
+  };
+  const createLevelBadge = (student, inline = false) => {
+    const badge = el("span", `tc-level-badge${inline ? " is-inline" : ""}`, String(studentLevel(student)));
+    badge.title = `Level ${studentLevel(student)}`;
+    badge.setAttribute("aria-label", `Level ${studentLevel(student)}`);
+    return badge;
+  };
+  const notifyLevelUp = (student, previousLevel) => {
+    const currentLevel = studentLevel(student);
+    if (currentLevel > previousLevel) showToast(`${student.name} - Level Up: ${currentLevel}!`, "success");
+  };
   const sortStudentsByScoreAndName = (students) => [...students].sort((a, b) => {
     const scoreDifference = effectiveScore(b) - effectiveScore(a);
     return scoreDifference || a.name.localeCompare(b.name, "tr", { sensitivity: "base" });
@@ -325,12 +478,12 @@
     return `${"⭐".repeat(visibleStars)}${stars > visibleStars ? ` +${stars - visibleStars}` : ""}`;
   };
   const studentRankClass = (points) => {
-    if (points >= 30) return " is-rank-gold-aura";
-    if (points >= 25) return " is-rank-gold-glow";
-    if (points >= 20) return " is-rank-gold";
-    if (points >= 15) return " is-rank-purple-gold";
-    if (points >= 10) return " is-rank-purple";
-    if (points >= 5) return " is-rank-green";
+    if (points >= 700) return " is-rank-gold-aura";
+    if (points >= 601) return " is-rank-gold-glow";
+    if (points >= 451) return " is-rank-gold";
+    if (points >= 301) return " is-rank-purple-gold";
+    if (points >= 201) return " is-rank-purple";
+    if (points >= 101) return " is-rank-green";
     return "";
   };
 
@@ -354,11 +507,10 @@
     document.querySelector(".tc-guided-coach")?.remove();
     guidedTutorial = null;
     if (restoreState) {
-      state.roster = restoreState.roster;
-      state.pointBank = restoreState.pointBank;
+      state.classrooms = restoreState.classrooms;
+      state.activeClassroomId = restoreState.activeClassroomId;
+      activateClassroom(state.activeClassroomId, false);
       state.selectedStudentId = restoreState.selectedStudentId;
-      state.attendanceDate = restoreState.attendanceDate;
-      state.absentStudentIds = restoreState.absentStudentIds;
       randomHistory.drawnIds = [...restoreState.randomDrawnIds];
       syncSelectedTrigger();
       save();
@@ -451,18 +603,17 @@
 
   function startGuidedTutorial() {
     closeOverlays();
+    commitActiveClassroom();
     const restoreState = {
-      roster: state.roster.map((student) => ({ ...student })),
-      pointBank: state.pointBank,
+      classrooms: JSON.parse(JSON.stringify(state.classrooms)),
+      activeClassroomId: state.activeClassroomId,
       selectedStudentId: state.selectedStudentId,
-      attendanceDate: state.attendanceDate,
-      absentStudentIds: [...state.absentStudentIds],
       randomDrawnIds: [...randomHistory.drawnIds]
     };
-    state.roster = [];
-    state.pointBank = 0;
-    state.selectedStudentId = "";
-    state.absentStudentIds = [];
+    const tutorialClassroom = createClassroom("TUTORIAL CLASS");
+    state.classrooms = [tutorialClassroom];
+    state.activeClassroomId = tutorialClassroom.id;
+    activateClassroom(tutorialClassroom.id, false);
     randomHistory.drawnIds = [];
     syncSelectedTrigger();
     updateHud();
@@ -548,6 +699,81 @@
     chosenBanner.textContent = chosen ? `${chosen.name} IS CHOSEN` : "";
     chosenBanner.classList.toggle("is-visible", Boolean(chosen));
     if (!chosen) chosenBanner.classList.remove("is-resetting");
+    accountButton?.classList.toggle("is-connected", Boolean(window.TeacherCloud?.isSignedIn?.()));
+    accountButton?.setAttribute("aria-label", window.TeacherCloud?.isSignedIn?.() ? "Cloud account connected" : "Sign in to cloud backup");
+  }
+
+  function applyCloudState(snapshot) {
+    if (Array.isArray(snapshot?.classrooms) && snapshot.classrooms.length) {
+      state.classrooms = snapshot.classrooms.map((classroom, index) => createClassroom(`CLASS ${index + 1}`, classroom));
+      state.activeClassroomId = state.classrooms.some((classroom) => classroom.id === snapshot.activeClassroomId)
+        ? snapshot.activeClassroomId
+        : state.classrooms[0].id;
+      activateClassroom(state.activeClassroomId, false);
+    } else if (Array.isArray(snapshot?.roster)) {
+      const classroom = createClassroom("MY CLASS", snapshot);
+      state.classrooms = [classroom];
+      state.activeClassroomId = classroom.id;
+      activateClassroom(classroom.id, false);
+    } else return;
+    state.selectedStudentId = "";
+    resetRandomPool();
+    syncSelectedTrigger();
+    persistLocal();
+    updateHud();
+  }
+
+  function openAccount() {
+    const cloud = window.TeacherCloud;
+    if (!cloud) return;
+    const account = cloud.getAccount();
+    if (account.signedIn) {
+      const card = makeOverlay("CLOUD BACKUP", "ACCOUNT CONNECTED", account.email);
+      const sync = el("button", "tc-action primary", "SYNC NOW");
+      const signOut = el("button", "tc-action danger", "SIGN OUT");
+      sync.type = signOut.type = "button";
+      sync.addEventListener("click", async () => {
+        sync.disabled = true;
+        try { await cloud.syncNow(); showToast("Classroom synced."); } catch (error) { showToast(error.message || "Sync failed."); }
+        sync.disabled = false;
+      });
+      signOut.addEventListener("click", async () => {
+        await cloud.signOut();
+        restoreGuestClassroom();
+        closeOverlays();
+        showToast("Signed out. Local classroom restored.");
+      });
+      const actions = el("div", "tc-actions");
+      actions.append(sync, signOut);
+      card.append(actions);
+      return;
+    }
+    const card = makeOverlay("CLOUD BACKUP", "TEACHER SIGN IN", "Sign in to back up your roster, points, stars, and avatars.");
+    const form = el("form", "tc-auth-form");
+    const email = el("input", "", "");
+    const password = el("input", "", "");
+    email.type = "email";
+    email.placeholder = "Email address";
+    email.autocomplete = "email";
+    password.type = "password";
+    password.placeholder = "Password";
+    password.autocomplete = "current-password";
+    const submit = el("button", "tc-action primary", "SIGN IN");
+    submit.type = "submit";
+    form.append(email, password, submit);
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      submit.disabled = true;
+      try {
+        await cloud.signIn(email.value.trim(), password.value);
+        closeOverlays();
+        updateHud();
+        showToast("Cloud backup connected.");
+      } catch (error) {
+        showToast(error.message || "Sign-in failed.");
+      } finally { submit.disabled = false; }
+    });
+    card.append(form);
   }
 
   function floatFrom(target, text, className = "") {
@@ -563,13 +789,99 @@
     floatFrom(bank, "+1");
   }
 
+  function classBar() {
+    const bar = el("div", "tc-class-bar");
+    state.classrooms.forEach((classroom) => {
+      const tab = el("button", `tc-class-tab${classroom.id === state.activeClassroomId ? " is-active" : ""}`, classroom.name);
+      tab.type = "button";
+      tab.addEventListener("click", () => {
+        if (classroom.id === state.activeClassroomId) return;
+        activateClassroom(classroom.id);
+        resetRandomPool();
+        syncSelectedTrigger();
+        save({ deferPoints: true });
+        updateHud();
+        openRoster();
+      });
+      bar.append(tab);
+    });
+    const add = el("button", "tc-class-tab is-add", "+");
+    add.type = "button";
+    add.title = "Create another class";
+    add.addEventListener("click", () => openClassNameDialog("create"));
+    bar.append(add);
+    return bar;
+  }
+
+  function openClassNameDialog(mode) {
+    if (!cloudClassroomsEnabled()) return;
+    const current = activeClassroom();
+    const isCreating = mode === "create";
+    const card = makeOverlay("CLASSROOM", isCreating ? "NEW CLASS" : "RENAME CLASS", isCreating ? "Create a separate roster for another class." : "Change the name of the active class.");
+    const form = el("form", "tc-class-name-form");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.maxLength = 40;
+    input.placeholder = "Class name";
+    input.value = isCreating ? "" : (current?.name || "");
+    const submit = el("button", "tc-action primary", isCreating ? "CREATE CLASS" : "SAVE NAME");
+    submit.type = "submit";
+    form.append(input, submit);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = input.value.trim();
+      if (!name) { showToast("Write a class name first."); return; }
+      const duplicate = state.classrooms.some((classroom) => classroom.id !== current?.id && classroom.name.localeCompare(name, "tr", { sensitivity: "base" }) === 0);
+      if (duplicate) { showToast("A class with this name already exists."); return; }
+      if (isCreating) {
+        commitActiveClassroom();
+        const classroom = createClassroom(name);
+        state.classrooms.push(classroom);
+        activateClassroom(classroom.id, false);
+        resetRandomPool();
+        syncSelectedTrigger();
+        save({ deferPoints: !resetStars });
+        updateHud();
+        openRosterEditor(true);
+      } else if (current) {
+        current.name = name;
+        save();
+        openRoster();
+      }
+    });
+    card.append(form);
+    requestAnimationFrame(() => input.focus());
+  }
+
+  function deleteActiveClassroom() {
+    if (!cloudClassroomsEnabled()) return;
+    const current = activeClassroom();
+    if (!current) return;
+    confirmPointsReset("DELETE CLASS?", `${current.name} and every student record in it will be deleted.`, "DELETE CLASS", () => {
+      commitActiveClassroom();
+      state.classrooms = state.classrooms.filter((classroom) => classroom.id !== current.id);
+      if (!state.classrooms.length) state.classrooms.push(createClassroom());
+      activateClassroom(state.classrooms[0].id, false);
+      resetRandomPool();
+      syncSelectedTrigger();
+      save();
+      updateHud();
+      openRoster();
+    });
+  }
+
   function openRoster() {
-    if (!hasRoster()) {
+    if (!hasRoster() && state.classrooms.length === 1) {
       openRosterEditor(true);
       if (guidedTutorial?.step === 1) window.setTimeout(() => setGuidedTutorialStep(2), 0);
       return;
     }
-    const card = makeOverlay("CLASSROOM", "CLASS ROSTER", "Choose a student to review the current score. Use ATTENDANCE to mark students absent for today.");
+    const current = activeClassroom();
+    const cloudMode = cloudClassroomsEnabled();
+    const card = makeOverlay("CLASSROOM", cloudMode ? (current?.name || "CLASS ROSTER") : "CLASS ROSTER", cloudMode
+      ? "Switch classes above, or choose a student to review the current score."
+      : "Choose a student to review the current score.");
+    if (cloudMode) card.append(classBar());
     const grid = el("div", "tc-student-grid");
     sortRosterStudents(state.roster).forEach((student) => {
       const item = studentCard(student, { showChosen: true, ranked: true, showAvatar: true });
@@ -577,23 +889,43 @@
       grid.append(item);
     });
     const actions = el("div", "tc-actions");
-    const edit = el("button", "tc-action", "EDIT ROSTER");
+    if (!state.roster.length) grid.append(el("div", "tc-empty", "This class has no students yet."));
+    const edit = el("button", "tc-action", state.roster.length ? "EDIT ROSTER" : "CREATE ROSTER");
     edit.type = "button";
     edit.addEventListener("click", () => openRosterEditor(false));
     const attendance = el("button", "tc-action", "ATTENDANCE");
     attendance.type = "button";
     attendance.addEventListener("click", openAttendance);
+    attendance.disabled = !state.roster.length;
     const resetPoints = el("button", "tc-action danger", "RESET POINTS");
     resetPoints.type = "button";
     resetPoints.addEventListener("click", () => {
       confirmPointsReset("RESET ALL POINTS?", "Every student score in this roster will be reset to 0.", "RESET ALL", () => {
         state.roster.forEach((student) => { student.points = 0; });
+        save({ deferPoints: true });
+        updateHud();
+        openRoster();
+      }, "RESET STARS TOO", () => {
+        state.roster.forEach((student) => {
+          student.points = 0;
+          student.stars = 0;
+        });
         save();
         updateHud();
         openRoster();
       });
     });
+    resetPoints.disabled = !state.roster.length;
     actions.append(edit, attendance, resetPoints);
+    if (cloudMode) {
+      const rename = el("button", "tc-action", "RENAME CLASS");
+      rename.type = "button";
+      rename.addEventListener("click", () => openClassNameDialog("rename"));
+      const removeClass = el("button", "tc-action danger", "DELETE CLASS");
+      removeClass.type = "button";
+      removeClass.addEventListener("click", deleteActiveClassroom);
+      actions.append(rename, removeClass);
+    }
     card.append(grid, actions);
     if (guidedTutorial?.step === 3) setGuidedTutorialStep(4);
     if (guidedTutorial?.step === 8) window.setTimeout(() => setGuidedTutorialStep(9), 0);
@@ -614,7 +946,7 @@
       if (state.selectedStudentId === student.id) state.selectedStudentId = "";
     }
     syncSelectedTrigger();
-    save();
+    save({ deferPoints: true });
     updateHud();
   }
 
@@ -668,16 +1000,25 @@
     const item = el(options.static ? "div" : "button", `tc-student${student.id === state.selectedStudentId ? " is-selected" : ""}${options.ranked ? studentRankClass(effectiveScore(student)) : ""}${showAvatar ? " has-avatar" : ""}${isAbsent(student) ? " is-absent" : ""}`);
     if (!options.static) item.type = "button";
     const details = el("div", "tc-student-details");
-    details.append(el("strong", "", student.name), el("span", "", `${student.points} PTS`));
+    const nameRow = el("div", "tc-student-name-row");
+    nameRow.append(el("strong", "", student.name));
+    if (!showAvatar) nameRow.append(createLevelBadge(student, true));
+    details.append(nameRow, el("span", "", `${student.points} PTS`));
     if (student.stars) details.append(el("div", "tc-student-stars", starSummary(student.stars)));
     item.append(details);
-    if (showAvatar) item.append(createStudentAvatar(student, "tc-student-avatar"));
+    const avatar = showAvatar ? createStudentAvatar(student, "tc-student-avatar") : null;
+    if (avatar) item.append(avatar);
     if (options.showChosen && student.id === state.selectedStudentId) item.append(el("em", "", "✓"));
-    if (options.showAttendance) item.append(el("span", "tc-attendance-status", isAbsent(student) ? "ABSENT" : "PRESENT"));
+    if (options.showAttendance) {
+      const absent = isAbsent(student);
+      const status = el("span", `tc-attendance-status${absent ? " is-absent" : ""}`, absent ? "✕" : "✓");
+      status.title = absent ? "Absent" : "Present";
+      (avatar || item).append(status);
+    }
     return item;
   }
 
-  function createStudentAvatar(student, className, showChooseCopy = false) {
+  function createStudentAvatar(student, className, showChooseCopy = false, showLevel = true) {
     const frame = el("div", className || "tc-avatar-media");
     if (!student.avatarPath) {
       if (showChooseCopy) {
@@ -686,15 +1027,20 @@
       }
       return frame;
     }
+    const levelBadge = showLevel ? createLevelBadge(student) : null;
     const image = document.createElement("img");
+    const imageCrop = el("div", "tc-avatar-image-crop");
     image.src = student.avatarPath;
     image.alt = `${student.name} avatar`;
     image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
     image.addEventListener("error", () => {
-      image.remove();
+      imageCrop.remove();
       frame.textContent = student.name.slice(0, 1).toLocaleUpperCase("tr-TR");
+      if (levelBadge) frame.append(levelBadge);
     }, { once: true });
-    frame.append(image);
+    imageCrop.append(image);
+    frame.append(imageCrop);
+    if (levelBadge) frame.append(levelBadge);
     return frame;
   }
 
@@ -723,7 +1069,7 @@
       confirmPointsReset(resetStars ? "RESET STUDENT STARS?" : "RESET STUDENT POINTS?", `${student.name}'s ${resetStars ? "stars" : "points"} will be reset!`, resetStars ? "RESET STARS" : "RESET POINTS", () => {
         if (resetStars) student.stars = 0;
         else student.points = 0;
-        save();
+        save({ deferPoints: !resetStars });
         updateHud();
         openStudentProfile(student.id);
       });
@@ -752,8 +1098,9 @@
     if (!student) return;
     const card = makeOverlay("CLASSROOM", "CHOOSE AVATAR", "Tap an avatar to save it for this student.");
     const perPage = 10;
-    const pages = Array.from({ length: Math.ceil(AVATAR_OPTIONS.length / perPage) }, (_, index) => AVATAR_OPTIONS.slice(index * perPage, (index + 1) * perPage));
-    let pageIndex = Math.max(0, Math.floor(AVATAR_OPTIONS.findIndex((avatar) => avatar.path === student.avatarPath) / perPage));
+    const avatarOptions = [{ name: "NO PHOTO", path: "", noPhoto: true }, ...AVATAR_OPTIONS];
+    const pages = Array.from({ length: Math.ceil(avatarOptions.length / perPage) }, (_, index) => avatarOptions.slice(index * perPage, (index + 1) * perPage));
+    let pageIndex = Math.max(0, Math.floor(avatarOptions.findIndex((avatar) => avatar.path === student.avatarPath) / perPage));
     const picker = el("div", "tc-avatar-picker");
     const previous = el("button", "tc-avatar-nav", "‹");
     const viewport = el("div", "tc-avatar-viewport");
@@ -769,11 +1116,16 @@
       avatars.forEach((avatar) => {
         const option = el("button", `tc-avatar-choice${student.avatarPath === avatar.path ? " is-active" : ""}`);
         option.type = "button";
-        const image = document.createElement("img");
-        image.src = avatar.path;
-        image.alt = avatar.name;
-        image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(avatar.path));
-        option.append(image, document.createTextNode(avatar.name.toUpperCase()));
+        if (avatar.noPhoto) {
+          option.classList.add("is-no-photo");
+          option.append(el("div", "tc-no-photo-frame"), document.createTextNode(avatar.name));
+        } else {
+          const image = document.createElement("img");
+          image.src = avatar.path;
+          image.alt = avatar.name;
+          image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(avatar.path));
+          option.append(image, document.createTextNode(avatar.name.toUpperCase()));
+        }
         option.addEventListener("click", () => {
           student.avatarPath = avatar.path;
           if (guidedTutorial?.step === 11) {
@@ -857,7 +1209,7 @@
     document.body.append(confirmOverlay);
   }
 
-  function confirmPointsReset(titleText, copyText, confirmText, onConfirm) {
+  function confirmPointsReset(titleText, copyText, confirmText, onConfirm, secondaryConfirmText = "", onSecondaryConfirm = null) {
     const confirmOverlay = el("div", "tc-confirm-overlay");
     const confirmCard = el("div", "tc-confirm-card");
     const title = el("h3", "", titleText);
@@ -872,8 +1224,18 @@
       onConfirm();
       close();
     });
+    if (secondaryConfirmText && typeof onSecondaryConfirm === "function") {
+      const resetStars = el("button", "tc-action danger", secondaryConfirmText);
+      resetStars.type = "button";
+      resetStars.addEventListener("click", () => {
+        onSecondaryConfirm();
+        close();
+      });
+      actions.append(cancel, reset, resetStars);
+    } else {
+      actions.append(cancel, reset);
+    }
     confirmOverlay.addEventListener("click", (event) => { if (event.target === confirmOverlay) close(); });
-    actions.append(cancel, reset);
     confirmCard.append(title, copy, actions);
     confirmOverlay.append(confirmCard);
     document.body.append(confirmOverlay);
@@ -903,10 +1265,7 @@
         .slice(0, 4);
       if (!matches.length) return;
 
-      const rect = input.getBoundingClientRect();
       const popover = el("div", "tc-name-suggestions");
-      popover.style.left = `${Math.max(12, rect.left)}px`;
-      popover.style.top = `${rect.top}px`;
       matches.forEach((name) => {
         const suggestion = el("button", "tc-name-suggestion", name);
         suggestion.type = "button";
@@ -921,6 +1280,9 @@
         popover.append(suggestion);
       });
       document.body.append(popover);
+      const rect = input.getBoundingClientRect();
+      popover.style.left = `${Math.max(12, rect.left)}px`;
+      popover.style.top = `${Math.max(12, rect.top - popover.offsetHeight - 10)}px`;
       suggestionPopover = popover;
     }
 
@@ -1009,6 +1371,16 @@
           keyboard.classList.add("is-visible");
           showNameSuggestions(input);
         });
+        input.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter") return;
+          event.preventDefault();
+          hideNameSuggestions();
+          if (!input.value.trim()) return;
+          const inputs = [...list.querySelectorAll(".tc-editor-row input")];
+          const next = inputs[inputs.indexOf(input) + 1];
+          if (next) focusEditorInput(next);
+          else add.click();
+        });
         const remove = el("button", "tc-remove", "×");
         remove.type = "button";
         remove.title = "Remove student";
@@ -1091,7 +1463,7 @@
       previewIndex += 1;
       playRandomBeep(previewIndex);
       const preview = el("div", "tc-random-preview");
-      if (previewStudent.avatarPath) preview.append(createStudentAvatar(previewStudent, "tc-announcement-avatar"));
+      if (previewStudent.avatarPath) preview.append(createStudentAvatar(previewStudent, "tc-announcement-avatar", false, false));
       preview.append(el("strong", "", previewStudent.name));
       announcement.replaceChildren(preview);
     };
@@ -1109,7 +1481,7 @@
       if (guidedTutorial?.step === 7) setGuidedTutorialStep(8);
       announcement.replaceChildren();
       announcement.append(el("p", "tc-announcement-label", "THE CHOSEN STUDENT"));
-      if (student.avatarPath) announcement.append(createStudentAvatar(student, "tc-announcement-avatar"));
+      if (student.avatarPath) announcement.append(createStudentAvatar(student, "tc-announcement-avatar", false, false));
       announcement.append(el("strong", "", student.name), el("span", "", "You are the chosen!"));
       const actions = el("div", "tc-actions");
       const done = el("button", "tc-action primary", "CONTINUE");
@@ -1245,14 +1617,16 @@
     const student = getStudent(studentId);
     if (!student) return;
     const awarded = state.pointBank > 0 ? state.pointBank : Math.max(1, Number(manualAmount) || 1);
+    const previousLevel = studentLevel(student);
     student.points += awarded;
     state.pointBank = 0;
     state.selectedStudentId = "";
     syncSelectedTrigger();
-    save();
+    save({ deferPoints: true });
     updateHud();
     playTeacherFeedback(true);
-    showToast(`+${awarded} points awarded to ${student.name}.`);
+    showToast(`+${awarded} points awarded to ${student.name}.`, "success");
+    notifyLevelUp(student, previousLevel);
     if (guidedTutorial?.step === 6) window.setTimeout(() => setGuidedTutorialStep(7), 0);
   }
 
@@ -1279,18 +1653,140 @@
     const student = getStudent(studentId);
     if (!student) return;
     student.points -= 1;
-    save();
+    save({ deferPoints: true });
     updateHud();
     playTeacherFeedback(false);
-    showToast(`-1 point from ${student.name}.`);
+    showToast(`-1 point from ${student.name}.`, "danger");
   }
 
   function onCorrect() {
     if (!hasRoster()) return;
     state.pointBank += 1;
-    save();
+    save({ deferPoints: true });
     updateHud();
     floatPoint();
+  }
+
+  function normalizeStudentName(name) {
+    return String(name || "").trim().replace(/\s+/g, " ").toLocaleUpperCase("tr-TR");
+  }
+
+  function awardStars(starAwards, classroomId = "") {
+    if (!Array.isArray(starAwards) || !starAwards.length) {
+      return { awarded: [], missing: [] };
+    }
+
+    commitActiveClassroom();
+    const classroom = state.classrooms.find((item) => item.id === classroomId) || activeClassroom();
+    if (!classroom) return { awarded: [], missing: [] };
+
+    const studentsByName = new Map(
+      (classroom.roster || []).map((student) => [normalizeStudentName(student.name), student])
+    );
+    const totalsByName = new Map();
+    starAwards.forEach((award) => {
+      const name = String(award?.name || "").trim();
+      const stars = Math.max(0, Math.floor(Number(award?.stars) || 0));
+      const key = normalizeStudentName(name);
+      if (!key || !stars) return;
+      const existing = totalsByName.get(key) || { name, stars: 0 };
+      existing.stars += stars;
+      totalsByName.set(key, existing);
+    });
+
+    const awarded = [];
+    const missing = [];
+    totalsByName.forEach(({ name, stars }, key) => {
+      const student = studentsByName.get(key);
+      if (!student) {
+        missing.push(name);
+        return;
+      }
+      const previousLevel = studentLevel(student);
+      student.stars = Math.max(0, Math.floor(Number(student.stars) || 0)) + stars;
+      awarded.push({ name: student.name, stars });
+      notifyLevelUp(student, previousLevel);
+    });
+
+    if (!awarded.length) return { awarded, missing };
+
+    if (classroom.id === state.activeClassroomId) state.roster = classroom.roster;
+    save();
+    updateHud();
+
+    const awardGroups = new Map();
+    awarded.forEach(({ name, stars }) => {
+      const names = awardGroups.get(stars) || [];
+      names.push(name);
+      awardGroups.set(stars, names);
+    });
+    [...awardGroups.entries()]
+      .sort(([first], [second]) => second - first)
+      .forEach(([stars, names]) => {
+        const label = stars === 1 ? "star" : "stars";
+        showToast(`⭐ ${names.join(", ")} awarded ${stars} ${label}.`, "success");
+      });
+
+    return { awarded, missing };
+  }
+
+  function awardFinalPoints(pointAwards, classroomId = "") {
+    if (!Array.isArray(pointAwards) || !pointAwards.length) {
+      return { awarded: [], missing: [] };
+    }
+
+    commitActiveClassroom();
+    const classroom = state.classrooms.find((item) => item.id === classroomId) || activeClassroom();
+    if (!classroom) return { awarded: [], missing: [] };
+
+    const studentsByName = new Map(
+      (classroom.roster || []).map((student) => [normalizeStudentName(student.name), student])
+    );
+    const totalsByName = new Map();
+    pointAwards.forEach((award) => {
+      const name = String(award?.name || "").trim();
+      const points = Math.max(0, Math.floor(Number(award?.points) || 0));
+      const key = normalizeStudentName(name);
+      if (!key || !points) return;
+      const existing = totalsByName.get(key) || { name, points: 0 };
+      existing.points += points;
+      totalsByName.set(key, existing);
+    });
+
+    const awarded = [];
+    const missing = [];
+    totalsByName.forEach(({ name, points }, key) => {
+      const student = studentsByName.get(key);
+      if (!student) {
+        missing.push(name);
+        return;
+      }
+      const previousLevel = studentLevel(student);
+      student.points = Number(student.points) || 0;
+      student.points += points;
+      awarded.push({ name: student.name, points });
+      notifyLevelUp(student, previousLevel);
+    });
+
+    if (!awarded.length) return { awarded, missing };
+
+    if (classroom.id === state.activeClassroomId) state.roster = classroom.roster;
+    save({ deferPoints: true });
+    updateHud();
+
+    const awardGroups = new Map();
+    awarded.forEach(({ name, points }) => {
+      const names = awardGroups.get(points) || [];
+      names.push(name);
+      awardGroups.set(points, names);
+    });
+    [...awardGroups.entries()]
+      .sort(([first], [second]) => second - first)
+      .forEach(([points, names]) => {
+        showToast(`${names.join(", ")} awarded +${points} points.`, "success");
+      });
+
+    return { awarded, missing };
   }
 
   let poolResetTimer = null;
@@ -1301,7 +1797,7 @@
       clearTimeout(poolResetTimer);
       poolResetTimer = null;
       state.pointBank = 0;
-      save();
+      save({ deferPoints: true });
       bank.classList.remove("is-resetting");
       updateHud();
       floatFrom(bank, "POOL RESET!", "tc-warning");
@@ -1331,25 +1827,28 @@
   const plusButton = el("button", "tc-plus", "➕");
   const minusButton = el("button", "tc-minus", "➖");
   const helpButton = el("button", "tc-help", "?");
+  const accountButton = el("button", "tc-account", "☁");
   const bank = el("button", "tc-bank", "ROSTER");
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
   const collapseButton = el("button", "tc-collapse", "<");
-  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = chosenBanner.type = collapseButton.type = "button";
+  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = chosenBanner.type = collapseButton.type = "button";
   bank.type = "button";
   rosterButton.title = "Class roster";
   plusButton.title = "Award the point pool";
   minusButton.title = "Remove one point";
   helpButton.title = "Student management help";
+  accountButton.title = "Cloud account";
   rosterButton.addEventListener("click", openRoster);
   randomButton.addEventListener("click", openRandomStudent);
   plusButton.addEventListener("click", awardCurrentPool);
   minusButton.addEventListener("click", () => openStudentPicker("remove"));
   helpButton.addEventListener("click", openHelp);
+  accountButton.addEventListener("click", openAccount);
   bank.addEventListener("click", requestPoolReset);
   chosenBanner.addEventListener("click", requestChosenReset);
   collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
-  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, bank);
+  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, bank);
   hud.append(chosenBanner, controls, collapseButton);
   document.body.append(hud);
 
@@ -1360,11 +1859,33 @@
 
   window.TeacherControl = {
     onCorrect,
+    awardStars,
+    awardFinalPoints,
     getSelectedStudent: () => getStudent()?.name || "",
     getRoster: () => state.roster.map((student) => ({ ...student })),
-    getPointBank: () => state.pointBank
+    getPointBank: () => state.pointBank,
+    getClassrooms: () => {
+      commitActiveClassroom();
+      return state.classrooms.map((classroom) => ({
+        id: classroom.id,
+        name: classroom.name,
+        attendanceDate: classroom.attendanceDate || "",
+        absentStudentIds: [...(classroom.absentStudentIds || [])],
+        roster: (classroom.roster || []).map((student) => ({ ...student }))
+      }));
+    },
+    getActiveClassroomId: () => state.activeClassroomId,
+    isCloudClassroomsEnabled: cloudClassroomsEnabled
   };
 
   syncSelectedTrigger();
   updateHud();
+  window.TeacherCloud?.initialize?.({
+    getState: () => {
+      commitActiveClassroom();
+      return state;
+    },
+    applyState: applyCloudState,
+    onStatusChange: updateHud
+  });
 })();

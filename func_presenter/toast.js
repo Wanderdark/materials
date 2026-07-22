@@ -104,5 +104,9 @@
     show
   };
 
-  init({ top: "80px", duration: 10000, global: true });
+  init({
+    top: "80px",
+    duration: 10000,
+    global: document.currentScript?.dataset.global !== "false"
+  });
 })();

@@ -1785,6 +1785,7 @@ function renderPresenceSlide(example) {
   list.className = `presence-list ${example.listClass || ""}`;
   const shouldReplaceCurrentItem = Boolean(example.replaceCurrentItem || (state.module?.id === "object-pronouns" && !example.showAllItems));
   list.dataset.replaceCurrentItem = shouldReplaceCurrentItem ? "true" : "";
+  if (example.defaultFlow || example.flow) list.dataset.defaultPresenceFlow = example.defaultFlow || example.flow;
   const items = example.shuffleItems ? shuffle(example.items || []) : (example.items || []);
   items.forEach((item, index) => {
     const row = document.createElement("section");
@@ -1920,6 +1921,7 @@ function renderPresenceSlide(example) {
     if (item.fontSize) row.style.setProperty("--presence-item-font-size", item.fontSize);
     if (item.letterSpacing) row.style.setProperty("--presence-item-letter-spacing", item.letterSpacing);
     if (item.clearPreviousOnShow) row.dataset.clearPreviousOnShow = "true";
+    if (item.flow) row.dataset.presenceFlow = item.flow;
     if (item.titleOverride) row.dataset.titleOverride = item.titleOverride;
     if (item.imagePathOnShow) row.dataset.imagePathOnShow = item.imagePathOnShow;
     if (item.speechText) row.dataset.speechText = item.speechText;
@@ -2012,15 +2014,15 @@ function renderPresenceSlide(example) {
       });
       promptLine.append(reveal);
     }
-    if (index < items.length - 1 && !example.showAllItems) {
+    if (index < items.length - 1 && !example.showAllItems && item.nextButton !== false) {
       const nextButton = document.createElement("button");
       nextButton.className = "presence-next";
       nextButton.type = "button";
       if ((example.listClass || "").split(/\s+/).includes("simple-past-choice-list")) {
         nextButton.classList.add("presence-next-word");
-        nextButton.textContent = "NEXT";
+        nextButton.textContent = item.nextButtonLabel || "NEXT";
       } else {
-        nextButton.textContent = "›";
+        nextButton.textContent = item.nextButtonLabel || "›";
       }
       nextButton.setAttribute("aria-label", "Show next sentence");
       nextButton.disabled = Boolean(item.answerReveal || item.choices || item.kind === "inline-choice");
@@ -2407,11 +2409,7 @@ function revealPresenceHotspotStep(list, currentIndex) {
     clearPresenceHotspots();
     return;
   }
-  if (nextRow.dataset.clearPreviousOnShow === "true") {
-    [...list.querySelectorAll(".presence-row")].forEach((row) => row.classList.add("hidden"));
-  } else if (list.dataset.replaceCurrentItem === "true") {
-    currentRow.classList.add("hidden");
-  }
+  applyPresenceAdvanceVisibility(list, currentRow, nextRow);
   nextRow.classList.remove("hidden");
   applyPresenceRowTitleOverride(nextRow);
   applyPresenceRowImage(nextRow);
@@ -2422,12 +2420,8 @@ function revealPresenceHotspotStep(list, currentIndex) {
 function showNextPresenceRow(list, currentIndex) {
   const nextRow = list.querySelector(`[data-presence-index="${currentIndex + 1}"]`);
   if (!nextRow) return;
-  if (nextRow.dataset.clearPreviousOnShow === "true") {
-    [...list.querySelectorAll(".presence-row")].forEach((row) => row.classList.add("hidden"));
-  } else if (list.dataset.replaceCurrentItem === "true") {
-    const currentRow = list.querySelector(`[data-presence-index="${currentIndex}"]`);
-    currentRow?.classList.add("hidden");
-  }
+  const currentRow = list.querySelector(`[data-presence-index="${currentIndex}"]`);
+  applyPresenceAdvanceVisibility(list, currentRow, nextRow);
   nextRow.classList.remove("hidden");
   applyPresenceRowTitleOverride(nextRow);
   applyPresenceRowImage(nextRow);
@@ -2435,6 +2429,18 @@ function showNextPresenceRow(list, currentIndex) {
   speakPresenceRow(nextRow);
   const nextButton = list.querySelector(`[data-presence-index="${currentIndex}"] .presence-next`);
   if (nextButton) nextButton.classList.add("hidden");
+}
+
+function applyPresenceAdvanceVisibility(list, currentRow, nextRow) {
+  const flow = nextRow?.dataset.presenceFlow || list.dataset.defaultPresenceFlow || "";
+  if (flow === "append") return;
+  if (flow === "replace-all" || nextRow?.dataset.clearPreviousOnShow === "true") {
+    [...list.querySelectorAll(".presence-row")].forEach((row) => row.classList.add("hidden"));
+    return;
+  }
+  if (flow === "replace-current" || list.dataset.replaceCurrentItem === "true") {
+    currentRow?.classList.add("hidden");
+  }
 }
 
 function enablePresenceNext(row) {
@@ -2658,6 +2664,8 @@ function startParagraphChoice(exercise) {
   els.pcScore.textContent = `0 / ${state.pcTotalChoices}`;
   els.pcCard.classList.toggle("pc-text-only", Boolean(exercise.textOnly));
   els.pcResult.classList.add("hidden");
+  els.pcSkip.dataset.pcAction = "";
+  els.pcSkip.textContent = "SKIP EXERCISE";
   els.pcSkip.classList.toggle("hidden", state.postExerciseIndex === undefined);
   els.pcScreen.classList.remove("hidden");
   renderPcPage();
@@ -2677,6 +2685,9 @@ function renderPcPage() {
     els.pcImage.alt = "";
   }
   els.pcResult.classList.add("hidden");
+  els.pcSkip.dataset.pcAction = "";
+  els.pcSkip.textContent = "SKIP EXERCISE";
+  els.pcSkip.classList.toggle("hidden", state.postExerciseIndex === undefined);
   els.pcDone.dataset.pcAction = "done";
   els.pcDone.textContent = "BACK TO MENU";
   els.pcParagraph.replaceChildren(...(page.sentences || []).map((sentence) => {
@@ -2694,20 +2705,35 @@ function advancePcPage() {
   renderPcPage();
 }
 
-function showPcPageResult(overallCorrect) {
+function configurePcPageResult(overallCorrect) {
   const isLastPage = state.pcPageIndex >= state.pcPages.length - 1;
+  const groupSize = Number(state.exercise?.groupSize);
+  const isGroupBoundary = !isLastPage && Number.isInteger(groupSize) && groupSize > 0
+    && (state.pcPageIndex + 1) % groupSize === 0;
+
+  if (isLastPage) {
+    els.pcResultText.textContent = overallCorrect === state.pcTotalChoices ? `Perfect! All ${state.pcTotalChoices} correct!`
+      : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
+    els.pcDone.textContent = state.postExerciseIndex !== undefined ? "CONTINUE →" : "BACK TO MENU";
+    els.pcDone.dataset.pcAction = "done";
+  } else if (isGroupBoundary) {
+    els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Ready for the next group?`;
+    els.pcDone.textContent = "CONTINUE →";
+    els.pcDone.dataset.pcAction = "next";
+    els.pcSkip.textContent = "EXIT";
+    els.pcSkip.dataset.pcAction = "exit";
+    els.pcSkip.classList.remove("hidden");
+  } else {
+    els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
+    els.pcDone.textContent = "NEXT PAGE →";
+    els.pcDone.dataset.pcAction = "next";
+  }
+  els.pcResult.classList.remove("hidden");
+}
+
+function showPcPageResult(overallCorrect) {
   setTimeout(() => {
-    if (isLastPage) {
-      els.pcResultText.textContent = overallCorrect === state.pcTotalChoices ? `Perfect! All ${state.pcTotalChoices} correct!`
-        : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
-      els.pcDone.textContent = state.postExerciseIndex !== undefined ? "CONTINUE →" : "BACK TO MENU";
-      els.pcDone.dataset.pcAction = "done";
-    } else {
-      els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
-      els.pcDone.textContent = "NEXT PAGE →";
-      els.pcDone.dataset.pcAction = "next";
-    }
-    els.pcResult.classList.remove("hidden");
+    configurePcPageResult(overallCorrect);
   }, 500);
 }
 
@@ -2762,19 +2788,8 @@ function checkPcProgress() {
       renderPcPersonalityMatch(page, overallCorrect);
       return;
     }
-    const isLastPage = state.pcPageIndex >= state.pcPages.length - 1;
     setTimeout(() => {
-      if (isLastPage) {
-        els.pcResultText.textContent = overallCorrect === state.pcTotalChoices ? `Perfect! All ${state.pcTotalChoices} correct!`
-          : `${overallCorrect} out of ${state.pcTotalChoices} correct.`;
-        els.pcDone.textContent = state.postExerciseIndex !== undefined ? "CONTINUE →" : "BACK TO MENU";
-        els.pcDone.dataset.pcAction = "done";
-      } else {
-        els.pcResultText.textContent = `${overallCorrect} / ${state.pcTotalChoices} correct. Keep going!`;
-        els.pcDone.textContent = "NEXT PAGE →";
-        els.pcDone.dataset.pcAction = "next";
-      }
-      els.pcResult.classList.remove("hidden");
+      configurePcPageResult(overallCorrect);
     }, 500);
   }
 }
@@ -5341,7 +5356,14 @@ els.pcBack.addEventListener("click", () => {
   state.postExerciseIndex = undefined;
   returnToSetup();
 });
-els.pcSkip.addEventListener("click", returnToPostExerciseSlide);
+els.pcSkip.addEventListener("click", () => {
+  if (els.pcSkip.dataset.pcAction === "exit") {
+    state.postExerciseIndex = undefined;
+    returnToSetup();
+    return;
+  }
+  returnToPostExerciseSlide();
+});
 els.pcDone.addEventListener("click", () => {
   if (els.pcDone.dataset.pcAction === "next") advancePcPage();
   else if (state.postExerciseIndex !== undefined) returnToPostExerciseSlide();

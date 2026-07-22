@@ -499,8 +499,24 @@ body.tb-mode .team-joker-row{display:flex}
 #std-warning{font-size:13px;color:#4ade80;text-align:center;display:none;min-height:18px}
 .std-actions{display:flex;gap:10px;width:100%}
 .std-attendance{flex:0 0 auto;padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.7vw,17px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,#7c3aed,#a855f7);border:none;border-radius:12px;color:#fff;cursor:pointer;white-space:nowrap}
+.std-roster-import{flex:0 0 auto;padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.7vw,17px);font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:linear-gradient(135deg,#5135a5,#8054d7);border:2px solid #a68aff;border-radius:12px;color:#fff;cursor:pointer;white-space:nowrap;box-shadow:0 7px 18px rgba(95,65,190,.26)}
+.std-roster-import:hover{filter:brightness(1.12);transform:translateY(-1px)}
 .std-balance{flex:0 0 auto;padding:13px 18px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(13px,1.7vw,17px);font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(135deg,#1e3a5f,#2563eb);border:none;border-radius:12px;color:#fff;cursor:pointer;white-space:nowrap}
 .std-start{flex:1;padding:13px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(16px,2vw,21px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:linear-gradient(135deg,#15803d,#22c55e);border:none;border-radius:12px;color:#fff;cursor:pointer}
+.rvr-roster-overlay{position:fixed;inset:0;z-index:9835;background:rgba(2,8,26,.82);backdrop-filter:blur(7px);display:flex;align-items:center;justify-content:center;padding:20px}
+.rvr-roster-overlay.hidden{display:none}
+.rvr-roster-modal{position:relative;width:min(92vw,560px);max-height:min(82vh,720px);overflow:auto;padding:30px;border:2px solid #8069db;border-radius:24px;background:linear-gradient(145deg,#112957,#0a1739);box-shadow:0 20px 60px rgba(0,0,0,.48);color:#eff4ff}
+.rvr-roster-eyebrow{color:#ffe15c;font-size:13px;font-weight:1000;letter-spacing:.16em;margin-bottom:8px}
+.rvr-roster-modal h2{margin:0;font-size:clamp(25px,4vw,37px);line-height:1.05}
+.rvr-roster-modal p{margin:12px 0 22px;color:#afc5f5;font-size:16px;line-height:1.45}
+.rvr-roster-close{position:absolute;right:16px;top:15px;width:42px;height:42px;border-radius:12px;border:1px solid #5374c9;background:#142b5d;color:#dce8ff;font-size:27px;cursor:pointer}
+.rvr-roster-class-list{display:grid;gap:10px}
+.rvr-roster-class-btn{display:flex;justify-content:space-between;gap:12px;align-items:center;width:100%;padding:15px 17px;border:2px solid #416ab4;border-radius:14px;background:#102658;color:#fff;text-align:left;cursor:pointer;font-weight:900;font-size:18px}
+.rvr-roster-class-btn:hover{border-color:#ffe15c;background:#17336b;transform:translateY(-1px)}
+.rvr-roster-class-meta{color:#8fb2ef;font-size:13px;white-space:nowrap}
+.rvr-roster-message{min-height:20px;margin-top:14px;color:#ffd15c;font-size:14px;font-weight:800}
+.tbr-transfer-stars{background:linear-gradient(135deg,#7141cf,#a65bea)!important;border-color:#d7b5ff!important;box-shadow:0 7px 18px rgba(132,76,218,.34)!important}
+.tbr-transfer-stars:disabled{opacity:.56;cursor:default;filter:saturate(.45)}
 @media (max-width:1366px),(max-height:800px){
   .name-modal{width:min(92vw,620px);padding:32px 36px 28px}
   .name-title{font-size:clamp(30px,4.8vw,50px)}
@@ -526,7 +542,7 @@ body.tb-mode .team-joker-row{display:flex}
   .std-kb-key{min-width:31px;height:34px;font-size:13px;border-radius:7px}
   .std-kb-wide{min-width:62px;font-size:12px}
   .std-actions{gap:8px}
-  .std-attendance,.std-balance{padding:11px 14px}
+  .std-attendance,.std-roster-import,.std-balance{padding:11px 14px}
   .std-start{padding:11px}
 }
 
@@ -1132,11 +1148,24 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
     </div>
     <div id="std-warning"></div>
     <div class="std-actions">
+      <button class="std-roster-import" type="button" onclick="openRvrRosterClassPicker()">👥 ROSTERDEN AKTAR</button>
       <button class="std-balance" id="std-clearall-btn" style="background:linear-gradient(135deg,#7f1d1d,#dc2626)" onclick="stdClearAll()">✕ Clear All</button>
       <button class="std-balance" id="std-fillall-btn" onclick="stdFillAll()">↓ Fill All</button>
       <!-- her zaman -->
       <button class="std-start" onclick="applyStudentsAndContinue()">✓ Tamam, Devam Et</button>
     </div>
+  </div>
+</div>
+
+<!-- ── TEACHER HUD: ROSTER IMPORT ── -->
+<div id="rvr-roster-class-overlay" class="rvr-roster-overlay hidden" onclick="if(event.target===this)closeRvrRosterClassPicker()">
+  <div class="rvr-roster-modal" role="dialog" aria-modal="true" aria-labelledby="rvr-roster-class-title">
+    <button class="rvr-roster-close" type="button" aria-label="Close" onclick="closeRvrRosterClassPicker()">×</button>
+    <div class="rvr-roster-eyebrow">TEACHER HUD</div>
+    <h2 id="rvr-roster-class-title">SELECT A ROSTER</h2>
+    <p>Present students will be shared fairly between both teams according to their total points and stars.</p>
+    <div id="rvr-roster-class-list" class="rvr-roster-class-list"></div>
+    <div id="rvr-roster-class-message" class="rvr-roster-message"></div>
   </div>
 </div>
 
@@ -1216,6 +1245,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
       <div class="tbr-coin-val" id="tbr-coin-val">—</div>
       <div class="tbr-divider"></div>
       <div class="tbr-scores-compare" id="tbr-scores-compare"></div>
+      <button class="tbr-again tbr-transfer-stars" id="rvr-transfer-stars" type="button" onclick="transferRvrFinalStarsToRoster()" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
       <button class="tbr-again" onclick="exitFullscreenOnly()">⛶ EXIT FULL SCREEN</button>
       <button class="tbr-again tbr-stop-conf" id="tbr-stop-conf-btn" onclick="_stopConfetti()">🎊 KONFETİLERİ DURDUR</button>
       <button class="tbr-again tbr-home" onclick="_goToMainMenu()">🏠 ANA SAYFAYA DÖN</button>
@@ -1314,6 +1344,9 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <script src="words.js"></script>
 <script src="names.js" onerror="void 0"></script>
 <script src="avatars.js"></script>
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script src="../modules/teamnames.js"></script>
 <script src="../modules/studentselection.js"></script>
 <script src="../modules/avatarselection.js"></script>
@@ -1352,6 +1385,8 @@ let selectedCategories = new Set();
 function _isCatUnit(u) { return typeof CATEGORIES !== 'undefined' && Object.prototype.hasOwnProperty.call(CATEGORIES, u); }
 let selectedUnits      = new Set(QUESTIONS.filter(q => !_isCatUnit(q[2])).map(q => q[2]));
 let studentInputs      = [Array(STD_SLOTS).fill(''), Array(STD_SLOTS).fill('')];
+let importedRosterClassroomId = '';
+let rvrFinalStarsTransferred = false;
 
 // ── SPEECH STATE ─────────────────────────────────────────
 let _currentWord     = '';
@@ -1646,6 +1681,139 @@ function _loadStudentInputs() {
         studentInputs[gi][si] = typeof data[gi][si] === 'string' ? data[gi][si] : '';
     });
   } catch(e) {}
+}
+
+function rvrRosterTodayKey() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+}
+
+function rvrRosterEffectiveScore(student) {
+  return (Number(student?.points) || 0) + (Number(student?.stars) || 0) * 10;
+}
+
+function closeRvrRosterClassPicker() {
+  document.getElementById('rvr-roster-class-overlay')?.classList.add('hidden');
+}
+
+function openRvrRosterClassPicker() {
+  const overlay = document.getElementById('rvr-roster-class-overlay');
+  const list = document.getElementById('rvr-roster-class-list');
+  const message = document.getElementById('rvr-roster-class-message');
+  if (!overlay || !list || !message) return;
+
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.length);
+  list.replaceChildren();
+  message.textContent = '';
+
+  if (!usable.length) {
+    message.textContent = 'Create a roster from the Teacher HUD first.';
+  } else {
+    usable.forEach((classroom) => {
+      const absentIds = classroom.attendanceDate === rvrRosterTodayKey()
+        ? new Set(classroom.absentStudentIds || [])
+        : new Set();
+      const presentCount = classroom.roster.filter((student) => !absentIds.has(student.id)).length;
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      const meta = document.createElement('span');
+      button.type = 'button';
+      button.className = 'rvr-roster-class-btn';
+      name.textContent = classroom.name || 'MY CLASS';
+      meta.className = 'rvr-roster-class-meta';
+      meta.textContent = `${presentCount} present`;
+      button.append(name, meta);
+      button.addEventListener('click', () => importRvrRosterClass(classroom.id));
+      list.append(button);
+    });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function importRvrRosterClass(classroomId) {
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const classroom = classrooms.find((item) => item.id === classroomId);
+  const message = document.getElementById('rvr-roster-class-message');
+  if (!classroom || !Array.isArray(classroom.roster)) return;
+
+  const absentIds = classroom.attendanceDate === rvrRosterTodayKey()
+    ? new Set(classroom.absentStudentIds || [])
+    : new Set();
+  const students = classroom.roster
+    .filter((student) => student?.name && !absentIds.has(student.id))
+    .sort((a, b) => rvrRosterEffectiveScore(b) - rvrRosterEffectiveScore(a)
+      || a.name.localeCompare(b.name, 'tr'));
+
+  if (students.length < 2) {
+    if (message) message.textContent = 'At least two present students are needed.';
+    return;
+  }
+  if (students.length > STD_SLOTS * 2) {
+    if (message) message.textContent = `This game supports up to ${STD_SLOTS * 2} students.`;
+    return;
+  }
+  if (students.length % 2) {
+    if (message) message.textContent = 'Mark attendance so both teams can have the same number of students.';
+    return;
+  }
+
+  const teamNamesFromRoster = [[], []];
+  const balanceOrder = [0, 1, 1, 0];
+  students.forEach((student, index) => {
+    teamNamesFromRoster[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
+  });
+
+  studentInputs = [Array(STD_SLOTS).fill(''), Array(STD_SLOTS).fill('')];
+  teamNamesFromRoster.forEach((team, groupIndex) => {
+    team.forEach((name, studentIndex) => {
+      studentInputs[groupIndex][studentIndex] = name;
+    });
+  });
+  _slotRevealed = [Array(STD_SLOTS).fill(true), Array(STD_SLOTS).fill(true)];
+  _silentDistributed = false;
+
+  [0, 1].forEach((groupIndex) => {
+    for (let studentIndex = 0; studentIndex < STD_SLOTS; studentIndex++) {
+      const value = studentInputs[groupIndex][studentIndex];
+      const text = document.getElementById(`stdt-${groupIndex}-${studentIndex}`);
+      const slot = document.getElementById(`std-${groupIndex}-${studentIndex}`);
+      if (text) text.textContent = value;
+      if (slot) slot.classList.toggle('is-empty', !value);
+    }
+  });
+
+  importedRosterClassroomId = classroom.id;
+  rvrFinalStarsTransferred = false;
+  updateRvrFinalStarsTransferButton();
+  _saveStudentInputs();
+  closeRvrRosterClassPicker();
+}
+
+function updateRvrFinalStarsTransferButton() {
+  const button = document.getElementById('rvr-transfer-stars');
+  if (!button) return;
+  const canTransfer = !!importedRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  button.hidden = !canTransfer;
+  button.disabled = rvrFinalStarsTransferred;
+  button.textContent = rvrFinalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
+}
+
+function transferRvrFinalStarsToRoster() {
+  if (rvrFinalStarsTransferred || !importedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
+  const starMap = typeof calcStarMap === 'function' ? calcStarMap() : {};
+  const awards = [0, 1].flatMap((groupIndex) =>
+    groupStudents[groupIndex].map((name, studentIndex) => ({
+      name,
+      points: (Number(starMap[`${groupIndex}-${studentIndex}`]) || 0) * 5
+    }))
+  ).filter((award) => award.name && award.points > 0);
+
+  const result = window.TeacherControl.awardFinalPoints(awards, importedRosterClassroomId);
+  if (result?.awarded?.length) {
+    rvrFinalStarsTransferred = true;
+    updateRvrFinalStarsTransferButton();
+  }
 }
 
 function applyStudentsAndContinue() {
@@ -3303,6 +3471,7 @@ function _endMatch() {
     finalMusic.volume = 0.72;
     finalMusic.play().catch(() => {});
     showTbResultOverlay(overallWinner, winnerCoins, teamTotals);
+    updateRvrFinalStarsTransferButton();
     _playSound('sounds/finalcheer.mp3', 0.5);
     if (overallWinner !== null) FinalScreen.start();
   });
