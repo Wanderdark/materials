@@ -44,6 +44,17 @@
     ["Ava", "Benjamin", "Chloe", "Daniel", "David", "Ella", "Emma", "Ethan", "Hannah", "Jack", "Lucas", "Mia", "Noah", "Olivia", "Victoria", "Zoe"]
       .map((name) => ({ name, path: canonicalAvatarPath(name) }))
   );
+  const AVATAR_UNLOCK_LEVELS = Object.freeze({
+    grace: 9,
+    louis: 9,
+    rex: 5,
+    pixie: 5,
+    nova: 5,
+    blaze: 3,
+    mara: 3,
+    frost: 4,
+    terra: 4
+  });
   const shouldFlipAvatar = (path = "") => /AV_Anime_(Nova|Terra)_head\.webp$/i.test(path);
 
   const css = `
@@ -226,6 +237,10 @@
     .tc-avatar-choice img { display: block; width: 100%; aspect-ratio: 1; margin-bottom: 4px; border-radius: 8px; object-fit: cover; }
     .tc-avatar-choice.is-no-photo .tc-no-photo-frame { display: grid; width: 100%; aspect-ratio: 1; margin-bottom: 4px; place-items: center; border: 1px dashed rgba(219, 234, 254, .52); border-radius: 8px; color: #93a8d8; font-family: Arial, sans-serif; font-size: 22px; font-weight: 400; }
     .tc-avatar-choice:hover, .tc-avatar-choice.is-active { border-color: #ffd700; box-shadow: 0 0 18px rgba(255, 215, 0, .25); }
+    .tc-avatar-choice.is-locked { cursor: not-allowed; opacity: .72; }
+    .tc-avatar-choice.is-locked img { filter: grayscale(1); opacity: .42; }
+    .tc-avatar-choice.is-locked:hover { border-color: rgba(147, 197, 253, .3); box-shadow: none; }
+    .tc-avatar-choice .tc-avatar-req { display: block; margin-top: 2px; color: #ffd84d; font-family: var(--font-display, sans-serif); font-size: 8px; font-weight: 900; letter-spacing: .055em; line-height: 1.05; text-align: center; }
     @media (max-width: 520px) { .tc-profile-summary { grid-template-columns: 1fr; justify-items: center; text-align: center; } .tc-profile-avatar { width: 126px; } }
     @media (max-width: 700px) { .tc-hud { bottom: 6px; left: 6px; gap: 4px; padding: 5px; } .tc-hud button { width: 32px; height: 32px; font-size: 15px; } .tc-hud .tc-bank { min-width: 54px; height: 32px; font-size: 14px; } .tc-hud-controls { gap: 4px; } .tc-hud.is-collapsed { width: 20px; } .tc-hud .tc-collapse { width: 18px; flex-basis: 18px; height: 32px; font-size: 19px; } .tc-key { width: 26px; min-width: 26px; height: 30px; font-size: 11px; } .tc-key.is-wide { width: 60px; min-width: 60px; } .tc-key.is-space { width: 126px; min-width: 126px; } .tc-overlay { padding: 12px; } }
   `;
@@ -458,9 +473,18 @@
     badge.setAttribute("aria-label", `Level ${studentLevel(student)}`);
     return badge;
   };
+  const avatarRequiredLevel = (avatarName) => AVATAR_UNLOCK_LEVELS[String(avatarName || "").trim().toLowerCase()] || 1;
+  const avatarUnlocksBetween = (previousLevel, currentLevel) => Object.entries(AVATAR_UNLOCK_LEVELS)
+    .filter(([, requiredLevel]) => requiredLevel > previousLevel && requiredLevel <= currentLevel)
+    .map(([name]) => name.toUpperCase());
   const notifyLevelUp = (student, previousLevel) => {
     const currentLevel = studentLevel(student);
-    if (currentLevel > previousLevel) showToast(`${student.name} - Level Up: ${currentLevel}!`, "success");
+    if (currentLevel <= previousLevel) return;
+    showToast(`${student.name} - Level Up: ${currentLevel}!`, "success");
+    const unlockedAvatars = avatarUnlocksBetween(previousLevel, currentLevel);
+    if (unlockedAvatars.length) {
+      showToast(`${student.name} new avatars available`, "success");
+    }
   };
   const sortStudentsByScoreAndName = (students) => [...students].sort((a, b) => {
     const scoreDifference = effectiveScore(b) - effectiveScore(a);
@@ -1114,8 +1138,12 @@
     pages.forEach((avatars) => {
       const page = el("div", "tc-avatar-page");
       avatars.forEach((avatar) => {
-        const option = el("button", `tc-avatar-choice${student.avatarPath === avatar.path ? " is-active" : ""}`);
+        const requiredLevel = avatar.noPhoto ? 1 : avatarRequiredLevel(avatar.name);
+        const isLocked = requiredLevel > studentLevel(student);
+        const option = el("button", `tc-avatar-choice${student.avatarPath === avatar.path ? " is-active" : ""}${isLocked ? " is-locked" : ""}`);
         option.type = "button";
+        option.disabled = isLocked;
+        option.setAttribute("aria-disabled", isLocked ? "true" : "false");
         if (avatar.noPhoto) {
           option.classList.add("is-no-photo");
           option.append(el("div", "tc-no-photo-frame"), document.createTextNode(avatar.name));
@@ -1126,7 +1154,9 @@
           image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(avatar.path));
           option.append(image, document.createTextNode(avatar.name.toUpperCase()));
         }
+        if (isLocked) option.append(el("span", "tc-avatar-req", `REQ. LEV. : ${requiredLevel}`));
         option.addEventListener("click", () => {
+          if (isLocked) return;
           student.avatarPath = avatar.path;
           if (guidedTutorial?.step === 11) {
             student.points = 10;
