@@ -147,6 +147,7 @@
 
   function save() {
     try { localStorage.setItem(STORE_KEY, JSON.stringify(profile)); } catch { /* ignore */ }
+    window.dispatchEvent(new Event("studentprofilechange"));
   }
 
   function ensureDaily() {
@@ -192,7 +193,7 @@
 
   /* ---------- CSS ---------- */
   const css = `
-  .sg-hud { position: fixed; left: 14px; bottom: 92px; z-index: 90; display: flex; align-items: center; gap: 10px; padding: 7px 16px 7px 8px; border: 1px solid rgba(255, 216, 77, .45); border-radius: 999px; background: rgba(8, 16, 40, .94); cursor: pointer; box-shadow: 0 14px 34px rgba(0, 0, 0, .4); transition: transform .15s ease, border-color .15s ease; }
+  .sg-hud { position: fixed; left: 8px; bottom: 16px; z-index: 90; display: flex; align-items: center; gap: 10px; padding: 7px 16px 7px 8px; border: 1px solid rgba(255, 216, 77, .45); border-radius: 999px; background: rgba(8, 16, 40, .94); cursor: pointer; box-shadow: 0 14px 34px rgba(0, 0, 0, .4); transition: transform .15s ease, border-color .15s ease; }
   .sg-hud:hover { transform: translateY(-2px); border-color: rgba(255, 216, 77, .85); }
   .sg-hud .sg-ava { position: relative; width: 42px; height: 42px; }
   .sg-hud .sg-ava img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--u2-gold, #ffd84d); background: #0a142f; }
@@ -390,22 +391,8 @@
   }
 
   function syncChipPlacement() {
-    const setup = document.getElementById("setupScreen");
-    const onSetup = setup && !setup.classList.contains("hidden");
-    if (onSetup) {
-      headerChip.remove();
-      hud.classList.remove("sg-hidden");
-      return;
-    }
-    const section = [...document.querySelectorAll("main.app-shell > section")].find((node) => !node.classList.contains("hidden"));
-    const header = section?.querySelector(".presentation-header");
-    if (header) {
-      if (headerChip.parentElement !== header) header.append(headerChip);
-      hud.classList.add("sg-hidden");
-    } else {
-      headerChip.remove();
-      hud.classList.remove("sg-hidden");
-    }
+    headerChip.remove();
+    hud.classList.remove("sg-hidden");
   }
 
   const screenObserver = new MutationObserver(syncChipPlacement);
@@ -486,6 +473,7 @@
       profile.name = name.toUpperCase();
       profile.avatar = selected;
       save();
+      window.dispatchEvent(new Event("studentprofilechange"));
       updateHud();
       closeOverlays();
       evaluateAchievements();
@@ -499,6 +487,10 @@
 
   /* ---------- Profile panel ---------- */
   function openPanel() {
+    if (!profile.name || !profile.avatar) {
+      openCreation();
+      return;
+    }
     closeOverlays();
     ensureDaily();
     const overlay = el("div", "sg-overlay");
@@ -719,7 +711,9 @@
   ensureDaily();
   syncChipPlacement();
   updateHud();
-  if (!profile.name || !profile.avatar) openCreation();
-  else evaluateAchievements();
+  if (!profile.name || !profile.avatar) {
+    if (window.__studentHudAutoCreate !== false) openCreation();
+    else evaluateAchievements();
+  } else evaluateAchievements();
   updateHud();
 })();

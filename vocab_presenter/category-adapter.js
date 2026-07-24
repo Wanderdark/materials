@@ -3,6 +3,199 @@
   "use strict";
 
   const CATEGORIES = {
+    "6:1": [
+      {
+        id: "school-staff-participants",
+        title: "School Staff & Participants",
+        words: [
+          "LEADER", "COUNSELLOR", "GUIDE", "LIBRARIAN", "HEADMISTRESS", "PE TEACHER", "LISTENER"
+        ]
+      },
+      {
+        id: "school-events-national-symbols",
+        title: "School Events & National Symbols",
+        words: [
+          "FESTIVAL", "ASSEMBLY", "SPEECH", "CELEBRATION", "NATIONAL ANTHEM", "SCHOOL CEREMONY", "PARADE", "FLAG"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "PERMISSION", "CAREFULLY", "RESPONSIBLE", "MANNER", "MANAGE", "INSTRUCTION", "FOLLOW", "ENTER", "GREET",
+          "SUPPORT", "VOLUNTEER", "WILLINGLY", "HELPFUL", "SUCCESSFUL", "CHEERFULLY",
+          "BEFORE", "PACK", "PASS", "FAIL", "TRY", "REGULARLY", "INTERVIEW"
+        ]
+      }
+    ],
+    "6:2": [
+      {
+        id: "learning-actions",
+        title: "Learning Actions",
+        words: [
+          "FOCUS", "RESEARCH", "SEARCH", "REVIEW", "REVISE", "REPEAT", "REMEMBER", "PRACTISE", "READ SILENTLY", "READ ALOUD",
+          "COUNT", "MARK", "SORT", "WORK IN PAIRS", "WORK IN GROUPS", "IN TURNS", "ONE AFTER ANOTHER", "EXERCISE", "ACTIVITY"
+        ]
+      },
+      {
+        id: "time-sequence",
+        title: "Time & Sequence",
+        words: ["BEFORE", "AFTER", "FIRSTLY"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "REST", "BRUSH", "RECYCLE", "EASILY", "TASK", "TOGETHER", "SHARE", "HABIT", "LEVEL", "DIARY", "LEARNING", "TEACHING", "CREATIVE", "CONTINUE"
+        ]
+      }
+    ],
+    "6:3": [
+      {
+        id: "accessories-clothing",
+        title: "Accessories & Clothing",
+        words: [
+          "NECKLACE", "TIGHTS", "TRAINERS", "JEWELLERY", "WALLET", "POCKET", "KIT", "BRACELET", "PURSE", "CHAIN", "SWIMSUIT"
+        ]
+      },
+      {
+        id: "personality-descriptions",
+        title: "Personality & Descriptions",
+        words: [
+          "BRILLIANT", "PERSONALITY", "SOCIAL", "WEAK", "LOVELY", "ATTRACTIVE", "CLEVER", "CRAZY", "LAZY", "RUDE",
+          "POLITE", "CARING", "PATIENT", "SERIOUS", "INDEPENDENT", "ORGANIZED", "HELPFUL", "SIMPLE", "FOCUSED", "TIDY"
+        ]
+      },
+      {
+        id: "body-parts",
+        title: "Body Parts",
+        words: [
+          "BACK", "STOMACH", "HEART", "SKIN", "ANKLE", "KNEE", "NECK", "FINGER", "ARM", "BODY",
+          "EYE", "FACE", "FOOT", "HAIR", "HAND", "HEAD", "NOSE", "TOOTH", "TEETH", "LEG"
+        ]
+      },
+      {
+        id: "manner-adverbs",
+        title: "Manner Adverbs",
+        words: ["SADLY", "HAPPILY"]
+      }
+    ],
+    "6:4": [
+      {
+        id: "household-objects",
+        title: "Household Objects",
+        words: [
+          "RUBBISH BIN", "BOOKSHELF", "CLOCK", "LIGHT", "PILLOW", "REFRIGERATOR", "BLANKET", "BOX", "CARPET", "MIRROR",
+          "COOKER", "CURTAIN", "DRAWER", "FURNITURE", "KEY", "SHELF", "SINK", "TOWEL", "CHOPPING BOARD"
+        ]
+      },
+      {
+        id: "professions-workplace-roles",
+        title: "Professions & Workplace Roles",
+        words: [
+          "AUTHOR", "COOK", "BUSINESSMAN", "BOSS", "DENTIST", "DESIGNER", "DETECTIVE", "DIRECTOR", "EMPLOYEE", "MANAGER", "EMPLOYER",
+          "SOLDIER", "ASSISTANT", "JOURNALIST", "LAWYER", "PAINTER", "PROFESSOR", "PILOT", "REPORTER", "ENGINEER", "OFFICER", "FARMER"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "ROOF", "FLAT", "APARTMENT", "ENTRANCE", "FLOOR", "HEATING", "YOUTH ROOM", "DOWNSTAIRS", "UPSTAIRS",
+          "COMPANY", "CONSTRUCTION", "EARN", "FACTORY", "STRICT", "AMBITIOUS"
+        ]
+      }
+    ],
+    "6:5": [
+      {
+        id: "transportation",
+        title: "Transportation",
+        words: [
+          "PUBLIC TRANSPORT", "VEHICLE", "UNDERGROUND", "SUBWAY", "VAN", "SHIP", "LORRY", "TRUCK", "MOTORCYCLE", "TROLLEY", "TRAM"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "FESTIVAL", "CELEBRATE", "AUDIENCE", "MUSICIAN", "WEDDING", "JAZZ", "ROCK", "PERFORM", "RAISE MONEY", "PRACTICE", "RIDE", "SKATE",
+          "TIRED", "PLEASED", "ORGANIZE", "LOCAL", "NEIGHBORHOOD", "PARKING", "SIGN", "DRIVING", "DIRECTION", "WHEEL", "PETROL", "GAS STATION",
+          "OVERPASS", "UNDERPASS", "RUSH", "GO STRAIGHT", "GO ALONG", "SLOWLY", "GO PAST"
+        ]
+      }
+    ],
+    "6:6": [
+      {
+        id: "countries",
+        title: "Countries",
+        words: [
+          "ENGLAND", "GERMANY", "FRANCE", "GREECE", "SPAIN", "ITALY", "AUSTRIA", "CYPRUS", "POLAND", "DENMARK", "BELGIUM", "NETHERLANDS", "SWEDEN", "INDIA"
+        ]
+      },
+      {
+        id: "nationalities-languages",
+        title: "Nationalities & Languages",
+        words: [
+          "ENGLISH", "GERMAN", "FRENCH", "GREEK", "SPANISH", "ITALIAN", "AUSTRIAN", "TURKISH CYPRIOT", "TURKISH", "POLISH", "DANISH", "BELGIAN", "DUTCH", "SWEDISH", "INDIAN", "FOREIGN LANGUAGE"
+        ]
+      },
+      {
+        id: "food",
+        title: "Food",
+        words: [
+          "INGREDIENT", "DESSERT", "APPETISER", "MAIN COURSE", "DISH", "HEAT", "SOUR", "HOMEMADE", "SPICY", "DUMPLINGS", "BITTER", "CRUNCHY", "HIGH QUALITY", "FLAVOURFUL", "STREET FOOD"
+        ]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "COUNTRY", "CAPITAL", "FLAG", "TRADITIONAL", "NATION", "GOVERNMENT", "HERITAGE", "NATIONALITY", "OFFICIAL", "HISTORIC",
+          "DRY", "FOOD STALLS", "POPUP MARKET", "EXPERIENCE", "COMPETITION", "INCREDIBLE", "GORGEOUS", "EVERYWHERE", "NOWHERE", "SOMEWHERE", "ANYWHERE"
+        ]
+      }
+    ],
+    "6:7": [
+      {
+        id: "outdoor-adventure-activities",
+        title: "Outdoor & Adventure Activities",
+        words: [
+          "CLIMBING", "ADVENTURE", "SAILING", "SNOWBOARDING", "HIKING", "RAFTING", "CAMPING", "CYCLE", "FISHING", "SKIING", "RUN"
+        ]
+      },
+      {
+        id: "words-about-environment",
+        title: "Words about Environment",
+        words: ["PREVENT", "RECYCLE", "RUBBISH", "PLANT", "PICK", "PROTECT", "REDUCE", "SAVE WATER", "REUSABLE", "DESTROY"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "INCREASE", "REMOVE", "REPLACE", "SOLVE", "AGAINST", "DANGER", "ENERGY", "HEAT", "POLLUTION", "SMOKE", "HIGH", "REALIZE"
+        ]
+      }
+    ],
+    "6:8": [
+      {
+        id: "space-planets",
+        title: "Space & Planets",
+        words: ["MOON", "SUN", "MERCURY", "VENUS", "MARS", "JUPITER", "SATURN", "NEPTUNE", "ATMOSPHERE", "ORBIT"]
+      },
+      {
+        id: "extreme-weather-conditions",
+        title: "Extreme Weather Conditions",
+        words: ["STORM", "THUNDER", "LIGHTNING", "DROUGHT", "FLOOD", "HURRICANE", "BLIZZARD", "FREEZING"]
+      },
+      {
+        id: "other-words",
+        title: "Other Words",
+        words: [
+          "POPULATION", "EXPECT", "INVENT", "FLYING", "NATURE", "LIGHT", "LAND", "BRIGHT", "EXPERT", "GOAL", "KNOWLEDGE", "POSSIBILITY",
+          "PURPOSE", "TECHNOLOGY", "SOURCE", "PREDICT", "HOPE", "CLOSE", "FAR", "PEACE", "DISTANCE", "RUN OUT", "ALIVE", "EXIST"
+        ]
+      }
+    ],
     "7:1": [
       {
         id: "personality-relationships",
