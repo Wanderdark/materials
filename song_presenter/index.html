@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Song Presenter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+  </script>
+</head>
+<body>
+  <main class="app-shell">
+
+    <!-- ═══════════ LIBRARY ═══════════ -->
+    <section id="libraryScreen" class="library-screen">
+      <div class="brand-lockup">
+        <span class="brand-kicker">CLASSROOM TOOL</span>
+        <h1>SONG<br><em>PRESENTER</em></h1>
+        <p>Teach vocabulary through songs with pre and during listening activities.</p>
+        <div class="brand-chips">
+          <span class="brand-chip">🖼️ Word &amp; picture match</span>
+          <span class="brand-chip">🎧 Fill the lyrics</span>
+        </div>
+        <span class="brand-credit">Designed by Adil Fırat OKTAV</span>
+        <button id="resetProgressButton" class="secondary-button reset-progress-button">RESET</button>
+      </div>
+      <div class="library-card">
+        <div class="selection-heading"><span>♪</span><div><h2>Choose a song</h2><p>Pick a song to start the lesson.</p></div></div>
+        <div id="libraryFilterBar" class="library-filter-bar hidden">
+          <button id="artistBackButton" class="icon-button" aria-label="Back to all songs">←</button>
+          <strong id="artistFilterName"></strong>
+        </div>
+        <div id="songGrid" class="song-grid" aria-label="Song selection"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════ ACTIVITY SHELL ═══════════ -->
+    <section id="activityScreen" class="activity-screen hidden">
+      <header class="activity-header">
+        <button id="backButton" class="icon-button">BACK</button>
+        <div class="session-info">
+          <span id="songArtistLabel">ARTIST</span>
+          <strong id="songTitleLabel">SONG TITLE</strong>
+        </div>
+        <span class="tool-credit">Tool Designed by Adil Fırat OKTAV</span>
+        <nav class="stage-stepper" id="stageStepper">
+          <span data-stage="0"><b>1</b>PRE-LISTENING</span><i></i>
+          <span data-stage="1"><b>2</b>DURING-LISTENING</span>
+        </nav>
+        <button id="liteButton" class="icon-button" title="Low-performance mode: disables climax effects">LITE</button>
+        <button id="fullscreenButton" class="icon-button">FULL</button>
+      </header>
+
+      <!-- ── PAGE 1 · PRE-LISTENING ── -->
+      <div id="preStage" class="stage">
+        <article class="stage-card pre-card">
+          <div class="pre-word-rail">
+            <p class="panel-kicker">WORDS</p>
+            <div id="preWordBank" class="pre-word-bank"></div>
+          </div>
+          <div id="preImageGrid" class="pre-image-grid"></div>
+        </article>
+      </div>
+
+      <!-- ── PAGE 2 · DURING-LISTENING ── -->
+      <div id="duringStage" class="stage hidden">
+        <article class="stage-card during-card">
+          <div class="player-rail">
+            <div id="playerVisual" class="player-visual"></div>
+            <div class="player-meta">
+              <p id="playerSongTitle" class="player-song-title"></p>
+              <p id="playerSongArtist" class="player-song-artist"></p>
+            </div>
+            <div class="player-progress" id="playerProgress"><span id="playerProgressBar"></span></div>
+            <div class="player-time"><span id="playerTimeNow">0:00</span><span id="playerTimeTotal">0:00</span></div>
+            <div class="player-buttons">
+              <button id="replayButton" class="player-button" title="Replay">⟲</button>
+              <button id="playButton" class="player-button play" title="Play">▶</button>
+              <button id="videoButton" class="player-button video-btn" title="Show video">VID</button>
+              <button id="micButton" class="player-button karaoke-btn" title="Karaoke video" disabled>🎤</button>
+            </div>
+          </div>
+          <div class="lyrics-rail">
+            <p class="panel-kicker">WORD BANK</p>
+            <div id="duringWordBank" class="during-word-bank"></div>
+            <p class="panel-kicker lyrics-kicker">LYRICS · fill the gaps while you listen</p>
+            <div id="lyricsBox" class="lyrics-box"></div>
+          </div>
+        </article>
+      </div>
+
+      <footer class="activity-footer">
+        <button id="prevStageButton" class="secondary-button invisible">← PREVIOUS</button>
+        <div id="stageStatus" class="stage-status"></div>
+        <button id="nextStageButton" class="primary-button" disabled>NEXT →</button>
+      </footer>
+    </section>
+
+    <!-- ═══════════ COMPLETE ═══════════ -->
+    <section id="completeScreen" class="complete-screen hidden">
+      <div class="complete-card">
+        <p class="brand-kicker">LESSON COMPLETE</p>
+        <h1>GREAT<br><em>JOB!</em></h1>
+        <p id="completeSummary">You matched the words and filled the lyrics.</p>
+        <div class="complete-actions">
+          <button id="restartButton" class="secondary-button">REPLAY THIS SONG</button>
+          <button id="libraryButton" class="primary-button">BACK TO LIBRARY</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <audio id="songAudio" preload="metadata"></audio>
+
+  <script src="toast.js"></script>
+  <script src="songs.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

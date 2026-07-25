@@ -5,6 +5,18 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://adilhoca.com/student-zone/index.html</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://adilhoca.com/vocab_presenter/index.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adilhoca.com/func_presenter/index.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://adilhoca.com/word_rivals/index.html</loc>
     <priority>0.8</priority>
   </url>
@@ -25,11 +37,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://adilhoca.com/wordopia/WORDOPIA.html</loc>
+    <loc>https://adilhoca.com/wordopia/index.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://adilhoca.com/vocab_presenter/index.html</loc>
+    <loc>https://adilhoca.com/word_duel/index.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -37,7 +49,23 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://adilhoca.com/word_reveal/sp.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://adilhoca.com/word_quest/index.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adilhoca.com/word_overlord/index.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adilhoca.com/word_crush/index.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://adilhoca.com/word_crush/gemoria_class.html</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

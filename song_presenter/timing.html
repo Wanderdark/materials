@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timing Studio — Song Presenter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+    textarea { user-select: text; -webkit-user-select: text; }
+    :root {
+      --bg: #03091b; --panel: rgba(10, 20, 48, .9); --text: #f4f7ff; --muted: #8fa6d9;
+      --line: rgba(143, 166, 255, .22); --blue: #6688ff; --yellow: #ffd84d; --mint: #65e6b8;
+      --display: "Barlow Condensed", "Segoe UI", sans-serif;
+    }
+    body { min-height: 100vh; margin: 0; padding: 18px 24px; color: var(--text);
+      background: radial-gradient(circle at 12% 10%, rgba(52,87,213,.24), transparent 30%), var(--bg);
+      font-family: Inter, "Segoe UI", Arial, sans-serif; }
+    .studio { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(0, 1.4fr); grid-template-rows: auto minmax(0, 1fr); gap: 16px; height: calc(100vh - 36px); }
+    header { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; }
+    header h1 { margin: 0; font-family: var(--display); font-size: 30px; letter-spacing: .05em; }
+    header h1 em { color: var(--yellow); font-style: normal; }
+    .icon-button { padding: 10px 16px; border: 1px solid var(--line); border-radius: 12px; color: var(--text); background: #142650; cursor: pointer; font-weight: 900; letter-spacing: .06em; font-size: 13px; text-decoration: none; }
+    .icon-button:hover { border-color: var(--blue); }
+    select { padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; color: var(--text); background: #142650; font: inherit; font-weight: 700; }
+    .hint { margin-left: auto; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-align: right; line-height: 1.5; }
+    .hint b { color: var(--yellow); }
+
+    .left, .right { display: flex; flex-direction: column; gap: 12px; min-height: 0; padding: 16px; border: 1px solid rgba(255,255,255,.1); border-radius: 20px; background: var(--panel); }
+    .video-box { position: relative; width: 100%; aspect-ratio: 16/9; max-height: 34vh; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(--line); flex-shrink: 0; }
+    .video-box video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+    .clock { font-family: var(--display); font-size: 44px; font-weight: 800; letter-spacing: .06em; color: var(--yellow); text-align: center; line-height: 1; }
+    .clock small { font-size: 22px; color: var(--muted); }
+    .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .controls button { min-width: 54px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; color: var(--text); background: #142650; cursor: pointer; font-weight: 900; font-size: 14px; }
+    .controls button:hover { border-color: var(--yellow); }
+    .controls button.play { background: var(--yellow); color: #111833; border-color: var(--yellow); min-width: 74px; font-size: 16px; }
+    .controls button.speed-on { border-color: var(--mint); color: var(--mint); }
+    .action-banner { padding: 12px; border-radius: 12px; text-align: center; font-family: var(--display); font-size: 21px; letter-spacing: .05em; background: rgba(255,216,77,.1); border: 1px dashed rgba(255,216,77,.5); color: var(--yellow); }
+    .action-banner.end-phase { background: rgba(101,230,184,.1); border-color: rgba(101,230,184,.5); color: var(--mint); }
+    .action-banner.done { background: rgba(101,230,184,.16); border-style: solid; color: var(--mint); }
+
+    .hidden { display: none !important; }
+    .paste-bar { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .paste-hint { color: var(--muted); font-size: 11.5px; font-weight: 700; }
+    .paste-panel { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .paste-panel textarea { min-height: 160px; max-height: 30vh; }
+    .paste-panel .load { align-self: flex-end; border-color: rgba(101,230,184,.5); color: var(--mint); }
+    .lines { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; scrollbar-width: thin; scrollbar-color: #29416f transparent; }
+    .line { display: grid; grid-template-columns: 26px 34px minmax(0,1fr) 170px 26px; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 10px; border: 1px solid transparent; cursor: pointer; }
+    .line:hover { border-color: var(--line); }
+    .line .clr { width: 24px; height: 24px; padding: 0; border: 1px solid transparent; border-radius: 7px; background: none; color: transparent; cursor: pointer; font-size: 13px; font-weight: 900; line-height: 1; }
+    .line:hover .clr, .line.current .clr { color: #ff8066; }
+    .line .clr:hover { border-color: #ff8066; background: rgba(255,128,102,.12); }
+    .line .del { width: 24px; height: 24px; padding: 0; border: 1px solid transparent; border-radius: 7px; background: none; color: transparent; cursor: pointer; font-size: 12px; font-weight: 900; line-height: 1; }
+    .line:hover .del, .line.current .del { color: #ff8066; }
+    .line .del:hover { border-color: #ff8066; background: rgba(255,128,102,.18); }
+    .line .num { color: var(--muted); font-size: 11px; font-weight: 900; text-align: right; }
+    .line .txt { font-size: 15px; font-weight: 700; color: #c4d2f5; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .line .tm { font-family: var(--display); font-size: 15px; letter-spacing: .04em; color: var(--muted); text-align: right; white-space: nowrap; }
+    .line.current { border-color: var(--yellow); background: rgba(255,216,77,.08); }
+    .line.current .txt { color: var(--yellow); }
+    .line.timed .tm { color: var(--mint); }
+    .out-wrap { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; max-height: 34vh; }
+    .out-head { display: flex; align-items: center; gap: 10px; }
+    .out-head span { color: var(--muted); font-size: 11px; font-weight: 900; letter-spacing: .14em; }
+    .out-head button { margin-left: auto; }
+    textarea { flex: 1; min-height: 130px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: #060d22; color: #b8f5d8; font: 12.5px/1.6 Consolas, monospace; resize: none; scrollbar-width: thin; }
+  </style>
+</head>
+<body>
+  <div class="studio">
+    <header>
+      <a class="icon-button" href="index.html">← TOOL'A DÖN</a>
+      <h1>TIMING <em>STUDIO</em></h1>
+      <select id="songSelect"></select>
+      <div class="hint">
+        <b>SPACE</b> başlangıç/bitiş kaydet · <b>Z</b> geri al · <b>X</b> seçili satırı temizle · <b>K</b> oynat/durdur<br>
+        <b>← →</b> 3 sn sar · satıra tıkla = oradan devam et<br>
+        sağ ✕ = zamanı temizle · sol ✕ = satırı komple sil
+      </div>
+    </header>
+
+    <div class="left">
+      <div class="video-box"><video id="media" playsinline></video></div>
+      <div class="clock" id="clock">0:00<small>.000</small></div>
+      <div class="controls">
+        <button id="seekBack">−3s</button>
+        <button id="playBtn" class="play">▶</button>
+        <button id="seekFwd">+3s</button>
+        <button data-speed="0.5">0.5×</button>
+        <button data-speed="0.75">0.75×</button>
+        <button data-speed="1" class="speed-on">1×</button>
+      </div>
+      <div class="action-banner" id="banner">SPACE → 1. satırın BAŞLANGICI</div>
+      <div class="out-wrap">
+        <div class="out-head">
+          <span>ÇIKTI — songs.js'e yapıştır</span>
+          <button class="icon-button" id="copyBtn">📋 KOPYALA</button>
+          <button class="icon-button" id="resetBtn">SIFIRLA</button>
+        </div>
+        <textarea id="output" readonly spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="paste-bar">
+        <button class="icon-button" id="pasteToggle">📋 DÜZ SÖZ YAPIŞTIR</button>
+        <span class="paste-hint">songs.js'e girmeden, sözleri buraya yapıştırıp zamanla</span>
+      </div>
+      <div id="pastePanel" class="paste-panel hidden">
+        <textarea id="pasteBox" spellcheck="false" placeholder="Şarkı sözlerini satır satır buraya yapıştır...&#10;Boş satırlar otomatik atlanır.&#10;Boşluk kelimelerini <kelime> şeklinde işaretleyebilirsin (sonradan da olur)."></textarea>
+        <button class="icon-button load" id="pasteLoad">⤵ SATIRLARA BÖL VE YÜKLE</button>
+      </div>
+      <div class="lines" id="linesBox"></div>
+    </div>
+  </div>
+
+  <script src="songs.js"></script>
+  <script>
+  (() => {
+    "use strict";
+    const $ = (id) => document.getElementById(id);
+    const media = $("media");
+
+    let lines = [];        // {text, from, to}
+    let idx = 0;           // hedef satır
+    let phase = "start";   // "start" | "end"
+    let history = [];      // undo için: {idx, phase}
+
+    /* ── Zaman formatı: 2:47.401 (ms sıfırsa 2:47) ── */
+    function fmt(t) {
+      if (t == null) return "—";
+      const m = Math.floor(t / 60);
+      const s = t - m * 60;
+      let str = s.toFixed(3);
+      if (str.endsWith(".000")) str = str.slice(0, -4);
+      const [ip, fp] = str.split(".");
+      return m + ":" + ip.padStart(2, "0") + (fp ? "." + fp : "");
+    }
+
+    /* ── Şarkı seçimi ── */
+    const sel = $("songSelect");
+    (window.SONGS || []).forEach((s, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = s.title + " — " + (s.artist || "");
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change", () => loadSong(+sel.value));
+
+    function loadSong(i) {
+      const song = window.SONGS[i];
+      /* Sözleri al (zamanlıysa text'ini, düz string'se kendisini) */
+      lines = (song.lyrics || []).map((l) => ({ text: typeof l === "string" ? l : l.text, from: null, to: null }));
+      idx = 0; phase = "start"; history = [];
+
+      /* Medya: videos/<base>.* dene, hiçbiri yoksa mp3'e düşer
+         (video elementi mp3 de çalar, ekran siyah kalır) */
+      media.innerHTML = "";
+      media.removeAttribute("src");
+      const base = song.audio.split("/").pop().replace(/\.[a-zA-Z0-9]+$/, "");
+      ["mp4", "webm", "mov", "ogv"].forEach((ext) => {
+        const src = document.createElement("source");
+        src.src = "videos/" + base + "." + ext;
+        media.appendChild(src);
+      });
+      const mp3 = document.createElement("source");
+      mp3.src = song.audio;
+      media.appendChild(mp3);
+      media.load();
+      renderLines();
+      renderOutput();
+      renderBanner();
+    }
+
+    /* ── Satır listesi ── */
+    function renderLines() {
+      const box = $("linesBox");
+      box.innerHTML = "";
+      lines.forEach((l, i) => {
+        const div = document.createElement("div");
+        div.className = "line" + (i === idx ? " current" : "") + (l.from != null || l.to != null ? " timed" : "");
+        div.innerHTML = `<button class="del" title="Bu satırı sözlerden komple çıkar">✕</button>
+          <span class="num">${i + 1}</span>
+          <span class="txt">${l.text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</span>
+          <span class="tm">${fmt(l.from)} → ${fmt(l.to)}</span>
+          <button class="clr" title="Bu satırın zamanlarını sil">✕</button>`;
+        div.addEventListener("click", () => { idx = i; phase = "start"; history = []; renderLines(); renderBanner(); });
+        div.querySelector(".clr").addEventListener("click", (e) => {
+          e.stopPropagation();
+          clearLine(i);
+        });
+        div.querySelector(".del").addEventListener("click", (e) => {
+          e.stopPropagation();
+          deleteLine(i);
+        });
+        box.appendChild(div);
+      });
+      const cur = box.children[idx];
+      if (cur) cur.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+
+    /* ── Çıktı ── */
+    function renderOutput() {
+      const esc = (s) => s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+      $("output").value = lines
+        .map((l) => `      { from: "${l.from != null ? fmt(l.from) : "?"}", to: "${l.to != null ? fmt(l.to) : "?"}", text: "${esc(l.text)}" },`)
+        .join("\n");
+    }
+
+    function renderBanner() {
+      const b = $("banner");
+      b.classList.remove("end-phase", "done");
+      if (idx >= lines.length) {
+        b.textContent = "🎉 BİTTİ — çıktıyı kopyala!";
+        b.classList.add("done");
+        return;
+      }
+      if (phase === "start") {
+        b.textContent = `SPACE → ${idx + 1}. satırın BAŞLANGICI`;
+      } else {
+        b.textContent = `SPACE → ${idx + 1}. satırın BİTİŞİ`;
+        b.classList.add("end-phase");
+      }
+    }
+
+    /* ── SPACE: kaydet ── */
+    function mark() {
+      if (idx >= lines.length) return;
+      const t = media.currentTime;
+      history.push({ idx, phase });
+      if (phase === "start") { lines[idx].from = t; phase = "end"; }
+      else { lines[idx].to = t; idx++; phase = "start"; }
+      renderLines(); renderOutput(); renderBanner();
+    }
+    /* ── Tek satırı temizle: zamanları sil, hedefi o satıra al ── */
+    function clearLine(i) {
+      lines[i].from = null;
+      lines[i].to = null;
+      idx = i; phase = "start"; history = [];
+      renderLines(); renderOutput(); renderBanner();
+    }
+    /* ── Satırı komple sil: sözlerden çıkar, listeyi kaydır ── */
+    function deleteLine(i) {
+      lines.splice(i, 1);
+      if (idx > i) idx--;
+      else phase = "start"; // silinen tam hedef satırsa yenisi aynı index'e kayar
+      if (idx > lines.length) idx = lines.length;
+      history = [];
+      renderLines(); renderOutput(); renderBanner();
+    }
+    /* ── Z: geri al ── */
+    function undo() {
+      const prev = history.pop();
+      if (!prev) return;
+      idx = prev.idx; phase = prev.phase;
+      if (phase === "start") lines[idx].from = null; else lines[idx].to = null;
+      renderLines(); renderOutput(); renderBanner();
+    }
+
+    /* ── Player kontrolleri ── */
+    $("playBtn").addEventListener("click", () => { media.paused ? media.play() : media.pause(); });
+    media.addEventListener("play",  () => { $("playBtn").textContent = "⏸"; });
+    media.addEventListener("pause", () => { $("playBtn").textContent = "▶"; });
+    $("seekBack").addEventListener("click", () => { media.currentTime = Math.max(0, media.currentTime - 3); });
+    $("seekFwd").addEventListener("click",  () => { media.currentTime += 3; });
+    document.querySelectorAll("[data-speed]").forEach((b) => {
+      b.addEventListener("click", () => {
+        media.playbackRate = +b.dataset.speed;
+        document.querySelectorAll("[data-speed]").forEach((x) => x.classList.remove("speed-on"));
+        b.classList.add("speed-on");
+      });
+    });
+
+    /* Saat — ms hassasiyetinde akıcı gösterim */
+    function tickClock() {
+      const t = media.currentTime || 0;
+      const m = Math.floor(t / 60);
+      const s = Math.floor(t % 60);
+      const ms = Math.floor((t % 1) * 1000);
+      $("clock").innerHTML = `${m}:${String(s).padStart(2, "0")}<small>.${String(ms).padStart(3, "0")}</small>`;
+      requestAnimationFrame(tickClock);
+    }
+    requestAnimationFrame(tickClock);
+
+    /* ── Klavye ── */
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "TEXTAREA" || e.target.tagName === "SELECT") return;
+      if (e.code === "Space") { e.preventDefault(); mark(); }
+      else if (e.key === "z" || e.key === "Z" || e.key === "Backspace") { e.preventDefault(); undo(); }
+      else if (e.key === "k" || e.key === "K") { media.paused ? media.play() : media.pause(); }
+      else if (e.key === "x" || e.key === "X") { if (idx < lines.length) clearLine(idx); }
+      else if (e.key === "ArrowLeft")  { media.currentTime = Math.max(0, media.currentTime - 3); }
+      else if (e.key === "ArrowRight") { media.currentTime += 3; }
+    });
+
+    /* ── Düz söz yapıştırma modu ── */
+    $("pasteToggle").addEventListener("click", () => {
+      $("pastePanel").classList.toggle("hidden");
+      if (!$("pastePanel").classList.contains("hidden")) $("pasteBox").focus();
+    });
+    $("pasteLoad").addEventListener("click", () => {
+      const raw = $("pasteBox").value.split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+      if (!raw.length) return;
+      lines = raw.map((text) => ({ text, from: null, to: null }));
+      idx = 0; phase = "start"; history = [];
+      $("pastePanel").classList.add("hidden");
+      renderLines(); renderOutput(); renderBanner();
+    });
+
+    /* Butona tıklandıktan sonra odak üstünde kalmasın — yoksa SPACE
+       hem işaretleme yapar hem butonu tekrar tetikler */
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (b) b.blur();
+    });
+
+    /* ── Kopyala / Sıfırla ── */
+    $("copyBtn").addEventListener("click", async () => {
+      const out = $("output");
+      try { await navigator.clipboard.writeText(out.value); }
+      catch (_) { out.focus(); out.select(); document.execCommand("copy"); }
+      $("copyBtn").textContent = "✅ KOPYALANDI";
+      setTimeout(() => { $("copyBtn").textContent = "📋 KOPYALA"; }, 1800);
+    });
+    $("resetBtn").addEventListener("click", () => {
+      lines.forEach((l) => { l.from = null; l.to = null; });
+      idx = 0; phase = "start"; history = [];
+      renderLines(); renderOutput(); renderBanner();
+    });
+
+    /* ── Başlat ── */
+    if ((window.SONGS || []).length) loadSong(0);
+  })();
+  </script>
+</body>
+</html>
