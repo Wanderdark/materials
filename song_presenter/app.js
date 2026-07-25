@@ -372,6 +372,7 @@
       chip.classList.add("placed");
       if (selectedChip === chip) selectedChip = null;
       playSfx(sfxCorrect);
+      window.TeacherControl?.onCorrect();
       if (els.preImageGrid.querySelectorAll(".pre-item.done").length === song.words.length) {
         completeStage();
         ToastManager.show("🎉 ALL WORDS MATCHED! PRESS NEXT.", null, 4000);
@@ -875,6 +876,7 @@
         if (g !== gap) g.classList.add("auto-filled"); // kardeş boşluklara pop efekti
       });
       playSfx(sfxCorrect);
+      window.TeacherControl?.onCorrect();
       chip.classList.add("placed");
       chip.classList.remove("selected");
       if (selectedChip === chip) selectedChip = null;
