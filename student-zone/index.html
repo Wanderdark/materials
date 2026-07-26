@@ -30,6 +30,7 @@
       <a class="activity-card words reveal" href="../vocab_presenter/index.html?mode=student" data-zone-route="vocabulary"><img src="../images/thumbnails/word_presenter_student.webp" width="640" height="360" alt="Vocabulary activity preview"><div class="activity-copy"><span class="activity-icon" aria-hidden="true">Aa</span><h3>Learn Words</h3><p>Explore new vocabulary through pictures, flashcards and short challenges.</p><span class="card-cta">Start Vocabulary <b aria-hidden="true">→</b></span></div></a>
       <a class="activity-card grammar reveal" href="../func_presenter/index.html?mode=student" data-zone-route="grammar"><img src="../images/thumbnails/func_presenter_student.webp" width="640" height="360" alt="Grammar activity preview"><div class="activity-copy"><span class="activity-icon" aria-hidden="true">⇄</span><h3>Practise Grammar</h3><p>Review grammar topics and test yourself with interactive activities.</p><span class="card-cta">Start Grammar <b aria-hidden="true">→</b></span></div></a>
       <button class="activity-card games reveal" type="button" data-games-trigger aria-haspopup="dialog" aria-controls="games-hub"><img src="../images/thumbnails/games_student.webp" width="640" height="360" alt="Interactive games preview"><span class="activity-copy"><span class="activity-icon" aria-hidden="true">★</span><span class="activity-title">Play Games</span><span class="activity-description">Build vocabulary skills through fast, visual solo games.</span><span class="card-cta">Explore Games <b aria-hidden="true">→</b></span></span></button>
+      <a class="activity-card words reveal" href="../song_presenter/index.html?mode=student"><img src="../images/thumbnails/sing_with_ella.webp" width="640" height="360" alt="Sing with Ella preview"><div class="activity-copy"><span class="activity-icon" aria-hidden="true">♪</span><h3>Sing with Ella</h3><p>Listen to songs, practise the lyrics and sing along in karaoke mode.</p><span class="card-cta">Start Singing <b aria-hidden="true">→</b></span></div></a>
     </div></section>
     <section id="student-progress" class="student-progress-section shell reveal" aria-labelledby="student-progress-title"><div class="student-progress-head"><div><p class="kicker">Your adventure</p><h2 id="student-progress-title">Daily quests and rewards</h2></div><p>Track your rank, daily quests and achievements from your Student HUD.</p></div><div class="student-progress" data-student-progress></div></section>
   </main>
@@ -41,5 +42,27 @@
   <script>window.__studentHudAutoCreate=false;sessionStorage.setItem("fpStudentMode","1");</script>
   <script src="../func_presenter/student.js"></script>
   <script src="student-zone.js"></script>
+  <script>
+    (() => {
+      const syncSongQuestProgress = () => {
+        let profile;
+        try { profile = JSON.parse(localStorage.getItem("fpStudentProfile") || "{}"); } catch (_) { return; }
+        const daily = profile?.daily;
+        if (!daily) return;
+        document.querySelectorAll(".student-quest-card").forEach((card) => {
+          const label = card.querySelector("strong")?.textContent;
+          const progress = label === "Listen to 1 song with Ella" ? (daily.songsListenedToday || 0)
+            : label === "Sing 1 song with Ella (Karaoke)" ? (daily.karaokeSongsToday || 0) : null;
+          if (progress == null || card.classList.contains("claimed")) return;
+          const complete = progress >= 1;
+          card.classList.toggle("ready", complete);
+          card.querySelector("em").textContent = `${Math.min(progress, 1)} / 1`;
+          card.querySelector(".student-quest-bar i").style.width = `${complete ? 100 : 0}%`;
+        });
+      };
+      window.addEventListener("studentprofilechange", syncSongQuestProgress);
+      requestAnimationFrame(syncSongQuestProgress);
+    })();
+  </script>
 </body>
 </html>

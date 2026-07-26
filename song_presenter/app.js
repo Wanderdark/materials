@@ -26,6 +26,7 @@
     playButton: $("playButton"), videoButton: $("videoButton"), micButton: $("micButton"), replayButton: $("replayButton"),
     duringWordBank: $("duringWordBank"), lyricsBox: $("lyricsBox"),
     restartButton: $("restartButton"), libraryButton: $("libraryButton"), resetProgressButton: $("resetProgressButton"),
+    menuReturnButton: $("menuReturnButton"), cornerMenuReturnButton: $("cornerMenuReturnButton"),
     completeSummary: $("completeSummary"),
     audio: $("songAudio")
   };
@@ -110,7 +111,7 @@
   /* kareoke/ klasöründe aynı isimli karaoke videosu arar */
   function getKaraokeCandidates(s) {
     const base = s.audio.split("/").pop().replace(/\.[a-zA-Z0-9]+$/, "");
-    return ["mp4", "webm", "mov", "ogv"].map((ext) => "kareoke/" + base + "." + ext);
+    return ["mp3"].map((ext) => "kareoke/" + base + "." + ext);
   }
 
   /* ════════════════════════════════════════════════════════════════════
@@ -222,7 +223,7 @@
   function addSongCard(s) {
     const listened = getListenedSet().has(s.id);
     const card = document.createElement("button");
-    card.className = "song-card" + (listened ? " listened" : "");
+    card.className = "song-card" + (s.image ? " has-cover" : "") + (listened ? " listened" : "");
     card.type = "button";
     const cover = s.image
       ? `<img src="${s.image}" alt="${s.title}">`
@@ -244,8 +245,11 @@
     const card = document.createElement("button");
     card.className = "song-card artist-card";
     card.type = "button";
+    const artistCover = window.ARTIST_COVERS?.[artist];
     const withImage = list.find((s) => s.image);
-    const cover = withImage
+    const cover = artistCover
+      ? `<img src="${artistCover}" alt="${artist}">`
+      : withImage
       ? `<img src="${withImage.image}" alt="${artist}">`
       : `<span class="cover-note">♪♫</span>`;
     card.innerHTML = `
@@ -373,12 +377,14 @@
       if (selectedChip === chip) selectedChip = null;
       playSfx(sfxCorrect);
       window.TeacherControl?.onCorrect();
+      window.StudentGame?.onCorrect();
       if (els.preImageGrid.querySelectorAll(".pre-item.done").length === song.words.length) {
         completeStage();
         ToastManager.show("🎉 ALL WORDS MATCHED! PRESS NEXT.", null, 4000);
       }
     } else {
       playSfx(sfxWrong);
+      window.StudentGame?.onWrong();
       ToastManager.show("❌ TRY AGAIN!", "warn", 2200);
       slot.classList.add("wrong");
       setTimeout(() => slot.classList.remove("wrong"), 420);
@@ -477,7 +483,7 @@
         return;
       }
       lastMediaT = t;
-      if (karaokeLines.length && playerMode !== "karaoke") updateKaraoke(t);
+      if (karaokeLines.length) updateKaraoke(t);
       if (climaxMoments.length || karaokeClimaxMoments.length) updateClimax(t);
       if (playerMode === "video" && autoZoomWindows.length) updateAutoZoom(t);
       if (censoredWindows.length || karaokeCensoredWindows.length) updateCensor(t);
@@ -488,6 +494,8 @@
       updatePlayIcon(false);
       stopClimax();
       const n = $("coverNote"); if (n) n.classList.remove("playing");
+      if (playerMode === "karaoke") window.StudentGame?.onKaraokeComplete();
+      else window.StudentGame?.onSongListened(song?.id);
       /* Video kaynaklı şarkıda video bitince kapak (thumbnail) geri gelir */
       if (videoIsSource && playerMode === "video") setVideoVisible(false);
     };
@@ -514,6 +522,38 @@
       const line = karaokeLines[karaokeIdx].el;
       requestAnimationFrame(() => line.scrollIntoView({ block: "center", behavior: "smooth" }));
     }
+  }
+
+  function revealKaraokeLyrics() {
+    els.lyricsBox.querySelectorAll(".lyric-gap:not(.filled)").forEach((gap) => {
+      gap.textContent = gap.dataset.word;
+      gap.classList.add("filled");
+    });
+    els.duringWordBank.querySelectorAll(".word-chip").forEach((chip) => {
+      chip.classList.remove("selected");
+      chip.classList.add("placed");
+    });
+    selectedChip = null;
+    completeStage();
+  }
+
+  function enterKaraokeAudio(src) {
+    if (videoEl) { videoEl.pause(); videoEl.remove(); videoEl = null; }
+    els.audio.pause();
+    els.audio.src = src;
+    els.audio.load();
+    showCoverVisual();
+    mediaEl = els.audio;
+    attachPlayerEvents(mediaEl);
+    playerMode = "karaoke";
+    videoIsSource = false;
+    els.videoButton.classList.remove("active");
+    els.micButton.classList.add("active");
+    setKaraokeLayout(false);
+    autoZoomActive = false;
+    censorActive = false;
+    revealKaraokeLyrics();
+    els.audio.play().catch(() => {});
   }
 
   /* Video üzerine binen kapak (thumbnail) katmanı — hem "VID'i göster/gizle"
@@ -681,6 +721,11 @@
       return;
     }
     if (videoEl) { videoEl.pause(); videoEl.remove(); videoEl = null; }
+    if (fromKaraoke) {
+      els.audio.pause();
+      els.audio.src = song.audio;
+      els.audio.load();
+    }
     els.audio.currentTime = (!fromKaraoke && isFinite(els.audio.duration) && t < els.audio.duration) ? t : 0;
     showCoverVisual();
     mediaEl = els.audio;
@@ -728,6 +773,17 @@
       probe.onloadedmetadata = () => onFound(probe.currentSrc);
       probe.load();
     };
+    const probeAudioFor = (candidates, onFound) => {
+      const probe = document.createElement("audio");
+      probe.preload = "metadata";
+      candidates.forEach((src) => {
+        const source = document.createElement("source");
+        source.src = src;
+        probe.appendChild(source);
+      });
+      probe.onloadedmetadata = () => onFound(probe.currentSrc);
+      probe.load();
+    };
     const thisSong = song; // probe geç dönerse şarkı değişmiş olabilir
     videoSrc = null;
     els.videoButton.disabled = true;
@@ -743,7 +799,7 @@
     });
     karaokeSrc = null;
     els.micButton.disabled = true;
-    probeFor(getKaraokeCandidates(song), (src) => {
+    probeAudioFor(getKaraokeCandidates(song), (src) => {
       if (song !== thisSong) return;
       karaokeSrc = src;
       els.micButton.disabled = false;
@@ -877,6 +933,7 @@
       });
       playSfx(sfxCorrect);
       window.TeacherControl?.onCorrect();
+      window.StudentGame?.onCorrect();
       chip.classList.add("placed");
       chip.classList.remove("selected");
       if (selectedChip === chip) selectedChip = null;
@@ -888,6 +945,7 @@
       }
     } else {
       ToastManager.show("❌ TRY AGAIN!", "warn", 2200);
+      window.StudentGame?.onWrong();
       gap.classList.add("wrong");
       setTimeout(() => gap.classList.remove("wrong"), 420);
     }
@@ -907,7 +965,7 @@
   });
   els.micButton.addEventListener("click", () => {
     if (playerMode === "karaoke") switchToAudio();
-    else if (karaokeSrc) enterVideoMode([karaokeSrc], "karaoke");
+    else if (karaokeSrc) enterKaraokeAudio(karaokeSrc);
   });
   els.replayButton.addEventListener("click", () => { if (mediaEl) { mediaEl.currentTime = 0; mediaEl.play(); } });
   els.playerProgress.addEventListener("click", (ev) => {
@@ -955,6 +1013,15 @@
     renderLibrary();
     ToastManager.show("✅ LISTENING HISTORY RESET", null, 3000);
   });
+
+  function returnToMenu() {
+    if (mediaEl) mediaEl.pause();
+    location.href = new URLSearchParams(location.search).get("mode") === "student"
+      ? "../student-zone/index.html"
+      : "../index.html";
+  }
+  els.menuReturnButton.addEventListener("click", returnToMenu);
+  els.cornerMenuReturnButton.addEventListener("click", returnToMenu);
 
   /* Sekme gizlenince müziği durdur (smartboard performansı) */
   document.addEventListener("visibilitychange", () => {

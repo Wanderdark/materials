@@ -63,6 +63,12 @@
     { id: "s10", group: "ON FIRE", icon: "🚀", title: "Unstoppable", desc: "10 correct answers in a row.", reward: 10, test: (p) => p.bestStreak >= 10, progress: (p) => [p.bestStreak, 10] },
     { id: "s20", group: "ON FIRE", icon: "⚡", title: "Lightning Brain", desc: "20 correct answers in a row.", reward: 25, test: (p) => p.bestStreak >= 20, progress: (p) => [p.bestStreak, 20] },
     { id: "s35", group: "ON FIRE", icon: "☄️", title: "Comet Run", desc: "35 correct answers in a row.", reward: 50, badge: "speedy", test: (p) => p.bestStreak >= 35, progress: (p) => [p.bestStreak, 35] },
+    { id: "listen3", group: "MUSIC JOURNEY", icon: "🎧", title: "First Chorus", desc: "Listen to 3 unique songs.", reward: 5, test: (p) => (p.listenedSongIds || []).length >= 3, progress: (p) => [(p.listenedSongIds || []).length, 3] },
+    { id: "listen10", group: "MUSIC JOURNEY", icon: "🎶", title: "Playlist Pro", desc: "Listen to 10 unique songs.", reward: 15, test: (p) => (p.listenedSongIds || []).length >= 10, progress: (p) => [(p.listenedSongIds || []).length, 10] },
+    { id: "listen30", group: "MUSIC JOURNEY", icon: "🏆", title: "Ella's Superfan", desc: "Listen to 30 unique songs.", reward: 35, test: (p) => (p.listenedSongIds || []).length >= 30, progress: (p) => [(p.listenedSongIds || []).length, 30] },
+    { id: "karaoke3", group: "SINGER", icon: "🎤", title: "Singer", desc: "Sing 3 karaoke songs.", reward: 5, test: (p) => (p.karaokeTotal || 0) >= 3, progress: (p) => [p.karaokeTotal || 0, 3] },
+    { id: "karaoke10", group: "SINGER", icon: "🎸", title: "Rock Star", desc: "Sing 10 karaoke songs.", reward: 15, test: (p) => (p.karaokeTotal || 0) >= 10, progress: (p) => [p.karaokeTotal || 0, 10] },
+    { id: "karaoke30", group: "SINGER", icon: "👑", title: "Diva", desc: "Sing 30 karaoke songs.", reward: 35, test: (p) => (p.karaokeTotal || 0) >= 30, progress: (p) => [p.karaokeTotal || 0, 30] },
     { id: "t1", group: "QUESTS", icon: "📋", title: "First Quest", desc: "Claim your first daily quest.", reward: 5, test: (p) => p.tasksClaimed >= 1, progress: (p) => [p.tasksClaimed, 1] },
     { id: "t10", group: "QUESTS", icon: "📅", title: "Quest Hunter", desc: "Claim 10 daily quests.", reward: 15, test: (p) => p.tasksClaimed >= 10, progress: (p) => [p.tasksClaimed, 10] },
     { id: "t30", group: "QUESTS", icon: "🗓️", title: "Quest Legend", desc: "Claim 30 daily quests.", reward: 30, badge: "star", test: (p) => p.tasksClaimed >= 30, progress: (p) => [p.tasksClaimed, 30] },
@@ -79,13 +85,15 @@
       { id: "e-c6", row: "correct", metric: "correct", label: "Give 6 correct answers", target: 6 },
       { id: "e-p10", row: "points", metric: "points", label: "Earn 10 points", target: 10 },
       { id: "e-s3", row: "streak", metric: "streak", label: "Get 3 correct in a row", target: 3 },
-      { id: "e-c9", row: "correct", metric: "correct", label: "Give 9 correct answers", target: 9 }
+      { id: "e-c9", row: "correct", metric: "correct", label: "Give 9 correct answers", target: 9 },
+      { id: "e-listen1", row: "song-listen", metric: "songListen", label: "Listen to 1 song with Ella", target: 1 }
     ],
     medium: [
       { id: "m-c15", row: "correct", metric: "correct", label: "Give 15 correct answers", target: 15 },
       { id: "m-p20", row: "points", metric: "points", label: "Earn 20 points", target: 20 },
       { id: "m-s6", row: "streak", metric: "streak", label: "Get 6 correct in a row", target: 6 },
-      { id: "m-p25", row: "points", metric: "points", label: "Earn 25 points", target: 25 }
+      { id: "m-p25", row: "points", metric: "points", label: "Earn 25 points", target: 25 },
+      { id: "m-karaoke1", row: "song-karaoke", metric: "songKaraoke", label: "Sing 1 song with Ella (Karaoke)", target: 1 }
     ],
     hard: [
       { id: "h-c30", row: "correct", metric: "correct", label: "Give 30 correct answers", target: 30 },
@@ -119,6 +127,8 @@
       tasksClaimed: 0,
       dailyMasterCount: 0,
       daysPlayed: [],
+      listenedSongIds: [],
+      karaokeTotal: 0,
       unlocked: [],
       claimed: [],
       lastRank: "SPARK",
@@ -162,7 +172,7 @@
       usedRows.add(pool[index].row);
       quests[tier] = { ...pool[index], tier, claimed: false };
     });
-    profile.daily = { date: key, pointsToday: 0, correctToday: 0, bestStreakToday: 0, quests, masterCounted: false };
+    profile.daily = { date: key, pointsToday: 0, correctToday: 0, bestStreakToday: 0, songsListenedToday: 0, karaokeSongsToday: 0, quests, masterCounted: false };
     save();
   }
 
@@ -179,6 +189,8 @@
     if (!daily) return 0;
     if (quest.metric === "points") return daily.pointsToday;
     if (quest.metric === "correct") return daily.correctToday;
+    if (quest.metric === "songListen") return daily.songsListenedToday || 0;
+    if (quest.metric === "songKaraoke") return daily.karaokeSongsToday || 0;
     return daily.bestStreakToday;
   }
 
@@ -680,6 +692,23 @@
     });
   }
 
+  function recordSongActivity(metric, songId) {
+    ensureDaily();
+    markDayPlayed();
+    if (metric === "listen") {
+      profile.daily.songsListenedToday = (profile.daily.songsListenedToday || 0) + 1;
+      if (!Array.isArray(profile.listenedSongIds)) profile.listenedSongIds = [];
+      if (songId && !profile.listenedSongIds.includes(songId)) profile.listenedSongIds.push(songId);
+    }
+    if (metric === "karaoke") {
+      profile.daily.karaokeSongsToday = (profile.daily.karaokeSongsToday || 0) + 1;
+      profile.karaokeTotal = (profile.karaokeTotal || 0) + 1;
+    }
+    notifyReadyQuests();
+    evaluateAchievements();
+    updateHud();
+  }
+
   window.StudentGame = {
     onCorrect() {
       ensureDaily();
@@ -704,6 +733,12 @@
       profile.wrongTotal += 1;
       profile.wrongRun += 1;
       save();
+    },
+    onSongListened(songId) {
+      recordSongActivity("listen", songId);
+    },
+    onKaraokeComplete() {
+      recordSongActivity("karaoke");
     }
   };
 

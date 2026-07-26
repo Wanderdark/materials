@@ -9,6 +9,9 @@
    id     : benzersiz kısa isim (boşluksuz, küçük harf)
    title  : şarkının adı (library kartında görünür)
    artist : sanatçı / kaynak (library kartında görünür)
+   artist cover : Aynı sanatçının birden fazla şarkısı varsa ana ekrandaki
+            albüm klasöründe görünür. Aşağıdaki ARTIST_COVERS'a ekle,
+            ör. Ella: "thumbnails/ella.webp".
    audio  : mp3 dosyası — songs/ klasörüne koy, ör. "songs/dosya.mp3"
             ÖNEMLİ: videos/ klasöründe aynı isimli video varsa mp3
             KOYMANA GEREK YOK — ses otomatik videodan çalınır, ekranda
@@ -107,6 +110,10 @@
             VİDEOSUNA göre gir (mp3/VID ile aynı olmayabilir).
    ═══════════════════════════════════════════════════════════════════════ */
 
+window.ARTIST_COVERS = {
+  Ella: "thumbnails/ella.webp"
+};
+
 window.SONGS = [
 
   /* ── ŞARKI 1 — LEARNING TOGETHER GROWING TOGETHER ───────────────────────────────────── */
@@ -123,12 +130,12 @@ window.SONGS = [
 
     climax: [
       { at: "0:51", to: "1:18" },
-      { at: "2:35", to: "3:00" }
+      { at: "2:32", to: "3:00" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
-    kareoke_climax: [{ at: "0:59", to: "1:33" },
-      { at: "2:37", to: "3:10" }],
+    kareoke_climax: [{ at: "0:51", to: "1:18" },
+      { at: "2:32", to: "3:00" }],
 
     /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
     censored: [],
@@ -199,7 +206,105 @@ window.SONGS = [
       { from: "2:41.795", to: "2:42.994", text: "Learn and <grow>," },
       { from: "2:43.147", to: "2:44.219", text: "We have so much" },
       { from: "2:44.595", to: "2:48.019", text: "To show the <world>." },]
+  },
+
+/* ── ŞARKI 2 — SIDE BY SIDE ───────────────────────────────────── */
+  {
+    id: "sidebyside",
+    title: "Side by side",
+    artist: "Ella",
+    audio: "songs/sidebyside.mp3",
+    video: null,
+    image: "thumbnails/sidebyside.webp",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "1:02", to: "1:27" },
+      { at: "2:12", to: "2:38" },
+      { at: "3:10", to: "3:49" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [
+      { at: "1:02", to: "1:27" },
+      { at: "2:12", to: "2:38" },
+      { at: "3:10", to: "3:49" }
+],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "lonely",    tr: "yalnız",          image: "images/alone.webp" },
+      { word: "shine",   tr: "parlamak",         image: "images/shine.webp" },
+      { word: "roads",  tr: "yollar",      image: "images/roads.webp" },
+      { word: "memories", tr: "anılar",        image: "images/memories.webp" },
+      { word: "storm",  tr: "fırtına",     image: "images/storm.webp" },
+      { word: "tears",   tr: "gözyaşları", image: "images/tears.webp" },
+      { word: "mind",  tr: "zihin",           image: "images/mind.webp" },
+      { word: "secrets",   tr: "sırlar",         image: "images/secret.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:16.423", to: "0:19.055", text: "Some mornings feel so gray," },
+      { from: "0:19.887", to: "0:22.447", text: "Feeling <lonely> on my way." },
+      { from: "0:23.359", to: "0:27.991", text: "Then you wave, it fades away." },
+      { from: "0:30.175", to: "0:33.215", text: "One little joke, one little smile," },
+      { from: "0:33.823", to: "0:36.799", text: "Makes a dark day <shine> so bright." },
+      { from: "0:37.239", to: "0:38.774", text: "Walking through the school ," },
+      { from: "0:38.966", to: "0:42.126", text: "Sharing dreams along the way," },
+      { from: "0:42.766", to: "0:45.895", text: "Making <memories> day by day." },
+      { from: "0:48.126", to: "0:50.318", text: "Even when the <storm> comes," },
+      { from: "0:51.494", to: "0:54.847", text: "I'll still be around." },
+      { from: "0:55.717", to: "1:02.294", text: "There's one thing I want you to know..." },
+      { from: "1:02.445", to: "1:07.062", text: "Side by side, I'm here for you." },
+      { from: "1:08.949", to: "1:12.197", text: "You're not alone," },
+      { from: "1:12.565", to: "1:14.053", text: "We'll make it through." },
+      { from: "1:16.350", to: "1:21.229", text: "Side by side, I'm here for you." },
+      { from: "1:23.086", to: "1:26.525", text: "You're not alone," },
+      { from: "1:26.725", to: "1:28.181", text: "We'll make it through." },
+      { from: "1:30.645", to: "1:33.501", text: "Sometimes we don't see eye to eye," },
+      { from: "1:33.773", to: "1:37.133", text: "<Tears> may fall, we may cry." },
+      { from: "1:37.525", to: "1:40.693", text: "But one small sorry changes it all," },
+      { from: "1:41.013", to: "1:44.165", text: "And we don't let each other fall." },
+      { from: "1:44.517", to: "1:46.741", text: "You keep my <secrets>," },
+      { from: "1:47.846", to: "1:49.750", text: "I keep yours too." },
+      { from: "1:51.118", to: "1:53.590", text: "No matter what," },
+      { from: "1:54.733", to: "1:56.645", text: "I'll stand by you." },
+      { from: "1:58.981", to: "2:01.603", text: "Even when the <storm> comes," },
+      { from: "2:02.120", to: "2:05.329", text: "I'll still be around." },
+      { from: "2:06.329", to: "2:12.841", text: "There's one thing I want you to know..." },
+      { from: "2:13.056", to: "2:17.609", text: "Side by side, I'm here for you." },
+      { from: "2:19.377", to: "2:22.768", text: "You're not alone," },
+      { from: "2:23.017", to: "2:24.664", text: "We'll make it through." },
+      { from: "2:26.833", to: "2:31.536", text: "Side by side, I'm here for you." },
+      { from: "2:33.617", to: "2:36.745", text: "You're not alone," },
+      { from: "2:37.096", to: "2:38.520", text: "We'll make it through." },
+      { from: "2:41.753", to: "2:45.304", text: "Years may pass, hair turns white." },
+      { from: "2:45.504", to: "2:48.664", text: "Different <roads>, different lives." },
+      { from: "2:48.880", to: "2:52.208", text: "No matter where life may lead," },
+      { from: "2:52.408", to: "2:55.609", text: "In <mind> and heart, we will meet." },
+      { from: "2:56.817", to: "2:59.257", text: "Even when the <storm> comes," },
+      { from: "3:00.073", to: "3:03.185", text: "I'll still be around." },
+      { from: "3:04.177", to: "3:10.674", text: "There's one thing I want you to know..." },
+      { from: "3:10.833", to: "3:15.258", text: "Side by side, I'm here for you." },
+      { from: "3:17.377", to: "3:20.609", text: "You're not alone," },
+      { from: "3:20.841", to: "3:22.561", text: "We'll make it through." },
+      { from: "3:24.601", to: "3:29.465", text: "Side by side, I'm here for you." },
+      { from: "3:31.145", to: "3:34.417", text: "You're not alone," },
+      { from: "3:34.809", to: "3:36.281", text: "We'll make it through..." },
+      { from: "3:38.506", to: "3:40.025", text: "Side by side," },
+      { from: "3:41.889", to: "3:43.386", text: "Side by side," },
+      { from: "3:45.550", to: "3:48.846", text: "Side by side," },
+      { from: "3:49.134", to: "3:53.534", text: "We'll make it through." },
+      { from: "", to: "", text: "Written by Adil Fırat Oktav." },
+      { from: "", to: "", text: "Thanks for listening..." },]
   }
+
+
 
 
   /* ── YENİ ŞARKI EKLEMEK İÇİN ────────────────────────────────────────

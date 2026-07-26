@@ -28,6 +28,7 @@
         </div>
         <span class="brand-credit">Designed by Adil Fırat OKTAV</span>
         <button id="resetProgressButton" class="secondary-button reset-progress-button">RESET</button>
+        <button id="menuReturnButton" class="secondary-button reset-progress-button menu-return-button">BACK TO MENU</button>
       </div>
       <div class="library-card">
         <div class="selection-heading"><span>♪</span><div><h2>Choose a song</h2><p>Pick a song to start the lesson.</p></div></div>
@@ -116,12 +117,16 @@
 
   </main>
 
+  <button id="cornerMenuReturnButton" class="icon-button corner-menu-return-button" type="button" aria-label="Back to menu" title="Back to menu">↩</button>
+
   <audio id="songAudio" preload="metadata"></audio>
 
   <script src="toast.js"></script>
   <script src="songs.js"></script>
   <script src="app.js"></script>
-  <script>window.__forceTeacherControl = true;</script>
+  <script>window.__forceTeacherControl = new URLSearchParams(location.search).get("mode") !== "student";</script>
+  <script src="../modules/profanity-filter.js"></script>
+  <script src="../func_presenter/student.js"></script>
   <script src="../func_presenter/teacher-cloud.js"></script>
   <script src="../func_presenter/teacher-control.js"></script>
 </body>

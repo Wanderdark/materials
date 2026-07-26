@@ -41,6 +41,8 @@ button { font: inherit; } .hidden { display: none !important; }
 .reset-progress-button { align-self: flex-start; padding: 8px 16px; font-size: 12px; letter-spacing: .1em; opacity: .7; text-decoration: none; display: inline-block; width: auto; }
 .reset-progress-button:hover { opacity: 1; border-color: #ff8066; }
 a.reset-progress-button:hover { border-color: var(--yellow); }
+.menu-return-button:hover { border-color: var(--yellow); }
+.corner-menu-return-button { position: fixed; top: 16px; right: 16px; z-index: 100; display: grid; width: 44px; height: 44px; place-items: center; padding: 0; border-radius: 12px; font-size: 23px; line-height: 1; }
 
 .library-card { padding: clamp(22px, 3vw, 38px); border: 1px solid rgba(255,255,255,.10); border-radius: 28px; background: var(--panel); box-shadow: var(--shadow); }
 .selection-heading { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
@@ -61,6 +63,7 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .song-card-body { position: absolute; left: 0; right: 0; bottom: 0; display: grid; gap: 4px; padding: 40px 18px 16px; background: linear-gradient(to top, rgba(4,9,27,.94) 20%, rgba(4,9,27,.6) 60%, transparent 100%); }
 .song-card-body span { font-size: 10px; font-weight: 900; letter-spacing: .15em; }
 .song-card-body strong { font-family: var(--display); font-size: clamp(22px, 2.2vw, 30px); letter-spacing: .03em; line-height: 1.04; text-shadow: 0 2px 10px rgba(0,0,0,.5); }
+.song-card.has-cover .song-card-body { display: none; }
 /* 6-ton rotasyonu */
 .song-card:nth-child(6n+1) { --tone: var(--yellow); } .song-card:nth-child(6n+2) { --tone: var(--mint); }
 .song-card:nth-child(6n+3) { --tone: var(--sky); }    .song-card:nth-child(6n+4) { --tone: var(--coral); }
@@ -229,6 +232,7 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
   .player-rail { border-right: 0; border-bottom: 1px solid var(--line); overflow-y: visible; }
   .lyrics-box { max-height: 52vh; }
 }
+@media (max-width: 640px) { .corner-menu-return-button { top: 10px; right: 10px; } }
 @media (max-width: 620px) {
   .app-shell { padding: 16px; }
   .pre-word-bank { grid-template-columns: repeat(2, 1fr); }
