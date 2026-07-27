@@ -2638,9 +2638,28 @@ function startSelectedExercise(exercise) {
     case "lucky-spin":
       startLuckySpin(exercise);
       return;
+    case "mini-game":
+      startMiniGame(exercise);
+      return;
     default:
       startChoiceExercise(exercise);
   }
+}
+
+function startMiniGame(exercise) {
+  const targetUrl = exercise.url || exercise.href;
+  if (!targetUrl) {
+    console.warn("Mini-game exercise is missing a URL.", exercise);
+    return;
+  }
+  try {
+    if (exercise.gameConfig) {
+      sessionStorage.setItem("funcPresenterMiniGameConfig", JSON.stringify(exercise.gameConfig));
+    }
+  } catch (error) {
+    console.warn("Could not save mini-game config.", error);
+  }
+  window.location.href = targetUrl;
 }
 
 function resetExerciseResultActions() {

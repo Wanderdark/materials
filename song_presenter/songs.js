@@ -302,7 +302,96 @@ window.SONGS = [
       { from: "3:49.134", to: "3:53.534", text: "We'll make it through." },
       { from: "", to: "", text: "Written by Adil Fırat Oktav." },
       { from: "", to: "", text: "Thanks for listening..." },]
+  },
+
+/* ── ŞARKI 3 — IN MY OWN WAY - ELLA ───────────────────────────────────── */
+  {
+    id: "inmyownway",
+    title: "In my own way",
+    artist: "Ella",
+    audio: "songs/inmyownway.mp3",
+    video: null,
+    image: "thumbnails/inmyownway.webp",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "1:05", to: "1:27" },
+      { at: "1:55", to: "2:34" },
+      { at: "2:58", to: "3:44" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [
+      { at: "1:05", to: "1:27" },
+      { at: "1:55", to: "2:34" },
+      { at: "2:58", to: "3:44" }
+],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "voices",    tr: "sesler",          image: "images/voices.webp" },
+      { word: "pretending",   tr: "rol yapmak",         image: "images/pretend.webp" },
+      { word: "scorn",  tr: "küçümsemek",      image: "images/scorn.webp" },
+      { word: "stare", tr: "dik dik bakmak",        image: "images/stare.webp" },
+      { word: "belong",  tr: "ait olmak",     image: "images/belong.webp" },
+      { word: "paths",   tr: "yollar", image: "images/roads.webp" },
+      { word: "shine",  tr: "parlamak",     image: "images/shine.webp" },
+      { word: "forced",   tr: "zoraki", image: "images/forced.webp" },
+    ],
+
+    lyrics: [
+      { from: "0:29.758", to: "0:31.767", text: "Different <voices>" },
+      { from: "0:32.919", to: "0:34.272", text: "In my head," },
+      { from: "0:35.879", to: "0:37.584", text: "'Be like us'," },
+      { from: "0:38.839", to: "0:40.496", text: "That's what they said." },
+      { from: "0:42.336", to: "0:43.871", text: "The same <paths>," },
+      { from: "0:45.255", to: "0:47.367", text: "The same styles," },
+      { from: "0:48.527", to: "0:49.801", text: "But none of them" },
+      { from: "0:51.057", to: "0:53.166", text: "Feels like me." },
+      { from: "0:55.481", to: "0:59.777", text: "Maybe I'm not all that strong." },
+      { from: "1:01.145", to: "1:07.617", text: "Still I know, Where I <belong>." },
+      { from: "1:07.824", to: "1:09.249", text: "No <pretending>," },
+      { from: "1:10.721", to: "1:13.465", text: "No <forced> dreams," },
+      { from: "1:13.832", to: "1:16.929", text: "Life is my own," },
+      { from: "1:17.361", to: "1:19.713", text: "To live in my way." },
+      { from: "1:20.249", to: "1:21.585", text: "No <pretending>," },
+      { from: "1:26.434", to: "1:29.122", text: "No <forced> dreams." },
+      { from: "1:32.586", to: "1:33.963", text: "Some will <scorn>," },
+      { from: "1:35.218", to: "1:37.058", text: "Some will not care." },
+      { from: "1:38.634", to: "1:40.058", text: "Some will stop" },
+      { from: "1:41.628", to: "1:43.428", text: "And simply <stare>." },
+      { from: "1:45.092", to: "1:47.892", text: "But all their noise helps me see," },
+      { from: "1:48.204", to: "1:51.036", text: "The only one I should be" },
+      { from: "1:51.724", to: "1:57.052", text: "Is me..." },
+      { from: "1:57.388", to: "1:58.931", text: "No <pretending>," },
+      { from: "2:00.476", to: "2:03.132", text: "No <forced> dreams," },
+      { from: "2:03.508", to: "2:06.548", text: "Life is my own," },
+      { from: "2:06.939", to: "2:09.420", text: "To live in my way." },
+      { from: "2:09.796", to: "2:11.275", text: "No <pretending>," },
+      { from: "2:16.404", to: "2:19.036", text: "No <forced> dreams," },
+      { from: "2:35.810", to: "2:38.207", text: "The night gets darker," },
+      { from: "2:38.414", to: "2:41.151", text: "Yet each star <shine>s," },
+      { from: "2:41.423", to: "2:43.983", text: "And in each one," },
+      { from: "2:44.879", to: "2:47.679", text: "Another world cries." },
+      { from: "2:48.270", to: "2:52.111", text: "Maybe I'm not all that strong." },
+      { from: "2:53.719", to: "3:00.063", text: "Still I know, where I <belong>." },
+      { from: "3:00.222", to: "3:01.807", text: "No <pretending>," },
+      { from: "3:03.190", to: "3:05.807", text: "No <forced> dreams," },
+      { from: "3:06.246", to: "3:09.303", text: "Life is my own," },
+      { from: "3:09.935", to: "3:18.054", text: "To live in my way." },
+      { from: "3:18.686", to: "3:21.126", text: "In my own way…" },
+      { from: "3:24.814", to: "3:26.694", text: "In my own way…" },
+      { from: "3:30.958", to: "3:33.142", text: "In my own way…" },
+      { from: "3:37", to: "3:39", text: "In my own way…" },
+      { from: "", to: "", text: "Written by Adil Fırat Oktav." },
+      { from: "", to: "", text: "Thanks for listening..." },]
   }
+
 
 
 

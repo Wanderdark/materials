@@ -95,6 +95,7 @@
     catch (_) { return new Set(); }
   }
   function markListened(id) {
+    if (!id) return;
     const set = getListenedSet();
     if (set.has(id)) return;
     set.add(id);
@@ -303,7 +304,6 @@
     buildDuringStage();
     showScreen("activity");
     setStage(0);
-    markListened(s.id); // egzersizler tamamlanmasa da ekranı açmak yeterli
   }
 
   /* ════════════════════════════════════════════════════════════════════
@@ -494,6 +494,7 @@
       updatePlayIcon(false);
       stopClimax();
       const n = $("coverNote"); if (n) n.classList.remove("playing");
+      markListened(song?.id);
       if (playerMode === "karaoke") window.StudentGame?.onKaraokeComplete();
       else window.StudentGame?.onSongListened(song?.id);
       /* Video kaynaklı şarkıda video bitince kapak (thumbnail) geri gelir */

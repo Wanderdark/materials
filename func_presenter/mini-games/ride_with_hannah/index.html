@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ride with Hannah</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <main class="app-shell">
+        <section id="gameFrame" class="game-frame" aria-label="Ride with Hannah visual engine">
+            <div id="gameWorld" class="game-world">
+                <div id="environmentRoot" class="environment-root"></div>
+                <div id="hannahShadow" class="hannah-shadow" aria-hidden="true"></div>
+                <div id="hannahSprite" class="hannah-sprite" aria-label="Hannah riding a bicycle"></div>
+                <div id="debugOverlays" class="debug-overlays" aria-hidden="true">
+                    <div class="overlay viewport-boundary"></div>
+                    <div class="overlay horizon-guide"></div>
+                    <div class="overlay ground-guide"></div>
+                    <div class="overlay anchor-point"></div>
+                    <div class="overlay sprite-bounds"></div>
+                </div>
+                <div id="assetLoader" class="asset-loader">Loading assets 0 / 12</div>
+            </div>
+        </section>
+        <aside id="debugPanel" class="debug-panel" aria-label="Developer visual tuning controls"></aside>
+    </main>
+    <script src="./src/app.js?v=4"></script>
+</body>
+</html>

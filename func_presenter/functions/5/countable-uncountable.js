@@ -4,7 +4,7 @@ const countableUncountableFunction = {
   unit: 6,
   title: "Countable and Uncountable Nouns",
   description: "",
-  exercises: ["quantity-choice", "quantity-snap", "countable-uncountable-sort"],
+  exercises: ["ride-with-hannah-countables", "quantity-choice", "quantity-snap", "countable-uncountable-sort"],
   sentences: [
     {
       id: "countable-uncountable-hub",

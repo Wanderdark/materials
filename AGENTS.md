@@ -36,7 +36,11 @@ Do not rewrite files through PowerShell.
 
 ## Editing Method (MANDATORY)
 
+
+
 * Always prefer apply\_patch.
+* Always tell the user which files you will touch for the current task. First, get his confirmation before proceeding. 
+* Don't take backup yourself.
 * Never rewrite an entire file for a small change.
 * Edit only the minimum required lines.
 * Avoid formatting-only changes.
@@ -53,13 +57,6 @@ Do not rewrite files through PowerShell.
 * Do not move files unless requested.
 * Do not delete files unless requested.
 
-## Backup Workflow (MANDATORY)
-
-* At the start of each independent editing task, create one byte-for-byte backup of every source file that will be edited under `F:\backups`.
-* During the same continuous task and file scope, do not create repeated backups before every small patch.
-* Create a new backup only when beginning a separate task, expanding the scope to a new source file, or after a user-directed pause/change of direction.
-* Backups must be plain file copies; never rewrite or transform source content while backing up.
-
 ## Before Finishing
 
 Always inspect the result.
@@ -71,7 +68,6 @@ Checklist:
 * Verify line endings are unchanged.
 * Verify Turkish characters remain intact.
 * Ensure no unexpected whole-file diff exists.
-* If a whole-file rewrite occurred, restore the file and retry using apply\_patch.
 
 ## Golden Rule
 
@@ -84,5 +80,4 @@ DO NOT rewrite the entire file.
 Use apply\_patch or an equivalent minimal edit.
 
 Whole-file rewrites are prohibited unless explicitly requested.
-
 
