@@ -4,7 +4,7 @@ const singularPluralsFunction = {
   unit: 1,
   title: "Singular and Plural Nouns",
   description: "Using one noun or more than one noun.",
-  exercises: ["singular-plural-choice", "sort-it"],
+  exercises: ["ride-with-hannah-singular-plurals", "singular-plural-choice", "sort-it"],
   sentences: [
     { id: "one-cat", focus: "SINGULAR", referenceType: "ONE", sentence: "a cat", highlight: "cat", singular: "cat", plural: "cats", answer: "cat", exerciseSentence: "I can see a ___ in the garden.", imagePath: "images/singular-plurals/01-one-cat.webp", visualBrief: "One cat sitting in a garden." },
     { id: "two-cats", focus: "PLURAL", referenceType: "MORE THAN ONE", sentence: "two cats", highlightStem: "cat", highlightSuffix: "s", suffixClass: "ending-s", singular: "cat", plural: "cats", answer: "cats", exerciseSentence: "I can see two ___ in the garden.", imagePath: "images/singular-plurals/02-two-cats.webp", visualBrief: "Two cats sitting together in a garden." },

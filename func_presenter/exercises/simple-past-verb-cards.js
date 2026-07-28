@@ -78,11 +78,13 @@ function startSimplePastVerbCards(exercise, api) {
   };
 
   function verbImagePath(base) {
-    return `../images/snapwords/${base.toLowerCase()}.webp`;
+    const basePath = exercise.assetBase || "../images/snapwords";
+    return `${basePath}/${base.toLowerCase()}.webp`;
   }
 
   function verbBackImagePath(word) {
-    return `../images/snapwords/v2/${word.toLowerCase()}.webp`;
+    const basePath = exercise.assetBase || "../images/snapwords";
+    return `${basePath}/v2/${word.toLowerCase()}.webp`;
   }
 
   function loadCardImage(face, imgEl, labelEl, candidates, displayText) {
@@ -172,7 +174,7 @@ function startSimplePastVerbCards(exercise, api) {
     feedback.textContent = isCorrect ? "Correct!" : `Wrong. Correct answer: ${state.current[1]}`;
     feedback.className = `exercise-feedback ${isCorrect ? "correct" : "wrong"}`;
     window.exerciseActivityModules?.showStamp?.(isCorrect);
-    playFeedbackSound(isCorrect);
+    window.playFeedbackSound?.(isCorrect);
     if (window.PenaltyShootout) {
       const state = isCorrect ? "correct" : isPartial ? "partial" : "wrong";
       const stateLabel = isCorrect
@@ -181,7 +183,7 @@ function startSimplePastVerbCards(exercise, api) {
           ? "🟡 SO CLOSE! (1 letter off)"
           : "❌ WRONG ANSWER";
       setTimeout(() => {
-        window.PenaltyShootout.open({ state, stateLabel });
+        window.PenaltyShootout.open({ state, stateLabel, ...(exercise.penaltyOptions || {}) });
       }, 1200);
     }
   }

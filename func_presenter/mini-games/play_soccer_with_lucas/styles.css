@@ -1,0 +1,41 @@
+:root { color-scheme: dark; font-family: Inter, "Segoe UI", Arial, sans-serif; --yellow: #ffd84d; --panel: #0d1b3f; --shadow: 0 24px 58px rgba(0, 0, 0, .34); --text: #f5f8ff; --muted: #c9d7ec; }
+* { box-sizing: border-box; }
+body { min-width: 320px; min-height: 100vh; margin: 0; color: #f5f8ff; background: radial-gradient(circle at 15% 12%, rgba(82, 192, 107, .34), transparent 32%), linear-gradient(145deg, #07162a, #0b3824); }
+.lucas-game { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 44px; }
+.back-link { display: inline-block; margin-bottom: 18px; color: #d8ecff; font-weight: 800; text-decoration: none; }
+.lucas-card { display: grid; grid-template-columns: minmax(280px, .92fr) minmax(0, 1.08fr); overflow: hidden; border: 1px solid rgba(255, 216, 77, .52); border-radius: 30px; background: rgba(7, 22, 42, .92); box-shadow: 0 28px 68px rgba(0, 0, 0, .35); }
+.lucas-hero { width: 100%; height: 100%; min-height: 560px; object-fit: cover; }
+.lucas-content { padding: clamp(26px, 5vw, 58px); }
+.kicker { margin: 0 0 10px; color: #ffd84d; font-size: .76rem; font-weight: 900; letter-spacing: .18em; }
+h1 { margin: 0; font-size: clamp(2.8rem, 5vw, 5rem); font-family: "Arial Black", Impact, sans-serif; line-height: .96; text-transform: uppercase; }
+.intro { max-width: 520px; margin: 18px 0 30px; color: #c9d7ec; font-size: 1.07rem; line-height: 1.55; }
+.mission-grid { display: grid; gap: 14px; }
+.mission-button, .answer-button, .action-button { width: 100%; border: 2px solid rgba(255, 216, 77, .72); border-radius: 18px; padding: 18px 20px; color: #fff7df; background: #123d67; font: 800 clamp(1rem, 1.7vw, 1.3rem)/1.15 Inter, sans-serif; cursor: pointer; text-align: left; }
+.mission-button small { display: block; margin-top: 7px; color: #b9d5ee; font-size: .78rem; font-weight: 700; }
+.mission-button:hover, .answer-button:hover, .action-button:hover { background: #1b5a91; }
+.task-label { margin: 0 0 9px; color: #8fe7a1; font-size: .78rem; font-weight: 900; letter-spacing: .15em; }
+.task-question { margin: 0 0 20px; font-size: clamp(1.55rem, 3vw, 2.4rem); font-weight: 900; line-height: 1.12; }
+.time-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.time-control { padding: 14px; border: 1px solid rgba(183, 217, 255, .25); border-radius: 15px; background: #0a2744; text-align: center; }
+.time-control strong { display: block; margin: 8px 0; color: #ffd84d; font-size: 2.3rem; }
+.time-control button { width: 42px; height: 34px; border: 0; border-radius: 9px; color: #07162a; background: #91e8a6; font-size: 1.3rem; font-weight: 900; cursor: pointer; }
+.answer-row { display: grid; gap: 10px; }
+.answer-button { text-align: center; }
+.verb-input { width: 100%; margin-bottom: 12px; border: 2px solid rgba(183, 217, 255, .42); border-radius: 14px; padding: 15px; color: #fff; background: #0a2744; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+.action-button { margin-top: 4px; color: #072418; background: #91e8a6; text-align: center; }
+.feedback { min-height: 24px; margin: 14px 0 0; color: #ffd84d; font-weight: 800; }
+.hidden, .lucas-card[hidden] { display: none !important; }
+.verb-card-screen { grid-template-rows: auto 1fr; gap: 20px; min-height: calc(100vh - 72px); }
+.presentation-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 18px; }
+.session-info { display: grid; gap: 4px; min-width: 0; }
+.session-info span, .reference-type, .progress span { color: #ffd84d; font-size: .72rem; font-weight: 900; letter-spacing: .16em; }
+.session-info strong { overflow: hidden; color: #fff; font-size: clamp(1rem, 2vw, 1.6rem); text-overflow: ellipsis; white-space: nowrap; }
+.progress { display: grid; justify-items: end; padding: 7px 14px; border: 1px solid rgba(143, 166, 255, .22); border-radius: 14px; background: #0d1b3f; }
+.progress strong { color: #ffd84d; font-size: 1.45rem; }
+.exercise-score { color: #c9d7ec; font-size: .72rem; font-weight: 900; letter-spacing: .12em; }.exercise-score strong { color: #ffd84d; font-size: 1.35rem; }
+.icon-button, .primary-button, .secondary-button { border: 0; border-radius: 14px; padding: 14px 18px; color: #07162a; background: #ffd84d; font: 900 1rem Inter, sans-serif; letter-spacing: .06em; cursor: pointer; }
+.secondary-button, .icon-button { color: #f5f8ff; background: #142650; border: 1px solid rgba(143, 166, 255, .26); }
+.exercise-feedback { min-height: 28px; margin: 0; color: #c9d7ec; font-weight: 900; }
+.exercise-feedback.correct { color: #91e8a6; }.exercise-feedback.wrong { color: #ff9b86; }
+.setup-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+@media (max-width: 760px) { .lucas-game { width: min(100% - 24px, 1120px); padding-top: 16px; } .lucas-card { grid-template-columns: 1fr; } .lucas-hero { min-height: 230px; max-height: 300px; } .lucas-content { padding: 28px 22px 34px; } }

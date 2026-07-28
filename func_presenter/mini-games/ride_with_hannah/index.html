@@ -12,7 +12,7 @@
             <div id="gameWorld" class="game-world">
                 <div id="environmentRoot" class="environment-root"></div>
                 <div id="hannahShadow" class="hannah-shadow" aria-hidden="true"></div>
-                <div id="hannahSprite" class="hannah-sprite" aria-label="Hannah riding a bicycle"></div>
+                <div id="hannahSprite" class="hannah-sprite" aria-label="Hannah riding a horse"></div>
                 <div id="debugOverlays" class="debug-overlays" aria-hidden="true">
                     <div class="overlay viewport-boundary"></div>
                     <div class="overlay horizon-guide"></div>
@@ -22,9 +22,31 @@
                 </div>
                 <div id="assetLoader" class="asset-loader">Loading assets 0 / 12</div>
             </div>
+            <section id="rideChoice" class="ride-choice" aria-labelledby="rideChoiceTitle" hidden>
+                <p class="ride-choice-kicker">RIDE WITH HANNAH</p>
+                <h1 id="rideChoiceTitle">Choose your grammar mission</h1>
+                <div class="ride-choice-actions"></div>
+            </section>
+            <div class="ride-touch-controls" aria-label="Ride controls">
+                <button id="jumpControl" type="button" aria-label="Jump">⬆️</button>
+                <button id="duckControl" type="button" aria-label="Duck">⬇️</button>
+            </div>
         </section>
-        <aside id="debugPanel" class="debug-panel" aria-label="Developer visual tuning controls"></aside>
     </main>
-    <script src="./src/app.js?v=4"></script>
+    <script>
+        window.__rideWithHannahStudentHudReady = new Promise((resolve) => {
+            if (new URLSearchParams(window.location.search).get("launcher") !== "student-zone") {
+                resolve();
+                return;
+            }
+            const studentHudScript = document.createElement("script");
+            studentHudScript.src = "../../student.js?v=2";
+            studentHudScript.addEventListener("load", resolve, { once: true });
+            studentHudScript.addEventListener("error", resolve, { once: true });
+            document.head.append(studentHudScript);
+        });
+    </script>
+    <script src="./src/word-set-registry.js?v=4"></script>
+    <script src="./src/app.js?v=16"></script>
 </body>
 </html>

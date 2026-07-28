@@ -8,12 +8,31 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="exercise-engines/lucky-spin.css">
+  <link rel="stylesheet" href="exercise-engines/fill-blank.css">
+  <link rel="stylesheet" href="exercise-engines/mistake-correct-it.css">
+  <link rel="stylesheet" href="exercise-engines/paragraph-choice.css">
+  <link rel="stylesheet" href="exercise-engines/pronoun-memory.css">
+  <link rel="stylesheet" href="exercise-engines/pronoun-snap.css">
+  <link rel="stylesheet" href="exercise-engines/student-match.css">
+  <link rel="stylesheet" href="exercise-engines/verb-cards.css">
+  <link rel="stylesheet" href="exercise-engines/simple-past-memory-chain.css">
+  <link rel="stylesheet" href="exercise-engines/possessive-simon.css">
+  <link rel="stylesheet" href="exercise-engines/time-setter.css">
+  <link rel="stylesheet" href="exercise-engines/guess-animal.css">
+  <link rel="stylesheet" href="exercise-engines/jumbled-sentences.css">
+  <link rel="stylesheet" href="exercise-engines/activity-visual-match.css">
+  <link rel="stylesheet" href="exercise-engines/true-false-grid.css">
+  <link rel="stylesheet" href="exercise-engines/sort-it.css">
+  <link rel="stylesheet" href="exercise-engines/conversation-builder.css">
+  <style>.app-back-button { position: fixed; top: 18px; right: 18px; z-index: 10000; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 2px solid rgba(255,216,77,.8); border-radius: 50%; background: rgba(10,28,67,.94); box-shadow: 0 8px 24px rgba(0,0,0,.28); cursor: pointer; font-size: 25px; line-height: 1; transition: transform .15s ease, background .15s ease; }.app-back-button:hover, .app-back-button:focus-visible { transform: translateY(-2px); background: #173267; outline: none; }</style>
   <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
   </script>
 </head>
 <body>
+  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back" title="Go back">↩️</button>
   <main class="app-shell">
     <section id="setupScreen" class="setup-screen">
       <div class="brand-lockup">
@@ -722,6 +741,7 @@
   <script src="exercises/countable-uncountable-quantity-choice.js"></script>
   <script src="exercises/countable-uncountable-quantity-snap.js"></script>
   <script src="exercises/ride-with-hannah-countables.js"></script>
+  <script src="exercises/ride-with-hannah-singular-plurals.js"></script>
   <script src="exercises/have-got-has-got-appearance-choice.js"></script>
   <script src="exercises/going-to-plans-am-is-are.js"></script>
   <script src="yaml/wild-life-wh-questions.yaml.js"></script>
@@ -735,6 +755,26 @@
   <script src="exercises/simple-past-memory-chain.js"></script>
   <script src="exercises/was-were-choice.js"></script>
   <script src="exercises/index.js"></script>
+  <script src="exercise-engines/sort-it.js"></script>
+  <script src="exercise-engines/lucky-spin.js"></script>
+  <script src="exercise-engines/jumbled-sentences.js"></script>
+  <script src="exercise-engines/activity-visual-match.js"></script>
+  <script src="exercise-engines/true-false-grid.js"></script>
+  <script src="exercise-engines/pronoun-memory.js"></script>
+  <script src="exercise-engines/pronoun-snap.js"></script>
+  <script src="exercise-engines/fill-blank.js"></script>
+  <script src="exercise-engines/word-bank-fill-blank.js"></script>
+  <script src="exercise-engines/mistake-correct-it.js"></script>
+  <script src="exercise-engines/time-setter.js"></script>
+  <script src="exercise-engines/guess-animal.js"></script>
+  <script src="exercise-engines/conversation-builder.js"></script>
+  <script src="exercise-engines/paragraph-choice.js"></script>
+  <script src="exercise-engines/student-match.js"></script>
+  <script src="presentation-engines/character-room.js"></script>
+  <script src="presentation-engines/presentation-slides.js"></script>
+  <script src="presentation-engines/personality-hub.js"></script>
+  <script src="presentation-engines/timetable.js"></script>
+  <script src="presentation-engines/presentation-overlays.js"></script>
   <script src="app.js"></script>
   <script src="../modules/profanity-filter.js"></script>
   <script src="../modules/penalty-shootout.js"></script>

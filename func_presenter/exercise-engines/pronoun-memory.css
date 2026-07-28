@@ -1,0 +1,14 @@
+/* Pronoun Memory exercise visuals. */
+.pronoun-memory-screen { display: grid; min-height: calc(100vh - 60px); grid-template-rows: auto 1fr; gap: 20px; }
+.pronoun-memory-screen .pronoun-memory-card { display: grid; align-content: center; justify-items: center; gap: 26px; width: min(1280px, 100%); margin: auto; padding: clamp(28px, 5vw, 62px); border: 1px solid rgba(255,255,255,.1); border-radius: 30px; background: var(--panel); box-shadow: var(--shadow); }
+.pronoun-memory-screen .pronoun-memory-card > .reference-type { text-align: center; }
+.pronoun-memory-screen .pronoun-memory-images { display: grid; grid-template-columns: repeat(var(--memory-image-count, 1), minmax(120px, 1fr)); gap: clamp(10px, 1.8vw, 22px); width: 100%; }
+.pronoun-memory-screen .pronoun-memory-image { position: relative; width: 100%; max-width: 300px; aspect-ratio: 1; justify-self: center; overflow: hidden; border: 2px solid #6688ff; border-radius: 22px; background: #fff; transition: opacity .25s ease, transform .25s ease; }
+.pronoun-memory-screen .pronoun-memory-image img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; }
+.pronoun-memory-screen .pronoun-memory-image > span { position: absolute; top: 9px; left: 9px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: #172033; background: var(--yellow); font-size: 15px; font-weight: 950; }
+.pronoun-memory-screen .pronoun-memory-image.concealed { display: grid; place-items: center; min-height: 0; border-style: dashed; background: linear-gradient(135deg, #173267, #0c1d42); }
+.pronoun-memory-screen .pronoun-memory-image.concealed img { visibility: hidden; }
+.pronoun-memory-screen .pronoun-memory-image.concealed::after { position: absolute; inset: 0; display: grid; place-items: center; color: var(--yellow); content: ""; font-size: clamp(54px, 8vw, 110px); font-weight: 950; }
+.pronoun-memory-screen .pronoun-memory-choices { display: grid; justify-items: center; gap: 18px; width: 100%; }
+.pronoun-memory-screen .pronoun-memory-choices p { margin: 0; color: var(--text); font-size: clamp(22px, 3vw, 38px); font-weight: 950; letter-spacing: .08em; }
+@media (max-width: 760px) { .pronoun-memory-screen .pronoun-memory-images { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

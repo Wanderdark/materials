@@ -151,7 +151,7 @@ const goingToPlansChoiceCharacters = [
   {
     name: "DANIEL",
     question: "What is Daniel <going to> do on holiday?",
-    imagePath: "images/goingto-plans/daniel-rollercoaster.webp",
+    imagePath: "images/common/ride-rollercoaster-daniel-1.webp",
     segments: [
       { text: "Daniel is " },
       { text: "going to", className: "freq-highlight" },

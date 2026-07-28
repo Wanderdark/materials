@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Play Soccer with Lucas</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="../../exercise-engines/time-setter.css">
+  <link rel="stylesheet" href="../../exercise-engines/verb-cards.css">
+</head>
+<body>
+  <main class="lucas-game">
+    <a class="back-link" href="../../../student-zone/index.html">← Student Zone</a>
+    <section class="lucas-card" aria-live="polite">
+      <img class="lucas-hero" src="../../../images/thumbnails/soccer_with_lucas.webp" alt="Lucas playing soccer">
+      <div class="lucas-content">
+        <p class="kicker">LUCAS'S FOOTBALL CLUB</p>
+        <h1>Play Soccer with Lucas</h1>
+        <p class="intro">Complete a grammar mission to give Lucas a powerful penalty shot.</p>
+        <div id="lucasGameRoot"></div>
+      </div>
+    </section>
+    <section id="timeSetterScreen" class="time-setter-screen hidden">
+      <header class="presentation-header">
+        <button id="timeSetterExitButton" class="icon-button" type="button">EXIT</button>
+        <div class="session-info"><span id="timeSetterGradeLabel">GRADE 5</span><strong>SET THE TIME</strong></div>
+        <div class="progress"><strong id="timeSetterRoundText">ROUND 1</strong><span>SUCCESSFUL SETS</span></div>
+        <div class="exercise-score">SCORE <strong id="timeSetterScore">0</strong></div>
+      </header>
+      <article id="timeSetterCard" class="time-setter-card">
+        <p class="reference-type">SET THE DIGITAL CLOCK</p>
+        <h1 id="timeSetterTarget" class="time-setter-question">It is quarter past five.</h1>
+        <p class="time-setter-instruction">Use the controls to set the digital clock.</p>
+        <div class="time-setter-clock" aria-label="Digital clock setter"><div class="digital-clock-body"><div class="time-step-row top"><button id="timeSetterHourUp" class="time-step-button" type="button">HOUR +</button><button id="timeSetterMinuteUp" class="time-step-button" type="button">MIN +</button><button id="timeSetterInlineExitButton" class="time-step-button time-action-exit" type="button">EXIT</button></div><strong id="timeSetterDigital" class="digital-clock-display">12:00</strong><div class="time-step-row bottom"><button id="timeSetterHourDown" class="time-step-button" type="button">HOUR −</button><button id="timeSetterMinuteDown" class="time-step-button" type="button">MIN −</button><button id="timeSetterCheckButton" class="time-step-button time-action-ok" type="button">OK</button></div><span class="digital-clock-glare"></span></div></div>
+        <p id="timeSetterFeedback" class="exercise-feedback" aria-live="polite">Set the clock, then press OK.</p>
+        <div id="timeSetterActions" class="setup-actions time-setter-actions"></div>
+      </article>
+    </section>
+    <section id="verbCardScreen" class="verb-card-screen hidden">
+      <header class="presentation-header">
+        <button id="verbCardExitButton" class="icon-button" type="button">EXIT</button>
+        <div class="session-info"><span id="verbCardGradeLabel">GRADE 7</span><strong id="verbCardTitle">VERB CARDS</strong></div>
+        <div class="progress"><strong id="verbCardProgressText">0</strong><span>CARDS</span></div>
+      </header>
+      <article class="verb-card-stage">
+        <section id="verbCardLevelPanel" class="verb-card-level-panel">
+          <p class="reference-type">CHOOSE LEVEL</p>
+          <div class="verb-card-level-buttons"><button id="verbCardBasicButton" class="primary-button" type="button">BASIC</button><button id="verbCardAdvancedButton" class="secondary-button" type="button">ADVANCED</button></div>
+        </section>
+        <section id="verbCardPlayPanel" class="verb-card-play-panel hidden">
+          <p id="verbCardPoolMessage" class="verb-card-pool-message hidden">VERB POOL EMPTY - SHUFFLING...</p>
+          <div id="verbCardFlip" class="verb-card-flip"><div class="verb-card-inner"><div id="verbCardFront" class="verb-card-face verb-card-front"><img id="verbCardImage" class="verb-card-image hidden" alt=""><span id="verbCardFrontLabel" class="verb-card-front-label hidden"></span></div><div id="verbCardBack" class="verb-card-face verb-card-back"><img id="verbCardBackImage" class="verb-card-image hidden" alt=""><span id="verbCardBackLabel" class="verb-card-front-label hidden"></span></div></div></div>
+          <div id="verbCardInput" class="verb-card-input empty">TYPE THE PAST FORM</div>
+          <div id="verbCardKeyboardPanel" class="verb-card-keyboard-panel"><div id="verbCardKeyboard"></div></div>
+          <p id="verbCardFeedback" class="exercise-feedback" aria-live="polite"></p>
+          <div class="verb-card-actions"><button id="verbCardNextButton" class="primary-button hidden" type="button">NEXT</button><button id="verbCardInlineExitButton" class="secondary-button hidden" type="button">EXIT</button></div>
+        </section>
+      </article>
+    </section>
+  </main>
+  <script src="../../../modules/penalty-shootout.js"></script>
+  <script src="../../../modules/stamp.js"></script>
+  <script src="../../../modules/rgbkeyboard.js"></script>
+  <script src="../../exercises/simple-past-verb-cards.js"></script>
+  <script>
+    window.__lucasStudentHudReady = new Promise((resolve) => {
+      if (new URLSearchParams(window.location.search).get("launcher") !== "student-zone") {
+        resolve();
+        return;
+      }
+      const studentHudScript = document.createElement("script");
+      studentHudScript.src = "../../student.js?v=2";
+      studentHudScript.addEventListener("load", resolve, { once: true });
+      studentHudScript.addEventListener("error", resolve, { once: true });
+      document.head.append(studentHudScript);
+    });
+  </script>
+  <script src="./src/app.js?v=3"></script>
+</body>
+</html>

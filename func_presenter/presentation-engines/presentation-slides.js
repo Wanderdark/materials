@@ -1,0 +1,165 @@
+// APP-ANCHOR: Presentation intro and slide rendering.
+function startPresentation() {
+  if (!state.module) return;
+  state.index = 0;
+  state.visitedPresenceButtons.clear();
+  state.showingFunctionIntro = Boolean(state.module.pronounTable);
+  hideAllScreens();
+  els.presentation.classList.remove("hidden");
+  if (state.showingFunctionIntro) renderFunctionIntro();
+  else renderExample();
+}
+
+function renderFunctionIntro() {
+  const intro = state.module.pronounTable;
+  els.exampleCard.classList.add("hidden");
+  els.functionIntro.classList.remove("hidden");
+  els.gradeLabel.textContent = `GRADE ${state.grade}`;
+  els.title.textContent = state.module.title.toUpperCase();
+  els.progressText.textContent = "INTRO";
+  els.progressBar.style.width = "0%";
+  els.functionIntroTitle.textContent = intro.title || "Choose the correct form of to be.";
+  els.pronounTable.replaceChildren(...intro.groups.map((group) => {
+    const card = document.createElement("div");
+    card.className = `pronoun-group ${group.highlightClass || ""}`;
+    const pronouns = document.createElement("div");
+    pronouns.className = "pronoun-list";
+    group.pronouns.forEach((pronoun) => {
+      const item = document.createElement("span");
+      item.textContent = pronoun;
+      pronouns.append(item);
+    });
+    const arrow = document.createElement("span");
+    arrow.className = "pronoun-arrow";
+    arrow.textContent = "→";
+    const verb = document.createElement("strong");
+    verb.textContent = group.verb;
+    card.append(pronouns, arrow, verb);
+    return card;
+  }));
+  els.previous.disabled = true;
+  els.next.textContent = "START EXAMPLES";
+  syncHeaderNextButton();
+  els.dots.replaceChildren();
+}
+
+function renderExample() {
+  state.showingFunctionIntro = false;
+  clearPresenceHotspots();
+  clearVisualAnnotations();
+  clearPersonalityHubVisual();
+  els.functionIntro.classList.add("hidden");
+  els.exampleCard.classList.remove("hidden");
+  const example = state.module.sentences[state.index];
+  const visibleSentences = state.module.sentences.filter((s) => !s.bridgeSlide);
+  const total = visibleSentences.length;
+  const visiblePos = state.module.sentences.slice(0, state.index + 1).filter((s) => !s.bridgeSlide).length;
+  const isTimePrompt = Boolean(example.timePrompt);
+  const isTimetableSlide = Boolean(example.timetableSlide);
+  const isPresenceSlide = Boolean(example.presenceSlide);
+  const noVisual = Boolean(example.noVisual);
+  const focus = example.focus || example.article || "";
+  const highlight = example.highlight || example.article;
+  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide
+    ? ""
+    : example.highlightSuffix
+    ? example.sentence.replace(
+      new RegExp(`\\b(${example.highlightStem})(${example.highlightSuffix})\\b`, "i"),
+      `$1<mark class="plural-ending ${example.suffixClass}">$2</mark>`
+    )
+    : example.sentence.replace(new RegExp(`\\b(${highlight})\\b`, "i"), `<mark class="${example.highlightClass || ""}">$1</mark>`);
+  const usesMintBadge = example.article === "the" || example.focus === "PLURAL";
+
+  els.gradeLabel.textContent = `GRADE ${state.grade}`;
+  els.title.textContent = state.module.title.toUpperCase();
+  els.progressText.textContent = `${visiblePos} / ${total}`;
+  els.progressBar.style.width = `${(visiblePos / total) * 100}%`;
+  els.exampleCard.classList.toggle("time-prompt-slide", isTimePrompt);
+  els.exampleCard.classList.toggle("timetable-slide", isTimetableSlide);
+  els.exampleCard.classList.toggle("presence-slide", isPresenceSlide);
+  els.exampleCard.classList.toggle("no-visual-slide", noVisual);
+  els.exampleCard.classList.toggle("speech-bubble-slide", example.visualStyle === "speech-bubble");
+  els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
+  els.exampleCard.classList.toggle("inline-choice-slide", (example.listClass || "").split(/\s+/).includes("inline-choice-list"));
+  els.exampleCard.classList.toggle("personality-hub-slide", Boolean(example.personalityHub));
+  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
+  els.timeDigitalDisplay.textContent = example.digitalTime || "";
+  els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
+  els.timePromptView.classList.toggle("hidden", !isTimePrompt);
+  els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
+  els.presenceView.classList.toggle("hidden", !isPresenceSlide);
+  if (isTimePrompt) {
+    els.timePromptDigital.textContent = example.digitalTime;
+    els.timePromptAnswer.textContent = example.answerSentence;
+    els.timePromptAnswer.classList.add("hidden");
+    els.timeReveal.disabled = false;
+  }
+  [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide));
+  els.article.textContent = focus ? focus.toUpperCase() : "";
+  els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide);
+  els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
+  els.timeQuestion.textContent = example.question || "";
+  els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
+  els.sentence.innerHTML = isTimetableSlide
+    ? renderTimetableParts(example.questionParts || example.sentenceParts)
+    : highlightedSentence;
+  els.sentence.classList.toggle("long-phrase", isTimetableSlide || (example.sentence?.length || 0) > 10);
+  els.sentence.classList.toggle("timetable-sentence", isTimetableSlide);
+  const showExampleSentence = !isTimePrompt && state.module.id === "a-an-the" && example.exerciseSentence;
+  els.presentationExampleSentence.textContent = showExampleSentence
+    ? example.exerciseSentence.replace("___", example.article)
+    : "";
+  els.presentationExampleSentence.classList.toggle("hidden", !showExampleSentence);
+  els.description.textContent = state.module.id === "a-an-the"
+    ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
+    : state.module.description;
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || !els.description.textContent);
+  els.ruleNote.textContent = example.ruleNote || "";
+  els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !example.ruleNote);
+  if (isTimetableSlide && example.answerParts) {
+    els.timetableAnswer.innerHTML = renderTimetableParts(example.answerParts);
+    els.timetableAnswer.classList.toggle("hidden", Boolean(example.answerReveal));
+    els.timetableReveal.classList.toggle("hidden", !example.answerReveal);
+    els.timetableReveal.disabled = false;
+  }
+  if (isPresenceSlide) renderPresenceSlide(example);
+  if (example.personalityHub) {
+    const hubState = getPersonalityHubState(example);
+    const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
+    renderPersonalityHubVisual(example, activeTrait);
+  }
+  if (!isTimePrompt && !noVisual && !example.personalityHub) {
+    els.brief.textContent = example.visualBrief;
+    els.fallback.classList.add("hidden");
+    els.image.classList.remove("hidden");
+    els.image.className = example.imageClass || "";
+    els.image.alt = example.visualBrief;
+    els.image.src = example.imagePath;
+    els.image.style.aspectRatio = example.imageAspect || "";
+    els.image.style.objectFit = example.imageFit || "";
+    updateVisualAnnotations(example);
+    if (isPresenceSlide) {
+      const firstVisibleRow = els.presenceView.querySelector(".presence-row:not(.hidden)");
+      if (firstVisibleRow?.dataset.imagePathOnShow || firstVisibleRow?.dataset.speechText || firstVisibleRow?.dataset.speakerName) {
+        applyPresenceRowImage(firstVisibleRow);
+      }
+    }
+    if (isPresenceSlide) {
+      requestAnimationFrame(positionPresenceHotspots);
+      requestAnimationFrame(positionPresenceHoverNameTag);
+    }
+  }
+  els.previous.disabled = state.index === 0 && !state.module.pronounTable;
+  const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;
+  els.next.textContent = (isLastVisible && !example.exerciseLink && !example.exerciseObj) ? "FINISH" : "NEXT";
+  syncHeaderNextButton();
+  els.dots.replaceChildren(...visibleSentences.map((s) => {
+    const actualIdx = state.module.sentences.indexOf(s);
+    const dot = document.createElement("span");
+    dot.className = actualIdx === state.index ? "active" : actualIdx < state.index ? "complete" : "";
+    return dot;
+  }));
+}
+

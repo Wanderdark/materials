@@ -107,6 +107,11 @@ body {
     image-rendering: auto;
     transform-origin: center bottom;
     pointer-events: none;
+    transition: left 2.5s linear;
+}
+
+body > .sg-hud {
+    z-index: 290;
 }
 
 .hannah-shadow {
@@ -147,6 +152,90 @@ body {
     background: var(--panel-bg);
     color: var(--text);
     font-size: 12px;
+}
+
+.ride-choice {
+    position: absolute;
+    inset: 0;
+    z-index: 300;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 18px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(5, 19, 44, 0.9), rgba(15, 72, 92, 0.78));
+    text-align: center;
+}
+
+.ride-choice[hidden] {
+    display: none;
+}
+
+.ride-choice-kicker {
+    margin: 0;
+    color: #9de9ff;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+}
+
+.ride-choice h1 {
+    margin: 0;
+    color: #fff7df;
+    font-size: clamp(32px, 5vw, 70px);
+    text-transform: uppercase;
+}
+
+.ride-choice-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.ride-choice button {
+    min-width: 210px;
+    border: 3px solid #ffd84a;
+    border-radius: 18px;
+    padding: 17px 24px;
+    background: #163f75;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+    color: #fff7df;
+    cursor: pointer;
+    font-family: "Arial Black", Impact, system-ui, sans-serif;
+    font-size: clamp(19px, 2vw, 30px);
+}
+
+.ride-choice button:hover,
+.ride-choice button:focus-visible {
+    background: #245da5;
+    outline: 3px solid #9de9ff;
+    outline-offset: 3px;
+}
+
+.ride-touch-controls {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 240;
+    display: grid;
+    gap: 10px;
+}
+
+.ride-touch-controls button {
+    display: grid;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    border: 2px solid rgba(255, 216, 74, 0.85);
+    border-radius: 18px;
+    background: rgba(9, 35, 75, 0.88);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+    font-size: 31px;
+}
+
+.ride-touch-controls button:active {
+    transform: scale(0.94);
 }
 
 .debug-panel h2,
@@ -442,6 +531,33 @@ body {
     filter: brightness(1.8);
 }
 
+.ride-balloon {
+    position: absolute;
+    z-index: 145;
+    width: 78px;
+    height: auto;
+    cursor: pointer;
+    filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.26));
+    transform-origin: center center;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.ride-balloon.is-popped {
+    animation: ride-balloon-pop 260ms ease-out forwards;
+    pointer-events: none;
+}
+
+.ride-balloon.is-despawning {
+    pointer-events: none;
+}
+
+@keyframes ride-balloon-pop {
+    0% { opacity: 1; filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.26)) brightness(1); }
+    50% { opacity: 1; filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.9)) brightness(2.2); }
+    100% { opacity: 0; filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0)) brightness(3); }
+}
+
 .ride-floating-text {
     position: absolute;
     z-index: 240;
@@ -480,6 +596,57 @@ body {
     place-items: center;
     background: rgba(2, 8, 24, 0.66);
     pointer-events: auto;
+}
+
+.ride-tutorial {
+    position: absolute;
+    inset: 0;
+    z-index: 280;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    background: rgba(2, 8, 24, 0.58);
+    pointer-events: auto;
+}
+
+.ride-tutorial-card {
+    display: grid;
+    gap: 16px;
+    width: min(590px, 88%);
+    padding: 28px 32px;
+    border: 3px solid #ffd84a;
+    border-radius: 28px;
+    background: rgba(9, 24, 56, 0.96);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.36);
+    color: #fff7df;
+    text-align: center;
+}
+
+.ride-tutorial-card h2 {
+    margin: 0;
+    color: #ffd84a;
+    font-size: clamp(30px, 4vw, 52px);
+}
+
+.ride-tutorial-card p {
+    margin: 0;
+    color: #cfe8f2;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: clamp(15px, 1.5vw, 21px);
+    line-height: 1.45;
+}
+
+.ride-tutorial-card button {
+    justify-self: center;
+    min-width: 190px;
+    border: 0;
+    border-radius: 16px;
+    padding: 13px 22px;
+    background: #ffd84a;
+    color: #071430;
+    cursor: pointer;
+    font-family: "Arial Black", Impact, system-ui, sans-serif;
+    font-size: 20px;
 }
 
 .ride-game-end-card {
@@ -596,7 +763,4 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .debug-panel {
-        max-height: 42vh;
-    }
 }

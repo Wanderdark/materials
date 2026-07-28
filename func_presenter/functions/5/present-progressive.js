@@ -296,6 +296,7 @@ const presentProgressiveFunction = {
             comparison: {
               left: {
                 imagePath: "../images/5/4/16.webp",
+                imageScale: 0.6,
                 caption: "I ride my bicycle to school every day."
               },
               right: {
@@ -312,6 +313,7 @@ const presentProgressiveFunction = {
             comparison: {
               left: {
                 imagePath: "../images/5/4/27.webp",
+                imageScale: 0.6,
                 caption: "Olivia take<s> photos in the park every weekend."
               },
               right: {
@@ -333,6 +335,7 @@ const presentProgressiveFunction = {
             comparison: {
               left: {
                 imagePath: "../images/5/4/18.webp",
+                imageScale: 0.6,
                 caption: "Jack goe<s> fish<ing> with his father every weekend."
               },
               right: {
@@ -349,6 +352,7 @@ const presentProgressiveFunction = {
             comparison: {
               left: {
                 imagePath: "images/present-progressive/playsoccer.webp",
+                imageScale: 0.6,
                 caption: "Ethan and Jack always play football after school."
               },
               right: {

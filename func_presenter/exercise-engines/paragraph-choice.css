@@ -1,0 +1,26 @@
+/* Paragraph Choice exercise visuals. */
+.pc-screen { display: grid; min-height: calc(100vh - 60px); grid-template-rows: auto 1fr; gap: 20px; }
+.pc-screen .pc-card { display: grid; grid-template-columns: minmax(280px, .88fr) minmax(360px, 1.12fr); overflow: hidden; border: 1px solid rgba(255,255,255,.10); border-radius: 28px; background: var(--panel); box-shadow: var(--shadow); }
+.pc-screen .pc-text-panel { display: flex; flex-direction: column; justify-content: center; gap: 20px; padding: clamp(30px, 5.5vw, 68px); }
+.pc-screen .pc-paragraph { display: flex; flex-direction: column; gap: 16px; }
+.pc-screen .pc-paragraph .inline-choice-prompt { margin: 0; color: #d9e4ff; font-size: clamp(18px, 2vw, 30px); font-weight: 900; line-height: 1.7; }
+.pc-screen .pc-result { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-top: 18px; border-top: 1px solid rgba(102,136,255,.22); }
+.pc-screen .pc-result-text { margin: 0; color: var(--mint); font-size: clamp(18px, 2vw, 28px); font-weight: 900; }
+.pc-screen .pc-card .visual-panel img { width: min(460px, 100%); aspect-ratio: auto; max-height: 72vh; object-fit: contain; background: white; }
+.pc-screen .pc-card.pc-text-only { grid-template-columns: 1fr; width: min(980px, 100%); margin: auto; }
+.pc-screen .pc-card.pc-text-only .pc-text-panel { align-items: center; text-align: center; }
+.pc-screen .pc-card.pc-text-only .pc-paragraph { width: min(820px, 100%); }
+.pc-screen .pc-card.pc-text-only .pc-paragraph .inline-choice-prompt { justify-content: center; font-size: clamp(30px, 4vw, 58px); line-height: 1.35; }
+.pc-screen .pc-personality-match { display: grid; gap: 14px; width: min(820px, 100%); margin-top: 12px; padding-top: 18px; border-top: 1px solid rgba(102,136,255,.24); }
+.pc-screen .pc-personality-match h2 { margin: 0; color: var(--yellow); font-size: clamp(22px, 2.4vw, 36px); font-weight: 950; letter-spacing: .06em; text-align: center; text-transform: uppercase; }
+.pc-screen .pc-personality-match-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pc-screen .pc-personality-character-option { display: grid; gap: 8px; justify-items: center; padding: 10px; border: 2px solid rgba(102,136,255,.46); border-radius: 18px; color: #f4f7ff; background: rgba(20,43,92,.82); cursor: pointer; transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease; }
+.pc-screen .pc-personality-character-option:hover:not(:disabled), .pc-screen .pc-personality-character-option:focus-visible:not(:disabled) { transform: translateY(-2px); border-color: var(--yellow); box-shadow: 0 0 18px rgba(255,216,77,.18); outline: none; }
+.pc-screen .pc-personality-character-option img { width: min(118px, 100%); aspect-ratio: 1 / 1; object-fit: cover; border-radius: 15px; background: white; }
+.pc-screen .pc-personality-character-option strong { color: var(--yellow); font-size: clamp(12px, 1vw, 17px); font-weight: 950; letter-spacing: .06em; text-transform: uppercase; }
+.pc-screen .pc-personality-character-option.correct { border-color: var(--mint); background: #135342; box-shadow: 0 0 18px rgba(101,230,184,.28); }
+.pc-screen .pc-personality-character-option.wrong { border-color: #ff8066; background: #6e2c25; animation: sortShake .35s ease-in-out; }
+.pc-screen .pc-personality-character-option:disabled { cursor: default; }
+.pc-screen .pc-skip-btn { align-self: center; margin-top: 10px; padding: 7px 20px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: transparent; cursor: pointer; font-size: clamp(12px, 1.2vw, 16px); font-weight: 700; letter-spacing: .06em; }
+.pc-screen .pc-skip-btn:hover { border-color: #6688ff; color: var(--text); }
+@media (max-width: 780px) { .pc-screen .pc-personality-match-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

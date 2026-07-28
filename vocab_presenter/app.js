@@ -2393,6 +2393,12 @@
     setSetupStep("grade");
   });
 
+  document.getElementById("appBackButton").addEventListener("click", () => {
+    window.location.href = sessionStorage.getItem("fpStudentMode") === "1"
+      ? "../student-zone/index.html"
+      : "../index.html";
+  });
+
   renderGrades();
   renderUnits();
   updateSetupSummary();

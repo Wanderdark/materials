@@ -21,10 +21,12 @@
   const STORE_KEY = "fpStudentProfile";
   const AVATARS = ["Blaze", "Frost", "Grace", "Louis", "Mara", "Nova", "Orion", "Pixie", "Rex", "Terra"];
   const FLIPPED_AVATARS = new Set(["Nova", "Terra"]);
-  const AVATAR_BASE = "../word_overlord/avatars/";
+  const SHARED_ASSET_BASE = new URL("../", document.currentScript?.src || window.location.href);
+  const sharedAssetUrl = (path) => new URL(path, SHARED_ASSET_BASE).href;
+  const AVATAR_BASE = sharedAssetUrl("word_overlord/avatars/");
   const avatarPath = (name, size = "head") => `${AVATAR_BASE}AV_Anime_${name}${size === "head" ? "_head" : ""}.webp`;
-  const STAR_SOUND = "../word_crush/sounds/star.mp3";
-  const BADGE_BASE = "../word_crush/badges/";
+  const STAR_SOUND = sharedAssetUrl("word_crush/sounds/star.mp3");
+  const BADGE_BASE = sharedAssetUrl("word_crush/badges/");
   const todayKey = () => new Date().toISOString().slice(0, 10);
   const playStar = () => new Audio(STAR_SOUND).play().catch(() => {});
 
@@ -42,7 +44,7 @@
     { name: "LIEUTENANT",         tr: "Teğmen",     img: "lieutenant",         threshold: 75 },
     { name: "SECOND LIEUTENANT",  tr: "Asteğmen",   img: "second_lieutenant",  threshold: 0 }
   ];
-  const rankImg = (rank) => `../word_overlord/ranks/${rank.img}.webp`;
+  const rankImg = (rank) => sharedAssetUrl(`word_overlord/ranks/${rank.img}.webp`);
   const getRank = (score) => RANKS.find((rank) => score >= rank.threshold) || RANKS[RANKS.length - 1];
   const getNextRank = (score) => [...RANKS].reverse().find((rank) => rank.threshold > score) || null;
 
@@ -233,6 +235,12 @@
     16% { opacity: 1; transform: translate(-50%, -14px) scale(1.2); }
     100% { opacity: 0; transform: translate(-50%, -120px) scale(1); }
   }
+  .sg-float.loss { color: #ff8066; text-shadow: 0 3px 14px rgba(0, 0, 0, .7), 0 0 26px rgba(255, 128, 102, .45); animation-name: sgFloatLoss; }
+  @keyframes sgFloatLoss {
+    0% { opacity: 0; transform: translate(-50%, -8px) scale(.7); }
+    16% { opacity: 1; transform: translate(-50%, 14px) scale(1.2); }
+    100% { opacity: 0; transform: translate(-50%, 120px) scale(1); }
+  }
   .sg-ach-tabs { display: flex; gap: 8px; }
   .sg-ach-tab { padding: 6px 14px; border: 1px solid #2b4084; border-radius: 999px; background: #101f47; color: #8fa6d9; font-size: 11px; font-weight: 900; letter-spacing: .08em; cursor: pointer; transition: border-color .15s ease, color .15s ease, background-color .15s ease; }
   .sg-ach-tab.active { border-color: rgba(255, 216, 77, .7); background: rgba(255, 216, 77, .1); color: var(--u2-gold, #ffd84d); }
@@ -395,7 +403,7 @@
       x = rect.left + rect.width / 2;
       y = rect.top - 6;
     }
-    const float = el("span", "sg-float", text);
+    const float = el("span", `sg-float${text.startsWith("-") ? " loss" : ""}`, text);
     float.style.left = `${x}px`;
     float.style.top = `${y}px`;
     document.body.append(float);
@@ -425,6 +433,8 @@
       if (climbed) {
         showToast(`⭐ RANK UP! You are now ${rank.name}!`);
         playStar();
+      } else {
+        showToast(`⬇️ YOUR RANK IS DEMOTED TO: ${rank.name}`);
       }
     }
   }
@@ -732,7 +742,14 @@
       profile.streak = 0;
       profile.wrongTotal += 1;
       profile.wrongRun += 1;
+      if (profile.points > 0) {
+        profile.points -= 1;
+        profile.daily.pointsToday = Math.max(0, profile.daily.pointsToday - 1);
+        floatPoints("-1");
+      }
+      checkRankUp();
       save();
+      updateHud(true);
     },
     onSongListened(songId) {
       recordSongActivity("listen", songId);

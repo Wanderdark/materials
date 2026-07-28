@@ -35,7 +35,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "distant_sky_layer",
             label: "Sky",
-            src: "./assets/backgrounds/distant_sky_layer.png",
+            src: "./assets/backgrounds/distant_sky_layer.webp",
             placeholder: "sky",
             sourceWidth: 1774,
             sourceHeight: 887,
@@ -55,7 +55,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "distant_clouds_layer",
             label: "Clouds",
-            src: "./assets/backgrounds/distant_clouds_seamless_layer.png",
+            src: "./assets/backgrounds/distant_clouds_seamless_layer.webp",
             placeholder: "clouds",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -76,7 +76,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "distant_mountain_layer",
             label: "Mountains",
-            src: "./assets/backgrounds/distant_mountain_layer.png",
+            src: "./assets/backgrounds/distant_mountain_layer.webp",
             placeholder: "mountains",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -96,7 +96,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "composite_distant_landscape_layer",
             label: "Distant landscape composite",
-            src: "./assets/backgrounds/composite_distant_landscape_seamless_layer.png",
+            src: "./assets/backgrounds/composite_distant_landscape_seamless_layer.webp",
             placeholder: "mountains",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -117,7 +117,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "far_forest_layer",
             label: "Far forest",
-            src: "./assets/backgrounds/far_forest_layer.png",
+            src: "./assets/backgrounds/far_forest_layer.webp",
             placeholder: "farForest",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -137,7 +137,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "midground_trees_layer",
             label: "Midground trees",
-            src: "./assets/backgrounds/midground_trees_layer.png",
+            src: "./assets/backgrounds/midground_trees_layer.webp",
             placeholder: "midgroundTrees",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -157,8 +157,8 @@ export const DEFAULT_CONFIG = {
         {
             id: "near_bushes_layer",
             label: "Near bushes",
-            src: "./assets/backgrounds/near_bushes_and_grass_layer.png",
-            expectedSrc: "./assets/backgrounds/near_bushes_layer.png",
+            src: "./assets/backgrounds/near_bushes_and_grass_layer.webp",
+            expectedSrc: "./assets/backgrounds/near_bushes_layer.webp",
             placeholder: "nearBushes",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -178,7 +178,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "roadside_details_layer",
             label: "Roadside details",
-            src: "./assets/backgrounds/roadside_details_layer.png",
+            src: "./assets/backgrounds/roadside_details_layer.webp",
             placeholder: "roadsideDetails",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -198,7 +198,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "composite_mid_roadside_layer",
             label: "Mid roadside composite",
-            src: "./assets/backgrounds/composite_mid_roadside_seamless_layer.png",
+            src: "./assets/backgrounds/composite_mid_roadside_seamless_layer.webp",
             placeholder: "nearBushes",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -219,8 +219,8 @@ export const DEFAULT_CONFIG = {
         {
             id: "ground_layer",
             label: "Ground",
-            src: "./assets/backgrounds/cycling_path_layer.png",
-            expectedSrc: "./assets/backgrounds/ground_layer.png",
+            src: "./assets/backgrounds/cycling_path_layer.webp",
+            expectedSrc: "./assets/backgrounds/ground_layer.webp",
             placeholder: "ground",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -241,7 +241,7 @@ export const DEFAULT_CONFIG = {
         {
             id: "foreground_vegetation_layer",
             label: "Foreground vegetation",
-            src: "./assets/backgrounds/foreground_vegetation_dense_layer.png",
+            src: "./assets/backgrounds/foreground_vegetation_dense_layer.webp",
             placeholder: "foreground",
             sourceWidth: 1536,
             sourceHeight: 1024,
@@ -284,7 +284,7 @@ export const DEFAULT_CONFIG = {
         },
         states: {
             ride: {
-                src: "./assets/characters/hannah_ride_manual_atlas.png?v=1",
+                src: "./assets/characters/hannah_ride_manual_atlas.webp?v=1",
                 frameCount: 8,
                 columns: 8,
                 fps: 11,
@@ -312,7 +312,7 @@ export const DEFAULT_CONFIG = {
                 }
             },
             jump: {
-                src: "./assets/characters/hannah_jump_manual_atlas.png?v=1",
+                src: "./assets/characters/hannah_jump_manual_atlas.webp?v=1",
                 frameCount: 4,
                 columns: 4,
                 fps: 8,
@@ -324,7 +324,7 @@ export const DEFAULT_CONFIG = {
                 runtimeSourceWidth: 1196
             },
             idleFallback: {
-                src: "./assets/characters/hannah1.png",
+                src: "./assets/characters/hannah1.webp",
                 frameCount: 1,
                 sourceWidth: 1536,
                 sourceHeight: 1024

@@ -9,6 +9,11 @@
                 src: "./assets/sounds/forest.mp3",
                 volume: 0.45,
                 loop: true
+            },
+            gallop: {
+                src: "./assets/sounds/gallop.mp3",
+                volume: 0.38,
+                loop: true
             }
         },
         environment: {
@@ -29,17 +34,17 @@
             segmentSeams: false
         },
         layers: [
-            layer("distant_sky_layer", "Sky", "./assets/backgrounds/distant_sky_layer.png", "sky", 1774, 887, 1920, 1080, 0, 0, false),
-            layer("distant_clouds_layer", "Clouds", "./assets/backgrounds/distant_clouds_seamless_layer.png", "clouds", 1536, 1024, 1920, 1280, 0.04, 10, true),
-            { ...layer("distant_mountain_layer", "Mountains", "./assets/backgrounds/distant_mountain_layer.png", "mountains", 1536, 1024, 1920, 1280, 0.1, 20, true), enabled: false },
-            { ...layer("composite_distant_landscape_layer", "Distant landscape composite", "./assets/backgrounds/composite_distant_landscape_seamless_layer.png", "mountains", 1536, 1024, 1920, 1280, 0.16, 25, true), alternateFlip: false },
-            { ...layer("far_forest_layer", "Far forest", "./assets/backgrounds/far_forest_layer.png", "farForest", 1536, 1024, 1920, 1280, 0.18, 30, true), enabled: false },
-            { ...layer("midground_trees_layer", "Midground trees", "./assets/backgrounds/midground_trees_layer.png", "midgroundTrees", 1536, 1024, 1920, 1280, 0.38, 40, true), enabled: false },
-            { ...layer("near_bushes_layer", "Near bushes", "./assets/backgrounds/near_bushes_and_grass_layer.png", "nearBushes", 1536, 1024, 1920, 1280, 0.68, 50, true), expectedSrc: "./assets/backgrounds/near_bushes_layer.png", enabled: false },
-            { ...layer("roadside_details_layer", "Roadside details", "./assets/backgrounds/roadside_details_layer.png", "roadsideDetails", 1536, 1024, 1920, 1280, 0.88, 60, true), enabled: false },
-            { ...layer("composite_mid_roadside_layer", "Mid roadside composite", "./assets/backgrounds/composite_mid_roadside_seamless_layer.png", "nearBushes", 1536, 1024, 1920, 1280, 0.72, 58, true), alternateFlip: false },
-            { ...layer("ground_layer", "Ground", "./assets/backgrounds/cycling_path_layer.png", "ground", 1536, 1024, 1920, 1280, 1, 70, true), expectedSrc: "./assets/backgrounds/ground_layer.png", yOffset: 105 },
-            { ...layer("foreground_vegetation_layer", "Foreground vegetation", "./assets/backgrounds/foreground_vegetation_dense_layer.png", "foreground", 1536, 1024, 1920, 1280, 1.28, 100, true), yOffset: 110 }
+            layer("distant_sky_layer", "Sky", "./assets/backgrounds/distant_sky_layer.webp", "sky", 1774, 887, 1920, 1080, 0, 0, false),
+            layer("distant_clouds_layer", "Clouds", "./assets/backgrounds/distant_clouds_seamless_layer.webp", "clouds", 1536, 1024, 1920, 1280, 0.04, 10, true),
+            { ...layer("distant_mountain_layer", "Mountains", "./assets/backgrounds/distant_mountain_layer.webp", "mountains", 1536, 1024, 1920, 1280, 0.1, 20, true), enabled: false },
+            { ...layer("composite_distant_landscape_layer", "Distant landscape composite", "./assets/backgrounds/composite_distant_landscape_seamless_layer.webp", "mountains", 1536, 1024, 1920, 1280, 0.16, 25, true), alternateFlip: false },
+            { ...layer("far_forest_layer", "Far forest", "./assets/backgrounds/far_forest_layer.webp", "farForest", 1536, 1024, 1920, 1280, 0.18, 30, true), enabled: false },
+            { ...layer("midground_trees_layer", "Midground trees", "./assets/backgrounds/midground_trees_layer.webp", "midgroundTrees", 1536, 1024, 1920, 1280, 0.38, 40, true), enabled: false },
+            { ...layer("near_bushes_layer", "Near bushes", "./assets/backgrounds/near_bushes_and_grass_layer.webp", "nearBushes", 1536, 1024, 1920, 1280, 0.68, 50, true), expectedSrc: "./assets/backgrounds/near_bushes_layer.webp", enabled: false },
+            { ...layer("roadside_details_layer", "Roadside details", "./assets/backgrounds/roadside_details_layer.webp", "roadsideDetails", 1536, 1024, 1920, 1280, 0.88, 60, true), enabled: false },
+            { ...layer("composite_mid_roadside_layer", "Mid roadside composite", "./assets/backgrounds/composite_mid_roadside_seamless_layer.webp", "nearBushes", 1536, 1024, 1920, 1280, 0.72, 58, true), alternateFlip: false },
+            { ...layer("ground_layer", "Ground", "./assets/backgrounds/cycling_path_layer.webp", "ground", 1536, 1024, 1920, 1280, 1, 70, true), expectedSrc: "./assets/backgrounds/ground_layer.webp", yOffset: 105 },
+            { ...layer("foreground_vegetation_layer", "Foreground vegetation", "./assets/backgrounds/foreground_vegetation_dense_layer.webp", "foreground", 1536, 1024, 1920, 1280, 1.28, 100, true), yOffset: 110 }
         ],
         character: {
             anchorX: 0.3,
@@ -57,44 +62,61 @@
             shadow: { enabled: false, zIndex: 65, width: 228, height: 42, xOffset: 8, yOffset: -6, opacity: 0.28 },
             states: {
                 ride: {
-                    src: "./assets/characters/hannah_ride_manual_atlas.png?v=1",
+                    src: "./assets/characters/hannah_horse_ride_1.webp",
+                    frameSources: Array.from(
+                        { length: 8 },
+                        (_, index) => `./assets/characters/hannah_horse_ride_${index + 1}.webp`
+                    ),
                     frameCount: 8,
                     columns: 8,
                     fps: 11,
                     loop: true,
-                    sourceWidth: 2184,
+                    sourceWidth: 294,
                     sourceHeight: 724,
-                    frameWidth: 273,
+                    frameWidth: 294,
                     frameHeight: 724,
-                    runtimeSourceWidth: 2184,
-                    frameRects: [
-                        { x: 0, y: 0, width: 273, height: 724 },
-                        { x: 273, y: 0, width: 273, height: 724 },
-                        { x: 546, y: 0, width: 273, height: 724 },
-                        { x: 819, y: 0, width: 273, height: 724 },
-                        { x: 1092, y: 0, width: 273, height: 724 },
-                        { x: 1365, y: 0, width: 273, height: 724 },
-                        { x: 1638, y: 0, width: 273, height: 724 },
-                        { x: 1911, y: 0, width: 273, height: 724 }
-                    ],
-                    chromaKey: { enabled: false, color: [247, 2, 245], tolerance: 72, feather: 24 }
+                    runtimeSourceWidth: 294
                 },
                 jump: {
-                    src: "./assets/characters/hannah_jump_manual_atlas.png?v=1",
+                    src: "./assets/characters/hannah_horse_jump_1.webp",
+                    frameSources: Array.from(
+                        { length: 4 },
+                        (_, index) => `./assets/characters/hannah_horse_jump_${index + 1}.webp`
+                    ),
                     frameCount: 4,
                     columns: 4,
                     fps: 4,
                     loop: false,
-                    sourceWidth: 1196,
+                    sourceWidth: 313,
                     sourceHeight: 724,
-                    frameWidth: 299,
+                    frameWidth: 313,
                     frameHeight: 724,
-                    runtimeSourceWidth: 1196
+                    runtimeSourceWidth: 313,
+                    scaleMultiplier: 0.9
                 },
-                idleFallback: { src: "./assets/characters/hannah1.png", frameCount: 1, sourceWidth: 1536, sourceHeight: 1024 }
+                duck: {
+                    src: "./assets/characters/hannah_horse_duck_0.webp",
+                    frameSources: Array.from(
+                        { length: 6 },
+                        (_, index) => `./assets/characters/hannah_horse_duck_${index}.webp`
+                    ),
+                    frameCount: 6,
+                    columns: 6,
+                    fps: 3.5,
+                    loop: false,
+                    sourceWidth: 684,
+                    sourceHeight: 384,
+                    runtimeSourceWidth: 684,
+                    frameWidth: 342,
+                    frameHeight: 384,
+                    scaleMultiplier: 0.875,
+                    wheelContactOffsetX: 160,
+                    wheelContactOffsetY: 570,
+                    visualYOffset: 220
+                },
+                idleFallback: { src: "./assets/characters/hannah1.webp", frameCount: 1, sourceWidth: 1536, sourceHeight: 1024 }
             }
         },
-        debug: { panelVisible: true, warningsVisible: true, updateInterval: 0.25 }
     };
 
     function layer(id, label, src, placeholder, sourceWidth, sourceHeight, renderWidth, renderHeight, speedMultiplier, zIndex, scroll) {
@@ -143,12 +165,12 @@
         return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
     }
 
-    function riderPlaceholderDataUrl(frameCount, frameWidth, height) {
+    function horsePlaceholderDataUrl(frameCount, frameWidth, height) {
         const width = frameCount * frameWidth;
         const frames = Array.from({ length: frameCount }, (_, index) => {
             const x = index * frameWidth;
-            const pedal = index % 2 === 0 ? 20 : -20;
-            return `<g transform="translate(${x} 0)"><rect width="${frameWidth}" height="${height}" fill="none"/><circle cx="92" cy="632" r="44" fill="none" stroke="#df3d6d" stroke-width="10"/><circle cx="188" cy="632" r="44" fill="none" stroke="#df3d6d" stroke-width="10"/><path d="M92 632 L138 568 L188 632 L128 632 Z" fill="none" stroke="#3a8ad8" stroke-width="10" stroke-linejoin="round"/><path d="M138 568 L154 505 L176 468" fill="none" stroke="#f4a62a" stroke-width="16" stroke-linecap="round"/><circle cx="168" cy="430" r="36" fill="#ffd39a"/><path d="M142 448 C104 468 98 512 110 552" fill="none" stroke="#f6bf31" stroke-width="18" stroke-linecap="round"/><path d="M138 568 L${138 + pedal} 620" stroke="#24343d" stroke-width="9" stroke-linecap="round"/></g>`;
+            const stride = index % 2 === 0 ? 18 : -18;
+            return `<g transform="translate(${x} 0)"><rect width="${frameWidth}" height="${height}" fill="none"/><ellipse cx="145" cy="570" rx="82" ry="48" fill="#7a4528"/><path d="M195 555 L218 448 L246 425" fill="none" stroke="#7a4528" stroke-width="30" stroke-linecap="round"/><circle cx="250" cy="415" r="27" fill="#7a4528"/><path d="M96 604 L${88 + stride} 670 M160 608 L${170 - stride} 670" stroke="#3a251d" stroke-width="15" stroke-linecap="round"/><circle cx="125" cy="470" r="28" fill="#ffd39a"/><path d="M105 484 L132 545" stroke="#397fc3" stroke-width="22" stroke-linecap="round"/><path d="M132 520 L185 550" stroke="#397fc3" stroke-width="16" stroke-linecap="round"/></g>`;
         }).join("");
         const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">${frames}</svg>`;
         return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
@@ -171,11 +193,6 @@
                 image.onload = () => {
                     completed += 1;
                     const info = { image, loaded: true, width: image.naturalWidth, height: image.naturalHeight, runtimeSrc: url };
-                    try {
-                        this.applyRuntimeProcessing(url, image, info);
-                    } catch (error) {
-                        this.warnings.push(`Runtime processing skipped for ${url}: ${error.message}`);
-                    }
                     this.assets.set(url, info);
                     this.updateProgress(completed, urls.length);
                     resolve();
@@ -205,60 +222,6 @@
             });
             Object.values(this.config.character.states).forEach((state) => urls.add(state.src));
             return [...urls];
-        }
-
-        applyRuntimeProcessing(url, image, info) {
-            const ride = this.config.character.states.ride;
-            if (url !== ride.src || !ride.chromaKey?.enabled) {
-                return;
-            }
-            const frameWidth = ride.frameWidth;
-            const frameHeight = ride.frameHeight;
-            const canvas = document.createElement("canvas");
-            canvas.width = ride.runtimeSourceWidth || frameWidth * ride.frameCount;
-            canvas.height = frameHeight;
-            const context = canvas.getContext("2d", { willReadFrequently: true });
-            ride.frameRects.forEach((rect, index) => {
-                context.drawImage(
-                    image,
-                    rect.x,
-                    rect.y,
-                    rect.width,
-                    rect.height,
-                    index * frameWidth,
-                    0,
-                    rect.width,
-                    frameHeight
-                );
-            });
-            const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
-            const data = pixels.data;
-            const [targetR, targetG, targetB] = ride.chromaKey.color;
-            const tolerance = ride.chromaKey.tolerance;
-            const feather = ride.chromaKey.feather;
-            let changed = 0;
-            for (let index = 0; index < data.length; index += 4) {
-                const dr = data[index] - targetR;
-                const dg = data[index + 1] - targetG;
-                const db = data[index + 2] - targetB;
-                const distance = Math.sqrt((dr * dr) + (dg * dg) + (db * db));
-                if (distance <= tolerance) {
-                    data[index + 3] = 0;
-                    changed += 1;
-                } else if (distance <= tolerance + feather) {
-                    data[index + 3] = Math.round(data[index + 3] * ((distance - tolerance) / feather));
-                    changed += 1;
-                }
-            }
-            if (changed > 0) {
-                context.putImageData(pixels, 0, 0);
-                info.runtimeSrc = canvas.toDataURL("image/png");
-                info.runtimeProcessed = "chroma-key";
-                info.runtimeWidth = canvas.width;
-                info.runtimeHeight = canvas.height;
-                info.runtimeFrameWidth = frameWidth;
-                this.warnings.push("hannah_ride_spritesheet.png uses uneven frame widths and an opaque magenta background; a transparent 8-frame runtime atlas was generated.");
-            }
         }
 
         updateProgress(completed, total) {
@@ -380,6 +343,9 @@
             this.elapsed = 0;
             this.stateElapsed = 0;
             this.isJumping = false;
+            this.isDucking = false;
+            this.frameStrip = null;
+            this.frameStripSource = "";
             this.frameWidth = this.state.frameWidth;
             this.frameHeight = this.state.frameHeight;
             this.spriteElement.style.zIndex = this.config.zIndex;
@@ -389,11 +355,58 @@
         }
 
         applyStateImage() {
+            if (this.state.frameSources) {
+                this.ensureFrameStrip();
+                return;
+            }
+            this.frameStrip?.remove();
+            this.frameStrip = null;
+            this.frameStripSource = "";
+            this.spriteElement.style.overflow = "";
             const stateInfo = this.assetMap?.get(this.state.src) || this.assetInfo;
             const spriteSource = this.usePlaceholderAssets
-                ? riderPlaceholderDataUrl(this.state.frameCount, this.state.frameWidth, this.state.frameHeight)
+                ? horsePlaceholderDataUrl(this.state.frameCount, this.state.frameWidth, this.state.frameHeight)
                 : stateInfo?.runtimeSrc || this.state.src;
             this.spriteElement.style.backgroundImage = `url("${spriteSource}")`;
+        }
+
+        ensureFrameStrip() {
+            const sources = this.state.frameSources;
+            const sourceKey = sources.join("|");
+            if (this.frameStripSource !== sourceKey) {
+                this.frameStrip?.remove();
+                const strip = document.createElement("div");
+                strip.className = "hannah-frame-strip";
+                strip.style.position = "absolute";
+                strip.style.left = "0";
+                strip.style.top = "0";
+                strip.style.display = "flex";
+                strip.style.willChange = "transform";
+                sources.forEach((source) => {
+                    const image = document.createElement("img");
+                    image.src = source;
+                    image.alt = "";
+                    image.decoding = "async";
+                    image.style.display = "block";
+                    image.style.flex = "0 0 auto";
+                    strip.append(image);
+                });
+                this.spriteElement.append(strip);
+                this.frameStrip = strip;
+                this.frameStripSource = sourceKey;
+            }
+            this.spriteElement.style.backgroundImage = "none";
+            this.spriteElement.style.overflow = "hidden";
+            this.updateFrameStrip();
+        }
+
+        updateFrameStrip() {
+            if (!this.frameStrip) {
+                return;
+            }
+            const stateScale = this.config.scale * (this.state.scaleMultiplier || 1);
+            const offset = -(this.frame * this.frameWidth * stateScale);
+            this.frameStrip.style.transform = `translate3d(${offset}px, 0, 0)`;
         }
 
         setState(name) {
@@ -403,6 +416,7 @@
             this.frameTimer = 0;
             this.stateElapsed = 0;
             this.isJumping = name === "jump";
+            this.isDucking = name === "duck";
             this.applyStateImage();
             this.applyLayout();
         }
@@ -413,8 +427,14 @@
             }
         }
 
+        duck() {
+            if (!this.isJumping && !this.isDucking && this.config.states.duck) {
+                this.setState("duck");
+            }
+        }
+
         applyLayout() {
-            const scale = this.config.scale;
+            const scale = this.config.scale * (this.state.scaleMultiplier || 1);
             const stateInfo = this.assetMap?.get(this.state.src) || this.assetInfo;
             this.frameWidth = stateInfo?.runtimeFrameWidth || this.state.frameWidth || (this.state.sourceWidth / this.state.columns);
             this.frameHeight = stateInfo?.runtimeHeight || this.state.frameHeight || this.state.sourceHeight;
@@ -422,8 +442,11 @@
             const height = this.frameHeight * scale;
             const anchorX = 1920 * this.config.anchorX;
             const groundY = 1080 * this.config.groundY;
-            const left = anchorX - (this.config.wheelContactOffsetX * scale);
-            const top = groundY - (this.config.wheelContactOffsetY * scale) + this.config.visualYOffset;
+            const wheelContactOffsetX = this.state.wheelContactOffsetX ?? this.config.wheelContactOffsetX;
+            const wheelContactOffsetY = this.state.wheelContactOffsetY ?? this.config.wheelContactOffsetY;
+            const visualYOffset = this.state.visualYOffset ?? this.config.visualYOffset;
+            const left = anchorX - (wheelContactOffsetX * scale);
+            const top = groundY - (wheelContactOffsetY * scale) + visualYOffset;
             this.spriteElement.style.width = `${width}px`;
             this.spriteElement.style.height = `${height}px`;
             this.spriteElement.style.left = `${left}px`;
@@ -431,6 +454,15 @@
             const sheetWidth = stateInfo?.runtimeWidth || this.state.runtimeSourceWidth || this.state.sourceWidth;
             this.spriteElement.style.backgroundSize = `${sheetWidth * scale}px ${height}px`;
             this.spriteElement.style.backgroundPosition = "0px 0px";
+            if (this.frameStrip) {
+                this.frameStrip.style.width = `${this.frameWidth * this.state.frameCount * scale}px`;
+                this.frameStrip.style.height = `${height}px`;
+                this.frameStrip.querySelectorAll("img").forEach((image) => {
+                    image.style.width = `${width}px`;
+                    image.style.height = `${height}px`;
+                });
+                this.updateFrameStrip();
+            }
             const shadow = this.config.shadow;
             this.shadowElement.classList.toggle("is-enabled", shadow.enabled);
             this.shadowElement.style.width = `${shadow.width * scale}px`;
@@ -457,7 +489,11 @@
                 } else {
                     this.frame = (this.frame + framesToAdvance) % this.state.frameCount;
                 }
-                this.spriteElement.style.backgroundPosition = `${-(this.frame * this.frameWidth * this.config.scale)}px 0px`;
+                if (this.state.frameSources) {
+                    this.updateFrameStrip();
+                } else {
+                    this.spriteElement.style.backgroundPosition = `${-(this.frame * this.frameWidth * this.config.scale)}px 0px`;
+                }
             }
             const bob = this.config.bobAmplitude === 0 ? 0 : Math.sin(this.elapsed * this.config.bobFrequency * Math.PI * 2) * this.config.bobAmplitude;
             const tilt = this.config.tiltAmplitude === 0 ? 0 : Math.sin(this.elapsed * this.config.bobFrequency * Math.PI * 2) * this.config.tiltAmplitude;
@@ -629,14 +665,24 @@
             this.assets = new Map();
             this.warnings = [];
             this.audio = null;
+            this.gallopAudio = null;
+            this.gallopPausedForJump = false;
+            this.touchStartY = null;
+            this.speedMultiplier = 1;
+            this.speedBoostTimer = 0;
+            this.speedSlowTimer = 0;
+            this.speedBoostActive = false;
+            this.speedSlowActive = false;
+            this.defaultCharacterAnchorX = this.config.character.anchorX;
             this.lastTime = 0;
             this.paused = false;
             this.rafId = 0;
-            this.debugTimer = 0;
             this.tick = this.tick.bind(this);
             this.onResize = this.onResize.bind(this);
             this.onVisibilityChange = this.onVisibilityChange.bind(this);
             this.onKeyDown = this.onKeyDown.bind(this);
+            this.onTouchStart = this.onTouchStart.bind(this);
+            this.onTouchEnd = this.onTouchEnd.bind(this);
         }
 
         async start() {
@@ -646,16 +692,15 @@
             this.assets = result.assets;
             this.warnings = result.warnings.concat(this.filenameMappingWarnings());
             this.buildScene();
-            this.debugPanel = new DebugPanel(this.elements.debugPanel, this.config, {
-                applyConfig: () => this.applyConfig(),
-                reset: () => this.resetVisualTuning()
-            });
-            this.debugPanel.setWarnings(this.warnings);
             this.applyConfig();
             this.onResize();
             window.addEventListener("resize", this.onResize);
             document.addEventListener("visibilitychange", this.onVisibilityChange);
             window.addEventListener("keydown", this.onKeyDown);
+            this.elements.frame.addEventListener("touchstart", this.onTouchStart, { passive: true });
+            this.elements.frame.addEventListener("touchend", this.onTouchEnd, { passive: true });
+            this.elements.jumpControl?.addEventListener("click", () => this.triggerJump());
+            this.elements.duckControl?.addEventListener("click", () => this.triggerDuck());
             this.setupAudio();
             this.lastTime = performance.now();
             this.rafId = requestAnimationFrame(this.tick);
@@ -694,7 +739,6 @@
             this.layers.forEach((layerConfig) => layerConfig.applyLayout());
             this.character.applyLayout();
             this.applyOverlays();
-            this.debugPanel?.updateLayerStatus(this.layers.map((layerConfig) => layerConfig.getStatus()));
         }
 
         applyOverlays() {
@@ -734,14 +778,14 @@
             const delta = Math.min((time - this.lastTime) / 1000, 0.05);
             this.lastTime = time;
             this.updateSpeed(delta);
-            this.layers.forEach((layerConfig) => layerConfig.update(delta, this.config.speed.current));
-            this.character.update(delta);
-            this.applyOverlays();
-            this.debugTimer += delta;
-            if (this.debugTimer >= this.config.debug.updateInterval) {
-                this.debugTimer = 0;
-                this.debugPanel?.updateLayerStatus(this.layers.map((layerConfig) => layerConfig.getStatus()));
+            const gameDelta = delta * this.speedMultiplier;
+            this.layers.forEach((layerConfig) => layerConfig.update(gameDelta, this.config.speed.current));
+            this.character.update(gameDelta);
+            if (this.gallopPausedForJump && !this.character.isJumping) {
+                this.gallopAudio?.play().catch(() => {});
+                this.gallopPausedForJump = false;
             }
+            this.applyOverlays();
             this.rafId = requestAnimationFrame(this.tick);
         }
 
@@ -778,15 +822,26 @@
             this.audio.preload = "auto";
             this.audio.hidden = true;
             document.body.append(this.audio);
+            const gallop = this.config.audio?.gallop;
+            if (gallop?.src) {
+                this.gallopAudio = document.createElement("audio");
+                this.gallopAudio.src = gallop.src;
+                this.gallopAudio.loop = gallop.loop !== false;
+                this.gallopAudio.volume = gallop.volume;
+                this.gallopAudio.preload = "auto";
+                this.gallopAudio.hidden = true;
+                document.body.append(this.gallopAudio);
+            }
             window.__rideWithHannahAudio = this.audio;
             window.__rideWithHannahAudioReady = true;
 
             const tryPlay = () => {
-                if (!this.audio || !this.audio.paused) {
+                const tracks = [this.audio, this.gallopAudio].filter(Boolean);
+                if (!tracks.some((track) => track.paused)) {
                     cleanup();
                     return;
                 }
-                this.audio.play().then(cleanup).catch(() => {});
+                Promise.all(tracks.map((track) => track.play())).then(cleanup).catch(() => {});
             };
             const cleanup = () => {
                 window.removeEventListener("pointerdown", tryPlay);
@@ -798,28 +853,96 @@
         }
 
         onKeyDown(event) {
-            if (event.code === "Space") {
-                this.audio?.play().catch(() => {});
+            if (event.code === "Space" || event.code === "ArrowUp") {
                 event.preventDefault();
-                this.character.jump();
+                this.triggerJump();
+            } else if (event.code === "ArrowDown") {
+                event.preventDefault();
+                this.triggerDuck();
             }
         }
 
-        resetVisualTuning() {
-            cancelAnimationFrame(this.rafId);
-            this.elements.overlays.querySelectorAll(".canvas-bounds, .seam-guide").forEach((node) => node.remove());
-            this.config = cloneConfig();
-            this.applySharedEnvironmentDefaults();
-            this.buildScene();
-            this.debugPanel = new DebugPanel(this.elements.debugPanel, this.config, {
-                applyConfig: () => this.applyConfig(),
-                reset: () => this.resetVisualTuning()
-            });
-            this.debugPanel.setWarnings(this.warnings);
-            this.applyConfig();
-            this.onResize();
-            this.lastTime = performance.now();
-            this.rafId = requestAnimationFrame(this.tick);
+        onTouchStart(event) {
+            if (event.touches.length === 1) {
+                this.touchStartY = event.touches[0].clientY;
+            }
+        }
+
+        onTouchEnd(event) {
+            const touch = event.changedTouches[0];
+            if (this.touchStartY !== null && touch) {
+                const deltaY = this.touchStartY - touch.clientY;
+                if (deltaY >= 48) {
+                    this.triggerJump();
+                } else if (deltaY <= -48) {
+                    this.triggerDuck();
+                }
+            }
+            this.touchStartY = null;
+        }
+
+        triggerJump() {
+            this.audio?.play().catch(() => {});
+            if (!this.character.isJumping && this.gallopAudio) {
+                this.gallopAudio.pause();
+                this.gallopPausedForJump = true;
+            }
+            this.character.jump();
+        }
+
+        triggerDuck() {
+            this.character.duck();
+        }
+
+        activateSpeedBoost() {
+            if (this.speedSlowActive) {
+                this.speedSlowActive = false;
+                window.clearTimeout(this.speedSlowTimer);
+                this.speedSlowTimer = 0;
+                this.updateSpeedEffects();
+                return;
+            }
+            this.speedBoostActive = true;
+            this.updateSpeedEffects();
+            window.clearTimeout(this.speedBoostTimer);
+            this.speedBoostTimer = window.setTimeout(() => {
+                this.speedBoostActive = false;
+                this.updateSpeedEffects();
+                this.speedBoostTimer = 0;
+            }, 10000);
+        }
+
+        activateSlowdown() {
+            if (this.speedBoostActive) {
+                this.speedBoostActive = false;
+                window.clearTimeout(this.speedBoostTimer);
+                this.speedBoostTimer = 0;
+                this.updateSpeedEffects();
+                return;
+            }
+            this.speedSlowActive = true;
+            this.updateSpeedEffects();
+            window.clearTimeout(this.speedSlowTimer);
+            this.speedSlowTimer = window.setTimeout(() => {
+                this.speedSlowActive = false;
+                this.updateSpeedEffects();
+                this.speedSlowTimer = 0;
+            }, 10000);
+        }
+
+        updateSpeedEffects() {
+            this.speedMultiplier = (this.speedBoostActive ? 1.5 : 1) * (this.speedSlowActive ? 0.75 : 1);
+
+            const targetAnchorX = this.speedBoostActive
+                ? 0.5
+                : this.speedSlowActive
+                    ? 0.16
+                    : this.defaultCharacterAnchorX;
+
+            if (this.config.character.anchorX !== targetAnchorX) {
+                this.config.character.anchorX = targetAnchorX;
+                this.character?.applyLayout();
+            }
         }
 
         filenameMappingWarnings() {
@@ -833,23 +956,21 @@
         return key.replace(/[A-Z]/g, (match) => ` ${match.toLowerCase()}`).replace(/^./, (match) => match.toUpperCase());
     }
 
-    const DEFAULT_NOUN_GAME_CONFIG = {
-        countableWords: [
-            "BEANS", "SALAD", "CROISSANT", "MUSHROOM", "PANCAKE",
-            "PEPPER", "BISCUIT", "COOKIE", "LEMON", "PIE",
-            "NUT", "CORN", "LETTUCE"
-        ],
-        uncountableWords: [
-            "SPICES", "MILK", "WATER", "JAM", "SUGAR",
-            "BUTTER", "SALT", "FLOUR", "GARLIC", "MEAT",
-            "OIL", "BAKING POWDER", "CINNAMON", "DOUGH"
+    const DEFAULT_WORD_SET = {
+        id: "countable-uncountable",
+        title: "Countable and Uncountable Nouns",
+        groups: [
+            { id: "countable", label: "COUNTABLE", words: ["BEANS", "SALAD", "CROISSANT", "MUSHROOM", "PANCAKE", "PEPPER", "BISCUIT", "COOKIE", "LEMON", "PIE", "NUT", "CORN", "LETTUCE"] },
+            { id: "uncountable", label: "UNCOUNTABLE", words: ["SPICES", "MILK", "WATER", "JAM", "SUGAR", "BUTTER", "SALT", "FLOUR", "GARLIC", "MEAT", "OIL", "BAKING POWDER", "CINNAMON", "DOUGH"] }
         ]
     };
 
-    function readNounGameConfig() {
+    function readLaunchConfig() {
         try {
             const stored = window.sessionStorage.getItem("funcPresenterMiniGameConfig");
-            return stored ? JSON.parse(stored) : {};
+            const config = stored ? JSON.parse(stored) : {};
+            const query = new URLSearchParams(window.location.search);
+            return query.get("launcher") === "student-zone" || !query.has("return") ? {} : config;
         } catch (error) {
             console.warn("Mini-game config could not be read.", error);
             return {};
@@ -861,6 +982,63 @@
         return source
             .map((word) => String(word || "").trim().toUpperCase())
             .filter(Boolean);
+    }
+
+    function normalizeWordSet(wordSet) {
+        const source = wordSet?.groups?.length >= 2 ? wordSet : DEFAULT_WORD_SET;
+        const groups = source.groups.slice(0, 2).map((group, index) => ({
+            id: String(group?.id || `group-${index + 1}`).trim().toLowerCase().replace(/[^a-z0-9-]/g, "-") || `group-${index + 1}`,
+            label: String(group?.label || group?.id || `GROUP ${index + 1}`).trim().toUpperCase(),
+            words: normalizeWordList(group?.words, [])
+        }));
+        return groups.every((group) => group.words.length)
+            ? { id: source.id || "word-set", title: source.title || "Ride with Hannah", groups }
+            : DEFAULT_WORD_SET;
+    }
+
+    function buildGradeWordSet(wordSet, grade) {
+        const gradeGroups = wordSet?.gradeGroups;
+        if (!gradeGroups) {
+            return wordSet;
+        }
+        const grades = [5, 6, 7, 8].filter((entry) => entry <= grade);
+        const groupDefinitions = wordSet.groupDefinitions?.length >= 2
+            ? wordSet.groupDefinitions.slice(0, 2)
+            : [
+                { id: "singular", label: "SINGULAR" },
+                { id: "plural", label: "PLURAL" }
+            ];
+        return {
+            id: wordSet.id,
+            title: `${wordSet.title} — Grade ${grade}`,
+            groups: groupDefinitions.map((group) => ({
+                id: group.id,
+                label: group.label,
+                words: grades.flatMap((entry) => gradeGroups[entry]?.[group.id] || [])
+            }))
+        };
+    }
+
+    function loadWordSet(source, id) {
+        if (!source || !id) {
+            return Promise.resolve(null);
+        }
+        window.RideWithHannahWordSets = window.RideWithHannahWordSets || {};
+        if (window.RideWithHannahWordSets[id]) {
+            return Promise.resolve(window.RideWithHannahWordSets[id]);
+        }
+        return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = source;
+            script.onload = () => resolve(window.RideWithHannahWordSets[id] || null);
+            script.onerror = () => reject(new Error(`Word set could not be loaded: ${source}`));
+            document.head.append(script);
+        });
+    }
+
+    function getReturnUrl() {
+        const requested = new URLSearchParams(window.location.search).get("return");
+        return requested || "../../index.html";
     }
 
     function shuffled(items) {
@@ -898,16 +1076,15 @@
         oscillator.stop(context.currentTime + duration + 0.02);
     }
 
-    class CountableUncountableRideGame {
-        constructor(engine) {
+    class RideWordGame {
+        constructor(engine, wordSet, launchConfig) {
             this.engine = engine;
             this.frame = engine.elements.frame;
-            this.config = readNounGameConfig();
-            this.sources = {
-                countable: normalizeWordList(this.config.countableWords, DEFAULT_NOUN_GAME_CONFIG.countableWords),
-                uncountable: normalizeWordList(this.config.uncountableWords, DEFAULT_NOUN_GAME_CONFIG.uncountableWords)
-            };
-            this.wordPools = { countable: [], uncountable: [] };
+            this.config = launchConfig || {};
+            this.wordSet = normalizeWordSet(wordSet);
+            this.groups = this.wordSet.groups;
+            this.sources = Object.fromEntries(this.groups.map((group) => [group.id, group.words]));
+            this.wordPools = Object.fromEntries(this.groups.map((group) => [group.id, []]));
             this.items = [];
             this.basketWords = [];
             this.rafId = null;
@@ -915,13 +1092,23 @@
             this.lastTime = 0;
             this.elapsed = 0;
             this.spawnTimer = 0;
-            this.duration = 60;
+            this.duration = Number(this.config.durationSeconds) || 90;
             this.spawnInterval = 2.15;
             this.speed = 400;
+            this.arrow = null;
+            this.balloons = [];
+            this.balloonSpawnTimer = 4;
+            this.arrowTimer = 15;
+            this.arrowInterval = 15;
+            this.arrowSpawnLeadTime = 1;
+            this.arrowResumeSpawnDelay = 0.8;
+            this.arrowSpeed = 322;
+            this.arrowScale = 0.4;
+            this.arrowYRatio = 0.68;
             this.lives = 3;
             this.bankHearts = 0;
             this.score = 0;
-            this.targetType = "countable";
+            this.targetGroup = this.groups[0];
             this.buildUi();
         }
 
@@ -938,7 +1125,7 @@
                         </div>
                     </div>
                     <div class="ride-game-status">
-                        <div class="ride-game-chip"><span>TIME</span><strong data-time>60</strong></div>
+                        <div class="ride-game-chip"><span>TIME</span><strong data-time>90</strong></div>
                         <div class="ride-game-chip"><span>SCORE</span><strong data-score>0</strong></div>
                         <div class="ride-game-lives" data-lives></div>
                         <div class="ride-game-bank" data-bank></div>
@@ -958,23 +1145,45 @@
 
         start() {
             this.clearItems();
+            this.clearArrow();
+            this.clearBalloons();
             this.removeEndOverlay();
-            this.targetType = Math.random() < 0.5 ? "countable" : "uncountable";
+            this.targetGroup = this.groups[Math.floor(Math.random() * this.groups.length)];
             this.items = [];
             this.basketWords = [];
-            this.wordPools = { countable: [], uncountable: [] };
+            this.wordPools = Object.fromEntries(this.groups.map((group) => [group.id, []]));
             this.lastTime = 0;
             this.elapsed = 0;
             this.spawnTimer = 0.65;
+            this.arrowTimer = this.arrowInterval;
+            this.balloonSpawnTimer = 4 + Math.random() * 3;
             this.lives = 3;
             this.bankHearts = 0;
             this.score = 0;
             this.running = true;
             this.correctAudio = new Audio("./assets/sounds/correct.mp3");
             this.correctAudio.preload = "auto";
-            this.nodes.instruction.textContent = `COLLECT ALL ${this.targetType.toUpperCase()} ITEMS`;
+            this.nodes.instruction.textContent = `COLLECT ALL ${this.targetGroup.label} ITEMS`;
             this.renderStats();
             this.rafId = requestAnimationFrame((time) => this.tick(time));
+        }
+
+        showTutorial() {
+            const overlay = document.createElement("div");
+            overlay.className = "ride-tutorial";
+            overlay.innerHTML = `
+                <div class="ride-tutorial-card">
+                    <h2>RIDE WITH HANNAH</h2>
+                    <p><strong>JUMP:</strong> Space, ↑ or swipe up.</p>
+                    <p><strong>DUCK:</strong> ↓ or swipe down to avoid arrows.</p>
+                    <button type="button" data-start-ride>START RIDE</button>
+                </div>
+            `;
+            overlay.querySelector("[data-start-ride]").addEventListener("click", () => {
+                overlay.remove();
+                this.start();
+            });
+            this.frame.append(overlay);
         }
 
         tick(time) {
@@ -984,15 +1193,24 @@
             if (!this.lastTime) {
                 this.lastTime = time;
             }
-            const delta = Math.min((time - this.lastTime) / 1000, 0.05);
+            const delta = Math.min((time - this.lastTime) / 1000, 0.05) * this.engine.speedMultiplier;
             this.lastTime = time;
             this.elapsed += delta;
-            this.spawnTimer -= delta;
-            if (this.spawnTimer <= 0) {
-                this.spawnItem();
-                this.spawnTimer = this.spawnInterval + Math.random() * 0.35;
+            this.arrowTimer -= delta;
+            if (this.arrowTimer <= 0) {
+                this.spawnArrow();
+                this.arrowTimer = this.arrowInterval;
+            }
+            if ((!this.arrow || this.arrow.spawnReleased) && this.arrowTimer > this.arrowSpawnLeadTime) {
+                this.spawnTimer -= delta;
+                if (this.spawnTimer <= 0) {
+                    this.spawnItem();
+                    this.spawnTimer = this.spawnInterval + Math.random() * 0.35;
+                }
             }
             this.updateItems(delta);
+            this.updateBalloons(delta);
+            this.updateArrow(delta);
             this.nodes.time.textContent = String(Math.max(0, Math.ceil(this.duration - this.elapsed)));
             if (this.elapsed >= this.duration) {
                 this.endGame("TIME IS UP!");
@@ -1009,8 +1227,8 @@
         }
 
         spawnItem() {
-            const otherType = this.targetType === "countable" ? "uncountable" : "countable";
-            const type = Math.random() < 0.58 ? this.targetType : otherType;
+            const otherGroup = this.groups.find((group) => group.id !== this.targetGroup.id) || this.groups[0];
+            const type = Math.random() < 0.58 ? this.targetGroup.id : otherGroup.id;
             const word = this.nextWord(type);
             const node = document.createElement("div");
             node.className = `ride-noun-box is-${type}`;
@@ -1029,6 +1247,91 @@
             this.positionItem(item);
         }
 
+        spawnBalloon() {
+            const colors = ["red", "blue", "green"];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const node = document.createElement("img");
+            node.className = `ride-balloon is-${color}`;
+            node.src = `./assets/decals/${color}_baloon.webp`;
+            node.alt = color === "red" ? "Speed balloon" : "";
+            node.draggable = false;
+            this.frame.append(node);
+            const balloon = {
+                node,
+                color,
+                x: this.frame.clientWidth + 130,
+                y: this.frame.clientHeight * (0.2 + Math.random() * 0.42),
+                speed: 75 + Math.random() * 45,
+                drift: 24 + Math.random() * 28,
+                phase: Math.random() * Math.PI * 2,
+                rotation: Math.random() * 360,
+                rotationSpeed: (Math.random() < 0.5 ? -1 : 1) * (8 + Math.random() * 10)
+            };
+            node.addEventListener("click", () => {
+                this.popBalloon(balloon);
+                if (balloon.color === "red") {
+                    this.engine.activateSpeedBoost();
+                } else if (balloon.color === "blue") {
+                    this.engine.activateSlowdown();
+                } else if (balloon.color === "green") {
+                    this.score += 1;
+                    this.floatText("+1 SCORE", this.nodes.score.getBoundingClientRect(), "ride-floating-point");
+                    this.playCorrectSound();
+                    this.renderStats();
+                }
+            });
+            this.balloons.push(balloon);
+            this.positionBalloon(balloon);
+        }
+
+        updateBalloons(delta) {
+            this.balloonSpawnTimer -= delta;
+            if (!this.balloons.length && this.balloonSpawnTimer <= 0) {
+                this.spawnBalloon();
+                this.balloonSpawnTimer = 5 + Math.random() * 5;
+            }
+            this.balloons = this.balloons.filter((balloon) => {
+                if (balloon.isDespawning) {
+                    balloon.y -= 780 * delta;
+                    balloon.despawnRemaining -= delta;
+                    this.positionBalloon(balloon);
+                    if (balloon.despawnRemaining <= 0) {
+                        balloon.node.remove();
+                        return false;
+                    }
+                    return true;
+                }
+                balloon.x -= balloon.speed * delta;
+                balloon.phase += delta * 1.7;
+                balloon.rotation += balloon.rotationSpeed * delta;
+                this.positionBalloon(balloon);
+                if (balloon.x < -180) {
+                    balloon.isDespawning = true;
+                    balloon.despawnRemaining = 0.36;
+                    balloon.node.classList.add("is-despawning");
+                }
+                return true;
+            });
+        }
+
+        popBalloon(balloon) {
+            if (balloon.isPopped) {
+                return;
+            }
+            balloon.isPopped = true;
+            balloon.node.classList.add("is-popped");
+            const popAudio = new Audio("./assets/sounds/baloon_pup.mp3");
+            popAudio.volume = 0.65;
+            popAudio.play().catch(() => {});
+            window.setTimeout(() => balloon.node.remove(), 260);
+            this.balloons = this.balloons.filter((item) => item !== balloon);
+        }
+
+        positionBalloon(balloon) {
+            const y = balloon.y + Math.sin(balloon.phase) * balloon.drift;
+            balloon.node.style.transform = `translate3d(${balloon.x}px, ${y}px, 0) rotate(${balloon.rotation}deg)`;
+        }
+
         getGroundItemY(node) {
             const frameHeight = this.frame.clientHeight || 720;
             const itemHeight = node.offsetHeight || 52;
@@ -1042,7 +1345,7 @@
                 item.x -= this.speed * delta;
                 this.positionItem(item);
                 if (!item.hit && rectanglesOverlap(hannahRect, this.getItemRect(item))) {
-                    item.type === this.targetType ? this.collectItem(item) : this.hitWrongItem(item);
+                    item.type === this.targetGroup.id ? this.collectItem(item) : this.hitWrongItem(item);
                     return false;
                 }
                 if (item.x < -260) {
@@ -1055,6 +1358,78 @@
 
         positionItem(item) {
             item.node.style.transform = `translate3d(${item.x}px, ${item.y}px, 0)`;
+        }
+
+        spawnArrow() {
+            this.clearArrow();
+            const node = document.createElement("img");
+            node.className = "ride-arrow";
+            node.src = "./assets/decals/arrow.webp";
+            node.alt = "";
+            node.style.position = "absolute";
+            node.style.zIndex = "145";
+            node.style.width = `${154 * this.arrowScale}px`;
+            node.style.height = "auto";
+            node.style.pointerEvents = "none";
+            node.style.willChange = "transform";
+            this.frame.append(node);
+            this.arrow = {
+                node,
+                x: this.frame.clientWidth + 120,
+                y: this.frame.clientHeight * this.arrowYRatio,
+                spawnReleased: false,
+                hit: false
+            };
+            this.positionArrow();
+        }
+
+        updateArrow(delta) {
+            if (!this.arrow) {
+                return;
+            }
+            this.arrow.x -= this.arrowSpeed * delta;
+            this.positionArrow();
+            if (!this.arrow.spawnReleased && this.arrow.x <= 80) {
+                this.arrow.spawnReleased = true;
+                this.spawnTimer = this.arrowResumeSpawnDelay;
+            }
+            if (!this.arrow.hit && !this.engine.character?.isDucking && this.arrowHitsHannah()) {
+                this.hitArrow();
+                return;
+            }
+            if (this.arrow.x < -this.arrow.node.offsetWidth) {
+                const releasedSpawn = this.arrow.spawnReleased;
+                this.clearArrow();
+                if (!releasedSpawn) {
+                    this.spawnTimer = this.arrowResumeSpawnDelay;
+                }
+            }
+        }
+
+        positionArrow() {
+            if (!this.arrow) {
+                return;
+            }
+            this.arrow.node.style.left = `${this.arrow.x}px`;
+            this.arrow.node.style.top = `${this.arrow.y}px`;
+        }
+
+        getArrowRect() {
+            const rect = this.arrow.node.getBoundingClientRect();
+            return {
+                left: rect.left,
+                right: rect.left + rect.width * 0.26,
+                top: rect.top + rect.height * 0.2,
+                bottom: rect.bottom - rect.height * 0.2
+            };
+        }
+
+        arrowHitsHannah() {
+            const spriteRect = this.engine.elements.hannahSprite.getBoundingClientRect();
+            const arrowRect = this.getArrowRect();
+            const headLeft = spriteRect.left + spriteRect.width * 0.42;
+            const headRight = spriteRect.right - spriteRect.width * 0.31;
+            return arrowRect.right > headLeft && arrowRect.left < headRight;
         }
 
         getItemRect(item) {
@@ -1078,6 +1453,16 @@
             };
         }
 
+        getHannahHeadRect() {
+            const spriteRect = this.engine.elements.hannahSprite.getBoundingClientRect();
+            return {
+                left: spriteRect.left + spriteRect.width * 0.42,
+                right: spriteRect.right - spriteRect.width * 0.31,
+                top: spriteRect.top + spriteRect.height * 0.27,
+                bottom: spriteRect.top + spriteRect.height * 0.48
+            };
+        }
+
         collectItem(item) {
             item.hit = true;
             item.node.classList.add("is-collected");
@@ -1085,6 +1470,11 @@
             this.bankHearts += 1;
             this.basketWords.unshift(item.word);
             this.basketWords = this.basketWords.slice(0, 6);
+            try {
+                window.StudentGame?.onCorrect?.();
+            } catch (error) {
+                console.warn("Student score hook failed.", error);
+            }
             if (this.bankHearts >= 3) {
                 this.bankHearts = 0;
                 this.score += 1;
@@ -1118,6 +1508,27 @@
             item.node.remove();
             this.lives -= 1;
             this.bankHearts = Math.max(0, this.bankHearts - 1);
+            try {
+                window.StudentGame?.onWrong?.();
+            } catch (error) {
+                console.warn("Student score hook failed.", error);
+            }
+            this.frame.classList.remove("ride-shake");
+            void this.frame.offsetWidth;
+            this.frame.classList.add("ride-shake");
+            this.floatText("💔", this.nodes.lives.getBoundingClientRect(), "ride-floating-broken");
+            this.renderStats();
+            playRideTone(125, 0.22, "sawtooth");
+            if (this.lives <= 0) {
+                this.endGame("GAME OVER");
+            }
+        }
+
+        hitArrow() {
+            this.arrow.hit = true;
+            this.clearArrow();
+            this.spawnTimer = this.arrowResumeSpawnDelay;
+            this.lives -= 1;
             this.frame.classList.remove("ride-shake");
             void this.frame.offsetWidth;
             this.frame.classList.add("ride-shake");
@@ -1154,6 +1565,7 @@
             this.running = false;
             cancelAnimationFrame(this.rafId);
             this.clearItems();
+            this.clearArrow();
             const overlay = document.createElement("div");
             overlay.className = "ride-game-end";
             overlay.innerHTML = `
@@ -1168,7 +1580,7 @@
             `;
             overlay.querySelector("[data-try]").addEventListener("click", () => this.start());
             overlay.querySelector("[data-exit]").addEventListener("click", () => {
-                window.location.href = "../../index.html";
+                window.location.href = getReturnUrl();
             });
             this.endOverlay = overlay;
             this.frame.append(overlay);
@@ -1177,6 +1589,16 @@
         clearItems() {
             this.items.forEach((item) => item.node.remove());
             this.items = [];
+        }
+
+        clearArrow() {
+            this.arrow?.node.remove();
+            this.arrow = null;
+        }
+
+        clearBalloons() {
+            this.balloons.forEach((balloon) => balloon.node.remove());
+            this.balloons = [];
         }
 
         removeEndOverlay() {
@@ -1193,13 +1615,88 @@
         hannahShadow: document.getElementById("hannahShadow"),
         overlays: document.getElementById("debugOverlays"),
         loader: document.getElementById("assetLoader"),
-        debugPanel: document.getElementById("debugPanel")
+        jumpControl: document.getElementById("jumpControl"),
+        duckControl: document.getElementById("duckControl")
     });
 
-    engine.start()
-        .then(() => {
-            const game = new CountableUncountableRideGame(engine);
-            game.start();
-        })
-        .catch((error) => console.error("Ride with Hannah failed to start.", error));
+    const rideChoice = document.getElementById("rideChoice");
+    const launchConfig = readLaunchConfig();
+    let selectedWordSet = null;
+
+    function setChoiceContent(kicker, title, actions) {
+        rideChoice.querySelector(".ride-choice-kicker").textContent = kicker;
+        rideChoice.querySelector("h1").textContent = title;
+        rideChoice.querySelector(".ride-choice-actions").innerHTML = actions;
+        rideChoice.hidden = false;
+    }
+
+    function showWordSetChoice() {
+        const options = window.RideWithHannahWordSetRegistry || [];
+        setChoiceContent(
+            "RIDE WITH HANNAH",
+            "Choose your grammar mission",
+            options.map((option) => `<button type="button" data-word-set-id="${option.id}">${option.label}</button>`).join("")
+        );
+        rideChoice.querySelectorAll("[data-word-set-id]").forEach((button) => {
+            button.addEventListener("click", async () => {
+                const option = options.find((entry) => entry.id === button.dataset.wordSetId);
+                const buttons = rideChoice.querySelectorAll("button");
+                buttons.forEach((choice) => { choice.disabled = true; });
+                try {
+                    const wordSet = await loadWordSet(option?.source, option?.id);
+                    if (wordSet?.gradeGroups) {
+                        showGradeChoice(wordSet);
+                    } else {
+                        selectedWordSet = normalizeWordSet(wordSet);
+                        await startRide();
+                    }
+                } catch (error) {
+                    buttons.forEach((choice) => { choice.disabled = false; });
+                    console.error("Ride with Hannah word set failed to load.", error);
+                }
+            });
+        });
+    }
+
+    function showGradeChoice(wordSet) {
+        setChoiceContent(
+            wordSet.title.toUpperCase(),
+            "Choose your grade",
+            [5, 6, 7, 8].map((grade) => `<button type="button" data-grade="${grade}">GRADE ${grade}</button>`).join("")
+        );
+        rideChoice.querySelectorAll("[data-grade]").forEach((button) => {
+            button.addEventListener("click", async () => {
+                const buttons = rideChoice.querySelectorAll("button");
+                buttons.forEach((choice) => { choice.disabled = true; });
+                selectedWordSet = normalizeWordSet(buildGradeWordSet(wordSet, Number(button.dataset.grade)));
+                await startRide();
+            });
+        });
+    }
+
+    async function startRide() {
+        try {
+            rideChoice.hidden = true;
+            await window.__rideWithHannahStudentHudReady;
+            await engine.start();
+            const game = new RideWordGame(engine, selectedWordSet, launchConfig);
+            game.showTutorial();
+        } catch (error) {
+            rideChoice.hidden = false;
+            console.error("Ride with Hannah failed to start.", error);
+        }
+    }
+
+    (async () => {
+        if (launchConfig.wordSet?.source && launchConfig.wordSet?.id) {
+            try {
+                selectedWordSet = normalizeWordSet(await loadWordSet(launchConfig.wordSet.source, launchConfig.wordSet.id));
+                await startRide();
+                return;
+            } catch (error) {
+                console.error("Ride with Hannah word set failed to load.", error);
+            }
+        }
+        showWordSetChoice();
+    })();
 })();

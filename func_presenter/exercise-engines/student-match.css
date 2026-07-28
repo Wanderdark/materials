@@ -1,0 +1,17 @@
+/* Student Match exercise visuals. */
+.sm-screen { display: grid; min-height: calc(100vh - 60px); grid-template-rows: auto 1fr auto auto; gap: 18px; padding: clamp(12px, 2vw, 24px) clamp(16px, 3vw, 40px); }
+.sm-screen .sm-progress-wrap { color: var(--yellow); font-size: clamp(14px, 1.3vw, 20px); font-weight: 950; letter-spacing: .06em; white-space: nowrap; }
+.sm-screen .sm-student-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.5vw, 22px); }
+.sm-screen .sm-student-card { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: clamp(10px, 1.5vw, 18px) clamp(8px, 1vw, 14px); border: 2px solid rgba(102,136,255,.38); border-radius: 22px; background: var(--panel); cursor: pointer; transition: border-color .16s, box-shadow .16s; }
+.sm-screen .sm-student-card:hover:not(.sm-matched) { border-color: #6688ff; box-shadow: 0 0 20px rgba(102,136,255,.22); }
+.sm-screen .sm-student-card.sm-matched { border-color: rgba(102,136,255,.2); opacity: .32; filter: grayscale(1); cursor: default; box-shadow: none; }
+.sm-screen .sm-student-img-frame { width: 100%; aspect-ratio: 3/4; overflow: hidden; border-radius: 14px; background: #fff; }
+.sm-screen .sm-student-img { width: 100%; height: 100%; object-fit: contain; transform-origin: center; }
+.sm-screen .sm-student-name { color: var(--yellow); font-size: clamp(13px, 1.3vw, 20px); font-weight: 950; letter-spacing: .06em; text-align: center; }
+.sm-screen .sm-desc-list { display: flex; flex-direction: column; gap: 10px; }
+.sm-screen .sm-desc-card { display: flex; align-items: center; min-height: 58px; padding: clamp(10px, 1.4vw, 18px) clamp(14px, 2vw, 24px); border: 2px solid rgba(102,136,255,.38); border-radius: 16px; color: var(--text); background: var(--panel); cursor: pointer; font-size: clamp(14px, 1.35vw, 22px); font-weight: 850; line-height: 1.3; transition: border-color .14s, background .14s, opacity .25s; }
+.sm-screen .sm-desc-card:hover:not(.sm-matched) { border-color: #6688ff; background: #1a2f60; }
+.sm-screen .sm-desc-card.sm-selected { border-color: var(--yellow); color: var(--yellow); background: rgba(255,216,77,.10); }
+.sm-screen .sm-desc-card.sm-matched { opacity: .28; cursor: default; pointer-events: none; }
+.sm-screen .sm-result { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 16px; }
+.sm-screen .sm-result-text { margin: 0; color: var(--mint); font-size: clamp(18px, 1.8vw, 28px); font-weight: 950; }

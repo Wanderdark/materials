@@ -8,8 +8,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>.app-back-button { position: fixed; top: 18px; right: 18px; z-index: 10000; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 2px solid rgba(255,216,77,.8); border-radius: 50%; background: rgba(10,28,67,.94); box-shadow: 0 8px 24px rgba(0,0,0,.28); cursor: pointer; font-size: 25px; line-height: 1; transition: transform .15s ease, background .15s ease; }.app-back-button:hover, .app-back-button:focus-visible { transform: translateY(-2px); background: #173267; outline: none; }</style>
 </head>
 <body>
+  <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back" title="Go back">↩️</button>
   <main class="app-shell">
     <section id="setupScreen" class="screen setup-screen">
       <div class="brand-lockup">

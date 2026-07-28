@@ -30,7 +30,8 @@ button { font: inherit; } .hidden { display: none !important; }
 
 /* ═══ LIBRARY ═══ */
 .library-screen { display: grid; grid-template-columns: minmax(300px, .8fr) minmax(420px, 1.45fr); gap: 34px; align-items: start; min-height: calc(100vh - 52px); }
-.brand-lockup { display: flex; flex-direction: column; justify-content: flex-start; gap: 0; padding-top: 26px; position: sticky; top: 26px; }
+.brand-lockup { display: flex; flex-direction: column; justify-content: flex-start; gap: 16px; padding-top: 26px; position: sticky; top: 26px; }
+.brand-ella { display: block; width: min(100%, 460px); height: auto; object-fit: contain; }
 .brand-lockup h1 { margin: 10px 0 14px; font-family: var(--display); font-size: clamp(52px, 6.4vw, 96px); line-height: .9; letter-spacing: .04em; }
 .brand-lockup h1 em { color: var(--yellow); font-style: normal; }
 .brand-lockup p { margin: 0 0 22px; color: var(--muted); font-size: clamp(15px, 1.6vw, 19px); line-height: 1.5; max-width: 420px; }

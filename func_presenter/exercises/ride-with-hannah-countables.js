@@ -6,40 +6,13 @@
     url: "mini-games/ride_with_hannah/index.html?return=../../index.html",
     gameConfig: {
       instructionMode: "random",
-      durationSeconds: 60,
+      durationSeconds: 90,
       startingHearts: 3,
       heartsPerPoint: 5,
-      countableWords: [
-        "BEANS",
-        "SALAD",
-        "CROISSANT",
-        "MUSHROOM",
-        "PANCAKE",
-        "PEPPER",
-        "BISCUIT",
-        "COOKIE",
-        "LEMON",
-        "PIE",
-        "NUT",
-        "CORN",
-        "LETTUCE"
-      ],
-      uncountableWords: [
-        "MILK",
-        "WATER",
-        "JAM",
-        "SUGAR",
-        "BUTTER",
-        "SALT",
-        "FLOUR",
-        "GARLIC",
-        "MEAT",
-        "OIL",
-        "BAKING POWDER",
-        "CINNAMON",
-        "SPICES",
-        "DOUGH"
-      ]
+      wordSet: {
+        id: "countable-uncountable",
+        source: "./functions/countable_uncountable/words.js"
+      }
     },
     supports(functionModule) {
       return functionModule?.id === "countable-uncountable" &&

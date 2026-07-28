@@ -1,0 +1,20 @@
+/* Pronoun Snap exercise visuals. */
+.pronoun-snap-screen { display: grid; min-height: calc(100vh - 60px); grid-template-rows: auto 1fr; gap: 20px; }
+.pronoun-snap-screen .pronoun-snap-card { display: grid; align-content: center; justify-items: center; gap: 22px; width: min(820px, 100%); margin: auto; padding: clamp(28px, 5vw, 58px); border: 1px solid rgba(255,255,255,.1); border-radius: 30px; background: var(--panel); box-shadow: var(--shadow); transition: border-color .15s ease, box-shadow .15s ease; }
+.pronoun-snap-screen .pronoun-snap-card.snap-correct { border-color: var(--mint); box-shadow: 0 0 28px rgba(101,230,184,.24); }
+.pronoun-snap-screen .pronoun-snap-card.snap-wrong { border-color: #ff8066; box-shadow: 0 0 28px rgba(255,128,102,.24); }
+.pronoun-snap-screen .pronoun-snap-card > .reference-type { text-align: center; }
+.pronoun-snap-screen .pronoun-snap-card img { width: min(300px, 100%); aspect-ratio: 1; object-fit: contain; border: 2px solid #6688ff; border-radius: 22px; background: #fff; }
+.pronoun-snap-screen .pronoun-snap-repeat-visual { display: grid; grid-template-columns: repeat(auto-fit, minmax(76px, 1fr)); place-items: center; gap: 10px; width: min(540px, 100%); min-height: 300px; padding: 18px; border: 2px solid #6688ff; border-radius: 22px; background: #fff; }
+.pronoun-snap-screen .pronoun-snap-repeat-visual img { width: min(92px, 100%); aspect-ratio: 1; object-fit: contain; border: 0; border-radius: 0; background: transparent; }
+.pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons { width: min(720px, 100%); }
+.pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons button { min-height: 70px; }
+.pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons.quantity-snap-choices { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; width: min(760px, 100%); }
+.pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons.quantity-snap-choices button { min-height: 54px; padding: 8px 10px; border-radius: 14px; font-size: clamp(15px, 1.65vw, 24px); letter-spacing: .06em; line-height: 1.05; white-space: normal; }
+.pronoun-snap-screen .snap-total-timer { --snap-total-angle: 360deg; position: relative; display: grid; place-items: center; width: 86px; height: 86px; border-radius: 50%; background: conic-gradient(var(--yellow) var(--snap-total-angle), #20335f 0deg); box-shadow: 0 0 24px rgba(255,216,77,.18); }
+.pronoun-snap-screen .snap-total-timer::before { position: absolute; inset: 7px; border-radius: inherit; background: #08152f; content: ""; }
+.pronoun-snap-screen .snap-total-timer-emoji { position: absolute; top: 12px; z-index: 1; font-size: 20px; line-height: 1; }
+.pronoun-snap-screen .snap-total-timer strong { position: relative; z-index: 1; margin-top: 18px; color: var(--yellow); font-size: 28px; font-weight: 950; line-height: 1; }
+.pronoun-snap-screen .snap-total-timer.hidden { display: none; }
+@media (max-width: 760px) { .pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons.quantity-snap-choices { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .pronoun-snap-screen .pronoun-snap-card .pronoun-choice-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

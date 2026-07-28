@@ -390,7 +390,95 @@ window.SONGS = [
       { from: "3:37", to: "3:39", text: "In my own way…" },
       { from: "", to: "", text: "Written by Adil Fırat Oktav." },
       { from: "", to: "", text: "Thanks for listening..." },]
+  },
+
+/* ── ŞARKI 4 — ASH OR RAIN - ELLA ───────────────────────────────────── */
+  {
+    id: "ashorrain",
+    title: "Ash or Rain?",
+    artist: "Ella",
+    audio: "songs/ashorrain.mp3",
+    video: null,
+    image: "thumbnails/ashorrain.webp",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:55", to: "1:25" },
+      { at: "2:48", to: "3:17" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [
+      { at: "0:55", to: "1:25" },
+      { at: "2:48", to: "3:17" }
+],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "sparrow",    tr: "sesler",          image: "images/sparrow.webp" },
+      { word: "sky",   tr: "gökyüzü",         image: "images/sky.webp" },
+      { word: "forest",  tr: "orman",      image: "images/forest.webp" },
+      { word: "fallen", tr: "devrilmiş",        image: "images/fallen.webp" },
+      { word: "stone",  tr: "taş",     image: "images/stone.webp" },
+      { word: "future",   tr: "gelecek", image: "images/future.webp" },
+      { word: "cities",  tr: "şehirler",     image: "images/city.webp" },
+      { word: "dream",   tr: "hayal", image: "images/dream.webp" },
+    ],
+
+    lyrics: [
+      { from: "0:13.730", to: "0:15.058", text: "You told us," },
+      { from: "0:17.330", to: "0:18.794", text: "'Reach the <sky>'" },
+      { from: "0:20.858", to: "0:22.386", text: "So we learned" },
+      { from: "0:24.178", to: "0:25.842", text: "To <dream> so high." },
+      { from: "0:27.786", to: "0:29.482", text: "But each year" },
+      { from: "0:31.130", to: "0:33.139", text: "The <forest>s fall." },
+      { from: "0:34.931", to: "0:36.659", text: "Who will hear" },
+      { from: "0:38.195", to: "0:40.035", text: "The <sparrow>'s call?" },
+      { from: "0:42.019", to: "0:45.171", text: "You gave us dreams," },
+      { from: "0:45.028", to: "0:47.029", text: "And told us to follow." },
+      { from: "0:48.632", to: "0:52.184", text: "So leave us a world" },
+      { from: "0:52.480", to: "0:56.256", text: "To live tomorrow." },
+      { from: "0:56.464", to: "0:57.720", text: "We're holding on" },
+      { from: "0:59.392", to: "1:01.017", text: "To every tree." },
+      { from: "1:03.285", to: "1:06.726", text: "Will you stand here" },
+      { from: "1:08.397", to: "1:09.645", text: "Next to me?" },
+      { from: "1:12.182", to: "1:13.589", text: "We're holding on" },
+      { from: "1:15.245", to: "1:16.950", text: "To every tree." },
+      { from: "1:18.901", to: "1:22.478", text: "Will you stand here" },
+      { from: "1:24.376", to: "1:25.536", text: "Next to me?" },
+      { from: "1:31.543", to: "1:33.159", text: "You built <cities>," },
+      { from: "1:34.743", to: "1:36.295", text: "<Stone> on <stone>." },
+      { from: "1:38.423", to: "1:40.023", text: "Now we're scared" },
+      { from: "1:41.511", to: "1:43.599", text: "To call them home." },
+      { from: "1:45.263", to: "1:47.543", text: "Plastic oceans." },
+      { from: "1:48.495", to: "1:50.375", text: "A <fallen> tree." },
+      { from: "1:51.895", to: "1:54.351", text: "Is this the <future>" },
+      { from: "1:55.423", to: "1:57.295", text: "We'll have to see?" },
+      { from: "1:59.415", to: "2:02.487", text: "You gave us dreams," },
+      { from: "2:02.751", to: "2:04.703", text: "And told us to follow." },
+      { from: "2:06.054", to: "2:09.358", text: "So leave us a world" },
+      { from: "2:09.566", to: "2:14.646", text: "To live tomorrow." },
+      { from: "2:22.070", to: "2:23.246", text: "If the <future>" },
+      { from: "2:24.054", to: "2:25.502", text: "Calls our name..." },
+      { from: "2:26.902", to: "2:28.966", text: "What will we aim?" },
+      { from: "2:32.213", to: "2:36.701", text: "Ash… Or rain?" },
+      { from: "2:48.489", to: "2:49.961", text: "We're holding on" },
+      { from: "2:51.513", to: "2:53.217", text: "To every tree." },
+      { from: "2:55.409", to: "2:55.817", text: "Will you" },
+      { from: "2:56.652", to: "2:58.756", text: "Stand here" },
+      { from: "3:00.508", to: "3:01.644", text: "Next to me?" },
+      { from: "3:07.556", to: "3:13.940", text: "Next to me..." },
+      { from: "3:14.329", to: "3:15.953", text: "Next to me..." },
+      { from: "", to: "", text: "Written by Adil Fırat Oktav." },
+      { from: "", to: "", text: "Thanks for listening..." },]
+
   }
+
 
 
 
