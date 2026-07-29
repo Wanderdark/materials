@@ -11,6 +11,7 @@
         <section id="gameFrame" class="game-frame" aria-label="Ride with Hannah visual engine">
             <div id="gameWorld" class="game-world">
                 <div id="environmentRoot" class="environment-root"></div>
+                <div id="speedBurst" class="ride-speed-burst" aria-hidden="true"></div>
                 <div id="hannahShadow" class="hannah-shadow" aria-hidden="true"></div>
                 <div id="hannahSprite" class="hannah-sprite" aria-label="Hannah riding a horse"></div>
                 <div id="debugOverlays" class="debug-overlays" aria-hidden="true">
@@ -27,10 +28,6 @@
                 <h1 id="rideChoiceTitle">Choose your grammar mission</h1>
                 <div class="ride-choice-actions"></div>
             </section>
-            <div class="ride-touch-controls" aria-label="Ride controls">
-                <button id="jumpControl" type="button" aria-label="Jump">⬆️</button>
-                <button id="duckControl" type="button" aria-label="Duck">⬇️</button>
-            </div>
         </section>
     </main>
     <script>
@@ -46,7 +43,7 @@
             document.head.append(studentHudScript);
         });
     </script>
-    <script src="./src/word-set-registry.js?v=4"></script>
-    <script src="./src/app.js?v=16"></script>
+    <script src="./src/word-set-registry.js?v=6"></script>
+    <script src="./src/app.js?v=25"></script>
 </body>
 </html>

@@ -477,9 +477,103 @@ window.SONGS = [
       { from: "", to: "", text: "Written by Adil Fırat Oktav." },
       { from: "", to: "", text: "Thanks for listening..." },]
 
+  },
+
+/* ── ŞARKI 4 — ASH OR RAIN - ELLA ───────────────────────────────────── */
+  {
+    id: "thepriceyouneverpay",
+    title: "The Price you never pay",
+    artist: "Ella",
+    audio: "songs/thepriceyouneverpay.mp3",
+    video: null,
+    image: "thumbnails/thepriceyouneverpay.webp",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:00", to: "0:00" },
+      { at: "0:00", to: "0:00" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [
+      { at: "0:00", to: "0:00" },
+      { at: "0:00", to: "0:00" }
+],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "speech",    tr: "nutuk",          image: "images/speech.webp" },
+      { word: "lie",   tr: "yalan",         image: "images/lie.webp" },
+      { word: "pain",  tr: "acı",      image: "images/pain.webp" },
+      { word: "sign", tr: "imzalamak",        image: "images/sign.webp" },
+      { word: "grave",  tr: "mezar",     image: "images/grave.webp" },
+      { word: "crumb",   tr: "ekmek kırıntısı", image: "images/crumb.webp" },
+      { word: "war",  tr: "savaş",     image: "images/war.webp" },
+      { word: "starve",   tr: "açlık", image: "images/starve.webp" },
+    ],
+
+    lyrics: [
+      { from: "0:20.401", to: "0:21.857", text: "Another <speech>." },
+      { from: "0:23.145", to: "0:24.617", text: "Another <lie>." },
+      { from: "0:25.633", to: "0:27.321", text: "Another mother" },
+      { from: "0:27.985", to: "0:29.713", text: "Starts to cry." },
+      { from: "0:30.880", to: "0:32.840", text: "Another sunrise." },
+      { from: "0:33.327", to: "0:35.016", text: "Another town." },
+      { from: "0:35.968", to: "0:37.448", text: "Another school" },
+      { from: "0:37.992", to: "0:39.936", text: "Burning down." },
+      { from: "0:42.302", to: "0:44.374", text: "You write the future" },
+      { from: "0:44.829", to: "0:46.517", text: "With others' <pain>s." },
+      { from: "0:47.245", to: "0:49.081", text: "You build your empires" },
+      { from: "0:49.312", to: "0:51.640", text: "On others' remains." },
+      { from: "0:52.632", to: "0:54.704", text: "You shake your hands." },
+      { from: "0:54.944", to: "0:57.057", text: "You <sign> the page." },
+      { from: "0:57.505", to: "0:59.025", text: "Then send the young" },
+      { from: "0:59.385", to: "1:02.257", text: "To another <grave>." },
+      { from: "1:02.593", to: "1:04.633", text: "You call it peace." },
+      { from: "1:05.185", to: "1:07.241", text: "You call it <pride>." },
+      { from: "1:07.214", to: "1:09.934", text: "Children still" },
+      { from: "1:11.126", to: "1:12.918", text: "Pay the price." },
+      { from: "1:21.515", to: "1:23.155", text: "The gold you piled" },
+      { from: "1:24.139", to: "1:25.753", text: "To wage the <war>." },
+      { from: "1:26.657", to: "1:28.129", text: "Another child" },
+      { from: "1:28.257", to: "1:30.865", text: "Woke up to <starve>." },
+      { from: "1:31.537", to: "1:33.834", text: "One more banquet." },
+      { from: "1:33.618", to: "1:35.546", text: "With golden wine." },
+      { from: "1:36.154", to: "1:37.978", text: "Not even a <crumb>" },
+      { from: "1:38.306", to: "1:40.986", text: "For those in line." },
+      { from: "1:42.883", to: "1:44.611", text: "You never hear" },
+      { from: "1:45.019", to: "1:47.306", text: "The bombs at night." },
+      { from: "1:48.194", to: "1:49.738", text: "Yet somehow" },
+      { from: "1:49.922", to: "1:52.474", text: "Decide what's right." },
+      { from: "1:53.306", to: "1:55.418", text: "You shake your hands." },
+      { from: "1:55.626", to: "1:57.802", text: "You sign the page." },
+      { from: "1:58.330", to: "1:59.834", text: "Then send the young" },
+      { from: "2:00.130", to: "2:02.946", text: "To another <grave>." },
+      { from: "2:03.210", to: "2:05.418", text: "You call it peace." },
+      { from: "2:05.610", to: "2:08.106", text: "You call it <pride>." },
+      { from: "2:08.306", to: "2:10.786", text: "Children still" },
+      { from: "2:11.813", to: "2:13.661", text: "Pay the price." },
+      { from: "2:19.395", to: "2:21.707", text: "When all are gone..." },
+      { from: "2:21.948", to: "2:24.083", text: "What remains?" },
+      { from: "2:27.428", to: "2:29.244", text: "Empty homes..." },
+      { from: "2:30.451", to: "2:38.893", text: "And names on <grave>s." },
+      { from: "2:54.423", to: "2:56.335", text: "You shake your hands." },
+      { from: "2:56.879", to: "2:58.871", text: "You <sign> the page." },
+      { from: "2:59.383", to: "3:00.831", text: "Then send the young" },
+      { from: "3:01.039", to: "3:04.007", text: "To another <grave>." },
+      { from: "3:04.191", to: "3:06.263", text: "You call it peace." },
+      { from: "3:06.807", to: "3:08.887", text: "You call it <pride>." },
+      { from: "3:09.167", to: "3:11.790", text: "Children still" },
+      { from: "3:13.006", to: "3:14.830", text: "Pay the price." },
+      { from: "", to: "", text: "Written by Adil Fırat Oktav." },
+      { from: "", to: "", text: "Thanks for listening..." },]
+
   }
-
-
 
 
 

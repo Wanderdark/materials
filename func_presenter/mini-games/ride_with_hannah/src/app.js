@@ -113,8 +113,7 @@
                     wheelContactOffsetX: 160,
                     wheelContactOffsetY: 570,
                     visualYOffset: 220
-                },
-                idleFallback: { src: "./assets/characters/hannah1.webp", frameCount: 1, sourceWidth: 1536, sourceHeight: 1024 }
+                }
             }
         },
     };
@@ -673,6 +672,8 @@
             this.speedSlowTimer = 0;
             this.speedBoostActive = false;
             this.speedSlowActive = false;
+            this.stormZoomActive = false;
+            this.stormZoomTimer = 0;
             this.defaultCharacterAnchorX = this.config.character.anchorX;
             this.lastTime = 0;
             this.paused = false;
@@ -683,6 +684,7 @@
             this.onKeyDown = this.onKeyDown.bind(this);
             this.onTouchStart = this.onTouchStart.bind(this);
             this.onTouchEnd = this.onTouchEnd.bind(this);
+            this.onFrameClick = this.onFrameClick.bind(this);
         }
 
         async start() {
@@ -699,6 +701,7 @@
             window.addEventListener("keydown", this.onKeyDown);
             this.elements.frame.addEventListener("touchstart", this.onTouchStart, { passive: true });
             this.elements.frame.addEventListener("touchend", this.onTouchEnd, { passive: true });
+            this.elements.frame.addEventListener("click", this.onFrameClick);
             this.elements.jumpControl?.addEventListener("click", () => this.triggerJump());
             this.elements.duckControl?.addEventListener("click", () => this.triggerDuck());
             this.setupAudio();
@@ -802,7 +805,8 @@
         onResize() {
             const frame = this.elements.frame.getBoundingClientRect();
             const viewportScale = Math.min(frame.width / this.config.designWidth, frame.height / this.config.designHeight);
-            this.elements.world.style.transform = `translate(-50%, -50%) scale(${viewportScale})`;
+            const stormZoom = this.stormZoomActive ? 1.04 : 1;
+            this.elements.world.style.transform = `translate(-50%, -50%) scale(${viewportScale * stormZoom})`;
         }
 
         onVisibilityChange() {
@@ -881,6 +885,21 @@
             this.touchStartY = null;
         }
 
+        onFrameClick(event) {
+            if (event.target.closest?.(".ride-balloon, button, .ride-choice, .ride-tutorial, .ride-game-ui, .ride-game-over")) {
+                return;
+            }
+            const frame = this.elements.frame.getBoundingClientRect();
+            const viewportScale = Math.min(frame.width / this.config.designWidth, frame.height / this.config.designHeight);
+            const y = ((event.clientY - frame.top - (frame.height / 2)) / viewportScale) + (this.config.designHeight / 2);
+            const bounds = this.character.getBounds();
+            if (y < bounds.top + (bounds.height / 2)) {
+                this.triggerJump();
+            } else {
+                this.triggerDuck();
+            }
+        }
+
         triggerJump() {
             this.audio?.play().catch(() => {});
             if (!this.character.isJumping && this.gallopAudio) {
@@ -904,6 +923,7 @@
             }
             this.speedBoostActive = true;
             this.updateSpeedEffects();
+            this.playStormBurst();
             window.clearTimeout(this.speedBoostTimer);
             this.speedBoostTimer = window.setTimeout(() => {
                 this.speedBoostActive = false;
@@ -930,8 +950,25 @@
             }, 10000);
         }
 
+        resetSpeedEffects() {
+            window.clearTimeout(this.speedBoostTimer);
+            window.clearTimeout(this.speedSlowTimer);
+            window.clearTimeout(this.stormZoomTimer);
+            this.speedBoostTimer = 0;
+            this.speedSlowTimer = 0;
+            this.stormZoomTimer = 0;
+            this.speedBoostActive = false;
+            this.speedSlowActive = false;
+            this.stormZoomActive = false;
+            this.elements.environmentRoot.classList.remove("is-motion-blurred");
+            this.elements.speedBurst.classList.remove("is-active");
+            this.updateSpeedEffects();
+            this.onResize();
+        }
+
         updateSpeedEffects() {
             this.speedMultiplier = (this.speedBoostActive ? 1.5 : 1) * (this.speedSlowActive ? 0.75 : 1);
+            this.elements.environmentRoot.classList.toggle("is-motion-blurred", this.speedBoostActive);
 
             const targetAnchorX = this.speedBoostActive
                 ? 0.5
@@ -943,6 +980,24 @@
                 this.config.character.anchorX = targetAnchorX;
                 this.character?.applyLayout();
             }
+        }
+
+        playStormBurst() {
+            const bounds = this.character.getBounds();
+            const burst = this.elements.speedBurst;
+            window.clearTimeout(this.stormZoomTimer);
+            this.stormZoomActive = true;
+            burst.style.left = `${bounds.left - 180}px`;
+            burst.style.top = `${bounds.top + (bounds.height * 0.4)}px`;
+            burst.classList.remove("is-active");
+            void burst.offsetWidth;
+            burst.classList.add("is-active");
+            this.onResize();
+            this.stormZoomTimer = window.setTimeout(() => {
+                this.stormZoomActive = false;
+                this.onResize();
+                this.stormZoomTimer = 0;
+            }, 250);
         }
 
         filenameMappingWarnings() {
@@ -1086,7 +1141,6 @@
             this.sources = Object.fromEntries(this.groups.map((group) => [group.id, group.words]));
             this.wordPools = Object.fromEntries(this.groups.map((group) => [group.id, []]));
             this.items = [];
-            this.basketWords = [];
             this.rafId = null;
             this.running = false;
             this.lastTime = 0;
@@ -1119,10 +1173,6 @@
                 <div class="ride-game-topbar">
                     <div class="ride-game-instruction-wrap">
                         <div class="ride-game-instruction" data-instruction></div>
-                        <div class="ride-game-basket">
-                            <span>BASKET</span>
-                            <div data-basket></div>
-                        </div>
                     </div>
                     <div class="ride-game-status">
                         <div class="ride-game-chip"><span>TIME</span><strong data-time>90</strong></div>
@@ -1138,19 +1188,18 @@
                 time: this.ui.querySelector("[data-time]"),
                 score: this.ui.querySelector("[data-score]"),
                 lives: this.ui.querySelector("[data-lives]"),
-                bank: this.ui.querySelector("[data-bank]"),
-                basket: this.ui.querySelector("[data-basket]")
+                bank: this.ui.querySelector("[data-bank]")
             };
         }
 
         start() {
+            this.engine.resetSpeedEffects();
             this.clearItems();
             this.clearArrow();
             this.clearBalloons();
             this.removeEndOverlay();
             this.targetGroup = this.groups[Math.floor(Math.random() * this.groups.length)];
             this.items = [];
-            this.basketWords = [];
             this.wordPools = Object.fromEntries(this.groups.map((group) => [group.id, []]));
             this.lastTime = 0;
             this.elapsed = 0;
@@ -1163,6 +1212,12 @@
             this.running = true;
             this.correctAudio = new Audio("./assets/sounds/correct.mp3");
             this.correctAudio.preload = "auto";
+            this.neighAudios = ["./assets/sounds/neigh1.mp3", "./assets/sounds/neigh2.mp3"].map((src) => {
+                const audio = new Audio(src);
+                audio.preload = "auto";
+                return audio;
+            });
+            this.neighIndex = 0;
             this.nodes.instruction.textContent = `COLLECT ALL ${this.targetGroup.label} ITEMS`;
             this.renderStats();
             this.rafId = requestAnimationFrame((time) => this.tick(time));
@@ -1468,8 +1523,6 @@
             item.node.classList.add("is-collected");
             this.floatText("💛", item.node.getBoundingClientRect(), "ride-floating-heart");
             this.bankHearts += 1;
-            this.basketWords.unshift(item.word);
-            this.basketWords = this.basketWords.slice(0, 6);
             try {
                 window.StudentGame?.onCorrect?.();
             } catch (error) {
@@ -1518,10 +1571,18 @@
             this.frame.classList.add("ride-shake");
             this.floatText("💔", this.nodes.lives.getBoundingClientRect(), "ride-floating-broken");
             this.renderStats();
+            this.playNeighSound();
             playRideTone(125, 0.22, "sawtooth");
             if (this.lives <= 0) {
                 this.endGame("GAME OVER");
             }
+        }
+
+        playNeighSound() {
+            const audio = this.neighAudios[this.neighIndex];
+            this.neighIndex = (this.neighIndex + 1) % this.neighAudios.length;
+            audio.currentTime = 0;
+            audio.play().catch(() => {});
         }
 
         hitArrow() {
@@ -1544,7 +1605,6 @@
             this.nodes.score.textContent = String(this.score);
             this.nodes.lives.textContent = "❤".repeat(Math.max(0, this.lives));
             this.nodes.bank.textContent = "💛".repeat(Math.max(0, this.bankHearts));
-            this.nodes.basket.innerHTML = this.basketWords.map((word) => `<span>${word}</span>`).join("");
         }
 
         floatText(text, rect, className) {
@@ -1611,6 +1671,7 @@
         frame: document.getElementById("gameFrame"),
         world: document.getElementById("gameWorld"),
         environmentRoot: document.getElementById("environmentRoot"),
+        speedBurst: document.getElementById("speedBurst"),
         hannahSprite: document.getElementById("hannahSprite"),
         hannahShadow: document.getElementById("hannahShadow"),
         overlays: document.getElementById("debugOverlays"),
@@ -1630,8 +1691,49 @@
         rideChoice.hidden = false;
     }
 
-    function showWordSetChoice() {
-        const options = window.RideWithHannahWordSetRegistry || [];
+    function getWordSetOptions() {
+        return Array.isArray(window.RideWithHannahWordSetRegistry)
+            ? window.RideWithHannahWordSetRegistry
+            : [];
+    }
+
+    function isCurrentWordSetRegistry(options) {
+        return window.RideWithHannahWordSetRegistryVersion >= 3 && options.length >= 3;
+    }
+
+    function reloadWordSetRegistry() {
+        const registryScript = document.querySelector('script[src*="word-set-registry.js"]');
+        const source = new URL(registryScript?.src || "./src/word-set-registry.js", window.location.href);
+        source.searchParams.set("retry", Date.now().toString());
+        return new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = source.href;
+            script.onload = () => isCurrentWordSetRegistry(getWordSetOptions()) ? resolve() : reject(new Error("Word set registry is outdated."));
+            script.onerror = () => reject(new Error("Word set registry could not be loaded."));
+            document.head.append(script);
+        });
+    }
+
+    async function showWordSetChoice() {
+        let options = getWordSetOptions();
+        if (!isCurrentWordSetRegistry(options)) {
+            setChoiceContent("RIDE WITH HANNAH", "Loading missions…", "");
+            try {
+                await reloadWordSetRegistry();
+                options = getWordSetOptions();
+            } catch (error) {
+                console.warn("Ride with Hannah word set registry retry failed.", error);
+            }
+        }
+        if (!isCurrentWordSetRegistry(options)) {
+            setChoiceContent(
+                "RIDE WITH HANNAH",
+                "Missions couldn't load",
+                '<button type="button" data-retry-missions>RETRY</button>'
+            );
+            rideChoice.querySelector("[data-retry-missions]").addEventListener("click", () => showWordSetChoice());
+            return;
+        }
         setChoiceContent(
             "RIDE WITH HANNAH",
             "Choose your grammar mission",
@@ -1697,6 +1799,6 @@
                 console.error("Ride with Hannah word set failed to load.", error);
             }
         }
-        showWordSetChoice();
+        await showWordSetChoice();
     })();
 })();

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Picture Dictionary | AdilHoca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../student-zone/student-zone.css">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const listenButton = document.querySelector('.word-row .icon-btn');
+      const wordTitle = document.getElementById('wordTitle');
+      if (!listenButton || !wordTitle) return;
+      listenButton.textContent = '👂';
+      listenButton.setAttribute('aria-label', 'Listen to the word twice');
+      listenButton.title = 'Listen twice';
+      listenButton.addEventListener('click', () => {
+        const word = wordTitle.textContent.trim();
+        if (!word || !('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        [0, 1].forEach((index) => {
+          const utterance = new SpeechSynthesisUtterance(word.toLowerCase());
+          utterance.lang = 'en-US';
+          utterance.rate = 0.78;
+          if (index === 1) utterance.text = ` ${utterance.text}`;
+          window.speechSynthesis.speak(utterance);
+        });
+      });
+    });
+  </script>
+  <style>
+    :root{--navy:#16295A;--navy-dark:#0d1c45;--gold:#F4A940;--cream:#fffaf0;--paper:#fffdfa;--ink:#172a50;--muted:#67738a;--line:#dce4ef;--blue:#eaf4ff;--focus:#f4a940}*{box-sizing:border-box}body{margin:0;min-width:320px;background:linear-gradient(145deg,#edf5ff 0%,var(--cream) 48%,#fff6df 100%);color:var(--ink);font:16px/1.5 Barlow,Arial,sans-serif;min-height:100vh}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.page{width:min(1120px,calc(100% - 32px));margin:auto;padding:28px 0 56px}.top{display:flex;align-items:center;gap:16px;margin-bottom:31px}.back,.icon-btn{border:0;background:#fff;color:var(--navy);box-shadow:0 7px 20px #16295a14;display:grid;place-items:center}.back{width:45px;height:45px;border-radius:15px;font-size:1.3rem;text-decoration:none}.title-icon{width:50px;height:50px;border-radius:17px;background:var(--navy);color:#fff;display:grid;place-items:center}.title-icon svg{width:28px}.top h1{font:800 clamp(2rem,4vw,3.1rem)/.9 'Barlow Condensed',sans-serif;margin:0}.top p{margin:5px 0 0;color:var(--muted)}.search-wrap{position:relative;z-index:3;max-width:820px;margin:0 auto 35px}.search{display:flex;gap:8px;align-items:center;background:var(--paper);padding:8px 8px 8px 18px;border:1px solid #d8e1ee;border-radius:22px;box-shadow:0 15px 35px #16295a18}.search svg{width:23px;color:var(--navy);flex:none}.search input{border:0;outline:0;background:transparent;min-width:0;flex:1;font-size:1.08rem;color:var(--ink)}.clear{display:none;border:0;background:transparent;color:var(--muted);font-size:1.4rem}.search.has-value .clear{display:block}.submit{border:0;border-radius:15px;padding:12px 19px;background:var(--gold);color:#402400;font-weight:700}.suggestions{position:absolute;top:calc(100% + 8px);left:12px;right:12px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 35px #16295a22;padding:6px;display:none}.suggestions.show{display:block}.suggestion{display:block;width:100%;text-align:left;border:0;border-radius:10px;background:transparent;padding:10px 13px;color:var(--ink);font-weight:600}.suggestion.active,.suggestion:hover{background:#fff2d8}.notice{min-height:24px;margin:8px 13px 0;color:#9b6724;font-size:.92rem}.state,.result{background:var(--paper);border:1px solid #e2e6ee;border-radius:30px;box-shadow:0 18px 45px #16295a13}.state{padding:clamp(32px,7vw,76px) 24px;text-align:center;max-width:760px;margin:auto}.state-mark{width:85px;height:85px;margin:0 auto 18px;border-radius:28px;background:linear-gradient(135deg,#e7f2ff,#fff0ce);color:var(--navy);display:grid;place-items:center}.state-mark svg{width:47px}.state h2{font:700 2rem/1 'Barlow Condensed',sans-serif;margin:0}.state p{color:var(--muted);margin:10px 0 21px}.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.chip{border:1px solid #f0d49e;background:#fffaf0;color:var(--navy);border-radius:999px;padding:7px 13px;font-weight:600}.result{display:none;grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr);overflow:hidden;animation:rise .25s ease both}.result.show{display:grid}.image-panel{min-height:405px;background:linear-gradient(150deg,#fff4da,#eef6ff);padding:28px;display:grid;place-items:center;position:relative}.image-panel img{width:100%;height:100%;max-height:360px;object-fit:contain}.image-fallback{color:var(--navy);text-align:center;font-weight:600}.info{padding:clamp(25px,5vw,51px)}.word-row{display:flex;gap:14px;align-items:start;justify-content:space-between}.word-row h2{font:800 clamp(2.4rem,5vw,4.1rem)/.86 'Barlow Condensed',sans-serif;overflow-wrap:anywhere;margin:0}.icon-btn{width:42px;height:42px;border-radius:14px;flex:none}.badges{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 26px}.badge{border-radius:999px;padding:5px 11px;background:#e8f2ff;color:#28528b;font-size:.82rem;font-weight:700}.badge.unit{background:#fff0d4;color:#98601c}.section{border-top:1px solid var(--line);padding:18px 0}.section h3{margin:0 0 6px;color:var(--navy);font-size:.78rem;letter-spacing:.09em;text-transform:uppercase}.section p{margin:0;font-size:1.06rem}.example{background:#fff6e5;border-radius:14px;padding:14px 16px;color:#534020;font-style:italic}.no-result{display:none;max-width:600px}.no-result.show{display:block}@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}@media(max-width:700px){.page{width:min(100% - 24px,560px);padding-top:18px}.top{align-items:flex-start}.top h1{font-size:2.4rem}.top p{font-size:.92rem}.search{border-radius:18px;padding-left:13px}.submit{padding:11px 13px}.result.show{display:block}.image-panel{min-height:275px}.info{padding:27px 23px}.state{border-radius:24px}.top{gap:11px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="student-header"><nav class="student-nav shell" aria-label="Student Zone navigation"><a class="student-brand" href="../student-zone/index.html" aria-label="Student Zone home"><img src="../logo.webp" alt="AdilHoca"><span>Student Zone</span></a><div class="student-links"><a href="../student-zone/index.html">Home</a><a href="../student-zone/index.html#activities">Learn</a><a href="../student-zone/index.html#games-hub">Games</a></div><div class="student-controls"><a class="teacher-return" href="../index.html">Teacher Site <span aria-hidden="true">↗</span></a></div></nav></header>
+  <main class="page"><header class="top"><a class="back" href="student-zone/index.html" aria-label="Back to Student Zone">←</a><div class="title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5zM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg></div><div><h1>Picture Dictionary</h1><p>Search a word and discover its meaning.</p></div></header>
+    <section class="search-wrap" aria-label="Dictionary search"><div class="search" id="searchShell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg><input id="query" type="search" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="suggestions" aria-autocomplete="list" placeholder="Search for a word..."><button id="clear" class="clear" type="button" aria-label="Clear search">×</button><button id="submit" class="submit" type="button">Search</button></div><div id="suggestions" class="suggestions" role="listbox"></div><div id="notice" class="notice" aria-live="polite"></div></section>
+    <section id="empty" class="state"><div class="state-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10.5" cy="10.5" r="5.5"/><path d="m15 15 5 5M5 4h9"/></svg></div><h2>Ready to discover?</h2><p>Type a word to explore its meaning, picture and example.</p><div id="chips" class="chips"></div></section>
+    <section id="noResult" class="state no-result" role="status"><h2>We couldn’t find that word.</h2><p>Check the spelling or try another word.</p><button class="chip" id="tryAgain">Try another word</button></section>
+    <article id="result" class="result" aria-live="polite"><div class="image-panel"><img id="wordImage" alt="" hidden><div id="imageFallback" class="image-fallback">Picture unavailable</div></div><div class="info"><div class="word-row"><h2 id="wordTitle"></h2><button class="icon-btn" type="button" aria-label="Pronunciation coming soon" title="Pronunciation coming soon">♬</button></div><div class="badges"><span class="badge" id="grade"></span><span class="badge unit" id="unit"></span></div><section class="section"><h3>English Definition</h3><p id="definition"></p></section><section class="section"><h3>Turkish Meaning</h3><p id="meaning"></p></section><section class="section"><h3>Example Sentence</h3><p id="example" class="example"></p></section></div></article>
+  </main>
+  <script src="../word_master/questions.js"></script>
+  <script>
+    // This page lives one folder below the project root. The existing adapter
+    // removes one ../ prefix, so retain the correct root-relative image path.
+    (typeof QUESTIONS === "undefined" ? [] : QUESTIONS).forEach((record) => {
+      if (record?.[6]) record[6] = `../${record[6]}`;
+    });
+    const dictionaryGrade = Number(sessionStorage.getItem('dictionaryGrade')) || 5;
+    if (typeof QUESTIONS !== 'undefined') {
+      QUESTIONS.sort((first, second) => Number(first[3] === dictionaryGrade) - Number(second[3] === dictionaryGrade));
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const heading = document.querySelector('.top > div:last-child');
+      if (!heading) return;
+      const selector = document.createElement('div');
+      selector.className = 'grade-picker';
+      selector.innerHTML = '<span>Select your grade</span>' + [5, 6, 7, 8].map((grade) => `<button type="button" class="${grade === dictionaryGrade ? 'active' : ''}" data-grade="${grade}">Grade ${grade}</button>`).join('');
+      heading.append(selector);
+      selector.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-grade]');
+        if (!button) return;
+        sessionStorage.setItem('dictionaryGrade', button.dataset.grade);
+        window.location.reload();
+      });
+    });
+  </script>
+  <script>
+    (()=>{const $=id=>document.getElementById(id),input=$('query'),shell=$('searchShell'),list=$('suggestions'),notice=$('notice'),result=$('result'),empty=$('empty'),noResult=$('noResult');const norm=v=>String(v||'').trim().toUpperCase().replace(/[’'.,!?-]/g,'').replace(/\s+/g,' ');const source=typeof QUESTIONS==='undefined'?[]:QUESTIONS;const words=source.filter(Array.isArray).map(q=>({word:q[2]||'',definition:q[0]||'Definition unavailable.',meaning:q[8]||q[1]||'Turkish meaning unavailable.',grade:q[3],unit:q[5],image:String(q[6]||'').replace(/^\.\.\//,''),example:q[9]&&q[9]!=='placeholder'?q[9]:'Example sentence coming soon.'})).filter(x=>x.word);const unique=[...new Map(words.map(x=>[norm(x.word),x])).values()].sort((a,b)=>a.word.localeCompare(b.word));let matches=[],active=-1;function showSuggestions(){const v=norm(input.value);matches=v?unique.filter(x=>norm(x.word).includes(v)).sort((a,b)=>{const A=norm(a.word),B=norm(b.word);return (A===v?0:A.startsWith(v)?1:2)-(B===v?0:B.startsWith(v)?1:2)||A.localeCompare(B)}).slice(0,7):[];active=-1;list.innerHTML=matches.map((x,i)=>`<button class="suggestion" type="button" role="option" data-i="${i}">${x.word}</button>`).join('');list.classList.toggle('show',!!matches.length);input.setAttribute('aria-expanded',String(!!matches.length))}function select(x){if(!x)return;input.value=x.word;shell.classList.add('has-value');list.classList.remove('show');input.setAttribute('aria-expanded','false');notice.textContent='';empty.hidden=true;noResult.classList.remove('show');$('wordTitle').textContent=x.word;$('definition').textContent=x.definition;$('meaning').textContent=x.meaning;$('grade').textContent=x.grade?'Grade '+x.grade:'Grade unavailable';$('unit').textContent=x.unit?'Unit '+x.unit:'Unit unavailable';$('example').textContent=x.example;const img=$('wordImage'),fall=$('imageFallback');img.hidden=true;fall.hidden=false;if(x.image){img.onload=()=>{img.hidden=false;fall.hidden=true};img.onerror=()=>{img.hidden=true;fall.hidden=false};img.alt='Picture for '+x.word;img.src=x.image}result.classList.remove('show');requestAnimationFrame(()=>result.classList.add('show'))}function submit(){const v=norm(input.value);if(!v){notice.textContent='Type a word to search.';input.focus();return}select(unique.find(x=>norm(x.word)===v)||matches[0]);if(!unique.find(x=>norm(x.word)===v)&&!matches[0]){result.classList.remove('show');empty.hidden=true;noResult.classList.add('show')}}input.addEventListener('input',()=>{shell.classList.toggle('has-value',!!input.value);notice.textContent='';showSuggestions()});input.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(matches.length){active=(active+(e.key==='ArrowDown'?1:matches.length-1))%matches.length;[...list.children].forEach((b,i)=>b.classList.toggle('active',i===active))}}else if(e.key==='Enter'){e.preventDefault();select(active>=0?matches[active]:unique.find(x=>norm(x.word)===norm(input.value))||matches[0]);if(active<0&&!matches[0]&&!unique.find(x=>norm(x.word)===norm(input.value)))submit()}else if(e.key==='Escape'){list.classList.remove('show')}});list.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)select(matches[+b.dataset.i])});$('submit').onclick=submit;$('clear').onclick=()=>{input.value='';shell.classList.remove('has-value');showSuggestions();input.focus()};$('tryAgain').onclick=()=>{noResult.classList.remove('show');empty.hidden=false;input.focus()};$('chips').innerHTML=unique.slice(0,5).map(x=>`<button class="chip" type="button">${x.word}</button>`).join('');$('chips').onclick=e=>{const b=e.target.closest('button');if(b)select(unique.find(x=>x.word===b.textContent))};})();
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const example = document.getElementById('example');
+      const wordTitle = document.getElementById('wordTitle');
+      if (!example || !wordTitle) return;
+      const exampleListen = document.createElement('button');
+      exampleListen.type = 'button';
+      exampleListen.className = 'example-listen';
+      exampleListen.textContent = '👂';
+      exampleListen.setAttribute('aria-label', 'Listen to the example sentence');
+      exampleListen.title = 'Listen';
+      example.after(exampleListen);
+      exampleListen.addEventListener('click', () => {
+        const sentence = example.textContent.trim();
+        if (!sentence || sentence === 'Example sentence coming soon.' || !('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(sentence);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.82;
+        window.speechSynthesis.speak(utterance);
+      });
+      const highlightWord = () => {
+        const word = wordTitle.textContent.trim();
+        const sentence = example.textContent;
+        if (!word || !sentence || sentence === 'Example sentence coming soon.') return;
+        const escape = (value) => value.replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+        const escapedWord = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        example.innerHTML = escape(sentence).replace(new RegExp(`(${escapedWord})`, 'gi'), '<mark class="example-word">$1</mark>');
+      };
+      new MutationObserver(() => requestAnimationFrame(highlightWord)).observe(wordTitle, { childList: true, characterData: true, subtree: true });
+      const section = document.createElement('section');
+      section.className = 'section example-translation';
+      section.innerHTML = '<h3>Turkish Translation</h3><p class="example" id="exampleTurkish">Example translation coming soon.</p>';
+      example.closest('.section').after(section);
+      const update = () => {
+        const grade = Number(document.getElementById('grade')?.textContent.replace(/\D/g, ''));
+        const unit = Number(document.getElementById('unit')?.textContent.replace(/\D/g, ''));
+        const record = (typeof QUESTIONS === 'undefined' ? [] : QUESTIONS).find((item) => item[2] === wordTitle.textContent.trim() && item[3] === grade && item[5] === unit);
+        document.getElementById('exampleTurkish').textContent = record?.[10] && record[10] !== 'placeholder' ? record[10] : 'Example translation coming soon.';
+      };
+      new MutationObserver(update).observe(wordTitle, { childList: true, characterData: true, subtree: true });
+      update();
+    });
+  </script>
+  <style>
+    body{color:var(--sz-text);background:radial-gradient(circle at 15% 12%,rgba(48,112,255,.16),transparent 30%),radial-gradient(circle at 84% 6%,rgba(244,169,64,.12),transparent 25%),linear-gradient(145deg,#0b172b 0%,#0a1528 45%,#07101f 100%)}body:before{position:fixed;inset:0;z-index:-1;content:"";pointer-events:none;opacity:.24;background-image:linear-gradient(rgba(132,172,222,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(132,172,222,.06) 1px,transparent 1px);background-size:44px 44px}.page{width:min(1180px,calc(100% - 48px));padding:48px 0 70px}.top{margin-bottom:26px}.top h1,.word-row h2{color:#fff}.top p{color:var(--sz-muted)}.back{background:rgba(255,255,255,.05);border:1px solid var(--sz-line);color:#fff;box-shadow:none}.title-icon{background:rgba(77,169,255,.16);border:1px solid rgba(77,169,255,.45)}.search{background:linear-gradient(145deg,rgba(17,37,66,.92),rgba(7,16,31,.94));border-color:var(--sz-line);box-shadow:0 18px 42px rgba(0,0,0,.22)}.search input{color:#fff}.submit{background:var(--sz-orange);color:#07101f}.suggestions,.state,.result{background:linear-gradient(145deg,rgba(17,37,66,.95),rgba(7,16,31,.96));border-color:var(--sz-line);box-shadow:0 18px 42px rgba(0,0,0,.22)}.suggestion{color:#e8f2ff}.suggestion.active,.suggestion:hover,.chip{background:rgba(77,169,255,.13);color:#c8e7ff;border-color:rgba(77,169,255,.4)}.state p,.section p{color:#d6e1ef}.state-mark,.image-panel{background:linear-gradient(145deg,#17375b,#0c1c34)}.image-fallback{color:#bfe0ff}.badge{background:rgba(77,169,255,.15);color:#bfe0ff}.badge.unit{background:rgba(244,169,64,.14);color:#ffd786}.section{border-color:var(--sz-line)}.section h3{color:#9eb8d7}.example{background:rgba(255,216,77,.1);color:#ffe3a2}.example-word{padding:0;color:#47df8a;background:transparent;font-weight:800}.example-listen{float:right;margin-top:-42px;margin-right:10px;border:0;border-radius:10px;padding:6px;background:rgba(77,169,255,.18);cursor:pointer}.no-result h2{color:#fff}@media(max-width:700px){.page{width:min(100% - 24px,560px);padding-top:30px}.student-links{display:none}}
+  </style>
+  <style>
+    .grade-picker{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:13px;color:var(--sz-muted);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.grade-picker button{border:1px solid var(--sz-line);border-radius:999px;padding:4px 9px;color:#bfe0ff;background:rgba(77,169,255,.1);font:800 .68rem Barlow,sans-serif;cursor:pointer}.grade-picker button.active,.grade-picker button:hover{border-color:rgba(244,169,64,.72);color:#07101f;background:var(--sz-orange)}
+  </style>
+</body>
+</html>

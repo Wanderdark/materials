@@ -12,6 +12,19 @@
 </head>
 <body>
   <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back" title="Go back">↩️</button>
+  <div id="studentGradeOverlay" class="student-grade-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="studentGradeTitle">
+    <div class="student-grade-card">
+      <span class="student-grade-kicker">PICTURE DICTIONARY</span>
+      <h2 id="studentGradeTitle">Select your grade</h2>
+      <p>Choose your grade to explore unit vocabulary and use the dictionary.</p>
+      <div class="student-grade-options">
+        <button type="button" data-student-grade="5">Grade 5</button>
+        <button type="button" data-student-grade="6">Grade 6</button>
+        <button type="button" data-student-grade="7">Grade 7</button>
+        <button type="button" data-student-grade="8">Grade 8</button>
+      </div>
+    </div>
+  </div>
   <main class="app-shell">
     <section id="setupScreen" class="screen setup-screen">
       <div class="brand-lockup">
@@ -28,6 +41,38 @@
         </div>
         <a href="../func_presenter/index.html" class="app-switch-link">TO GRAMMAR <span>→</span></a>
         <span class="brand-credit">Designed by <b>Adil Fırat OKTAV</b></span>
+        <section id="studentDictionaryPanel" class="student-dictionary-panel" aria-labelledby="studentDictionaryTitle">
+          <div class="student-dictionary-heading">
+            <span>STUDENT ZONE</span>
+            <h2 id="studentDictionaryTitle">Picture Dictionary</h2>
+            <p>Search a word and discover its meaning.</p>
+            <a id="studentDictionaryOpenPage" class="student-dictionary-page-link" href="../dictionary/dictionary.html">GO TO DICTIONARY <span>→</span></a>
+          </div>
+          <form id="studentDictionaryForm" class="student-dictionary-search">
+            <label class="student-dictionary-search-label" for="studentDictionaryInput">Search for a word</label>
+            <input id="studentDictionaryInput" type="search" autocomplete="off" placeholder="Search a word...">
+            <button type="submit">Search</button>
+          </form>
+          <div id="studentDictionarySuggestions" class="student-dictionary-suggestions" hidden aria-label="Word suggestions"></div>
+          <p id="studentDictionaryHint" class="student-dictionary-hint">Select a grade, then search any English word.</p>
+          <article id="studentDictionaryResult" class="student-dictionary-result" hidden>
+            <div class="student-dictionary-image-wrap">
+              <img id="studentDictionaryImage" alt="">
+              <span id="studentDictionaryImageFallback" hidden>Image unavailable</span>
+            </div>
+            <div class="student-dictionary-content">
+              <div class="student-dictionary-word-row">
+                <h3 id="studentDictionaryWord"></h3>
+                <button id="studentDictionaryWordSpeak" type="button" aria-label="Listen to the word" title="Listen to the word">👂</button>
+              </div>
+              <div class="student-dictionary-tags"><span id="studentDictionaryGrade"></span><span id="studentDictionaryUnit"></span></div>
+              <div class="student-dictionary-detail"><strong>English definition</strong><p id="studentDictionaryDefinition"></p></div>
+              <div class="student-dictionary-detail"><strong>Turkish meaning</strong><p id="studentDictionaryMeaning"></p></div>
+              <div class="student-dictionary-detail"><strong>Example sentence</strong><div class="student-dictionary-example"><p id="studentDictionaryExample"></p><button id="studentDictionaryExampleSpeak" type="button" aria-label="Listen to the example sentence" title="Listen to the example sentence">👂</button></div></div>
+              <div class="student-dictionary-detail"><strong>Turkish translation</strong><p id="studentDictionaryTranslation"></p></div>
+            </div>
+          </article>
+        </section>
       </div>
 
       <div id="setupCard" class="setup-card" data-step="grade">
@@ -498,6 +543,7 @@
   <script src="lucky-spin-adapter.js"></script>
   <script src="poss-simon.js"></script>
   <script src="app.js"></script>
+  <script src="student-dictionary.js?v=2"></script>
   <script src="../modules/profanity-filter.js"></script>
   <script src="../func_presenter/toast.js"></script>
   <script src="../func_presenter/student.js"></script>
