@@ -113,6 +113,15 @@
     turkishPoint: $("turkishPointButton"),
     definitionBlock: $("definitionBlock"),
     englishDefinition: $("englishDefinition"),
+    teacherExampleBlock: $("teacherExampleBlock"),
+    teacherExampleSentence: $("teacherExampleSentence"),
+    teacherExampleImage: $("teacherExampleImageButton"),
+    teacherExampleSpeak: $("teacherExampleSpeakButton"),
+    imageOverlay: $("vocabImageOverlay"),
+    imageOverlayImage: $("vocabImageOverlayImage"),
+    imageOverlaySentence: $("vocabImageOverlaySentence"),
+    imageOverlaySpeak: $("vocabImageOverlaySpeak"),
+    imageOverlayClose: $("vocabImageOverlayClose"),
     wordRelations: $("wordRelations"),
     synonymInfo: $("synonymInfo"),
     oppositeInfo: $("oppositeInfo"),
@@ -170,6 +179,7 @@
   const records = typeof QUESTIONS === "undefined"
     ? []
     : QUESTIONS.filter((item) => Array.isArray(item) && item[2] && Number(item[3]) > 0);
+  const isStudentVocabularyMode = new URLSearchParams(window.location.search).get("mode") === "student";
 
   const synonymGroups = typeof SYNONYM_PAIRS === "undefined"
     ? []
@@ -247,6 +257,54 @@
     luckyFinishTimer: null,
     luckyAudioContext: null
   };
+  let teacherExampleImageUrl = "";
+  let teacherShowingExampleImage = false;
+  let hasTeacherExample = false;
+
+  function exampleImageStem(word) {
+    return String(word || "")
+      .toLocaleLowerCase("en-US")
+      .replace(/ı/g, "i")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  }
+
+  function prepareTeacherExample(record) {
+    const sentence = record[9];
+    hasTeacherExample = sentence && sentence !== "placeholder";
+    teacherShowingExampleImage = false;
+    teacherExampleImageUrl = "";
+    els.teacherExampleBlock.classList.add("hidden");
+    els.teacherExampleImage.disabled = true;
+    els.teacherExampleImage.classList.remove("is-active");
+    els.teacherExampleImage.title = "Example image unavailable";
+    els.teacherExampleSentence.textContent = hasTeacherExample ? sentence : "";
+    if (!hasTeacherExample) return;
+
+    const stem = exampleImageStem(record[2]);
+    const imageRoot = "../dictionary/images/";
+    const candidates = [
+      `${imageRoot}${stem}-${record[3]}-${record[5]}.webp`,
+      `${imageRoot}${stem}-${record[3]}-${record[5]}.png`,
+      `${imageRoot}${stem}.webp`,
+      `${imageRoot}${stem}.png`
+    ];
+    const findExampleImage = (index = 0) => {
+      if (state.pool[state.index] !== record || index >= candidates.length) return;
+      const probe = new Image();
+      probe.onload = () => {
+        if (state.pool[state.index] !== record) return;
+        teacherExampleImageUrl = candidates[index];
+        els.teacherExampleImage.disabled = false;
+        els.teacherExampleImage.title = "Show example image";
+      };
+      probe.onerror = () => findExampleImage(index + 1);
+      probe.src = candidates[index];
+    };
+    findExampleImage();
+  }
 
   function uniqueSorted(values) {
     return [...new Set(values)].sort((a, b) => a - b);
@@ -1567,6 +1625,7 @@
     els.turkishPoint.classList.remove("is-awarded");
     els.turkishPoint.disabled = false;
     els.definitionBlock.classList.add("hidden");
+    prepareTeacherExample(record);
     els.wordRelations.classList.add("hidden");
     renderWordGuessOptions(record);
     els.wordImage.alt = `Image for the word ${record[2]}`;
@@ -1617,6 +1676,7 @@
     els.wordTitleRow.classList.remove("hidden");
     els.meaningBlock.classList.remove("hidden");
     els.definitionBlock.classList.remove("hidden");
+    els.teacherExampleBlock.classList.toggle("hidden", !hasTeacherExample);
     renderWordRelations(state.pool[state.index]);
     speakWordTwice();
     updateChrome();
@@ -1638,6 +1698,65 @@
     clearTimeout(state.speechTimer);
     speakWord();
     state.speechTimer = setTimeout(speakWord, 2000);
+  }
+
+  function speakTeacherExample() {
+    const sentence = els.teacherExampleSentence.textContent.trim();
+    if (!sentence || !("speechSynthesis" in window)) return;
+    showTeacherExampleImage();
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.lang = "en-US";
+    utterance.rate = .82;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function showTeacherExampleImage() {
+    const record = state.pool[state.index];
+    if (!record || els.teacherExampleImage.disabled || teacherShowingExampleImage) return;
+    teacherShowingExampleImage = true;
+    els.imageFallback.classList.add("hidden");
+    els.wordImage.classList.remove("hidden");
+    els.wordImage.src = teacherExampleImageUrl;
+    els.wordImage.alt = `Example image for ${record[2]}`;
+    els.teacherExampleImage.classList.add("is-active");
+    els.teacherExampleImage.title = "Show word image";
+  }
+
+  function toggleTeacherExampleImage() {
+    const record = state.pool[state.index];
+    if (!record || els.teacherExampleImage.disabled) return;
+    if (teacherShowingExampleImage) {
+      teacherShowingExampleImage = false;
+      els.imageFallback.classList.add("hidden");
+      els.wordImage.classList.remove("hidden");
+      els.wordImage.src = imagePath(record);
+      els.wordImage.alt = `Image for the word ${record[2]}`;
+    } else {
+      showTeacherExampleImage();
+    }
+    els.teacherExampleImage.classList.toggle("is-active", teacherShowingExampleImage);
+    els.teacherExampleImage.title = teacherShowingExampleImage ? "Show word image" : "Show example image";
+  }
+
+  function openPresentationImageOverlay() {
+    const record = state.pool[state.index];
+    if (!record || els.wordImage.classList.contains("hidden") || !els.wordImage.currentSrc) return;
+    els.imageOverlayImage.src = els.wordImage.currentSrc;
+    els.imageOverlayImage.alt = els.wordImage.alt;
+    els.imageOverlaySentence.textContent = record[9] && record[9] !== "placeholder" ? record[9] : "Example sentence coming soon.";
+    els.imageOverlaySentence.parentElement.hidden = !teacherExampleImageUrl || els.wordImage.currentSrc !== new URL(teacherExampleImageUrl, window.location.href).href;
+    els.imageOverlay.classList.remove("hidden");
+  }
+
+  function speakImageOverlaySentence() {
+    const sentence = els.imageOverlaySentence.textContent.trim();
+    if (!sentence || sentence === "Example sentence coming soon." || !("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.lang = "en-US";
+    utterance.rate = .82;
+    window.speechSynthesis.speak(utterance);
   }
 
   function wait(milliseconds) {
@@ -1744,8 +1863,9 @@
     els.navigation.classList.toggle("hidden", ["offer", "results", "farewell", "categoryIntro"].includes(state.mode));
     els.previous.classList.toggle("hidden", state.index === 0 || state.mode !== "word");
     els.next.textContent = state.mode !== "word" ? "Continue →" : atEnd ? "Finish Presentation ✓" : "Next →";
-    els.next.classList.toggle("hidden", state.mode === "word" && state.wordStage !== "turkish");
-    els.next.disabled = state.mode !== "word" || state.wordStage !== "turkish";
+    const canAdvanceWord = ["guess", "english", "turkish"].includes(state.wordStage);
+    els.next.classList.toggle("hidden", state.mode === "word" && !canAdvanceWord);
+    els.next.disabled = state.mode !== "word" || !canAdvanceWord;
     syncHeaderNextButton();
     renderDots();
   }
@@ -2363,6 +2483,14 @@
   els.revealTurkish.addEventListener("click", revealTurkish);
   els.turkishPoint.addEventListener("click", awardTurkishMeaningPoint);
   els.speakWord.addEventListener("click", speakWord);
+  els.teacherExampleSpeak.addEventListener("click", speakTeacherExample);
+  els.teacherExampleImage.addEventListener("click", toggleTeacherExampleImage);
+  els.wordImage.addEventListener("click", openPresentationImageOverlay);
+  if (!isStudentVocabularyMode) els.imageOverlaySpeak.addEventListener("click", speakImageOverlaySentence);
+  els.imageOverlayClose.addEventListener("click", () => els.imageOverlay.classList.add("hidden"));
+  els.imageOverlay.addEventListener("click", (event) => {
+    if (event.target === els.imageOverlay) els.imageOverlay.classList.add("hidden");
+  });
   els.categoryContinue.addEventListener("click", () => {
     if (state.mode === "categoryIntro") renderWord();
   });

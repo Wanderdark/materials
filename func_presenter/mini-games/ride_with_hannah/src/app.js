@@ -1218,7 +1218,7 @@
                 return audio;
             });
             this.neighIndex = 0;
-            this.nodes.instruction.textContent = `COLLECT ALL ${this.targetGroup.label} ITEMS`;
+            this.nodes.instruction.textContent = `COLLECT ALL ${this.targetGroup.label} WORDS`;
             this.renderStats();
             this.rafId = requestAnimationFrame((time) => this.tick(time));
         }

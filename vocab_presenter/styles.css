@@ -1525,7 +1525,7 @@ body.student-vocab-mode .student-dictionary-panel {
   cursor: pointer;
   font-weight: 950;
 }
-.student-dictionary-suggestions { display: grid; overflow: hidden; border: 1px solid rgba(143, 166, 255, .25); border-radius: 15px; background: #0d1b3f; }
+.student-dictionary-suggestions { display: grid; flex: 0 0 auto; overflow: hidden; border: 1px solid rgba(143, 166, 255, .25); border-radius: 15px; background: #0d1b3f; }
 body.student-vocab-mode .student-dictionary-suggestions[hidden] { display: none; }
 .student-dictionary-suggestions button { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; padding: 11px 14px; border: 0; border-bottom: 1px solid rgba(143, 166, 255, .14); color: #f4f7ff; background: transparent; cursor: pointer; text-align: left; }
 .student-dictionary-suggestions button:last-child { border-bottom: 0; }
@@ -1560,6 +1560,8 @@ body.student-vocab-mode .student-dictionary-suggestions[hidden] { display: none;
   cursor: pointer;
   font-size: 20px;
 }
+.student-dictionary-example-image:disabled { opacity: .34; cursor: not-allowed; }
+.student-dictionary-example-image.is-active { border-color: var(--u2-gold); background: rgba(255, 216, 77, .2); }
 .student-dictionary-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .student-dictionary-tags span { padding: 6px 10px; border-radius: 999px; color: #a8c8ff; background: rgba(71, 137, 224, .18); font-size: 12px; font-weight: 900; }
 .student-dictionary-tags span + span { color: #ffda80; background: rgba(255, 216, 77, .12); }
@@ -1569,6 +1571,26 @@ body.student-vocab-mode .student-dictionary-suggestions[hidden] { display: none;
 .student-dictionary-example p { flex: 1; margin: 0; font-style: italic; }
 .student-dictionary-highlight { padding: 0; color: #54e59a; background: transparent; font-weight: 900; }
 
+.vocab-image-overlay { position: fixed; z-index: 30000; inset: 0; display: grid; place-items: center; padding: 24px; background: rgba(3, 9, 27, .84); }
+.vocab-image-overlay-card { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) auto; width: min(82vw, 680px); aspect-ratio: 1; overflow: hidden; padding: 24px; border: 1px solid rgba(255, 216, 77, .48); border-radius: 28px; background: #0a142f; box-shadow: 0 28px 70px rgba(0, 0, 0, .52); }
+.vocab-image-overlay-visual { display: grid; min-height: 0; place-items: center; }
+.vocab-image-overlay-visual img { width: 100%; height: 100%; object-fit: contain; }
+.vocab-image-overlay-sentence { display: flex; align-items: center; gap: 10px; margin: 12px 36px 0; padding: 10px 12px; border-radius: 14px; background: rgba(4, 22, 54, .78); }
+.vocab-image-overlay-sentence[hidden] { display: none; }
+.vocab-image-overlay-card p { margin: 0; flex: 1; color: #e7edff; font-size: clamp(15px, 2vw, 20px); font-style: italic; font-weight: 700; line-height: 1.35; text-align: center; }
+.vocab-image-overlay-sentence button { flex: 0 0 auto; border: 0; border-radius: 10px; padding: 8px; background: rgba(77, 169, 255, .2); cursor: pointer; }
+.vocab-image-overlay-close { position: absolute; z-index: 1; top: 12px; right: 12px; display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(143, 166, 255, .36); border-radius: 50%; color: #fff; background: rgba(13, 27, 63, .9); cursor: pointer; font-size: 27px; line-height: 1; }
+body.student-vocab-mode #studentDictionaryImage,
+#wordImage { cursor: zoom-in; }
+
+.teacher-example-block { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.10); }
+.teacher-example-block > span { color: #8fa6d9; font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.teacher-example-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, .05); }
+.teacher-example-row p { flex: 1; margin: 0; color: #e7edff; font-size: 16px; font-style: italic; font-weight: 650; line-height: 1.45; }
+.teacher-example-row button { flex: 0 0 auto; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(143, 166, 255, .3); border-radius: 13px; background: #173267; cursor: pointer; font-size: 20px; }
+.teacher-example-row button:disabled { opacity: .34; cursor: not-allowed; }
+.teacher-example-row #teacherExampleImageButton.is-active { border-color: var(--u2-gold); background: rgba(255, 216, 77, .2); }
+
 @media (max-width: 980px) {
   body.student-vocab-mode .student-dictionary-panel { max-height: none; }
 }
@@ -1577,6 +1599,8 @@ body.student-vocab-mode .student-dictionary-suggestions[hidden] { display: none;
   .student-dictionary-search { grid-template-columns: 1fr; }
   .student-dictionary-search-label { grid-column: auto; }
   .student-dictionary-search button { height: 46px; }
+  .vocab-image-overlay-card { width: min(94vw, 560px); padding: 18px; border-radius: 22px; }
+  .vocab-image-overlay-sentence { margin: 9px 30px 0; }
 }
 
 /* Unit theme label (tiny, under the word count) */

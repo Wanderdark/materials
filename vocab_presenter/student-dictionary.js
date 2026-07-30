@@ -20,8 +20,17 @@
   const meaning = $("studentDictionaryMeaning");
   const example = $("studentDictionaryExample");
   const translation = $("studentDictionaryTranslation");
+  const exampleImageButton = $("studentDictionaryExampleImage");
+  const imageOverlay = $("vocabImageOverlay");
+  const imageOverlayImage = $("vocabImageOverlayImage");
+  const imageOverlaySentence = $("vocabImageOverlaySentence");
+  const imageOverlaySpeak = $("vocabImageOverlaySpeak");
+  const imageOverlayClose = $("vocabImageOverlayClose");
   let selectedGrade = null;
   let visibleRecord = null;
+  let exampleImageUrl = "";
+  let exampleImageCandidates = [];
+  let showingExampleImage = false;
 
   const normalize = (value) => String(value || "").trim().toLocaleUpperCase("en-US");
   const source = typeof QUESTIONS === "undefined" ? [] : QUESTIONS;
@@ -55,6 +64,26 @@
     say();
   }
 
+  function showStudentExampleImage() {
+    if (!visibleRecord || exampleImageButton.disabled || showingExampleImage) return;
+    showingExampleImage = true;
+    imageFallback.hidden = true;
+    image.hidden = false;
+    image.src = exampleImageUrl;
+    image.alt = `Example image for ${visibleRecord.word}`;
+    exampleImageButton.classList.add("is-active");
+    exampleImageButton.title = "Show word image";
+  }
+
+  function openStudentImageOverlay() {
+    if (!visibleRecord || image.hidden || !image.currentSrc) return;
+    imageOverlayImage.src = image.currentSrc;
+    imageOverlayImage.alt = image.alt;
+    imageOverlaySentence.textContent = visibleRecord.example;
+    imageOverlaySentence.parentElement.hidden = !exampleImageUrl || image.currentSrc !== new URL(exampleImageUrl, window.location.href).href;
+    imageOverlay.classList.remove("hidden");
+  }
+
   function highlightExample(sentence, target) {
     example.replaceChildren();
     const pattern = new RegExp(`(${target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
@@ -72,6 +101,16 @@
 
   function display(record) {
     visibleRecord = record;
+    showingExampleImage = false;
+    const imageName = encodeURIComponent(record.word.toLocaleLowerCase("en-US").replace(/ı/g, "i").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, ""));
+    const imageRoot = "../dictionary/images/";
+    exampleImageUrl = "";
+    exampleImageCandidates = [
+      `${imageRoot}${imageName}-${record.grade}-${record.unit}.webp`,
+      `${imageRoot}${imageName}-${record.grade}-${record.unit}.png`,
+      `${imageRoot}${imageName}.webp`,
+      `${imageRoot}${imageName}.png`
+    ];
     word.textContent = record.word;
     grade.textContent = `Grade ${record.grade}`;
     unit.textContent = `Unit ${record.unit}`;
@@ -83,6 +122,22 @@
     imageFallback.hidden = true;
     image.hidden = !record.image;
     image.src = record.image || "";
+    exampleImageButton.disabled = true;
+    exampleImageButton.classList.remove("is-active");
+    exampleImageButton.title = "Example image unavailable";
+    const findExampleImage = (index = 0) => {
+      if (visibleRecord !== record || index >= exampleImageCandidates.length) return;
+      const probe = new Image();
+      probe.onload = () => {
+        if (visibleRecord !== record) return;
+        exampleImageUrl = exampleImageCandidates[index];
+        exampleImageButton.disabled = false;
+        exampleImageButton.title = "Show example image";
+      };
+      probe.onerror = () => findExampleImage(index + 1);
+      probe.src = exampleImageCandidates[index];
+    };
+    findExampleImage();
     result.hidden = false;
     hint.textContent = selectedGrade === record.grade
       ? `Showing the Grade ${selectedGrade} version of this word.`
@@ -178,7 +233,27 @@
     if (selectedGrade) sessionStorage.setItem("dictionaryGrade", selectedGrade);
   });
   $("studentDictionaryWordSpeak").addEventListener("click", () => speak(visibleRecord?.word, 2));
-  $("studentDictionaryExampleSpeak").addEventListener("click", () => speak(visibleRecord?.example, 1));
+  $("studentDictionaryExampleSpeak").addEventListener("click", () => {
+    showStudentExampleImage();
+    speak(visibleRecord?.example, 1);
+  });
+  exampleImageButton.addEventListener("click", () => {
+    if (!visibleRecord || exampleImageButton.disabled) return;
+    if (showingExampleImage) {
+      showingExampleImage = false;
+      imageFallback.hidden = true;
+      image.hidden = !visibleRecord.image;
+      image.src = visibleRecord.image || "";
+      image.alt = visibleRecord.word;
+    } else {
+      showStudentExampleImage();
+    }
+    exampleImageButton.classList.toggle("is-active", showingExampleImage);
+    exampleImageButton.title = showingExampleImage ? "Show word image" : "Show example image";
+  });
+  image.addEventListener("click", openStudentImageOverlay);
+  imageOverlaySpeak.addEventListener("click", () => speak(imageOverlaySentence.textContent.trim(), 1));
+  imageOverlayClose.addEventListener("click", () => imageOverlay.classList.add("hidden"));
   image.addEventListener("error", () => {
     image.hidden = true;
     imageFallback.hidden = false;

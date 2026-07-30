@@ -83,10 +83,109 @@
       exampleListen.setAttribute('aria-label', 'Listen to the example sentence');
       exampleListen.title = 'Listen';
       example.after(exampleListen);
-      exampleListen.addEventListener('click', () => {
-        const sentence = example.textContent.trim();
-        if (!sentence || sentence === 'Example sentence coming soon.' || !('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
+      const exampleImage = document.createElement('button');
+      exampleImage.type = 'button';
+      exampleImage.className = 'example-image';
+      exampleImage.textContent = '🖼️';
+      exampleImage.setAttribute('aria-label', 'Show example image');
+      exampleImage.title = 'Example image unavailable';
+      exampleImage.disabled = true;
+      example.after(exampleImage);
+      example.closest('.section').classList.add('has-example-actions');
+       const wordImage = document.getElementById('wordImage');
+       const imageFallback = document.getElementById('imageFallback');
+       const imageOverlay = document.createElement('div');
+       imageOverlay.className = 'dictionary-image-overlay';
+       imageOverlay.innerHTML = '<div class="dictionary-image-overlay-card"><button class="dictionary-image-overlay-close" type="button" aria-label="Close image">×</button><div class="dictionary-image-overlay-visual"><img alt=""></div><div class="dictionary-image-overlay-sentence"><p></p><button type="button" aria-label="Listen to the example sentence" title="Listen">👂</button></div></div>';
+       document.body.append(imageOverlay);
+       const imageOverlayImage = imageOverlay.querySelector('img');
+       const imageOverlaySentence = imageOverlay.querySelector('p');
+       const openImageOverlay = () => {
+         if (!wordImage || wordImage.hidden || !wordImage.currentSrc) return;
+         imageOverlayImage.src = wordImage.currentSrc;
+         imageOverlayImage.alt = wordImage.alt;
+         imageOverlaySentence.textContent = example.textContent.trim();
+         imageOverlaySentence.parentElement.hidden = !exampleImagePath || wordImage.currentSrc !== new URL(exampleImagePath, window.location.href).href;
+         imageOverlay.classList.add('show');
+       };
+       wordImage?.addEventListener('click', openImageOverlay);
+       imageOverlay.querySelector('.dictionary-image-overlay-close').addEventListener('click', () => imageOverlay.classList.remove('show'));
+       imageOverlay.addEventListener('click', (event) => {
+         if (event.target === imageOverlay) imageOverlay.classList.remove('show');
+       });
+       imageOverlay.querySelector('.dictionary-image-overlay-sentence button').addEventListener('click', () => {
+         const sentence = imageOverlaySentence.textContent.trim();
+         if (!sentence || sentence === 'Example sentence coming soon.' || !('speechSynthesis' in window)) return;
+         window.speechSynthesis.cancel();
+         const utterance = new SpeechSynthesisUtterance(sentence);
+         utterance.lang = 'en-US';
+         utterance.rate = 0.82;
+         window.speechSynthesis.speak(utterance);
+       });
+       let originalImage = '';
+      let exampleImagePath = '';
+      let exampleImageCandidates = [];
+      let showingExampleImage = false;
+      const updateExampleImage = () => {
+        const word = wordTitle.textContent.trim();
+        showingExampleImage = false;
+        exampleImage.classList.remove('active');
+        originalImage = wordImage.getAttribute('src') || '';
+        const imageName = word.toLocaleLowerCase('en-US').replace(/ı/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+        const grade = document.getElementById('grade')?.textContent.replace(/\D/g, '');
+        const unit = document.getElementById('unit')?.textContent.replace(/\D/g, '');
+        exampleImagePath = '';
+        exampleImageCandidates = imageName ? [
+          `images/${encodeURIComponent(`${imageName}-${grade}-${unit}`)}.webp`,
+          `images/${encodeURIComponent(`${imageName}-${grade}-${unit}`)}.png`,
+          `images/${encodeURIComponent(imageName)}.webp`,
+          `images/${encodeURIComponent(imageName)}.png`
+        ] : [];
+        exampleImage.disabled = true;
+        exampleImage.title = 'Example image unavailable';
+        const findExampleImage = (index = 0) => {
+          if (wordTitle.textContent.trim() !== word || index >= exampleImageCandidates.length) return;
+          const probe = new Image();
+          probe.onload = () => {
+            if (wordTitle.textContent.trim() !== word) return;
+            exampleImagePath = exampleImageCandidates[index];
+            exampleImage.disabled = false;
+            exampleImage.title = 'Show example image';
+          };
+          probe.onerror = () => findExampleImage(index + 1);
+          probe.src = exampleImageCandidates[index];
+        };
+         findExampleImage();
+       };
+       const showExampleImage = () => {
+         if (exampleImage.disabled || !wordImage || showingExampleImage) return;
+         showingExampleImage = true;
+         imageFallback.hidden = true;
+         wordImage.hidden = false;
+         wordImage.src = exampleImagePath;
+         wordImage.alt = `Example image for ${wordTitle.textContent.trim()}`;
+         exampleImage.classList.add('active');
+         exampleImage.title = 'Show word image';
+       };
+       exampleImage.addEventListener('click', () => {
+         if (exampleImage.disabled || !wordImage) return;
+         if (showingExampleImage) {
+           showingExampleImage = false;
+           imageFallback.hidden = true;
+           wordImage.hidden = false;
+           wordImage.src = originalImage;
+           wordImage.alt = `Picture for ${wordTitle.textContent.trim()}`;
+           exampleImage.classList.remove('active');
+           exampleImage.title = 'Show example image';
+         } else {
+           showExampleImage();
+         }
+       });
+       exampleListen.addEventListener('click', () => {
+         const sentence = example.textContent.trim();
+         if (!sentence || sentence === 'Example sentence coming soon.' || !('speechSynthesis' in window)) return;
+         showExampleImage();
+         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(sentence);
         utterance.lang = 'en-US';
         utterance.rate = 0.82;
@@ -112,6 +211,7 @@
         document.getElementById('exampleTurkish').textContent = record?.[10] && record[10] !== 'placeholder' ? record[10] : 'Example translation coming soon.';
       };
       new MutationObserver(update).observe(wordTitle, { childList: true, characterData: true, subtree: true });
+      new MutationObserver(() => requestAnimationFrame(updateExampleImage)).observe(wordTitle, { childList: true, characterData: true, subtree: true });
       update();
     });
   </script>
@@ -120,6 +220,9 @@
   </style>
   <style>
     .grade-picker{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:13px;color:var(--sz-muted);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.grade-picker button{border:1px solid var(--sz-line);border-radius:999px;padding:4px 9px;color:#bfe0ff;background:rgba(77,169,255,.1);font:800 .68rem Barlow,sans-serif;cursor:pointer}.grade-picker button.active,.grade-picker button:hover{border-color:rgba(244,169,64,.72);color:#07101f;background:var(--sz-orange)}
+  </style>
+  <style>
+    .has-example-actions .example{padding-left:54px;padding-right:54px}.example-image{float:left;margin-top:-42px;margin-left:10px;border:0;border-radius:10px;padding:6px;background:rgba(77,169,255,.18);cursor:pointer}.example-image:disabled{opacity:.34;cursor:not-allowed}.example-image.active{background:rgba(244,169,64,.3);outline:1px solid rgba(244,169,64,.7)}#wordImage{cursor:zoom-in}.dictionary-image-overlay{position:fixed;inset:0;z-index:30000;display:none;place-items:center;padding:24px;background:rgba(1,10,27,.78);backdrop-filter:blur(6px)}.dictionary-image-overlay.show{display:grid}.dictionary-image-overlay-card{position:relative;width:min(82vw,680px);aspect-ratio:1;display:grid;grid-template-rows:minmax(0,1fr) auto;padding:28px;border:1px solid rgba(143,188,255,.34);border-radius:24px;background:#071a36;box-shadow:0 24px 70px rgba(0,0,0,.48)}.dictionary-image-overlay-visual{min-height:0;display:grid;place-items:center}.dictionary-image-overlay-visual img{width:100%;height:100%;object-fit:contain}.dictionary-image-overlay-sentence{display:flex;align-items:center;gap:10px;margin:14px 32px 0;padding:10px 12px;border-radius:14px;background:rgba(4,22,54,.78)}.dictionary-image-overlay-sentence[hidden]{display:none}.dictionary-image-overlay-card p{flex:1;margin:0;color:#edf5ff;text-align:center;font-size:clamp(1rem,2vw,1.35rem);font-style:italic}.dictionary-image-overlay-sentence button{flex:0 0 auto;border:0;border-radius:10px;padding:8px;background:rgba(77,169,255,.2);cursor:pointer}.dictionary-image-overlay-close{position:absolute;top:12px;right:12px;width:38px;height:38px;border:0;border-radius:50%;background:#fff;color:#071a36;font-size:26px;line-height:1;cursor:pointer}
   </style>
 </body>
 </html>

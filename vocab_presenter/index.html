@@ -12,6 +12,13 @@
 </head>
 <body>
   <button id="appBackButton" class="app-back-button" type="button" aria-label="Go back" title="Go back">↩️</button>
+  <div id="vocabImageOverlay" class="vocab-image-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="vocabImageOverlaySentence">
+    <div class="vocab-image-overlay-card">
+      <button id="vocabImageOverlayClose" class="vocab-image-overlay-close" type="button" aria-label="Close image">×</button>
+      <div class="vocab-image-overlay-visual"><img id="vocabImageOverlayImage" alt=""></div>
+      <div class="vocab-image-overlay-sentence"><p id="vocabImageOverlaySentence"></p><button id="vocabImageOverlaySpeak" type="button" aria-label="Listen to the example sentence" title="Listen">👂</button></div>
+    </div>
+  </div>
   <div id="studentGradeOverlay" class="student-grade-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="studentGradeTitle">
     <div class="student-grade-card">
       <span class="student-grade-kicker">PICTURE DICTIONARY</span>
@@ -68,7 +75,7 @@
               <div class="student-dictionary-tags"><span id="studentDictionaryGrade"></span><span id="studentDictionaryUnit"></span></div>
               <div class="student-dictionary-detail"><strong>English definition</strong><p id="studentDictionaryDefinition"></p></div>
               <div class="student-dictionary-detail"><strong>Turkish meaning</strong><p id="studentDictionaryMeaning"></p></div>
-              <div class="student-dictionary-detail"><strong>Example sentence</strong><div class="student-dictionary-example"><p id="studentDictionaryExample"></p><button id="studentDictionaryExampleSpeak" type="button" aria-label="Listen to the example sentence" title="Listen to the example sentence">👂</button></div></div>
+              <div class="student-dictionary-detail"><strong>Example sentence</strong><div class="student-dictionary-example"><button id="studentDictionaryExampleImage" class="student-dictionary-example-image" type="button" aria-label="Show example image" title="Example image unavailable" disabled>🖼️</button><p id="studentDictionaryExample"></p><button id="studentDictionaryExampleSpeak" type="button" aria-label="Listen to the example sentence" title="Listen to the example sentence">👂</button></div></div>
               <div class="student-dictionary-detail"><strong>Turkish translation</strong><p id="studentDictionaryTranslation"></p></div>
             </div>
           </article>
@@ -443,6 +450,14 @@
           <div id="definitionBlock" class="definition-block hidden">
             <span>English definition</span>
             <p id="englishDefinition"></p>
+          </div>
+          <div id="teacherExampleBlock" class="teacher-example-block hidden">
+            <span>Example sentence</span>
+            <div class="teacher-example-row">
+              <button id="teacherExampleImageButton" type="button" aria-label="Show example image" title="Example image unavailable" disabled>🖼️</button>
+              <p id="teacherExampleSentence"></p>
+              <button id="teacherExampleSpeakButton" type="button" aria-label="Listen to the example sentence" title="Listen to the example sentence">👂</button>
+            </div>
           </div>
           <div id="wordRelations" class="word-relations hidden">
             <p id="synonymInfo" class="synonym-info hidden"></p>
