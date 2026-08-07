@@ -179,6 +179,11 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .during-card.karaoke-mode .player-button.play { width: 56px; height: 56px; font-size: 23px; }
 .during-card.karaoke-mode .player-button.video-btn { font-size: 13px; }
 .lyrics-rail { display: flex; flex-direction: column; gap: 10px; min-height: 0; padding: clamp(20px, 2.4vw, 32px); }
+.word-bank-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.word-bank-heading .panel-kicker { margin: 0; }
+.autofill-button { padding: 6px 10px; border: 1px solid rgba(255,216,77,.55); border-radius: 999px; color: var(--yellow); background: rgba(255,216,77,.08); font-size: 10px; font-weight: 900; letter-spacing: .1em; cursor: pointer; }
+.autofill-button:hover { border-color: var(--yellow); background: rgba(255,216,77,.16); }
+.autofill-button:disabled { opacity: .45; cursor: default; }
 .during-word-bank { display: flex; flex-wrap: nowrap; gap: 8px; padding: 10px 12px; border: 1px dashed #4c659e; border-radius: 16px; background: rgba(5, 12, 30, .48); }
 .during-word-bank .word-chip { flex: 1 1 0; min-width: 0; min-height: 42px; padding: 4px 6px; font-size: clamp(11px, 1.05vw, 20px); white-space: nowrap; overflow: hidden; }
 .lyrics-kicker { margin-top: 8px; }

@@ -1,12 +1,6 @@
 // APP-ANCHOR: Time-setter exercise flow.
 function createTimeSetterTarget(previousTarget = null, round = 1, exercise = {}) {
-  const defaultTypes = [
-    { minutes: [0] },
-    { minutes: [15] },
-    { minutes: [30] },
-    { minutes: [5, 10, 20] },
-    { minutes: [45] }
-  ];
+  const defaultTypes = [{ minutes: [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55] }];
   const types = exercise.timeTypes || defaultTypes;
   const guidedRounds = exercise.guidedRounds || [0, 15, 30, 0, 15];
   const allowedTypes = round <= guidedRounds.length
@@ -30,6 +24,7 @@ function describeTimeSetterTarget({ hour, minute }) {
   if (minute === 15) return `It is quarter past ${hourWord}.`;
   if (minute === 30) return `It is half past ${hourWord}.`;
   if (minute === 45) return `It is quarter to ${words[hour === 12 ? 1 : hour + 1]}.`;
+  if (minute > 30) return `It is ${words[60 - minute]} to ${words[hour === 12 ? 1 : hour + 1]}.`;
   return `It is ${words[minute]} past ${hourWord}.`;
 }
 

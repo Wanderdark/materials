@@ -90,5 +90,17 @@
       requestAnimationFrame(syncSongQuestProgress);
     })();
   </script>
+  <script>
+    (() => {
+      const charactersCard = document.querySelector("[data-characters-trigger]");
+      if (!charactersCard || document.querySelector("[data-olivias-movie-memories]")) return;
+      const card = document.createElement("a");
+      card.className = "activity-card grammar reveal is-visible";
+      card.href = "../olivias_movie_memories/index.html";
+      card.dataset.oliviasMovieMemories = "true";
+      card.innerHTML = '<img src="../images/thumbnails/olivias_movie_memories.webp" width="640" height="360" alt="Olivia’s Movie Memories preview"><div class="activity-copy"><span class="activity-icon" aria-hidden="true">▣</span><h3>Olivia’s Movie Memories</h3><p>Discover short listening memories from the AdilHoca Universe.</p><span class="card-cta">Open memories <b aria-hidden="true">→</b></span></div>';
+      charactersCard.insertAdjacentElement("afterend", card);
+    })();
+  </script>
 </body>
 </html>

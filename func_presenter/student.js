@@ -736,6 +736,7 @@
       notifyReadyQuests();
       evaluateAchievements();
       checkRankUp();
+      save();
       updateHud(true);
     },
     onWrong() {
@@ -747,6 +748,45 @@
         profile.daily.pointsToday = Math.max(0, profile.daily.pointsToday - 1);
         floatPoints("-1");
       }
+      checkRankUp();
+      save();
+      updateHud(true);
+    },
+    onListeningCorrect(points = 1) {
+      const reward = Math.max(0, Number(points) || 0);
+      ensureDaily();
+      markDayPlayed();
+      profile.points += reward;
+      profile.correctTotal += 1;
+      profile.streak += 1;
+      profile.bestStreak = Math.max(profile.bestStreak, profile.streak);
+      if (profile.wrongRun >= 3) profile.comebackDone = true;
+      profile.wrongRun = 0;
+      profile.daily.pointsToday += reward;
+      profile.daily.correctToday += 1;
+      profile.daily.bestStreakToday = Math.max(profile.daily.bestStreakToday, profile.streak);
+      floatPoints(`+${reward}`);
+      notifyReadyQuests();
+      evaluateAchievements();
+      checkRankUp();
+      save();
+      updateHud(true);
+    },
+    onListeningWrong() {
+      profile.streak = 0;
+      profile.wrongTotal += 1;
+      profile.wrongRun += 1;
+      save();
+      updateHud(true);
+    },
+    awardListeningBonus(points = 1) {
+      const reward = Math.max(0, Number(points) || 0);
+      ensureDaily();
+      profile.points += reward;
+      profile.daily.pointsToday += reward;
+      floatPoints(`+${reward}`);
+      notifyReadyQuests();
+      evaluateAchievements();
       checkRankUp();
       save();
       updateHud(true);

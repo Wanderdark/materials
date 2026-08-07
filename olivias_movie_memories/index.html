@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Olivia’s Movie Memories student listening game.">
+  <title>Olivia’s Movie Memories | AdilHoca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="student-landing.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section id="setup-screen" class="screen setup-screen" aria-labelledby="setup-title">
+      <div class="brand-lockup"><span class="brand-mark">▶</span><div><p class="eyebrow">AdilHoca · Teacher Tool</p><h1 id="setup-title">League of Listening</h1></div></div>
+      <div class="setup-grid">
+        <article class="setup-card"><p class="eyebrow">1 · Groups</p><h2>Build your teams</h2><div class="choice-row" role="group" aria-label="Number of teams"><button class="choice-button is-selected" type="button" data-group-count="2">2 Teams</button><button class="choice-button" type="button" data-group-count="3">3 Teams</button></div><div id="group-name-fields" class="group-name-fields"></div></article>
+        <article class="setup-card"><p class="eyebrow">2 · Roster</p><h2>Select players</h2><p class="muted">Import a class from Teacher HUD for balanced teams, or add players manually.</p><button id="open-roster-button" class="primary-button" type="button">👥 IMPORT ROSTER</button><div id="roster-status" class="status-note" aria-live="polite">No class selected yet.</div><div id="team-editor" class="team-editor"></div><div class="manual-student-row"><input id="manual-student-input" type="text" maxlength="36" placeholder="Add player name"><select id="manual-student-team" aria-label="Team for new player"></select><button id="add-student-button" class="secondary-button" type="button">ADD</button></div></article>
+        <article class="setup-card settings-card"><p class="eyebrow">3 · Round</p><h2>Game settings</h2><label class="field-label" for="round-limit">Maximum rounds</label><input id="round-limit" type="number" min="1" max="20" value="10"><p class="muted">A round ends when every selected player has played once. Then choose to continue or finish.</p><div class="rules-list"><span>🎬 One regular replay, then teacher override</span><span>🃏 Two team jokers per round</span><span>⏱ Answer time: 20 seconds</span><span>💬 Without subtitles +200 · With subtitles +100</span></div><button id="start-game-button" class="primary-button start-button" type="button" disabled>START GAME <span>→</span></button></article>
+      </div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" hidden aria-live="polite">
+      <header class="game-header"><div class="game-toolbar"><button id="exit-game-button" class="icon-button" type="button" aria-label="Exit game">×</button><button id="previous-track-button" class="music-control" type="button" aria-label="Previous music track" title="Previous track">⏮</button><button id="next-track-button" class="music-control" type="button" aria-label="Next music track" title="Next track">⏭</button><button id="mute-music-button" class="music-control" type="button" aria-label="Mute background music" title="Mute music">♫</button><button id="override-replay-button" class="override-replay" type="button" disabled aria-label="Override replay video" title="Override replay video">OVR ↻</button></div><div class="round-progress"><span id="round-label">ROUND 1</span><strong id="turn-label">1 / 1</strong></div><div id="scoreboard" class="scoreboard" aria-label="Team scores"></div></header>
+      <div class="game-layout">
+        <aside id="turn-panel" class="turn-panel"><p class="eyebrow">Current player</p><span id="active-team-chip" class="team-chip">TEAM</span><img id="active-student-avatar" class="active-student-avatar" alt="" hidden><h2 id="active-student-name">Are you ready?</h2><p id="turn-instruction" class="muted">Listen carefully.</p><p class="eyebrow appearing-label">Appearing in this video:</p><div id="dialogue-characters" class="dialogue-characters" aria-label="Characters in this dialogue"></div><div id="video-function" class="video-function" hidden><span>FUNCTION :</span><strong id="video-function-name"></strong></div><div class="joker-deck"><div class="joker-heading"><span>TEAM JOKERS</span><strong id="joker-remaining">2 LEFT</strong></div><button class="joker-button" type="button" data-joker="echo"><span>🔊</span><strong>ECHO</strong><small>One extra listen</small></button><button class="joker-button" type="button" data-joker="timeFreeze"><span>⏱</span><strong>TIME FREEZE</strong><small>+15 seconds</small></button><button class="joker-button" type="button" data-joker="doubleOrNothing"><span>×2</span><strong>DOUBLE OR NOTHING</strong><small>Double correct score</small></button></div></aside>
+        <section class="listening-stage" aria-label="Listening game"><div class="stage-topline"><span id="watch-counter">LISTENING PLAYS LEFT: 2</span><span id="answer-timer" class="answer-timer" hidden>20</span></div><div id="video-wrap" class="video-wrap"><video id="listening-video" playsinline preload="metadata"></video><div id="video-fallback" class="video-fallback"><strong>Video ready. Start the first listen.</strong></div><div id="difficulty-selector" class="difficulty-selector" hidden><span>CHOOSE DIFFICULTY</span><div><button class="difficulty-button" type="button" data-difficulty="easy">EASY MODE</button><button class="difficulty-button" type="button" data-difficulty="medium">MEDIUM MODE</button></div></div><button id="play-video-button" class="video-play-button" type="button" hidden aria-label="Play video">▶</button><div id="decision-overlay" class="decision-overlay" hidden><button id="no-subtitle-button" class="subtitle-choice no-subtitle" type="button"><strong>HIDE SUBTITLES</strong><span>2× POINTS · +200</span></button><button id="show-subtitle-button" class="subtitle-choice" type="button"><strong>SHOW SUBTITLES</strong><span>1× POINTS · +100</span></button></div><div id="answer-overlay" class="answer-overlay" hidden><div id="transcript-panel" class="transcript-panel" hidden><span>SUBTITLES</span><p id="transcript-text"></p></div><div id="answer-panel" class="answer-panel" hidden><button class="answer-card" type="button" data-answer="a"></button><button class="answer-card" type="button" data-answer="b"></button></div></div><div id="evidence-overlay" class="evidence-overlay" hidden><span>EVIDENCE REPLAY</span><p id="evidence-text"></p></div></div><div class="video-controls"><div class="video-action-controls"><button id="replay-button" class="secondary-button" type="button" disabled>↻ REPLAY VIDEO</button><button id="answer-now-button" class="answer-now-button" type="button" disabled>ANSWER NOW</button></div><span id="video-status" class="status-note">Call the player.</span></div><div id="feedback-panel" class="feedback-panel" hidden><strong id="feedback-title"></strong><p id="feedback-message"></p><div class="feedback-actions"><button id="evidence-replay-button" class="primary-button" type="button" hidden>▶ EVIDENCE REPLAY</button><button id="next-turn-button" class="primary-button" type="button" hidden>NEXT <span>→</span></button></div></div></section>
+      </div>
+    </section>
+
+    <section id="round-screen" class="screen decision-screen" hidden><div class="decision-card"><p class="eyebrow">Round complete</p><h2 id="round-complete-title">Every player has had a turn.</h2><p id="round-complete-message" class="muted"></p><div class="choice-row"><button id="continue-round-button" class="primary-button" type="button">CONTINUE</button><button id="finish-game-button" class="secondary-button" type="button">FINISH GAME</button></div></div></section>
+    <section id="final-screen" class="screen final-screen" hidden><div class="winner-panel"><p class="eyebrow">League of Listening · Final</p><span class="winner-crown">👑</span><h2 id="winner-team-name">WINNER!</h2><p id="winner-team-score"></p><button id="transfer-points-button" class="primary-button" type="button">⭐ TRANSFER ROSTER POINTS</button><button id="new-game-button" class="secondary-button" type="button">NEW GAME</button></div><div class="final-details"><article><h3>Team scores</h3><div id="final-team-scores"></div></article><article><h3>Player scores</h3><div id="final-student-scores"></div></article></div></section>
+  </main>
+
+  <div id="auto-lb"><div class="alb-title">🏆 HIGH SCORES</div><div id="auto-lb-list"></div></div>
+  <div id="roster-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="roster-dialog-title"><div class="modal-backdrop" data-close-roster></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-roster aria-label="Close">×</button><p class="eyebrow">Teacher HUD</p><h2 id="roster-dialog-title">Choose your class</h2><p class="muted">Students marked absent today are excluded automatically.</p><div id="classroom-list" class="classroom-list"></div><p id="classroom-message" class="status-note" aria-live="polite"></p></div></div>
+
+  <script>window.__oliviasMovieMemoriesStudentMode = true; sessionStorage.setItem("fpStudentMode", "1");</script>
+  <script src="../func_presenter/names.js"></script>
+  <script src="../func_presenter/teacher-cloud.js"></script>
+  <script src="../func_presenter/teacher-control.js"></script>
+  <script src="../func_presenter/toast.js"></script>
+  <script src="scripts.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/content-selector.js"></script>
+  <script src="js/roster-adapter.js"></script>
+  <script src="js/jokers.js"></script>
+  <script src="js/streaks.js"></script>
+  <script src="js/evidence-replay.js"></script>
+  <script src="js/game-state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/leaderboard.js"></script>
+  <script src="js/background-tracks.js"></script>
+  <script src="js/background-music.js"></script>
+  <script src="../func_presenter/student.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/student-loop-adapter.js"></script>
+</body>
+</html>

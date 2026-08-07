@@ -84,7 +84,7 @@
 
   function createTarget(previousTarget = null, round = 1) {
     const guidedMinutes = [0, 15, 30, 0, 15];
-    const minuteChoices = round <= guidedMinutes.length ? [guidedMinutes[round - 1]] : [0, 5, 10, 15, 20, 30, 45];
+    const minuteChoices = round <= guidedMinutes.length ? [guidedMinutes[round - 1]] : [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
     let target;
     do {
       target = { hour: Math.floor(Math.random() * 12) + 1, minute: minuteChoices[Math.floor(Math.random() * minuteChoices.length)] };
@@ -98,6 +98,7 @@
     if (minute === 15) return `It is quarter past ${words[hour]}.`;
     if (minute === 30) return `It is half past ${words[hour]}.`;
     if (minute === 45) return `It is quarter to ${words[hour === 12 ? 1 : hour + 1]}.`;
+    if (minute > 30) return `It is ${words[60 - minute]} to ${words[hour === 12 ? 1 : hour + 1]}.`;
     return `It is ${words[minute]} past ${words[hour]}.`;
   }
 
@@ -225,8 +226,8 @@
 
   timeNodes.hourUp.addEventListener("click", () => { if (!timeState.locked) { timeState.hour = (timeState.hour % 12) + 1; updateDigitalClock(); playTimeStep(true); } });
   timeNodes.hourDown.addEventListener("click", () => { if (!timeState.locked) { timeState.hour = ((timeState.hour + 10) % 12) + 1; updateDigitalClock(); playTimeStep(false); } });
-  timeNodes.minuteUp.addEventListener("click", () => { if (!timeState.locked) { timeState.minute = (timeState.minute + 15) % 60; updateDigitalClock(); playTimeStep(true); } });
-  timeNodes.minuteDown.addEventListener("click", () => { if (!timeState.locked) { timeState.minute = (timeState.minute + 45) % 60; updateDigitalClock(); playTimeStep(false); } });
+  timeNodes.minuteUp.addEventListener("click", () => { if (!timeState.locked) { timeState.minute = (timeState.minute + 5) % 60; updateDigitalClock(); playTimeStep(true); } });
+  timeNodes.minuteDown.addEventListener("click", () => { if (!timeState.locked) { timeState.minute = (timeState.minute + 55) % 60; updateDigitalClock(); playTimeStep(false); } });
   timeNodes.check.addEventListener("click", checkTimeSetter);
   document.getElementById("timeSetterExitButton").addEventListener("click", showLauncher);
   document.getElementById("timeSetterInlineExitButton").addEventListener("click", showLauncher);

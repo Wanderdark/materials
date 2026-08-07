@@ -1701,8 +1701,8 @@ students:
       scale: 3
       label: "average height"
       note: "Average height."
-    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length French bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images."
-    canonical_description: "Olivia has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses."
+    ai_character_card: "Olivia is a 12-year-old girl from the AdilHoca educational universe. She has a neat chin-length brown bob haircut that ends at jawline-to-chin level and does not reach her shoulders, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length brown bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images. Do not make her hair long or shoulder-length."
+    canonical_description: "Olivia has a neat chin-length brown bob haircut that ends at jawline-to-chin level and does not reach her shoulders, slightly thick eyebrows, and green eyes. She does not wear glasses."
     default_expression: "Curious creative smile."
     expression_note: "Bir seyi inceliyormus gibi. Gozleri merakli."
     signature_activity: "Photography"
@@ -1748,7 +1748,7 @@ students:
       friend_groups: [Creative, Art]
     hidden_lore:
       secret_crush: "none"
-    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly."
+    prompt_insert: "Olivia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has a neat chin-length brown bob haircut that ends at jawline-to-chin level and does not reach her shoulders, slightly thick eyebrows, green eyes, no glasses, and a curious creative smile with observant eyes. Preserve her face, chin-length bob hairstyle, hair color, eyebrow shape, eye color, age, and overall identity exactly. Do not make her hair long or shoulder-length."
 
   - id: VICTORIA
     name: "Victoria"

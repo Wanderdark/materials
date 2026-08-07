@@ -24,7 +24,7 @@
     playerProgress: $("playerProgress"), playerProgressBar: $("playerProgressBar"),
     playerTimeNow: $("playerTimeNow"), playerTimeTotal: $("playerTimeTotal"),
     playButton: $("playButton"), videoButton: $("videoButton"), micButton: $("micButton"), replayButton: $("replayButton"),
-    duringWordBank: $("duringWordBank"), lyricsBox: $("lyricsBox"),
+    duringWordBank: $("duringWordBank"), autofillButton: $("autofillButton"), lyricsBox: $("lyricsBox"),
     restartButton: $("restartButton"), libraryButton: $("libraryButton"), resetProgressButton: $("resetProgressButton"),
     menuReturnButton: $("menuReturnButton"), cornerMenuReturnButton: $("cornerMenuReturnButton"),
     completeSummary: $("completeSummary"),
@@ -538,6 +538,18 @@
     completeStage();
   }
 
+  function autofillLyrics() {
+    els.lyricsBox.querySelectorAll(".lyric-gap:not(.filled)").forEach((gap) => {
+      gap.textContent = gap.dataset.word;
+      gap.classList.add("filled", "auto-filled");
+    });
+    els.duringWordBank.classList.add("hidden");
+    els.autofillButton.disabled = true;
+    selectedChip = null;
+    completeStage();
+    updateStatus();
+  }
+
   function enterKaraokeAudio(src) {
     if (videoEl) { videoEl.pause(); videoEl.remove(); videoEl = null; }
     els.audio.pause();
@@ -899,6 +911,8 @@
 
     /* — Kelime bankası: 8 kelime + (varsa) sözlerde geçen ekstra boşluk kelimeleri — */
     els.duringWordBank.innerHTML = "";
+    els.duringWordBank.classList.remove("hidden");
+    els.autofillButton.disabled = false;
     const bankWords = song.words.map((w) => w.word);
     Object.keys(gapCount).forEach((w) => {
       if (!bankWords.some((b) => b.toLowerCase() === w)) bankWords.push(w);
@@ -968,6 +982,7 @@
     if (playerMode === "karaoke") switchToAudio();
     else if (karaokeSrc) enterKaraokeAudio(karaokeSrc);
   });
+  els.autofillButton.addEventListener("click", autofillLyrics);
   els.replayButton.addEventListener("click", () => { if (mediaEl) { mediaEl.currentTime = 0; mediaEl.play(); } });
   els.playerProgress.addEventListener("click", (ev) => {
     if (!mediaEl || !mediaEl.duration) return;

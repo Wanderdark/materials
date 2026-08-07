@@ -313,6 +313,17 @@
     state.selectedStudentId = "";
   }
 
+  function setActiveClassroom(classroomId) {
+    if (!state.classrooms.some((classroom) => classroom.id === classroomId)) return false;
+    if (state.activeClassroomId === classroomId) return true;
+    activateClassroom(classroomId);
+    resetRandomPool();
+    syncSelectedTrigger();
+    save({ deferPoints: true });
+    updateHud();
+    return true;
+  }
+
   let teacherToastLoadPromise = null;
 
   function loadTeacherToastManager() {
@@ -1938,6 +1949,7 @@
       }));
     },
     getActiveClassroomId: () => state.activeClassroomId,
+    setActiveClassroom,
     isCloudClassroomsEnabled: cloudClassroomsEnabled
   };
 
