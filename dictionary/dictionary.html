@@ -133,13 +133,10 @@
         originalImage = wordImage.getAttribute('src') || '';
         const imageName = word.toLocaleLowerCase('en-US').replace(/ı/g, 'i').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
         const grade = document.getElementById('grade')?.textContent.replace(/\D/g, '');
-        const unit = document.getElementById('unit')?.textContent.replace(/\D/g, '');
         exampleImagePath = '';
         exampleImageCandidates = imageName ? [
-          `images/${encodeURIComponent(`${imageName}-${grade}-${unit}`)}.webp`,
-          `images/${encodeURIComponent(`${imageName}-${grade}-${unit}`)}.png`,
-          `images/${encodeURIComponent(imageName)}.webp`,
-          `images/${encodeURIComponent(imageName)}.png`
+          `images/${encodeURIComponent(`${grade}_${imageName}`)}.webp`,
+          `images/${encodeURIComponent(`${grade}_${imageName}`)}.png`
         ] : [];
         exampleImage.disabled = true;
         exampleImage.title = 'Example image unavailable';

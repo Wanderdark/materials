@@ -8,6 +8,7 @@
   const exit = document.querySelector("#exit-game-button");
   const scoreboard = document.querySelector("#scoreboard");
   const roundProgress = document.querySelector(".round-progress");
+  const overrideReplay = document.querySelector("#override-replay-button");
   const leaderboard = document.querySelector("#auto-lb");
   const noSubtitles = document.querySelector("#no-subtitle-button span");
   const showSubtitles = document.querySelector("#show-subtitle-button span");
@@ -319,11 +320,11 @@
     document.body.classList.add("omm-landing-active");
     setup.classList.add("student-memory-setup");
     setup.insertAdjacentHTML("afterbegin", [
-      '<section class="omm-landing" aria-labelledby="omm-title"><div class="omm-landing-grid">',
+      '<section class="omm-landing" aria-labelledby="omm-title"><a class="omm-zone-back" href="../student-zone/" aria-label="Back to Student Zone">🔙</a><div class="omm-landing-grid">',
       '<div class="omm-landing-copy"><p class="eyebrow">ADILHOCA · STUDENT ZONE</p><h1 id="omm-title">OLIVIA’S MOVIE MEMORIES</h1>',
        '<div class="omm-actions"><button id="omm-watch-button" class="omm-action omm-action-primary" type="button"><span class="omm-action-icon" aria-hidden="true">▶</span><span><span class="omm-action-title">START A MEMORY JOURNEY</span><span class="omm-action-subtitle">Discover 10 memories in one journey</span></span><span class="omm-action-arrow" aria-hidden="true">→</span></button>',
       '<button id="omm-book-button" class="omm-action" type="button"><span class="omm-action-icon" aria-hidden="true">▤</span><span><span class="omm-action-title">MEMORY BOOK</span><span class="omm-action-subtitle">See the memories you unlocked</span></span><span class="omm-action-arrow" aria-hidden="true">→</span></button></div></div>',
-       '<div class="omm-hero"><img src="../images/thumbnails/olivias_movie_memories.webp" alt="Olivia looking through a glowing memory album"></div><section id="omm-daily-board" class="omm-daily-board" aria-label="Daily task board"></section></div></section>',
+       '<div class="omm-hero"><img src="assets/ui/olivia_magic_memories.webp" alt="Olivia looking through a glowing memory album"></div><section id="omm-daily-board" class="omm-daily-board" aria-label="Daily task board"></section></div></section>',
       '<section id="omm-book" class="omm-book" hidden role="dialog" aria-modal="true" aria-labelledby="omm-book-title"><div class="omm-book-card"><div class="omm-book-head"><div><p class="eyebrow">YOUR COLLECTION</p><h2 id="omm-book-title">MEMORY BOOK</h2><p id="omm-book-meta">0 memories unlocked</p></div><button class="omm-book-close" type="button" data-close-book aria-label="Close Memory Book">×</button></div><div class="omm-book-chapter-nav"><button type="button" data-chapter-scroll="-1" aria-label="Show previous themes">‹</button><div id="omm-book-chapters" class="omm-book-chapters" aria-label="Memory Book chapters"></div><button type="button" data-chapter-scroll="1" aria-label="Show next themes">›</button></div><div class="omm-book-stage"><div class="omm-book-page-title"><span id="omm-book-chapter">SCHOOL LIFE</span><small id="omm-book-page-number">PAGE 1 / 3</small></div><div id="omm-book-pages" class="omm-book-pages"></div><button class="omm-book-turn omm-book-turn-prev" type="button" data-book-prev aria-label="Previous book page">‹</button><button class="omm-book-turn omm-book-turn-next" type="button" data-book-next aria-label="Next book page">›</button></div></div></section>'
        ,'<section id="omm-viewer" class="omm-book omm-viewer" hidden role="dialog" aria-modal="true" aria-labelledby="omm-viewer-title"><div class="omm-book-card"><div class="omm-book-head"><div><p class="eyebrow">MEMORY REPLAY</p><h2 id="omm-viewer-title">WATCH THE MEMORY</h2></div><button class="omm-book-close" type="button" data-close-viewer aria-label="Close memory replay">×</button></div><video class="omm-viewer-video" controls playsinline></video><div class="omm-viewer-script"><span>FULL SCRIPT</span><p id="omm-viewer-script"></p></div></div></section>'
        ,'<section id="omm-journey-complete" class="omm-book omm-journey-complete" hidden role="dialog" aria-modal="true" aria-labelledby="omm-journey-title"><div class="omm-book-card"><p class="eyebrow">TODAY’S LISTENING SESSION</p><h2 id="omm-journey-title">MEMORY JOURNEY COMPLETE</h2><div id="omm-journey-stats" class="omm-journey-stats"></div><div class="omm-journey-actions"><button type="button" class="omm-action omm-action-primary" data-open-book-from-result><span class="omm-action-icon">▤</span><span><span class="omm-action-title">OPEN MEMORY BOOK</span><span class="omm-action-subtitle">See today’s unlocked memories</span></span><span class="omm-action-arrow">→</span></button><button type="button" class="omm-action" data-back-student-zone><span class="omm-action-icon">←</span><span><span class="omm-action-title">BACK TO STUDENT ZONE</span><span class="omm-action-subtitle">Return to your activities</span></span><span class="omm-action-arrow">→</span></button></div></div></section>'
@@ -335,6 +336,7 @@
   if (start) start.innerHTML = 'START A MEMORY JOURNEY <span>→</span>';
   if (exit) exit.title = "Back to Olivia's Movie Memories";
   if (scoreboard) scoreboard.hidden = true;
+  if (overrideReplay) overrideReplay.hidden = true;
   if (scoreboard) {
     new MutationObserver(() => {
       const day = readJourneyDay();

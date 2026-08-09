@@ -286,10 +286,8 @@
     const stem = exampleImageStem(record[2]);
     const imageRoot = "../dictionary/images/";
     const candidates = [
-      `${imageRoot}${stem}-${record[3]}-${record[5]}.webp`,
-      `${imageRoot}${stem}-${record[3]}-${record[5]}.png`,
-      `${imageRoot}${stem}.webp`,
-      `${imageRoot}${stem}.png`
+      `${imageRoot}${record[3]}_${stem}.webp`,
+      `${imageRoot}${record[3]}_${stem}.png`
     ];
     const findExampleImage = (index = 0) => {
       if (state.pool[state.index] !== record || index >= candidates.length) return;

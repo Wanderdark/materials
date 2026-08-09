@@ -263,6 +263,7 @@ students:
         name: "Amina"
         nationality: "Kenyan"
         job: "Veterinarian"
+        hobby: "Gardening"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "warm brown"
@@ -281,6 +282,7 @@ students:
         name: "David"
         nationality: "Kenyan"
         job: "Wildlife Photographer"
+        hobby: "Hiking"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "deep brown"
@@ -342,6 +344,7 @@ students:
       best_friend: "Benjamin"
       reason: "Environmental Club, nature, animals, calm personalities, and spending time outdoors together."
       good_friends: [Emma, Hannah, Jack]
+      close_friends: [Benjamin, Emma, Hannah, Jack]
       friend_groups: [Animal Care, Nature]
     hidden_lore:
       secret_crush: "none"
@@ -369,6 +372,7 @@ students:
         name: "Emily"
         nationality: "Danish"
         job: "Travel Agent"
+        hobby: "Taking photos"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a soft warm undertone"
@@ -387,6 +391,7 @@ students:
         name: "Oliver"
         nationality: "Danish"
         job: "Swimming Coach"
+        hobby: "Cycling"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light sun-kissed tone"
@@ -449,6 +454,7 @@ students:
       best_friend: "Jack"
       reason: "Fishing, nature, camping, and relaxed personalities."
       good_friends: [Ava, David, Hannah]
+      close_friends: [Jack, Ava, David, Hannah]
       friend_groups: [Outdoor, Nature]
     hidden_lore:
       secret_crush: "Ava"
@@ -476,6 +482,7 @@ students:
         name: "Camille"
         nationality: "French"
         job: "Baker"
+        hobby: "Gardening / growing flowers"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a rosy warm undertone"
@@ -494,6 +501,7 @@ students:
         name: "Julien"
         nationality: "French"
         job: "Interior Designer"
+        hobby: "Visiting museums"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair neutral undertone"
@@ -556,6 +564,7 @@ students:
       best_friend: "Emma"
       reason: "Chloe and Emma are canon best friends."
       good_friends: [Olivia, Ella, Mia]
+      close_friends: [Emma, Olivia, Ella, Mia]
       friend_groups: [Creative, Emotional Support]
     hidden_lore:
       secret_crush: "none"
@@ -583,6 +592,7 @@ students:
         name: "Elena"
         nationality: "Spanish"
         job: "Drama Teacher"
+        hobby: "Singing songs"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "warm olive"
@@ -601,6 +611,7 @@ students:
         name: "Javier"
         nationality: "Spanish"
         job: "Mechanic"
+        hobby: "Fishing"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "warm tan olive"
@@ -664,6 +675,7 @@ students:
       best_friend: "Lucas"
       reason: "Both are sporty, energetic, competitive, and adventurous."
       good_friends: [Jack, Hannah, Chloe]
+      close_friends: [Lucas, Hannah, Jack, Chloe]
       friend_groups: [Sports, Adventure]
     hidden_lore:
       secret_crush: "Chloe"
@@ -691,6 +703,7 @@ students:
         name: "Valeria"
         nationality: "Mexican"
         job: "Hotel Manager"
+        hobby: "Dancing"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "warm medium tan"
@@ -772,6 +785,7 @@ students:
       best_friend: "Benjamin"
       reason: "Family-oriented boys who both connect through beach and travel themes."
       good_friends: [Jack, Ava]
+      close_friends: [Benjamin, Ava, Jack, Olivia]
       friend_groups: [Family, Travel]
     hidden_lore:
       secret_crush: "none"
@@ -799,6 +813,7 @@ students:
         name: "Charlotte"
         nationality: "Australian"
         job: "Music Teacher"
+        hobby: "Playing piano"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a warm peach undertone"
@@ -817,6 +832,7 @@ students:
         name: "Liam"
         nationality: "Australian"
         job: "Radio Presenter"
+        hobby: "Listening to music / collecting records"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light sun-kissed tone"
@@ -880,6 +896,7 @@ students:
       best_friend: "Olivia"
       reason: "Music and art."
       good_friends: [Chloe, Emma]
+      close_friends: [Olivia, Chloe, Emma, Hannah]
       friend_groups: [Music, Creative]
     hidden_lore:
       secret_crush: "none"
@@ -907,6 +924,7 @@ students:
         name: "Sophie"
         nationality: "Canadian"
         job: "Nurse"
+        hobby: "Gardening"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a soft neutral undertone"
@@ -925,6 +943,7 @@ students:
         name: "Haruto"
         nationality: "Japanese"
         job: "School Principal"
+        hobby: "Playing board games"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "light-medium warm beige"
@@ -987,6 +1006,7 @@ students:
       best_friend: "Chloe"
       reason: "Emma and Chloe are canon best friends."
       good_friends: [Hannah, Ava, Olivia, Ethan]
+      close_friends: [Chloe, Hannah, Ava, Olivia]
       friend_groups: [Creative, Leaders, STEM]
     hidden_lore:
       secret_crush: "Ethan"
@@ -1014,6 +1034,7 @@ students:
         name: "Elizabeth"
         nationality: "British"
         job: "Architect"
+        hobby: "Painting / sketching"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a cool neutral undertone"
@@ -1032,6 +1053,7 @@ students:
         name: "James"
         nationality: "British"
         job: "Engineer"
+        hobby: "Playing golf"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light warm undertone"
@@ -1093,6 +1115,7 @@ students:
       best_friend: "Victoria"
       reason: "Logic, focused study habits, and STEM interests."
       good_friends: [Noah, Emma, Olivia]
+      close_friends: [Victoria, Noah, Emma, Olivia]
       friend_groups: [Academic, STEM]
     hidden_lore:
       secret_crush: "none"
@@ -1120,6 +1143,7 @@ students:
         name: "Ingrid"
         nationality: "Norwegian"
         job: "Waiter"
+        hobby: "Barbecue / outdoor cooking"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a cool rosy undertone"
@@ -1138,6 +1162,7 @@ students:
         name: "Lars"
         nationality: "Norwegian"
         job: "Camping Store Owner"
+        hobby: "Hiking"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light weathered outdoor tone"
@@ -1203,6 +1228,7 @@ students:
       best_friend: "Emma"
       reason: "Outdoor energy with a social personality."
       good_friends: [Jack, Benjamin, Ava, Daniel]
+      close_friends: [Emma, Jack, Benjamin, Daniel]
       friend_groups: [Outdoor, Adventure]
     hidden_lore:
       secret_crush: "none"
@@ -1230,6 +1256,7 @@ students:
         name: "Isla"
         nationality: "Scottish"
         job: "Postman"
+        hobby: "Gardening"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a light freckled warm undertone"
@@ -1248,6 +1275,7 @@ students:
         name: "Callum"
         nationality: "Scottish"
         job: "Farmer"
+        hobby: "Fishing"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a weathered outdoor tone"
@@ -1309,6 +1337,7 @@ students:
       best_friend: "Benjamin"
       reason: "Outdoor bros."
       good_friends: [Hannah, Daniel, David, Ava]
+      close_friends: [Benjamin, Hannah, Daniel, David]
       friend_groups: [Outdoor, Practical]
     hidden_lore:
       secret_crush: "Hannah"
@@ -1336,6 +1365,7 @@ students:
         name: "Jessica"
         nationality: "American"
         job: "Police Officer"
+        hobby: "Running"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "medium warm tan"
@@ -1354,6 +1384,7 @@ students:
         name: "Gabriel"
         nationality: "Brazilian"
         job: "Firefighter"
+        hobby: "Barbecue"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "medium brown"
@@ -1415,6 +1446,7 @@ students:
       best_friend: "Daniel"
       reason: "Sports, competition, and adventure."
       good_friends: [Jack, Hannah]
+      close_friends: [Daniel, Jack, Hannah, Ethan]
       friend_groups: [Sports, Competition]
     hidden_lore:
       secret_crush: "none"
@@ -1442,6 +1474,7 @@ students:
         name: "Giulia"
         nationality: "Italian"
         job: "Chef"
+        hobby: "Reading books"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair olive"
@@ -1460,6 +1493,7 @@ students:
         name: "Fırat"
         nationality: "Turkish"
         job: "English Teacher"
+        hobby: "Cycling"
         visual_identity:
           age_range: "late 40s"
           skin_tone: "esmer / warm medium brown"
@@ -1528,6 +1562,7 @@ students:
       best_friend: "Zoe"
       reason: "Both are quiet and reflective."
       good_friends: [Chloe, Victoria]
+      close_friends: [Zoe, Chloe, Victoria, Noah]
       friend_groups: [Quiet, Creative]
     hidden_lore:
       secret_crush: "Noah"
@@ -1555,6 +1590,7 @@ students:
         name: "Katharina"
         nationality: "German"
         job: "Doctor"
+        hobby: "Gardening"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a cool neutral undertone"
@@ -1570,9 +1606,10 @@ students:
           dna_cues_from_child: ["green eyes", "logical calm", "organized presence", "thoughtful facial focus"]
           prompt_insert: "Katharina, Noah's mother, is a German doctor in her late 30s. She has fair cool neutral-toned skin, short straight light-brown hair neatly tucked behind the ears, green calm intelligent eyes, and a narrow oval face with a precise reassuring expression. She should feel believably related to Noah through similar green eyes, logical calm, organized presence, and thoughtful facial focus. She wears a clean doctor coat over simple professional clothes with subtle medical details such as a stethoscope, doctor badge, or small medical notebook. Preserve her distinct identity as Noah's mother; do not make her look like a generic adult."
       father:
-        name: "Ethan"
+        name: "Victor"
         nationality: "Canadian"
         job: "Dentist"
+        hobby: "Doing puzzles"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light warm undertone"
@@ -1586,7 +1623,7 @@ students:
           clothing_style: "dentist coat or neat clinic shirt"
           professional_visual_cues: ["dental mask around neck", "dental clipboard", "small mirror tool"]
           dna_cues_from_child: ["short straight brown hair", "thoughtful neutral expression", "organized academic presence", "careful attention to detail"]
-          prompt_insert: "Ethan, Noah's father, is a Canadian dentist in his early 40s. He has fair light warm-toned skin, short straight brown hair neatly combed, green-brown careful eyes, and a soft rectangular-oval face with a gentle precise smile. He should feel believably related to Noah through similar short straight brown hair, thoughtful neutral expression, organized academic presence, and careful attention to detail. He wears a dentist coat or neat clinic shirt with subtle dental details such as a dental mask around his neck, a clipboard, or a small mirror tool. Preserve his distinct identity as Noah's father; do not make him look like a generic adult."
+          prompt_insert: "Victor, Noah's father, is a Canadian dentist in his early 40s. He has fair light warm-toned skin, short straight brown hair neatly combed, green-brown careful eyes, and a soft rectangular-oval face with a gentle precise smile. He should feel believably related to Noah through similar short straight brown hair, thoughtful neutral expression, organized academic presence, and careful attention to detail. He wears a dentist coat or neat clinic shirt with subtle dental details such as a dental mask around his neck, a clipboard, or a small mirror tool. Preserve his distinct identity as Noah's father; do not make him look like a generic adult."
     pet: {has_pet: false}
     relative_height:
       scale: 1
@@ -1635,6 +1672,7 @@ students:
       best_friend: "Victoria"
       reason: "Canonical chess duo."
       good_friends: [Ethan, Mia]
+      close_friends: [Victoria, Ethan, Mia, Zoe]
       friend_groups: [Academic, STEM]
     hidden_lore:
       secret_crush: "none"
@@ -1662,6 +1700,7 @@ students:
         name: "Fiona"
         nationality: "Irish"
         job: "Hairdresser"
+        hobby: "Watching films"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a soft rosy undertone"
@@ -1745,6 +1784,7 @@ students:
       best_friend: "Ella"
       reason: "Music and art."
       good_friends: [Chloe, Victoria, Emma]
+      close_friends: [Ella, Chloe, Victoria, Emma]
       friend_groups: [Creative, Art]
     hidden_lore:
       secret_crush: "none"
@@ -1772,6 +1812,7 @@ students:
         name: "Monica"
         nationality: "British"
         job: "Lawyer"
+        hobby: "Reading books"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "fair with a cool undertone"
@@ -1791,6 +1832,7 @@ students:
         name: "Arthur"
         nationality: "British"
         job: "Bus Driver"
+        hobby: "Playing board games"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "fair with a light warm undertone"
@@ -1854,6 +1896,7 @@ students:
       best_friend: "Noah"
       reason: "Canonical chess duo."
       good_friends: [Olivia, Ethan, Mia]
+      close_friends: [Noah, Ethan, Olivia, Mia]
       friend_groups: [STEM, Strategy]
     hidden_lore:
       secret_crush: "none"
@@ -1881,6 +1924,7 @@ students:
         name: "Eleni"
         nationality: "Greek"
         job: "Saleswoman"
+        hobby: "Cooking"
         visual_identity:
           age_range: "late 30s"
           skin_tone: "warm olive"
@@ -1899,6 +1943,7 @@ students:
         name: "Nikos"
         nationality: "Greek"
         job: "Salesman"
+        hobby: "Stargazing"
         visual_identity:
           age_range: "early 40s"
           skin_tone: "warm tan olive"
@@ -1960,6 +2005,7 @@ students:
       best_friend: "Mia"
       reason: "Both are quiet and reflective."
       good_friends: [Victoria, Chloe]
+      close_friends: [Mia, Victoria, Chloe, Ava]
       friend_groups: [Quiet, Nature]
     hidden_lore:
       secret_crush: "none"

@@ -13,18 +13,26 @@ function createRandomItemPicker(items) {
   if (window.__oliviasMovieMemoriesStudentMode) {
     const storageKey = "oliviasMovieMemoriesWatchedV1";
     const playable = getPlayableItems(items);
+    const shuffle = (list) => {
+      const shuffled = [...list];
+      for (let index = shuffled.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+      }
+      return shuffled;
+    };
     let watched = new Set();
     try { watched = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]")); } catch (_) {}
     if (playable.length && playable.every((item) => watched.has(item.id))) {
       watched.clear();
       localStorage.removeItem(storageKey);
     }
-    let pool = playable.filter((item) => !watched.has(item.id));
+    let pool = shuffle(playable.filter((item) => !watched.has(item.id)));
     const pick = () => {
       if (!pool.length) {
         watched.clear();
         localStorage.removeItem(storageKey);
-        pool = [...playable];
+        pool = shuffle(playable);
       }
       const item = pool.pop() || null;
       if (item) {

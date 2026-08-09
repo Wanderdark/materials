@@ -106,10 +106,8 @@
     const imageRoot = "../dictionary/images/";
     exampleImageUrl = "";
     exampleImageCandidates = [
-      `${imageRoot}${imageName}-${record.grade}-${record.unit}.webp`,
-      `${imageRoot}${imageName}-${record.grade}-${record.unit}.png`,
-      `${imageRoot}${imageName}.webp`,
-      `${imageRoot}${imageName}.png`
+      `${imageRoot}${record.grade}_${imageName}.webp`,
+      `${imageRoot}${record.grade}_${imageName}.png`
     ];
     word.textContent = record.word;
     grade.textContent = `Grade ${record.grade}`;

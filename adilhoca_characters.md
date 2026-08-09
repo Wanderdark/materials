@@ -111,6 +111,10 @@ Hobbies:
 - Loves: taking care of animals
 - Likes: birdwatching
 
+Parent Hobbies:
+- Amina (mother): Gardening
+- David (father): Hiking
+
 General Interests:
 - Gardening
 - Nature walks
@@ -144,6 +148,7 @@ Relationships:
 - Best friend: Benjamin
 - Relationship reason: Environmental Club, nature, animals, calm personalities, and spending time outdoors together.
 - Good friends: Emma, Hannah, Jack
+- Close friends: Benjamin, Emma, Hannah, Jack
 
 Hidden lore:
 secret_crush: none
@@ -178,6 +183,10 @@ Hobbies:
 - Loves: riding his scooter
 - Likes: skateboarding
 
+Parent Hobbies:
+- Emily (mother): Taking photos
+- Oliver (father): Cycling
+
 General Interests:
 - Reading books
 - Beach holidays
@@ -211,6 +220,7 @@ Relationships:
 - Best friend: Jack
 - Relationship reason: Fishing, nature, camping, and relaxed personalities.
 - Good friends: Ava, David, Hannah
+- Close friends: Jack, Ava, David, Hannah
 
 Hidden lore:
 secret_crush: Ava
@@ -245,6 +255,10 @@ Hobbies:
 - Loves: dancing
 - Likes: playing the piano
 
+Parent Hobbies:
+- Camille (mother): Gardening / growing flowers
+- Julien (father): Visiting museums
+
 General Interests:
 - Drama
 - Pottery
@@ -278,6 +292,7 @@ Relationships:
 - Best friend: Emma
 - Relationship reason: Chloe and Emma are canon best friends.
 - Good friends: Olivia, Ella, Mia
+- Close friends: Emma, Olivia, Ella, Mia
 
 Hidden lore:
 secret_crush: none
@@ -308,6 +323,10 @@ Riding an Electric Scooter.
 Hobbies:
 - Loves: skiing, snowboarding
 - Likes: playing basketball, playing table tennis
+
+Parent Hobbies:
+- Elena (mother): Singing songs
+- Javier (father): Fishing
 
 General Interests:
 - Football
@@ -343,6 +362,7 @@ Relationships:
 - Best friend: Lucas
 - Relationship reason: Both are sporty, energetic, competitive, and adventurous.
 - Good friends: Jack, Hannah, Chloe
+- Close friends: Lucas, Hannah, Jack, Chloe
 
 Hidden lore:
 secret_crush: Chloe
@@ -373,6 +393,9 @@ Family Holidays.
 Hobbies:
 - Loves: travelling
 - Likes: camping
+
+Parent Hobbies:
+- Valeria (mother): Dancing
 
 General Interests:
 - Beach activities
@@ -407,6 +430,7 @@ Relationships:
 - Best friend: Benjamin
 - Relationship reason: Family-oriented boys who both connect through beach and travel themes.
 - Good friends: Jack, Ava
+- Close friends: Benjamin, Ava, Jack, Olivia
 
 Hidden lore:
 secret_crush: none
@@ -440,6 +464,10 @@ Singing.
 Hobbies:
 - Loves: singing
 - Likes: drawing
+
+Parent Hobbies:
+- Charlotte (mother): Playing piano
+- Liam (father): Listening to music / collecting records
 
 General Interests:
 - Music
@@ -477,6 +505,7 @@ Relationships:
 - Best friend: Olivia
 - Relationship reason: Music and art.
 - Good friends: Chloe, Emma
+- Close friends: Olivia, Chloe, Emma, Hannah
 
 Hidden lore:
 secret_crush: none
@@ -507,6 +536,10 @@ Helping Others.
 Hobbies:
 - Loves: cooking
 - Likes: baking, doing science experiments
+
+Parent Hobbies:
+- Sophie (mother): Gardening
+- Haruto (father): Playing board games
 
 General Interests:
 - Organizing events
@@ -545,6 +578,7 @@ Relationships:
 - Relationship reason: Emma and Chloe are canon best friends.
 - Good friends: Hannah, Ava, Olivia, Ethan
 - Friend groups: Creative, Leaders, STEM
+- Close friends: Chloe, Hannah, Ava, Olivia
 
 Hidden lore:
 secret_crush: Ethan
@@ -575,6 +609,10 @@ Playing Golf.
 Hobbies:
 - Loves: playing the violin
 - Likes: listening to classical music
+
+Parent Hobbies:
+- Elizabeth (mother): Painting / sketching
+- James (father): Playing golf
 
 General Interests:
 - Violin
@@ -609,6 +647,7 @@ Relationships:
 - Best friend: Victoria
 - Relationship reason: Logic, focused study habits, and STEM interests.
 - Good friends: Noah, Emma, Olivia
+- Close friends: Victoria, Noah, Emma, Olivia
 
 Hidden lore:
 secret_crush: none
@@ -648,6 +687,10 @@ Hobbies:
 - Loves: cycling
 - Likes: hiking
 
+Parent Hobbies:
+- Ingrid (mother): Barbecue / outdoor cooking
+- Lars (father): Hiking
+
 General Interests:
 - Camping
 - Barbecue
@@ -682,6 +725,7 @@ Relationships:
 - Best friend: Emma
 - Relationship reason: Outdoor energy with a social personality.
 - Good friends: Jack, Benjamin, Ava, Daniel
+- Close friends: Emma, Jack, Benjamin, Daniel
 
 Hidden lore:
 secret_crush: none
@@ -712,6 +756,10 @@ Fishing.
 Hobbies:
 - Loves: gardening
 - Likes: hiking
+
+Parent Hobbies:
+- Isla (mother): Gardening
+- Callum (father): Fishing
 
 General Interests:
 - Football
@@ -746,6 +794,7 @@ Relationships:
 - Best friend: Benjamin
 - Relationship reason: Outdoor bros.
 - Good friends: Hannah, Daniel, David, Ava
+- Close friends: Benjamin, Hannah, Daniel, David
 
 Hidden lore:
 secret_crush: Hannah
@@ -776,6 +825,10 @@ Playing Football.
 Hobbies:
 - Loves: playing football
 - Likes: swimming
+
+Parent Hobbies:
+- Jessica (mother): Running
+- Gabriel (father): Barbecue
 
 General Interests:
 - Basketball
@@ -810,6 +863,7 @@ Relationships:
 - Best friend: Daniel
 - Relationship reason: Sports, competition, and adventure.
 - Good friends: Jack, Hannah
+- Close friends: Daniel, Jack, Hannah, Ethan
 
 Hidden lore:
 secret_crush: none
@@ -849,6 +903,10 @@ Hobbies:
 - Loves: writing in her diary
 - Likes: reading books
 
+Parent Hobbies:
+- Giulia (mother): Reading books
+- Fırat (father): Cycling
+
 General Interests:
 - Reading novels
 - School newspaper
@@ -882,6 +940,7 @@ Relationships:
 - Best friend: Zoe
 - Relationship reason: Both are quiet and reflective.
 - Good friends: Chloe, Victoria
+- Close friends: Zoe, Chloe, Victoria, Noah
 
 Hidden lore:
 secret_crush: Noah
@@ -916,6 +975,10 @@ Hobbies:
 - Loves: studying
 - Likes: playing chess
 
+Parent Hobbies:
+- Katharina (mother): Gardening
+- Victor (father): Doing puzzles
+
 General Interests:
 - Homework
 - Reading
@@ -949,6 +1012,7 @@ Relationships:
 - Best friend: Victoria
 - Relationship reason: Canonical chess duo.
 - Good friends: Ethan, Mia
+- Close friends: Victoria, Ethan, Mia, Zoe
 
 Hidden lore:
 secret_crush: none
@@ -979,6 +1043,9 @@ Photography.
 Hobbies:
 - Loves: taking photos
 - Likes: painting, going to cinema, watching movies
+
+Parent Hobbies:
+- Fiona (mother): Watching films
 
 General Interests:
 - Piano
@@ -1015,6 +1082,7 @@ Relationships:
 - Best friend: Ella
 - Relationship reason: Music and art.
 - Good friends: Chloe, Victoria, Emma
+- Close friends: Ella, Chloe, Victoria, Emma
 
 Hidden lore:
 secret_crush: none
@@ -1049,6 +1117,10 @@ Hobbies:
 - Loves: coding
 - Likes: solving puzzles
 
+Parent Hobbies:
+- Monica (mother): Reading books
+- Arthur (father): Playing board games
+
 General Interests:
 - Robotics
 - Chess
@@ -1082,6 +1154,7 @@ Relationships:
 - Best friend: Noah
 - Relationship reason: Canonical chess duo.
 - Good friends: Olivia, Ethan, Mia
+- Close friends: Noah, Ethan, Olivia, Mia
 
 Hidden lore:
 secret_crush: none
@@ -1112,6 +1185,10 @@ Crossword Puzzles.
 Hobbies:
 - Loves: solving crossword puzzles
 - Likes: stargazing
+
+Parent Hobbies:
+- Eleni (mother): Cooking
+- Nikos (father): Stargazing
 
 General Interests:
 - Reading
@@ -1146,6 +1223,7 @@ Relationships:
 - Best friend: Mia
 - Relationship reason: Both are quiet and reflective.
 - Good friends: Victoria, Chloe
+- Close friends: Mia, Victoria, Chloe, Ava
 
 Hidden lore:
 secret_crush: none

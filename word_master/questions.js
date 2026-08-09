@@ -651,7 +651,7 @@ const QUESTIONS = [
 
 // ─── GRADE 6 THEME 1 YENİ MÜFREDAT ───────────────────────────────────────────────
 ["Earlier than something else in time.","Zamanlama olarak başka bir şeyden önce.","BEFORE",6,2,1,"../images/8/3/53.webp",[],"ÖNCE","Wash your hands before lunch.","Öğle yemeğinden önce ellerini yıka."],
-["A special day with fun activities","Festival","FESTIVAL",6,1,1,"../images/5/1/30.webp",[],"FESTİVAL","Ella sang at the school festival.","Ella okul festivalinde şarkı söyledi."],
+["A special day with fun activities","Festival","FESTIVAL",6,1,1,"../images/5/1/30.webp",[],"FESTİVAL","Ella sang a song at the festival ceremony.","Ella okul bayram töreninde şarkı söyledi."],
 ["English definition","Turkish definition","PACK",6,2,1,"../images/5/8/13.webp",[],"PAKETLEMEK","Benjamin packed his school bag carefully.","Benjamin okul çantasını dikkatlice hazırladı."],
 ["Go after someone","Birinin arkasından gitmek","FOLLOW",6,2,1,"../images/5/2/43.webp",[],"TAKİP ETMEK","Please follow your teacher's instructions.","Lütfen öğretmeninizin talimatlarını takip edin."],
 ["In a careful way","Dikkatli bir şekilde","CAREFULLY",6,3,1,"../images/5/2/39.webp",[],"DİKKATLİCE","Mia read the questions carefully.","Mia soruları dikkatlice okudu."],
