@@ -21,7 +21,6 @@ function hasCompleteEvidence(question) {
 }
 
 function getEvidenceLine(question) {
-  if (question?.evidenceStart == null && question?.evidenceEnd == null) return String(question?.transcript || "");
   if (question?.evidenceSentence != null) return String(question.evidenceSentence);
   return String(question?.transcript || "");
 }

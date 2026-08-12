@@ -73,6 +73,10 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .song-card .cover-note, .song-card-body span { color: var(--tone); }
 .song-card .song-cover .cover-note { color: rgba(3, 9, 27, .82); }
 .song-card:hover { border-color: var(--tone); box-shadow: 0 0 26px color-mix(in srgb, var(--tone) 34%, transparent); }
+.artist-spotify-button { position: absolute; right: 16px; bottom: 16px; z-index: 3; display: inline-flex; transition: transform .14s ease, filter .14s ease; }
+.artist-spotify-button img { display: block; height: 38px; width: auto; }
+.artist-spotify-button span { padding: 6px 10px; border: 1px solid #1ed760; border-radius: 999px; color: #1ed760; background: rgba(3,9,27,.88); font-size: 10px; font-weight: 900; letter-spacing: .08em; white-space: nowrap; }
+.artist-spotify-button:hover { transform: translateY(-1px); filter: brightness(1.12); }
 
 /* ═══ ACTIVITY SHELL ═══ */
 .activity-screen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 18px; height: calc(100vh - 52px); }
@@ -144,6 +148,10 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .player-meta { display: grid; gap: 2px; }
 .player-song-title { margin: 0; font-family: var(--display); font-size: clamp(24px, 2.2vw, 34px); font-weight: 800; letter-spacing: .04em; line-height: 1; }
 .player-song-artist { margin: 0; color: var(--muted); font-weight: 700; font-size: 14px; }
+.spotify-button { justify-self: start; display: inline-flex; margin-top: 6px; color: #1ed760; text-decoration: none; transition: transform .14s ease, filter .14s ease; }
+.spotify-button img { display: block; height: 34px; width: auto; }
+.spotify-button span { padding: 6px 10px; border: 1px solid #1ed760; border-radius: 999px; background: rgba(30,215,96,.1); font-size: 10px; font-weight: 900; letter-spacing: .08em; }
+.spotify-button:hover { transform: translateY(-1px); filter: brightness(1.12); }
 .player-progress { position: relative; height: 10px; border-radius: 99px; background: #1b2d57; cursor: pointer; overflow: hidden; }
 .player-progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5478ff, var(--yellow)); }
 .player-time { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; }

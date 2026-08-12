@@ -24,6 +24,7 @@
             "ozel/klasor/video.mp4" — o zaman otomatik aramayı atlar
             ve direkt bu yolu kullanır.
    image  : şarkı kapak görseli, ör. "images/kapak.webp" — yoksa: null
+   spotify : Spotify şarkı adresi, ör. "https://open.spotify.com/track/..." — yoksa: ""
 
    videoclose : (isteğe bağlı) ör. "3:20" — video veya karaoke oynarken
             bu saniyeye gelinince video otomatik kapanır, ekranda
@@ -124,6 +125,7 @@ window.SONGS = [
     audio: "songs/learningtogether.mp3",
     video: null,
     image: "thumbnails/learningtogether.webp",
+    spotify: "https://open.spotify.com/track/5iegMmeMo4dnq0KsaSKFgC",
     videoclose: null,
     zoomfactor: true,
     zoomgap: 8,
@@ -216,6 +218,7 @@ window.SONGS = [
     audio: "songs/sidebyside.mp3",
     video: null,
     image: "thumbnails/sidebyside.webp",
+    spotify: "https://open.spotify.com/track/5SO7bP1vjAX70oZ5DMlDKc",
     videoclose: null,
     zoomfactor: true,
     zoomgap: 8,
@@ -312,6 +315,7 @@ window.SONGS = [
     audio: "songs/inmyownway.mp3",
     video: null,
     image: "thumbnails/inmyownway.webp",
+    spotify: "https://open.spotify.com/track/4frUoNmfs5j7BnlDsZXggt",
     videoclose: null,
     zoomfactor: true,
     zoomgap: 8,
@@ -400,6 +404,7 @@ window.SONGS = [
     audio: "songs/ashorrain.mp3",
     video: null,
     image: "thumbnails/ashorrain.webp",
+    spotify: "https://open.spotify.com/track/5vGBSL2Oqit2tb9Y84bT9N",
     videoclose: null,
     zoomfactor: true,
     zoomgap: 8,
@@ -479,7 +484,7 @@ window.SONGS = [
 
   },
 
-/* ── ŞARKI 4 — ASH OR RAIN - ELLA ───────────────────────────────────── */
+/* ── ŞARKI 5 — THE PRICE YOU NEVER PAY - ELLA ───────────────────────────────────── */
   {
     id: "thepriceyouneverpay",
     title: "The Price you never pay",
@@ -487,6 +492,7 @@ window.SONGS = [
     audio: "songs/thepriceyouneverpay.mp3",
     video: null,
     image: "thumbnails/thepriceyouneverpay.webp",
+    spotify: "https://open.spotify.com/track/2bI8TPvYhZyeoHrUwxJvhH",
     videoclose: null,
     zoomfactor: true,
     zoomgap: 8,

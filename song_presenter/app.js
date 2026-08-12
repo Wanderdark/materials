@@ -9,6 +9,9 @@
 
   /* ── DOM kısayolu ── */
   const $ = (id) => document.getElementById(id);
+  const ARTIST_SPOTIFY = {
+    Ella: "https://open.spotify.com/artist/5bMPXxCpR4PFSQSHzu0BLK"
+  };
 
   const els = {
     library: $("libraryScreen"), activity: $("activityScreen"), complete: $("completeScreen"),
@@ -20,7 +23,7 @@
     stages: [$("preStage"), $("duringStage")],
     prevButton: $("prevStageButton"), nextButton: $("nextStageButton"), stageStatus: $("stageStatus"),
     preWordBank: $("preWordBank"), preImageGrid: $("preImageGrid"),
-    playerVisual: $("playerVisual"), playerTitle: $("playerSongTitle"), playerArtist: $("playerSongArtist"),
+    playerVisual: $("playerVisual"), playerTitle: $("playerSongTitle"), playerArtist: $("playerSongArtist"), spotifyButton: $("spotifyButton"),
     playerProgress: $("playerProgress"), playerProgressBar: $("playerProgressBar"),
     playerTimeNow: $("playerTimeNow"), playerTimeTotal: $("playerTimeTotal"),
     playButton: $("playButton"), videoButton: $("videoButton"), micButton: $("micButton"), replayButton: $("replayButton"),
@@ -243,9 +246,10 @@
   }
 
   function addArtistCard(artist, list) {
-    const card = document.createElement("button");
+    const card = document.createElement("div");
     card.className = "song-card artist-card";
-    card.type = "button";
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
     const artistCover = window.ARTIST_COVERS?.[artist];
     const withImage = list.find((s) => s.image);
     const cover = artistCover
@@ -253,16 +257,30 @@
       : withImage
       ? `<img src="${withImage.image}" alt="${artist}">`
       : `<span class="cover-note">♪♫</span>`;
+    const spotifyUrl = ARTIST_SPOTIFY[artist];
+    const spotifyLink = spotifyUrl
+      ? `<a class="artist-spotify-button" href="${spotifyUrl}" target="_blank" rel="noopener noreferrer" aria-label="Listen to ${artist} on Spotify">
+          <img src="thumbnails/spotify.webp" alt="" onerror="this.nextElementSibling.hidden = false; this.remove();">
+          <span hidden>LISTEN ON SPOTIFY</span>
+        </a>`
+      : "";
     card.innerHTML = `
       <div class="song-cover">${cover}<span class="artist-count">${list.length} SONGS</span></div>
       <div class="song-card-body">
         <span>ARTIST</span>
         <strong>${artist}</strong>
-      </div>`;
-    card.addEventListener("click", () => {
+      </div>${spotifyLink}`;
+    card.addEventListener("click", (event) => {
+      if (event.target.closest(".artist-spotify-button")) return;
       if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
       artistFilter = artist;
       renderLibrary();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.target.closest(".artist-spotify-button")) return;
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      card.click();
     });
     els.songGrid.appendChild(card);
   }
@@ -757,6 +775,10 @@
     /* — Player — */
     els.playerTitle.textContent = song.title;
     els.playerArtist.textContent = song.artist || "";
+    const spotifyUrl = typeof song.spotify === "string" ? song.spotify.trim() : "";
+    els.spotifyButton.classList.toggle("hidden", !spotifyUrl);
+    if (spotifyUrl) els.spotifyButton.href = spotifyUrl;
+    else els.spotifyButton.removeAttribute("href");
     if (videoEl) { videoEl.pause(); videoEl.remove(); videoEl = null; }
     playerMode = "audio";
     videoIsSource = false;

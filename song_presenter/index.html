@@ -70,6 +70,10 @@
             <div class="player-meta">
               <p id="playerSongTitle" class="player-song-title"></p>
               <p id="playerSongArtist" class="player-song-artist"></p>
+              <a id="spotifyButton" class="spotify-button hidden" target="_blank" rel="noopener noreferrer">
+                <img src="thumbnails/spotify.webp" alt="Listen on Spotify" onerror="this.nextElementSibling.hidden = false; this.remove();">
+                <span hidden>LISTEN ON SPOTIFY</span>
+              </a>
             </div>
             <div class="player-progress" id="playerProgress"><span id="playerProgressBar"></span></div>
             <div class="player-time"><span id="playerTimeNow">0:00</span><span id="playerTimeTotal">0:00</span></div>
