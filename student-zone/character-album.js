@@ -99,6 +99,8 @@
     viewer.className = "album-viewer";
     viewer.innerHTML = `<article class="album-viewer-card"><header class="album-viewer-head"><div><p class="kicker">CHARACTER REPLAY</p><h2>WATCH THE VIDEO</h2><p>${pretty(currentCharacter)} · ${chapter.title}</p></div><button class="album-viewer-close" type="button" data-album-viewer-close aria-label="Close character video">×</button></header><video controls playsinline preload="metadata" src="${videoSource(id)}"></video></article>`;
     const video = viewer.querySelector("video");
+    video.addEventListener("play", () => document.dispatchEvent(new CustomEvent("characteralbumvideostart")));
+    video.addEventListener("pause", () => document.dispatchEvent(new CustomEvent("characteralbumvideoend")));
     const close = () => { video.pause(); viewer.remove(); };
     viewer.querySelector("[data-album-viewer-close]").addEventListener("click", close);
     viewer.addEventListener("click", (event) => { if (event.target === viewer) close(); });

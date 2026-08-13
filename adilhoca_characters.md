@@ -145,10 +145,10 @@ Favorite Profile:
 - Favorite TV program type: Nature Documentaries
 
 Relationships:
-- Best friend: Benjamin
-- Relationship reason: Environmental Club, nature, animals, calm personalities, and spending time outdoors together.
-- Good friends: Emma, Hannah, Jack
-- Close friends: Benjamin, Emma, Hannah, Jack
+- Best friend: Chloe
+- Relationship reason: Both are gentle, polite, sensitive, and kind-hearted students who prefer calm emotional support and enjoy going shopping together.
+- Good friends: Benjamin, Emma, Hannah, Jack
+- Close friends: Chloe, Benjamin, Emma, Hannah
 
 Hidden lore:
 secret_crush: none
@@ -289,10 +289,10 @@ Favorite Profile:
 - Favorite TV program type: Talent Shows
 
 Relationships:
-- Best friend: Emma
-- Relationship reason: Chloe and Emma are canon best friends.
-- Good friends: Olivia, Ella, Mia
-- Close friends: Emma, Olivia, Ella, Mia
+- Best friend: Ava
+- Relationship reason: Both are gentle, polite, sensitive, and kind-hearted students who prefer calm emotional support and enjoy going shopping together.
+- Good friends: Emma, Olivia, Ella, Mia
+- Close friends: Ava, Emma, Olivia, Ella
 
 Hidden lore:
 secret_crush: none
@@ -427,10 +427,10 @@ Favorite Profile:
 - Favorite TV program type: Travel Programs
 
 Relationships:
-- Best friend: Benjamin
-- Relationship reason: Family-oriented boys who both connect through beach and travel themes.
+- Best friend: Ethan
+- Relationship reason: Both are responsible, steady, thoughtful students who prefer careful decisions and dependable friendship.
 - Good friends: Jack, Ava
-- Close friends: Benjamin, Ava, Jack, Olivia
+- Close friends: Ethan, Benjamin, Ava, Jack
 
 Hidden lore:
 secret_crush: none
@@ -574,11 +574,11 @@ Favorite Profile:
 - Favorite TV program type: Cooking Shows
 
 Relationships:
-- Best friend: Chloe
-- Relationship reason: Emma and Chloe are canon best friends.
-- Good friends: Hannah, Ava, Olivia, Ethan
+- Best friend: Hannah
+- Relationship reason: Emma's supportive leadership balances Hannah's outdoor energy, making them a strong social and active duo.
+- Good friends: Chloe, Ava, Olivia, Ethan
 - Friend groups: Creative, Leaders, STEM
-- Close friends: Chloe, Hannah, Ava, Olivia
+- Close friends: Hannah, Chloe, Ava, Olivia
 
 Hidden lore:
 secret_crush: Ethan
@@ -644,10 +644,10 @@ Favorite Profile:
 - Favorite TV program type: Chess Tournaments
 
 Relationships:
-- Best friend: Victoria
-- Relationship reason: Logic, focused study habits, and STEM interests.
-- Good friends: Noah, Emma, Olivia
-- Close friends: Victoria, Noah, Emma, Olivia
+- Best friend: David
+- Relationship reason: Both are responsible, steady, thoughtful students who prefer careful decisions and dependable friendship.
+- Good friends: Victoria, Noah, Emma, Olivia
+- Close friends: David, Victoria, Noah, Emma
 
 Hidden lore:
 secret_crush: none

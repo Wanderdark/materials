@@ -2952,27 +2952,6 @@ evidenceEnd: "0:05.246",
 evidenceSentence: "Ava : /Would you like/ some water?",
   },
 {
-    id: "hannah_victoria_school_trip",
-    status: "published",
-    videoSrc: "assets/video/school_trip_hannah_victoria.mp4",
-    title: "Hannah asks Victoria about journey's length",
-    transcript: "Hannah : /How long/ is the journey? Ava : About an hour.",
-    answerOptions: [
-      { id: "a", text: "Hannah : Ne kadardır yoldayız? Ava: Bir saattir." },
-      { id: "b", text: "Hannah : Yolculuk /ne kadar sürecek/? Ava: Bir saat kadar." }
-    ],
-    easyDistractor: "Hannah : Yolculuk bir saat sürecek mi? Ava: Evet, tam bir saat.",
-    correctOptionId: "b", // TODO: "a" veya "b"
-    explanation: "",
-    characterIds: ["hannah","victoria"],
-    grades: [5, 6],
-    functions: "askinginformationabouttime",
-    theme: "school-trip",
-    evidenceStart: "0:00.631",
-evidenceEnd: "0:02.417",
-evidenceSentence: "Hannah : /How long/ is the journey?",
-  },
-{
     id: "benjamin_emma_school_trip",
     status: "published",
     videoSrc: "assets/video/school_trip_benjamin_emma.mp4",
@@ -3247,6 +3226,433 @@ evidenceSentence: "Ava : /Where's/ the rubbish bin? Benjamin : It's /behind/ tha
 evidenceEnd: "0:02.302",
 evidenceSentence: "Hannah : /How long/ is the journey? Victoria : About an hour.",
   },
+
+{
+    id: "school_trip_lunch_time_mia_zoe",
+    status: "published",
+    videoSrc: "assets/video/school_trip_lunch_time_mia_zoe.mp4",
+    title: "Mia suggests eating a hamburger and Zoe agrees.",
+    transcript: "Mia : /How about/ eat/ing/ a hamburger? Zoe : Great idea, Let's.",
+    answerOptions: [
+      { id: "a", text: "Mia : Neden hamburger yemiyoruz? Zoe : Harika fikir, Hadi yiyelim." },
+      { id: "b", text: "Mia : Hamburger yemeye /ne dersin/? Zoe : Harika fikir, Hadi yiyelim." }
+    ],
+    easyDistractor: "Mia : Neden hamburger yemiyoruz? Zoe : Hiç sanmıyorum, Aç değilim.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [5, 6],
+    functions: ["makingasuggestion", "accepting"],
+    theme: "school-trip",
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:02.053",
+evidenceSentence: "Mia : /How about/ eat/ing/ a hamburger?",
+  },
+
+
+ {
+    id: "school_trip_lunch_time_ella",
+    status: "published",
+    videoSrc: "assets/video/school_trip_lunch_time_ella.mp4",
+    title: "Olivia buys an ice-cream and asks the price",
+    transcript: "Shopkeeper : What would you like, young lady? Ella : /I'd like/ a chocolate ice cream, please. Shopkeeper : Sure. Ella : Thanks, /How much is it/? Shopkeeper : It's one dollar.",
+    answerOptions: [
+      { id: "a", text: "Esnaf : Ne isterdiniz, küçük hanım? Ella : Çikolatalı dondurma istiyorum, lütfen. Esnaf : Tabi. Ella : Güzel mi? Esnaf : Tabi ki" },
+      { id: "b", text: "Esnaf : Ne isterdiniz, küçük hanım? Ella : Çikolatalı dondurma seviyorum. Esnaf : Tabi. Ella : Ne kadar? Esnaf : 1 dolar" }
+    ],
+    easyDistractor: "Esnaf : Ne isterdiniz, küçük hanım? Ella : Çikolatalı süt lütfen. Esnaf : Tabi. Ella : Ne kadar? Esnaf : Bedava.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["olivia"],
+    grades: [5, 6],
+    functions: ["ordering_something","asking_for_price"],
+    theme: "school_trip",
+    evidenceStart: "0:01.792",
+evidenceEnd: "0:12.122",
+evidenceSentence: "Ella : /I'd like/ a chocolate ice cream, please. Shopkeeper : Sure. Ella : Thanks, /How much is it/?",
+  },
+  {
+    id: "5_school_life_noah_victoria",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_noah_victoria.mp4",
+    title: "Noah asks Victoria about her puzzle-solving habit.",
+    transcript: "Noah : Do you like solving puzzles? Victoria : Yes, I solve one /every day/.",
+    answerOptions: [
+      { id: "a", text: "Noah : Yapboz çözmeyi sever misin? Victoria : Evet, /Her gün/ bir tane çözerim." },
+      { id: "b", text: "Noah : Yapboz çözmeyi sever misin? Victoria : Evet, Haftada bir tane çözerim." }
+    ],
+    easyDistractor: "Noah : Yapboz çözmeyi sever misin? Victoria : Hayır, Hiç yapmam.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["noah", "victoria"],
+    grades: [5, 6],
+    functions: ["asking_preferences_about_activities", "frequency_adverbs"],
+    theme: "School_life",
+    evidenceStart: "0:02.055",
+evidenceEnd: "0:05.242",
+evidenceSentence: "Noah : Do you like solving puzzles? Victoria : Yes, I solve one /every day/.",
+  },
+  {
+    id: "5_school_life_ella_olivia",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_ella_olivia.mp4",
+    title: "Ella and Olivia compare their after-school activity preferences.",
+    transcript: "Ella : /Do you like/ drawing after school? Olivia : Yes, but I like taking photos /more/.",
+    answerOptions: [
+      { id: "a", text: "Ella : Okuldan sonra resim çizmeyi tercih eder misin? Olivia : Severim, ama fotoğraf çekmek favorim." },
+      { id: "b", text: "Ella : Okuldan sonra resim çizmeyi /sever misin/? Olivia : Evet, ama fotoğraf çekmeyi /daha çok/ severim." }
+    ],
+    easyDistractor: "Ella : Okuldan sonra futbol oynamayı sever misin? Olivia : Hayır, Futbol oynamayı hiç sevmem.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [5, 6],
+    functions: ["asking_preferences_about_activities", "expressing_and_comparing_personal_preferences"],
+    theme: "School_life",
+    evidenceStart: "0:00.666",
+evidenceEnd: "0:05.508",
+evidenceSentence: "Ella : /Do you like/ drawing after school? Olivia : Yes, but I like taking photos /more/.",
+  },
+  {
+    id: "5_school_life_lucas_daniel",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_lucas_daniel.mp4",
+    title: "Lucas and Daniel compare their sports preferences.",
+    transcript: "Lucas : /Do you like/ playing basketball? Daniel : Yes, but table tennis is my favorite.",
+    answerOptions: [
+      { id: "a", text: "Lucas : Basketbol oynamayı /sever misin/? Daniel : Evet, ama masa tenisi favorim." },
+      { id: "b", text: "Lucas : Basketbolda iyi misin? Daniel : Evet, ama masa tenisi favorim." }
+    ],
+    easyDistractor: "Lucas : Basketbol oynamayı sever misin? Daniel : Hayır, Basketbol oynamayı hiç sevmem.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["lucas", "daniel"],
+    grades: [5, 6],
+    functions: ["asking_preferences_about_activities", "expressing_and_comparing_personal_preferences"],
+    theme: "School_life",
+   evidenceStart: "0:00.151",
+evidenceEnd: "0:02.247",
+evidenceSentence: "Lucas : /Do you like/ playing basketball?",
+  },
+  {
+    id: "5_school_life_daniel_emma",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_daniel_emma.mp4",
+    title: "Daniel asks permission to touch a hot object.",
+    transcript: "Daniel : /Can I/ touch this? Emma : No, /you mustn't, It's very hot/.",
+    answerOptions: [
+      { id: "a", text: "Daniel : Buna dokunacağım. Emma : Evet, Dokunabilirsin, Çok soğuk." },
+      { id: "b", text: "Daniel : Buna /dokunabilir miyim/? Emma : Hayır, /Dokunmamalısın, Çok sıcak/." }
+    ],
+    easyDistractor: "Daniel : Buna bakabilir miyim? Emma : Evet, Bakabilirsin.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["daniel", "emma"],
+    grades: [5, 6],
+    functions: ["asking_permission", "giving_a_warning"],
+    theme: "School_life",
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:05.174",
+evidenceSentence: "Daniel : /Can I/ touch this? Emma : No, /you mustn't, It's very hot/.",
+
+  },
+{
+    id: "5_school_life_mia_zoe",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_mia_zoe.mp4",
+    title: "Zoe reminds Mia about a library rule.",
+    transcript: "Zoe : We /can't eat/ in the library. Mia : Okay, I'll put it away.",
+    answerOptions: [
+      { id: "a", text: "Zoe : Kütüphanede /yemek yiyemeyiz/. Mia : Tamam, Onu kaldıracağım." },
+      { id: "b", text: "Zoe : Kütüphanede yemek yiyebiliriz. Mia : Tamam, Onu çıkaracağım." }
+    ],
+    easyDistractor: "Zoe : Kütüphanede sessiz konuşmalıyız. Mia : Tamam, Daha yüksek sesle konuşacağım.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [5, 6],
+    functions: ["expressing_a_school_rule"],
+    theme: "School_life",
+ evidenceStart: "0:00.876",
+evidenceEnd: "0:02.827",
+evidenceSentence: "Zoe : We /can't eat/ in the library.",
+ },
+  {
+    id: "5_school_life_hannah_emma",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_hannah_emma.mp4",
+    title: "Emma corrects Hannah's behaviour in school.",
+    transcript: "Emma : Hannah, you /mustn't run/ here. Hannah : You're right, I'll walk.",
+    answerOptions: [
+      { id: "a", text: "Emma : Hannah, Burada koşabilirsin. Hannah : Haklısın, Koşacağım." },
+      { id: "b", text: "Emma : Hannah, Burada /koşmamalısın/. Hannah : Haklısın, Yürüyeceğim." }
+    ],
+    easyDistractor: "Emma : Hannah, Burada oturmamalısın. Hannah : Haklısın, Oturacağım.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["hannah", "emma"],
+    grades: [5, 6],
+    functions: ["expressing_prohibition", "correcting_behaviour", "accepting"],
+    theme: "School_life",
+    evidenceStart: "0:00.389",
+evidenceEnd: "0:02.679",
+    evidenceSentence: "Emma : Hannah, you /mustn't run/ here.",
+  },
+
+  {
+    id: "5_school_life_mia_david",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_mia_david.mp4",
+    title: "Mia asks David where the library is.",
+    transcript: "Mia : /Where is/ the library? David : It's next to the art room.",
+    answerOptions: [
+      { id: "a", text: "Mia : /Kütüphane nerede/ ? David : Sanat odasının bitişiğinde." },
+      { id: "b", text: "Mia : Kütüphane burası mı? David : Sanat salonunun karşısında." }
+    ],
+    easyDistractor: "Mia : Kütüphane nerede? David : Sınıfın içinde.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["mia", "david"],
+    grades: [5, 6],
+    functions: ["askingaboutlocation", "givinglocationinformation"],
+    theme: "School_life",
+    evidenceStart: "0:00.617",
+evidenceEnd: "0:01.836",
+evidenceSentence: "Mia : /Where is/ the library?",
+  },
+
+  {
+    id: "5_school_life_emma_chloe",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_emma_chloe.mp4",
+    title: "Chloe checks whether she is at the science club.",
+    transcript: "Chloe : Is this the /science club/? Emma : Yes, it is, Come in!",
+    answerOptions: [
+      { id: "a", text: "Chloe : Burası spor kulübü mü? Emma : Evet, Öyle, İçeri gel!" },
+      { id: "b", text: "Chloe : Burası /bilim kulübü/ mü? Emma : Evet, Öyle, İçeri gel!" }
+    ],
+    easyDistractor: "Chloe : Burası bilim kulübü mü? Emma : Hayır, Burası kütüphane.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["emma", "chloe"],
+    grades: [5, 6],
+    functions: ["askingaboutlocation"],
+    theme: "School_life",
+ evidenceStart: "0:00.000",
+evidenceEnd: "0:01.905",
+evidenceSentence: "Chloe : Is this the /science club/?",
+  },
+  {
+    id: "5_school_life_ava_ethan",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_ava_ethan.mp4",
+    title: "Ethan asks Ava about a wildlife poster.",
+    transcript: "Ethan : Is that the /wildlife poster/? Ava : Yes, it is, These are birds from our school garden.",
+    answerOptions: [
+      { id: "a", text: "Ethan : Şu /yaban hayatı posteri/ mi? Ava : Evet, Öyle, Bunlar okul bahçemizdeki kuşlar." },
+      { id: "b", text: "Ethan : Şu spor posteri mi? Ava : Evet, Öyle, Bunlar okul takımımızdaki öğrenciler." }
+    ],
+    easyDistractor: "Ethan : Şu yaban hayatı posteri mi? Ava : Hayır, Bu bir spor posteri.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["ava", "ethan"],
+    grades: [5, 6],
+    functions: ["asking_about"],
+    theme: "School_life",
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.240",
+evidenceSentence: "Ethan : Is that the /wildlife poster/?",
+  },
+ {
+    id: "5_school_life_hannah",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_hannah.mp4",
+    title: "The teacher reminds Hannah about the class rule on chewing gum.",
+    transcript: "Teacher : Hannah, you /mustn't chew gum/ in class. Hannah : Sorry, I'll throw it away.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Hannah, Sınıfa sakız getirmemelisin. Hannah : Özür dilerim, Onu evde bırakacağım" },
+      { id: "b", text: "Öğretmen : Hannah, Sınıfta /sakız çiğnememelisin/. Hannah : Özür dilerim, Onu çöpe atacağım." }
+    ],
+    easyDistractor: "Öğretmen : Hannah, Sınıfta sakız çiğneyebilirsin. Hannah : Özür dilerim, Sakızımı yiyeceğim.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [5, 6],
+    functions: ["expressing_obligations_or_rules"],
+    theme: "School_life",
+evidenceStart: "0:00.000",
+evidenceEnd: "0:03.242",
+evidenceSentence: "Teacher : Hannah, you /mustn't chew gum/ in class.",
+  },
+ {
+    id: "5_school_life_lucas",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_lucas.mp4",
+    title: "The teacher reminds Lucas about the classroom food and drink rule.",
+    transcript: "Teacher : You /can't eat or drink/ in the lesson. Lucas : Okay, I'll put it away.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Derste /yemek yiyip içemezsin/. Lucas : Tamam, çantama koyacağım." },
+      { id: "b", text: "Öğretmen : Yemek yiyip içeceksen dışarı çık. Lucas : Tamam, Sonra yerim." }
+    ],
+    easyDistractor: "Öğretmen : Derste yemek yiyebilirsin. Lucas : Tamam, o zaman devam ediyim.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["lucas"],
+    grades: [5, 6],
+    functions: ["expressing_obligations_or_rules"],
+    theme: "School_life",
+    evidenceStart: "0:00.571",
+evidenceEnd: "0:03.032",
+evidenceSentence: "Teacher : You /can't eat or drink/ in the lesson.",
+  },
+{
+    id: "5_school_life_emma",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_emma.mp4",
+    title: "The teacher asks Emma to keep the classroom tidy.",
+    transcript: "Teacher : Please /keep your classroom tidy/. Emma : Of course, I'll put these books away.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Lütfen /sınıfını düzenli tut/. Emma : Tabii, Bu kitapları rafa koyacağım." },
+      { id: "b", text: "Öğretmen : Lütfen sıranı düzenli tut. Emma : Tabii, Bu defterleri rafa koyacağım." }
+    ],
+    easyDistractor: "Öğretmen : Lütfen sınıfını düzenli tut. Emma : Hayır, Kitapları yere atacağım.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["emma"],
+    grades: [5, 6],
+    functions: ["giving_commands"],
+    theme: "School_life",
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:02.207",
+evidenceSentence: "Teacher : Please /keep your classroom tidy/",
+  },
+{
+    id: "5_school_life_jack",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_jack.mp4",
+    title: "The assistant headmaster reminds Jack not to litter.",
+    transcript: "Assistant Headmaster : Jack, you /can't/ throw rubbish around. Jack : Okay, I'll pick it up.",
+    answerOptions: [
+      { id: "a", text: "Müdür Yardımcısı : Jack, Çöpleri etrafa atman yanlış. Jack : Tamam, atmayacağım." },
+      { id: "b", text: "Müdür Yardımcısı : Jack, Çöpleri etrafa /atamazsın/. Jack : Tamam, Onu yerden alıp çöp kutusuna atacağım." }
+    ],
+    easyDistractor: "Müdür Yardımcısı : Jack, Çöpleri etrafa atamazsın. Jack : Hayır, Onu yerde bırakacağım.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["jack"],
+    grades: [5, 6],
+    functions: ["expressing_obligations_or_rules"],
+    theme: "School_life",
+    evidenceStart: "0:00.288",
+evidenceEnd: "0:03.062",
+evidenceSentence: "Assistant Headmaster : Jack, you /can't/ throw rubbish around.",
+  },
+{
+    id: "5_school_life_olivia",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_olivia.mp4",
+    title: "The teacher reminds Olivia to raise her hand before speaking.",
+    transcript: "Teacher : Olivia, /raise your hand to speak/. Olivia : Okay!",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Olivia, /Konuşacak için elini kaldır/. Olivia : Tamam!" },
+      { id: "b", text: "Öğretmen : Olivia, Konuşma lütfen. Olivia : Tamam!" }
+    ],
+    easyDistractor: "Öğretmen : Olivia, Konuşmak için ayağa kalk. Olivia : Tamam!",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["olivia"],
+    grades: [5, 6],
+    functions: ["giving_commands"],
+    theme: "School_life",
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.991",
+evidenceSentence: "Teacher : Olivia, /raise your hand to speak/",
+  },
+{
+    id: "5_school_life_jack_ethan",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_jack_ethan.mp4",
+    title: "Jack asks Ethan about the new basketball coach.",
+    transcript: "Jack : /Who/ is that man? Ethan : He's our new basketball coach.",
+    answerOptions: [
+      { id: "a", text: "Jack : Şu adamın işi ne? Ethan : O bizim yeni basketbol koçumuz." },
+      { id: "b", text: "Jack : Şu adam /kim/? Ethan : O bizim yeni basketbol koçumuz." }
+    ],
+    easyDistractor: "Jack : Şu adam öğretmen mi? Ethan : Evet, O bizim yeni basketbol koçumuz.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["jack", "ethan"],
+    grades: [5, 6],
+    functions: ["asking_about"],
+    theme: "School_life",
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:01.427",
+evidenceSentence: "Jack : /Who/ is that man?",
+  },
+  {
+    id: "5_school_life_benjamin_david_victoria",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_benjamin_david_victoria.mp4",
+    title: "Benjamin asks David who leads the technology club.",
+    transcript: "Benjamin : /Who/ is the technology club leader? David : Victoria is, She's near the computers.",
+    answerOptions: [
+      { id: "a", text: "Benjamin : Teknoloji kulübü lideri /kim/? David : Victoria, Bilgisayarların yanında." },
+      { id: "b", text: "Benjamin : Ben teknoloji kulübü lideriyim. O kim? David : Onun adı Victoria." }
+    ],
+    easyDistractor: "Benjamin : Teknoloji kulübü lideri sen misin? David : Evet, benim.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["benjamin", "david", "victoria"],
+    grades: [5, 6],
+    functions: ["asking_about"],
+    theme: "School_life",
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:02.642",
+evidenceSentence: "Benjamin : /Who/ is the technology club leader?",
+  },
+{
+    id: "5_school_life_mia",
+    status: "published",
+    videoSrc: "assets/video/5_school_life_mia.mp4",
+    title: "Mia asks the librarian what a book is about.",
+    transcript: "Mia : /What/ is this book /about/? Librarian : It's about planets and space.",
+    answerOptions: [
+      { id: "a", text: "Mia : Bu kitap /ne hakkında/? Kütüphaneci : Gezegenler ve uzay hakkında." },
+      { id: "b", text: "Mia : Bu kitabın yazarı kim? Kütüphaneci : Ünlü bir uzay profesörü." }
+    ],
+    easyDistractor: "Mia : Bu kitap ne hakkında? Kütüphaneci : Hayvanlar ve vahşi yaşam.",
+    correctOptionId: "a", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["mia"],
+    grades: [5, 6],
+    functions: ["asking_about"],
+    theme: "School_life",
+   evidenceStart: "0:00.251",
+evidenceEnd: "0:01.927",
+evidenceSentence: "Mia : /What/ is this book /about/?",
+  },
+{
+    id: "5_classroom_life_david",
+    status: "published",
+    videoSrc: "assets/video/5_classroom_life_david.mp4",
+    title: "David describes his classroom responsibility before class.",
+    transcript: "Teacher : What do you do before class? David : I /open the windows/ and /check the desks/.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Dersten önce ne yaparsın? David : Pencereleri kapatırım, Sıraları dağıtırım." },
+      { id: "b", text: "Öğretmen : Dersten önce ne yaparsın? David : /Pencereleri açarım/, /Sıraları kontrol ederim/." }
+    ],
+    easyDistractor: "Öğretmen : Dersten önce ne yaparsın? David : Pencereleri açarım, Kitap okurum.",
+    correctOptionId: "b", // TODO: "a" veya "b"
+    explanation: "",
+    characterIds: ["david"],
+    grades: [5, 6],
+    functions: ["describing_roles"],
+    theme: "Classroom_life",
+    evidenceStart: "0:02.068",
+evidenceEnd: "0:04.717",
+evidenceSentence: "David : I /open the windows/ and /check the desks/",
+  },
+
 
 
 

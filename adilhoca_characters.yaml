@@ -341,10 +341,10 @@ students:
       book_type: "Animal Stories"
       tv_program_type: "Nature Documentaries"
     relationships:
-      best_friend: "Benjamin"
-      reason: "Environmental Club, nature, animals, calm personalities, and spending time outdoors together."
-      good_friends: [Emma, Hannah, Jack]
-      close_friends: [Benjamin, Emma, Hannah, Jack]
+      best_friend: "Chloe"
+      reason: "Both are gentle, polite, sensitive, and kind-hearted students who prefer calm emotional support and enjoy going shopping together."
+      good_friends: [Benjamin, Emma, Hannah, Jack]
+      close_friends: [Chloe, Benjamin, Emma, Hannah]
       friend_groups: [Animal Care, Nature]
     hidden_lore:
       secret_crush: "none"
@@ -561,10 +561,10 @@ students:
       book_type: "Fairy Tales"
       tv_program_type: "Talent Shows"
     relationships:
-      best_friend: "Emma"
-      reason: "Chloe and Emma are canon best friends."
-      good_friends: [Olivia, Ella, Mia]
-      close_friends: [Emma, Olivia, Ella, Mia]
+      best_friend: "Ava"
+      reason: "Both are gentle, polite, sensitive, and kind-hearted students who prefer calm emotional support and enjoy going shopping together."
+      good_friends: [Emma, Olivia, Ella, Mia]
+      close_friends: [Ava, Emma, Olivia, Ella]
       friend_groups: [Creative, Emotional Support]
     hidden_lore:
       secret_crush: "none"
@@ -782,10 +782,10 @@ students:
       book_type: "Travel Books"
       tv_program_type: "Travel Programs"
     relationships:
-      best_friend: "Benjamin"
-      reason: "Family-oriented boys who both connect through beach and travel themes."
+      best_friend: "Ethan"
+      reason: "Both are responsible, steady, thoughtful students who prefer careful decisions and dependable friendship."
       good_friends: [Jack, Ava]
-      close_friends: [Benjamin, Ava, Jack, Olivia]
+      close_friends: [Ethan, Benjamin, Ava, Jack]
       friend_groups: [Family, Travel]
     hidden_lore:
       secret_crush: "none"
@@ -1003,10 +1003,10 @@ students:
       book_type: "Friendship Stories"
       tv_program_type: "Cooking Shows"
     relationships:
-      best_friend: "Chloe"
-      reason: "Emma and Chloe are canon best friends."
-      good_friends: [Hannah, Ava, Olivia, Ethan]
-      close_friends: [Chloe, Hannah, Ava, Olivia]
+      best_friend: "Hannah"
+      reason: "Emma's supportive leadership balances Hannah's outdoor energy, making them a strong social and active duo."
+      good_friends: [Chloe, Ava, Olivia, Ethan]
+      close_friends: [Hannah, Chloe, Ava, Olivia]
       friend_groups: [Creative, Leaders, STEM]
     hidden_lore:
       secret_crush: "Ethan"
@@ -1112,10 +1112,10 @@ students:
       book_type: "Mystery"
       tv_program_type: "Chess Tournaments"
     relationships:
-      best_friend: "Victoria"
-      reason: "Logic, focused study habits, and STEM interests."
-      good_friends: [Noah, Emma, Olivia]
-      close_friends: [Victoria, Noah, Emma, Olivia]
+      best_friend: "David"
+      reason: "Both are responsible, steady, thoughtful students who prefer careful decisions and dependable friendship."
+      good_friends: [Victoria, Noah, Emma, Olivia]
+      close_friends: [David, Victoria, Noah, Emma]
       friend_groups: [Academic, STEM]
     hidden_lore:
       secret_crush: "none"

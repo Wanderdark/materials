@@ -7,6 +7,10 @@ function parseRangeTime(value) {
   return match ? Number(match[1]) * 60 + Number(match[2]) : null;
 }
 
+function getField(object, name) {
+  return Object.entries(object || {}).find(([key]) => key.toLowerCase() === name.toLowerCase())?.[1];
+}
+
 function dialogueSegments(text) {
   const source = String(text || "");
   const matches = [...source.matchAll(/(^|[.!?]\s+)([\p{L}][\p{L}\s'-]*?)\s*:\s*/gu)];
@@ -52,9 +56,9 @@ function playVideoRange(video, startAt, endAt) {
 }
 
 function playEvidenceSegment(video, question) {
-  const questionStart = parseRangeTime(question?.videoStart) ?? 0;
+  const questionStart = parseRangeTime(getField(question, "videoStart")) ?? 0;
   const durationEnd = Number.isFinite(video.duration) ? video.duration : questionStart + 30;
-  const questionEnd = Math.min(parseRangeTime(question?.videoEnd) ?? durationEnd, durationEnd);
+  const questionEnd = Math.min(parseRangeTime(getField(question, "videoEnd")) ?? durationEnd, durationEnd);
   const evidenceStart = parseRangeTime(question?.evidenceStart);
   const evidenceEnd = parseRangeTime(question?.evidenceEnd);
   if (evidenceStart == null && evidenceEnd == null) return playVideoRange(video, questionStart, questionEnd);
@@ -64,8 +68,8 @@ function playEvidenceSegment(video, question) {
 }
 
 function playEchoSegment(video, question) {
-  const startAt = parseRangeTime(question?.videoStart) ?? 0;
-  const configuredEnd = parseRangeTime(question?.videoEnd);
+  const startAt = parseRangeTime(getField(question, "videoStart")) ?? 0;
+  const configuredEnd = parseRangeTime(getField(question, "videoEnd"));
   const endAt = configuredEnd ?? (Number.isFinite(video.duration) ? video.duration : startAt + 30);
   return playVideoRange(video, startAt, endAt);
 }
