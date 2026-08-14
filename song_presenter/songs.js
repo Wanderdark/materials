@@ -579,7 +579,93 @@ window.SONGS = [
       { from: "", to: "", text: "Written by Adil Fırat Oktav." },
       { from: "", to: "", text: "Thanks for listening..." },]
 
-  }
+  },
+/* ── ŞARKI 6 — THE NOISE OF HOME ───────────────────────────────────── */
+  {
+    id: "thenoiseofhome",
+    title: "The noise of home",
+    artist: "Ella",
+    audio: "songs/thenoiseofhome.mp3",
+    video: null,
+    image: "thumbnails/thenoiseofhome.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "kitchen",    tr: "mutfak",          image: "images/kitchen.webp" },
+      { word: "plate",   tr: "tabak",         image: "images/plate.webp" },
+      { word: "grin",  tr: "sırıtmak",      image: "images/grin.webp" },
+      { word: "loneliness", tr: "yanlızlık",        image: "images/alone.webp" },
+      { word: "key",  tr: "anahtar",     image: "images/key.webp" },
+      { word: "familiar",   tr: "tanıdık", image: "images/familiar.webp" },
+      { word: "wide",  tr: "geniş",           image: "images/wide.webp" },
+      { word: "laughter",   tr: "kahkaha",         image: "images/laughter.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:16.686", to: "0:19.662", text: "Someone's talking down the hall," },
+      { from: "0:20.173", to: "0:23.078", text: "Someone's laughing way too loud." },
+      { from: "0:23.614", to: "0:26.742", text: "Someone left the <kitchen> light on," },
+      { from: "0:27.246", to: "0:29.918", text: "Someone's music shakes the house." },
+      { from: "0:30.726", to: "0:33.477", text: "We fight about the little things," },
+      { from: "0:33.866", to: "0:37.109", text: "Then laugh at what the morning brings." },
+      { from: "0:37.306", to: "0:40.289", text: "We slam our doors and walk away," },
+      { from: "0:40.822", to: "0:43.738", text: "Then laugh about it anyway." },
+      { from: "0:44.518", to: "0:46.874", text: "I used to wish the noise away," },
+      { from: "0:48.086", to: "0:50.588", text: "Dreaming of a quieter day." },
+      { from: "0:51.107", to: "0:53.729", text: "Now I know I'll miss the sound," },
+      { from: "0:54.611", to: "0:58.013", text: "When there's no one else around." },
+      { from: "0:58.006", to: "1:00.910", text: "So let the whole house make some noise," },
+      { from: "1:01.648", to: "1:04.521", text: "Let every room be full of voice." },
+      { from: "1:05.140", to: "1:07.834", text: "Let them call my name once more," },
+      { from: "1:08.662", to: "1:12.716", text: "Like a thousand times before." },
+      { from: "1:19.719", to: "1:22.584", text: "Dinner waiting on my <plate>," },
+      { from: "1:22.974", to: "1:25.823", text: "Someone asking why I'm late." },
+      { from: "1:26.333", to: "1:29.366", text: "Same old stories wear me thin," },
+      { from: "1:29.725", to: "1:32.634", text: "Same bad joke still makes me <grin>." },
+      { from: "1:33.618", to: "1:35.916", text: "I used to dream of being grown," },
+      { from: "1:36.510", to: "1:39.318", text: "Couldn't wait to be left alone." },
+      { from: "1:39.537", to: "1:42.656", text: "Now each and every passing night," },
+      { from: "1:43.034", to: "1:46.731", text: "Feeds the <loneliness> that I fight." },
+      { from: "1:46.852", to: "1:49.667", text: "So let the whole house make some noise," },
+      { from: "1:50.363", to: "1:53.035", text: "Let every room be full of voice." },
+      { from: "1:53.829", to: "1:56.463", text: "Let them call my name once more," },
+      { from: "1:57.327", to: "2:01.427", text: "Like a thousand times before." },
+      { from: "2:15.690", to: "2:18.657", text: "One day I'll turn this old <key>," },
+      { from: "2:19.305", to: "2:22.475", text: "And nothing will sound the same." },
+      { from: "2:22.991", to: "2:25.394", text: "No <familiar> face to see," },
+      { from: "2:26.252", to: "2:29.341", text: "No one calling out my name." },
+      { from: "2:29.893", to: "2:32.978", text: "So tonight I'll leave my door," },
+      { from: "2:33.428", to: "2:36.258", text: "Open <wide>r than before." },
+      { from: "2:36.834", to: "2:39.990", text: "Let the noise keep coming through," },
+      { from: "2:40.998", to: "2:46.222", text: "Someday I'll be missing all of you." },
+      { from: "2:49.189", to: "2:51.921", text: "Let the whole house make some noise," },
+      { from: "2:52.515", to: "2:55.252", text: "Let every room be full of voice." },
+      { from: "2:55.948", to: "2:59.045", text: "Let them call my name once more," },
+      { from: "2:59.382", to: "3:04.136", text: "Like a thousand times before." },
+      { from: "3:04.213", to: "3:07.126", text: "Let the <laughter> fill these walls," },
+      { from: "3:07.795", to: "3:10.743", text: "Let me hear them down the halls." },
+      { from: "3:11.199", to: "3:14.309", text: "I don't know where I may roam," },
+      { from: "3:14.427", to: "3:19.773", text: "I'll always know the noise of home." }]
+  },
+
 
 
 

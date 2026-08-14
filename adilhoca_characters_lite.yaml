@@ -174,8 +174,8 @@ students:
     default_expression: "Focused neutral expression."
     expression_note: "Hafif ciddi ama soguk degil. Sadece dikkatli."
     hobbies:
-      loves: ["playing the violin"]
-      likes: ["listening to classical music"]
+      loves: ["play drums"]
+      likes: ["listen to rock"]
     personality:
       traits: [Determined, punctual]
       note: "Kararli ve dakik bir ogrenci."

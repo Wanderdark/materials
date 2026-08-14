@@ -9,7 +9,8 @@
     { id: "introduction", title: "INTRODUCTION", prefix: "introduce_" },
     { id: "countries", title: "COUNTRIES", prefix: "countries_" },
     { id: "appearance", title: "PHYSICAL APPEARANCE", prefix: "5_personal_life_appearance_" },
-    { id: "family", title: "INTRODUCING FAMILIES", prefix: "introduce_family_" }
+    { id: "family", title: "INTRODUCING FAMILIES", prefix: "introduce_family_" },
+    { id: "best_friends", title: "BEST FRIENDS", prefix: "introduce_best_friend_" }
   ];
   const layouts = [
     [{ side: "left", x: 7, y: 13, w: 39, r: -4 }, { side: "left", x: 53, y: 12, w: 37, r: 3 }, { side: "left", x: 9, y: 54, w: 37, r: 3 }, { side: "left", x: 53, y: 55, w: 38, r: -3 }, { side: "right", x: 8, y: 14, w: 37, r: 4 }, { side: "right", x: 53, y: 12, w: 38, r: -3 }, { side: "right", x: 9, y: 55, w: 39, r: -2 }, { side: "right", x: 54, y: 54, w: 36, r: 4 }],

@@ -46,9 +46,9 @@ character_hobbies:
       - "baking"
   Ethan:
     loves:
-      - "playing the violin"
+      - "play drums"
     likes:
-      - "listening to classical music"
+      - "listen to rock"
   Olivia:
     loves:
       - "taking photos"
@@ -1080,9 +1080,9 @@ students:
     signature_activity: "Playing Golf"
     hobbies:
       loves:
-        - "playing the violin"
+        - "play drums"
       likes:
-        - "listening to classical music"
+        - "listen to rock"
     general_interests: [Violin, Chess, Football, Homework, Reading]
     personality:
       traits: [Determined, punctual]

@@ -607,8 +607,8 @@ Favorite / Signature Activity:
 Playing Golf.
 
 Hobbies:
-- Loves: playing the violin
-- Likes: listening to classical music
+- Loves: play drums
+- Likes: listen to rock
 
 Parent Hobbies:
 - Elizabeth (mother): Painting / sketching
