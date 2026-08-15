@@ -14,6 +14,7 @@
   const showSubtitles = document.querySelector("#show-subtitle-button span");
   const items = (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => item.status === "published");
   const watchedKey = "oliviasMovieMemoriesWatchedV1";
+  const forceUnlockAllMemoriesForR2Check = true;
   const journeyKey = "oliviasMovieMemoriesJourneyV1";
   const journeyLength = 10;
   const journeyTasks = [
@@ -50,6 +51,8 @@
     try { return JSON.parse(localStorage.getItem("fpStudentProfile") || "{}"); } catch (_) { return {}; }
   }
   function watchedIds() {
+    // TEMP R2 CHECK: show every published memory in the book until the remote migration is verified.
+    if (forceUnlockAllMemoriesForR2Check) return new Set(items.map((item) => item.id));
     try { return new Set(JSON.parse(localStorage.getItem(watchedKey) || "[]")); } catch (_) { return new Set(); }
   }
   function journeyDayKey() { return new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10); }
@@ -302,6 +305,11 @@
     if (!item || !viewer) return;
     const video = viewer.querySelector("video");
     const transcript = viewer.querySelector("#omm-viewer-script");
+    viewer.querySelector("#omm-viewer-path-debug")?.remove();
+    const debugPath = document.createElement("span");
+    debugPath.id = "omm-viewer-path-debug";
+    debugPath.textContent = `DEBUG VIDEO: ${item.videoSrc}`;
+    viewer.querySelector(".omm-book-card").append(debugPath);
     video.src = item.videoSrc;
     video.currentTime = 0;
     transcript.textContent = item.transcript.replaceAll("/", "");
