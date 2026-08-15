@@ -677,21 +677,6 @@ body.omm-landing-active #override-replay-button {
   width: min(850px, 100%);
 }
 
-#omm-viewer-path-debug {
-  display: block;
-  overflow: hidden;
-  margin-top: 10px;
-  border: 1px solid rgba(74, 222, 128, .7);
-  border-radius: 7px;
-  padding: 5px 8px;
-  color: #d8ffe5;
-  background: rgba(2, 12, 27, .86);
-  font: 700 .62rem/1.25 monospace;
-  letter-spacing: .02em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 .omm-journey-complete .omm-book-card {
   width: min(780px, 100%);
   text-align: center;

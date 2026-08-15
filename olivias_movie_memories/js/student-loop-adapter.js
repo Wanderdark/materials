@@ -14,7 +14,6 @@
   const showSubtitles = document.querySelector("#show-subtitle-button span");
   const items = (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => item.status === "published");
   const watchedKey = "oliviasMovieMemoriesWatchedV1";
-  const forceUnlockAllMemoriesForR2Check = true;
   const journeyKey = "oliviasMovieMemoriesJourneyV1";
   const journeyLength = 10;
   const journeyTasks = [
@@ -27,16 +26,15 @@
   ];
   const memoriesPerSpread = 8;
   const minimumSpreadsPerChapter = 3;
-  const chapters = [
-    { id: "introductions", title: "INTRODUCTIONS", themes: ["introduction"] },
-    { id: "school-life", title: "SCHOOL LIFE", themes: ["school_life"] },
-    { id: "classroom-life", title: "CLASSROOM LIFE", themes: ["classroom_life"] },
-    { id: "personal-life", title: "PERSONAL LIFE", themes: ["personal_life"] },
-    { id: "family-life", title: "FAMILY LIFE", themes: ["family_life"] },
-    { id: "life-in-the-city", title: "LIFE IN THE CITY", themes: ["city_life", "life_in_the_city"] },
-    { id: "life-in-the-world", title: "LIFE IN THE WORLD", themes: ["world_life", "countries"] },
-    { id: "life-in-nature", title: "LIFE IN THE NATURE", themes: ["nature_life", "life_in_nature"] },
-    { id: "life-in-the-future", title: "LIFE IN THE FUTURE", themes: ["future_life", "life_in_the_future"] }
+  const unitChapters = [
+    { id: "school-life", title: "SCHOOL LIFE", unit: "school_life" },
+    { id: "classroom-life", title: "CLASSROOM LIFE", unit: "classroom_life" },
+    { id: "personal-life", title: "PERSONAL LIFE", unit: "personal_life" },
+    { id: "family-life", title: "FAMILY LIFE", unit: "family_life" },
+    { id: "life-in-the-city", title: "LIFE IN THE CITY", unit: "life_in_the_city" },
+    { id: "life-in-the-world", title: "LIFE IN THE WORLD", unit: "life_in_the_world" },
+    { id: "life-in-the-nature", title: "LIFE IN THE NATURE", unit: "life_in_the_nature" },
+    { id: "life-in-the-universe", title: "LIFE IN THE UNIVERSE", unit: "life_in_the_universe" }
   ];
   const albumLayouts = [
     [{ side: "left", x: 7, y: 13, w: 39, r: -4 }, { side: "left", x: 53, y: 12, w: 37, r: 3 }, { side: "left", x: 9, y: 54, w: 37, r: 3 }, { side: "left", x: 53, y: 55, w: 38, r: -3 }, { side: "right", x: 8, y: 14, w: 37, r: 4 }, { side: "right", x: 53, y: 12, w: 38, r: -3 }, { side: "right", x: 9, y: 55, w: 39, r: -2 }, { side: "right", x: 54, y: 54, w: 36, r: 4 }],
@@ -51,8 +49,6 @@
     try { return JSON.parse(localStorage.getItem("fpStudentProfile") || "{}"); } catch (_) { return {}; }
   }
   function watchedIds() {
-    // TEMP R2 CHECK: show every published memory in the book until the remote migration is verified.
-    if (forceUnlockAllMemoriesForR2Check) return new Set(items.map((item) => item.id));
     try { return new Set(JSON.parse(localStorage.getItem(watchedKey) || "[]")); } catch (_) { return new Set(); }
   }
   function journeyDayKey() { return new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString().slice(0, 10); }
@@ -236,8 +232,28 @@
   function normalizeTheme(value) {
     return String(value || "").trim().toLowerCase().replace(/[\s-]+/g, "_");
   }
+  function fallbackTitle(theme) {
+    if (theme === "introduction") return "INTRODUCTIONS";
+    return theme ? theme.replace(/_/g, " ").toUpperCase() : "GENERIC";
+  }
+  const fallbackThemes = [...new Set(items
+    .filter((item) => !item.unit)
+    .map((item) => normalizeTheme(item.theme))
+    .filter(Boolean))];
+  const fallbackChapters = fallbackThemes.map((theme) => ({
+    id: "theme-" + theme,
+    title: fallbackTitle(theme),
+    fallbackTheme: theme
+  }));
+  const chapters = [
+    ...fallbackChapters.filter((chapter) => chapter.fallbackTheme === "introduction"),
+    ...unitChapters,
+    ...fallbackChapters.filter((chapter) => chapter.fallbackTheme !== "introduction"),
+    ...(items.some((item) => !item.unit && !normalizeTheme(item.theme)) ? [{ id: "generic", title: "GENERIC", fallbackTheme: "" }] : [])
+  ];
   function chapterMemories(chapter) {
-    return items.filter((item) => chapter.themes.includes(normalizeTheme(item.theme)));
+    if (chapter.unit) return items.filter((item) => item.unit === chapter.unit);
+    return items.filter((item) => !item.unit && normalizeTheme(item.theme) === chapter.fallbackTheme);
   }
   function chapterSpreadCount(chapter) {
     return Math.max(minimumSpreadsPerChapter, Math.ceil(chapterMemories(chapter).length / memoriesPerSpread));
@@ -305,11 +321,6 @@
     if (!item || !viewer) return;
     const video = viewer.querySelector("video");
     const transcript = viewer.querySelector("#omm-viewer-script");
-    viewer.querySelector("#omm-viewer-path-debug")?.remove();
-    const debugPath = document.createElement("span");
-    debugPath.id = "omm-viewer-path-debug";
-    debugPath.textContent = `DEBUG VIDEO: ${item.videoSrc}`;
-    viewer.querySelector(".omm-book-card").append(debugPath);
     video.src = item.videoSrc;
     video.currentTime = 0;
     transcript.textContent = item.transcript.replaceAll("/", "");
