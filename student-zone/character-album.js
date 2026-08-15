@@ -6,24 +6,23 @@
 
   const characters = ["ava", "benjamin", "chloe", "daniel", "david", "ella", "emma", "ethan", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"];
   const chapters = [
-    { id: "introduction", title: "INTRODUCTION", prefix: "introduce_" },
-    { id: "countries", title: "COUNTRIES", prefix: "countries_" },
-    { id: "appearance", title: "PHYSICAL APPEARANCE", prefix: "5_personal_life_appearance_" },
-    { id: "family", title: "INTRODUCING FAMILIES", prefix: "introduce_family_" },
-    { id: "best_friends", title: "BEST FRIENDS", prefix: "introduce_best_friend_" }
+    { id: "introduction", title: "INTRODUCTION", matches: (item, character) => new RegExp(`^introduce_${character}(?:_part\\d+)?$`).test(item.id) },
+    { id: "countries", title: "COUNTRIES", matches: (item, character) => item.id === `countries_${character}` },
+    { id: "appearance", title: "PHYSICAL APPEARANCE", matches: (item, character) => item.id === `5_personal_life_appearance_${character}` },
+    { id: "family", title: "INTRODUCING FAMILIES", matches: (item, character) => new RegExp(`^introduce_family_${character}(?:_\\d+)?$`).test(item.id) },
+    { id: "best_friends", title: "BEST FRIENDS", matches: (item, character) => new RegExp(`^introduce_best_friend_${character}(?:_part\\d+)?$`).test(item.id) }
   ];
   const layouts = [
     [{ side: "left", x: 7, y: 13, w: 39, r: -4 }, { side: "left", x: 53, y: 12, w: 37, r: 3 }, { side: "left", x: 9, y: 54, w: 37, r: 3 }, { side: "left", x: 53, y: 55, w: 38, r: -3 }, { side: "right", x: 8, y: 14, w: 37, r: 4 }, { side: "right", x: 53, y: 12, w: 38, r: -3 }, { side: "right", x: 9, y: 55, w: 39, r: -2 }, { side: "right", x: 54, y: 54, w: 36, r: 4 }],
     [{ side: "left", x: 8, y: 12, w: 37, r: 3 }, { side: "left", x: 52, y: 15, w: 39, r: -4 }, { side: "left", x: 8, y: 55, w: 39, r: -3 }, { side: "left", x: 55, y: 53, w: 35, r: 4 }, { side: "right", x: 8, y: 13, w: 39, r: -3 }, { side: "right", x: 54, y: 14, w: 36, r: 4 }, { side: "right", x: 10, y: 54, w: 36, r: 3 }, { side: "right", x: 53, y: 54, w: 38, r: -4 }]
   ];
-  const videoRoot = "../olivias_movie_memories/assets/video/";
   const portrait = (id) => `../func_presenter/images/common/bookmarks/${id}.webp`;
   const pretty = (id) => id.charAt(0).toUpperCase() + id.slice(1);
-  const videoId = (chapter) => `${chapter.prefix}${currentCharacter}`;
-  const videoSource = (id) => `${videoRoot}${id}.mp4`;
+  const videoSource = (item) => item.videoSrc;
   const thumbnailTimes = window.CHARACTER_ALBUM_THUMBNAILS || {};
   let currentCharacter = null;
-  let chapterIndex = 0;
+  let collectionIndex = 0;
+  let collectionPage = 0;
   let characterPage = 0;
   let restoresCharactersHub = false;
 
@@ -81,24 +80,40 @@
     const pageWidth = slot.side === "left" ? 40.1 : 39.2;
     return `--x:${pageLeft + slot.x * pageWidth / 100}%;--y:${7.4 + slot.y * .84}%;--w:${slot.w * pageWidth / 100}%;--r:${slot.r}deg;`;
   };
+  const publishedAlbumItems = () => (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => item?.status === "published" && item.videoSrc);
+  const uniqueVideoRecords = (records) => records.filter((record, index) => records.findIndex((item) => item.videoSrc === record.videoSrc) === index);
+  const collectionsForCharacter = () => {
+    const records = uniqueVideoRecords(chapters.flatMap((chapter) => publishedAlbumItems().filter((item) => chapter.matches(item, currentCharacter))));
+    return [{ id: "memories", title: "MEMORIES", records }];
+  };
+  const recordCaption = (record, collection) => collection.records.length > 1 ? record.title || collection.title : chapters.find((chapter) => chapter.matches(record, currentCharacter))?.title || collection.title;
   const renderBook = () => {
-    const chapter = chapters[chapterIndex];
-    const id = videoId(chapter);
-    const watched = isWatched(id);
-    const layout = layouts[chapterIndex % layouts.length];
+    const collections = collectionsForCharacter();
+    collectionIndex = Math.min(collectionIndex, collections.length - 1);
+    const collection = collections[collectionIndex];
+    const pageSize = layouts[0].length;
+    const pageCount = Math.max(1, Math.ceil(collection.records.length / pageSize));
+    collectionPage = Math.min(collectionPage, pageCount - 1);
+    const pageRecords = collection.records.slice(collectionPage * pageSize, (collectionPage + 1) * pageSize);
+    const layout = layouts[collectionPage % layouts.length];
+    const hasTabs = collections.length > 1;
     const slots = layout.map((slot, index) => {
       const style = slotStyle(slot);
-      if (index !== 0) return `<div class="album-memory-empty" style="${style}" aria-hidden="true"><span>NEW MEMORY</span></div>`;
-      return `<button class="album-memory-slot ${watched ? "" : "is-unwatched"}" type="button" data-album-video="${id}" style="${style}" aria-label="Watch ${chapter.title.toLowerCase()} memory for ${pretty(currentCharacter)}"><video class="album-memory-thumb" muted playsinline preload="metadata" data-thumbnail="${thumbnailTimes[id] || "00:00.000"}" src="${videoSource(id)}"></video><span class="album-memory-caption">${watched ? chapter.title : "UNWATCHED"}</span></button>`;
+      const record = pageRecords[index];
+      if (!record) return `<div class="album-memory-empty" style="${style}" aria-hidden="true"><span>NEW MEMORY</span></div>`;
+      const watched = isWatched(record.id);
+      const caption = recordCaption(record, collection);
+      return `<button class="album-memory-slot ${watched ? "" : "is-unwatched"}" type="button" data-album-video="${record.id}" data-album-caption="${caption}" style="${style}" ${watched ? `title="${record.title || caption}"` : ""} aria-label="Watch ${caption.toLowerCase()} memory for ${pretty(currentCharacter)}"><video class="album-memory-thumb" muted playsinline preload="metadata" data-thumbnail="${thumbnailTimes[record.id] || "00:00.000"}" src="${videoSource(record)}"></video><span class="album-memory-caption">${watched ? caption : "UNWATCHED"}</span></button>`;
     }).join("");
-    album.innerHTML = `<div class="character-album-backdrop" data-album-close></div><section class="album-book-card" aria-labelledby="character-album-title"><header class="album-book-head"><div><p class="kicker">${pretty(currentCharacter)}'S COLLECTION</p><h2 id="character-album-title">CHARACTER BOOK</h2></div><button class="album-book-close" type="button" data-album-book-close aria-label="Back to Character Album">×</button></header><nav class="album-book-chapter-nav" aria-label="Character Book chapters"><button type="button" data-album-chapter-scroll="-1" aria-label="Show previous chapters">‹</button><div class="album-book-chapters">${chapters.map((entry, index) => `<button type="button" data-album-chapter="${index}" ${index === chapterIndex ? "aria-current=\"page\"" : ""}>${entry.title}</button>`).join("")}</div><button type="button" data-album-chapter-scroll="1" aria-label="Show next chapters">›</button></nav><div class="album-book-stage"><div class="album-book-page-title"><span>${chapter.title}</span><small>PAGE 1 / 1</small></div><div class="album-book-pages">${slots}</div><button class="album-book-turn album-book-turn-prev" type="button" data-album-book-turn="previous" ${chapterIndex === 0 ? "disabled" : ""} aria-label="Previous chapter">‹</button><button class="album-book-turn album-book-turn-next" type="button" data-album-book-turn="next" ${chapterIndex === chapters.length - 1 ? "disabled" : ""} aria-label="Next chapter">›</button></div></section>`;
+    const chapterNav = `<nav class="album-book-chapter-nav" aria-label="Character Book chapters" ${hasTabs ? "" : "aria-hidden=\"true\" style=\"visibility:hidden\""}><button type="button" data-album-chapter-scroll="-1" ${hasTabs ? "" : "tabindex=\"-1\""} aria-label="Show previous chapters">‹</button><div class="album-book-chapters">${hasTabs ? collections.map((entry, index) => `<button type="button" data-album-chapter="${index}" ${index === collectionIndex ? "aria-current=\"page\"" : ""}>${entry.title}</button>`).join("") : "<button type=\"button\" tabindex=\"-1\">MEMORIES</button>"}</div><button type="button" data-album-chapter-scroll="1" ${hasTabs ? "" : "tabindex=\"-1\""} aria-label="Show next chapters">›</button></nav>`;
+    album.innerHTML = `<div class="character-album-backdrop" data-album-close></div><section class="album-book-card" aria-labelledby="character-album-title"><header class="album-book-head"><div><p class="kicker">${pretty(currentCharacter)}'S COLLECTION</p><h2 id="character-album-title">CHARACTER BOOK</h2></div><button class="album-book-close" type="button" data-album-book-close aria-label="Back to Character Album">×</button></header>${chapterNav}<div class="album-book-stage"><div class="album-book-page-title"><span>${collection.title}</span><small>PAGE ${collectionPage + 1} / ${pageCount}</small></div><div class="album-book-pages">${slots}</div><button class="album-book-turn album-book-turn-prev" type="button" data-album-book-turn="previous" ${collectionPage === 0 ? "disabled" : ""} aria-label="Previous page">‹</button><button class="album-book-turn album-book-turn-next" type="button" data-album-book-turn="next" ${collectionPage === pageCount - 1 ? "disabled" : ""} aria-label="Next page">›</button></div></section>`;
     album.querySelectorAll(".album-memory-thumb").forEach((video) => seekThumbnail(video, portrait(currentCharacter)));
   };
-  const openViewer = (id) => {
-    const chapter = chapters[chapterIndex];
+  const openViewer = (record, collection) => {
+    const caption = recordCaption(record, collection);
     const viewer = document.createElement("section");
     viewer.className = "album-viewer";
-    viewer.innerHTML = `<article class="album-viewer-card"><header class="album-viewer-head"><div><p class="kicker">CHARACTER REPLAY</p><h2>WATCH THE VIDEO</h2><p>${pretty(currentCharacter)} · ${chapter.title}</p></div><button class="album-viewer-close" type="button" data-album-viewer-close aria-label="Close character video">×</button></header><video controls playsinline preload="metadata" src="${videoSource(id)}"></video></article>`;
+    viewer.innerHTML = `<article class="album-viewer-card"><header class="album-viewer-head"><div><p class="kicker">CHARACTER REPLAY</p><h2>WATCH THE VIDEO</h2><p>${pretty(currentCharacter)} · ${caption}</p></div><button class="album-viewer-close" type="button" data-album-viewer-close aria-label="Close character video">×</button></header><video controls playsinline preload="metadata" src="${videoSource(record)}"></video></article>`;
     const video = viewer.querySelector("video");
     video.addEventListener("play", () => document.dispatchEvent(new CustomEvent("characteralbumvideostart")));
     video.addEventListener("pause", () => document.dispatchEvent(new CustomEvent("characteralbumvideoend")));
@@ -106,11 +121,11 @@
     viewer.querySelector("[data-album-viewer-close]").addEventListener("click", close);
     viewer.addEventListener("click", (event) => { if (event.target === viewer) close(); });
     video.addEventListener("ended", () => {
-      markWatched(id);
-      const card = album.querySelector(`[data-album-video="${id}"]`);
+      markWatched(record.id);
+      const card = album.querySelector(`[data-album-video="${record.id}"]`);
       card?.classList.remove("is-unwatched");
       const caption = card?.querySelector(".album-memory-caption");
-      if (caption) caption.textContent = chapter.title;
+      if (caption) caption.textContent = card.dataset.albumCaption;
     }, { once: true });
     album.append(viewer);
     video.play().catch(() => {});
@@ -140,15 +155,15 @@
     const page = event.target.closest("[data-album-character-page]");
     if (page) { characterPage += page.dataset.albumCharacterPage === "next" ? 1 : -1; renderCharacters(false); return; }
     const character = event.target.closest("[data-album-character]");
-    if (character) { currentCharacter = character.dataset.albumCharacter; chapterIndex = 0; renderBook(); return; }
+    if (character) { currentCharacter = character.dataset.albumCharacter; collectionIndex = 0; collectionPage = 0; renderBook(); return; }
     const chapter = event.target.closest("[data-album-chapter]");
-    if (chapter) { chapterIndex = Number(chapter.dataset.albumChapter); renderBook(); return; }
+    if (chapter) { collectionIndex = Number(chapter.dataset.albumChapter); collectionPage = 0; renderBook(); return; }
     const chapterScroll = event.target.closest("[data-album-chapter-scroll]");
     if (chapterScroll) { album.querySelector(".album-book-chapters")?.scrollBy({ left: Number(chapterScroll.dataset.albumChapterScroll) * 260, behavior: "smooth" }); return; }
     const turn = event.target.closest("[data-album-book-turn]");
-    if (turn) { chapterIndex += turn.dataset.albumBookTurn === "next" ? 1 : -1; renderBook(); return; }
+    if (turn) { collectionPage += turn.dataset.albumBookTurn === "next" ? 1 : -1; renderBook(); return; }
     const video = event.target.closest("[data-album-video]");
-    if (video) openViewer(video.dataset.albumVideo);
+    if (video) { const collection = collectionsForCharacter()[collectionIndex]; const record = collection.records.find((item) => item.id === video.dataset.albumVideo); if (record) openViewer(record, collection); }
   });
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape" || album.hidden) return;

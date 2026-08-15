@@ -11,4 +11,17 @@ window.LeagueListening.GAME_CONFIG = Object.freeze({
   rosterPointRatio: Object.freeze({ gamePoints: 100, rosterPoints: 3 })
 });
 
+window.LeagueListening.VIDEO_BASE_URL = "https://media.adilhoca.com/video/";
+window.LeagueListening.resolveVideoSrc = (source) => {
+  if (!source || /^https?:\/\//i.test(source)) return source;
+  const fileName = String(source).split(/[\\/]/).pop();
+  return `${window.LeagueListening.VIDEO_BASE_URL}${encodeURIComponent(fileName)}`;
+};
+
+if (Array.isArray(window.LEAGUE_OF_LISTENING_ITEMS)) {
+  window.LEAGUE_OF_LISTENING_ITEMS.forEach((item) => {
+    if (item?.videoSrc) item.videoSrc = window.LeagueListening.resolveVideoSrc(item.videoSrc);
+  });
+}
+
 window.LeagueListening.teamColors = ["blue", "green", "orange"];
