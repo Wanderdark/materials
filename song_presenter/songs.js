@@ -23,6 +23,9 @@
             uyuşmuyorsa veya videos/ dışında bir yerdeyse doldur, ör.
             "ozel/klasor/video.mp4" — o zaman otomatik aramayı atlar
             ve direkt bu yolu kullanır.
+   videotimingdelay : yalnızca VID modundaki söz zamanlaması için saniye
+            cinsinden + / - ince ayar. Ör. 0.35 veya -0.20. Boş "" ise 0
+            kabul edilir; MP3 ve karaoke zamanlamasını etkilemez.
    image  : şarkı kapak görseli, ör. "images/kapak.webp" — yoksa: null
    spotify : Spotify şarkı adresi, ör. "https://open.spotify.com/track/..." — yoksa: ""
 
@@ -124,6 +127,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/learningtogether.mp3",
     video: "https://media.adilhoca.com/video/learningtogethergrowingtogether.mp4",
+    videotimingdelay: "",
     image: "thumbnails/learningtogether.webp",
     spotify: "https://open.spotify.com/track/5iegMmeMo4dnq0KsaSKFgC",
     videoclose: null,
@@ -217,6 +221,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/sidebyside.mp3",
     video: "https://media.adilhoca.com/video/sidebyside.mp4",
+    videotimingdelay: "1",
     image: "thumbnails/sidebyside.webp",
     spotify: "https://open.spotify.com/track/5SO7bP1vjAX70oZ5DMlDKc",
     videoclose: null,
@@ -314,6 +319,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/inmyownway.mp3",
     video: null,
+    videotimingdelay: "",
     image: "thumbnails/inmyownway.webp",
     spotify: "https://open.spotify.com/track/4frUoNmfs5j7BnlDsZXggt",
     videoclose: null,
@@ -403,6 +409,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/ashorrain.mp3",
     video: null,
+    videotimingdelay: "",
     image: "thumbnails/ashorrain.webp",
     spotify: "https://open.spotify.com/track/5vGBSL2Oqit2tb9Y84bT9N",
     videoclose: null,
@@ -491,6 +498,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/thepriceyouneverpay.mp3",
     video: null,
+    videotimingdelay: "",
     image: "thumbnails/thepriceyouneverpay.webp",
     spotify: "https://open.spotify.com/track/2bI8TPvYhZyeoHrUwxJvhH",
     videoclose: null,
@@ -587,6 +595,7 @@ window.SONGS = [
     artist: "Ella",
     audio: "songs/thenoiseofhome.mp3",
     video: null,
+    videotimingdelay: "",
     image: "thumbnails/thenoiseofhome.webp",
     spotify: "",
     videoclose: null,

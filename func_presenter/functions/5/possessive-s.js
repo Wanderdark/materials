@@ -389,6 +389,30 @@ const possessiveSFunction = {
           shuffleChoices: true
         }
       ]
+    },
+    {
+      id: "possessive-s-video-olivia-chloe-luna",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_olivia_chloe.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "Is that " }, { answer: "Luna's", choices: ["Luna's", "Luna"] }, { text: " toy mouse?" }] }, { speaker: "CHLOE", parts: [{ text: "Yes, it's her favorite toy." }] }] }
+    },
+    {
+      id: "possessive-s-video-benjamin-lucas-daniel",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_benjamin_lucas.mp4", lines: [{ speaker: "LUCAS", parts: [{ answer: "Daniel's", choices: ["Daniel's", "Daniels"] }, { text: " sports bag is still here." }] }, { speaker: "BENJAMIN", parts: [{ text: "Again?" }] }, { speaker: "LUCAS", parts: [{ text: "Yep, he'll be back in a minute." }] }] }
+    },
+    {
+      id: "possessive-s-video-olivia-fiona-wig",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_olivia_fiona.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "Mom, is that the " }, { answer: "customer's", choices: ["customer's", "customer"] }, { text: " wig?" }] }, { speaker: "FIONA", parts: [{ text: "No, it's the " }, { answer: "mannequin's", choices: ["mannequin's", "mannequins"] }, { text: "." }] }] }
+    },
+    {
+      id: "possessive-s-video-ava-chloe-woman",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_ava_chloe.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "That " }, { answer: "woman's", choices: ["woman's", "woman"] }, { text: " bag is still on the bench." }] }, { speaker: "AVA", parts: [{ text: "She hasn't noticed, excuse me!" }] }, { speaker: "WOMAN", parts: [{ text: "Thank you, sweetie." }] }] }
+    },
+    {
+      id: "possessive-s-video-jack-david-dad",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_jack_david.mp4", lines: [{ speaker: "DAVID", parts: [{ text: "Your " }, { answer: "dad's", choices: ["dad's", "dads"] }, { text: " fishing rod is taller than you." }] }, { speaker: "JACK", parts: [{ text: "Yeah, and he still expects me to carry it." }] }] }
+    },
+    {
+      id: "possessive-s-video-david-valeria-suitcase",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_david_valeria.mp4", lines: [{ speaker: "DAVID", parts: [{ text: "Mom, is that the " }, { answer: "guest's", choices: ["guest's", "guests"] }, { text: " suitcase?" }] }, { speaker: "VALERIA", parts: [{ text: "Yes, it's the " }, { answer: "magician's", choices: ["magician's", "magician"] }, { text: "." }] }] }
     }
   ]
 };

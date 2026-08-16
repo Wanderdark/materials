@@ -279,6 +279,70 @@ const presentProgressiveFunction = {
       ]
     },
     {
+      id: "present-progressive-video-chloe-luna",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_chloe_luna.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Luna, what " }, { answer: "are", choices: ["is", "are"] }, { text: " you doing? Fine, you play it, I'll listen." }] }] }
+    },
+    {
+      id: "present-progressive-video-emma-chloe-foam",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/school_life_emma_chloe.mp4", lines: [{ speaker: "EMMA", parts: [{ text: "The foam is " }, { answer: "rising", choices: ["rise", "rising"] }, { text: " too fast." }] }, { speaker: "CHLOE", parts: [{ text: "I'll move the books!" }] }] }
+    },
+    {
+      id: "present-progressive-video-ella-olivia-sunny",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/school_life_olivia_ella_sunny.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Sunny took my ribbon!" }] }, { speaker: "OLIVIA", parts: [{ text: "He's " }, { answer: "flying", choices: ["flying", "flies"] }, { text: " toward the fountain!" }] }] }
+    },
+    {
+      id: "present-progressive-video-olivia-balloon",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_school_life_ella_olivia_2.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "My balloon " }, { answer: "is", choices: ["is", "are"] }, { text: " getting away." }] }] }
+    },
+    {
+      id: "present-progressive-video-victoria-pixel",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_victoria_pixel.mp4", lines: [{ speaker: "VICTORIA", parts: [{ text: "Great, you are " }, { answer: "coding", choices: ["code", "coding"] }, { text: " now?" }] }] }
+    },
+    {
+      id: "present-progressive-video-emma-david-worksheets",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/classroom_life_emma_david.mp4", lines: [{ speaker: "EMMA", parts: [{ text: "The worksheets " }, { answer: "are", choices: ["am", "is", "are"] }, { text: " flying everywhere." }] }, { speaker: "DAVID", parts: [{ text: "I've got the last one!" }] }] }
+    },
+    {
+      id: "present-progressive-video-chloe-ella-olivia",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_chloe_ella_olivia.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "Chloe, what " }, { answer: "are", choices: ["am", "is", "are"] }, { text: " you doing?" }] }, { speaker: "CHLOE", parts: [{ text: "Just " }, { answer: "having", choices: ["have", "having"] }, { text: " fun." }] }] }
+    },
+    {
+      id: "present-progressive-video-chloe-luna-reading",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_chloe_luna2.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Heyyy, I " }, { answer: "am", choices: ["am", "is", "are"] }, { text: " reading here." }] }] }
+    },
+    {
+      id: "present-progressive-video-hannah-lars-packing",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_hannah_lars.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "What " }, { answer: "are", choices: ["is", "are"] }, { text: " you packing, Dad?" }] }, { speaker: "LARS", parts: [{ text: "I'm " }, { answer: "preparing", choices: ["prepare", "preparing"] }, { text: " our camping bags." }] }] }
+    },
+    {
+      id: "present-progressive-video-ella-charlotte-sunny",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_ella_charlotte_sunny.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "What are you " }, { answer: "playing", choices: ["play", "playing"] }, { text: ", Mum?" }] }, { speaker: "CHARLOTTE", parts: [{ text: "I " }, { answer: "am", choices: ["am", "is", "are"] }, { text: " practising a new song." }] }] }
+    },
+    {
+      id: "present-progressive-video-hannah-lars-ingrid",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_hannah_lars_ingrid.mp4", lines: [{ speaker: "INGRID", parts: [{ text: "We " }, { answer: "are", choices: ["is", "are"] }, { text: " driving to the forest, aren't we?" }] }, { speaker: "HANNAH", parts: [{ text: "Yeyyy, Barbecue time!" }] }] }
+    },
+    {
+      id: "present-progressive-video-victoria-monica",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_victoria_monica.mp4", lines: [{ speaker: "VICTORIA", parts: [{ text: "You're " }, { answer: "working", choices: ["working", "works"] }, { text: " at home today, aren't you, Mum?" }] }, { speaker: "MONICA", parts: [{ text: "Yes, I'm finishing an important task." }] }, { speaker: "VICTORIA", parts: [{ text: "Do you need any help?" }] }] }
+    },
+    {
+      id: "present-progressive-video-ethan-james",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_ethan_james.mp4", lines: [{ speaker: "ETHAN", parts: [{ text: "You're " }, { answer: "reading", choices: ["read", "reading"] }, { text: " the sports page, aren't you, Dad?" }] }, { speaker: "JAMES", parts: [{ text: "Yes, I am, I " }, { answer: "am", choices: ["am", "is", "are"] }, { text: " checking the golf results." }] }] }
+    },
+    {
+      id: "present-progressive-video-emma-sophie",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_emma_sophie.mp4", lines: [{ speaker: "EMMA", parts: [{ text: "What " }, { answer: "are", choices: ["is", "are"] }, { text: " you cooking, Mum?" }] }, { speaker: "SOPHIE", parts: [{ text: "I'm " }, { answer: "cooking", choices: ["cook", "cooking"] }, { text: " vegetable soup, dear." }] }] }
+    },
+    {
+      id: "present-progressive-video-chloe-julien",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_chloe_julien.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "What are you " }, { answer: "doing", choices: ["do", "doing"] }, { text: ", Dad?" }] }, { speaker: "JULIEN", parts: [{ text: "I " }, { answer: "am", choices: ["am", "is", "are"] }, { text: " organising the living room." }] }] }
+    },
+    {
+      id: "present-progressive-video-victoria-pixel-fun",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/fun_victoria_pixel.mp4", lines: [{ speaker: "VICTORIA", parts: [{ text: "What " }, { answer: "am", choices: ["am", "are"] }, { text: " I doing wrong?" }] }] }
+    },
+    {
       id: "pp-vs-simple-present",
       presenceSlide: true,
       kicker: "PRESENT PROGRESSIVE",
@@ -363,6 +427,30 @@ const presentProgressiveFunction = {
           }
         }
       ]
+    },
+    {
+      id: "present-progressive-vs-simple-video-mia-giulia",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_mia_giulia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "You usually cook at this time, Mum." }] }, { speaker: "GIULIA", parts: [{ text: "Yes, but I'm " }, { answer: "reading", choices: ["read", "reads", "reading"] }, { text: " the newspaper now." }] }] }
+    },
+    {
+      id: "present-progressive-vs-simple-video-chloe-camille-julien",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_chloe_camille_julien.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "You usually bake cakes, Mum." }] }, { speaker: "CAMILLE", parts: [{ text: "Yes, but I'm " }, { answer: "making", choices: ["make", "makes", "making"] }, { text: " pancakes now." }] }] }
+    },
+    {
+      id: "present-progressive-vs-simple-video-benjamin-oliver",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "You usually swim in the morning, Dad." }] }, { speaker: "OLIVER", parts: [{ text: "Yes, but I'm " }, { answer: "resting", choices: ["rest", "rests", "resting"] }, { text: " today." }] }] }
+    },
+    {
+      id: "present-progressive-vs-simple-video-daniel-javier",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_daniel_javier.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "You usually fix cars, Dad." }] }, { speaker: "JAVIER", parts: [{ text: "Yes, but I'm " }, { answer: "fixing", choices: ["fix", "fixes", "fixing"] }, { text: " my bicycle today." }] }] }
+    },
+    {
+      id: "present-progressive-vs-simple-video-lucas-gabriel",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_lucas_gabriel.mp4", lines: [{ speaker: "LUCAS", parts: [{ text: "You usually work on Saturdays, Dad." }] }, { speaker: "GABRIEL", parts: [{ text: "Yes, but we're " }, { answer: "having", choices: ["have", "has", "having"] }, { text: " a picnic today." }] }, { speaker: "LUCAS", parts: [{ text: "Yesss!" }] }] }
+    },
+    {
+      id: "present-progressive-vs-simple-video-benjamin-oliver-emily",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver_emily.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "You always plan holidays for other people, Mum." }] }, { speaker: "EMILY", parts: [{ text: "Yes, but I'm " }, { answer: "planning", choices: ["plan", "plans", "planning"] }, { text: " for us today." }] }, { speaker: "BENJAMIN", parts: [{ text: "This one looks so cool!" }] }] }
     },
     {
       id: "pp-fill-blank-bridge",

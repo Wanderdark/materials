@@ -414,6 +414,11 @@
      SAYFA 2 — DURING-LISTENING (player + boşluk doldurma)
      ════════════════════════════════════════════════════════════════════ */
   /* ── Karaoke: aktif satırı vurgula + satır içi ilerleme dolgusu ── */
+  function getVideoTimingDelay(s) {
+    const delay = Number(s?.videotimingdelay);
+    return Number.isFinite(delay) ? delay : 0;
+  }
+
   function updateKaraoke(t) {
     let idx = -1;
     for (let i = 0; i < karaokeLines.length; i++) {
@@ -523,7 +528,7 @@
         return;
       }
       lastMediaT = t;
-      if (karaokeLines.length) updateKaraoke(t);
+      if (karaokeLines.length) updateKaraoke(playerMode === "video" ? t + getVideoTimingDelay(song) : t);
       if (climaxMoments.length || karaokeClimaxMoments.length) updateClimax(t);
       if (playerMode === "video" && autoZoomWindows.length) updateAutoZoom(t);
       if (censoredWindows.length || karaokeCensoredWindows.length) updateCensor(t);
@@ -773,7 +778,7 @@
     const fromKaraoke = playerMode === "karaoke";
     const wasPlaying = mediaEl && !mediaEl.paused;
     const t = mediaEl ? mediaEl.currentTime : 0;
-    if (videoIsSource || (videoSrc && fromKaraoke)) {
+    if (videoIsSource) {
       /* video kaynaklı şarkı: kapak görünümüyle baştan kur */
       mountMainVideo(wasPlaying || fromKaraoke);
       return;
@@ -853,11 +858,8 @@
       if (song !== thisSong) return;
       videoSrc = src;
       els.videoButton.disabled = false;
-      /* Video varsa mp3'e gerek yok: çalma henüz başlamadıysa ses
-         kaynağını videoya devret (görselde kapak durur) */
-      if (mediaEl === els.audio && els.audio.paused && els.audio.currentTime < 0.3 && playerMode === "audio") {
-        mountMainVideo(false);
-      }
+      /* Video bulunduysa şarkı VID modunda başlar. */
+      enterVideoMode([videoSrc], "video");
     });
     karaokeSrc = null;
     els.micButton.disabled = true;

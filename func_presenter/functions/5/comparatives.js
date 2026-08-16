@@ -251,6 +251,86 @@ const comparativesFunction = {
       ]
     },
     {
+      id: "comparatives-video-ella-sunny",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ella_sunny2.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Try again, but try " }, { answer: "better", choices: ["gooder", "better"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-hannah-emma-street-fair",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_hannah_emma.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "The street fair's music is getting " }, { answer: "louder", choices: ["quieter", "louder"] }, { text: "." }] }, { speaker: "EMMA", parts: [{ text: "Good, we must be getting " }, { answer: "closer", choices: ["closer", "farther"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-zoe-mia-house",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_zoe_mia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "This wooden house looks " }, { answer: "more beautiful", choices: ["beautifuler", "more beautiful"] }, { text: " than that flat." }] }, { speaker: "ZOE", parts: [{ text: "Yes, but the flat is " }, { answer: "more modern", choices: ["moderner", "more modern"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-zoe-mia-flat",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_zoe_mia2.mp4", lines: [{ speaker: "MIA", parts: [{ text: "That flat is much taller " }, { answer: "than", choices: ["to", "than"] }, { text: " the wooden house." }] }, { speaker: "ZOE", parts: [{ text: "True, but the wooden house looks " }, { answer: "more traditional", choices: ["more traditional", "traditionaler"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-noah-ethan-tv",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_noah_ethan.mp4", lines: [{ speaker: "NOAH", parts: [{ text: "This TV is " }, { answer: "bigger", choices: ["faster", "bigger"] }, { text: " than that one." }] }, { speaker: "ETHAN", parts: [{ text: "Yes, but that one is more advanced and " }, { answer: "more expensive", choices: ["more cheap", "more expensive"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-chloe-ava-giraffe",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_chloe_ava.mp4", lines: [{ speaker: "AVA", parts: [{ text: "The giraffe is " }, { answer: "taller", choices: ["shorter", "taller"] }, { text: " than the zebra." }] }] }
+    },
+    {
+      id: "comparatives-video-lucas-jack-sharks",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_lucas_jack.mp4", lines: [{ speaker: "JACK", parts: [{ text: "Yes, and sharks are " }, { answer: "older", choices: ["slower", "older"] }, { text: " than trees." }] }] }
+    },
+    {
+      id: "comparatives-video-ella-daniel-roller-coaster",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_ella_daniel.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "The roller coaster is " }, { answer: "faster", choices: ["slower", "faster"] }, { text: " than the bumper cars." }] }, { speaker: "ELLA", parts: [{ text: "I agree, but the bumper cars are " }, { answer: "funnier", choices: ["older", "funnier"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-ella-daniel-bumper-cars",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_ella_daniel2.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "You were right! This is really " }, { answer: "faster", choices: ["faster", "slower"] }, { text: " and " }, { answer: "funnier", choices: ["funnier", "more boring"] }, { text: " than the bumper cars!" }] }] }
+    },
+    {
+      id: "comparatives-video-hannah-lars-bridge",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_hannah_lars.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "This bridge is " }, { answer: "higher", choices: ["high", "higher"] }, { text: " than I expected!" }] }, { speaker: "LARS", parts: [{ text: "And " }, { answer: "less dangerous", choices: ["less dangerous", "more dangerous"] }, { text: " than the last one!" }] }] }
+    },
+    {
+      id: "comparatives-video-jack-callum-fish",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_jack_callum.mp4", lines: [{ speaker: "JACK", parts: [{ text: "I can catch a " }, { answer: "bigger", choices: ["big", "bigger"] }, { text: " fish than that." }] }] }
+    },
+    {
+      id: "comparatives-video-chloe-julien-trex",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_chloe_julien.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "T rex is " }, { answer: "bigger", choices: ["bigger", "big"] }, { text: " than I expected!" }] }, { speaker: "JULIEN", parts: [{ text: "And its teeth are " }, { answer: "longer", choices: ["tall", "longer"] }, { text: " than your hand." }] }] }
+    },
+    {
+      id: "comparatives-video-daniel-elena-sled",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_daniel_elena.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "Mom, my sled is " }, { answer: "faster", choices: ["expensive", "faster"] }, { text: " than yours!" }] }] }
+    },
+    {
+      id: "comparatives-video-mia-giulia-pizza",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_mia_giulia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "Your pizza is " }, { answer: "bigger", choices: ["smaller", "bigger"] }, { text: " than mine." }] }, { speaker: "GIULIA", parts: [{ text: "But yours looks more delicious." }] }] }
+    },
+    {
+      id: "comparatives-video-chloe-camille-flower",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_chloe_camille.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Mom, my flower is " }, { answer: "taller", choices: ["taller", "long"] }, { text: " than yours." }] }, { speaker: "CAMILLE", parts: [{ text: "Yes, but mine has " }, { answer: "more", choices: ["more", "less"] }, { text: " flowers." }] }] }
+    },
+    {
+      id: "comparatives-video-ella-olivia-skyscraper",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_ella_olivia2.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "That skyscraper is " }, { answer: "taller", choices: ["shorter", "taller"] }, { text: " than the tower." }] }, { speaker: "OLIVIA", parts: [{ text: "Yes, but the tower is much older." }] }] }
+    },
+    {
+      id: "comparatives-video-daniel-lucas-gym",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_daniel_lucas.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "This place is " }, { answer: "bigger", choices: ["faster", "bigger"] }, { text: " than our school gym." }] }, { speaker: "LUCAS", parts: [{ text: "Yeah, I already feel " }, { answer: "stronger", choices: ["more expensive", "stronger"] }, { text: "." }] }] }
+    },
+    {
+      id: "comparatives-video-daniel-hannah-storm",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_daniel_hannah.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "My scooter is so fast!" }] }, { speaker: "HANNAH", parts: [{ text: "But Storm is " }, { answer: "faster", choices: ["faster", "slower"] }, { text: "!" }] }] }
+    },
+    {
+      id: "comparatives-video-jack-david-fishing-rod",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_jack_david.mp4", lines: [{ speaker: "DAVID", parts: [{ text: "Your dad's fishing rod is " }, { answer: "taller", choices: ["shorter", "taller"] }, { text: " than you." }] }] }
+    },
+    {
+      id: "comparatives-video-ella-sunny-penguins",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_sunny2.mp4", lines: [{ speaker: "PRESENTER", parts: [{ text: "Some penguins can live in places " }, { answer: "colder", choices: ["colder", "hotter"] }, { text: " than minus fifty degrees!" }] }, { speaker: "ELLA", parts: [{ text: "That cold?" }] }] }
+    },
+    {
       id: "comparatives-student-reveal",
       presenceSlide: true,
       kicker: "COMPARATIVES",
