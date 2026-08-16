@@ -295,6 +295,104 @@ const thereIsAreFunction = {
         { parts: [{ text: "How many Computer lessons are there in a week?" }], choices: ["2", "3", "5"], answer: "3" },
         { parts: [{ text: "How many P.E. lessons are there in a week?" }], choices: ["1", "2", "4"], answer: "2" }
       ]
+    },
+    {
+      id: "classroom-life-ella-olivia-bag-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ella_olivia.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "Is there " }, { answer: "a dictionary", choices: ["a notebook", "a dictionary"] }, { text: " in your bag?" }] },
+          { speaker: "OLIVIA", parts: [{ text: "Yes, " }, { answer: "there is", choices: ["there is", "there isn't"] }, { text: ". You can borrow it." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-chloe-scissors-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_chloe.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ text: "Are there any scissors in the " }, { answer: "bookcase", choices: ["bag", "bookcase"] }, { text: "?" }] },
+          { speaker: "ART TEACHER", parts: [{ text: "Yes, there " }, { answer: "are", choices: ["is", "are"] }, { text: ". They're next to the glue." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-daniel-victoria-seats-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_daniel_victoria.mp4",
+        lines: [
+          { speaker: "DANIEL", parts: [{ answer: "Are there", choices: ["Is there", "Are there"] }, { text: " any free seats near the smartboard?" }] },
+          { speaker: "VICTORIA", parts: [{ answer: "Yes", choices: ["Yes", "no"] }, { text: ", there are two." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-ava-classroom-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ava.mp4",
+        lines: [
+          { speaker: "AVA", parts: [{ text: "Is there a " }, { answer: "teacher", choices: ["teacher", "student"] }, { text: " in the classroom?" }] },
+          { speaker: "ASSISTANT HEADMASTER", parts: [{ text: "Yes, there " }, { answer: "is", choices: ["are", "is"] }, { text: ". She's beside the bookcase." }] }
+        ]
+      }
+    },
+    {
+      id: "personal-life-ava-olivia-paint-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_personal_life_ava_olivia.mp4",
+        lines: [
+          { speaker: "AVA", parts: [{ answer: "There is", choices: ["There is", "there isn't"] }, { text: " a yellow paint on your nose." }] }
+        ]
+      }
+    },
+    {
+      id: "city-life-emma-hannah-octopus-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_emma_hannah.mp4",
+        lines: [
+          { speaker: "EMMA", parts: [{ text: "There " }, { answer: "are", choices: ["is", "are"] }, { text: " three hearts in an octopus." }] },
+          { speaker: "HANNAH", parts: [{ text: "Yes, and its blood is blue." }] }
+        ]
+      }
+    },
+    {
+      id: "city-life-mia-zoe-ferris-wheel-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_mia_zoe2.mp4",
+        lines: [
+          { speaker: "MIA", parts: [{ answer: "There is", choices: ["There is", "there are"] }, { text: " a giant Ferris wheel over there." }] },
+          { speaker: "ZOE", parts: [{ text: "And " }, { answer: "there are", choices: ["there is", "there are"] }, { text: " bumper cars near the gate." }] }
+        ]
+      }
+    },
+    {
+      id: "city-life-hannah-benjamin-car-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_hannah_benjamin.mp4",
+        lines: [
+          { speaker: "HANNAH", parts: [{ text: "Mom, " }, { answer: "there is", choices: ["there is", "there are"] }, { text: " Benjamin in that blue car!" }] },
+          { speaker: "BENJAMIN", parts: [{ text: "And " }, { answer: "there are", choices: ["there is", "there are"] }, { text: " no cars between us!" }] }
+        ]
+      }
+    },
+    {
+      id: "city-life-hannah-lars-waterfall-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_city_hannah_lars2.mp4",
+        lines: [
+          { speaker: "HANNAH", parts: [{ text: "Dad, " }, { answer: "there is", choices: ["there isn't", "there is"] }, { text: " a waterfall down there!" }] },
+          { speaker: "LARS", parts: [{ text: "And " }, { answer: "there are", choices: ["there is", "there are"] }, { text: " eagles above the valley." }] }
+        ]
+      }
     }
   ]
 };

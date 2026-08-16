@@ -128,6 +128,140 @@ const simplePresentDoYouLikeFunction = {
           }
         }
       ]
+    },
+    {
+      id: "school-life-chloe-emma-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_chloe_emma.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ text: "Do you like " }, { answer: "doing", choices: ["do", "doing"] }, { text: " science experiments?" }] },
+          { speaker: "EMMA", parts: [{ text: "Yes I do, they're exciting." }] }
+        ]
+      }
+    },
+    {
+      id: "school-life-noah-victoria-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_noah_victoria.mp4",
+        lines: [
+          { speaker: "NOAH", parts: [{ text: "Do you like " }, { answer: "solving", choices: ["solve", "solving"] }, { text: " puzzles?" }] },
+          { speaker: "VICTORIA", parts: [{ text: "Yes, I " }, { answer: "solve", choices: ["solve", "solving"] }, { text: " one every day." }] }
+        ]
+      }
+    },
+    {
+      id: "school-life-ella-olivia-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_ella_olivia.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "Do you like " }, { answer: "drawing", choices: ["drawing", "draw"] }, { text: " after school?" }] },
+          { speaker: "OLIVIA", parts: [{ text: "Yes, but I like " }, { answer: "taking", choices: ["take", "taking"] }, { text: " photos more." }] }
+        ]
+      }
+    },
+    {
+      id: "school-life-lucas-daniel-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_lucas_daniel.mp4",
+        lines: [
+          { speaker: "LUCAS", parts: [{ text: "Do you like " }, { answer: "playing", choices: ["play", "playing"] }, { text: " basketball?" }] },
+          { speaker: "DANIEL", parts: [{ text: "Yes, but table tennis is my " }, { answer: "favorite", choices: ["like", "favorite"] }, { text: "." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-olivia-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_olivia.mp4",
+        lines: [
+          { speaker: "OLIVIA", parts: [{ text: "I love " }, { answer: "taking", choices: ["take", "taking"] }, { text: " photos, I also " }, { answer: "enjoy", choices: ["enjoy", "hate"] }, { text: " painting and art." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-emma-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_emma.mp4",
+        lines: [
+          { speaker: "EMMA", parts: [{ text: "I " }, { answer: "love", choices: ["don't like", "love"] }, { text: " cooking and baking, I enjoy " }, { answer: "doing", choices: ["do", "doing"] }, { text: " science experiments and helping my friends." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-david-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_david.mp4",
+        lines: [
+          { speaker: "DAVID", parts: [{ text: "I love " }, { answer: "travelling", choices: ["travel", "travelling"] }, { text: " and discovering new places, I " }, { answer: "enjoy", choices: ["don't like", "enjoy"] }, { text: " camping with my friends." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-ethan-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_ethan.mp4",
+        lines: [
+          { speaker: "ETHAN", parts: [{ text: "I " }, { answer: "enjoy", choices: ["hate", "enjoy"] }, { text: " playing the violin and " }, { answer: "listening", choices: ["listen", "listening"] }, { text: " to classical music, I also love playing golf." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-jack-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_jack.mp4",
+        lines: [
+          { speaker: "JACK", parts: [{ text: "I love gardening, I enjoy " }, { answer: "fishing", choices: ["swimming", "fishing"] }, { text: " and hiking." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-lucas-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_lucas.mp4",
+        lines: [
+          { speaker: "LUCAS", parts: [{ text: "I love " }, { answer: "playing", choices: ["play", "playing"] }, { text: " football, I also enjoy " }, { answer: "swimming", choices: ["hiking", "swimming"] }, { text: "." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-noah-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_noah.mp4",
+        lines: [
+          { speaker: "NOAH", parts: [{ text: "I love " }, { answer: "studying", choices: ["studying", "study"] }, { text: " and learning new things, I enjoy playing " }, { answer: "chess", choices: ["football", "chess"] }, { text: " and solving puzzles." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-family-chloe-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_family_chloe.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ text: "My mum is Camille, she’s a baker, and she " }, { answer: "loves", choices: ["love", "loves"] }, { text: " growing flowers. My dad is Julien, he’s an interior designer, and he " }, { answer: "loves", choices: ["love", "loves"] }, { text: " visiting museums." }] }
+        ]
+      }
+    },
+    {
+      id: "introduce-family-ella-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_family_ella.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "My mum is Charlotte, she’s a music teacher and " }, { answer: "loves", choices: ["loves", "love"] }, { text: " playing the piano. My dad is Liam, he’s a radio presenter and " }, { answer: "loves", choices: ["love", "loves"] }, { text: " listening to music." }] }
+        ]
+      }
     }
   ]
 };

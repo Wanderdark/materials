@@ -141,7 +141,8 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .player-visual .cover-overlay { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; background: linear-gradient(150deg, #1b3a7c, #0a1638); }
 .player-visual .cover-overlay img { width: 100%; height: 100%; object-fit: contain; }
 /* Sansür anlarında videoyu tamamen örten siyah katman */
-.player-visual .censor-overlay { position: absolute; inset: 0; z-index: 3; background: #000; }
+.player-visual .censor-overlay { position: absolute; inset: 0; z-index: 4; background: #000; }
+.video-lyric-overlay { position: absolute; right: 5%; bottom: 5%; left: 5%; z-index: 3; margin: 0; color: var(--yellow); font-size: clamp(17px, 1.7vw, 24px); font-weight: 700; line-height: 1.55; text-align: center; text-shadow: 0 3px 4px #000, 0 0 18px rgba(0,0,0,.95); pointer-events: none; }
 .player-visual .cover-note { color: var(--yellow); font-family: var(--display); font-size: clamp(60px, 6vw, 96px); text-shadow: 0 8px 30px rgba(0,0,0,.5); }
 .player-visual .cover-note.playing { animation: pulse 1.1s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }

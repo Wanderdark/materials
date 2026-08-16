@@ -40,6 +40,87 @@ const toBeTellingTimeFunction = {
     { id: "quarter-to-two-prompt", focus: "QUARTER TO", referenceType: "QUARTER TO", digitalTime: "1:45", timePrompt: true, answerSentence: "It is quarter to two." },
     { id: "quarter-to-three-prompt", focus: "QUARTER TO", referenceType: "QUARTER TO", digitalTime: "2:45", timePrompt: true, answerSentence: "It is quarter to three." },
 
+    {
+      id: "classroom-life-chloe-ella-time-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_chloe_ella.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "Is it " }, { answer: "2:00", choices: ["2:00", "2:30"] }, { text: " already?" }] },
+          { speaker: "CHLOE", parts: [{ text: "Yes, it is, Music starts now." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-hannah-mia-time-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_hannah_mia.mp4",
+        lines: [
+          { speaker: "HANNAH", parts: [{ text: "What time is it now?" }] },
+          { speaker: "MIA", parts: [{ text: "It's " }, { answer: "10:20", choices: ["10:15", "10:20"] }, { text: "." }] },
+          { speaker: "HANNAH", parts: [{ text: "We should hurry!" }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-chloe-noah-science-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_chloe_noah.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ text: "What time does double science start?" }] },
+          { speaker: "NOAH", parts: [{ answer: "10:30", choices: ["10:15", "10:30"] }] },
+          { speaker: "CHLOE", parts: [{ text: "Oh no, that's now, thanks!" }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-benjamin-jack-breaktime-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_benjamin_jack.mp4",
+        lines: [
+          { speaker: "BENJAMIN", parts: [{ text: "What time is it?" }] },
+          { speaker: "JACK", parts: [{ answer: "10:30", choices: ["10:30", "10:00"] }, { text: ". It's breaktime!" }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-noah-secretary-time-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_noah.mp4",
+        lines: [
+          { speaker: "NOAH", parts: [{ text: "Excuse me, what time is it?" }] },
+          { speaker: "SCHOOL SECRETARY", parts: [{ text: "It's " }, { answer: "1:15", choices: ["1:15", "1:45"] }] },
+          { speaker: "NOAH", parts: [{ text: "Thank you." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-victoria-ethan-it-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_victoria_ethan.mp4",
+        lines: [
+          { speaker: "ETHAN", parts: [{ text: "What time does information technology start?" }] },
+          { speaker: "VICTORIA", parts: [{ text: "It starts at " }, { answer: "9:00", choices: ["8:15", "9:00"] }, { text: "." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-zoe-hannah-lunch-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_zoe_hannah.mp4",
+        lines: [
+          { speaker: "HANNAH", parts: [{ text: "What time does lunch break start?" }] },
+          { speaker: "ZOE", parts: [{ text: "At " }, { answer: "12:10", choices: ["10:12", "12:10"] }, { text: "." }] },
+          { speaker: "HANNAH", parts: [{ text: "Great! I'm so hungry." }] }
+        ]
+      }
+    },
     { id: "monday-english", timetableSlide: true, focus: "TIMETABLE", sentenceParts: [{ text: "The English lesson starts " }, { text: "at", className: "timetable-preposition" }, { text: " half past nine", className: "timetable-detail" }, { text: " " }, { text: "on", className: "timetable-preposition" }, { text: " Monday.", className: "timetable-detail" }], imagePath: "images/telling-time/timetable.webp", visualBrief: "A weekly school timetable." },
     { id: "monday-science", timetableSlide: true, focus: "TIMETABLE", sentenceParts: [{ text: "The Science lesson starts " }, { text: "at", className: "timetable-preposition" }, { text: " quarter past ten", className: "timetable-detail" }, { text: " " }, { text: "on", className: "timetable-preposition" }, { text: " Monday.", className: "timetable-detail" }], imagePath: "images/telling-time/timetable.webp", visualBrief: "A weekly school timetable." },
     { id: "monday-maths", timetableSlide: true, focus: "TIMETABLE", sentenceParts: [{ text: "The Maths lesson starts " }, { text: "at", className: "timetable-preposition" }, { text: " half past eleven", className: "timetable-detail" }, { text: " " }, { text: "on", className: "timetable-preposition" }, { text: " Monday.", className: "timetable-detail" }], imagePath: "images/telling-time/timetable.webp", visualBrief: "A weekly school timetable." },

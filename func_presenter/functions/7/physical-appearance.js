@@ -1,3 +1,35 @@
+const physicalAppearanceGrade7VideoCharacters = [
+  { name: "AVA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_ava.mp4", lines: [{ speaker: "AVA", parts: [{ text: "Hi, I'm Ava, I have shoulder-length " }, { answer: "curly", choices: ["curly", "straight"] }, { text: " black hair and " }, { answer: "green", choices: ["blue", "green"] }, { text: " eyes." }] }] },
+  { name: "BENJAMIN", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_benjamin.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "Hi, I'm Benjamin, I have short straight " }, { answer: "blonde", choices: ["brown", "blonde"] }, { text: " hair and " }, { answer: "blue", choices: ["black", "blue"] }, { text: " eyes." }] }] },
+  { name: "CHLOE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_chloe.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Hi, I'm Chloe, I have " }, { answer: "long", choices: ["long", "short"] }, { text: " curly blonde hair and " }, { answer: "blue", choices: ["blue", "brown"] }, { text: " eyes." }] }] },
+  { name: "DANIEL", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_daniel.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "Hi, I'm Daniel, I have " }, { answer: "shoulder-length", choices: ["shoulder-length", "long"] }, { text: " straight " }, { answer: "black", choices: ["blonde", "black"] }, { text: " hair and thick eyebrows." }] }] },
+  { name: "DAVID", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_david.mp4", lines: [{ speaker: "DAVID", parts: [{ text: "Hi, I'm David, I have " }, { answer: "very short", choices: ["very short", "long"] }, { text: " black hair and " }, { answer: "brown", choices: ["brown", "blue"] }, { text: " eyes." }] }] },
+  { name: "ELLA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_ella.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Hi, I'm Ella, I have shoulder-length " }, { answer: "wavy", choices: ["wavy", "straight"] }, { text: " blonde hair and " }, { answer: "green", choices: ["green", "brown"] }, { text: " eyes." }] }] },
+  { name: "EMMA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_emma.mp4", lines: [{ speaker: "EMMA", parts: [{ text: "Hi, I'm Emma, I have long " }, { answer: "straight", choices: ["straight", "wavy"] }, { text: " black hair and " }, { answer: "brown", choices: ["blue", "brown"] }, { text: " eyes." }] }] },
+  { name: "ETHAN", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_ethan.mp4", lines: [{ speaker: "ETHAN", parts: [{ text: "Hi, I'm Ethan, I have " }, { answer: "short curly", choices: ["short curly", "long wavy"] }, { text: " blonde hair and " }, { answer: "blue", choices: ["blue", "green"] }, { text: " eyes." }] }] },
+  { name: "HANNAH", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_hannah.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "Hi, I'm Hannah, I have " }, { answer: "long", choices: ["short", "long"] }, { text: " straight " }, { answer: "blonde", choices: ["blonde", "brown"] }, { text: " hair and blue eyes." }] }] },
+  { name: "JACK", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_jack.mp4", lines: [{ speaker: "JACK", parts: [{ text: "Hi, I'm Jack, I have short straight black " }, { answer: "hair", choices: ["hair", "eyes"] }, { text: " and brown " }, { answer: "eyes", choices: ["hair", "eyes"] }, { text: "." }] }] },
+  { name: "LUCAS", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_lucas.mp4", lines: [{ speaker: "LUCAS", parts: [{ text: "Hi, I'm Lucas, I have short " }, { answer: "curly", choices: ["curly", "straight"] }, { text: " black hair and " }, { answer: "brown", choices: ["green", "brown"] }, { text: " eyes." }] }] },
+  { name: "MIA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_mia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "Hi, I'm Mia, I have long " }, { answer: "wavy", choices: ["straight", "wavy"] }, { text: " brown hair and " }, { answer: "blue", choices: ["brown", "blue"] }, { text: " eyes." }] }] },
+  { name: "NOAH", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_noah.mp4", lines: [{ speaker: "NOAH", parts: [{ text: "Hi, I'm Noah, I have " }, { answer: "short", choices: ["long", "short"] }, { text: " straight brown hair, green eyes, and rectangular " }, { answer: "glasses", choices: ["eyes", "glasses"] }] }] },
+  { name: "OLIVIA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_olivia.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "Hi, I'm Olivia, I have a chin-length brown " }, { answer: "bob", choices: ["eyes", "bob"] }, { text: " and green " }, { answer: "eyes", choices: ["hair", "eyes"] }] }] },
+  { name: "VICTORIA", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_victoria.mp4", lines: [{ speaker: "VICTORIA", parts: [{ text: "Hi, I'm Victoria, I have long wavy " }, { answer: "black", choices: ["black", "blonde"] }, { text: " hair, blue eyes, and " }, { answer: "round", choices: ["round", "rectangular"] }, { text: " glasses." }] }] },
+  { name: "ZOE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_appearance_zoe.mp4", lines: [{ speaker: "ZOE", parts: [{ text: "Hi, I'm Zoe, I have long " }, { answer: "curly", choices: ["straight", "curly"] }, { text: " black hair and " }, { answer: "brown", choices: ["blue", "brown"] }, { text: " eyes." }] }] }
+];
+
+function buildPhysicalAppearanceGrade7VideoHubItems(characters) {
+  const withCenter = [...characters.slice(0, 4), { name: "CHOOSE\nONE", passive: true }, ...characters.slice(4)];
+  return withCenter.map((character) => ({
+    kind: "category-list",
+    parts: [{ text: character.name }],
+    ...(character.passive ? {} : { appearanceVideoCharacter: character })
+  }));
+}
+
+const physicalAppearanceGrade7FirstHubNames = ["BENJAMIN", "CHLOE", "DANIEL", "HANNAH", "LUCAS", "NOAH", "VICTORIA", "ZOE"];
+const physicalAppearanceGrade7FirstHubCharacters = physicalAppearanceGrade7VideoCharacters.filter(({ name }) => physicalAppearanceGrade7FirstHubNames.includes(name));
+const physicalAppearanceGrade7SecondHubCharacters = physicalAppearanceGrade7VideoCharacters.filter(({ name }) => !physicalAppearanceGrade7FirstHubNames.includes(name));
+
 const physicalAppearanceGrade7Function = {
   id: "physical-appearance",
   grade: 7,
@@ -626,6 +658,36 @@ const physicalAppearanceGrade7Function = {
           words: ["BLUE", "BLACK", "BROWN", "GREEN"]
         }
       ]
+    },
+    {
+      id: "physical-appearance-grade7-video-hub-1",
+      presenceSlide: true,
+      appearanceVideoHub: true,
+      focus: "CHOOSE ONE",
+      kicker: "PHYSICAL APPEARANCE",
+      title: "Click a character to watch and complete the description.",
+      compactTitle: true,
+      imagePath: "images/common/collage-photo-4.webp",
+      imageClass: "hub-collage-visual",
+      visualBrief: "Choose a character.",
+      showAllItems: true,
+      listClass: "character-hub-grid",
+      items: buildPhysicalAppearanceGrade7VideoHubItems(physicalAppearanceGrade7FirstHubCharacters)
+    },
+    {
+      id: "physical-appearance-grade7-video-hub-2",
+      presenceSlide: true,
+      appearanceVideoHub: true,
+      focus: "CHOOSE ONE",
+      kicker: "PHYSICAL APPEARANCE",
+      title: "Click a character to watch and complete the description.",
+      compactTitle: true,
+      imagePath: "images/common/collage-photo-5.webp",
+      imageClass: "hub-collage-visual",
+      visualBrief: "Choose a character.",
+      showAllItems: true,
+      listClass: "character-hub-grid",
+      items: buildPhysicalAppearanceGrade7VideoHubItems(physicalAppearanceGrade7SecondHubCharacters)
     },
     {
       id: "clothing-example",

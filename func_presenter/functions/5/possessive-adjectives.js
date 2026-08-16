@@ -144,6 +144,38 @@ const possessiveAdjectivesFunction = {
         { parts: [{ text: "Wrong: ", className: "presence-red" }, { text: "Hannah and Chloe are classmates. Her classroom is on the second floor." }], answerParts: [{ text: "Correct: ", className: "presence-mint" }, { text: "Hannah and Chloe are classmates. Their classroom is on the second floor." }], answerReveal: true },
         { parts: [{ text: "Wrong: ", className: "presence-red" }, { text: "I have a new pencil case. Your pencil case is blue." }], answerParts: [{ text: "Correct: ", className: "presence-mint" }, { text: "I have a new pencil case. My pencil case is blue." }], answerReveal: true }
       ]
+    },
+    {
+      id: "possessive-video-emma-chloe-sandwich",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/school_trip_lunch_time_emma_chloe.mp4", lines: [{ speaker: "EMMA", parts: [{ text: "Would you like half of " }, { answer: "my", choices: ["my", "your"] }, { text: " sandwich?" }] }, { speaker: "CHLOE", parts: [{ text: "Yes, please, I'm still a bit hungry." }] }] }
+    },
+    {
+      id: "possessive-video-benjamin-hannah-bike",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/benjamin_hannah.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "Can I borrow " }, { answer: "your", choices: ["my", "your"] }, { text: " bike please?" }] }, { speaker: "HANNAH", parts: [{ text: "Sorry, I need it." }] }] }
+    },
+    {
+      id: "possessive-video-ava-buddy",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/introduce_ava.mp4", lines: [{ speaker: "AVA", parts: [{ text: "Hi, I'm Ava. This is my dog. " }, { answer: "His", choices: ["His", "my"] }, { text: " name is Buddy." }] }] }
+    },
+    {
+      id: "possessive-video-olivia-chloe-toy",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_olivia_chloe.mp4", lines: [{ speaker: "OLIVIA", parts: [{ text: "Is that Luna's toy mouse?" }] }, { speaker: "CHLOE", parts: [{ text: "Yes, it's " }, { answer: "her", choices: ["his", "her"] }, { text: " favorite toy." }] }] }
+    },
+    {
+      id: "possessive-video-hannah-lars-bags",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_hannah_lars.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "What are you packing, Dad?" }] }, { speaker: "LARS", parts: [{ text: "I'm preparing " }, { answer: "our", choices: ["our", "their"] }, { text: " camping bags." }] }] }
+    },
+    {
+      id: "possessive-video-ava-chloe-shark",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ava_chloe.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Which animal has the biggest teeth?" }] }, { speaker: "AVA", parts: [{ text: "The great white shark has some of the biggest; " }, { answer: "their", choices: ["my", "their"] }, { text: " teeth are seven centimetres long!" }] }] }
+    },
+    {
+      id: "possessive-video-zoe-mia-telescope",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_zoe_mia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "Is this your telescope?" }] }, { speaker: "ZOE", parts: [{ text: "Yes, " }, { answer: "my", choices: ["my", "your"] }, { text: " father bought it." }] }] }
+    },
+    {
+      id: "possessive-video-ella-olivia-ticket",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/school_trip_arrival_ella_olivia.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "I can't find " }, { answer: "my", choices: ["my", "her"] }, { text: " ticket." }] }] }
     }
   ]
 };

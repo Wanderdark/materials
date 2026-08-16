@@ -203,6 +203,66 @@ const frequencyAdverbsFunction = {
           }
         }
       ]
+    },
+    {
+      id: "frequency-video-ava-olivia",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ava_olivia.mp4", lines: [{ speaker: "AVA", parts: [{ text: "Do you paint in the evenings?" }] }, { speaker: "OLIVIA", parts: [{ text: "I " }, { answer: "sometimes", choices: ["always", "sometimes"] }, { text: " paint before bed." }] }] }
+    },
+    {
+      id: "frequency-video-ella-sunny",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_sunny.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "No, still no, fine, you " }, { answer: "always", choices: ["often", "always"] }, { text: " win." }] }] }
+    },
+    {
+      id: "frequency-video-hannah-storm",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_hannah_storm.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "Storm " }, { answer: "always", choices: ["always", "usually"] }, { text: " listens to me, Storm, come here, Well, " }, { answer: "usually", choices: ["sometimes", "usually"] }, { text: "." }] }] }
+    },
+    {
+      id: "frequency-video-daniel-benjamin",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_daniel_benjamin.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ answer: "How often", choices: ["When", "How often"] }, { text: " do you ride your scooter?" }] }, { speaker: "DANIEL", parts: [{ text: "I ride it every " }, { answer: "afternoon", choices: ["morning", "afternoon"] }, { text: "." }] }] }
+    },
+    {
+      id: "frequency-video-ella-chloe",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_chloe.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Do you eat cupcakes for breakfast?" }] }, { speaker: "CHLOE", parts: [{ text: "No, I " }, { answer: "rarely", choices: ["never", "rarely"] }, { text: " eat them in the morning." }] }] }
+    },
+    {
+      id: "frequency-video-emma-mia",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_emma_mia.mp4", lines: [{ speaker: "MIA", parts: [{ answer: "How often", choices: ["What time", "How often"] }, { text: " do you bake cookies?" }] }, { speaker: "EMMA", parts: [{ text: "I " }, { answer: "usually", choices: ["always", "usually"] }, { text: " bake on Sundays." }] }] }
+    },
+    {
+      id: "frequency-video-ella-ethan",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_ethan.mp4", lines: [{ speaker: "ETHAN", parts: [{ text: "Do you pack your bag at night?" }] }, { speaker: "ELLA", parts: [{ answer: "Usually", choices: ["Often", "Usually"] }, { text: ", but I forgot my notebook again!" }] }] }
+    },
+    {
+      id: "frequency-video-mia-zoe",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_mia_zoe.mp4", lines: [{ speaker: "ZOE", parts: [{ text: "Do you watch television in the afternoon?" }] }, { speaker: "MIA", parts: [{ text: "I " }, { answer: "seldom", choices: ["seldom", "never"] }, { text: " watch it, I " }, { answer: "usually", choices: ["always", "usually"] }, { text: " read." }] }] }
+    },
+    {
+      id: "frequency-video-olivia-victoria",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_olivia_victoria.mp4", lines: [{ speaker: "VICTORIA", parts: [{ answer: "How often", choices: ["Why", "How often"] }, { text: " do you take photos?" }] }, { speaker: "OLIVIA", parts: [{ text: "I take photos " }, { answer: "everytime", choices: ["once a day", "everytime"] }, { text: "!" }] }] }
+    },
+    {
+      id: "frequency-video-noah-victoria",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_noah_victoria.mp4", lines: [{ speaker: "NOAH", parts: [{ text: "Do you always use that move?" }] }, { speaker: "VICTORIA", parts: [{ text: "No, I " }, { answer: "rarely", choices: ["never", "rarely"] }, { text: " use it." }] }] }
+    },
+    {
+      id: "frequency-video-ava-hannah",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ava_hannah.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "You bring a map when you hike, don't you?" }] }, { speaker: "AVA", parts: [{ answer: "Always", choices: ["Never", "Always"] }, { text: ", so I " }, { answer: "never", choices: ["always", "never"] }, { text: " get lost." }] }] }
+    },
+    {
+      id: "frequency-video-ella-benjamin",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_benjamin.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Do you walk in the park?" }] }, { speaker: "BENJAMIN", parts: [{ text: "I " }, { answer: "often", choices: ["often", "sometimes"] }, { text: " come here after dinner." }] }] }
+    },
+    {
+      id: "frequency-video-mia-giulia",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_mia_giulia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "You " }, { answer: "usually", choices: ["usually", "never"] }, { text: " cook at this time, Mum." }] }] }
+    },
+    {
+      id: "frequency-video-benjamin-oliver",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "You " }, { answer: "usually", choices: ["always", "usually"] }, { text: " swim in the morning, Dad." }] }] }
+    },
+    {
+      id: "frequency-video-lucas-brazil",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/countries_lucas.mp4", lines: [{ speaker: "LUCAS", parts: [{ text: "Hi, I'm Lucas, I'm from Brazil, Brazil has won the World Cup " }, { answer: "five", choices: ["five", "four"] }, { text: " times!" }] }] }
     }
   ]
 };

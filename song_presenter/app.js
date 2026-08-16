@@ -440,6 +440,28 @@
       const p = Math.min(100, Math.max(0, (t - k.from) / (k.to - k.from) * 100));
       k.el.style.setProperty("--kp", p.toFixed(1) + "%");
     }
+    syncVideoLyricOverlay();
+  }
+
+  function addVideoLyricOverlay() {
+    const overlay = document.createElement("p");
+    overlay.className = "video-lyric-overlay hidden";
+    els.playerVisual.appendChild(overlay);
+  }
+
+  function syncVideoLyricOverlay() {
+    const overlay = els.playerVisual.querySelector(".video-lyric-overlay");
+    const card = document.querySelector(".during-card");
+    const line = karaokeLines[karaokeIdx];
+    const visible = overlay && card && playerMode === "video" && !autoZoomActive &&
+      card.classList.contains("karaoke-mode") && line;
+    if (!overlay) return;
+    overlay.classList.toggle("hidden", !visible);
+    if (visible) {
+      const lyric = line.el.cloneNode(true);
+      lyric.querySelectorAll(".lyric-gap").forEach((gap) => { gap.textContent = gap.dataset.word; });
+      overlay.textContent = lyric.textContent.trim();
+    }
   }
 
   /* ── Climax: belirtilen anlarda yukarı süzülen emoji notalar ── */
@@ -534,6 +556,7 @@
     const card = document.querySelector(".during-card");
     const wasOn = card.classList.contains("karaoke-mode");
     card.classList.toggle("karaoke-mode", on);
+    syncVideoLyricOverlay();
     /* Büyük videodan (manuel ya da otomatik autozoom) çıkınca, panel tekrar
        görünür olduğunda o anki söz satırını ortaya kaydır — göz nerede
        kaldığını hemen bulsun */
@@ -666,10 +689,12 @@
       els.playerVisual.appendChild(v);
       els.playerVisual.appendChild(makeCoverOverlay());
       els.playerVisual.appendChild(makeCensorOverlay());
+      addVideoLyricOverlay();
       videoEl = v;
       mediaEl = v;
       attachPlayerEvents(mediaEl);
       playerMode = mode;
+      syncVideoLyricOverlay();
       els.videoButton.classList.toggle("active", mode === "video");
       els.micButton.classList.toggle("active", mode === "karaoke");
       setKaraokeLayout(mode === "karaoke");
@@ -712,6 +737,7 @@
     els.playerVisual.appendChild(v);
     els.playerVisual.appendChild(makeCoverOverlay());
     els.playerVisual.appendChild(makeCensorOverlay());
+    addVideoLyricOverlay();
     v.addEventListener("click", () => {
       const card = document.querySelector(".during-card");
       setKaraokeLayout(!card.classList.contains("karaoke-mode"));
@@ -737,6 +763,7 @@
     coverBaseHidden = show;
     refreshCoverOverlay();
     playerMode = show ? "video" : "audio";
+    syncVideoLyricOverlay();
     els.videoButton.classList.toggle("active", show);
     if (!show) { setKaraokeLayout(false); autoZoomActive = false; }
   }

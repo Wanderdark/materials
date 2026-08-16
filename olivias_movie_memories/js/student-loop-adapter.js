@@ -27,14 +27,14 @@
   const memoriesPerSpread = 8;
   const minimumSpreadsPerChapter = 3;
   const unitChapters = [
-    { id: "school-life", title: "SCHOOL LIFE", unit: "school_life" },
-    { id: "classroom-life", title: "CLASSROOM LIFE", unit: "classroom_life" },
-    { id: "personal-life", title: "PERSONAL LIFE", unit: "personal_life" },
-    { id: "family-life", title: "FAMILY LIFE", unit: "family_life" },
-    { id: "life-in-the-city", title: "LIFE IN THE CITY", unit: "life_in_the_city" },
-    { id: "life-in-the-world", title: "LIFE IN THE WORLD", unit: "life_in_the_world" },
-    { id: "life-in-the-nature", title: "LIFE IN THE NATURE", unit: "life_in_the_nature" },
-    { id: "life-in-the-universe", title: "LIFE IN THE UNIVERSE", unit: "life_in_the_universe" }
+    { id: "school-life", title: "SCHOOL LIFE", unit: "school_life", themes: ["school_life"] },
+    { id: "classroom-life", title: "CLASSROOM LIFE", unit: "classroom_life", themes: ["classroom_life"] },
+    { id: "personal-life", title: "PERSONAL LIFE", unit: "personal_life", themes: ["personal_life"] },
+    { id: "family-life", title: "FAMILY LIFE", unit: "family_life", themes: ["family_life"] },
+    { id: "life-in-the-city", title: "LIFE IN THE CITY", unit: "life_in_the_city", themes: ["city_life", "life_in_the_city"] },
+    { id: "life-in-the-world", title: "LIFE IN THE WORLD", unit: "life_in_the_world", themes: ["world_life", "life_in_the_world"] },
+    { id: "life-in-the-nature", title: "LIFE IN THE NATURE", unit: "life_in_the_nature", themes: ["nature_life", "life_in_nature", "life_in_the_nature"] },
+    { id: "life-in-the-universe", title: "LIFE IN THE UNIVERSE", unit: "life_in_the_universe", themes: ["life_in_the_universe"] }
   ];
   const albumLayouts = [
     [{ side: "left", x: 7, y: 13, w: 39, r: -4 }, { side: "left", x: 53, y: 12, w: 37, r: 3 }, { side: "left", x: 9, y: 54, w: 37, r: 3 }, { side: "left", x: 53, y: 55, w: 38, r: -3 }, { side: "right", x: 8, y: 14, w: 37, r: 4 }, { side: "right", x: 53, y: 12, w: 38, r: -3 }, { side: "right", x: 9, y: 55, w: 39, r: -2 }, { side: "right", x: 54, y: 54, w: 36, r: 4 }],
@@ -234,12 +234,15 @@
   }
   function fallbackTitle(theme) {
     if (theme === "introduction") return "INTRODUCTIONS";
+    if (theme === "generic") return "GENERIC";
     return theme ? theme.replace(/_/g, " ").toUpperCase() : "GENERIC";
   }
+  const unitThemes = new Set(unitChapters.flatMap((chapter) => chapter.themes));
+  const genericThemes = new Set(["general", "race", "school_trip"]);
   const fallbackThemes = [...new Set(items
     .filter((item) => !item.unit)
     .map((item) => normalizeTheme(item.theme))
-    .filter(Boolean))];
+    .filter((theme) => theme && !unitThemes.has(theme) && !genericThemes.has(theme)))];
   const fallbackChapters = fallbackThemes.map((theme) => ({
     id: "theme-" + theme,
     title: fallbackTitle(theme),
@@ -249,10 +252,11 @@
     ...fallbackChapters.filter((chapter) => chapter.fallbackTheme === "introduction"),
     ...unitChapters,
     ...fallbackChapters.filter((chapter) => chapter.fallbackTheme !== "introduction"),
-    ...(items.some((item) => !item.unit && !normalizeTheme(item.theme)) ? [{ id: "generic", title: "GENERIC", fallbackTheme: "" }] : [])
+    ...(items.some((item) => !item.unit && (!normalizeTheme(item.theme) || genericThemes.has(normalizeTheme(item.theme)))) ? [{ id: "generic", title: "GENERIC", fallbackTheme: "generic" }] : [])
   ];
   function chapterMemories(chapter) {
-    if (chapter.unit) return items.filter((item) => item.unit === chapter.unit);
+    if (chapter.unit) return items.filter((item) => item.unit === chapter.unit || (!item.unit && chapter.themes.includes(normalizeTheme(item.theme))));
+    if (chapter.fallbackTheme === "generic") return items.filter((item) => !item.unit && (!normalizeTheme(item.theme) || genericThemes.has(normalizeTheme(item.theme))));
     return items.filter((item) => !item.unit && normalizeTheme(item.theme) === chapter.fallbackTheme);
   }
   function chapterSpreadCount(chapter) {

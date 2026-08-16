@@ -219,6 +219,106 @@ const objectPronounsFunction = {
         { parts: [{ text: "Wrong: ", className: "presence-red" }, { text: "Ask he." }], answerParts: [{ text: "Correct: ", className: "presence-mint" }, { text: "Ask him." }], answerReveal: true },
         { parts: [{ text: "Wrong: ", className: "presence-red" }, { text: "Give the book to she." }], answerParts: [{ text: "Correct: ", className: "presence-mint" }, { text: "Give the book to her." }], answerReveal: true }
       ]
+    },
+    {
+      id: "classroom-life-mia-dictionary-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_mia.mp4",
+        lines: [
+          { speaker: "MIA", parts: [{ text: "Can I borrow the dictionary?" }] },
+          { speaker: "ENGLISH TEACHER", parts: [{ text: "Yes, take " }, { answer: "it", choices: ["it", "him"] }, { text: "." }] },
+          { speaker: "MIA", parts: [{ text: "Thank you." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-emma-sheets-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_emma.mp4",
+        lines: [
+          { speaker: "SCIENCE TEACHER", parts: [{ text: "Emma, give these sheets to the class, please." }] },
+          { speaker: "EMMA", parts: [{ text: "Sure, I'll hand " }, { answer: "them", choices: ["it", "them"] }, { text: " out." }] },
+          { speaker: "SCIENCE TEACHER", parts: [{ text: "Thank you." }] }
+        ]
+      }
+    },
+    {
+      id: "personal-life-ella-chloe-cupcakes-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_chloe.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "Do you eat cupcakes for breakfast?" }] },
+          { speaker: "CHLOE", parts: [{ text: "No, I rarely eat " }, { answer: "them", choices: ["her", "them"] }, { text: " in the morning." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-lucas-balls-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_lucas.mp4",
+        lines: [
+          { speaker: "COACH", parts: [{ text: "Lucas, bring me the balls, please." }] },
+          { speaker: "LUCAS", parts: [{ text: "Okay, I'll get " }, { answer: "them", choices: ["him", "them"] }, { text: "." }] },
+          { speaker: "COACH", parts: [{ text: "Thanks." }] }
+        ]
+      }
+    },
+    {
+      id: "classroom-life-emma-ethan-study-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_emma_ethan.mp4",
+        lines: [
+          { speaker: "EMMA", parts: [{ text: "When do you study science?" }] },
+          { speaker: "ETHAN", parts: [{ text: "I study " }, { answer: "it", choices: ["us", "it"] }, { text: " every afternoon." }] }
+        ]
+      }
+    },
+    {
+      id: "family-life-benjamin-emily-us-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver_emily.mp4",
+        lines: [
+          { speaker: "BENJAMIN", parts: [{ text: "You always plan holidays for other people, Mum." }] },
+          { speaker: "EMILY", parts: [{ text: "Yes, but I’m planning for " }, { answer: "us", choices: ["them", "us"] }, { text: " today." }] }
+        ]
+      }
+    },
+    {
+      id: "zoe-mia-lend-me-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/zoe_mia_1.mp4",
+        lines: [
+          { speaker: "ZOE", parts: [{ text: "Hi Mia, can you lend " }, { answer: "me", choices: ["him", "me"] }, { text: " your new novel please?" }] },
+          { speaker: "MIA", parts: [{ text: "Sure, you can have it." }] }
+        ]
+      }
+    },
+    {
+      id: "best-friend-zoe-her-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_zoe.mp4",
+        lines: [
+          { speaker: "ZOE", parts: [{ text: "She is shy and thoughtful. I can always rely on " }, { answer: "her", choices: ["him", "her"] }, { text: ". She is my best friend." }] }
+        ]
+      }
+    },
+    {
+      id: "best-friend-ethan-him-video",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_ethan.mp4",
+        lines: [
+          { speaker: "ETHAN", parts: [{ text: "He is thoughtful and reliable. I can always count on " }, { answer: "him", choices: ["him", "you"] }, { text: "." }] }
+        ]
+      }
     }
   ]
 };

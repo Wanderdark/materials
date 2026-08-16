@@ -45,6 +45,7 @@ function renderFunctionIntro() {
 
 function renderExample() {
   state.showingFunctionIntro = false;
+  clearVideoDialoguePractice?.();
   clearPresenceHotspots();
   clearVisualAnnotations();
   clearPersonalityHubVisual();
@@ -57,10 +58,11 @@ function renderExample() {
   const isTimePrompt = Boolean(example.timePrompt);
   const isTimetableSlide = Boolean(example.timetableSlide);
   const isPresenceSlide = Boolean(example.presenceSlide);
+  const isVideoDialogue = Boolean(example.videoDialogue);
   const noVisual = Boolean(example.noVisual);
   const focus = example.focus || example.article || "";
   const highlight = example.highlight || example.article;
-  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide
+  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue
     ? ""
     : example.highlightSuffix
     ? example.sentence.replace(
@@ -82,12 +84,13 @@ function renderExample() {
   els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
   els.exampleCard.classList.toggle("inline-choice-slide", (example.listClass || "").split(/\s+/).includes("inline-choice-list"));
   els.exampleCard.classList.toggle("personality-hub-slide", Boolean(example.personalityHub));
+  els.exampleCard.classList.toggle("video-dialogue-slide", isVideoDialogue);
   els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
   els.timePromptView.classList.toggle("hidden", !isTimePrompt);
   els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
-  els.presenceView.classList.toggle("hidden", !isPresenceSlide);
+  els.presenceView.classList.toggle("hidden", !isPresenceSlide && !isVideoDialogue);
   if (isTimePrompt) {
     els.timePromptDigital.textContent = example.digitalTime;
     els.timePromptAnswer.textContent = example.answerSentence;
@@ -95,17 +98,17 @@ function renderExample() {
     els.timeReveal.disabled = false;
   }
   [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
-    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide));
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide || isVideoDialogue));
   els.article.textContent = focus ? focus.toUpperCase() : "";
   els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
-  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide);
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue);
   els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
   els.timeQuestion.textContent = example.question || "";
   els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
-  els.sentence.innerHTML = isTimetableSlide
+  els.sentence.innerHTML = isVideoDialogue ? "" : isTimetableSlide
     ? renderTimetableParts(example.questionParts || example.sentenceParts)
     : highlightedSentence;
-  els.sentence.classList.toggle("long-phrase", isTimetableSlide || (example.sentence?.length || 0) > 10);
+  els.sentence.classList.toggle("long-phrase", !isVideoDialogue && (isTimetableSlide || (example.sentence?.length || 0) > 10));
   els.sentence.classList.toggle("timetable-sentence", isTimetableSlide);
   const showExampleSentence = !isTimePrompt && state.module.id === "a-an-the" && example.exerciseSentence;
   els.presentationExampleSentence.textContent = showExampleSentence
@@ -115,9 +118,9 @@ function renderExample() {
   els.description.textContent = state.module.id === "a-an-the"
     ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
     : state.module.description;
-  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || !els.description.textContent);
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || !els.description.textContent);
   els.ruleNote.textContent = example.ruleNote || "";
-  els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || !example.ruleNote);
+  els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isVideoDialogue || !example.ruleNote);
   if (isTimetableSlide && example.answerParts) {
     els.timetableAnswer.innerHTML = renderTimetableParts(example.answerParts);
     els.timetableAnswer.classList.toggle("hidden", Boolean(example.answerReveal));
@@ -125,12 +128,14 @@ function renderExample() {
     els.timetableReveal.disabled = false;
   }
   if (isPresenceSlide) renderPresenceSlide(example);
+  if (example.appearanceVideoHub) renderAppearanceVideoHub(example);
+  if (isVideoDialogue) renderVideoDialoguePractice(example);
   if (example.personalityHub) {
     const hubState = getPersonalityHubState(example);
     const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
     renderPersonalityHubVisual(example, activeTrait);
   }
-  if (!isTimePrompt && !noVisual && !example.personalityHub) {
+  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");
@@ -162,4 +167,3 @@ function renderExample() {
     return dot;
   }));
 }
-
