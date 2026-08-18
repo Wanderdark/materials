@@ -46,6 +46,7 @@ function renderFunctionIntro() {
 function renderExample() {
   state.showingFunctionIntro = false;
   clearVideoDialoguePractice?.();
+  clearDailyRoutineVideoHubPractice?.();
   clearPresenceHotspots();
   clearVisualAnnotations();
   clearPersonalityHubVisual();
@@ -129,6 +130,7 @@ function renderExample() {
   }
   if (isPresenceSlide) renderPresenceSlide(example);
   if (example.appearanceVideoHub) renderAppearanceVideoHub(example);
+  if (example.dailyRoutineVideoHub) renderDailyRoutineVideoHub(example);
   if (isVideoDialogue) renderVideoDialoguePractice(example);
   if (example.personalityHub) {
     const hubState = getPersonalityHubState(example);

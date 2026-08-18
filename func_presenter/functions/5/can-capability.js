@@ -262,6 +262,62 @@ const canCapabilityFunction = {
           }
         }
       ]
+    },
+    {
+      id: "can-capability-video-ella-sunny-parrots",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_sunny.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Parrots " }, { answer: "can", choices: ["can", "can't"] }, { text: " imitate sounds." }] }] }
+    },
+    {
+      id: "can-capability-video-hannah-storm-jump",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_hannah_storm.mp4", lines: [{ speaker: "HANNAH", parts: [{ text: "Storm " }, { answer: "can", choices: ["can", "can't"] }, { text: " jump really high." }] }] }
+    },
+    {
+      id: "can-capability-video-jack-benjamin-catch",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_jack_benjamin.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "Benjamin " }, { answer: "can't", choices: ["can", "can't"] }, { text: " catch everything." }] }] }
+    },
+    {
+      id: "can-capability-video-hannah-elephants",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_hannah.mp4", lines: [{ speaker: "GUIDE", parts: [{ text: "Elephants " }, { answer: "can", choices: ["can", "can't"] }, { text: " swim very well." }] }] }
+    },
+    {
+      id: "can-capability-video-ella-olivia-penguins",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_olivia.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Penguins " }, { answer: "can", choices: ["can", "can't"] }, { text: " swim fast." }] }, { speaker: "OLIVIA", parts: [{ text: "They " }, { answer: "can't", choices: ["can", "can't"] }, { text: " fly." }] }] }
+    },
+    {
+      id: "can-capability-video-chloe-emma-cookie",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_chloe_emma.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Chloe " }, { answer: "can't", choices: ["can", "can't"] }, { text: " catch the cookie with her mouth." }] }] }
+    },
+    {
+      id: "can-capability-video-benjamin-lucas-cheetahs",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_benjamin_lucas.mp4", lines: [{ speaker: "LUCAS", parts: [{ text: "Cheetahs " }, { answer: "can", choices: ["can", "can't"] }, { text: " run really fast." }] }] }
+    },
+    {
+      id: "can-capability-video-noah-lucas-lift",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_noah_lucas.mp4", lines: [{ speaker: "NOAH", parts: [{ text: "So, can you lift that?" }] }, { speaker: "LUCAS", parts: [{ text: "Well, I " }, { answer: "can't", choices: ["can", "can't"] }, { text: "." }] }] }
+    },
+    {
+      id: "can-capability-video-mia-crocodiles",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_mia.mp4", lines: [{ speaker: "MIA", parts: [{ text: "Crocodiles " }, { answer: "can", choices: ["can", "can't"] }, { text: " live for months without food." }] }] }
+    },
+    {
+      id: "can-capability-video-daniel-snakes",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_daniel.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "Snakes " }, { answer: "can", choices: ["can", "can't"] }, { text: " smell with their tongue, but Daniel " }, { answer: "can't", choices: ["can", "can't"] }, { text: "." }] }] }
+    },
+    {
+      id: "can-capability-video-ella-sunny-olivia-parrots",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_sunny_olivia.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Some parrots " }, { answer: "can", choices: ["can", "can't"] }, { text: " learn hundreds of words, but it seems my parrot " }, { answer: "can't", choices: ["can", "can't"] }, { text: "." }] }] }
+    },
+    {
+      id: "can-capability-video-chloe-chameleons",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_chloe.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Chameleons " }, { answer: "can", choices: ["can", "can't"] }, { text: " move their eyes in different directions!" }] }] }
+    },
+    {
+      id: "can-capability-video-victoria-pixel-password",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_victoria_pixel.mp4", lines: [{ speaker: "VICTORIA", parts: [{ text: "I " }, { answer: "can't", choices: ["can", "can't"] }, { text: " remember my password." }] }] }
+    },
+    {
+      id: "can-capability-video-ella-sunny-read",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_sunny3.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Sunny " }, { answer: "can", choices: ["can", "can't"] }, { text: " read." }] }] }
     }
   ]
 };

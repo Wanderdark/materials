@@ -446,6 +446,182 @@ const goingToPlansFunction = {
       items: buildGoingToPlansPlanCheckItems(goingToPlansPlanCheckItems.slice(12, 16))
     },
     {
+      id: "going-to-plans-video-hannah-emma-valley",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_hannah_emma.mp4",
+        lines: [{ speaker: "EMMA", parts: [{ text: "What are you going to do?" }] }, { speaker: "HANNAH", parts: [{ text: "I'm going to " }, { answer: "explore the valley", choices: ["explore the valley", "go camping"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-benjamin-jack-reef",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_benjamin_jack.mp4",
+        lines: [{ speaker: "BENJAMIN", parts: [{ text: "Are we going to see the " }, { answer: "sand dunes", choices: ["sand dunes", "coral reef"] }, { text: "?" }] }, { speaker: "JACK", parts: [{ text: "Yes, we're going to go " }, { answer: "scuba diving", choices: ["snorkelling", "scuba diving"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-daniel-lucas-desert",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_daniel_lucas.mp4",
+        lines: [{ speaker: "LUCAS", parts: [{ text: "What are we " }, { answer: "going to do", choices: ["doing", "going to do"] }, { text: " in the desert?" }] }, { speaker: "DANIEL", parts: [{ text: "We're " }, { answer: "going to ride", choices: ["riding", "going to ride"] }, { text: " a camel!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-benjamin-david-canyon",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_benjamin_david.mp4",
+        lines: [{ speaker: "BENJAMIN", parts: [{ text: "What are we going to do on our trip?" }] }, { speaker: "DAVID", parts: [{ text: "We're going to explore " }, { answer: "this amazing canyon", choices: ["the waterfalls", "this amazing canyon"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ella-charlotte-coast",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ella_charlotte.mp4",
+        lines: [{ speaker: "ELLA", parts: [{ text: "What are we going to do on the " }, { answer: "coast", choices: ["coast", "island"] }, { text: "?" }] }, { speaker: "CHARLOTTE", parts: [{ text: "We're going to go " }, { answer: "sightseeing", choices: ["shopping", "sightseeing"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-chloe-emma-grandparents",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_chloe_emma.mp4",
+        lines: [{ speaker: "CHLOE", parts: [{ text: "What are you going to do at half term?" }] }, { speaker: "EMMA", parts: [{ text: "I'm going to visit my " }, { answer: "grandparents", choices: ["parents", "grandparents"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ella-olivia-beach",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ella_olivia.mp4",
+        lines: [{ speaker: "OLIVIA", parts: [{ text: "Are you going to the beach on vacation?" }] }, { speaker: "ELLA", parts: [{ text: "Yes, I'm " }, { answer: "going to swim", choices: ["going to swim", "swimming"] }, { text: " every day!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-mia-victoria-london",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_mia_victoria.mp4",
+        lines: [{ speaker: "MIA", parts: [{ text: "Where are you going to go this mid-term holiday?" }] }, { speaker: "VICTORIA", parts: [{ text: "We are going to visit " }, { answer: "London", choices: ["London", "Paris"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ava-hannah-norway",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ava_hannah.mp4",
+        lines: [{ speaker: "AVA", parts: [{ text: "Where are you going to go on " }, { answer: "vacation", choices: ["vacation", "mid-term"] }, { text: "?" }] }, { speaker: "HANNAH", parts: [{ text: "I'm going to Norway, it's " }, { answer: "cold", choices: ["hot", "cold"] }, { text: " there!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ethan-noah-mountain",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ethan_noah.mp4",
+        lines: [{ speaker: "NOAH", parts: [{ text: "What are we going to do there?" }] }, { speaker: "ETHAN", parts: [{ text: "We're going to climb that " }, { answer: "mountain", choices: ["mountain", "hill"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-daniel-jack-question",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_daniel_jack.mp4",
+        lines: [{ speaker: "JACK", parts: [{ answer: "What", choices: ["What", "Where"] }, { text: " are you going to do on the mid-term holiday?" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-mia-zoe-summer",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_mia_zoe.mp4",
+        lines: [{ speaker: "ZOE", parts: [{ text: "Where are you going to go this summer?" }] }, { speaker: "MIA", parts: [{ text: "I'm going to stay at " }, { answer: "home", choices: ["home", "the seaside"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ethan-lucas-weekend",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ethan_lucas.mp4",
+        lines: [{ speaker: "ETHAN", parts: [{ text: "What are you going to do this weekend?" }] }, { speaker: "LUCAS", parts: [{ text: "I'm going to visit the " }, { answer: "amusement park", choices: ["museum", "amusement park"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-emma-sophie-zoo",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_emma_sophie.mp4",
+        lines: [{ speaker: "EMMA", parts: [{ text: "What are we going to do this weekend?" }] }, { speaker: "SOPHIE", parts: [{ text: "We're going to visit " }, { answer: "the zoo", choices: ["your grandparents", "the zoo"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-benjamin-oliver-volleyball",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_benjamin_oliver.mp4",
+        lines: [{ speaker: "OLIVER", parts: [{ text: "What are you going to do at the beach?" }] }, { speaker: "BENJAMIN", parts: [{ text: "I'm " }, { answer: "going to play", choices: ["play", "going to play"] }, { text: " beach volleyball!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-olivia-fiona-weekend",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_olivia_fiona.mp4",
+        lines: [{ speaker: "FIONA", parts: [{ text: "What are we going to do " }, { answer: "tomorrow", choices: ["tomorrow", "this weekend"] }, { text: "?" }] }, { speaker: "OLIVIA", parts: [{ text: "We're going to go " }, { answer: "sightseeing", choices: ["to the zoo", "sightseeing"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ava-amina-kenya",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ava_amina_buddy.mp4",
+        lines: [{ speaker: "AVA", parts: [{ text: "Where are we going to go this summer?" }] }, { speaker: "AMINA", parts: [{ text: "We're going to visit " }, { answer: "Kenya", choices: ["London", "Kenya"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-chloe-julien-camille-sandcastle",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_chloe_julien_camille.mp4",
+        lines: [{ speaker: "JULIEN", parts: [{ text: "What are you going to do today?" }] }, { speaker: "CHLOE", parts: [{ text: "I'm going to " }, { answer: "build a giant sandcastle", choices: ["collect sea shells", "build a giant sandcastle"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-mia-giulia-sandcastle",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_mia_giulia.mp4",
+        lines: [{ speaker: "GIULIA", parts: [{ text: "What are you going to do now?" }] }, { speaker: "MIA", parts: [{ text: "I'm going to " }, { answer: "collect seashells", choices: ["collect seashells", "build a sandcastle"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-ella-charlotte-roller-coaster",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ella_charlotte2.mp4",
+        lines: [{ speaker: "CHARLOTTE", parts: [{ text: "What are you going to ride first?" }] }, { speaker: "ELLA", parts: [{ text: "I'm going to ride the " }, { answer: "roller coaster", choices: ["bumper cars", "roller coaster"] }, { text: "!" }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-david-valeria-lake",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_david_valeria.mp4",
+        lines: [{ speaker: "DAVID", parts: [{ answer: "What", choices: ["What", "Where"] }, { text: " are we going to camp?" }] }, { speaker: "VALERIA", parts: [{ text: "Where do you want?" }] }, { speaker: "DAVID", parts: [{ text: "By the " }, { answer: "lake", choices: ["sea", "lake"] }] }]
+      }
+    },
+    {
+      id: "going-to-plans-video-zoe-nikos-meteor-shower",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_zoe_nikos.mp4",
+        lines: [{ speaker: "ZOE", parts: [{ text: "What are we going to watch " }, { answer: "this weekend", choices: ["tomorrow", "this weekend"] }, { text: "?" }] }, { speaker: "NIKOS", parts: [{ text: "We're going to watch " }, { answer: "a meteor shower", choices: ["the stars", "a meteor shower"] }] }]
+      }
+    },
+    {
       id: "going-to-plans-build-sentences",
       presenceSlide: true,
       focus: "GOING TO",

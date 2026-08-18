@@ -269,6 +269,134 @@ const canPermissionFunction = {
           ]
         }
       ]
+    },
+    {
+      id: "can-permission-video-victoria-noah-usb",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_victoria_noah.mp4",
+        lines: [{ speaker: "NOAH", parts: [{ answer: "Can", choices: ["Have", "Can"] }, { text: " I use my USB drive?" }] }, { speaker: "VICTORIA", parts: [{ text: "No, we " }, { answer: "can't", choices: ["can", "can't"] }, { text: " use them here." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-daniel-emma-hot",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_school_life_daniel_emma.mp4",
+        lines: [{ speaker: "DANIEL", parts: [{ answer: "Can", choices: ["Can", "Don't"] }, { text: " I touch this?" }] }, { speaker: "EMMA", parts: [{ text: "No, you mustn't. It's very hot." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-museum-mia-touch",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/school_trip_museum_mia.mp4",
+        lines: [{ speaker: "MIA", parts: [{ answer: "Can", choices: ["Let's", "Can"] }, { text: " I touch it?" }] }, { speaker: "SECURITY", parts: [{ text: "Sorry, don't touch, please. It is forbidden." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-daniel-restroom",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_daniel.mp4",
+        lines: [{ speaker: "DANIEL", parts: [{ answer: "May", choices: ["Have", "May"] }, { text: " I go to the restroom?" }] }, { speaker: "TEACHER", parts: [{ text: "Yes, but come back quickly." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-daniel-lucas-fries",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_daniel_lucas.mp4",
+        lines: [{ speaker: "DANIEL", parts: [{ answer: "Can", choices: ["Does", "Can"] }, { text: " I have some of your fries?" }] }, { speaker: "LUCAS", parts: [{ answer: "Sure", choices: ["Sure", "don't"] }, { text: ", just a few." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-emma-sophie-cheese",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_emma_sophie.mp4",
+        lines: [{ speaker: "EMMA", parts: [{ text: "Mom, " }, { answer: "can", choices: ["Why", "can"] }, { text: " I add some more cheese?" }] }, { speaker: "SOPHIE", parts: [{ answer: "Sure", choices: ["No", "Sure"] }, { text: ", but just a little." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-lucas-gabriel-tongs",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_lucas_gabriel.mp4",
+        lines: [{ speaker: "LUCAS", parts: [{ text: "Dad, " }, { answer: "can", choices: ["can", "don't"] }, { text: " I flip one?" }] }, { speaker: "GABRIEL", parts: [{ answer: "Sure", choices: ["No way", "Sure"] }, { text: ", use the tongs." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-ava-amina-vendor",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_ava_amina.mp4",
+        lines: [{ speaker: "AVA", parts: [{ answer: "Can", choices: ["Can", "Must"] }, { text: " I try one of those?" }] }, { speaker: "VENDOR", parts: [{ answer: "Of course", choices: ["Sorry", "Of course"] }, { text: ", take one." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-chloe-camille-decorate",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_chloe_camille.mp4",
+        lines: [{ speaker: "CHLOE", parts: [{ text: "Mom, " }, { answer: "Can", choices: ["Don't", "Can"] }, { text: " I decorate one?" }] }, { speaker: "CAMILLE", parts: [{ answer: "Sure", choices: ["No", "Sure"] }, { text: ", but don't shake it too much." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-hannah-emma-sauce",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_hannah_emma.mp4",
+        lines: [{ speaker: "HANNAH", parts: [{ answer: "Can", choices: ["Has", "Can"] }, { text: " I try that sauce?" }] }, { speaker: "VENDOR", parts: [{ answer: "Sorry, you can't", choices: ["Sorry, you can't", "Of course"] }, { text: ", but it's really spicy." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-ava-amina-buddy",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ava_amina_buddy.mp4",
+        lines: [{ speaker: "AVA", parts: [{ text: "Where are we going to go this summer?" }] }, { speaker: "AMINA", parts: [{ text: "We're going to visit Kenya!" }] }, { speaker: "AVA", parts: [{ answer: "Can", choices: ["Can", "Must"] }, { text: " Buddy come too?" }] }]
+      }
+    },
+    {
+      id: "can-permission-video-museum-olivia-photo",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/school_trip_museum_olivia.mp4",
+        lines: [{ speaker: "OLIVIA", parts: [{ answer: "May", choices: ["May", "must"] }, { text: " I take a photo?" }] }, { speaker: "TEACHER", parts: [{ answer: "Yes", choices: ["No", "Yes"] }, { text: ", but don't use the flash." }] }, { speaker: "OLIVIA", parts: [{ text: "Oh, sure." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-benjamin-hannah-bike",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/benjamin_hannah.mp4",
+        lines: [{ speaker: "BENJAMIN", parts: [{ answer: "Can", choices: ["Won't", "Can"] }, { text: " I borrow your bike, please?" }] }, { speaker: "HANNAH", parts: [{ answer: "Sorry", choices: ["Of course", "Sorry"] }, { text: ", I need it." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-chloe-ella-piano",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/chloe_ella.mp4",
+        lines: [{ speaker: "ELLA", parts: [{ text: "Can " }, { answer: "I", choices: ["I", "you"] }, { text: " play your piano?" }] }, { speaker: "CHLOE", parts: [{ answer: "Sure", choices: ["No", "Sure"] }, { text: ", you can." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-zoe-mia-novel",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/zoe_mia_1.mp4",
+        lines: [{ speaker: "ZOE", parts: [{ text: "Hi Mia, can " }, { answer: "I", choices: ["I", "you"] }, { text: " lend me your new novel, please?" }] }, { speaker: "MIA", parts: [{ text: "Sure, you " }, { answer: "can", choices: ["can", "can't"] }, { text: " have it." }] }]
+      }
+    },
+    {
+      id: "can-permission-video-zoe-mia-diary",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/zoe_mia_2.mp4",
+        lines: [{ speaker: "ZOE", parts: [{ text: "Your diary is cute. Can " }, { answer: "I", choices: ["I", "you"] }, { text: " have a look?" }] }, { speaker: "MIA", parts: [{ answer: "Sure", choices: ["Sure", "No way!"] }] }]
+      }
     }
   ]
 };

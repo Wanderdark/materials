@@ -18,7 +18,7 @@ window.exerciseModules.push({
     {
       imagePath: "../images/5/4/27.webp",
       segments: [
-        { text: "Olivia " },
+        { text: "She " },
         { blank: true, answer: "takes", clue: "take" },
         { text: " photos of flowers every Saturday. Look! She " },
         { blank: true, answer: "is taking", clue: "take" },
@@ -28,7 +28,7 @@ window.exerciseModules.push({
     {
       imagePath: "../images/5/4/8.webp",
       segments: [
-        { text: "Jack " },
+        { text: "He " },
         { blank: true, answer: "goes", clue: "go" },
         { text: " fishing with his father every weekend, but today they " },
         { blank: true, answer: "are relaxing", clue: "relax" },

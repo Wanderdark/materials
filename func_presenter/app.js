@@ -289,6 +289,7 @@ const els = {
   roomChoices: $("roomChoices"),
   roomNext: $("roomNextButton"),
   roomExit: $("roomExitButton"),
+  roomSkip: $("roomSkipButton"),
   roomIntroOverlay: $("roomIntroOverlay"),
   roomIntroText: $("roomIntroText"),
   roomIntroOk: $("roomIntroOkButton")
@@ -1848,6 +1849,7 @@ els.setupExercises.addEventListener("click", openExerciseMenu);
 els.presentationExercises.addEventListener("click", openExerciseMenu);
 els.roomBack.addEventListener("click", returnToHubFromRoom);
 els.roomExit.addEventListener("click", exitCharacterRoom);
+els.roomSkip.addEventListener("click", skipCharacterRoom);
 els.roomIntroOk.addEventListener("click", () => els.roomIntroOverlay.classList.add("hidden"));
 els.roomNext.addEventListener("click", () => {
   roomState.targetIndex += 1;

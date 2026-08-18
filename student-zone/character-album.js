@@ -9,6 +9,8 @@
     { id: "introduction", title: "INTRODUCTION", matches: (item, character) => new RegExp(`^introduce_${character}(?:_part\\d+)?$`).test(item.id) },
     { id: "countries", title: "COUNTRIES", matches: (item, character) => item.id === `countries_${character}` },
     { id: "appearance", title: "PHYSICAL APPEARANCE", matches: (item, character) => item.id === `5_personal_life_appearance_${character}` },
+    { id: "daily_routines", title: "DAILY ROUTINES", matches: (item, character) => item.id === `5_personal_life_${character}_daily_routine` },
+    { id: "possessions", title: "POSSESSIONS", matches: (item, character) => item.unit === "possessions" && item.characterIds?.includes(character) },
     { id: "family", title: "INTRODUCING FAMILIES", matches: (item, character) => new RegExp(`^introduce_family_${character}(?:_\\d+)?$`).test(item.id) },
     { id: "best_friends", title: "BEST FRIENDS", matches: (item, character) => new RegExp(`^introduce_best_friend_${character}(?:_part\\d+)?$`).test(item.id) }
   ];
@@ -80,7 +82,7 @@
     const pageWidth = slot.side === "left" ? 40.1 : 39.2;
     return `--x:${pageLeft + slot.x * pageWidth / 100}%;--y:${7.4 + slot.y * .84}%;--w:${slot.w * pageWidth / 100}%;--r:${slot.r}deg;`;
   };
-  const publishedAlbumItems = () => (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => item?.status === "published" && item.videoSrc);
+  const publishedAlbumItems = () => (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => ["published", "album"].includes(item?.status) && item.videoSrc);
   const uniqueVideoRecords = (records) => records.filter((record, index) => records.findIndex((item) => item.videoSrc === record.videoSrc) === index);
   const collectionsForCharacter = () => {
     const records = uniqueVideoRecords(chapters.flatMap((chapter) => publishedAlbumItems().filter((item) => chapter.matches(item, currentCharacter))));

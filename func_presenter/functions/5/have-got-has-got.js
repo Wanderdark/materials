@@ -33,6 +33,18 @@ const haveGotHasGotFunction = {
             speechPoint: { x: 1332, y: 250 },
             noSentenceBubble: true,
             exitLine: "See you later!",
+            videoTrueFalse: {
+              name: "BENJAMIN",
+              videoUrl: "https://media.adilhoca.com/video/5_possesions_benjamin.mp4",
+              questions: [
+                { text: "Benjamin has got a scooter and a skateboard.", answer: true },
+                { text: "Benjamin has got a PlayStation, but he wants another one.", answer: false, correction: "Benjamin hasn't got a PlayStation, but he wants one." },
+                { text: "Benjamin has got swimming goggles.", answer: true },
+                { text: "Benjamin hasn't got a swimming medal.", answer: false, correction: "Benjamin has got a swimming medal." },
+                { text: "Benjamin loves swimming.", answer: true },
+                { text: "Benjamin hasn't got a skateboard.", answer: false, correction: "Benjamin has got a skateboard." }
+              ]
+            },
             targets: [
               {
                 sentence: 'Benjamin has got a "scooter".',
@@ -89,6 +101,7 @@ const haveGotHasGotFunction = {
             speechPoint: { x: 1260, y: 190 },
             noSentenceBubble: true,
             exitLine: "Let's play chess someday, Bye",
+            videoTrueFalse: { name: "VICTORIA", videoUrl: "https://media.adilhoca.com/video/5_possesions_victoria.mp4", questions: [{ text: "Victoria has got a laptop.", answer: true }, { text: "Victoria has got a television.", answer: false, correction: "Victoria hasn't got a television." }, { text: "Victoria has got a hamster called Pixel.", answer: true }, { text: "Victoria has got a robot.", answer: true }, { text: "Victoria likes watching TV.", answer: false, correction: "Victoria doesn't like watching TV." }, { text: "Pixel is Victoria's robot.", answer: false, correction: "Pixel is Victoria's hamster." }] },
             targets: [
               {
                 sentence: 'Victoria has got a "laptop".',
@@ -144,6 +157,7 @@ const haveGotHasGotFunction = {
             imageHeight: 941,
             speechPoint: { x: 1310, y: 105 },
             exitLine: "Come again, BYE!",
+            videoTrueFalse: { name: "LUCAS", videoUrl: "https://media.adilhoca.com/video/5_possesions_lucas.mp4", questions: [{ text: "Lucas has got a guitar.", answer: false, correction: "Lucas hasn't got a guitar." }, { text: "Lucas has got a football and football boots.", answer: true }, { text: "Lucas has got a sports bag.", answer: true }, { text: "Lucas hasn't got a football medal.", answer: false, correction: "Lucas has got a football medal." }, { text: "Lucas has got a football trophy.", answer: true }, { text: "Lucas hasn't got a football jersey.", answer: false, correction: "Lucas has got a football jersey." }] },
             targets: [
               {
                 sentence: 'Lucas has got a "foot ball".',
@@ -195,6 +209,7 @@ const haveGotHasGotFunction = {
             imageHeight: 941,
             speechPoint: { x: 370, y: 75 },
             exitLine: "Nice to see you, BYE!",
+            videoTrueFalse: { name: "CHLOE", videoUrl: "https://media.adilhoca.com/video/5_possesions_chloe.mp4", questions: [{ text: "Chloe has got a piano.", answer: true }, { text: "Chloe has got a television.", answer: false, correction: "Chloe hasn't got a television." }, { text: "Chloe has got ballet shoes and a dancing medal.", answer: true }, { text: "Chloe has got a cat called Luna.", answer: true }, { text: "Chloe has got a computer.", answer: false, correction: "Chloe hasn't got a computer." }, { text: "Chloe's cat is called Coco.", answer: false, correction: "Chloe's cat is called Luna." }] },
             exitSound: "sounds/luna.mp3",
             exitSoundDelay: 2000,
             exitDelay: 4000,
@@ -273,6 +288,7 @@ const haveGotHasGotFunction = {
             speechPoint: { x: 1060, y: 130 },
             noSentenceBubble: true,
             exitLine: "I must study Maths, see you.",
+            videoTrueFalse: { name: "NOAH", videoUrl: "https://media.adilhoca.com/video/5_possesions_noah.mp4", questions: [{ text: "Noah has got a television.", answer: false, correction: "Noah hasn't got a television." }, { text: "Noah has got a chess set.", answer: true }, { text: "Noah doesn't like studying.", answer: false, correction: "Noah prefers studying." }, { text: "Noah has got lots of books.", answer: true }, { text: "Noah has got a desk lamp.", answer: true }, { text: "Noah hasn't got a globe.", answer: false, correction: "Noah has got a globe." }] },
             targets: [
               {
                 sentence: 'Noah has got a "chessboard".',
@@ -329,6 +345,7 @@ const haveGotHasGotFunction = {
             speechPoint: { x: 390, y: 160 },
             speechLift: 50,
             exitLine: "Thanks for coming, bye.",
+            videoTrueFalse: { name: "MIA", videoUrl: "https://media.adilhoca.com/video/5_possesions_mia.mp4", questions: [{ text: "Mia has got an armchair.", answer: true }, { text: "Mia has got a telescope.", answer: false, correction: "Mia hasn't got a telescope, but she wants one." }, { text: "Mia doesn't like reading.", answer: false, correction: "Mia loves reading." }, { text: "Mia has got a diary.", answer: true }, { text: "Mia has got a rabbit called Coco.", answer: true }, { text: "Coco is Mia's cat.", answer: false, correction: "Coco is Mia's rabbit." }] },
             easterEggs: [
               { id: "diary", line: "Don't touch my diary please", duration: 4000 },
               { id: "petRabbit", line: "Its name is Coco!", duration: 3000 },
@@ -393,6 +410,7 @@ const haveGotHasGotFunction = {
             speechPoint: { x: 355, y: 125 },
             speechLift: 98,
             exitLine: "Thanks for visiting!",
+            videoTrueFalse: { name: "ELLA", videoUrl: "https://media.adilhoca.com/video/5_possesions_ella.mp4", questions: [{ text: "Ella hasn't got a television.", answer: false, correction: "Ella has got a karaoke corner and a television." }, { text: "Ella has got a guitar.", answer: true }, { text: "Ella has got a music trophy.", answer: true }, { text: "Ella has got a piano.", answer: false, correction: "Ella has got a guitar." }, { text: "Sunny is Ella's cat.", answer: false, correction: "Sunny is Ella's colourful parrot." }, { text: "Ella has got a colourful parrot called Sunny.", answer: true }] },
             targets: [
               {
                 sentence: 'Ella has got a "guitar".',
@@ -452,6 +470,7 @@ const haveGotHasGotFunction = {
             imageHeight: 941,
             speechPoint: { x: 400, y: 75 },
             exitLine: "Hey, let's ride bike together this weekend.",
+            videoTrueFalse: { name: "HANNAH", videoUrl: "https://media.adilhoca.com/video/5_possesions_hannah.mp4", questions: [{ text: "Hannah has got a pink bike and a helmet.", answer: true }, { text: "Hannah has got hiking boots and a backpack.", answer: true }, { text: "Hannah has got a television in her room.", answer: false, correction: "Hannah hasn't got a television in her room." }, { text: "Hannah has got a computer in her room.", answer: false, correction: "Hannah hasn't got a computer in her room." }, { text: "Hannah has got a horse called Storm.", answer: true }, { text: "Storm is Hannah's dog.", answer: false, correction: "Storm is Hannah's horse." }] },
             exitDelay: 4000,
             easterEggs: [
               { id: "bicycle", line: "Let's go cycling!", duration: 3000 },
@@ -507,6 +526,89 @@ const haveGotHasGotFunction = {
           }
         }
       ]
+    },
+    {
+      id: "have-got-video-ella-olivia-strawberries",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_ella_olivia.mp4",
+        lines: [
+          { speaker: "ELLA", parts: [{ text: "Have you got the strawberries?" }] },
+          { speaker: "OLIVIA", parts: [{ text: "Yep, I " }, { answer: "have got", choices: ["have got", "has got"] }, { text: " them right here." }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-david-valeria-honey",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_david_valeria.mp4",
+        lines: [
+          { speaker: "DAVID", parts: [{ text: "Mom, " }, { answer: "have we got", choices: ["have we got", "has we got"] }, { text: " any honey?" }] },
+          { speaker: "VALERIA", parts: [{ text: "Yes, I've got some right here." }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-mia-giulia-strawberries",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_mia_giulia.mp4",
+        lines: [
+          { speaker: "MIA", parts: [{ text: "Mom, have we got everything?" }] },
+          { speaker: "GIULIA", parts: [{ text: "Almost, we " }, { answer: "haven't got", choices: ["have got", "haven't got"] }, { text: " any strawberries." }] },
+          { speaker: "MIA", parts: [{ text: "They've got some over there!" }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-noah-victoria-napkins",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_noah_victoria.mp4",
+        lines: [
+          { speaker: "NOAH", parts: [{ text: "Have you got any napkins?" }] },
+          { speaker: "VICTORIA", parts: [{ text: "Yeah, I " }, { answer: "have got", choices: ["have got", "don't have got"] }, { text: " some." }] },
+          { speaker: "NOAH", parts: [{ text: "Thanks." }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-chloe-emma-photos",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_chloe_emma.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ answer: "Have you", choices: ["Have you", "has you"] }, { text: " got any photos from yesterday?" }] },
+          { speaker: "EMMA", parts: [{ text: "Yeah, I " }, { answer: "have got", choices: ["have got", "haven't got"] }, { text: " loads!" }] },
+          { speaker: "CHLOE", parts: [{ text: "Show me!" }] },
+          { speaker: "CHLOE", parts: [{ text: "Delete this quickly!" }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-benjamin-ethan-popcorn",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_benjamin_ethan.mp4",
+        lines: [
+          { speaker: "BENJAMIN", parts: [{ text: "Have we got everything?" }] },
+          { speaker: "ETHAN", parts: [{ text: "Wait, we " }, { answer: "haven't got", choices: ["have got", "haven't got"] }, { text: " the popcorn." }] }
+        ]
+      }
+    },
+    {
+      id: "have-got-video-hannah-chloe-chocolate",
+      videoDialogue: {
+        title: "WATCH, THEN COMPLETE THE DIALOGUE",
+        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_hannah_chloe.mp4",
+        lines: [
+          { speaker: "CHLOE", parts: [{ text: "Mine " }, { answer: "hasn't got", choices: ["has got", "hasn't got"] }, { text: " any chocolate." }] },
+          { speaker: "HANNAH", parts: [{ text: "Here." }] },
+          { speaker: "HANNAH", parts: [{ text: "Stop, stop, stop!" }] },
+          { speaker: "CHLOE", parts: [{ text: "Perfect." }] }
+        ]
+      }
     }
   ]
 };

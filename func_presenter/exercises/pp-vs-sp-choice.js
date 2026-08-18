@@ -17,7 +17,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/22.webp",
+      imagePath: "images/present-progressive/picnic.webp",
       sentences: [
         {
           segments: [
@@ -29,7 +29,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/5.webp",
+      imagePath: "images/present-progressive/hannah-barbeque.webp",
       sentences: [
         {
           segments: [
@@ -41,11 +41,11 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/29.webp",
+      imagePath: "images/present-progressive/visit.webp",
       sentences: [
         {
           segments: [
-            { text: "Benjamin " },
+            { text: "Jack " },
             { options: ["visiting", "visit", "visits"], answer: "visits" },
             { text: " his grandparents once a week." }
           ]
@@ -65,11 +65,11 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/15.webp",
+      imagePath: "images/present-progressive/hannahzoe.webp",
       sentences: [
         {
           segments: [
-            { text: "Hannah and Emma are " },
+            { text: "Hannah and Zoe are " },
             { options: ["camp", "camps", "camping"], answer: "camping" },
             { text: " in the forest today." }
           ]
@@ -77,7 +77,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/18.webp",
+      imagePath: "images/present-progressive/jackfishing.webp",
       sentences: [
         {
           segments: [

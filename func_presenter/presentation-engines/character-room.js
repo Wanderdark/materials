@@ -221,6 +221,7 @@ function drawRoomHitAreas(target) {
 }
 
 let roomEasterEggTimer = null;
+let roomExitTimer = null;
 function handleRoomEasterEgg(egg, onDone) {
   clearTimeout(roomEasterEggTimer);
   positionRoomSpeechBubble(roomState.data.speechPoint);
@@ -296,11 +297,47 @@ function exitCharacterRoom() {
   els.roomSpeechBubble.classList.remove("hidden");
   speakRoomLine(room.exitLine || "Bye!", room);
   if (room.exitSound) setTimeout(() => new Audio(room.exitSound).play().catch(() => {}), room.exitSoundDelay ?? 0);
-  setTimeout(returnToHubFromRoom, room.exitDelay || 2000);
+  const returnIndex = roomState.returnIndex;
+  clearTimeout(roomExitTimer);
+  roomExitTimer = setTimeout(() => {
+    roomExitTimer = null;
+    if (!roomState) return;
+    if (room.videoTrueFalse) openRoomVideoTrueFalse(room, returnIndex);
+    else returnToHubFromRoom();
+  }, room.exitDelay || 2000);
+}
+
+function skipCharacterRoom() {
+  if (!roomState) return;
+  const room = roomState.data;
+  const returnIndex = roomState.returnIndex;
+  clearTimeout(roomEasterEggTimer);
+  clearTimeout(roomExitTimer);
+  roomExitTimer = null;
+  els.roomIntroOverlay.classList.add("hidden");
+  if (room.videoTrueFalse) openRoomVideoTrueFalse(room, returnIndex);
+  else returnToHubFromRoom();
+}
+
+function openRoomVideoTrueFalse(room, returnIndex) {
+  els.roomSpeechBubble.classList.add("hidden");
+  roomState = null;
+  hideAllScreens();
+  els.presentation.classList.remove("hidden");
+  els.exampleCard.classList.remove("presence-slide");
+  els.exampleCard.classList.add("video-dialogue-slide");
+  renderDailyRoutineVideoPractice(room.videoTrueFalse, () => {
+    hideAllScreens();
+    els.presentation.classList.remove("hidden");
+    state.index = returnIndex;
+    renderExample();
+  });
 }
 
 function returnToHubFromRoom() {
   const returnIndex = roomState?.returnIndex;
+  clearTimeout(roomExitTimer);
+  roomExitTimer = null;
   els.roomSpeechBubble.classList.add("hidden");
   roomState = null;
   hideAllScreens();
@@ -308,4 +345,3 @@ function returnToHubFromRoom() {
   if (returnIndex != null) state.index = returnIndex;
   renderExample();
 }
-

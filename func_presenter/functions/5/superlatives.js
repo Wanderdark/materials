@@ -265,6 +265,34 @@ const superlativesFunction = {
       ]
     },
     {
+      id: "superlatives-video-chloe-luna-elephant",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_chloe_luna.mp4", lines: [{ speaker: "PRESENTER", parts: [{ text: "The African elephant is " }, { answer: "the heaviest", choices: ["the tallest", "the heaviest"] }, { text: " land animal in the world." }] }] }
+    },
+    {
+      id: "superlatives-video-benjamin-oliver-dolphins",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_benjamin_oliver.mp4", lines: [{ speaker: "PRESENTER", parts: [{ text: "Dolphins are " }, { answer: "the most intelligent", choices: ["the largest", "the most intelligent"] }, { text: " animals in the ocean." }] }] }
+    },
+    {
+      id: "superlatives-video-ella-olivia-giraffe",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_olivia3.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "The giraffe is the " }, { answer: "tallest", choices: ["taller", "tallest"] }, { text: " animal in the world, right?" }] }, { speaker: "OLIVIA", parts: [{ text: "Yep, it can be almost six metres tall." }] }] }
+    },
+    {
+      id: "superlatives-video-benjamin-jack-lions",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_benjamin_jack2.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "Lions have the " }, { answer: "loudest", choices: ["loudest", "louder"] }, { text: " roars, right? We can hear a lion's roar from eight kilometres away." }] }] }
+    },
+    {
+      id: "superlatives-video-ava-chloe-shark",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ava_chloe.mp4", lines: [{ speaker: "PRESENTER", parts: [{ text: "The great white shark has " }, { answer: "the biggest", choices: ["the biggest", "the smallest"] }, { text: " teeth among ocean animals." }] }] }
+    },
+    {
+      id: "superlatives-video-hannah-ingrid-horses",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_hannah_ingrid.mp4", lines: [{ speaker: "PRESENTER", parts: [{ text: "Horses have the " }, { answer: "biggest", choices: ["most beautiful", "biggest"] }, { text: " eyes of all land animals!" }] }] }
+    },
+    {
+      id: "superlatives-video-jack-fastest-fish",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_jack.mp4", lines: [{ speaker: "JACK", parts: [{ text: "The " }, { answer: "fastest", choices: ["fastest", "biggest"] }, { text: " fish is coming, luckiest catch ever." }] }] }
+    },
+    {
       id: "comparatives-student-reveal",
       presenceSlide: true,
       kicker: "COMPARATIVES",

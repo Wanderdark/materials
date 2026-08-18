@@ -1,0 +1,4 @@
+/* Character-room presentation controls. */
+.room-header-actions { display: flex; align-items: center; gap: 12px; }
+.room-skip-button { min-height: 42px; padding: 8px 16px; border: 2px solid rgba(255,216,77,.72); border-radius: 12px; color: var(--yellow); background: rgba(255,216,77,.08); cursor: pointer; font: inherit; font-size: clamp(12px, 1.1vw, 16px); font-weight: 950; letter-spacing: .08em; }
+.room-skip-button:hover, .room-skip-button:focus-visible { border-color: var(--mint); color: var(--mint); background: rgba(101,230,184,.10); outline: none; }

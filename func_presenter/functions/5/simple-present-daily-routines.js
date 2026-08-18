@@ -1,3 +1,122 @@
+const dailyRoutineVideoCharacters = [
+  {
+    name: "AVA",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_ava_daily_routine.mp4",
+    questions: [
+      { text: "Ava gets up at seven every morning.", answer: true },
+      { text: "Ava brushes her teeth only in the evening.", answer: false, correction: "Ava brushes her teeth every morning." },
+      { text: "Ava leaves home for school at half past eight.", answer: true },
+      { text: "Ava's lessons start at ten o'clock.", answer: false, correction: "Ava's lessons start at nine o'clock." },
+      { text: "Ava spends time with Buddy after school.", answer: true },
+      { text: "Ava visits an animal shelter every Sunday.", answer: false, correction: "Ava often visits an animal shelter at weekends." }
+    ]
+  },
+  {
+    name: "BENJAMIN",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_benjamin_daily_routine.mp4",
+    questions: [
+      { text: "Benjamin usually gets up at half past seven.", answer: true },
+      { text: "Benjamin walks to school every day.", answer: false, correction: "Benjamin usually rides his scooter to school." },
+      { text: "Benjamin's school finishes at three o'clock.", answer: true },
+      { text: "Benjamin goes skateboarding before doing his homework.", answer: false, correction: "Benjamin does his homework before going skateboarding." },
+      { text: "Benjamin often goes swimming at weekends.", answer: true },
+      { text: "Benjamin visits school on Sundays.", answer: false, correction: "Benjamin likes walking in nature on Sundays." }
+    ]
+  },
+  {
+    name: "ELLA",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_ella_daily_routine.mp4",
+    questions: [
+      { text: "Ella has breakfast with Sunny.", answer: true },
+      { text: "Ella gets home in the afternoon.", answer: true },
+      { text: "Ella often listens to music after school.", answer: true },
+      { text: "Ella sometimes plays the piano.", answer: false, correction: "Ella sometimes plays the guitar." },
+      { text: "Ella's family always has dinner together.", answer: true },
+      { text: "Ella goes to bed at nine o'clock.", answer: false, correction: "Ella goes to bed at ten o'clock." }
+    ]
+  },
+  {
+    name: "EMMA",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_emma_daily_routine.mp4",
+    questions: [
+      { text: "Science is Emma's favourite subject.", answer: true },
+      { text: "Emma's lessons start at half past eight.", answer: false, correction: "Emma's lessons start at nine o'clock." },
+      { text: "Emma usually helps her mum at home after school.", answer: true },
+      { text: "Emma loves cooking in the morning.", answer: false, correction: "Emma loves cooking in the evening." },
+      { text: "Emma often bakes with her mum at weekends.", answer: true },
+      { text: "Emma plays board games with her mum on Sundays.", answer: false, correction: "Emma plays board games with her dad on Sundays." }
+    ]
+  },
+  {
+    name: "CHLOE",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_chloe_daily_routine.mp4",
+    questions: [
+      { text: "Chloe usually gets up at seven on weekdays.", answer: true },
+      { text: "Chloe leaves home for school at eight o'clock.", answer: false, correction: "Chloe leaves home for school at half past eight." },
+      { text: "Art is Chloe's favourite subject.", answer: true },
+      { text: "Chloe always does her homework after school.", answer: true },
+      { text: "Chloe usually plays the guitar after school.", answer: false, correction: "Chloe usually plays the piano after school." },
+      { text: "Chloe usually goes to bed at ten o'clock.", answer: true }
+    ]
+  },
+  {
+    name: "HANNAH",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_hannah_daily_routine.mp4",
+    questions: [
+      { text: "Hannah always has a healthy breakfast.", answer: true },
+      { text: "Art is Hannah's favourite lesson.", answer: false, correction: "P.E. is Hannah's favourite lesson." },
+      { text: "Hannah often goes cycling after doing her homework.", answer: true },
+      { text: "Hannah usually goes to bed at eleven o'clock.", answer: false, correction: "Hannah usually goes to bed at ten o'clock." },
+      { text: "Hannah often goes hiking at weekends.", answer: true },
+      { text: "Hannah sometimes goes camping with Emma.", answer: false, correction: "Hannah sometimes goes camping with her family." }
+    ]
+  },
+  {
+    name: "MIA",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_mia_daily_routine.mp4",
+    questions: [
+      { text: "English is Mia's favourite subject.", answer: true },
+      { text: "Mia has breakfast after school.", answer: false, correction: "Mia always has breakfast before school." },
+      { text: "Mia has lunch at the school canteen with Zoe.", answer: true },
+      { text: "Mia leaves school at half past two in the afternoon.", answer: true },
+      { text: "Mia writes in her diary after doing her homework.", answer: true },
+      { text: "Mia bakes cookies with her mum on weekdays.", answer: false, correction: "Mia sometimes bakes cookies with her mum on Sundays." }
+    ]
+  },
+  {
+    name: "NOAH",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_noah_daily_routine.mp4",
+    questions: [
+      { text: "Noah usually gets up at seven o'clock.", answer: true },
+      { text: "Noah leaves home for school at nine o'clock.", answer: false, correction: "Noah leaves home for school at half past eight." },
+      { text: "Maths is Noah's favourite subject.", answer: true },
+      { text: "Noah does his homework before school.", answer: false, correction: "Noah does his homework after school." },
+      { text: "Noah usually practises chess after school.", answer: true },
+      { text: "Noah goes to the zoo on Sundays.", answer: false, correction: "Noah sometimes visits museums on Sundays." }
+    ]
+  },
+  {
+    name: "OLIVIA",
+    videoUrl: "https://media.adilhoca.com/video/5_personal_life_olivia_daily_routine.mp4",
+    questions: [
+      { text: "Olivia usually gets up at seven o'clock.", answer: true },
+      { text: "Olivia's lessons start at half past eight.", answer: false, correction: "Olivia's lessons start at nine o'clock." },
+      { text: "Art is Olivia's favourite subject.", answer: true },
+      { text: "Olivia leaves school at about two o'clock.", answer: true },
+      { text: "Olivia always goes to the cinema on Sundays.", answer: false, correction: "Olivia often goes to the cinema at weekends." },
+      { text: "Olivia usually goes to bed at ten o'clock.", answer: true }
+    ]
+  }
+];
+
+function buildDailyRoutineVideoHubItems() {
+  return dailyRoutineVideoCharacters.map((character) => ({
+    kind: "category-list",
+    parts: [{ text: character.name }],
+    dailyRoutineVideoCharacter: character
+  }));
+}
+
 const simplePresentDailyRoutinesFunction = {
   id: "simple-present-daily-routines",
   grade: 5,
@@ -346,6 +465,21 @@ const simplePresentDailyRoutinesFunction = {
           ]
         }
       ]
+    },
+    {
+      id: "daily-routines-video-hub",
+      presenceSlide: true,
+      dailyRoutineVideoHub: true,
+      focus: "CHOOSE ONE",
+      kicker: "DAILY ROUTINES",
+      title: "Click a character to watch and answer the questions.",
+      compactTitle: true,
+      imagePath: "images/common/collage-photo-6.webp",
+      imageClass: "hub-collage-visual",
+      visualBrief: "Choose a character.",
+      showAllItems: true,
+      listClass: "character-hub-grid daily-routine-character-hub-grid",
+      items: buildDailyRoutineVideoHubItems()
     },
     {
       id: "laura-plays-guitar",

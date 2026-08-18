@@ -226,6 +226,22 @@ const wildLifeWhQuestionsFunction = {
           }
         }
       ]
+    },
+    {
+      id: "wild-life-wh-video-daniel-lucas-tiger",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_daniel_lucas.mp4", lines: [{ speaker: "DANIEL", parts: [{ answer: "What", choices: ["What", "where"] }, { text: " do they eat?" }] }, { speaker: "LUCAS", parts: [{ text: "Meat. A tiger can eat about forty kilos in one meal!" }] }] }
+    },
+    {
+      id: "wild-life-wh-video-mia-zoe-gorillas",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_mia_zoe2.mp4", lines: [{ speaker: "MIA", parts: [{ answer: "Where", choices: ["What", "Where"] }, { text: " do gorillas live?" }] }, { speaker: "ZOE", parts: [{ text: "They live in forests in Africa. They build a new bed every night!" }] }] }
+    },
+    {
+      id: "wild-life-wh-video-ella-olivia-whales",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_ella_olivia2.mp4", lines: [{ speaker: "ELLA", parts: [{ answer: "Where", choices: ["What", "Where"] }, { text: " do whales live?" }] }, { speaker: "OLIVIA", parts: [{ text: "They live in oceans all around the world. They travel thousands of kilometres every year!" }] }] }
+    },
+    {
+      id: "wild-life-wh-video-chloe-olivia-crocodiles",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_nature_chloe_olivia.mp4", lines: [{ speaker: "CHLOE", parts: [{ answer: "Where", choices: ["Where", "what"] }, { text: " do crocodiles sleep?" }] }, { speaker: "OLIVIA", parts: [{ text: "Sometimes underwater. They can stay there for hours!" }] }] }
     }
   ]
 };

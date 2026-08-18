@@ -5,7 +5,7 @@ window.exerciseModules.push({
   title: "CHOOSE CORRECT OPTION",
   pages: [
     {
-      imagePath: "../images/5/4/5.webp",
+      imagePath: "images/present-progressive/hannah-barbeque.webp",
       sentences: [
         {
           segments: [{ text: "Who is having a barbeque?" }]
@@ -22,7 +22,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/22.webp",
+      imagePath: "images/present-progressive/picnic.webp",
       sentences: [
         {
           segments: [
@@ -36,7 +36,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/27.webp",
+      imagePath: "images/present-progressive/takephoto.webp",
       sentences: [
         {
           segments: [
@@ -85,7 +85,7 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/18.webp",
+      imagePath: "images/present-progressive/jackfishing.webp",
       sentences: [
         {
           segments: [
@@ -125,11 +125,11 @@ window.exerciseModules.push({
       ]
     },
     {
-      imagePath: "../images/5/4/29.webp",
+      imagePath: "images/present-progressive/visit.webp",
       sentences: [
         {
           segments: [
-            { text: "Benjamin " },
+            { text: "Jack " },
             { options: ["am", "is", "are"], answer: "is" },
             { text: " " },
             { options: ["visits", "visiting", "visit"], answer: "visiting" },

@@ -439,6 +439,30 @@ const countableUncountableFunction = {
           }
         ]
       }
+    },
+    {
+      id: "countable-video-david-valeria-honey",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_david_valeria.mp4", lines: [{ speaker: "DAVID", parts: [{ text: "Mom, have we got " }, { answer: "any", choices: ["any", "a lot of"] }, { text: " honey?" }] }, { speaker: "VALERIA", parts: [{ text: "Yes, I've got " }, { answer: "some", choices: ["any", "some"] }, { text: " right here." }] }] }
+    },
+    {
+      id: "countable-video-daniel-lucas-fries",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_daniel_lucas.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "Can I have " }, { answer: "some", choices: ["lots", "some"] }, { text: " of your fries?" }] }, { speaker: "LUCAS", parts: [{ text: "Sure, just " }, { answer: "a few", choices: ["a few", "any"] }, { text: "." }] }] }
+    },
+    {
+      id: "countable-video-mia-zoe-muffins",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_mia_zoe.mp4", lines: [{ speaker: "MIA", parts: [{ answer: "How many", choices: ["How many", "how much"] }, { text: " muffins have we got?" }] }, { speaker: "ZOE", parts: [{ text: "Four." }] }, { speaker: "MIA", parts: [{ text: "And " }, { answer: "how much", choices: ["how many", "how much"] }, { text: " milk have we got?" }] }, { speaker: "ZOE", parts: [{ text: "Not much." }] }, { speaker: "MIA", parts: [{ text: "That's not enough." }] }] }
+    },
+    {
+      id: "countable-video-lucas-daniel-sandwiches",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_lucas_daniel.mp4", lines: [{ speaker: "LUCAS", parts: [{ answer: "How many", choices: ["How many", "how much"] }, { text: " sandwiches do we need?" }] }, { speaker: "DANIEL", parts: [{ text: "Five." }] }, { speaker: "DANIEL", parts: [{ text: "Hey!" }] }, { speaker: "LUCAS", parts: [{ text: "And " }, { answer: "some", choices: ["some", "any"] }, { text: " lemonade, please." }] }] }
+    },
+    {
+      id: "countable-video-hannah-emma-sandwiches",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_hannah_emma2.mp4", lines: [{ speaker: "HANNAH", parts: [{ answer: "How many", choices: ["How many", "how much"] }, { text: " sandwiches have we got?" }] }, { speaker: "EMMA", parts: [{ text: "Eight." }] }, { speaker: "HANNAH", parts: [{ text: "And " }, { answer: "how much", choices: ["how many", "how much"] }, { text: " juice have we got?" }] }] }
+    },
+    {
+      id: "countable-video-ava-zoe-apples",
+      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_life_in_the_world_ava_zoe.mp4", lines: [{ speaker: "ZOE", parts: [{ answer: "How many", choices: ["How many", "how much"] }, { text: " apples do we need?" }] }, { speaker: "AVA", parts: [{ text: "Six." }] }, { speaker: "ZOE", parts: [{ text: "And " }, { answer: "how much", choices: ["how many", "how much"] }, { text: " rice?" }] }] }
     }
   ]
 };

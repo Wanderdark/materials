@@ -52,14 +52,14 @@ const presentProgressiveFunction = {
       presenceSlide: true,
       kicker: "PRESENT PROGRESSIVE",
       title: "VERB + ING",
-      imagePath: "../images/5/4/26.webp",
+      imagePath: "images/present-progressive/whataretheydoing.webp",
       visualBrief: "Present progressive tense intro.",
       showAllItems: true,
       listClass: "ppt-verb-cross",
       items: [
         {
           kind: "category-list",
-          parts: [{ text: "swim  →  swim" }, { text: "ming", className: "presence-yellow" }],
+          parts: [{ text: "read  →  read" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
             imagePath: "images/present-progressive/readbooks.webp",
             sentence: "I am <reading> a book."
@@ -67,10 +67,10 @@ const presentProgressiveFunction = {
         },
         {
           kind: "category-list",
-          parts: [{ text: "dance  →  danc" }, { text: "ing", className: "presence-yellow" }],
+          parts: [{ text: "do  →  do" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
-            imagePath: "../images/5/4/17.webp",
-            sentence: "Chloe is <dancing>."
+            imagePath: "images/present-progressive/dohomework.webp",
+            sentence: "Noah is <doing> homework."
           }
         },
         {
@@ -82,7 +82,7 @@ const presentProgressiveFunction = {
           kind: "category-list",
           parts: [{ text: "ride  →  rid" }, { text: "ing", className: "presence-yellow" }],
           overlayData: {
-            imagePath: "../images/5/4/13.webp",
+            imagePath: "images/present-progressive/ridescooter.webp",
             sentence: "Daniel is <riding> a scooter."
           }
         },
@@ -347,7 +347,6 @@ const presentProgressiveFunction = {
       presenceSlide: true,
       kicker: "PRESENT PROGRESSIVE",
       title: "PRESENT PROGRESSIVE vs. SIMPLE PRESENT",
-      exerciseObj: _ppVsSpExercise,
       compactTitle: true,
       imagePath: "images/present-progressive/ruletable.webp",
       showAllItems: true,
@@ -376,13 +375,13 @@ const presentProgressiveFunction = {
           overlayData: {
             comparison: {
               left: {
-                imagePath: "../images/5/4/27.webp",
+                imagePath: "images/present-progressive/takephoto.webp",
                 imageScale: 0.6,
                 caption: "Olivia take<s> photos in the park every weekend."
               },
               right: {
-                imagePath: "../images/5/4/14.webp",
-                revealSentence: "She <is> play<ing> the piano at home today."
+                imagePath: "images/present-progressive/paint.webp",
+                revealSentence: "She <is> paint<ing> at home today."
               }
             }
           }
@@ -398,7 +397,7 @@ const presentProgressiveFunction = {
           overlayData: {
             comparison: {
               left: {
-                imagePath: "../images/5/4/18.webp",
+                imagePath: "images/present-progressive/jackfishing.webp",
                 imageScale: 0.6,
                 caption: "Jack goe<s> fish<ing> with his father every weekend."
               },
@@ -451,11 +450,6 @@ const presentProgressiveFunction = {
     {
       id: "present-progressive-vs-simple-video-benjamin-oliver-emily",
       videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver_emily.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "You always plan holidays for other people, Mum." }] }, { speaker: "EMILY", parts: [{ text: "Yes, but I'm " }, { answer: "planning", choices: ["plan", "plans", "planning"] }, { text: " for us today." }] }, { speaker: "BENJAMIN", parts: [{ text: "This one looks so cool!" }] }] }
-    },
-    {
-      id: "pp-fill-blank-bridge",
-      bridgeSlide: true,
-      exerciseLink: "present-progressive-fill-blank"
     }
   ]
 };
