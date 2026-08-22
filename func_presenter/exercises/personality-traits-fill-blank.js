@@ -98,7 +98,7 @@ window.exerciseModules.push({
   title: "FILL THE BLANKS",
   instruction: "Choose a personality word, then place it in the correct blank.",
   supports(functionModule) {
-    return functionModule.id === "personality-traits" && functionModule.grade === 7;
+    return ["personality-traits", "personality-traits-grade8"].includes(functionModule.id) && [7, 8].includes(functionModule.grade);
   },
   buildPages() {
     return buildPersonalityFillBlankGroups();

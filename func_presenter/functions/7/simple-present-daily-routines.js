@@ -1,3 +1,13 @@
+const dailyRoutineGrade7VideoCharacters = dailyRoutineVideoCharacters;
+
+function buildDailyRoutineGrade7VideoHubItems() {
+  return dailyRoutineGrade7VideoCharacters.map((character) => ({
+    kind: "category-list",
+    parts: [{ text: character.name }],
+    dailyRoutineVideoCharacter: character
+  }));
+}
+
 const simplePresentDailyRoutinesGrade7Function = {
   id: "simple-present-daily-routines-grade7",
   grade: 7,
@@ -346,6 +356,21 @@ const simplePresentDailyRoutinesGrade7Function = {
           ]
         }
       ]
+    },
+    {
+      id: "daily-routines-video-hub",
+      presenceSlide: true,
+      dailyRoutineVideoHub: true,
+      focus: "CHOOSE ONE",
+      kicker: "DAILY ROUTINES",
+      title: "Click a character to watch and answer the questions.",
+      compactTitle: true,
+      imagePath: "images/common/collage-photo-6.webp",
+      imageClass: "hub-collage-visual",
+      visualBrief: "Choose a character.",
+      showAllItems: true,
+      listClass: "character-hub-grid daily-routine-character-hub-grid",
+      items: buildDailyRoutineGrade7VideoHubItems()
     },
     {
       id: "laura-plays-guitar",

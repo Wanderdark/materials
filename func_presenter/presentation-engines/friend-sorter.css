@@ -1,0 +1,25 @@
+/* Reusable portrait-card friendship sorting presentation activity. */
+.example-card.friend-sorter-slide { width:min(1480px,100%); margin:auto; }
+.example-card.friend-sorter-slide .sentence-panel { align-items:stretch; padding:clamp(16px,2vw,30px); }
+.friend-sorter { display:grid; gap:clamp(14px,1.6vw,24px); width:100%; }
+.friend-sorter > h2 { margin:0; color:var(--yellow); font-size:clamp(21px,2.1vw,35px); font-weight:950; letter-spacing:.1em; text-align:center; }
+.friend-sorter-cards { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:clamp(8px,1vw,15px); }
+.friend-sorter-card { display:grid; justify-items:center; align-content:start; gap:7px; min-height:0; padding:clamp(8px,.85vw,13px); border:2px solid rgba(255,216,77,.74); border-radius:16px; color:#f4f7ff; background:linear-gradient(145deg,#f1c957,#d8a940); cursor:grab; font:inherit; text-align:center; transition:transform .16s ease, box-shadow .16s ease, opacity .18s ease; }
+.friend-sorter-card:hover, .friend-sorter-card:focus-visible, .friend-sorter-card.selected { outline:none; transform:translateY(-3px); box-shadow:0 0 0 3px var(--mint),0 12px 24px rgba(0,0,0,.23); }
+.friend-sorter-card:active { cursor:grabbing; }
+.friend-sorter-card img { width:clamp(48px,4.7vw,82px); height:clamp(48px,4.7vw,82px); border:3px solid #fff8d9; border-radius:50%; object-fit:cover; background:#fff; }
+.friend-sorter-card p { margin:0; color:#1a2749; font-size:clamp(10px,.94vw,16px); font-weight:780; line-height:1.16; }
+.friend-sorter-card p strong { color:#10275e; font-weight:950; }
+.friend-sorter-zones { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(16px,2.2vw,34px); }
+.friend-sorter-zone { display:grid; align-content:start; gap:12px; min-height:clamp(150px,16vw,240px); padding:clamp(15px,1.7vw,27px); border:3px solid; border-radius:24px; cursor:pointer; }
+.friend-sorter-zone.positive { border-color:#66df99; background:linear-gradient(145deg,#0f6b37,#063a22); }
+.friend-sorter-zone.negative { border-color:#ff947f; background:linear-gradient(145deg,#a22b2b,#65151a); }
+.friend-sorter-zone h3 { margin:0; color:#fff6a8; font-size:clamp(16px,1.45vw,25px); font-weight:950; text-align:center; }
+.friend-sorter-drop-area { display:flex; flex-wrap:wrap; justify-content:center; align-content:flex-start; gap:10px; min-height:90px; }
+.friend-sorter-drop-area .friend-sorter-card { width:min(220px,100%); grid-template-columns:auto 1fr; align-items:center; justify-items:start; text-align:left; cursor:default; background:#f5ce61; }
+.friend-sorter-drop-area .friend-sorter-card img { width:48px; height:48px; }
+.friend-sorter-drop-area .friend-sorter-card.sorted { box-shadow:0 0 0 2px rgba(219,255,236,.8); }
+.example-card.friend-sorter-shake { animation:friendSorterShake .36s ease-in-out; }
+@keyframes friendSorterShake { 0%,100% { transform:translateX(0); } 20%,60% { transform:translateX(-9px); } 40%,80% { transform:translateX(9px); } }
+@media (max-width:900px) { .friend-sorter-cards { grid-template-columns:repeat(3,minmax(0,1fr)); }.friend-sorter-zones { grid-template-columns:1fr; } }
+@media (max-width:560px) { .friend-sorter-cards { grid-template-columns:repeat(2,minmax(0,1fr)); }.friend-sorter-card p { font-size:13px; }.friend-sorter-zone { min-height:130px; } }

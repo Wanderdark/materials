@@ -137,7 +137,7 @@ window.exerciseModules.push({
   title: "CHOOSE CORRECT OPTION",
   textOnly: true,
   supports(functionModule) {
-    return functionModule.id === "personality-traits" && functionModule.grade === 7;
+    return ["personality-traits", "personality-traits-grade8"].includes(functionModule.id) && [7, 8].includes(functionModule.grade);
   },
   get pages() {
     return buildPersonalityTraitChoicePages();

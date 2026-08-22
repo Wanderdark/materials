@@ -1,0 +1,11 @@
+/* Scrambled dialogue template: click the lines in their original order. */
+.scrambled-dialogue-list { gap: 12px; }
+.presence-slide .presence-title.compact.scrambled-dialogue-title { font-size: clamp(12px, .6vw, 20px) !important; letter-spacing: .06em; line-height: 1.15; white-space: nowrap; }
+.scrambled-dialogue-row { cursor: pointer; transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.scrambled-dialogue-row:hover, .scrambled-dialogue-row:focus-visible { border-color: var(--yellow); background: rgba(28,58,120,.78); outline: none; transform: translateX(5px); }
+.scrambled-dialogue-row.scrambled-dialogue-solved { cursor: default; border-color: var(--mint); background: rgba(19,83,66,.7); box-shadow: 0 0 18px rgba(101,230,184,.22); }
+.scrambled-dialogue-row.scrambled-dialogue-solved:hover { transform: none; }
+.scrambled-dialogue-complete .scrambled-dialogue-row { cursor: default; }
+.example-card.scrambled-dialogue-shake { animation: scrambledDialogueShake .36s ease-in-out; }
+@keyframes scrambledDialogueShake { 0%, 100% { transform: translateX(0); } 30%, 70% { transform: translateX(-8px); } 50% { transform: translateX(8px); } }
+@media (max-width: 760px) { .presence-slide .presence-title.compact.scrambled-dialogue-title { white-space: normal; } }

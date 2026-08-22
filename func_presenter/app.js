@@ -24,6 +24,7 @@ const els = {
   pronounTable: $("pronounTable"),
   fullscreen: $("fullscreenButton"),
   headerNext: $("headerNextButton"),
+  headerLast: $("headerLastButton"),
   gradeLabel: $("gradeLabel"),
   title: $("functionTitle"),
   progressText: $("progressText"),
@@ -867,6 +868,7 @@ function renderPresenceSlide(example) {
     if (item.imagePathOnShow) row.dataset.imagePathOnShow = item.imagePathOnShow;
     if (item.speechText) row.dataset.speechText = item.speechText;
     if (item.speakerName) row.dataset.speakerName = item.speakerName;
+    if (example.disablePresenceSpeech) row.dataset.disablePresenceSpeech = "true";
     if (example.hotspotMode && item.hotspots) {
       row.classList.add("hotspot-step", "pending-hotspot");
       row.dataset.hotspots = JSON.stringify(item.hotspots);
@@ -1435,6 +1437,13 @@ function next() {
   }
 }
 
+function goToLastSlide() {
+  if (!state.module?.sentences?.length) return;
+  state.showingFunctionIntro = false;
+  state.index = state.module.sentences.length - 1;
+  renderExample();
+}
+
 function previous() {
   if (state.showingFunctionIntro) return;
   if (state.index === 0 && state.module.pronounTable) {
@@ -1860,6 +1869,7 @@ els.fullscreen.addEventListener("click", toggleFullscreen);
 els.previous.addEventListener("click", previous);
 els.next.addEventListener("click", next);
 els.headerNext.addEventListener("click", next);
+els.headerLast.addEventListener("click", goToLastSlide);
 els.timeReveal.addEventListener("click", revealTimeAnswer);
 els.timetableReveal.addEventListener("click", revealTimetableAnswer);
 els.completeExercises.addEventListener("click", openExerciseMenu);

@@ -15,7 +15,7 @@ function renderFunctionIntro() {
   els.exampleCard.classList.add("hidden");
   els.functionIntro.classList.remove("hidden");
   els.gradeLabel.textContent = `GRADE ${state.grade}`;
-  els.title.textContent = state.module.title.toUpperCase();
+  renderPresentationTitle();
   els.progressText.textContent = "INTRO";
   els.progressBar.style.width = "0%";
   els.functionIntroTitle.textContent = intro.title || "Choose the correct form of to be.";
@@ -43,6 +43,14 @@ function renderFunctionIntro() {
   els.dots.replaceChildren();
 }
 
+function renderPresentationTitle() {
+  els.title.classList.toggle("compact-presentation-title", Boolean(state.module.compactPresentationTitle));
+  els.title.replaceChildren(state.module.title.toUpperCase());
+  if (state.module.titleSecondLine) {
+    els.title.append(document.createElement("br"), state.module.titleSecondLine.toUpperCase());
+  }
+}
+
 function renderExample() {
   state.showingFunctionIntro = false;
   clearVideoDialoguePractice?.();
@@ -50,6 +58,15 @@ function renderExample() {
   clearPresenceHotspots();
   clearVisualAnnotations();
   clearPersonalityHubVisual();
+  clearPersonalityWordReveal();
+  clearSuggestionDialogue();
+  clearSequentialBoxes();
+  clearFriendSorter();
+  clearInvitationLetter();
+  clearMessageComprehension();
+  clearStaticDialogueVideo();
+  clearScrambledDialogue();
+  clearTestQuestion();
   els.functionIntro.classList.add("hidden");
   els.exampleCard.classList.remove("hidden");
   const example = state.module.sentences[state.index];
@@ -60,6 +77,13 @@ function renderExample() {
   const isTimetableSlide = Boolean(example.timetableSlide);
   const isPresenceSlide = Boolean(example.presenceSlide);
   const isVideoDialogue = Boolean(example.videoDialogue);
+  const isPersonalityWordReveal = Boolean(example.personalityWordReveal);
+  const isSuggestionDialogue = Boolean(example.suggestionDialogue);
+  const isSequentialBoxes = Boolean(example.sequentialBoxes);
+  const isFriendSorter = Boolean(example.friendSorter);
+  const isInvitationLetter = Boolean(example.invitationLetter);
+  const isMessageComprehension = Boolean(example.messageComprehension);
+  const isTestQuestion = Boolean(example.testQuestion || example.classificationQuiz);
   const noVisual = Boolean(example.noVisual);
   const focus = example.focus || example.article || "";
   const highlight = example.highlight || example.article;
@@ -74,7 +98,7 @@ function renderExample() {
   const usesMintBadge = example.article === "the" || example.focus === "PLURAL";
 
   els.gradeLabel.textContent = `GRADE ${state.grade}`;
-  els.title.textContent = state.module.title.toUpperCase();
+  renderPresentationTitle();
   els.progressText.textContent = `${visiblePos} / ${total}`;
   els.progressBar.style.width = `${(visiblePos / total) * 100}%`;
   els.exampleCard.classList.toggle("time-prompt-slide", isTimePrompt);
@@ -85,6 +109,13 @@ function renderExample() {
   els.exampleCard.classList.toggle("description-choice-slide", example.listClass === "description-choice-list");
   els.exampleCard.classList.toggle("inline-choice-slide", (example.listClass || "").split(/\s+/).includes("inline-choice-list"));
   els.exampleCard.classList.toggle("personality-hub-slide", Boolean(example.personalityHub));
+  els.exampleCard.classList.toggle("personality-word-reveal-slide", isPersonalityWordReveal);
+  els.exampleCard.classList.toggle("suggestion-dialogue-slide", isSuggestionDialogue);
+  els.exampleCard.classList.toggle("sequential-boxes-slide", isSequentialBoxes);
+  els.exampleCard.classList.toggle("friend-sorter-slide", isFriendSorter);
+  els.exampleCard.classList.toggle("invitation-letter-slide", isInvitationLetter);
+  els.exampleCard.classList.toggle("message-comprehension-slide", isMessageComprehension);
+  els.exampleCard.classList.toggle("test-question-slide", isTestQuestion);
   els.exampleCard.classList.toggle("video-dialogue-slide", isVideoDialogue);
   els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
@@ -128,7 +159,14 @@ function renderExample() {
     els.timetableReveal.classList.toggle("hidden", !example.answerReveal);
     els.timetableReveal.disabled = false;
   }
-  if (isPresenceSlide) renderPresenceSlide(example);
+  if (isPresenceSlide && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isFriendSorter && !isInvitationLetter && !isMessageComprehension && !isTestQuestion) renderPresenceSlide(example);
+  if (isPersonalityWordReveal) renderPersonalityWordReveal(example);
+  if (isSuggestionDialogue) renderSuggestionDialogue(example);
+  if (isSequentialBoxes) renderSequentialBoxes(example);
+  if (isFriendSorter) renderFriendSorter(example);
+  if (isInvitationLetter) renderInvitationLetter(example);
+  if (isMessageComprehension) renderMessageComprehension(example);
+  if (isTestQuestion) renderTestQuestion(example);
   if (example.appearanceVideoHub) renderAppearanceVideoHub(example);
   if (example.dailyRoutineVideoHub) renderDailyRoutineVideoHub(example);
   if (isVideoDialogue) renderVideoDialoguePractice(example);
@@ -137,7 +175,7 @@ function renderExample() {
     const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
     renderPersonalityHubVisual(example, activeTrait);
   }
-  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue) {
+  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isInvitationLetter && !isMessageComprehension && !isTestQuestion) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");
@@ -157,6 +195,7 @@ function renderExample() {
       requestAnimationFrame(positionPresenceHotspots);
       requestAnimationFrame(positionPresenceHoverNameTag);
     }
+    if (example.staticDialogueVideo) renderStaticDialogueVideo(example);
   }
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
   const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;

@@ -1,0 +1,11 @@
+.sequential-boxes-slide .visual-panel { background:#050811; }
+.sequential-boxes-slide .sentence-panel { position:relative; justify-content:flex-start !important; align-items:stretch; }
+.sequential-boxes { position:absolute; inset:0; display:grid; align-content:start; gap:clamp(8px,1vw,14px); padding:clamp(14px,1.6vw,26px); text-align:center; }
+.sequential-boxes-heading { margin:0; color:var(--yellow); font-size:clamp(16px,1.35vw,25px); font-weight:900; letter-spacing:.08em; }
+.sequential-boxes-list { display:grid; gap:clamp(6px,.7vw,10px); }
+.sequential-boxes-item { width:min(100%,860px); margin:0 auto; padding:clamp(10px,1.1vw,15px) clamp(16px,1.9vw,27px); border:2px solid rgba(101,135,255,.52); border-radius:14px; color:#fff95a; background:linear-gradient(135deg,#152c67,#102252); font-size:clamp(16px,1.45vw,26px); font-weight:850; line-height:1.14; animation:sequentialBoxIn .2s ease-out; }.sequential-boxes-white { color:#f4f7ff; }.sequential-boxes-underlined { text-decoration:underline 3px var(--yellow); text-underline-offset:5px; }
+.sequential-boxes-item.numbered { display:grid; grid-template-columns:clamp(42px,4vw,66px) 1fr; align-items:center; gap:clamp(10px,1.2vw,18px); padding:0 clamp(16px,1.9vw,27px) 0 0; overflow:hidden; text-align:left; }.sequential-boxes-number { display:grid; place-items:center; align-self:stretch; color:#122663; background:linear-gradient(90deg,#e99f2b,#fff443,#e99f2b); font-size:clamp(20px,2.2vw,34px); font-weight:950; }
+.sequential-boxes-next { justify-self:center; min-width:60px; padding:3px 18px 8px; border:2px solid rgba(255,216,77,.8); border-radius:14px; color:var(--yellow); background:#18336e; cursor:pointer; font-size:32px; font-weight:900; line-height:1; }
+.sequential-boxes-next:hover, .sequential-boxes-next:focus-visible { background:#24458e; outline:none; transform:translateY(-2px); }
+@keyframes sequentialBoxIn { from { opacity:0; transform:translateY(10px) scale(.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+@media (max-width:700px) { .sequential-boxes { padding:18px; }.sequential-boxes-item { font-size:clamp(16px,4.5vw,22px); } }

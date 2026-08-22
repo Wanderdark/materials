@@ -45,6 +45,7 @@ const presenceDialogueVoices = {
 };
 
 function speakPresenceRow(row) {
+  if (row?.dataset.disablePresenceSpeech === "true") return;
   const textEl = row?.querySelector(".speaker-line-text");
   const headEl = row?.querySelector(".speaker-head");
   if (!textEl || !headEl) return;

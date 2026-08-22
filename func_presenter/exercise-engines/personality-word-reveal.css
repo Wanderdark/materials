@@ -1,0 +1,12 @@
+.example-card.personality-word-reveal-slide .sentence-panel { justify-content: flex-start; padding-top: clamp(24px, 3vw, 42px); }
+.personality-word-reveal { display: grid; width: 100%; }
+.personality-word-reveal-list { display: grid; gap: clamp(7px, .8vw, 11px); width: 100%; }
+.personality-word-reveal-row { display: grid; grid-template-columns: minmax(130px, .36fr) minmax(0, 1fr); align-items: stretch; gap: 10px; animation: personalityWordRevealIn .22s ease-out; }
+.personality-word-reveal-word { min-height: clamp(44px, 4.2vw, 58px); border: 2px solid rgba(255,216,77,.62); border-radius: 14px; color: var(--yellow); background: #102650; cursor: pointer; font-size: clamp(16px, 1.65vw, 25px); font-weight: 950; letter-spacing: .04em; transition: transform .14s ease, border-color .14s ease, box-shadow .14s ease; }
+.personality-word-reveal-word:hover:not(:disabled), .personality-word-reveal-word:focus-visible { border-color: var(--mint); box-shadow: 0 0 18px rgba(101,230,184,.24); outline: none; transform: translateY(-1px); }
+.personality-word-reveal-word:disabled { cursor: default; border-color: var(--mint); color: #dffdf2; background: #135342; }
+.personality-word-reveal-word.is-long { font-size: clamp(14px, 1.4vw, 21px); }
+.personality-word-reveal-definition { display: grid; align-items: center; min-height: clamp(44px, 4.2vw, 58px); margin: 0; padding: 8px 14px; border: 1px solid rgba(102,136,255,.44); border-radius: 14px; color: #f4f7ff; background: rgba(19,40,86,.58); font-size: clamp(14px, 1.35vw, 20px); font-weight: 750; line-height: 1.2; }
+.visual-panel img.personality-word-reveal-image { width: min(500px, 100%); max-height: 66vh; aspect-ratio: 1 / 1; object-fit: contain; }
+@keyframes personalityWordRevealIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 760px) { .personality-word-reveal-row { grid-template-columns: 1fr; gap: 6px; } }

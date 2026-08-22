@@ -9,6 +9,7 @@
     { id: "introduction", title: "INTRODUCTION", matches: (item, character) => new RegExp(`^introduce_${character}(?:_part\\d+)?$`).test(item.id) },
     { id: "countries", title: "COUNTRIES", matches: (item, character) => item.id === `countries_${character}` },
     { id: "appearance", title: "PHYSICAL APPEARANCE", matches: (item, character) => item.id === `5_personal_life_appearance_${character}` },
+    { id: "favorites", title: "FAVORITES", matches: (item, character) => item.id === `favorites_${character}` },
     { id: "daily_routines", title: "DAILY ROUTINES", matches: (item, character) => item.id === `5_personal_life_${character}_daily_routine` },
     { id: "possessions", title: "POSSESSIONS", matches: (item, character) => item.unit === "possessions" && item.characterIds?.includes(character) },
     { id: "family", title: "INTRODUCING FAMILIES", matches: (item, character) => new RegExp(`^introduce_family_${character}(?:_\\d+)?$`).test(item.id) },
@@ -85,8 +86,10 @@
   const publishedAlbumItems = () => (window.LEAGUE_OF_LISTENING_ITEMS || []).filter((item) => ["published", "album"].includes(item?.status) && item.videoSrc);
   const uniqueVideoRecords = (records) => records.filter((record, index) => records.findIndex((item) => item.videoSrc === record.videoSrc) === index);
   const collectionsForCharacter = () => {
-    const records = uniqueVideoRecords(chapters.flatMap((chapter) => publishedAlbumItems().filter((item) => chapter.matches(item, currentCharacter))));
-    return [{ id: "memories", title: "MEMORIES", records }];
+    const favoritesChapter = chapters.find((chapter) => chapter.id === "favorites");
+    const records = uniqueVideoRecords(chapters.filter((chapter) => chapter.id !== "favorites").flatMap((chapter) => publishedAlbumItems().filter((item) => chapter.matches(item, currentCharacter))));
+    const favorites = uniqueVideoRecords(publishedAlbumItems().filter((item) => favoritesChapter?.matches(item, currentCharacter)));
+    return [{ id: "memories", title: "MEMORIES", records }, ...(favorites.length ? [{ id: "favorites", title: "FAVORITES", records: favorites }] : [])];
   };
   const recordCaption = (record, collection) => collection.records.length > 1 ? record.title || collection.title : chapters.find((chapter) => chapter.matches(record, currentCharacter))?.title || collection.title;
   const renderBook = () => {
