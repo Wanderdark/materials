@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Interactive English learning tools designed for real classrooms.">
   <title>AdilHoca | Interactive English Learning</title>
+  <script>
+    (() => {
+      const recovery = new URLSearchParams(location.hash.slice(1));
+      if (recovery.get("type") !== "recovery" || !recovery.get("access_token")) return;
+      location.replace(`/func_presenter/index.html?mode=teacher&password-reset=1${location.hash}`);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">

@@ -384,6 +384,7 @@
     duelStudentScores = duelTeams.map((team) => team.map(() => 0));
     duelRoundPending = duelTeams.map((team) => new Set(team.map((_, index) => index)));
     trainingBlockSet = 0;
+    buildTrainingStage();
     duelRoundNumber = 1;
     duelFinalScoresTransferred = false;
     duelTurn = 0;
@@ -1457,13 +1458,14 @@
 
   function setTrainingBlockSet(blockSet) {
     trainingBlockSet = blockSet;
-    trainingTasks.forEach((task, index) => {
-      const targetLine = 0;
-      const training = task.lines[0].training;
+    trainingTasks.forEach((task) => {
+      const targetLine = trainingMode === "fast" ? 0 : Math.min(trainingBlockSet, task.lines.length - 1);
+      const training = task.lines[targetLine].training;
       task.target = training?.target || "";
       task.targetLine = targetLine;
       task.choices = Array.isArray(training?.choices) ? training.choices : [];
-      task.active = Boolean(task.target && task.choices.length === 4 && (trainingMode === "fast" || index % 2 === trainingBlockSet));
+      const hasQuestion = task.target && task.choices.length === 4;
+      task.active = Boolean(hasQuestion);
     });
   }
 
