@@ -8,6 +8,7 @@
   const PROFILE_TABLE = "teacher_profiles";
   const POINT_SYNC_DELAY = 120000;
   const PASSWORD_RESET_FLAG = "password-reset";
+  const PASSWORD_RESET_URL = "https://adilhoca.com/func_presenter/index.html?mode=teacher&password-reset=1";
   let session = null;
   let hooks = null;
   let syncTimer = 0;
@@ -288,11 +289,7 @@
   }
 
   function passwordResetRedirectUrl() {
-    const url = new URL(location.href);
-    url.searchParams.set("mode", "teacher");
-    url.searchParams.set(PASSWORD_RESET_FLAG, "1");
-    url.hash = "";
-    return url.href;
+    return PASSWORD_RESET_URL;
   }
 
   async function requestPasswordReset(email) {
