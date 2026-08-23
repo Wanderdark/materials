@@ -21,14 +21,11 @@
       <div class="brand-lockup">
         <img class="brand-ella" src="../images/thumbnails/ella_lets_sing.webp" alt="Ella says let's sing together">
         <span class="brand-credit">Designed by Adil Fırat OKTAV</span>
-        <button id="resetProgressButton" class="secondary-button reset-progress-button" hidden>RESET</button>
-        <button id="menuReturnButton" class="secondary-button reset-progress-button menu-return-button" hidden>BACK TO MENU</button>
-        <section id="privateLibraryPanel" class="private-library-panel hidden" aria-live="polite">
-          <span>OWNER ACCESS</span>
-          <strong>PRIVATE LIBRARY</strong>
-          <p id="privateLibraryStatus">Sign in to unlock private songs.</p>
-          <button id="privateLibraryButton" class="secondary-button private-library-button" type="button">UNLOCK PRIVATE LIBRARY</button>
-        </section>
+        <div class="library-actions">
+          <button id="resetProgressButton" class="secondary-button reset-progress-button" hidden>RESET</button>
+          <button id="menuReturnButton" class="secondary-button reset-progress-button menu-return-button" hidden>BACK TO MENU</button>
+          <button id="privateLibraryButton" class="secondary-button reset-progress-button" type="button" hidden>SIGN IN</button>
+        </div>
       </div>
       <div class="library-card">
         <div class="selection-heading"><span>♪</span><div><h2>Choose a song</h2><p>Pick a song to start the lesson.</p></div></div>

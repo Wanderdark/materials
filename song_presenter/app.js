@@ -38,7 +38,7 @@
     duelRosterButton: $("duelRosterButton"), duelAddAButton: $("duelAddAButton"), duelAddBButton: $("duelAddBButton"), duelSetupStartButton: $("duelSetupStartButton"), duelTempoSlowButton: $("duelTempoSlowButton"), duelTempoNormalButton: $("duelTempoNormalButton"), duelModeNormalButton: $("duelModeNormalButton"), duelModeFastButton: $("duelModeFastButton"),
     duelRosterOverlay: $("duelRosterOverlay"), duelRosterCloseButton: $("duelRosterCloseButton"), duelRosterClassList: $("duelRosterClassList"), duelRosterMessage: $("duelRosterMessage"),
     restartButton: $("restartButton"), libraryButton: $("libraryButton"), resetProgressButton: $("resetProgressButton"),
-    privateLibraryPanel: $("privateLibraryPanel"), privateLibraryStatus: $("privateLibraryStatus"), privateLibraryButton: $("privateLibraryButton"),
+    privateLibraryButton: $("privateLibraryButton"),
     menuReturnButton: $("menuReturnButton"), cornerMenuReturnButton: $("cornerMenuReturnButton"),
     completeSummary: $("completeSummary"), duelFinalScores: $("duelFinalScores"), duelFinalResult: $("duelFinalResult"), duelFinalTeamLists: $("duelFinalTeamLists"), duelFinalTransferNote: $("duelFinalTransferNote"), duelFinalTransferButton: $("duelFinalTransferButton"),
     audio: $("songAudio")
@@ -613,7 +613,6 @@
 
   async function loadPrivateLibrary() {
     if (isStudentMode || privateLibraryLoaded) return;
-    els.privateLibraryStatus.textContent = "Checking owner access…";
     try {
       const response = await fetch(`${PRIVATE_MEDIA_ORIGIN}/api/library`, { credentials: "include" });
       if (!response.ok) throw new Error(`Private library request failed: ${response.status}`);
@@ -622,15 +621,9 @@
       if (!Array.isArray(songs)) throw new Error("Invalid private library catalog.");
       privateSongs = songs.map(normalizePrivateSong);
       privateLibraryLoaded = true;
-      els.privateLibraryPanel.classList.add("unlocked");
-      els.privateLibraryStatus.textContent = `${privateSongs.length} private song${privateSongs.length === 1 ? "" : "s"} unlocked.`;
-      els.privateLibraryButton.textContent = "PRIVATE LIBRARY UNLOCKED";
-      els.privateLibraryButton.disabled = true;
+      els.privateLibraryButton.hidden = true;
       renderLibrary();
-    } catch (_) {
-      els.privateLibraryStatus.textContent = "Sign in to unlock private songs.";
-      els.privateLibraryButton.textContent = "UNLOCK PRIVATE LIBRARY";
-    }
+    } catch (_) {}
   }
 
   function addSongCard(s) {
@@ -1402,7 +1395,16 @@
       const item = typeof raw === "string" ? { text: raw } : raw;
       const from = parseTime(item.from);
       const to = parseTime(item.to);
-      return from == null || to == null ? null : { from, to, text: item.text, training: item.training || makeAutomaticTraining(item.text) };
+      const manualTraining = item.training;
+      const hasCompleteManualTraining = manualTraining?.target
+        && Array.isArray(manualTraining.choices)
+        && manualTraining.choices.length === 4;
+      return from == null || to == null ? null : {
+        from,
+        to,
+        text: item.text,
+        training: hasCompleteManualTraining ? manualTraining : makeAutomaticTraining(item.text)
+      };
     }).filter(Boolean);
     trainingTasks = [];
     const linesPerTask = trainingMode === "fast" ? 1 : 2;
@@ -1436,7 +1438,11 @@
     const taggedTarget = Array.from(text.matchAll(/<([^>]+)>/g))
       .map((match) => match[1])
       .find((word) => isValidTarget(word) && new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(plainText));
-    const target = taggedTarget || words.slice(1).find(isValidTarget);
+    const target = taggedTarget
+      || words.slice(1).find(isValidTarget)
+      || words.find(isValidTarget)
+      || words.slice(1).find((word) => word.length >= 2 && !word.includes("'"))
+      || words.find((word) => word.length >= 2 && !word.includes("'"));
     if (!target) return null;
     const normalizedTarget = target.toLowerCase();
     const choices = (song.words || []).map((entry) => entry.word)
@@ -1812,7 +1818,13 @@
     else setStage(stage + 1);
   });
   els.prevButton.addEventListener("click", () => { if (stage > 0) setStage(stage - 1); });
-  els.backButton.addEventListener("click", () => { if (mediaEl) mediaEl.pause(); showScreen("library"); });
+  function stopSongPlayback() {
+    if (mediaEl) mediaEl.pause();
+    if (videoEl && videoEl !== mediaEl) videoEl.pause();
+    stopTraining();
+  }
+
+  els.backButton.addEventListener("click", () => { stopSongPlayback(); showScreen("library"); });
   els.libraryButton.addEventListener("click", () => showScreen("library"));
   els.restartButton.addEventListener("click", () => startSong(song));
 
@@ -1840,12 +1852,11 @@
   els.privateLibraryButton.addEventListener("click", () => {
     if (privateLibraryLoaded) return;
     window.open(`${PRIVATE_MEDIA_ORIGIN}/login`, "privateMediaLogin", "noopener");
-    els.privateLibraryStatus.textContent = "Sign in in the new tab, then return here.";
   });
   window.addEventListener("focus", loadPrivateLibrary);
 
   function returnToMenu() {
-    if (mediaEl) mediaEl.pause();
+    stopSongPlayback();
     location.href = new URLSearchParams(location.search).get("mode") === "student"
       ? "../student-zone/index.html"
       : "../index.html";
@@ -1861,7 +1872,7 @@
   /* ── Başlat ── */
   ToastManager.init({ top: "84px", position: "left" });
   if (!isStudentMode) {
-    els.privateLibraryPanel.classList.remove("hidden");
+    els.privateLibraryButton.hidden = false;
     loadPrivateLibrary();
   }
   renderLibrary();

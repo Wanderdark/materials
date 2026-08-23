@@ -39,14 +39,8 @@ button { font: inherit; } .hidden { display: none !important; }
 .brand-chip { padding: 9px 15px; border: 1px solid var(--line); border-radius: 99px; background: rgba(17, 35, 79, .6); color: #c4d2f5; font-size: 14px; font-weight: 700; }
 .brand-credit { margin-top: 4px; color: var(--yellow); font-size: 14px; font-weight: 800; letter-spacing: .1em; }
 .panel-tools { display: flex; gap: 10px; margin-top: 14px; }
+.library-actions { display: flex; flex-wrap: wrap; gap: 9px; }
 .reset-progress-button { align-self: flex-start; padding: 8px 16px; font-size: 12px; letter-spacing: .1em; opacity: .7; text-decoration: none; display: inline-block; width: auto; }
-.private-library-panel { align-self: flex-start; display: grid; gap: 6px; width: min(100%, 280px); padding: 15px; border: 1px solid rgba(255,216,77,.42); border-radius: 16px; background: rgba(15,33,74,.74); }
-.private-library-panel > span { color: var(--yellow); font-size: 10px; font-weight: 900; letter-spacing: .16em; }
-.private-library-panel > strong { font-family: var(--display); font-size: 23px; letter-spacing: .05em; }
-.private-library-panel p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
-.private-library-button { justify-self: start; margin-top: 5px; padding: 9px 12px; font-size: 10px; }
-.private-library-panel.unlocked { border-color: rgba(74,222,128,.55); }
-.private-library-panel.unlocked > span { color: var(--mint); }
 .reset-progress-button:hover { opacity: 1; border-color: #ff8066; }
 a.reset-progress-button:hover { border-color: var(--yellow); }
 .menu-return-button:hover { border-color: var(--yellow); }

@@ -7,6 +7,7 @@
   const POINTS_DIRTY_KEY = "fpTeacherSupabasePointsDirtyV1";
   const PROFILE_TABLE = "teacher_profiles";
   const POINT_SYNC_DELAY = 120000;
+  const PASSWORD_RESET_FLAG = "password-reset";
   let session = null;
   let hooks = null;
   let syncTimer = 0;
@@ -286,6 +287,45 @@
     return { pending: true, email };
   }
 
+  function passwordResetRedirectUrl() {
+    const url = new URL(location.href);
+    url.searchParams.set("mode", "teacher");
+    url.searchParams.set(PASSWORD_RESET_FLAG, "1");
+    url.hash = "";
+    return url.href;
+  }
+
+  async function requestPasswordReset(email) {
+    return auth("recover", { email, redirect_to: passwordResetRedirectUrl() });
+  }
+
+  function capturePasswordRecovery() {
+    if (new URLSearchParams(location.search).get(PASSWORD_RESET_FLAG) !== "1") return false;
+    const hash = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const accessToken = hash.get("access_token");
+    if (!accessToken) return false;
+    session = {
+      access_token: accessToken,
+      refresh_token: hash.get("refresh_token") || "",
+      expires_at: Math.floor(Date.now() / 1000) + Number(hash.get("expires_in") || 3600)
+    };
+    write(SESSION_KEY, session);
+    return true;
+  }
+
+  async function updatePassword(password) {
+    const token = await activeToken();
+    const response = await fetch(`${PROJECT_URL}/auth/v1/user`, {
+      method: "PUT",
+      headers: jsonHeaders(token),
+      body: JSON.stringify({ password })
+    });
+    const user = await responseJson(response);
+    session = { ...session, user };
+    write(SESSION_KEY, session);
+    return user;
+  }
+
   async function signOut() {
     try { if (session?.access_token) await auth("logout", {}, session.access_token); } catch { /* local sign-out is enough */ }
     clearCloudSession();
@@ -311,6 +351,9 @@
     initialize(nextHooks) { hooks = nextHooks; restoreSession(); },
     signIn,
     signUp,
+    requestPasswordReset,
+    capturePasswordRecovery,
+    updatePassword,
     signOut,
     scheduleSync,
     schedulePointSync,

@@ -8,6 +8,7 @@
 
   const params = new URLSearchParams(location.search);
   const mode = params.get("mode");
+  const passwordResetRequested = params.get("password-reset") === "1";
   const forceTeacherMode = window.__forceTeacherControl === true;
   if (mode === "teacher") sessionStorage.setItem("fpTeacherMode", "1");
   if (mode === "student") sessionStorage.removeItem("fpTeacherMode");
@@ -800,10 +801,12 @@
     password.autocomplete = "current-password";
     const submit = el("button", "tc-action primary", "SIGN IN");
     const request = el("button", "tc-action", "REQUEST ACCOUNT");
+    const forgot = el("button", "tc-action", "FORGOT PASSWORD?");
     submit.type = "submit";
     request.type = "button";
+    forgot.type = "button";
     const actions = el("div", "tc-actions");
-    actions.append(submit, request);
+    actions.append(submit, request, forgot);
     form.append(displayName, email, password, actions);
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -840,8 +843,59 @@
         request.disabled = false;
       }
     });
+    forgot.addEventListener("click", async () => {
+      const teacherEmail = email.value.trim();
+      if (!teacherEmail) {
+        showToast("Enter your email address first.");
+        return;
+      }
+      forgot.disabled = true;
+      try {
+        await cloud.requestPasswordReset(teacherEmail);
+        showToast("Password reset email sent. Check your inbox.");
+      } catch (error) {
+        showToast(error.message || "Could not send password reset email.");
+      } finally {
+        forgot.disabled = false;
+      }
+    });
     const note = el("p", "tc-auth-note", "No approved account yet? Request one, then approve it from the local admin panel.");
     card.append(form, note);
+  }
+
+  function openPasswordReset() {
+    const cloud = window.TeacherCloud;
+    if (!cloud) return;
+    const card = makeOverlay("CLOUD BACKUP", "CREATE NEW PASSWORD", "Choose a new password for your Teacher HUD account.");
+    const form = el("form", "tc-auth-form");
+    const password = el("input", "", "");
+    const confirmPassword = el("input", "", "");
+    password.type = confirmPassword.type = "password";
+    password.placeholder = "New password";
+    confirmPassword.placeholder = "Confirm new password";
+    password.autocomplete = confirmPassword.autocomplete = "new-password";
+    const submit = el("button", "tc-action primary", "SAVE NEW PASSWORD");
+    submit.type = "submit";
+    form.append(password, confirmPassword, submit);
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!password.value || password.value !== confirmPassword.value) {
+        showToast("Passwords must match.");
+        return;
+      }
+      submit.disabled = true;
+      try {
+        await cloud.updatePassword(password.value);
+        const url = new URL(location.href);
+        url.searchParams.delete("password-reset");
+        url.hash = "";
+        location.replace(url.href);
+      } catch (error) {
+        showToast(error.message || "Could not update password.");
+        submit.disabled = false;
+      }
+    });
+    card.append(form);
   }
 
   function floatFrom(target, text, className = "") {
@@ -1955,6 +2009,7 @@
 
   syncSelectedTrigger();
   updateHud();
+  const hasPasswordRecovery = passwordResetRequested && window.TeacherCloud?.capturePasswordRecovery?.();
   window.TeacherCloud?.initialize?.({
     getState: () => {
       commitActiveClassroom();
@@ -1963,4 +2018,5 @@
     applyState: applyCloudState,
     onStatusChange: updateHud
   });
+  if (hasPasswordRecovery) openPasswordReset();
 })();
