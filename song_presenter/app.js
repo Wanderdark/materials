@@ -414,7 +414,7 @@
     els.duelReadyPlayer.textContent = duelPlayer(duelTurn === 0 ? 1 : 0) || "PLAYER";
     renderDuelReadyTeams();
     els.duelReadyOverlay.classList.remove("hidden");
-    if (!(videoSrc || song?.video)) return;
+    if (!videoSrc) return;
     duelReadyOverlayTimer = setTimeout(() => {
       els.duelReadyOverlay.classList.add("hidden");
       duelReadyOverlayTimer = null;
@@ -584,7 +584,7 @@
   els.duelBeginButton.addEventListener("click", () => {
     if (!duelReady || !els.duelReadyOverlay.classList.contains("duel-intro")) return;
     els.duelReadyOverlay.classList.remove("duel-intro");
-    if (videoSrc || song?.video) els.duelReadyOverlay.classList.add("hidden");
+    if (videoSrc) els.duelReadyOverlay.classList.add("hidden");
     startTraining();
   });
 
@@ -648,15 +648,20 @@
     els.songGrid.appendChild(card);
   }
 
+  function getArtistCoverPath(artist) {
+    const fileName = String(artist || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+    return fileName ? `thumbnails/${fileName}.webp` : "";
+  }
+
   function addArtistCard(artist, list) {
     const card = document.createElement("div");
     card.className = "song-card artist-card";
     card.tabIndex = 0;
     card.setAttribute("role", "button");
-    const artistCover = window.ARTIST_COVERS?.[artist];
     const withImage = list.find((s) => s.image);
+    const artistCover = getArtistCoverPath(artist);
     const cover = artistCover
-      ? `<img src="${artistCover}" alt="${artist}">`
+      ? `<img src="${artistCover}" alt="${artist}" data-fallback="${withImage?.image || ""}" onerror="if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback}else{this.remove()}">`
       : withImage
       ? `<img src="${withImage.image}" alt="${artist}">`
       : `<span class="cover-note">♪♫</span>`;
@@ -1566,7 +1571,7 @@
   function startTraining() {
     trainingStarted = true;
     if (!trainingTasks.length) { completeStage(); return; }
-    const source = videoSrc || song.video || song.audio;
+    const source = videoSrc || song.audio;
     if (!source) { els.trainingPrompt.textContent = "No media source found for this training."; return; }
     els.trainingVideo.src = source;
     applySongTempo(els.trainingVideo);

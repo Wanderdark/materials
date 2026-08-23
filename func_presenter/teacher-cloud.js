@@ -9,6 +9,7 @@
   const POINT_SYNC_DELAY = 120000;
   const PASSWORD_RESET_FLAG = "password-reset";
   const PASSWORD_RESET_URL = "https://adilhoca.com/func_presenter/index.html?mode=teacher&password-reset=1";
+  const MIN_PIN_LENGTH = 6;
   let session = null;
   let hooks = null;
   let syncTimer = 0;
@@ -27,6 +28,12 @@
   const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
   const clear = (key) => localStorage.removeItem(key);
   const notify = () => hooks?.onStatusChange?.(getAccount());
+
+  function requireNumericPin(password) {
+    if (!new RegExp(`^\\d{${MIN_PIN_LENGTH},}$`).test(String(password || ""))) {
+      throw new Error(`PIN must contain at least ${MIN_PIN_LENGTH} digits.`);
+    }
+  }
 
   function clearCloudSession() {
     session = null;
@@ -263,6 +270,7 @@
   }
 
   async function signIn(email, password) {
+    requireNumericPin(password);
     const payload = await auth("token?grant_type=password", { email, password });
     session = { ...payload, expires_at: Math.floor(Date.now() / 1000) + (payload.expires_in || 3600) };
     write(SESSION_KEY, session);
@@ -273,6 +281,7 @@
   }
 
   async function signUp(email, password, displayName = "") {
+    requireNumericPin(password);
     const payload = await auth("signup", {
       email,
       password,
@@ -311,6 +320,7 @@
   }
 
   async function updatePassword(password) {
+    requireNumericPin(password);
     const token = await activeToken();
     const response = await fetch(`${PROJECT_URL}/auth/v1/user`, {
       method: "PUT",

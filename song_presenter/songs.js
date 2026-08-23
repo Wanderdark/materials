@@ -675,6 +675,155 @@ window.SONGS = [
       { from: "3:14.427", to: "3:19.773", text: "I'll always know the noise of home." , training: {"target":"always","choices":["always","kitchen","plate","grin"]} }]
   },
 
+/* ── GRADE 5 UNIT 1 - SCHOOL IS COOL ───────────────────────────────────── */
+  {
+    id: "5_1_schooliscool",
+    title: "School is Cool",
+    artist: "Grade5",
+    audio: "songs/5_1_schooliscool.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_1_schooliscool.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "Science lab",    tr: "Fen laboratuarı",          image: "images/science_lab.webp" },
+      { word: "Notice board",   tr: "İlan panosu",         image: "images/notice_board.webp" },
+      { word: "field",  tr: "saha",      image: "images/field.webp" },
+      { word: "shout", tr: "bağırmak",        image: "images/shout.webp" },
+      { word: "obey the rules",  tr: "kurallara uymak",     image: "images/obey_the_rules.webp" },
+      { word: "art club",   tr: "sanat kulübü", image: "images/art_club.webp" },
+      { word: "no fighting",  tr: "kavga yok",           image: "images/no_fighting.webp" },
+      { word: "respect",   tr: "saygı",         image: "images/respect.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:07.762", to: "0:10.672", text: "This is my school, come with me,", training: { target: "school", choices: ["school", "secretary", "exhibition", "fountain"] } },
+      { from: "0:11.608", to: "0:14.643", text: "There are many things to see.", training: { target: "things", choices: ["things", "ancient", "historical", "uniform"] } },
+      { from: "0:15.307", to: "0:18.540", text: "This is the library, quiet please,", training: { target: "library", choices: ["library", "headmaster", "coach", "administration department"] } },
+      { from: "0:19.019", to: "0:21.979", text: "This is the canteen, sit with me.", training: { target: "canteen", choices: ["canteen", "conference hall", "notice board", "science lab"] } },
+      { from: "0:23.163", to: "0:26.315", text: "<Science lab>, conference hall,", training: { target: "Science lab", choices: ["Science lab", "music club", "ballet club", "folk dance club"] } },
+      { from: "0:26.931", to: "0:30.147", text: "<Notice board> upon the wall.", training: { target: "Notice board", choices: ["Notice board", "gate", "field", "fountain"] } },
+      { from: "0:30.659", to: "0:33.963", text: "There is a <field> beside the gate,", training: { target: "field", choices: ["field", "exhibition", "technology club", "environment club"] } },
+      { from: "0:34.555", to: "0:37.707", text: "Come to school, don't be late!", training: { target: "late", choices: ["late", "organize", "arrange", "solve"] } },
+      { from: "0:38.595", to: "0:41.611", text: "At our school, we learn and play,", training: { target: "learn", choices: ["learn", "ancient", "national day", "species"] } },
+      { from: "0:42.467", to: "0:45.451", text: "We <obey the rules> each day.", training: { target: "obey the rules", choices: ["obey the rules", "no shouting", "no fighting", "chew gum"] } },
+      { from: "0:46.123", to: "0:49.019", text: "No <shout>ing, no fighting too,", training: { target: "shout", choices: ["shout", "high heels", "law", "utterance"] } },
+      { from: "0:50.249", to: "0:52.944", text: "Keep it safe for me and you!", training: { target: "safe", choices: ["safe", "protect", "respect", "own"] } },
+      { from: "0:54.411", to: "0:56.787", text: "Do you like playing chess?", training: { target: "chess", choices: ["chess", "maths club", "science club", "film club"] } },
+      { from: "0:57.347", to: "1:00.684", text: "Yes, I do! The <chess club>'s best!", training: { target: "chess club", choices: ["chess club", "drama club", "sports club", "art club"] } },
+      { from: "1:01.987", to: "1:04.635", text: "Do you like making art?", training: { target: "art", choices: ["art", "secretary", "assistant to the headmaster", "headmaster"] } },
+      { from: "1:04.907", to: "1:08.347", text: "Join the <art club>, come and start!", training: { target: "art club", choices: ["art club", "music club", "science club", "technology club"] } },
+      { from: "1:08.955", to: "1:12.067", text: "At our school, we learn and play,", training: { target: "learn", choices: ["learn", "organize", "arrange", "solve"] } },
+      { from: "1:13.051", to: "1:15.907", text: "We obey the rules each day.", training: { target: "obey", choices: ["obey", "respect", "protect", "own"] } },
+      { from: "1:16.587", to: "1:19.427", text: "No shouting, <no fighting> too,", training: { target: "no fighting", choices: ["no fighting", "no shouting", "chew gum", "high heels"] } },
+      { from: "1:20.723", to: "1:23.219", text: "Keep it safe for me and you!", training: { target: "safe", choices: ["safe", "law", "national day", "historical"] } },
+      { from: "1:25.081", to: "1:26.737", text: "Music club and science club,", training: { target: "Music club", choices: ["Music club", "chess club", "drama club", "environment club"] } },
+      { from: "1:27.129", to: "1:28.705", text: "Sports club and the drama club.", training: { target: "Sports club", choices: ["Sports club", "ballet club", "folk dance club", "art club"] } },
+      { from: "1:28.879", to: "1:30.736", text: "Technology, maths and film,", training: { target: "Technology", choices: ["Technology", "science lab", "conference hall", "administration department"] } },
+      { from: "1:31.015", to: "1:36.912", text: "Choose a club and join the fun!", training: { target: "club", choices: ["club", "field", "gate", "uniform"] } },
+      { from: "1:36.903", to: "1:37.752", text: "Don't shout!", training: { target: "shout", choices: ["shout", "noise", "utterance", "fountain"] } },
+      { from: "1:38.943", to: "1:39.719", text: "Don't fight!", training: { target: "fight", choices: ["fight", "no fighting", "no shouting", "safe"] } },
+      { from: "1:40.155", to: "1:41.603", text: "Obey the rules,", training: { target: "Obey", choices: ["Obey", "organize", "arrange", "solve"] } },
+      { from: "1:41.877", to: "1:43.443", text: "<Respect> your friends,", training: { target: "Respect", choices: ["Respect", "protect", "own", "obey the rules"] } },
+      { from: "1:43.921", to: "1:49.807", text: "Keep our school safe and clear!", training: { target: "safe", choices: ["safe", "ancient", "historical", "exhibition"] } },
+      { from: "1:50.779", to: "1:53.515", text: "At our school, we learn and play,", training: { target: "school", choices: ["school", "library", "canteen", "notice board"] } },
+      { from: "1:54.385", to: "1:57.373", text: "We obey the rules each day.", training: { target: "rules", choices: ["rules", "law", "national day", "secretary"] } },
+      { from: "1:58.164", to: "2:00.936", text: "No shouting, no fighting too,", training: { target: "shouting", choices: ["shouting", "noise", "chew gum", "high heels"] } },
+      { from: "2:02.124", to: "2:04.854", text: "Keep it safe for me and you!", training: { target: "safe", choices: ["safe", "species", "utterance", "uniform"] } },
+      { from: "2:05.760", to: "2:09.102", text: "At our school, side by side,", training: { target: "school", choices: ["school", "coach", "headmaster", "assistant to the headmaster"] } },
+      { from: "2:09.708", to: "2:13.068", text: "Learn the rules and learn with pride!", training: { target: "rules", choices: ["rules", "respect", "protect", "obey the rules"] } },]
+  },
+
+/* ── GRADE 5 UNIT 1 - AROUND THE WORLD ───────────────────────────────────── */
+  {
+    id: "5_1_aroundtheworld",
+    title: "Around the World",
+    artist: "Grade5",
+    audio: "songs/5_1_aroundtheworld.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_1_aroundtheworld.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "National Days",    tr: "Milli bayramlar",          image: "images/national_day.webp" },
+      { word: "country",   tr: "ülke",         image: "images/country.webp" },
+      { word: "flag",  tr: "bayrak",      image: "images/flag.webp" },
+      { word: "Spain", tr: "İspanya",        image: "images/spain.webp" },
+      { word: "Germany",  tr: "Almanya",     image: "images/germany.webp" },
+      { word: "United Kingdom",   tr: "Birleşik Krallık", image: "images/united_kingdom.webp" },
+      { word: "South Korea",  tr: "Güney Kore",           image: "images/south_korea.webp" },
+      { word: "Japan",   tr: "Japonya",         image: "images/japan.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:00.881", to: "0:03.808", text: "Where are you from? Come sing with me,", training: { target: "from", choices: ["from", "country", "flag", "school"] } },
+      { from: "0:04.504", to: "0:07.631", text: "I'm from Türkiye, that's me!", training: { target: "Türkiye", choices: ["Türkiye", "France", "Spain", "Japan"] } },
+      { from: "0:08.527", to: "0:11.647", text: "Where is she from? She's from France,", training: { target: "France", choices: ["France", "Spain", "Germany", "Canada"] } },
+      { from: "0:12.391", to: "0:15.487", text: "He's from <Spain>, come on, let's dance!", training: { target: "Spain", choices: ["Spain", "France", "Italy", "Japan"] } },
+      { from: "0:16.273", to: "0:19.204", text: "Different countries, different days,", training: { target: "days", choices: ["days", "countries", "national days", "friends"] } },
+      { from: "0:19.901", to: "0:22.837", text: "We celebrate in different ways.", training: { target: "ways", choices: ["ways", "days", "countries", "flags"] } },
+      { from: "0:23.633", to: "0:27.119", text: "<National days> for me and you,", training: { target: "National days", choices: ["National days", "country", "flag", "friends"] } },
+      { from: "0:27.503", to: "0:31.547", text: "Every <country> has one too.", training: { target: "one", choices: ["one", "country", "flag", "friends"] } },
+      { from: "0:33.094", to: "0:36.358", text: "<Japan> and China, come this way,", training: { target: "Japan", choices: ["Japan", "China", "France", "Spain"] } },
+      { from: "0:36.900", to: "0:40.164", text: "Mexico and Brazil today.", training: { target: "today", choices: ["today", "Mexico", "Brazil", "Canada"] } },
+      { from: "0:40.655", to: "0:43.877", text: "<Germany>, Greece, come sing with me,", training: { target: "Germany", choices: ["Germany", "Greece", "Italy", "France"] } },
+      { from: "0:44.279", to: "0:47.722", text: "The <United Kingdom>, one, two, three!", training: { target: "three", choices: ["three", "United Kingdom", "South Korea", "Australia"] } },
+      { from: "0:48.083", to: "0:51.418", text: "Australia, Canada, let's go,", training: { target: "Canada", choices: ["Canada", "Australia", "Mexico", "Brazil"] } },
+      { from: "0:52.096", to: "0:55.301", text: "Italy and <Spain> say hello.", training: { target: "Spain", choices: ["Spain", "Italy", "France", "Germany"] } },
+      { from: "0:55.643", to: "0:59.015", text: "France, <South Korea>, sing with me,", training: { target: "South Korea", choices: ["South Korea", "Japan", "China", "Canada"] } },
+      { from: "0:59.824", to: "1:03.037", text: "Different countries, one, two, three!", training: { target: "three", choices: ["three", "countries", "national days", "friends"] } },
+      { from: "1:03.655", to: "1:06.521", text: "Different countries, different days,", training: { target: "days", choices: ["days", "countries", "flag", "national days"] } },
+      { from: "1:07.229", to: "1:10.323", text: "We celebrate in different ways.", training: { target: "ways", choices: ["ways", "days", "friends", "flags"] } },
+      { from: "1:11.025", to: "1:14.218", text: "<National days> for me and you,", training: { target: "days", choices: ["days", "country", "flag", "friends"] } },
+      { from: "1:14.908", to: "1:18.956", text: "Every <country> has one too.", training: { target: "one", choices: ["one", "national days", "flag", "friends"] } },
+      { from: "1:19.286", to: "1:22.070", text: "<Flag>s are here, it's our day,", training: { target: "Flag", choices: ["Flag", "country", "national days", "friends"] } },
+      { from: "1:22.574", to: "1:25.958", text: "We celebrate in our own way.", training: { target: "way", choices: ["way", "day", "country", "flag"] } },
+      { from: "1:26.324", to: "1:29.573", text: "Friends are here, come out and say,", training: { target: "Friends", choices: ["Friends", "flags", "countries", "national days"] } },
+      { from: "1:29.927", to: "1:33.360", text: "We celebrate our national day!", training: { target: "day", choices: ["day", "flag", "country", "friends"] } },
+      { from: "1:33.865", to: "1:36.833", text: "Different countries, different days,", training: { target: "days", choices: ["days", "flags", "national days", "friends"] } },
+      { from: "1:37.367", to: "1:40.607", text: "We celebrate in different ways.", training: { target: "ways", choices: ["ways", "days", "country", "flag"] } },
+      { from: "1:41.117", to: "1:44.244", text: "National days for me and you,", training: { target: "days", choices: ["days", "countries", "flags", "friends"] } },
+      { from: "1:44.856", to: "1:49.727", text: "Every country has one too.", training: { target: "one", choices: ["one", "national days", "flag", "friends"] } },]
+  },
+
 
 
 
@@ -685,3 +834,111 @@ window.SONGS = [
      ------------------------------------------------------------------ */
 
 ];
+
+/* Her training sorusunda en az bir ses benzeri güçlü çeldirici bulunur.
+   Türev ekleri yerine rhyme / yakın ses eşleşmeleri tercih edilir. */
+const PHONETIC_DISTRACTORS = Object.freeze({
+  "journey": "attorney", "adventures": "departures", "smile": "style", "step": "slept",
+  "dreams": "streams", "pride": "ride", "moments": "opponents", "find": "mind",
+  "learn": "turn", "much": "touch", "shine": "line", "sorrow": "borrow",
+  "stronger": "longer", "today": "away", "high": "sky", "fear": "near",
+  "when": "then", "lesson": "session", "closer": "poser", "goal": "soul",
+  "answer": "dancer", "really": "freely", "rise": "eyes", "always": "hallways",
+  "friends": "ends", "laugh": "path", "better": "letter", "together": "weather",
+  "dream": "stream", "word": "heard", "believe": "receive", "try": "sky",
+  "grow": "snow", "world": "curled", "mornings": "warnings", "lonely": "only",
+  "wave": "save", "little": "brittle", "dark": "park", "through": "blue",
+  "memories": "melodies", "storm": "form", "still": "hill", "thing": "ring",
+  "side": "wide", "alone": "stone", "make": "lake", "here": "near",
+  "eye": "sky", "fall": "call", "sorry": "story", "other": "mother",
+  "keep": "sleep", "matter": "letter", "stand": "land", "pass": "class",
+  "roads": "codes", "life": "wife", "mind": "kind", "adil": "april",
+  "listening": "glistening", "voices": "choices", "head": "red", "like": "bike",
+  "what": "hot", "paths": "laughs", "same": "name", "none": "sun",
+  "strong": "song", "belong": "along", "pretending": "defending", "forced": "forest",
+  "own": "phone", "live": "give", "scorn": "storm", "will": "hill",
+  "stop": "shop", "stare": "care", "noise": "voice", "only": "lonely",
+  "night": "light", "star": "far", "each": "beach", "told": "cold",
+  "sky": "high", "learned": "turned", "year": "near", "forest": "forced",
+  "hear": "near", "sparrow": "narrow", "holding": "folding", "every": "heavy",
+  "next": "text", "built": "guilt", "stone": "alone", "scared": "shared",
+  "call": "fall", "oceans": "motions", "fallen": "pollen", "future": "teacher",
+  "have": "save", "name": "same", "aim": "game", "rain": "train",
+  "me": "sea", "speech": "beach", "lie": "fly", "mother": "other",
+  "starts": "hearts", "sunrise": "surprise", "town": "down", "school": "pool",
+  "down": "town", "pain": "train", "empires": "desires", "remains": "refrains",
+  "hands": "lands", "sign": "line", "young": "song", "grave": "wave",
+  "peace": "lease", "price": "rice", "gold": "cold", "war": "door",
+  "child": "wild", "starve": "carve", "banquet": "blanket", "golden": "olden",
+  "crumb": "drum", "those": "clothes", "bombs": "palms", "somehow": "allow",
+  "right": "light", "gone": "dawn", "homes": "poems", "talking": "walking",
+  "laughing": "graphing", "kitchen": "itching", "music": "mystic", "fight": "night",
+  "doors": "floors", "quieter": "writer", "sound": "round", "else": "bells",
+  "house": "mouse", "thousand": "mountain", "plate": "late", "asking": "masking",
+  "stories": "worries", "grin": "twin", "wait": "gate", "loneliness": "silliness",
+  "key": "sea", "nothing": "something", "familiar": "similar", "calling": "falling",
+  "tonight": "light", "wide": "side", "missing": "kissing", "laughter": "after",
+  "roam": "home", "things": "rings", "library": "diary", "canteen": "machine",
+  "science lab": "science class", "notice board": "notice word", "field": "feel",
+  "late": "gate", "obey the rules": "arrange the tools", "shout": "about",
+  "safe": "save", "chess": "dress", "chess club": "chess class", "art": "heart",
+  "art club": "art class", "obey": "away", "no fighting": "no writing",
+  "music club": "music class", "sports club": "sports class", "technology": "ecology",
+  "club": "globe", "respect": "reflect", "rules": "schools", "shouting": "counting",
+  "from": "drum", "türkiye": "to be", "france": "dance", "spain": "train",
+  "countries": "entries", "ways": "phase", "national days": "special ways",
+  "national": "festival", "country": "laundry", "japan": "a fan", "three": "free",
+  "canada": "camera", "germany": "journey", "south korea": "story area",
+  "flag": "bag", "way": "maze", "friends": "ends", "day": "maze", "days": "phase",
+  "one": "phone"
+});
+
+const VISUALLY_DISTINCT_PHONETIC_DISTRACTORS = Object.freeze({
+  "pride": "guide", "find": "behind", "fear": "clear", "when": "ten",
+  "wave": "behave", "dark": "shark", "side": "guide", "make": "break",
+  "fall": "drawl", "other": "colour", "life": "knife", "mind": "behind",
+  "listening": "beginning", "like": "spike", "same": "flame", "live": "forgive",
+  "will": "until", "stop": "drop", "night": "kite", "each": "sea",
+  "told": "behold", "year": "clear", "hear": "clear", "holding": "snowing",
+  "next": "flex", "built": "spilt", "call": "drawl", "have": "laugh",
+  "name": "flame", "rain": "champagne", "mother": "colour", "town": "around",
+  "down": "around", "hands": "plans", "price": "advice", "gold": "behold",
+  "golden": "frozen", "right": "flight", "talking": "parking", "fight": "moonlight",
+  "sound": "around", "house": "blouse", "plate": "straight", "asking": "dancing",
+  "calling": "walking", "wide": "guide", "missing": "living", "late": "eight",
+  "safe": "faith", "art": "aunt", "one": "won"
+});
+
+function areVisuallyTooSimilar(first, second) {
+  const a = String(first).toLowerCase().replace(/[^a-z]/g, "");
+  const b = String(second).toLowerCase().replace(/[^a-z]/g, "");
+  if (!a || !b) return true;
+  if ((a.includes(b) || b.includes(a)) && Math.abs(a.length - b.length) <= 2) return true;
+  const rows = Array.from({ length: a.length + 1 }, (_, index) => [index]);
+  for (let column = 1; column <= b.length; column++) rows[0][column] = column;
+  for (let row = 1; row <= a.length; row++) {
+    for (let column = 1; column <= b.length; column++) {
+      rows[row][column] = Math.min(
+        rows[row - 1][column] + 1,
+        rows[row][column - 1] + 1,
+        rows[row - 1][column - 1] + (a[row - 1] === b[column - 1] ? 0 : 1)
+      );
+    }
+  }
+  const distance = rows[a.length][b.length];
+  const length = Math.max(a.length, b.length);
+  return (length <= 5 && distance <= 1) || distance / length <= 0.15;
+}
+
+window.SONGS.forEach((song) => {
+  (song.lyrics || []).forEach((line) => {
+    const training = line?.training;
+    const target = String(training?.target || "");
+    const normalizedTarget = target.toLowerCase();
+    const phonetic = VISUALLY_DISTINCT_PHONETIC_DISTRACTORS[normalizedTarget]
+      || PHONETIC_DISTRACTORS[normalizedTarget];
+    if (!phonetic || areVisuallyTooSimilar(target, phonetic) || !Array.isArray(training.choices) || training.choices.length !== 4) return;
+    if (training.choices.some((choice) => String(choice).toLowerCase() === phonetic)) return;
+    training.choices[3] = phonetic;
+  });
+});

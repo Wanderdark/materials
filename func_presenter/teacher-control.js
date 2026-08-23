@@ -158,6 +158,11 @@
     .tc-auth-form { display: grid; gap: 10px; margin-top: 18px; }
     .tc-auth-form input { width: 100%; min-height: 46px; box-sizing: border-box; border: 1px solid #2f4d9a; border-radius: 12px; outline: none; background: #0d1a3d; color: #f4f7ff; padding: 0 14px; font: 800 14px/1 var(--font-ui, sans-serif); }
     .tc-auth-form input:focus { border-color: #ffd84d; box-shadow: 0 0 0 3px rgba(255, 216, 77, .16); }
+    .tc-auth-form .tc-pin-input { font-size: 24px; letter-spacing: .28em; text-align: center; }
+    .tc-pin-pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .tc-pin-key { min-height: 46px; border: 1px solid #36549d; border-radius: 10px; background: #14295a; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 20px; font-weight: 800; cursor: pointer; }
+    .tc-pin-key:hover { border-color: var(--u2-gold, #ffd84d); background: #1c3979; }
+    .tc-pin-key.is-utility { color: #ffc2c2; font-size: 12px; letter-spacing: .04em; }
     .tc-auth-note { color: #a9bbef; font: 700 13px/1.45 var(--font-ui, sans-serif); margin: 10px 0 0; }
     .tc-hud .tc-account.is-connected { border-color: #61e7b6; color: #d9fff0; box-shadow: 0 0 12px rgba(97, 231, 182, .32); }
     .tc-action { padding: 12px 17px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 15px; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
@@ -760,6 +765,50 @@
     updateHud();
   }
 
+  function createPinInput(placeholder, autocomplete) {
+    const input = el("input", "tc-pin-input", "");
+    input.type = "password";
+    input.inputMode = "numeric";
+    input.pattern = "[0-9]*";
+    input.placeholder = placeholder;
+    input.autocomplete = autocomplete;
+    input.readOnly = true;
+    input.setAttribute("aria-label", placeholder);
+    return input;
+  }
+
+  function createPinPad(inputs) {
+    let activeInput = inputs[0];
+    const pad = el("div", "tc-pin-pad");
+    const updatePin = (action) => {
+      if (action === "clear") activeInput.value = "";
+      else if (action === "back") activeInput.value = activeInput.value.slice(0, -1);
+      else if (/^\d$/.test(action)) activeInput.value += action;
+    };
+    inputs.forEach((input) => {
+      input.addEventListener("focus", () => { activeInput = input; });
+      input.addEventListener("keydown", (event) => {
+        if (/^\d$/.test(event.key)) {
+          updatePin(event.key);
+          event.preventDefault();
+        } else if (event.key === "Backspace") {
+          updatePin("back");
+          event.preventDefault();
+        } else if (event.key === "Escape") {
+          updatePin("clear");
+          event.preventDefault();
+        }
+      });
+    });
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "CLEAR", "0", "⌫"].forEach((label) => {
+      const key = el("button", `tc-pin-key${label === "CLEAR" || label === "⌫" ? " is-utility" : ""}`, label);
+      key.type = "button";
+      key.addEventListener("click", () => updatePin(label === "CLEAR" ? "clear" : label === "⌫" ? "back" : label));
+      pad.append(key);
+    });
+    return pad;
+  }
+
   function openAccount() {
     const cloud = window.TeacherCloud;
     if (!cloud) return;
@@ -785,29 +834,26 @@
       card.append(actions);
       return;
     }
-    const card = makeOverlay("CLOUD BACKUP", "TEACHER SIGN IN", "Sign in to back up your roster, points, stars, and avatars.");
+    const card = makeOverlay("CLOUD BACKUP", "TEACHER SIGN IN", "Enter your email and numeric PIN to back up your roster, points, stars, and avatars.");
     const form = el("form", "tc-auth-form");
     const displayName = el("input", "", "");
     const email = el("input", "", "");
-    const password = el("input", "", "");
+    const password = createPinInput("PIN (at least 6 digits)", "current-password");
     displayName.type = "text";
     displayName.placeholder = "Teacher name (optional)";
     displayName.autocomplete = "name";
     email.type = "email";
     email.placeholder = "Email address";
     email.autocomplete = "email";
-    password.type = "password";
-    password.placeholder = "Password";
-    password.autocomplete = "current-password";
     const submit = el("button", "tc-action primary", "SIGN IN");
     const request = el("button", "tc-action", "REQUEST ACCOUNT");
-    const forgot = el("button", "tc-action", "FORGOT PASSWORD?");
+    const forgot = el("button", "tc-action", "FORGOT PIN?");
     submit.type = "submit";
     request.type = "button";
     forgot.type = "button";
     const actions = el("div", "tc-actions");
     actions.append(submit, request, forgot);
-    form.append(displayName, email, password, actions);
+    form.append(displayName, email, password, createPinPad([password]), actions);
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       submit.disabled = true;
@@ -827,7 +873,7 @@
     request.addEventListener("click", async () => {
       const teacherEmail = email.value.trim();
       if (!teacherEmail || !password.value) {
-        showToast("Enter email and password first.");
+        showToast("Enter email and PIN first.");
         return;
       }
       submit.disabled = true;
@@ -852,9 +898,9 @@
       forgot.disabled = true;
       try {
         await cloud.requestPasswordReset(teacherEmail);
-        showToast("Password reset email sent. Check your inbox.");
+        showToast("PIN reset email sent. Check your inbox.");
       } catch (error) {
-        showToast(error.message || "Could not send password reset email.");
+        showToast(error.message || "Could not send PIN reset email.");
       } finally {
         forgot.disabled = false;
       }
@@ -866,21 +912,17 @@
   function openPasswordReset() {
     const cloud = window.TeacherCloud;
     if (!cloud) return;
-    const card = makeOverlay("CLOUD BACKUP", "CREATE NEW PASSWORD", "Choose a new password for your Teacher HUD account.");
+    const card = makeOverlay("CLOUD BACKUP", "CREATE NEW PIN", "Choose a numeric PIN with at least 6 digits.");
     const form = el("form", "tc-auth-form");
-    const password = el("input", "", "");
-    const confirmPassword = el("input", "", "");
-    password.type = confirmPassword.type = "password";
-    password.placeholder = "New password";
-    confirmPassword.placeholder = "Confirm new password";
-    password.autocomplete = confirmPassword.autocomplete = "new-password";
-    const submit = el("button", "tc-action primary", "SAVE NEW PASSWORD");
+    const password = createPinInput("New PIN (at least 6 digits)", "new-password");
+    const confirmPassword = createPinInput("Confirm new PIN", "new-password");
+    const submit = el("button", "tc-action primary", "SAVE NEW PIN");
     submit.type = "submit";
-    form.append(password, confirmPassword, submit);
+    form.append(password, confirmPassword, createPinPad([password, confirmPassword]), submit);
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!password.value || password.value !== confirmPassword.value) {
-        showToast("Passwords must match.");
+      if (!/^\d{6,}$/.test(password.value) || password.value !== confirmPassword.value) {
+        showToast("PINs must match and contain at least 6 digits.");
         return;
       }
       submit.disabled = true;
