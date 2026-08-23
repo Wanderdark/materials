@@ -96,6 +96,8 @@ function renderVideoDialoguePractice(example) {
   video.className = "video-dialogue-video";
   video.src = data.videoUrl;
   video.controls = true;
+  video.controlsList = "nodownload";
+  video.disablePictureInPicture = true;
   video.playsInline = true;
   video.preload = "metadata";
   visual.append(video);

@@ -118,7 +118,7 @@
     const caption = recordCaption(record, collection);
     const viewer = document.createElement("section");
     viewer.className = "album-viewer";
-    viewer.innerHTML = `<article class="album-viewer-card"><header class="album-viewer-head"><div><p class="kicker">CHARACTER REPLAY</p><h2>WATCH THE VIDEO</h2><p>${pretty(currentCharacter)} · ${caption}</p></div><button class="album-viewer-close" type="button" data-album-viewer-close aria-label="Close character video">×</button></header><video controls playsinline preload="metadata" src="${videoSource(record)}"></video></article>`;
+    viewer.innerHTML = `<article class="album-viewer-card"><header class="album-viewer-head"><div><p class="kicker">CHARACTER REPLAY</p><h2>WATCH THE VIDEO</h2><p>${pretty(currentCharacter)} · ${caption}</p></div><button class="album-viewer-close" type="button" data-album-viewer-close aria-label="Close character video">×</button></header><video controls controlsList="nodownload" disablePictureInPicture playsinline preload="metadata" src="${videoSource(record)}"></video></article>`;
     const video = viewer.querySelector("video");
     video.addEventListener("play", () => document.dispatchEvent(new CustomEvent("characteralbumvideostart")));
     video.addEventListener("pause", () => document.dispatchEvent(new CustomEvent("characteralbumvideoend")));

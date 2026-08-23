@@ -9,6 +9,8 @@
 
   /* ── DOM kısayolu ── */
   const $ = (id) => document.getElementById(id);
+  const isStudentMode = new URLSearchParams(window.location.search).get("mode") === "student";
+  const PRIVATE_MEDIA_ORIGIN = "https://private-media.adilhoca.com";
   const ARTIST_SPOTIFY = {
     Ella: "https://open.spotify.com/artist/5bMPXxCpR4PFSQSHzu0BLK"
   };
@@ -19,8 +21,7 @@
     filterBar: $("libraryFilterBar"), artistFilterName: $("artistFilterName"), artistBackButton: $("artistBackButton"),
     backButton: $("backButton"), fullscreenButton: $("fullscreenButton"), liteButton: $("liteButton"),
     artistLabel: $("songArtistLabel"), titleLabel: $("songTitleLabel"),
-    stepper: $("stageStepper"),
-    stages: [$("preStage"), $("duringStage")],
+    stages: [$("preStage"), $("duringStage"), $("trainingStage")],
     prevButton: $("prevStageButton"), nextButton: $("nextStageButton"), stageStatus: $("stageStatus"),
     preWordBank: $("preWordBank"), preImageGrid: $("preImageGrid"),
     playerVisual: $("playerVisual"), playerTitle: $("playerSongTitle"), playerArtist: $("playerSongArtist"), spotifyButton: $("spotifyButton"),
@@ -28,9 +29,18 @@
     playerTimeNow: $("playerTimeNow"), playerTimeTotal: $("playerTimeTotal"),
     playButton: $("playButton"), videoButton: $("videoButton"), micButton: $("micButton"), replayButton: $("replayButton"),
     duringWordBank: $("duringWordBank"), autofillButton: $("autofillButton"), lyricsBox: $("lyricsBox"),
+    trainingVideo: $("trainingVideo"), trainingPrompt: $("trainingPrompt"), trainingLine: $("trainingLine"),
+    trainingChoices: $("trainingChoices"), trainingRehearButton: $("trainingRehearButton"), trainingReplayPrompt: $("trainingReplayPrompt"), trainingReplayTitle: $("trainingReplayTitle"), trainingReplayMessage: $("trainingReplayMessage"), trainingReplayYesButton: $("trainingReplayYesButton"), trainingReplayFinishButton: $("trainingReplayFinishButton"),
+    duelReadyOverlay: $("duelReadyOverlay"), duelCurrentPlayer: $("duelCurrentPlayer"), duelReadyPlayer: $("duelReadyPlayer"), duelReadyTeams: $("duelReadyTeams"), duelBeginButton: $("duelBeginButton"),
+    duelScoreboard: $("duelScoreboard"), teamAScore: $("teamAScore"), teamBScore: $("teamBScore"),
+    teamAPlayer: $("teamAPlayer"), teamBPlayer: $("teamBPlayer"), duelTurnName: $("duelTurnName"), duelNextPlayer: $("duelNextPlayer"),
+    duelSetupOverlay: $("duelSetupOverlay"), duelSetupSubtitle: $("duelSetupSubtitle"), duelTeamInputs: $("duelTeamInputs"), duelTempoPicker: $("duelTempoPicker"), duelModePicker: $("duelModePicker"), duelSetupMessage: $("duelSetupMessage"),
+    duelRosterButton: $("duelRosterButton"), duelAddAButton: $("duelAddAButton"), duelAddBButton: $("duelAddBButton"), duelSetupStartButton: $("duelSetupStartButton"), duelTempoSlowButton: $("duelTempoSlowButton"), duelTempoNormalButton: $("duelTempoNormalButton"), duelModeNormalButton: $("duelModeNormalButton"), duelModeFastButton: $("duelModeFastButton"),
+    duelRosterOverlay: $("duelRosterOverlay"), duelRosterCloseButton: $("duelRosterCloseButton"), duelRosterClassList: $("duelRosterClassList"), duelRosterMessage: $("duelRosterMessage"),
     restartButton: $("restartButton"), libraryButton: $("libraryButton"), resetProgressButton: $("resetProgressButton"),
+    privateLibraryPanel: $("privateLibraryPanel"), privateLibraryStatus: $("privateLibraryStatus"), privateLibraryButton: $("privateLibraryButton"),
     menuReturnButton: $("menuReturnButton"), cornerMenuReturnButton: $("cornerMenuReturnButton"),
-    completeSummary: $("completeSummary"),
+    completeSummary: $("completeSummary"), duelFinalScores: $("duelFinalScores"), duelFinalResult: $("duelFinalResult"), duelFinalTeamLists: $("duelFinalTeamLists"), duelFinalTransferNote: $("duelFinalTransferNote"), duelFinalTransferButton: $("duelFinalTransferButton"),
     audio: $("songAudio")
   };
 
@@ -38,11 +48,19 @@
   const sfxCorrect = new Audio("sounds/correct.mp3");
   const sfxWrong   = new Audio("sounds/wrong.mp3");
   function playSfx(a) { try { a.currentTime = 0; a.play(); } catch (_) {} }
+  let songPlaybackRate = 1;
+  let trainingMode = "normal";
+  function applySongTempo(media) {
+    media.playbackRate = songPlaybackRate;
+    media.defaultPlaybackRate = songPlaybackRate;
+    media.preservesPitch = true;
+    media.webkitPreservesPitch = true;
+  }
 
   /* ── Durum ── */
   let song = null;            // aktif şarkı verisi
   let stage = 0;              // 0=pre 1=during
-  let stageDone = [false, false];
+  let stageDone = [false, false, false];
   let mediaEl = null;         // audio veya video elementi — o an aktif olan
   let videoEl = null;
   let playerMode = "audio";   // "audio" | "video" | "karaoke"
@@ -53,8 +71,34 @@
   let lastMediaT = 0;         // videoclose eşiğini yakalamak için önceki zaman
   let liteMode = false;       // düşük performans modu — her açılışta kapalı başlar
   let artistFilter = null;    // library'de aktif sanatçı filtresi
+  let privateSongs = [];
+  let privateLibraryLoaded = false;
   let karaokeLines = [];      // zamanlı söz satırları: {from, to, el}
   let karaokeIdx = -1;        // aktif satır indeksi
+  let trainingTasks = [];
+  let trainingTaskIndex = -1;
+  let trainingStarted = false;
+  let trainingWaiting = false;
+  let trainingAnswered = false;
+  let trainingAnsweredCount = 0;
+  let trainingRound = 1;
+  let trainingBlockSet = 0;
+  let duelRoundNumber = 1;
+  let duelRoundEnding = false;
+  let trainingFadeFrame = null;
+  let trainingPauseTimer = null;
+  let duelTeams = [[], []];
+  let duelPlayerIndex = [0, 0];
+  let duelScores = [0, 0];
+  let duelStudentScores = [[], []];
+  let duelRoundPending = [new Set(), new Set()];
+  let duelFinalScoresTransferred = false;
+  let duelTurn = 0;
+  let duelReady = false;
+  let duelPausedPoints = 10;
+  let duelPenaltyTimer = null;
+  let duelReadyOverlayTimer = null;
+  let duelRosterClassroomId = "";
   let autoZoomWindows = [];   // uzun enstrümantal aralıklar: {start, end}
   let autoZoomActive = false; // otomatik büyüme şu an devrede mi
   let autoZoomGap = 8;        // şarkıya göre ayarlanır (songs.js "zoomgap")
@@ -187,15 +231,17 @@
   function setStage(n) {
     stage = n;
     els.stages.forEach((s, i) => s.classList.toggle("hidden", i !== n));
-    [...els.stepper.querySelectorAll("span[data-stage]")].forEach((sp) => {
-      const i = +sp.dataset.stage;
-      sp.classList.toggle("active", i === n);
-      sp.classList.toggle("done", stageDone[i] && i !== n);
-    });
+    els.activity.classList.toggle("duel-stage", n === 2 && !isStudentMode);
+    els.duelScoreboard.classList.toggle("hidden", n !== 2 || !duelReady);
     els.prevButton.classList.toggle("invisible", n === 0);
-    els.nextButton.textContent = n === 1 ? "FINISH ✓" : "NEXT →";
-    els.nextButton.disabled = n === 0 ? false : !stageDone[n];
+    els.nextButton.textContent = n === 2 ? "FINISH ✓" : "NEXT →";
+    els.nextButton.disabled = n === 2 && !stageDone[2];
     if (n !== 1 && mediaEl && !mediaEl.paused) mediaEl.pause();
+    if (n === 2 && !trainingStarted && !stageDone[2]) {
+      if (isStudentMode || duelReady) startTraining();
+      else openDuelSetup();
+    }
+    if (n !== 2) stopTraining();
     updateStatus();
   }
 
@@ -204,10 +250,12 @@
     if (stage === 0) {
       const done = els.preImageGrid.querySelectorAll(".pre-item.done").length;
       txt = done + " / " + song.words.length + " MATCHED";
-    } else {
+    } else if (stage === 1) {
       const gaps = els.lyricsBox.querySelectorAll(".lyric-gap");
       const filled = els.lyricsBox.querySelectorAll(".lyric-gap.filled");
       txt = filled.length + " / " + gaps.length + " GAPS FILLED";
+    } else {
+      txt = trainingAnsweredCount + " / " + trainingTasks.length + " ROUNDS ANSWERED";
     }
     if (stageDone[stage]) txt += " · COMPLETE ✓";
     els.stageStatus.textContent = txt;
@@ -222,8 +270,369 @@
   }
 
   /* ════════════════════════════════════════════════════════════════════
+     TEAM DUEL · roster, challengers and score
+     ════════════════════════════════════════════════════════════════════ */
+  function resetDuel() {
+    duelTeams = [[""], [""]];
+    duelPlayerIndex = [0, 0];
+    duelScores = [0, 0];
+    duelStudentScores = [[], []];
+    duelRoundPending = [new Set(), new Set()];
+    duelFinalScoresTransferred = false;
+    duelTurn = 0;
+    duelReady = false;
+    duelPausedPoints = 10;
+    songPlaybackRate = 1;
+    trainingMode = "normal";
+    trainingBlockSet = 0;
+    duelRoundNumber = 1;
+    duelRosterClassroomId = "";
+    clearDuelPenalty();
+    if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
+    duelReadyOverlayTimer = null;
+    renderDuelReadyTeams();
+    els.duelReadyOverlay.classList.remove("hidden");
+    els.duelScoreboard.classList.add("hidden");
+    els.duelFinalScores.classList.add("hidden");
+  }
+
+  function rosterTodayKey() {
+    const now = new Date();
+    return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  }
+
+  function rosterScore(student) { return (Number(student?.points) || 0) + ((Number(student?.stars) || 0) * 10); }
+
+  function renderDuelTeamInputs() {
+    els.duelTeamInputs.innerHTML = "";
+    [0, 1].forEach((team) => {
+      const column = document.createElement("section");
+      column.className = "duel-team-column team-" + (team === 0 ? "a" : "b");
+      column.innerHTML = `<h3>TEAM ${team === 0 ? "A" : "B"}</h3>`;
+      duelTeams[team].forEach((name, index) => {
+        const input = document.createElement("input");
+        input.className = "duel-student-input";
+        input.placeholder = "Student name";
+        input.value = name;
+        input.addEventListener("input", () => { duelTeams[team][index] = input.value; });
+        column.appendChild(input);
+      });
+      els.duelTeamInputs.appendChild(column);
+    });
+  }
+
+  function openDuelSetup() {
+    els.duelSetupOverlay.classList.remove("hidden");
+    els.duelSetupSubtitle.textContent = "Create Team A and Team B. Students will play in the order shown.";
+    els.duelTempoPicker.classList.add("hidden");
+    els.duelModePicker.classList.add("hidden");
+    els.duelTeamInputs.classList.remove("hidden");
+    els.duelRosterButton.hidden = false;
+    els.duelAddAButton.hidden = false;
+    els.duelAddBButton.hidden = false;
+    els.duelSetupStartButton.hidden = false;
+    els.duelSetupStartButton.textContent = "START TEAM DUEL →";
+    els.duelSetupMessage.textContent = "";
+    renderDuelTeamInputs();
+  }
+
+  function cleanDuelTeams() { duelTeams = duelTeams.map((team) => team.map((name) => String(name || "").trim()).filter(Boolean)); }
+
+  function showTempoPicker() {
+    cleanDuelTeams();
+    if (!duelTeams[0].length || !duelTeams[1].length) { els.duelSetupMessage.textContent = "Add at least one student to both teams."; return; }
+    els.duelSetupSubtitle.textContent = "Choose the tempo for this team duel.";
+    els.duelTeamInputs.classList.add("hidden");
+    els.duelTempoPicker.classList.remove("hidden");
+    els.duelModePicker.classList.add("hidden");
+    els.duelRosterButton.hidden = true;
+    els.duelAddAButton.hidden = true;
+    els.duelAddBButton.hidden = true;
+    els.duelSetupStartButton.hidden = true;
+    els.duelSetupMessage.textContent = "";
+  }
+
+  function showModePicker() {
+    els.duelSetupSubtitle.textContent = "Choose how often students answer during the song.";
+    els.duelTempoPicker.classList.add("hidden");
+    els.duelModePicker.classList.remove("hidden");
+  }
+
+  function duelPlayer(team) { return duelTeams[team][duelPlayerIndex[team]] || null; }
+
+  function updateDuelScoreboard() {
+    els.teamAScore.textContent = duelScores[0];
+    els.teamBScore.textContent = duelScores[1];
+    els.teamAPlayer.textContent = duelPlayer(0) || "OUT";
+    els.teamBPlayer.textContent = duelPlayer(1) || "OUT";
+    const active = duelPlayer(duelTurn) || "TEAM " + (duelTurn === 0 ? "A" : "B");
+    const next = duelPlayer(duelTurn === 0 ? 1 : 0) || "—";
+    els.duelTurnName.textContent = active.toUpperCase();
+    els.duelNextPlayer.textContent = "NEXT PLAYER: " + next.toUpperCase();
+  }
+
+  function renderDuelReadyTeams() {
+    const nextTeam = duelTurn === 0 ? 1 : 0;
+    els.duelReadyTeams.innerHTML = [0, 1].map((team) => `<section><h4>TEAM ${team === 0 ? "A" : "B"}</h4>${duelTeams[team].map((name, index) => `<span class="${team === duelTurn && index === duelPlayerIndex[team] ? "active" : team === nextTeam && index === duelPlayerIndex[team] ? "next" : ""}"><b>${name}</b><em>${duelStudentScores[team]?.[index] || 0} PTS</em></span>`).join("")}</section>`).join("");
+  }
+
+  function startDuel() {
+    cleanDuelTeams();
+    if (!duelTeams[0].length || !duelTeams[1].length) { els.duelSetupMessage.textContent = "Add at least one student to both teams."; return; }
+    duelReady = true;
+    duelScores = [0, 0];
+    duelStudentScores = duelTeams.map((team) => team.map(() => 0));
+    duelRoundPending = duelTeams.map((team) => new Set(team.map((_, index) => index)));
+    trainingBlockSet = 0;
+    duelRoundNumber = 1;
+    duelFinalScoresTransferred = false;
+    duelTurn = 0;
+    duelPausedPoints = 10;
+    els.duelSetupOverlay.classList.add("hidden");
+    els.duelScoreboard.classList.remove("hidden");
+    updateDuelScoreboard();
+    els.duelCurrentPlayer.textContent = duelPlayer(duelTurn) || "PLAYER";
+    els.duelReadyPlayer.textContent = duelPlayer(duelTurn === 0 ? 1 : 0) || "PLAYER";
+    renderDuelReadyTeams();
+    els.duelReadyOverlay.classList.add("duel-intro");
+    els.duelReadyOverlay.classList.remove("hidden");
+  }
+
+  function switchDuelTurn() {
+    duelTurn = duelTurn === 0 ? 1 : 0;
+    duelPausedPoints = 10;
+    updateDuelScoreboard();
+    announceDuelPlayer();
+  }
+
+  function announceDuelPlayer() {
+    if (!duelReady) return;
+    if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
+    els.duelReadyOverlay.classList.remove("duel-intro");
+    els.duelCurrentPlayer.textContent = duelPlayer(duelTurn) || "PLAYER";
+    els.duelReadyPlayer.textContent = duelPlayer(duelTurn === 0 ? 1 : 0) || "PLAYER";
+    renderDuelReadyTeams();
+    els.duelReadyOverlay.classList.remove("hidden");
+    if (!(videoSrc || song?.video)) return;
+    duelReadyOverlayTimer = setTimeout(() => {
+      els.duelReadyOverlay.classList.add("hidden");
+      duelReadyOverlayTimer = null;
+    }, 2000);
+  }
+
+  function eliminateCurrentDuelPlayer() {
+    duelPlayerIndex[duelTurn] = (duelPlayerIndex[duelTurn] + 1) % duelTeams[duelTurn].length;
+    return false;
+  }
+
+  function markDuelRoundTurn() { duelRoundPending[duelTurn].delete(duelPlayerIndex[duelTurn]); }
+  function hasFullDuelRound() { return duelRoundPending.every((pending) => pending.size === 0); }
+
+  function getDuelFinalAwards() {
+    const isDraw = duelScores[0] === duelScores[1];
+    const winningTeam = duelScores[0] > duelScores[1] ? 0 : 1;
+    const overallTop = Math.max(0, ...duelStudentScores.flat());
+    return [0, 1].flatMap((team) => {
+      const teamTop = Math.max(0, ...(duelStudentScores[team] || []));
+      return duelTeams[team].map((name, index) => {
+        const points = Number(duelStudentScores[team][index]) || 0;
+        let stars;
+        if (isDraw) stars = points > 0 ? 3 : 1;
+        else stars = points > 0 ? (team === winningTeam ? 3 : 2) : (team === winningTeam ? 1 : 0);
+        if (points > 0 && points === teamTop) stars += 1;
+        if (!isDraw && points > 0 && points === overallTop && team !== winningTeam) stars += 1;
+        return { team, name, points, stars };
+      });
+    });
+  }
+
+  function renderDuelFinalScores() {
+    if (!duelReady) { els.duelFinalScores.classList.add("hidden"); return; }
+    const awards = getDuelFinalAwards();
+    const isDraw = duelScores[0] === duelScores[1];
+    const winner = duelScores[0] > duelScores[1] ? "TEAM A WINS!" : "TEAM B WINS!";
+    els.duelFinalResult.textContent = isDraw ? "IT'S A DRAW!" : winner;
+    els.duelFinalTeamLists.innerHTML = [0, 1].map((team) => {
+      const teamAwards = awards.filter((award) => award.team === team);
+      return `<section class="duel-final-team team-${team === 0 ? "a" : "b"}"><h3>TEAM ${team === 0 ? "A" : "B"} <small>${duelScores[team]} POINTS</small></h3>${teamAwards.map((award) => `<div><strong>${award.name}</strong><span>${award.points} duel pts · ⭐ ${award.stars} · +${award.stars * 5}</span></div>`).join("")}</section>`;
+    }).join("");
+    const canTransfer = !!duelRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === "function";
+    els.duelFinalTransferButton.hidden = !canTransfer;
+    els.duelFinalTransferButton.disabled = duelFinalScoresTransferred;
+    els.duelFinalTransferButton.textContent = duelFinalScoresTransferred ? "✓ PUANLAR AKTARILDI" : "⭐ YILDIZLARI PUANA AKTAR";
+    els.duelFinalTransferNote.textContent = canTransfer ? "Each star transfers as 5 roster points." : "Roster transfer is available when the class is imported from the roster.";
+    els.duelFinalScores.classList.remove("hidden");
+  }
+
+  function transferDuelFinalScores() {
+    if (duelFinalScoresTransferred || !duelRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== "function") return;
+    const awards = getDuelFinalAwards().filter((award) => award.name && award.stars > 0).map((award) => ({ name: award.name, points: award.stars * 5 }));
+    const result = window.TeacherControl.awardFinalPoints(awards, duelRosterClassroomId);
+    if (!result?.awarded?.length) { ToastManager.show("NO MATCHING ROSTER STUDENTS FOUND", "warn", 3000); return; }
+    duelFinalScoresTransferred = true;
+    renderDuelFinalScores();
+  }
+
+  function clearDuelPenalty() {
+    if (duelPenaltyTimer) clearInterval(duelPenaltyTimer);
+    duelPenaltyTimer = null;
+    duelPausedPoints = 10;
+  }
+
+  function showTrainingCountdown(points) {
+    const spinner = els.trainingLine.querySelector(".training-spinner");
+    if (!spinner) return;
+    spinner.classList.add("countdown");
+    spinner.textContent = points;
+  }
+
+  function setRehearEnabled(enabled) {
+    els.trainingRehearButton.disabled = !enabled;
+  }
+
+  function forfeitDuelTurn(waitForBlockEnd = false, target = "", playSound = true) {
+    clearDuelPenalty();
+    if (playSound) playSfx(sfxWrong);
+    markDuelRoundTurn();
+    eliminateCurrentDuelPlayer();
+    switchDuelTurn();
+    const finishAfterLine = hasFullDuelRound() && waitForBlockEnd && !trainingWaiting;
+    if (hasFullDuelRound() && !finishAfterLine) { finishDuelRound(); return; }
+    if (finishAfterLine) duelRoundEnding = true;
+    if (waitForBlockEnd) {
+      trainingAnswered = true;
+      els.trainingChoices.querySelectorAll("button").forEach((choiceButton) => { choiceButton.disabled = true; });
+      const gap = els.trainingLine.querySelector(".training-gap");
+      if (gap) {
+        gap.classList.remove("training-spinner");
+        gap.textContent = target;
+      }
+      els.trainingPrompt.textContent = "Wrong answer — listen to the end of the block.";
+      return;
+    }
+    advanceTrainingTask();
+  }
+
+  function finishDuelRound() {
+    duelRoundEnding = false;
+    if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
+    duelReadyOverlayTimer = null;
+    els.duelReadyOverlay.classList.add("hidden");
+    trainingWaiting = true;
+    els.trainingVideo.pause();
+    showTrainingReplayPrompt();
+  }
+
+  function beginDuelPausePenalty() {
+    if (!duelReady) return;
+    clearDuelPenalty();
+    duelPausedPoints = 10;
+    showTrainingCountdown(duelPausedPoints);
+    updateDuelScoreboard();
+    duelPenaltyTimer = setInterval(() => {
+      duelPausedPoints--;
+      showTrainingCountdown(duelPausedPoints);
+      updateDuelScoreboard();
+      if (duelPausedPoints <= 0) forfeitDuelTurn();
+    }, 1000);
+  }
+
+  function openDuelRosterPicker() {
+    const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+    const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.some((student) => String(student?.name || "").trim()));
+    els.duelRosterClassList.innerHTML = "";
+    els.duelRosterMessage.textContent = "";
+    els.duelRosterOverlay.classList.remove("hidden");
+    if (!usable.length) { els.duelRosterMessage.textContent = "Create or sync a class roster from the teacher HUD first."; return; }
+    usable.forEach((classroom) => {
+      const absent = classroom.attendanceDate === rosterTodayKey() ? new Set(classroom.absentStudentIds || []) : new Set();
+      const present = (classroom.roster || []).filter((student) => String(student?.name || "").trim() && !absent.has(student.id));
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "duel-roster-class";
+      button.innerHTML = `<strong>${classroom.name || "CLASS"}</strong><span>${present.length} present students</span>`;
+      button.addEventListener("click", () => importDuelRoster(classroom, present));
+      els.duelRosterClassList.appendChild(button);
+    });
+  }
+
+  function importDuelRoster(classroom, present) {
+    if (!present.length) { els.duelRosterMessage.textContent = "There are no present students in this class today."; return; }
+    const sorted = present.slice().sort((a, b) => rosterScore(b) - rosterScore(a) || String(a.name).localeCompare(String(b.name), "tr", { sensitivity: "base" }));
+    const order = [0, 1, 1, 0];
+    duelTeams = [[], []];
+    sorted.forEach((student, index) => duelTeams[order[index % order.length]].push(String(student.name).trim()));
+    duelRosterClassroomId = classroom.id;
+    els.duelRosterOverlay.classList.add("hidden");
+    renderDuelTeamInputs();
+    els.duelSetupMessage.textContent = `${classroom.name}: ${present.length} present students balanced across Team A and Team B.`;
+  }
+
+  els.duelAddAButton.addEventListener("click", () => { duelTeams[0].push(""); renderDuelTeamInputs(); });
+  els.duelAddBButton.addEventListener("click", () => { duelTeams[1].push(""); renderDuelTeamInputs(); });
+  els.duelRosterButton.addEventListener("click", openDuelRosterPicker);
+  els.duelRosterCloseButton.addEventListener("click", () => els.duelRosterOverlay.classList.add("hidden"));
+  els.duelSetupStartButton.addEventListener("click", () => {
+    showTempoPicker();
+  });
+  els.duelTempoSlowButton.addEventListener("click", () => { songPlaybackRate = 0.85; showModePicker(); });
+  els.duelTempoNormalButton.addEventListener("click", () => { songPlaybackRate = 1; showModePicker(); });
+  els.duelModeNormalButton.addEventListener("click", () => { trainingMode = "normal"; startDuel(); });
+  els.duelModeFastButton.addEventListener("click", () => { trainingMode = "fast"; startDuel(); });
+  els.duelFinalTransferButton.addEventListener("click", transferDuelFinalScores);
+  els.duelBeginButton.addEventListener("click", () => {
+    if (!duelReady || !els.duelReadyOverlay.classList.contains("duel-intro")) return;
+    els.duelReadyOverlay.classList.remove("duel-intro");
+    if (videoSrc || song?.video) els.duelReadyOverlay.classList.add("hidden");
+    startTraining();
+  });
+
+  /* ════════════════════════════════════════════════════════════════════
      LIBRARY
      ════════════════════════════════════════════════════════════════════ */
+  function getLibrarySongs() {
+    return [...(window.SONGS || []), ...privateSongs];
+  }
+
+  function privateMediaUrl(value) {
+    if (!value || /^(?:https?:)?\/\//i.test(value)) return value;
+    return `${PRIVATE_MEDIA_ORIGIN}/media/${value.replace(/^\/+/, "")}`;
+  }
+
+  function normalizePrivateSong(songData) {
+    const privateSong = { ...songData };
+    ["audio", "video", "karaoke", "image"].forEach((field) => {
+      privateSong[field] = privateMediaUrl(privateSong[field]);
+    });
+    privateSong.words = (privateSong.words || []).map((word) => ({
+      ...word,
+      image: privateMediaUrl(word.image)
+    }));
+    return privateSong;
+  }
+
+  async function loadPrivateLibrary() {
+    if (isStudentMode || privateLibraryLoaded) return;
+    els.privateLibraryStatus.textContent = "Checking owner access…";
+    try {
+      const response = await fetch(`${PRIVATE_MEDIA_ORIGIN}/api/library`, { credentials: "include" });
+      if (!response.ok) throw new Error(`Private library request failed: ${response.status}`);
+      const catalog = await response.json();
+      const songs = Array.isArray(catalog) ? catalog : catalog.songs;
+      if (!Array.isArray(songs)) throw new Error("Invalid private library catalog.");
+      privateSongs = songs.map(normalizePrivateSong);
+      privateLibraryLoaded = true;
+      els.privateLibraryPanel.classList.add("unlocked");
+      els.privateLibraryStatus.textContent = `${privateSongs.length} private song${privateSongs.length === 1 ? "" : "s"} unlocked.`;
+      els.privateLibraryButton.textContent = "PRIVATE LIBRARY UNLOCKED";
+      els.privateLibraryButton.disabled = true;
+      renderLibrary();
+    } catch (_) {
+      els.privateLibraryStatus.textContent = "Sign in to unlock private songs.";
+      els.privateLibraryButton.textContent = "UNLOCK PRIVATE LIBRARY";
+    }
+  }
+
   function addSongCard(s) {
     const listened = getListenedSet().has(s.id);
     const card = document.createElement("button");
@@ -287,7 +696,7 @@
 
   function renderLibrary() {
     els.songGrid.innerHTML = "";
-    const songs = window.SONGS || [];
+    const songs = getLibrarySongs();
     els.filterBar.classList.toggle("hidden", !artistFilter);
 
     /* Sanatçı filtresi aktif → sadece o sanatçının şarkıları */
@@ -315,11 +724,13 @@
 
   function startSong(s) {
     song = s;
-    stageDone = [false, false];
+    stageDone = [false, false, false];
+    resetDuel();
     els.artistLabel.textContent = (s.artist || "SONG").toUpperCase();
     els.titleLabel.textContent = s.title.toUpperCase();
     buildPreStage();
     buildDuringStage();
+    buildTrainingStage();
     showScreen("activity");
     setStage(0);
   }
@@ -512,6 +923,7 @@
 
   /* Aktif medya elementine (audio veya video) ortak dinleyicileri bağlar */
   function attachPlayerEvents(el) {
+    applySongTempo(el);
     el.onloadedmetadata = () => { els.playerTimeTotal.textContent = fmtTime(el.duration); };
     el.ontimeupdate = () => {
       const t = el.currentTime;
@@ -985,6 +1397,347 @@
     });
   }
 
+  function buildTrainingStage() {
+    const lyricLines = song.lyrics.map((raw) => {
+      const item = typeof raw === "string" ? { text: raw } : raw;
+      const from = parseTime(item.from);
+      const to = parseTime(item.to);
+      return from == null || to == null ? null : { from, to, text: item.text, training: item.training || makeAutomaticTraining(item.text) };
+    }).filter(Boolean);
+    trainingTasks = [];
+    const linesPerTask = trainingMode === "fast" ? 1 : 2;
+    for (let start = 0; start < lyricLines.length; start += linesPerTask) {
+      const lines = lyricLines.slice(start, start + linesPerTask);
+      trainingTasks.push({ from: lines[0].from, to: lines[lines.length - 1].to, lines, target: "", targetLine: 0, choices: [], active: false });
+    }
+    setTrainingBlockSet(trainingBlockSet);
+    trainingTaskIndex = -1;
+    trainingStarted = false;
+    trainingWaiting = false;
+    trainingAnswered = false;
+    duelRoundEnding = false;
+    clearDuelPenalty();
+    trainingAnsweredCount = 0;
+    els.trainingReplayPrompt.classList.add("hidden");
+    els.trainingVideo.pause();
+    els.trainingVideo.removeAttribute("src");
+    setRehearEnabled(false);
+    els.trainingLine.textContent = "";
+    els.trainingChoices.innerHTML = "";
+    els.trainingPrompt.textContent = trainingTasks.length
+      ? "Listen and choose the missing word before the line ends."
+      : "No lyric training has been prepared for this song yet.";
+  }
+
+  function makeAutomaticTraining(text) {
+    const plainText = text.replace(/<([^>]+)>/g, "$1");
+    const words = plainText.match(/[A-Za-z']+/g) || [];
+    const isValidTarget = (word) => word.length >= 4 && !word.includes("'");
+    const taggedTarget = Array.from(text.matchAll(/<([^>]+)>/g))
+      .map((match) => match[1])
+      .find((word) => isValidTarget(word) && new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i").test(plainText));
+    const target = taggedTarget || words.slice(1).find(isValidTarget);
+    if (!target) return null;
+    const normalizedTarget = target.toLowerCase();
+    const choices = (song.words || []).map((entry) => entry.word)
+      .filter((word) => word.toLowerCase() !== normalizedTarget && !word.toLowerCase().startsWith(normalizedTarget) && !normalizedTarget.startsWith(word.toLowerCase()));
+    const fallback = ["forest", "kitchen", "future", "memory", "laughter", "journey"];
+    fallback.forEach((word) => {
+      if (!choices.some((choice) => choice.toLowerCase() === word) && word !== normalizedTarget) choices.push(word);
+    });
+    const distractors = shuffle(choices).slice(0, 3);
+    return distractors.length === 3 ? { target, choices: [target, ...distractors] } : null;
+  }
+
+  function setTrainingBlockSet(blockSet) {
+    trainingBlockSet = blockSet;
+    trainingTasks.forEach((task, index) => {
+      const targetLine = 0;
+      const training = task.lines[0].training;
+      task.target = training?.target || "";
+      task.targetLine = targetLine;
+      task.choices = Array.isArray(training?.choices) ? training.choices : [];
+      task.active = Boolean(task.target && task.choices.length === 4 && (trainingMode === "fast" || index % 2 === trainingBlockSet));
+    });
+  }
+
+  function renderTrainingTask(task) {
+    els.trainingLine.innerHTML = "";
+    els.trainingChoices.classList.remove("correct-exit", "wrong-exit");
+    els.trainingChoices.closest(".training-panel")?.classList.remove("training-shake");
+    task.lines.forEach((line, lineIndex) => {
+      const row = document.createElement("div");
+      const lineText = line.text.replace(/<([^>]+)>/g, "$1");
+      const targetPattern = task.active ? new RegExp(`\\b${task.target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i") : null;
+      const match = lineIndex === task.targetLine && targetPattern ? targetPattern.exec(lineText) : null;
+      if (match) {
+        row.append(document.createTextNode(lineText.slice(0, match.index)));
+        const gap = document.createElement("span");
+        gap.className = "training-gap training-spinner";
+        gap.setAttribute("aria-label", "Missing word");
+        row.append(gap, document.createTextNode(lineText.slice(match.index + match[0].length)));
+      } else {
+        row.textContent = lineText;
+      }
+      els.trainingLine.appendChild(row);
+    });
+    els.trainingChoices.innerHTML = "";
+    if (!task.active) return;
+    shuffle([...task.choices]).forEach((choice) => {
+      const button = document.createElement("button");
+      button.className = "training-choice";
+      button.type = "button";
+      button.textContent = choice;
+      button.addEventListener("click", () => answerTrainingChoice(button, choice, task));
+      els.trainingChoices.appendChild(button);
+    });
+  }
+
+  function playTrainingTask(index, continuePlayback = false, startFromIntro = false) {
+    const task = trainingTasks[index];
+    if (!task) return;
+    const keepDuelPenalty = Boolean(duelPenaltyTimer);
+    trainingTaskIndex = index;
+    trainingWaiting = false;
+    trainingAnswered = false;
+    setRehearEnabled(false);
+    if (trainingFadeFrame) { cancelAnimationFrame(trainingFadeFrame); trainingFadeFrame = null; }
+    if (trainingPauseTimer !== null) { clearTimeout(trainingPauseTimer); trainingPauseTimer = null; }
+    els.trainingVideo.volume = 1;
+    if (startFromIntro) {
+      els.trainingLine.textContent = "";
+      els.trainingChoices.innerHTML = "";
+      els.trainingPrompt.textContent = "Listen to the song introduction.";
+    } else {
+      renderTrainingTask(task);
+      els.trainingPrompt.textContent = task.active ? "Choose the missing word before the line ends." : "Listen closely to the next lines.";
+    }
+    const playLine = () => {
+      const scheduleLineEnd = (lyricStart) => {
+        const lineDuration = Math.max(0, (task.to - lyricStart) * 1000 / (els.trainingVideo.playbackRate || 1));
+        trainingPauseTimer = setTimeout(() => {
+          trainingPauseTimer = null;
+          if (!task.active) { if (trainingTaskIndex === index && !stageDone[2]) advanceTrainingTask(true); return; }
+          if (trainingTaskIndex !== index || trainingWaiting || trainingAnswered || stageDone[2]) return;
+          trainingWaiting = true;
+          setRehearEnabled(true);
+          if (!keepDuelPenalty) beginDuelPausePenalty();
+          els.trainingPrompt.textContent = "The line is over — choose an answer to continue.";
+          fadeOutTrainingAtLineEnd();
+        }, task.active ? Math.max(0, lineDuration - 420) : lineDuration);
+      };
+      if (continuePlayback) {
+        scheduleLineEnd(els.trainingVideo.currentTime + getVideoTimingDelay(song));
+        return;
+      }
+      const sourceTime = Math.max(0, task.from - getVideoTimingDelay(song));
+      if (startFromIntro) {
+        els.trainingVideo.currentTime = 0;
+        const startTask = () => {
+          trainingPauseTimer = setTimeout(() => {
+            if (trainingTaskIndex !== index || stageDone[2]) return;
+            renderTrainingTask(task);
+            els.trainingPrompt.textContent = task.active ? "Choose the missing word before the line ends." : "Listen closely to the next lines.";
+            scheduleLineEnd(task.from);
+          }, sourceTime * 1000 / (els.trainingVideo.playbackRate || 1));
+        };
+        const playback = els.trainingVideo.play();
+        if (playback?.then) playback.then(startTask).catch(() => {});
+        else startTask();
+        return;
+      }
+      els.trainingVideo.currentTime = sourceTime;
+      const playback = els.trainingVideo.play();
+      if (playback?.then) playback.then(() => scheduleLineEnd(task.from)).catch(() => {});
+      else scheduleLineEnd(task.from);
+    };
+    if (continuePlayback || els.trainingVideo.readyState >= 1) playLine();
+    else els.trainingVideo.onloadedmetadata = playLine;
+  }
+
+  function startTraining() {
+    trainingStarted = true;
+    if (!trainingTasks.length) { completeStage(); return; }
+    const source = videoSrc || song.video || song.audio;
+    if (!source) { els.trainingPrompt.textContent = "No media source found for this training."; return; }
+    els.trainingVideo.src = source;
+    applySongTempo(els.trainingVideo);
+    els.trainingVideo.load();
+    els.trainingReplayPrompt.classList.add("hidden");
+    playTrainingTask(0, false, true);
+  }
+
+  function stopTraining() {
+    els.trainingVideo.pause();
+    if (trainingFadeFrame) { cancelAnimationFrame(trainingFadeFrame); trainingFadeFrame = null; }
+    if (trainingPauseTimer !== null) { clearTimeout(trainingPauseTimer); trainingPauseTimer = null; }
+    clearDuelPenalty();
+    setRehearEnabled(false);
+    els.trainingVideo.volume = 1;
+    trainingStarted = false;
+  }
+
+  function advanceTrainingTask(continuePlayback = false) {
+    const nextIndex = trainingTaskIndex + 1;
+    if (nextIndex >= trainingTasks.length) {
+      finishTrainingPassAfterMedia();
+      return;
+    }
+    playTrainingTask(nextIndex, continuePlayback);
+  }
+
+  function finishTrainingPassAfterMedia() {
+    const finishPass = () => {
+      if (duelReady) {
+        if (hasFullDuelRound()) finishDuelRound();
+        else startTrainingReplay(true);
+        return;
+      }
+      if (trainingRound === 1 || duelReady) { showTrainingReplayPrompt(); return; }
+      completeStage();
+    };
+    els.trainingPrompt.textContent = "Listen to the end of the song.";
+    els.trainingChoices.innerHTML = "";
+    if (els.trainingVideo.ended) { finishPass(); return; }
+    els.trainingVideo.addEventListener("ended", finishPass, { once: true });
+    const playback = els.trainingVideo.play();
+    if (playback?.catch) playback.catch(() => {});
+  }
+
+  function showTrainingReplayPrompt() {
+    els.trainingVideo.pause();
+    clearDuelPenalty();
+    setRehearEnabled(false);
+    els.trainingChoices.innerHTML = "";
+    els.trainingLine.textContent = "ROUND COMPLETE";
+    els.trainingPrompt.textContent = "Every student has played. Play another round?";
+    els.trainingReplayTitle.textContent = duelReady ? "NEXT ROUND?" : "REPLAY SONG?";
+    els.trainingReplayMessage.textContent = "";
+    els.trainingReplayYesButton.textContent = duelReady ? `YES, PLAY ROUND ${duelRoundNumber + 1}` : "YES, PLAY AGAIN";
+    els.trainingReplayPrompt.classList.remove("hidden");
+  }
+
+  function startTrainingReplay(restartFromIntro = true) {
+    if (duelReady && hasFullDuelRound()) {
+      duelRoundPending = duelTeams.map((team) => new Set(team.map((_, index) => index)));
+      duelRoundNumber++;
+    }
+    if (restartFromIntro) setTrainingBlockSet(trainingBlockSet === 0 ? 1 : 0);
+    trainingWaiting = false;
+    trainingAnswered = false;
+    els.trainingReplayPrompt.classList.add("hidden");
+    if (!restartFromIntro && trainingTaskIndex + 1 < trainingTasks.length) {
+      playTrainingTask(trainingTaskIndex + 1);
+      return;
+    }
+    trainingTaskIndex = -1;
+    els.trainingVideo.currentTime = 0;
+    playTrainingTask(0);
+  }
+
+  function fadeOutTrainingAtLineEnd() {
+    const video = els.trainingVideo;
+    const initialVolume = video.volume;
+    const startedAt = performance.now();
+    const forcePause = () => {
+      if (trainingFadeFrame) cancelAnimationFrame(trainingFadeFrame);
+      video.pause();
+      video.volume = initialVolume;
+      trainingFadeFrame = null;
+      trainingPauseTimer = null;
+    };
+    const hardPause = setTimeout(forcePause, 460);
+    const fade = (now) => {
+      const progress = Math.min(1, (now - startedAt) / 420);
+      video.volume = initialVolume * (1 - progress);
+      if (progress < 1) trainingFadeFrame = requestAnimationFrame(fade);
+      else {
+        clearTimeout(hardPause);
+        forcePause();
+      }
+    };
+    trainingFadeFrame = requestAnimationFrame(fade);
+  }
+
+  function answerTrainingChoice(button, choice, task) {
+    if (trainingTaskIndex < 0 || stageDone[2]) return;
+    if (choice.toLowerCase() !== task.target.toLowerCase()) {
+      button.classList.add("wrong");
+      els.trainingChoices.classList.add("wrong-exit");
+      els.trainingChoices.closest(".training-panel")?.classList.add("training-shake");
+      playSfx(sfxWrong);
+      setTimeout(() => button.classList.remove("wrong"), 420);
+      if (duelReady) {
+        setTimeout(() => forfeitDuelTurn(!trainingWaiting, task.target, false), 480);
+        return;
+      }
+      window.StudentGame?.onWrong();
+      setTimeout(() => advanceTrainingTask(), 480);
+      return;
+    }
+    const wasWaiting = trainingWaiting;
+    playSfx(sfxCorrect);
+    let duelRoundComplete = false;
+    if (duelReady) {
+      const earned = duelPausedPoints;
+      clearDuelPenalty();
+      duelScores[duelTurn] += earned;
+      duelStudentScores[duelTurn][duelPlayerIndex[duelTurn]] += earned;
+      markDuelRoundTurn();
+      eliminateCurrentDuelPlayer();
+      switchDuelTurn();
+      duelRoundComplete = hasFullDuelRound();
+    } else {
+      window.TeacherControl?.onCorrect();
+      window.StudentGame?.onCorrect();
+    }
+    button.classList.add("correct");
+    els.trainingChoices.classList.add("correct-exit");
+    trainingAnswered = true;
+    els.trainingChoices.querySelectorAll("button").forEach((choiceButton) => { choiceButton.disabled = true; });
+    const gap = els.trainingLine.querySelector(".training-gap");
+    if (gap) {
+      gap.classList.remove("training-spinner");
+      gap.textContent = task.target;
+    }
+    els.trainingPrompt.textContent = "Correct! Listen to the end of the line.";
+    trainingAnsweredCount++;
+    updateStatus();
+    if (duelRoundComplete) {
+      if (wasWaiting) { setTimeout(finishDuelRound, 420); return; }
+      duelRoundEnding = true;
+      return;
+    }
+    if (wasWaiting) setTimeout(() => advanceTrainingTask(), 420);
+  }
+
+  els.trainingVideo.addEventListener("timeupdate", () => {
+    const task = trainingTasks[trainingTaskIndex];
+    if (!task || trainingWaiting || stageDone[2]) return;
+    if (!task.active) return;
+    const lyricTime = els.trainingVideo.currentTime + getVideoTimingDelay(song);
+    if (lyricTime >= task.to) {
+      if (trainingAnswered) {
+        if (duelRoundEnding) { finishDuelRound(); return; }
+        advanceTrainingTask(true);
+        return;
+      }
+      trainingWaiting = true;
+      setRehearEnabled(true);
+      beginDuelPausePenalty();
+      els.trainingPrompt.textContent = "The line is over — choose an answer to continue.";
+      fadeOutTrainingAtLineEnd();
+    }
+  });
+
+  els.trainingRehearButton.addEventListener("click", () => {
+    if (trainingWaiting && trainingTaskIndex >= 0) {
+      playTrainingTask(trainingTaskIndex);
+    }
+  });
+  els.trainingReplayYesButton.addEventListener("click", () => startTrainingReplay(false));
+  els.trainingReplayFinishButton.addEventListener("click", () => { completeStage(); finishSongActivity(); });
+
   function tryFillGap(chip, gap, displayWord) {
     if (gap.dataset.word === chip.dataset.word) {
       /* Aynı kelimenin TÜM boşlukları birlikte dolar — böylece kelime
@@ -1044,16 +1797,19 @@
   /* ════════════════════════════════════════════════════════════════════
      NAVİGASYON
      ════════════════════════════════════════════════════════════════════ */
+  function finishSongActivity() {
+    els.completeSummary.textContent =
+      `"${song.title}" — you matched the words, filled the lyrics and completed lyric training. 👏`;
+    renderDuelFinalScores();
+    if (mediaEl) mediaEl.pause();
+    stopTraining();
+    showScreen("complete");
+  }
+
   els.nextButton.addEventListener("click", () => {
-    if (stage !== 0 && !stageDone[stage]) return;
-    if (stage === 1) {
-      els.completeSummary.textContent =
-        `"${song.title}" — you matched all ${song.words.length} words and filled every gap. 👏`;
-      if (mediaEl) mediaEl.pause();
-      showScreen("complete");
-    } else {
-      setStage(stage + 1);
-    }
+    if (stage === 2 && !stageDone[2]) return;
+    if (stage === 2) finishSongActivity();
+    else setStage(stage + 1);
   });
   els.prevButton.addEventListener("click", () => { if (stage > 0) setStage(stage - 1); });
   els.backButton.addEventListener("click", () => { if (mediaEl) mediaEl.pause(); showScreen("library"); });
@@ -1081,6 +1837,13 @@
     ToastManager.show("✅ LISTENING HISTORY RESET", null, 3000);
   });
 
+  els.privateLibraryButton.addEventListener("click", () => {
+    if (privateLibraryLoaded) return;
+    window.open(`${PRIVATE_MEDIA_ORIGIN}/login`, "privateMediaLogin", "noopener");
+    els.privateLibraryStatus.textContent = "Sign in in the new tab, then return here.";
+  });
+  window.addEventListener("focus", loadPrivateLibrary);
+
   function returnToMenu() {
     if (mediaEl) mediaEl.pause();
     location.href = new URLSearchParams(location.search).get("mode") === "student"
@@ -1097,5 +1860,9 @@
 
   /* ── Başlat ── */
   ToastManager.init({ top: "84px", position: "left" });
+  if (!isStudentMode) {
+    els.privateLibraryPanel.classList.remove("hidden");
+    loadPrivateLibrary();
+  }
   renderLibrary();
 })();

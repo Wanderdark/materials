@@ -24,6 +24,8 @@ function renderDailyRoutineVideoPractice(character, onComplete) {
   video.className = "daily-routine-video-video";
   video.src = character.videoUrl;
   video.controls = true;
+  video.controlsList = "nodownload";
+  video.disablePictureInPicture = true;
   video.playsInline = true;
   video.preload = "metadata";
   visual.append(video);

@@ -55,6 +55,8 @@ function renderStaticDialogueVideo(example) {
     video.className = "static-dialogue-video";
     video.src = data.videoUrl;
     video.controls = true;
+    video.controlsList = "nodownload";
+    video.disablePictureInPicture = true;
     video.playsInline = true;
     video.preload = "metadata";
     video.addEventListener("loadedmetadata", () => {

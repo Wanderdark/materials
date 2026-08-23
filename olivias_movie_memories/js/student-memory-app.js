@@ -214,7 +214,7 @@
   }
   function openMemory(id) {
     const item = ITEMS.find((entry) => entry.id === id); if (!item) return;
-    elements.modal.innerHTML = `<article class="memory-modal-card"><button id="close-memory-modal" type="button" aria-label="Close">×</button><video controls playsinline src="${item.videoSrc}"></video><div class="modal-copy"><p class="eyebrow">${escape((item.theme || "").replace(/_/g, " "))}</p><h2>${escape(item.title)}</h2><p>${transcriptMarkup(item.transcript)}</p></div></article>`;
+    elements.modal.innerHTML = `<article class="memory-modal-card"><button id="close-memory-modal" type="button" aria-label="Close">×</button><video controls controlsList="nodownload" disablePictureInPicture playsinline src="${item.videoSrc}"></video><div class="modal-copy"><p class="eyebrow">${escape((item.theme || "").replace(/_/g, " "))}</p><h2>${escape(item.title)}</h2><p>${transcriptMarkup(item.transcript)}</p></div></article>`;
     elements.modal.hidden = false;
     elements.modal.querySelector("#close-memory-modal").addEventListener("click", () => { elements.modal.hidden = true; });
   }

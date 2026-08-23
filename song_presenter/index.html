@@ -23,6 +23,12 @@
         <span class="brand-credit">Designed by Adil Fırat OKTAV</span>
         <button id="resetProgressButton" class="secondary-button reset-progress-button" hidden>RESET</button>
         <button id="menuReturnButton" class="secondary-button reset-progress-button menu-return-button" hidden>BACK TO MENU</button>
+        <section id="privateLibraryPanel" class="private-library-panel hidden" aria-live="polite">
+          <span>OWNER ACCESS</span>
+          <strong>PRIVATE LIBRARY</strong>
+          <p id="privateLibraryStatus">Sign in to unlock private songs.</p>
+          <button id="privateLibraryButton" class="secondary-button private-library-button" type="button">UNLOCK PRIVATE LIBRARY</button>
+        </section>
       </div>
       <div class="library-card">
         <div class="selection-heading"><span>♪</span><div><h2>Choose a song</h2><p>Pick a song to start the lesson.</p></div></div>
@@ -43,10 +49,11 @@
           <strong id="songTitleLabel">SONG TITLE</strong>
         </div>
         <span class="tool-credit">Tool Designed by Adil Fırat OKTAV</span>
-        <nav class="stage-stepper" id="stageStepper">
-          <span data-stage="0"><b>1</b>PRE-LISTENING</span><i></i>
-          <span data-stage="1"><b>2</b>DURING-LISTENING</span>
-        </nav>
+        <div id="duelScoreboard" class="duel-scoreboard hidden" aria-live="polite">
+          <div class="duel-score-card team-a"><span>TEAM A</span><strong id="teamAScore">0</strong><small id="teamAPlayer">—</small></div>
+          <div class="duel-turn"><span>CURRENT PLAYER</span><b id="duelTurnName">DUEL READY</b><small id="duelNextPlayer">NEXT PLAYER: —</small></div>
+          <div class="duel-score-card team-b"><span>TEAM B</span><strong id="teamBScore">0</strong><small id="teamBPlayer">—</small></div>
+        </div>
         <button id="liteButton" class="icon-button" title="Low-performance mode: disables climax effects">LITE</button>
         <button id="fullscreenButton" class="icon-button">FULL</button>
       </header>
@@ -93,6 +100,23 @@
         </article>
       </div>
 
+      <!-- ── PAGE 3 · AFTER-LISTENING ── -->
+      <div id="trainingStage" class="stage hidden">
+        <article class="stage-card training-card">
+          <div class="training-video-wrap">
+            <video id="trainingVideo" playsinline preload="metadata"></video>
+            <div id="duelReadyOverlay" class="duel-ready-overlay hidden"><div class="duel-ready-announcement"><div><span>NOW PLAYING:</span><strong id="duelCurrentPlayer">PLAYER</strong></div><div><span>GET READY:</span><strong id="duelReadyPlayer">PLAYER</strong></div></div><div id="duelReadyTeams" class="duel-ready-teams"></div><button id="duelBeginButton" type="button">BEGIN</button></div>
+          </div>
+          <div class="training-panel">
+            <p id="trainingPrompt" class="training-prompt">Listen and choose the missing word.</p>
+            <p id="trainingLine" class="training-line"></p>
+            <div id="trainingChoices" class="training-choices"></div>
+            <button id="trainingRehearButton" class="secondary-button training-rehear" type="button">↺ REHEAR THIS LINE</button>
+            <div id="trainingReplayPrompt" class="training-replay-prompt hidden"><strong id="trainingReplayTitle">NEXT ROUND?</strong><span id="trainingReplayMessage"></span><div><button id="trainingReplayYesButton" class="primary-button" type="button">YES, PLAY ROUND 2</button><button id="trainingReplayFinishButton" class="secondary-button" type="button">FINISH</button></div></div>
+          </div>
+        </article>
+      </div>
+
       <footer class="activity-footer">
         <button id="prevStageButton" class="secondary-button invisible">← PREVIOUS</button>
         <div id="stageStatus" class="stage-status"></div>
@@ -106,6 +130,13 @@
         <p class="brand-kicker">LESSON COMPLETE</p>
         <h1>GREAT<br><em>JOB!</em></h1>
         <p id="completeSummary">You matched the words and filled the lyrics.</p>
+        <section id="duelFinalScores" class="duel-final-scores hidden" aria-live="polite">
+          <p class="brand-kicker">FINAL SCORES</p>
+          <h2 id="duelFinalResult">TEAM A WINS!</h2>
+          <div id="duelFinalTeamLists" class="duel-final-team-lists"></div>
+          <p id="duelFinalTransferNote" class="duel-final-transfer-note"></p>
+          <button id="duelFinalTransferButton" class="primary-button" type="button" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
+        </section>
         <div class="complete-actions">
           <button id="restartButton" class="secondary-button">REPLAY THIS SONG</button>
           <button id="libraryButton" class="primary-button">BACK TO LIBRARY</button>
@@ -118,6 +149,39 @@
   <button id="cornerMenuReturnButton" class="icon-button corner-menu-return-button" type="button" aria-label="Back to menu" title="Back to menu">↩</button>
 
   <audio id="songAudio" preload="metadata"></audio>
+
+  <div id="duelSetupOverlay" class="duel-overlay hidden">
+    <div class="duel-modal">
+      <h2>STUDENT SELECTION</h2>
+      <p id="duelSetupSubtitle">Create Team A and Team B. Students will play in the order shown.</p>
+      <div id="duelTeamInputs" class="duel-team-inputs"></div>
+      <div id="duelTempoPicker" class="duel-tempo-picker hidden">
+        <p>SELECT SONG TEMPO</p>
+        <div><button id="duelTempoSlowButton" type="button">SLOW <small>0.85×</small></button><button id="duelTempoNormalButton" type="button">NORMAL <small>1×</small></button></div>
+      </div>
+      <div id="duelModePicker" class="duel-tempo-picker hidden">
+        <p>SELECT QUESTION MODE</p>
+        <div><button id="duelModeNormalButton" type="button">NORMAL <small>1 QUESTION / 2 LINES</small></button><button id="duelModeFastButton" type="button">FAST PACED <small>1 QUESTION / LINE</small></button></div>
+      </div>
+      <p id="duelSetupMessage" class="duel-setup-message"></p>
+      <div class="duel-setup-actions">
+        <button id="duelRosterButton" class="secondary-button" type="button">👥 GET CLASS FROM ROSTER</button>
+        <button id="duelAddAButton" class="secondary-button" type="button">＋ TEAM A STUDENT</button>
+        <button id="duelAddBButton" class="secondary-button" type="button">＋ TEAM B STUDENT</button>
+        <button id="duelSetupStartButton" class="primary-button" type="button">START TEAM DUEL →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="duelRosterOverlay" class="duel-overlay hidden">
+    <div class="duel-modal duel-roster-modal">
+      <button id="duelRosterCloseButton" class="icon-button duel-modal-close" type="button">×</button>
+      <h2>CHOOSE A CLASS</h2>
+      <p>Present students will be balanced across Team A and Team B by their roster score.</p>
+      <div id="duelRosterClassList" class="duel-roster-class-list"></div>
+      <p id="duelRosterMessage" class="duel-setup-message"></p>
+    </div>
+  </div>
 
   <script src="toast.js"></script>
   <script src="songs.js"></script>
