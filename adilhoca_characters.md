@@ -128,6 +128,12 @@ Polite, thoughtful, responsible.
 Personality note:
 Kibar, dusunceli ve sorumluluk sahibi bir ogrenci.
 
+Hated activity:
+Hanging out in crowded places.
+
+Phobia:
+Crowded places.
+
 Favorite Food / Drink:
 - Favorite food: Salad
 - Favorite drink: Lemonade
@@ -199,6 +205,12 @@ Easy-going, laid-back, friendly, funny.
 
 Personality note:
 Rahat, arkadas canlisi ve komik bir ogrenci.
+
+Hated activity:
+Being in stressful competitions.
+
+Phobia:
+Thunderstorms.
 
 Favorite Food / Drink:
 - Favorite food: Hamburger
@@ -272,6 +284,12 @@ Sensitive, polite.
 Personality note:
 Duygulari kolay incinen ama kibar bir ogrenci.
 
+Hated activity:
+Watching horror movies.
+
+Phobia:
+Bugs.
+
 Favorite Food / Drink:
 - Favorite food: Cupcake
 - Favorite drink: Strawberry Milkshake
@@ -342,6 +360,12 @@ Clumsy, energetic, confident.
 Personality note:
 Enerjik, kendine guvenen ve bazen sakar bir ogrenci.
 
+Hated activity:
+Waiting in long lines.
+
+Phobia:
+Creatures and monsters.
+
 Favorite Food / Drink:
 - Favorite food: Pizza
 - Favorite drink: Tea
@@ -409,6 +433,12 @@ Honest, thoughtful, responsible, reliable.
 
 Personality note:
 Durust, dusunceli, sorumlu ve guvenilir bir ogrenci.
+
+Hated activity:
+People who tell lies.
+
+Phobia:
+Snakes and dentists.
 
 Favorite Food / Drink:
 - Favorite food: Grilled Fish
@@ -481,6 +511,12 @@ Cheerful, outgoing, sociable, forgetful.
 
 Personality note:
 Neseli, sosyal ve bazen unutkan bir ogrenci.
+
+Hated activity:
+Getting up early.
+
+Phobia:
+Dark.
 
 Character usage note:
 Ella can be used as a backup Music Club student when needed.
@@ -557,6 +593,12 @@ Friendly, helpful, generous, reliable.
 Personality note:
 Arkadas canlisi, yardimsever, comert ve guvenilir bir ogrenci.
 
+Hated activity:
+Fast rides.
+
+Phobia:
+High places and fast rides.
+
 Favorite Food / Drink:
 - Favorite food: Vegetable Soup
 - Favorite drink: Milk
@@ -626,6 +668,12 @@ Determined, punctual.
 
 Personality note:
 Kararli ve dakik bir ogrenci.
+
+Hated activity:
+Wasting time.
+
+Phobia:
+Failure.
 
 Favorite Food / Drink:
 - Favorite food: Steak
@@ -705,6 +753,12 @@ Adventurous, energetic, cheerful.
 Personality note:
 Maceraci, enerjik ve neseli bir ogrenci.
 
+Hated activity:
+Staying indoors.
+
+Phobia:
+Claustrophobia.
+
 Favorite Food / Drink:
 - Favorite food: Barbecue
 - Favorite drink: Iced Tea
@@ -774,6 +828,12 @@ Selfish, stubborn, patient.
 Personality note:
 Inatci, sabirli ve bazen bencil davranabilen bir ogrenci.
 
+Hated activity:
+Football.
+
+Phobia:
+Deep water.
+
 Favorite Food / Drink:
 - Favorite food: Sandwich
 - Favorite drink: Lemon Iced Tea
@@ -842,6 +902,12 @@ Determined, energetic.
 
 Personality note:
 Kararli ve enerjik bir ogrenci.
+
+Hated activity:
+Playing with unfair teammates.
+
+Phobia:
+Needles.
 
 Favorite Food / Drink:
 - Favorite food: Spaghetti
@@ -920,6 +986,12 @@ Shy, thoughtful.
 Personality note:
 Utangac ve dusunceli bir ogrenci.
 
+Hated activity:
+Speaking in a noisy crowd.
+
+Phobia:
+Horror movies.
+
 Favorite Food / Drink:
 - Favorite food: Chocolate Cookies
 - Favorite drink: Hot Chocolate
@@ -992,6 +1064,12 @@ Intelligent, hardworking.
 Personality note:
 Zeki ve caliskan bir ogrenci.
 
+Hated activity:
+Doing sports activities.
+
+Phobia:
+Chaos.
+
 Favorite Food / Drink:
 - Favorite food: Chicken Wrap
 - Favorite drink: Green Tea
@@ -1061,6 +1139,12 @@ Funny, creative.
 
 Personality note:
 Yaratici ve komik bir ogrenci.
+
+Hated activity:
+Rushing an art project.
+
+Phobia:
+Flight.
 
 Favorite Food / Drink:
 - Favorite food: Blueberry Pancakes
@@ -1134,6 +1218,12 @@ Intelligent, stingy.
 Personality note:
 Zeki ama bazen cimri davranabilen bir ogrenci.
 
+Hated activity:
+Reading books.
+
+Phobia:
+Making mistakes.
+
 Favorite Food / Drink:
 - Favorite food: Sushi
 - Favorite drink: Matcha Latte
@@ -1202,6 +1292,12 @@ Shy, thoughtful, patient.
 
 Personality note:
 Utangac, dusunceli ve sabirli bir ogrenci.
+
+Hated activity:
+Loud music and places.
+
+Phobia:
+Loud noises.
 
 Favorite Food / Drink:
 - Favorite food: Mushroom Pizza

@@ -4,6 +4,7 @@
 .test-question-label { margin:0; color:var(--yellow); font-size:clamp(14px,1.35vw,22px); font-weight:950; letter-spacing:.13em; text-align:center; }
 .test-question-line { margin:0; color:#f4f7ff; font-size:clamp(18px,1.9vw,30px); font-weight:800; line-height:1.34; }.test-question-line.has-portrait { display:flex; align-items:center; gap:clamp(12px,1.5vw,20px); }.test-question-portrait { flex:0 0 clamp(72px,6vw,99px); width:clamp(72px,6vw,99px); height:clamp(72px,6vw,99px); border:3px solid var(--yellow); border-radius:50%; object-fit:cover; background:#fff; }
 .test-question-line strong { color:var(--yellow); }
+.test-question-gap { color:var(--yellow); letter-spacing:.08em; }.test-question-spinner { display:inline-grid; width:.78em; height:.78em; margin:0 .1em; vertical-align:-.04em; place-items:center; }.test-question-spinner::after { width:.54em; height:.54em; border:.11em solid rgba(255,210,51,.28); border-top-color:var(--yellow); border-radius:50%; content:""; animation:testQuestionSpin .8s linear infinite; }@keyframes testQuestionSpin { to { transform:rotate(360deg); } }
 .test-question-statement { margin:0; color:#f4f7ff; font-size:clamp(25px,2.7vw,44px); font-weight:850; line-height:1.28; text-align:center; }
 .example-card.test-question-slide .sentence-panel { align-items:stretch; justify-content:center; padding:clamp(28px,4vw,58px); }
 .test-question { display:grid; gap:clamp(24px,3vw,42px); width:min(760px,100%); }

@@ -61,6 +61,8 @@ function renderExample() {
   clearPersonalityWordReveal();
   clearSuggestionDialogue();
   clearSequentialBoxes();
+  clearLikesDislikesIntro();
+  clearLikesDislikesPopup();
   clearFriendSorter();
   clearInvitationLetter();
   clearMessageComprehension();
@@ -80,6 +82,8 @@ function renderExample() {
   const isPersonalityWordReveal = Boolean(example.personalityWordReveal);
   const isSuggestionDialogue = Boolean(example.suggestionDialogue);
   const isSequentialBoxes = Boolean(example.sequentialBoxes);
+  const isLikesDislikesIntro = Boolean(example.likesDislikesIntro);
+  const isLikesDislikesPopup = Boolean(example.likesDislikesPopup);
   const isFriendSorter = Boolean(example.friendSorter);
   const isInvitationLetter = Boolean(example.invitationLetter);
   const isMessageComprehension = Boolean(example.messageComprehension);
@@ -87,7 +91,7 @@ function renderExample() {
   const noVisual = Boolean(example.noVisual);
   const focus = example.focus || example.article || "";
   const highlight = example.highlight || example.article;
-  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue
+  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || isLikesDislikesIntro || isLikesDislikesPopup
     ? ""
     : example.highlightSuffix
     ? example.sentence.replace(
@@ -112,17 +116,19 @@ function renderExample() {
   els.exampleCard.classList.toggle("personality-word-reveal-slide", isPersonalityWordReveal);
   els.exampleCard.classList.toggle("suggestion-dialogue-slide", isSuggestionDialogue);
   els.exampleCard.classList.toggle("sequential-boxes-slide", isSequentialBoxes);
+  els.exampleCard.classList.toggle("likes-dislikes-intro-slide", isLikesDislikesIntro);
+  els.exampleCard.classList.toggle("likes-dislikes-popup-slide", isLikesDislikesPopup);
   els.exampleCard.classList.toggle("friend-sorter-slide", isFriendSorter);
   els.exampleCard.classList.toggle("invitation-letter-slide", isInvitationLetter);
   els.exampleCard.classList.toggle("message-comprehension-slide", isMessageComprehension);
   els.exampleCard.classList.toggle("test-question-slide", isTestQuestion);
   els.exampleCard.classList.toggle("video-dialogue-slide", isVideoDialogue);
-  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual);
+  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual || isLikesDislikesIntro);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
   els.timePromptView.classList.toggle("hidden", !isTimePrompt);
   els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
-  els.presenceView.classList.toggle("hidden", !isPresenceSlide && !isVideoDialogue);
+  els.presenceView.classList.toggle("hidden", !isPresenceSlide && !isVideoDialogue && !isLikesDislikesIntro && !isLikesDislikesPopup);
   if (isTimePrompt) {
     els.timePromptDigital.textContent = example.digitalTime;
     els.timePromptAnswer.textContent = example.answerSentence;
@@ -130,14 +136,14 @@ function renderExample() {
     els.timeReveal.disabled = false;
   }
   [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
-    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide || isVideoDialogue));
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide || isVideoDialogue || isLikesDislikesIntro || isLikesDislikesPopup));
   els.article.textContent = focus ? focus.toUpperCase() : "";
   els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
-  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue);
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || isLikesDislikesIntro || isLikesDislikesPopup);
   els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
   els.timeQuestion.textContent = example.question || "";
   els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
-  els.sentence.innerHTML = isVideoDialogue ? "" : isTimetableSlide
+  els.sentence.innerHTML = isVideoDialogue || isLikesDislikesPopup ? "" : isTimetableSlide
     ? renderTimetableParts(example.questionParts || example.sentenceParts)
     : highlightedSentence;
   els.sentence.classList.toggle("long-phrase", !isVideoDialogue && (isTimetableSlide || (example.sentence?.length || 0) > 10));
@@ -150,7 +156,7 @@ function renderExample() {
   els.description.textContent = state.module.id === "a-an-the"
     ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
     : state.module.description;
-  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || !els.description.textContent);
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || isLikesDislikesIntro || isLikesDislikesPopup || !els.description.textContent);
   els.ruleNote.textContent = example.ruleNote || "";
   els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isVideoDialogue || !example.ruleNote);
   if (isTimetableSlide && example.answerParts) {
@@ -163,6 +169,8 @@ function renderExample() {
   if (isPersonalityWordReveal) renderPersonalityWordReveal(example);
   if (isSuggestionDialogue) renderSuggestionDialogue(example);
   if (isSequentialBoxes) renderSequentialBoxes(example);
+  if (isLikesDislikesIntro) renderLikesDislikesIntro(example);
+  if (isLikesDislikesPopup) renderLikesDislikesPopup(example);
   if (isFriendSorter) renderFriendSorter(example);
   if (isInvitationLetter) renderInvitationLetter(example);
   if (isMessageComprehension) renderMessageComprehension(example);
@@ -175,7 +183,7 @@ function renderExample() {
     const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
     renderPersonalityHubVisual(example, activeTrait);
   }
-  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isInvitationLetter && !isMessageComprehension && !isTestQuestion) {
+  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isLikesDislikesIntro && !isLikesDislikesPopup && !isInvitationLetter && !isMessageComprehension && !isTestQuestion) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");

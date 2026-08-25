@@ -128,11 +128,28 @@
         <h1>GREAT<br><em>JOB!</em></h1>
         <p id="completeSummary">You matched the words and filled the lyrics.</p>
         <section id="duelFinalScores" class="duel-final-scores hidden" aria-live="polite">
-          <p class="brand-kicker">FINAL SCORES</p>
-          <h2 id="duelFinalResult">TEAM A WINS!</h2>
-          <div id="duelFinalTeamLists" class="duel-final-team-lists"></div>
-          <p id="duelFinalTransferNote" class="duel-final-transfer-note"></p>
-          <button id="duelFinalTransferButton" class="primary-button" type="button" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
+          <div class="winner-wrapper">
+            <div class="winner-ann">
+              <div class="winner-crown-big">👑</div>
+              <div class="winner-title-big">WINNER!</div>
+              <div id="duelFinalResult" class="winner-ann-group">TEAM A WINS!</div>
+              <div id="duelFinalWinnerPoints" class="winner-ann-pts">0</div>
+              <div class="winner-ann-sub">points</div>
+              <div id="duelFinalScoreSummary" class="winner-ann-all"></div>
+              <p id="duelFinalTransferNote" class="duel-final-transfer-note"></p>
+              <button id="duelFinalTransferButton" class="winner-transfer-stars" type="button" hidden>⭐ YILDIZLARI PUANA AKTAR</button>
+            </div>
+            <div class="winner-scores-section">
+              <div class="sp-left">
+                <div class="sp-left-title">🏆 High Scores</div>
+                <div id="duelFinalHighScores"></div>
+              </div>
+              <div class="sp-right">
+                <div class="sp-right-title">Team Details</div>
+                <div id="duelFinalTeamLists" class="sg-grid two-groups"></div>
+              </div>
+            </div>
+          </div>
         </section>
         <div class="complete-actions">
           <button id="restartButton" class="secondary-button">REPLAY THIS SONG</button>

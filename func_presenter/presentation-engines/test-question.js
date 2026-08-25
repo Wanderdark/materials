@@ -20,7 +20,20 @@ function playTestQuestionSound(isCorrect) {
 function getTestQuestionPortrait(speaker) {
   const name = String(speaker || "").trim().toLowerCase();
   const characterNames = new Set(["ava", "benjamin", "chloe", "daniel", "david", "ella", "emma", "ethan", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"]);
-  return characterNames.has(name) ? `images/dialogue/${name}_front.webp` : "";
+  return characterNames.has(name) ? `../olivias_movie_memories/assets/portraits/${name}.webp` : "";
+}
+
+function appendTestQuestionLineText(container, lineText) {
+  String(lineText || "").split(/(_{2,})/g).forEach((part) => {
+    if (/^_{2,}$/.test(part)) {
+      const gap = document.createElement("span");
+      gap.className = "test-question-gap test-question-spinner";
+      gap.setAttribute("aria-label", "Missing expression");
+      container.append(gap);
+      return;
+    }
+    container.append(document.createTextNode(part));
+  });
 }
 
 function renderTestQuestion(example) {
@@ -37,7 +50,12 @@ function renderTestQuestion(example) {
   els.presenceView.append(question);
   els.exampleCard.classList.add("test-question-active");
 
-  const statements = isClassificationQuiz ? shuffleTestQuestionChoices(data.statements || []) : [data];
+  const hasQuestionSequence = !isClassificationQuiz && Array.isArray(data.questions) && data.questions.length > 0;
+  const statements = isClassificationQuiz
+    ? shuffleTestQuestionChoices(data.statements || [])
+    : hasQuestionSequence
+      ? data.questions
+      : [data];
   let questionIndex = 0;
   const renderCurrentQuestion = () => {
     document.getElementById("testQuestionPrompt")?.remove();
@@ -47,7 +65,7 @@ function renderTestQuestion(example) {
     prompt.className = "test-question-prompt";
     const label = document.createElement("p");
     label.className = "test-question-label";
-    label.textContent = data.promptLabel || "COMPLETE THE DIALOGUE";
+    label.textContent = current.promptLabel || data.promptLabel || "COMPLETE THE DIALOGUE";
     if (!isClassificationQuiz) prompt.append(label);
     if (isClassificationQuiz) {
       const statement = document.createElement("p");
@@ -55,7 +73,7 @@ function renderTestQuestion(example) {
       statement.textContent = current.text;
       prompt.append(statement);
     } else {
-      (data.lines || []).forEach((line) => {
+      (current.lines || []).forEach((line) => {
         const dialogueLine = document.createElement("p");
         const portrait = line.speakerImage || getTestQuestionPortrait(line.speaker);
         dialogueLine.className = `test-question-line ${portrait ? "has-portrait" : ""}`;
@@ -69,7 +87,8 @@ function renderTestQuestion(example) {
         const text = document.createElement("span");
         const speaker = document.createElement("strong");
         speaker.textContent = `${line.speaker}:`;
-        text.append(speaker, ` ${line.text}`);
+        text.append(speaker, " ");
+        appendTestQuestionLineText(text, line.text);
         dialogueLine.append(text);
         prompt.append(dialogueLine);
       });
@@ -81,7 +100,8 @@ function renderTestQuestion(example) {
     const options = document.createElement("div");
     options.className = "test-question-options";
     let firstAttempt = true;
-    const choices = data.randomizeChoices === false ? [...(data.choices || [])] : shuffleTestQuestionChoices(data.choices || []);
+    const choiceList = current.choices || data.choices || [];
+    const choices = current.randomizeChoices === false || data.randomizeChoices === false ? [...choiceList] : shuffleTestQuestionChoices(choiceList);
     choices.forEach((choice, index) => {
       const option = document.createElement("button");
       option.type = "button";
@@ -104,13 +124,14 @@ function renderTestQuestion(example) {
         option.classList.add("correct");
         if (firstAttempt) window.StudentGame?.onCorrect();
         window.TeacherControl?.onCorrect();
-        if (isClassificationQuiz) {
+        if (isClassificationQuiz || hasQuestionSequence) {
           const nextButton = document.createElement("button");
           nextButton.type = "button";
           nextButton.className = "primary-button test-question-next";
-          nextButton.textContent = questionIndex === statements.length - 1 ? "CONTINUE" : "NEXT SENTENCE";
+          const isLastQuestion = questionIndex === statements.length - 1;
+          nextButton.textContent = isLastQuestion ? "CONTINUE" : isClassificationQuiz ? "NEXT SENTENCE" : "NEXT QUESTION";
           nextButton.addEventListener("click", () => {
-            if (questionIndex === statements.length - 1) next();
+            if (isLastQuestion) next();
             else {
               questionIndex += 1;
               renderCurrentQuestion();

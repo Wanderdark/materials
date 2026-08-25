@@ -824,9 +824,256 @@ window.SONGS = [
       { from: "1:44.856", to: "1:49.727", text: "Every country has one too.", training: { target: "one", choices: ["one", "national days", "flag", "friends"] } },]
   },
 
+/* ── GRADE 5 UNIT 2 - SCHOOL DAYS ───────────────────────────────────── */
+  {
+    id: "5_2_schooldays",
+    title: "School Days",
+    artist: "Grade5",
+    audio: "songs/5_2_schooldays.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_2_schooldays.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
 
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
 
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
 
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "Science",    tr: "Fen",          image: "images/science.webp" },
+      { word: "timetable",   tr: "ders programı",         image: "images/timetable.webp" },
+      { word: "ruler",  tr: "cetvel",      image: "images/ruler.webp" },
+      { word: "Arts", tr: "Görsel sanatlar",        image: "images/arts.webp" },
+      { word: "Weekend",  tr: "haftasonu",     image: "images/weekend.webp" },
+      { word: "School bag",   tr: "okul çantası", image: "images/schoolbag.webp" },
+      { word: "P.E.",  tr: "Beden eğitimi",           image: "images/pe.webp" },
+      { word: "I.T.",   tr: "Bilişim teknolojileri",         image: "images/it.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:00.428", to: "0:04.022", text: "Monday morning, Maths will start,", training: { target: "Maths", choices: ["Maths", "Music", "Science", "paths"] } },
+      { from: "0:05.110", to: "0:08.566", text: "Tuesday, English, then some <Arts>.", training: { target: "Arts", choices: ["Arts", "Music", "English", "hearts"] } },
+      { from: "0:09.999", to: "0:13.112", text: "Wednesday, <Science>, books in sight,", training: { target: "Science", choices: ["Science", "English", "Maths", "silence"] } },
+      { from: "0:14.431", to: "0:17.647", text: "Read my notebook, write it right.", training: { target: "right", choices: ["right", "notebook", "read", "flight"] } },
+      { from: "0:18.791", to: "0:21.575", text: "Monday morning, Maths will start,", training: { target: "Monday", choices: ["Monday", "Tuesday", "Friday", "someday"] } },
+      { from: "0:22.919", to: "0:26.391", text: "Tuesday, English, then some <Arts>.", training: { target: "English", choices: ["English", "Turkish", "Arts", "finish"] } },
+      { from: "0:27.743", to: "0:30.990", text: "Wednesday, <Science>, books in sight,", training: { target: "books", choices: ["books", "Science", "Maths", "looks"] } },
+      { from: "0:32.221", to: "0:35.493", text: "Read my notebook, write it right.", training: { target: "notebook", choices: ["notebook", "ruler", "pencil", "cookbook"] } },
+      { from: "0:36.666", to: "0:40.281", text: "Check my <timetable>, come and see,", training: { target: "timetable", choices: ["timetable", "notebook", "ruler", "fairytale"] } },
+      { from: "0:41.278", to: "0:44.766", text: "Maths and <Science>, time for <P.E.>", training: { target: "P.E.", choices: ["P.E.", "I.T.", "Science", "T.V."] } },
+      { from: "0:45.814", to: "0:49.246", text: "Music, English, <Arts> and <I.T.>,", training: { target: "I.T.", choices: ["I.T.", "P.E.", "Arts", "E.T."] } },
+      { from: "0:50.382", to: "0:53.710", text: "That's my school week, now come with me!", training: { target: "school", choices: ["school", "week", "Music", "pool"] } },
+      { from: "0:55.526", to: "0:57.606", text: "Thursday, Turkish, read and write,", training: { target: "write", choices: ["write", "read", "Turkish", "flight"] } },
+      { from: "0:57.893", to: "1:00.085", text: "Friday, Music feels just right.", training: { target: "right", choices: ["right", "Music", "Friday", "flight"] } },
+      { from: "1:00.188", to: "1:02.108", text: "Pencil, <ruler>, book in hand,", training: { target: "ruler", choices: ["ruler", "pencil", "book", "cooler"] } },
+      { from: "1:02.388", to: "1:04.292", text: "<School bag> ready, now I stand.", training: { target: "stand", choices: ["stand", "ready", "School bag", "land"] } },
+      { from: "1:04.155", to: "1:07.291", text: "Check my <timetable>, come and see,", training: { target: "come", choices: ["come", "see", "Check", "drum"] } },
+      { from: "1:08.435", to: "1:11.651", text: "Maths and <Science>, time for <P.E.>", training: { target: "Science", choices: ["Science", "Maths", "P.E.", "silence"] } },
+      { from: "1:13.011", to: "1:16.315", text: "Music, English, <Arts> and <I.T.>,", training: { target: "Arts", choices: ["Arts", "Music", "English", "hearts"] } },
+      { from: "1:16.809", to: "1:20.808", text: "That's my school week, now come with me!", training: { target: "week", choices: ["week", "school", "Music", "cheek"] } },
+      { from: "1:22.608", to: "1:24.448", text: "Monday, Tuesday, Wednesday flow,", training: { target: "flow", choices: ["flow", "Monday", "Wednesday", "snow"] } },
+      { from: "1:25.032", to: "1:26.848", text: "Thursday, Friday, off we go.", training: { target: "go", choices: ["go", "Friday", "Thursday", "snow"] } },
+      { from: "1:27.296", to: "1:29.890", text: "Saturday and Sunday we play,", training: { target: "play", choices: ["play", "Sunday", "Saturday", "grey"] } },
+      { from: "1:31.216", to: "1:35.728", text: "<Weekend> time is here to stay!", training: { target: "stay", choices: ["stay", "Weekend", "time", "sleigh"] } },
+      { from: "1:35.730", to: "1:38.970", text: "Check my <timetable>, come and see,", training: { target: "see", choices: ["see", "come", "Check", "tea"] } },
+      { from: "1:40.066", to: "1:43.299", text: "Maths and <Science>, time for <P.E.>", training: { target: "Maths", choices: ["Maths", "Science", "P.E.", "paths"] } },
+      { from: "1:44.554", to: "1:47.970", text: "Music, English, <Arts> and <I.T.>,", training: { target: "English", choices: ["English", "Arts", "Music", "finish"] } },
+      { from: "1:48.842", to: "1:52.378", text: "That's my school week, now come with me!", training: { target: "come", choices: ["come", "school", "week", "drum"] } },
+      { from: "1:52.914", to: "1:56.042", text: "Check my <timetable>, come and see,", training: { target: "Check", choices: ["Check", "come", "see", "deck"] } },
+      { from: "1:57.130", to: "2:00.578", text: "Maths and <Science>, time for <P.E.>", training: { target: "time", choices: ["time", "Maths", "Science", "rhyme"] } },
+      { from: "2:01.576", to: "2:05.072", text: "Music, English, <Arts> and <I.T.>,", training: { target: "Music", choices: ["Music", "English", "Arts", "mystic"] } },
+      { from: "2:06.272", to: "2:09.555", text: "That's my school week, now come with me!", training: { target: "me", choices: ["me", "school", "week", "sea"] } },]
+  },
+
+/* ── GRADE 5 UNIT 2 - A DAY IN MY LIFE ───────────────────────────────────── */
+  {
+    id: "5_2_adayinmylife",
+    title: "A Day In My Life",
+    artist: "Grade5",
+    audio: "songs/5_2_adayinmylife.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_2_adayinmylife.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "get up",    tr: "uyanmak",          image: "images/get_up.webp" },
+      { word: "Quarter past",   tr: "çeyrek geçe",         image: "images/quarter_past.webp" },
+      { word: "Breakfast",  tr: "kahvaltı",      image: "images/breakfast.webp" },
+      { word: "Half past", tr: "buçuk geçe",        image: "images/half_past.webp" },
+      { word: "seat",  tr: "sıra",     image: "images/seat.webp" },
+      { word: "Quarter to",   tr: "çeyrek kala", image: "images/quarter_to.webp" },
+      { word: "dinner",  tr: "akşam yemeği",           image: "images/dinner.webp" },
+      { word: "bright",   tr: "parlak",         image: "images/bright.webp" }
+    ],
+
+    lyrics: [
+      { from: "0:09.071", to: "0:10.433", text: "What time is it?", training: { target: "What", choices: ["What", "When", "Where", "hot"] } },
+      { from: "0:11.051", to: "0:12.455", text: "Seven o'clock,", training: { target: "Seven", choices: ["Seven", "Eight", "Nine", "heaven"] } },
+      { from: "0:13.277", to: "0:14.333", text: "I <get up>", training: { target: "get up", choices: ["get up", "sit down", "go home", "fed up"] } },
+      { from: "0:14.519", to: "0:16.409", text: "And check the clock.", training: { target: "clock", choices: ["clock", "book", "ruler", "rock"] } },
+      { from: "0:16.787", to: "0:18.965", text: "<Quarter past> seven", training: { target: "Quarter past", choices: ["Quarter past", "Quarter to", "Half past", "quarter glass"] } },
+      { from: "0:19.133", to: "0:20.531", text: "<Breakfast> time,", training: { target: "Breakfast", choices: ["Breakfast", "dinner", "homework", "fast test"] } },
+      { from: "0:21.149", to: "0:22.169", text: "Eight o'clock,", training: { target: "Eight", choices: ["Eight", "Seven", "Ten", "weight"] } },
+      { from: "0:22.517", to: "0:24.551", text: "I feel just fine.", training: { target: "fine", choices: ["fine", "full", "bright", "wine"] } },
+      { from: "0:24.755", to: "0:25.853", text: "What time is it?", training: { target: "time", choices: ["time", "clock", "school", "rhyme"] } },
+      { from: "0:26.399", to: "0:27.881", text: "Look and see,", training: { target: "Look", choices: ["Look", "Tell", "Read", "book"] } },
+      { from: "0:28.277", to: "0:29.873", text: "Tell the time", training: { target: "Tell", choices: ["Tell", "Look", "Read", "bell"] } },
+      { from: "0:30.023", to: "0:31.943", text: "And sing with me.", training: { target: "sing", choices: ["sing", "tell", "look", "wing"] } },
+      { from: "0:32.153", to: "0:33.605", text: "<Half past> eight,", training: { target: "Half past", choices: ["Half past", "Quarter past", "Quarter to", "hall pass"] } },
+      { from: "0:33.878", to: "0:35.834", text: "I leave for school,", training: { target: "leave", choices: ["leave", "come", "read", "weave"] } },
+      { from: "0:36.176", to: "0:39.518", text: "Learning there", training: { target: "Learning", choices: ["Learning", "Breakfast", "homework", "yearning"] } },
+      { from: "0:39.884", to: "0:41.708", text: "Is really cool!", training: { target: "cool", choices: ["cool", "bright", "fine", "school"] } },
+      { from: "0:45.236", to: "0:48.713", text: "Nine o'clock, I'm at my <seat>,", training: { target: "seat", choices: ["seat", "ruler", "clock", "street"] } },
+      { from: "0:49.043", to: "0:50.580", text: "<Half past> twelve,", training: { target: "twelve", choices: ["twelve", "nine", "four", "shelves"] } },
+      { from: "0:50.729", to: "0:53.015", text: "It's time to eat.", training: { target: "eat", choices: ["eat", "read", "sleep", "seat"] } },
+      { from: "0:53.171", to: "0:54.461", text: "<Quarter to> four,", training: { target: "Quarter to", choices: ["Quarter to", "Quarter past", "Half past", "water"] } },
+      { from: "0:55.018", to: "0:56.470", text: "School is done,", training: { target: "done", choices: ["done", "fun", "school", "sun"] } },
+      { from: "0:57.178", to: "0:58.402", text: "Four o'clock,", training: { target: "Four", choices: ["Four", "Nine", "Ten", "floor"] } },
+      { from: "0:58.551", to: "1:00.574", text: "It's time for fun.", training: { target: "fun", choices: ["fun", "done", "homework", "sun"] } },
+      { from: "1:00.747", to: "1:01.839", text: "What time is it?", training: { target: "is", choices: ["is", "it", "time", "quiz"] } },
+      { from: "1:02.225", to: "1:03.797", text: "Look and see,", training: { target: "see", choices: ["see", "look", "tell", "tea"] } },
+      { from: "1:04.277", to: "1:05.825", text: "Tell the time", training: { target: "the", choices: ["the", "time", "tell", "tree"] } },
+      { from: "1:06.065", to: "1:07.967", text: "And sing with me.", training: { target: "with", choices: ["with", "sing", "me", "myth"] } },
+      { from: "1:08.153", to: "1:09.653", text: "<Quarter to> five,", training: { target: "five", choices: ["five", "four", "nine", "drive"] } },
+      { from: "1:10.193", to: "1:11.609", text: "Fun is done,", training: { target: "Fun", choices: ["Fun", "School", "Time", "sun"] } },
+      { from: "1:12.154", to: "1:14.122", text: "Time for homework,", training: { target: "homework", choices: ["homework", "Breakfast", "dinner", "classwork"] } },
+      { from: "1:16.180", to: "1:17.632", text: "Here I come!", training: { target: "Here", choices: ["Here", "There", "School", "cheer"] } },
+      { from: "1:21.328", to: "1:22.768", text: "<Half past> six,", training: { target: "six", choices: ["six", "five", "ten", "mix"] } },
+      { from: "1:23.122", to: "1:25.211", text: "It's <dinner> time,", training: { target: "dinner", choices: ["dinner", "Breakfast", "homework", "winner"] } },
+      { from: "1:25.328", to: "1:26.450", text: "Belly full,", training: { target: "Belly", choices: ["Belly", "Breakfast", "dinner", "jelly"] } },
+      { from: "1:26.654", to: "1:29.270", text: "I feel just fine.", training: { target: "feel", choices: ["feel", "fine", "full", "meal"] } },
+      { from: "1:29.338", to: "1:30.754", text: "<Quarter past> nine,", training: { target: "nine", choices: ["nine", "seven", "eight", "vine"] } },
+      { from: "1:31.401", to: "1:32.554", text: "Read at night,", training: { target: "night", choices: ["night", "light", "read", "kite"] } },
+      { from: "1:33.328", to: "1:34.540", text: "Ten o'clock,", training: { target: "Ten", choices: ["Ten", "Nine", "Four", "pen"] } },
+      { from: "1:34.738", to: "1:36.820", text: "Turn off the light.", training: { target: "Turn", choices: ["Turn", "Read", "Tell", "learn"] } },
+      { from: "1:36.673", to: "1:37.736", text: "What time is it?", training: { target: "it", choices: ["it", "is", "What", "bit"] } },
+      { from: "1:38.325", to: "1:39.669", text: "Look and see,", training: { target: "and", choices: ["and", "Look", "see", "hand"] } },
+      { from: "1:40.221", to: "1:41.757", text: "Tell the time", training: { target: "time", choices: ["time", "Tell", "the", "rhyme"] } },
+      { from: "1:41.925", to: "1:43.923", text: "And sing with me.", training: { target: "me", choices: ["me", "sing", "with", "sea"] } },
+      { from: "1:44.133", to: "1:45.369", text: "Ten o'clock,", training: { target: "o'clock", choices: ["o'clock", "time", "school", "rock"] } },
+      { from: "1:45.981", to: "1:47.626", text: "The stars are <bright>,", training: { target: "bright", choices: ["bright", "stars", "night", "kite"] } },
+      { from: "1:48.142", to: "1:49.666", text: "Time for bed,", training: { target: "bed", choices: ["bed", "dinner", "school", "head"] } },
+      { from: "1:50.003", to: "1:52.834", text: "So say good night!", training: { target: "good", choices: ["good", "night", "bright", "wood"] } },
+      { from: "1:52.954", to: "1:53.843", text: "What time is it?", training: { target: "What time", choices: ["What time", "Look and see", "Tell the time", "bedtime"] } },
+      { from: "1:54.209", to: "1:55.823", text: "Look and see,", training: { target: "Look and see", choices: ["Look and see", "Tell the time", "Sing with me", "book and tea"] } },
+      { from: "1:56.285", to: "1:57.792", text: "Tell the time", training: { target: "Tell the time", choices: ["Tell the time", "Look and see", "Sing with me", "bell and rhyme"] } },
+      { from: "1:57.892", to: "1:59.800", text: "And sing with me.", training: { target: "And sing", choices: ["And sing", "Look and see", "Tell the time", "hand wing"] } },
+      { from: "2:00.184", to: "2:01.432", text: "Ten o'clock,", training: { target: "Ten o'clock", choices: ["Ten o'clock", "Eight o'clock", "Seven o'clock", "pen and rock"] } },
+      { from: "2:02.044", to: "2:03.586", text: "The stars are <bright>,", training: { target: "stars", choices: ["stars", "bright", "night", "cars"] } },
+      { from: "2:04.161", to: "2:07.551", text: "Time for bed,", training: { target: "Time for", choices: ["Time for", "School is", "Fun is", "rhyme door"] } },
+      { from: "2:07.917", to: "2:10.191", text: "So say good night!", training: { target: "night", choices: ["night", "bright", "good", "kite"] } },]
+  },
+
+/* ── GRADE 5 UNIT 3 - ME IN EVERY WAY ───────────────────────────────────── */
+  {
+    id: "5_3_meineveryway",
+    title: "Me in Every Way",
+    artist: "Grade5",
+    audio: "songs/5_3_meineveryway.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_3_meineveryway.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "nose",    tr: "burun",          image: "images/nose.webp" },
+      { word: "curly",   tr: "kıvırcık",         image: "images/curly.webp" },
+      { word: "straight",  tr: "düz",      image: "images/straight.webp" },
+      { word: "round", tr: "yuvarlak",        image: "images/round.webp" },
+      { word: "clothes",  tr: "kıyafetler",     image: "images/clothes.webp" },
+      { word: "blonde",   tr: "sarışın", image: "images/blonde.webp" },
+      { word: "long",  tr: "uzun",           image: "images/long.webp" },
+      { word: "eye",   tr: "göz",         image: "images/eye.webp" }
+    ],
+
+    lyrics: [
+
+      { from: "0:00.831", to: "0:04.487", text: "My hair is <long>, my eyes are blue,", training: { target: "long", choices: ["long", "short", "straight", "wrong"] } },
+      { from: "0:05.165", to: "0:08.489", text: "I've got a little <nose> here too.", training: { target: "nose", choices: ["nose", "eyes", "mouth", "goes"] } },
+      { from: "0:09.201", to: "0:12.433", text: "My hair is <curly>, soft and bright,", training: { target: "curly", choices: ["curly", "straight", "long", "early"] } },
+      { from: "0:13.057", to: "0:16.425", text: "My <eye>s are shining in the light.", training: { target: "eyes", choices: ["eyes", "hair", "nose", "rise"] } },
+      { from: "0:17.041", to: "0:20.353", text: "My hair is short, my eyes are brown,", training: { target: "short", choices: ["short", "long", "curly", "sport"] } },
+      { from: "0:21.153", to: "0:24.377", text: "My <straight> black hair falls softly down.", training: { target: "straight", choices: ["straight", "curly", "round", "great"] } },
+      { from: "0:24.881", to: "0:28.385", text: "I've got a <round> and cheerful face,", training: { target: "round", choices: ["round", "square", "long", "sound"] } },
+      { from: "0:28.656", to: "0:32.248", text: "My smile can brighten any place.", training: { target: "smile", choices: ["smile", "face", "eyes", "style"] } },
+      { from: "0:33.116", to: "0:36.532", text: "Look at me now, what can you see?", training: { target: "look", choices: ["look", "see", "hear", "foot"] } },
+      { from: "0:37.028", to: "0:40.380", text: "All my features are part of me.", training: { target: "features", choices: ["features", "clothes", "hair", "creatures"] } },
+      { from: "0:40.940", to: "0:44.348", text: "The <clothes> I wear can change each day,", training: { target: "clothes", choices: ["clothes", "shoes", "jackets", "shows"] } },
+      { from: "0:44.877", to: "0:49.125", text: "But I am me in every way.", training: { target: "way", choices: ["way", "day", "style", "maze"] } },
+      { from: "0:52.813", to: "0:56.206", text: "Today a red T-shirt I wear,", training: { target: "today", choices: ["today", "tomorrow", "yesterday", "away"] } },
+      { from: "0:56.219", to: "1:00.003", text: "Next day it's white, I do not care.", training: { target: "white", choices: ["white", "red", "blue", "night"] } },
+      { from: "1:00.274", to: "1:04.035", text: "Sometimes I like to change my style,", training: { target: "style", choices: ["style", "clothes", "hair", "while"] } },
+      { from: "1:04.259", to: "1:08.010", text: "But I never wear a fake smile.", training: { target: "fake", choices: ["fake", "real", "true", "ache"] } },
+      { from: "1:08.914", to: "1:12.090", text: "Look at me now, what can you see?", training: { target: "see", choices: ["see", "look", "me", "sea"] } },
+      { from: "1:12.514", to: "1:15.802", text: "All my features are part of me.", training: { target: "part", choices: ["part", "features", "hair", "heart"] } },
+      { from: "1:16.313", to: "1:19.568", text: "The <clothes> I wear can change each day,", training: { target: "wear", choices: ["wear", "clothes", "shirt", "there"] } },
+      { from: "1:20.465", to: "1:24.776", text: "But I am me in every way.", training: { target: "every", choices: ["every", "way", "day", "heavy"] } },
+      { from: "1:40.240", to: "1:43.464", text: "Her hair is <blonde>, her jacket's blue,", training: { target: "blonde", choices: ["blonde", "brown", "black", "pond"] } },
+      { from: "1:44.048", to: "1:47.496", text: "His eyes are green, his shirt is new.", training: { target: "shirt", choices: ["shirt", "jacket", "trousers", "dirt"] } },
+      { from: "1:48.144", to: "1:51.536", text: "Her shoes are white, his jeans are gray,", training: { target: "shoes", choices: ["shoes", "jeans", "shirt", "news"] } },
+      { from: "1:52.040", to: "1:55.520", text: "Different styles from day to day.", training: { target: "different", choices: ["different", "same", "unique", "distant"] } },
+      { from: "1:55.984", to: "1:59.472", text: "Look at me now, what can you see?", training: { target: "me", choices: ["me", "you", "look", "sea"] } },
+      { from: "2:03.163", to: "2:03.109", text: "All my features are part of me.", training: { target: "all my", choices: ["all my", "features", "part", "fall by"] } },
+      { from: "2:03.557", to: "2:06.789", text: "My clothes may change from day to day,", training: { target: "change", choices: ["change", "clothes", "style", "strange"] } },
+      { from: "2:07.465", to: "2:11.889", text: "But I am me in every way.", training: { target: "me", choices: ["me", "way", "every", "sea"] } },
+      { from: "2:12.161", to: "2:15.161", text: "Look at me now, what can you see?", training: { target: "you", choices: ["you", "me", "see", "blue"] } },
+      { from: "2:15.641", to: "2:18.817", text: "All my features are part of me.", training: { target: "of me", choices: ["of me", "features", "part", "on sea"] } },
+      { from: "2:19.049", to: "2:22.954", text: "My <clothes> may change from day to day,", training: { target: "day", choices: ["day", "clothes", "change", "maze"] } },
+      { from: "2:23.369", to: "2:27.746", text: "But I am me in every way.", training: { target: "every way", choices: ["every way", "me", "day", "heavy maze"] } },
+
+  ]
+  },
 
   /* ── YENİ ŞARKI EKLEMEK İÇİN ────────────────────────────────────────
      Yukarıdaki bloğu kopyala, virgülle ayırarak buraya yapıştır,
@@ -890,7 +1137,24 @@ const PHONETIC_DISTRACTORS = Object.freeze({
   "national": "festival", "country": "laundry", "japan": "a fan", "three": "free",
   "canada": "camera", "germany": "journey", "south korea": "story area",
   "flag": "bag", "way": "maze", "friends": "ends", "day": "maze", "days": "phase",
-  "one": "phone"
+  "one": "phone", "maths": "paths", "arts": "hearts", "science": "silence",
+  "timetable": "fairytale", "p.e.": "t.v.", "i.t.": "e.t.", "write": "flight",
+  "ruler": "cooler", "flow": "snow", "go": "snow", "play": "grey", "stay": "sleigh",
+  "comes": "drums", "around": "sound", "follow": "hollow", "leave": "weave",
+  "tomorrow": "sorrow", "tree": "free", "shake": "cake", "page": "stage",
+  "send": "bend", "another": "mother", "children": "kitchen", "pay": "day",
+  "room": "moon", "voice": "noise", "times": "rhymes", "keep": "sleep",
+  "different": "distant", "celebrate": "separate", "me": "sea", "you": "blue",
+  "by": "sky", "no pretending": "slow defending", "no forced dreams": "new forest scenes",
+  "you're": "fur", "you're not": "pure thought", "that": "cat",
+  "so leave us": "slow believers", "we're": "fur", "every tree": "heavy plea",
+  "then send": "ten bends", "pay price": "day advice", "pay the price": "day advice",
+  "long": "wrong", "nose": "goes", "curly": "early", "eyes": "rise",
+  "short": "sport", "straight": "great", "round": "sound", "look": "foot",
+  "features": "creatures", "clothes": "shows", "wear": "there", "white": "night",
+  "style": "while", "fake": "ache", "part": "heart", "blonde": "pond",
+  "shirt": "dirt", "shoes": "news", "all my": "fall by", "change": "strange",
+  "of me": "on sea", "every way": "heavy maze"
 });
 
 const VISUALLY_DISTINCT_PHONETIC_DISTRACTORS = Object.freeze({
@@ -942,3 +1206,83 @@ window.SONGS.forEach((song) => {
     training.choices[3] = phonetic;
   });
 });
+
+/* Aynı lyric satırı tekrarlandığında tek bir hedefe takılı kalmasın.
+   Son iki Grade 5 şarkısının training akışı elle düzenlendiği için korunur. */
+const REPEATED_LINE_TRAINING_EXCLUSIONS = new Set([
+  "5_2_schooldays",
+  "5_2_adayinmylife",
+  "5_3_meineveryway"
+]);
+
+function getPhoneticDistractor(target) {
+  const normalizedTarget = String(target).toLowerCase();
+  return VISUALLY_DISTINCT_PHONETIC_DISTRACTORS[normalizedTarget]
+    || PHONETIC_DISTRACTORS[normalizedTarget]
+    || "";
+}
+
+function getRepeatLineKey(text) {
+  return String(text || "")
+    .replace(/[<>]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getRepeatLineTargets(line) {
+  const cleanText = getRepeatLineKey(line.text);
+  const words = cleanText.match(/[a-z]+(?:'[a-z]+)?/g) || [];
+  const candidates = [String(line.training?.target || "").toLowerCase()];
+
+  for (let size = 1; size <= Math.min(3, words.length); size++) {
+    for (let start = 0; start <= words.length - size; start++) {
+      candidates.push(words.slice(start, start + size).join(" "));
+    }
+  }
+
+  return [...new Set(candidates)].filter((target) => {
+    const phonetic = getPhoneticDistractor(target);
+    return phonetic && !areVisuallyTooSimilar(target, phonetic);
+  });
+}
+
+function applyRepeatedLineTrainingTargets(song) {
+  if (REPEATED_LINE_TRAINING_EXCLUSIONS.has(song.id)) return;
+
+  const repeatedLines = new Map();
+  (song.lyrics || []).forEach((line) => {
+    if (!line?.training?.target || !Array.isArray(line.training.choices)) return;
+    const key = getRepeatLineKey(line.text);
+    const group = repeatedLines.get(key) || [];
+    group.push(line);
+    repeatedLines.set(key, group);
+  });
+
+  repeatedLines.forEach((lines) => {
+    if (lines.length < 2) return;
+    const targets = getRepeatLineTargets(lines[0]);
+    if (targets.length < 2) return;
+
+    lines.forEach((line, index) => {
+      const target = targets[index % targets.length];
+      const phonetic = getPhoneticDistractor(target);
+      const previousChoices = line.training.choices.map((choice) => String(choice));
+      const choices = [target, phonetic];
+
+      previousChoices.forEach((choice) => {
+        if (choices.length >= 4) return;
+        if (!choices.some((item) => item.toLowerCase() === choice.toLowerCase())) choices.push(choice);
+      });
+      targets.forEach((choice) => {
+        if (choices.length >= 4) return;
+        if (!choices.some((item) => item.toLowerCase() === choice.toLowerCase())) choices.push(choice);
+      });
+
+      line.training.target = target;
+      line.training.choices = choices.slice(0, 4);
+    });
+  });
+}
+
+window.SONGS.forEach(applyRepeatedLineTrainingTargets);
