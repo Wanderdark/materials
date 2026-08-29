@@ -228,11 +228,16 @@
     els.complete.classList.toggle("hidden", name !== "complete");
   }
 
+  function updateStudentTrainingVideoLayout() {
+    els.stages[2].classList.toggle("student-training-audio-only", isStudentMode && !videoSrc);
+  }
+
   function setStage(n) {
     stage = n;
     els.stages.forEach((s, i) => s.classList.toggle("hidden", i !== n));
     els.activity.classList.toggle("duel-stage", n === 2 && !isStudentMode);
     els.duelScoreboard.classList.toggle("hidden", n !== 2 || !duelReady);
+    updateStudentTrainingVideoLayout();
     els.prevButton.classList.toggle("invisible", n === 0);
     els.nextButton.textContent = n === 2 ? "FINISH ✓" : "NEXT →";
     els.nextButton.disabled = n === 2 && !stageDone[2];
@@ -291,7 +296,8 @@
     if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
     duelReadyOverlayTimer = null;
     renderDuelReadyTeams();
-    els.duelReadyOverlay.classList.remove("hidden");
+    els.duelReadyOverlay.classList.toggle("hidden", isStudentMode);
+    els.duelReadyOverlay.classList.remove("duel-intro");
     els.duelScoreboard.classList.add("hidden");
     els.duelFinalScores.classList.add("hidden");
   }
@@ -1273,10 +1279,23 @@
     };
     const thisSong = song; // probe geç dönerse şarkı değişmiş olabilir
     videoSrc = null;
+    updateStudentTrainingVideoLayout();
     els.videoButton.disabled = true;
     probeFor(getVideoCandidates(song), (src) => {
       if (song !== thisSong) return;
       videoSrc = src;
+      updateStudentTrainingVideoLayout();
+      if (isStudentMode && stage === 2 && trainingStarted && els.trainingVideo.src !== videoSrc) {
+        const resumeAt = els.trainingVideo.currentTime;
+        els.trainingVideo.pause();
+        els.trainingVideo.src = videoSrc;
+        applySongTempo(els.trainingVideo);
+        els.trainingVideo.onloadedmetadata = () => {
+          els.trainingVideo.currentTime = resumeAt;
+          els.trainingVideo.play().catch(() => {});
+        };
+        els.trainingVideo.load();
+      }
       els.videoButton.disabled = false;
       /* Video bulunduysa şarkı VID modunda başlar. */
       enterVideoMode([videoSrc], "video");
@@ -1470,6 +1489,15 @@
     return distractors.length === 3 ? { target, choices: [target, ...distractors] } : null;
   }
 
+  function findTrainingTarget(text, target) {
+    if (!target) return null;
+    const escapedTarget = String(target).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(`(^|[^A-Za-z0-9])(${escapedTarget})(?=$|[^A-Za-z0-9])`, "i");
+    const match = pattern.exec(text);
+    if (!match) return null;
+    return { index: match.index + match[1].length, length: match[2].length };
+  }
+
   function setTrainingBlockSet(blockSet) {
     trainingBlockSet = blockSet;
     trainingTasks.forEach((task) => {
@@ -1478,7 +1506,8 @@
       task.target = training?.target || "";
       task.targetLine = targetLine;
       task.choices = Array.isArray(training?.choices) ? training.choices : [];
-      const hasQuestion = task.target && task.choices.length === 4;
+      const targetText = task.lines[targetLine]?.text.replace(/<([^>]+)>/g, "$1") || "";
+      const hasQuestion = Boolean(findTrainingTarget(targetText, task.target)) && task.choices.length === 4;
       task.active = Boolean(hasQuestion);
     });
   }
@@ -1490,14 +1519,13 @@
     task.lines.forEach((line, lineIndex) => {
       const row = document.createElement("div");
       const lineText = line.text.replace(/<([^>]+)>/g, "$1");
-      const targetPattern = task.active ? new RegExp(`\\b${task.target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i") : null;
-      const match = lineIndex === task.targetLine && targetPattern ? targetPattern.exec(lineText) : null;
+      const match = lineIndex === task.targetLine && task.active ? findTrainingTarget(lineText, task.target) : null;
       if (match) {
         row.append(document.createTextNode(lineText.slice(0, match.index)));
         const gap = document.createElement("span");
         gap.className = "training-gap training-spinner";
         gap.setAttribute("aria-label", "Missing word");
-        row.append(gap, document.createTextNode(lineText.slice(match.index + match[0].length)));
+        row.append(gap, document.createTextNode(lineText.slice(match.index + match.length)));
       } else {
         row.textContent = lineText;
       }
@@ -1579,6 +1607,7 @@
 
   function startTraining() {
     trainingStarted = true;
+    if (isStudentMode) els.duelReadyOverlay.classList.add("hidden");
     if (!trainingTasks.length) { completeStage(); return; }
     const source = videoSrc || song.audio;
     if (!source) { els.trainingPrompt.textContent = "No media source found for this training."; return; }

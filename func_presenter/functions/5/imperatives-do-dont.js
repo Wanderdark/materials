@@ -102,5 +102,25 @@ const imperativesDoDontFunction = {
   ]
 };
 
+const imperativesDoDontVideoStartIndex = imperativesDoDontFunction.sentences.findIndex(
+  (item) => item.id === "school-life-emma-tidy-video"
+);
+const imperativesDoDontVideoItems = imperativesDoDontFunction.sentences
+  .slice(imperativesDoDontVideoStartIndex, imperativesDoDontVideoStartIndex + 8)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+imperativesDoDontFunction.sentences.splice(imperativesDoDontVideoStartIndex, imperativesDoDontVideoItems.length, {
+  id: "imperatives-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: imperativesDoDontVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(imperativesDoDontFunction);

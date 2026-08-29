@@ -322,5 +322,25 @@ const canCapabilityFunction = {
   ]
 };
 
+const canCapabilityVideoStartIndex = canCapabilityFunction.sentences.findIndex(
+  (item) => item.id === "can-capability-video-ella-sunny-parrots"
+);
+const canCapabilityVideoItems = canCapabilityFunction.sentences
+  .slice(canCapabilityVideoStartIndex, canCapabilityVideoStartIndex + 14)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+canCapabilityFunction.sentences.splice(canCapabilityVideoStartIndex, canCapabilityVideoItems.length, {
+  id: "can-capability-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: canCapabilityVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(canCapabilityFunction);

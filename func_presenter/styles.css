@@ -955,3 +955,10 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
 .personality-definition-result { margin: 4px 0 0; padding: 14px 16px; border: 1px solid rgba(101,230,184,.38); border-radius: 16px; color: #f4f7ff; background: rgba(18,84,67,.28); font-size: clamp(18px, 1.65vw, 26px); font-weight: 900; line-height: 1.25; text-align: center; }
 @keyframes sortShake { 0%,100% { transform: translateX(0); } 30%,70% { transform: translateX(-7px); } 50% { transform: translateX(7px); } }
 .session-info strong.compact-presentation-title { font-size: clamp(9px, 1vw, 13px); }
+
+/* Keep long presentation titles inside their own header column. */
+#presentationScreen .presentation-header { grid-template-columns: auto minmax(0, 23vw) minmax(250px, 1fr) auto auto auto auto auto; }
+#presentationScreen .session-info { width: 100%; min-width: 0; max-width: none; overflow: hidden; }
+#presentationScreen .session-info strong { display: -webkit-box; width: 100%; min-width: 0; min-height: 2.1em; overflow: hidden; font-size: clamp(14px, 1.35vw, 22px); line-height: 1.05; text-overflow: clip; white-space: normal; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+#presentationScreen .tool-credit { width: 100%; min-width: 0; overflow: visible; color: var(--yellow); font-size: clamp(10px, .95vw, 14px); letter-spacing: .07em; text-overflow: clip; white-space: nowrap; }
+@media (max-width: 760px) { #presentationScreen .presentation-header { grid-template-columns: auto minmax(0, 1fr) auto; } #presentationScreen .session-info strong { display: block; min-height: 0; white-space: nowrap; text-overflow: ellipsis; } #presentationScreen .tool-credit { display: none; } }

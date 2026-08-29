@@ -5,7 +5,7 @@ const frequencyAdverbsFunction = {
   title: "Adverbs of Frequency",
   description: "Expressing how often something happens using adverbs of frequency.",
   returnToSetupOnComplete: true,
-  exercises: ["frequency-adverbs-choice", "frequency-adverbs-jumbled"],
+  exercises: ["frequency-adverbs-choice-grade7", "frequency-adverbs-jumbled"],
   sentences: [
     {
       id: "frequency-adverbs-intro",
@@ -266,6 +266,26 @@ const frequencyAdverbsFunction = {
     }
   ]
 };
+
+const frequencyAdverbsVideoStartIndex = frequencyAdverbsFunction.sentences.findIndex(
+  (item) => item.id === "frequency-video-ava-olivia"
+);
+const frequencyAdverbsVideoItems = frequencyAdverbsFunction.sentences
+  .slice(frequencyAdverbsVideoStartIndex, frequencyAdverbsVideoStartIndex + 15)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+frequencyAdverbsFunction.sentences.splice(frequencyAdverbsVideoStartIndex, frequencyAdverbsVideoItems.length, {
+  id: "frequency-adverbs-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: frequencyAdverbsVideoItems
+  }
+});
 
 window.functionModules = window.functionModules || [];
 window.functionModules.push(frequencyAdverbsFunction);

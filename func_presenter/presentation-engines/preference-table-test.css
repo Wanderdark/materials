@@ -1,0 +1,18 @@
+/* Reusable preference table test for presentation slides. */
+.example-card.preference-table-test-slide { grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); }
+.example-card.preference-table-test-slide .visual-panel { min-width:0; align-items: center; padding: clamp(22px, 3vw, 44px); }
+.example-card.preference-table-test-slide .sentence-panel { align-items: stretch; justify-content: center; padding: clamp(24px, 3.5vw, 54px); }
+.preference-table-test { width:min(700px,100%); min-width:0; max-width:100%; padding:clamp(10px,1.5vw,18px); overflow:hidden; border:2px solid rgba(255,216,77,.6); border-radius:22px; background:rgba(3,10,29,.56); box-shadow:0 18px 42px rgba(0,0,0,.24); }
+.preference-table-test table { width:100%; min-width:0; border-collapse:collapse; table-layout:fixed; overflow:hidden; border-radius:13px; }
+.preference-table-test th, .preference-table-test td { height: clamp(54px, 6.2vw, 86px); padding: 7px; border: 2px solid rgba(196,211,255,.42); text-align: center; }
+.preference-table-test thead th { overflow:hidden; color:var(--yellow); background:rgba(28,53,112,.88); font-size:clamp(9px,.8vw,14px); font-weight:950; line-height:1.12; overflow-wrap:normal; word-break:normal; }
+.preference-table-test tbody th { position:relative; padding:7px 8px 12px; color:#f4f7ff; background:rgba(12,28,65,.92); font-size:clamp(15px,1.5vw,24px); font-weight:950; text-align:center; vertical-align:bottom; }
+.preference-table-test .preference-table-portrait { position:absolute; top:8px; left:50%; z-index:1; width:clamp(38px,4.1vw,62px); height:clamp(38px,4.1vw,62px); max-width:none; aspect-ratio:1; border:2px solid var(--yellow); border-radius:50%; object-fit:cover; background:#fff; transform:translateX(-50%); }
+.preference-table-name { position:absolute; bottom:8px; left:50%; z-index:2; display:block; width:max-content; max-width:calc(100% - 12px); padding:5px 9px; overflow:hidden; border-radius:8px; color:#f4f7ff; background:rgba(3,10,29,.72); box-shadow:0 4px 12px rgba(0,0,0,.2); font-size:clamp(10px,.8vw,14px); line-height:1; text-overflow:ellipsis; white-space:nowrap; transform:translateX(-50%); }
+.preference-table-test td { color: #f4f7ff; background: rgba(5,15,39,.66); }
+.preference-table-tick, .preference-table-cross { display: inline-grid; place-items: center; width: clamp(28px, 3.1vw, 42px); height: clamp(28px, 3.1vw, 42px); border-radius: 50%; font-size: clamp(24px, 3vw, 40px); font-weight: 950; line-height: 1; }
+.preference-table-tick { color: #dffdf2; background: #167250; box-shadow: 0 0 16px rgba(101,230,184,.3); }
+.preference-table-cross { color: #fff0ec; background: #9c343b; box-shadow: 0 0 16px rgba(255,128,102,.25); }
+.preference-table-question { width: min(760px, 100%); }
+.preference-table-question h2 { line-height: 1.15; }
+@media (max-width: 760px) { .preference-table-test th, .preference-table-test td { padding: 4px; } }

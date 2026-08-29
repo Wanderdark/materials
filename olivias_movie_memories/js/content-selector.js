@@ -44,17 +44,51 @@ function createRandomItemPicker(items) {
     pick.remove = (id) => { pool = pool.filter((item) => item.id !== id); };
     return pick;
   }
-  let pool = getPlayableItems(items);
-  let index = pool.length - 1;
+  const storageKey = "oliviasMovieMemoriesTeacherHistoryV1";
+  const playable = getPlayableItems(items);
+  const shuffle = (list) => {
+    const shuffled = [...list];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+  };
+  let shown = new Set();
+  let excluded = new Set();
+  try {
+    const history = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    shown = new Set(history.shown || []);
+    excluded = new Set(history.excluded || []);
+  } catch (_) {}
+  const saveHistory = () => localStorage.setItem(storageKey, JSON.stringify({
+    shown: [...shown],
+    excluded: [...excluded]
+  }));
+  const available = () => playable.filter((item) => !excluded.has(item.id));
+  if (available().length && available().every((item) => shown.has(item.id))) {
+    shown.clear();
+    saveHistory();
+  }
+  let pool = shuffle(available().filter((item) => !shown.has(item.id)));
   const pick = () => {
-    if (!pool.length) return null;
-    if (index < 0) index = pool.length - 1;
-    return pool[index--];
+    if (!pool.length) {
+      shown.clear();
+      saveHistory();
+      pool = shuffle(available());
+    }
+    const item = pool.pop() || null;
+    if (item) {
+      shown.add(item.id);
+      saveHistory();
+    }
+    return item;
   };
 
   pick.remove = (id) => {
     pool = pool.filter((item) => item.id !== id);
-    if (index >= pool.length) index = pool.length - 1;
+    excluded.add(id);
+    saveHistory();
   };
 
   return pick;

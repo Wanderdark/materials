@@ -323,5 +323,25 @@ const objectPronounsFunction = {
   ]
 };
 
+const objectPronounsVideoStartIndex = objectPronounsFunction.sentences.findIndex(
+  (item) => item.id === "classroom-life-mia-dictionary-video"
+);
+const objectPronounsVideoItems = objectPronounsFunction.sentences
+  .slice(objectPronounsVideoStartIndex, objectPronounsVideoStartIndex + 9)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+objectPronounsFunction.sentences.splice(objectPronounsVideoStartIndex, objectPronounsVideoItems.length, {
+  id: "object-pronouns-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: objectPronounsVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(objectPronounsFunction);

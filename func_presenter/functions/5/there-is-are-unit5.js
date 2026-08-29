@@ -560,5 +560,25 @@ thereIsAreUnit5Function.sentences.push(
   }
 );
 
+const thereIsAreUnit5VideoStartIndex = thereIsAreUnit5Function.sentences.findIndex(
+  (item) => item.id === "unit5-classroom-life-ella-olivia-bag-video"
+);
+const thereIsAreUnit5VideoItems = thereIsAreUnit5Function.sentences
+  .slice(thereIsAreUnit5VideoStartIndex, thereIsAreUnit5VideoStartIndex + 9)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+thereIsAreUnit5Function.sentences.splice(thereIsAreUnit5VideoStartIndex, thereIsAreUnit5VideoItems.length, {
+  id: "there-is-are-unit5-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: thereIsAreUnit5VideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(thereIsAreUnit5Function);

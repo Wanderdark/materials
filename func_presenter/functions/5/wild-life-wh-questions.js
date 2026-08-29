@@ -246,5 +246,29 @@ const wildLifeWhQuestionsFunction = {
   ]
 };
 
+const wildLifeWhQuestionsVideoStartIndex = wildLifeWhQuestionsFunction.sentences.findIndex(
+  (item) => item.id === "wild-life-wh-video-daniel-lucas-tiger"
+);
+const wildLifeWhQuestionsVideoItems = wildLifeWhQuestionsFunction.sentences
+  .slice(wildLifeWhQuestionsVideoStartIndex, wildLifeWhQuestionsVideoStartIndex + 4)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+wildLifeWhQuestionsFunction.sentences.splice(
+  wildLifeWhQuestionsVideoStartIndex,
+  wildLifeWhQuestionsVideoItems.length,
+  {
+    id: "wild-life-wh-questions-video-hub",
+    noVisual: true,
+    simplePresentVideoHub: {
+      title: "WATCH AND COMPLETE",
+      items: wildLifeWhQuestionsVideoItems
+    }
+  }
+);
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(wildLifeWhQuestionsFunction);

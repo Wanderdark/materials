@@ -613,5 +613,25 @@ const haveGotHasGotFunction = {
   ]
 };
 
+const haveGotHasGotVideoStartIndex = haveGotHasGotFunction.sentences.findIndex(
+  (item) => item.id === "have-got-video-ella-olivia-strawberries"
+);
+const haveGotHasGotVideoItems = haveGotHasGotFunction.sentences
+  .slice(haveGotHasGotVideoStartIndex, haveGotHasGotVideoStartIndex + 7)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+haveGotHasGotFunction.sentences.splice(haveGotHasGotVideoStartIndex, haveGotHasGotVideoItems.length, {
+  id: "have-got-has-got-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: haveGotHasGotVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(haveGotHasGotFunction);

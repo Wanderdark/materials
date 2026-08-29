@@ -392,5 +392,25 @@ const comparativesFunction = {
   ]
 };
 
+const comparativesVideoStartIndex = comparativesFunction.sentences.findIndex(
+  (item) => item.id === "comparatives-video-ella-sunny"
+);
+const comparativesVideoItems = comparativesFunction.sentences
+  .slice(comparativesVideoStartIndex, comparativesVideoStartIndex + 20)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+comparativesFunction.sentences.splice(comparativesVideoStartIndex, comparativesVideoItems.length, {
+  id: "comparatives-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: comparativesVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(comparativesFunction);

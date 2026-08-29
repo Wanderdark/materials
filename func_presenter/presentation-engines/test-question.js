@@ -54,7 +54,7 @@ function renderTestQuestion(example) {
   const statements = isClassificationQuiz
     ? shuffleTestQuestionChoices(data.statements || [])
     : hasQuestionSequence
-      ? data.questions
+      ? data.randomizeQuestions === true ? shuffleTestQuestionChoices(data.questions) : data.questions
       : [data];
   let questionIndex = 0;
   const renderCurrentQuestion = () => {
@@ -66,12 +66,17 @@ function renderTestQuestion(example) {
     const label = document.createElement("p");
     label.className = "test-question-label";
     label.textContent = current.promptLabel || data.promptLabel || "COMPLETE THE DIALOGUE";
-    if (!isClassificationQuiz) prompt.append(label);
+    if (!isClassificationQuiz && !(current.hidePromptLabel || data.hidePromptLabel)) prompt.append(label);
     if (isClassificationQuiz) {
       const statement = document.createElement("p");
       statement.className = "test-question-statement";
       statement.textContent = current.text;
       prompt.append(statement);
+    } else if (current.targetExpression || data.targetExpression) {
+      const targetExpression = document.createElement("p");
+      targetExpression.className = "test-question-target-expression";
+      targetExpression.textContent = current.targetExpression || data.targetExpression;
+      prompt.append(targetExpression);
     } else {
       (current.lines || []).forEach((line) => {
         const dialogueLine = document.createElement("p");
@@ -142,7 +147,8 @@ function renderTestQuestion(example) {
       });
       options.append(option);
     });
-    question.replaceChildren(title, options);
+    if (current.hideQuestionTitle || data.hideQuestionTitle) question.replaceChildren(options);
+    else question.replaceChildren(title, options);
   };
   renderCurrentQuestion();
 }

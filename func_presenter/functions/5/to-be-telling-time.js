@@ -135,5 +135,25 @@ const toBeTellingTimeFunction = {
   ]
 };
 
+const toBeTellingTimeVideoStartIndex = toBeTellingTimeFunction.sentences.findIndex(
+  (item) => item.id === "classroom-life-chloe-ella-time-video"
+);
+const toBeTellingTimeVideoItems = toBeTellingTimeFunction.sentences
+  .slice(toBeTellingTimeVideoStartIndex, toBeTellingTimeVideoStartIndex + 7)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+toBeTellingTimeFunction.sentences.splice(toBeTellingTimeVideoStartIndex, toBeTellingTimeVideoItems.length, {
+  id: "telling-time-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: toBeTellingTimeVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(toBeTellingTimeFunction);

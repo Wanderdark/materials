@@ -1,0 +1,16 @@
+/* Grade 5 Simple Present video hub. */
+.example-card.simple-present-video-hub-open { display: block; padding: clamp(16px, 2vw, 30px) clamp(22px, 3vw, 52px); }
+.simple-present-video-hub { display: grid; width: min(100%, 1160px); margin: 0 auto; gap: clamp(18px, 2.4vw, 32px); }
+.simple-present-video-hub-title { margin: 0; color: var(--yellow); font-size: clamp(24px, 2.6vw, 42px); font-weight: 950; letter-spacing: .08em; text-align: center; }
+.simple-present-video-hub-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 26px); }
+.simple-present-video-hub-card { position: relative; display: grid; place-items: center; min-height: clamp(104px, 11vw, 154px); padding: 14px; border: 0; border-radius: 24px; background: linear-gradient(135deg, rgba(37,24,92,.88), rgba(8,22,59,.94)); box-shadow: inset 0 0 0 2px rgba(109,104,255,.45), 0 14px 30px rgba(0,0,0,.26); cursor: pointer; transition: transform .16s ease, filter .16s ease; }
+.simple-present-video-hub-card:hover:not(:disabled), .simple-present-video-hub-card:focus-visible:not(:disabled) { transform: translateY(-4px); outline: none; box-shadow: inset 0 0 0 2px var(--yellow), 0 16px 34px rgba(0,0,0,.34), 0 0 22px rgba(255,216,77,.20); }
+.simple-present-video-hub-portraits { display: flex; align-items: center; justify-content: center; gap: clamp(24px, 3vw, 42px); width: 100%; }
+.simple-present-video-hub-portraits img { width: clamp(54px, 5.8vw, 82px); aspect-ratio: 1; border: 4px solid #8063ff; border-radius: 50%; background: #f3efff; object-fit: cover; object-position: center top; box-shadow: 0 7px 15px rgba(0,0,0,.30); }
+.simple-present-video-hub-card.is-solo .simple-present-video-hub-portraits img { margin-right: clamp(58px, 5.8vw, 82px); }
+.simple-present-video-hub-play { position: absolute; left: 50%; top: 50%; display: grid; width: clamp(48px, 5vw, 68px); height: clamp(48px, 5vw, 68px); place-items: center; border: 4px solid #fff6d3; border-radius: 50%; color: #fff; background: #ff9500; box-shadow: 0 7px 16px rgba(0,0,0,.32); font-size: clamp(24px, 2.6vw, 37px); line-height: 1; transform: translate(-50%, -50%); }
+.simple-present-video-hub-card.is-completed { cursor: default; filter: grayscale(.75) brightness(.68); opacity: .72; }
+.simple-present-video-hub-card.is-completed .simple-present-video-hub-play { background: #8b6900; }
+.simple-present-video-hub-tick { position: absolute; right: 8px; top: 7px; display: grid; width: clamp(28px, 2.6vw, 38px); height: clamp(28px, 2.6vw, 38px); place-items: center; border: 3px solid #e4fff4; border-radius: 50%; color: #f3fff9; background: #138154; box-shadow: 0 0 16px rgba(101,230,184,.68); font-size: clamp(19px, 1.9vw, 27px); font-weight: 950; }
+@media (max-width: 900px) { .simple-present-video-hub-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .simple-present-video-hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -417,5 +417,25 @@ const possessiveSFunction = {
   ]
 };
 
+const possessiveSVideoStartIndex = possessiveSFunction.sentences.findIndex(
+  (item) => item.id === "possessive-s-video-olivia-chloe-luna"
+);
+const possessiveSVideoItems = possessiveSFunction.sentences
+  .slice(possessiveSVideoStartIndex, possessiveSVideoStartIndex + 6)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+possessiveSFunction.sentences.splice(possessiveSVideoStartIndex, possessiveSVideoItems.length, {
+  id: "possessive-s-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: possessiveSVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(possessiveSFunction);

@@ -467,5 +467,29 @@ const countableUncountableFunction = {
   ]
 };
 
+const countableUncountableVideoStartIndex = countableUncountableFunction.sentences.findIndex(
+  (item) => item.id === "countable-video-david-valeria-honey"
+);
+const countableUncountableVideoItems = countableUncountableFunction.sentences
+  .slice(countableUncountableVideoStartIndex, countableUncountableVideoStartIndex + 6)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+countableUncountableFunction.sentences.splice(
+  countableUncountableVideoStartIndex,
+  countableUncountableVideoItems.length,
+  {
+    id: "countable-uncountable-video-hub",
+    noVisual: true,
+    simplePresentVideoHub: {
+      title: "WATCH AND COMPLETE",
+      items: countableUncountableVideoItems
+    }
+  }
+);
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(countableUncountableFunction);

@@ -165,5 +165,25 @@ const friendshipGrade8Function = {
   ]
 };
 
+const friendshipGrade8VideoStartIndex = friendshipGrade8Function.sentences.findIndex(
+  (item) => item.id === "friendship-video-ethan-david"
+);
+const friendshipGrade8VideoItems = friendshipGrade8Function.sentences
+  .slice(friendshipGrade8VideoStartIndex, friendshipGrade8VideoStartIndex + 8)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+friendshipGrade8Function.sentences.splice(friendshipGrade8VideoStartIndex, friendshipGrade8VideoItems.length, {
+  id: "friendship-grade8-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: friendshipGrade8VideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(friendshipGrade8Function);

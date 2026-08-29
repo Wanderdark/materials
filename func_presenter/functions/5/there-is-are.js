@@ -397,5 +397,25 @@ const thereIsAreFunction = {
   ]
 };
 
+const thereIsAreVideoStartIndex = thereIsAreFunction.sentences.findIndex(
+  (item) => item.id === "classroom-life-ella-olivia-bag-video"
+);
+const thereIsAreVideoItems = thereIsAreFunction.sentences
+  .slice(thereIsAreVideoStartIndex, thereIsAreVideoStartIndex + 9)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+thereIsAreFunction.sentences.splice(thereIsAreVideoStartIndex, thereIsAreVideoItems.length, {
+  id: "there-is-are-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: thereIsAreVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(thereIsAreFunction);

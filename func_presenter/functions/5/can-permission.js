@@ -401,5 +401,25 @@ const canPermissionFunction = {
   ]
 };
 
+const canPermissionVideoStartIndex = canPermissionFunction.sentences.findIndex(
+  (item) => item.id === "can-permission-video-victoria-noah-usb"
+);
+const canPermissionVideoItems = canPermissionFunction.sentences
+  .slice(canPermissionVideoStartIndex, canPermissionVideoStartIndex + 16)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+canPermissionFunction.sentences.splice(canPermissionVideoStartIndex, canPermissionVideoItems.length, {
+  id: "can-permission-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: canPermissionVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(canPermissionFunction);

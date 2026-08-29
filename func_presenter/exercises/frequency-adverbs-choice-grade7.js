@@ -35,7 +35,7 @@ window.exerciseModules.push({
         {
           segments: [
             { text: "Ava " },
-            { options: ["never", "often", "rarely"], answer: "always" },
+            { options: ["never", "always", "rarely"], answer: "always" },
             { text: " feeds her dog." }
           ]
         }
@@ -70,9 +70,9 @@ window.exerciseModules.push({
       sentences: [
         {
           segments: [
-            { text: "David makes his bed " },
+            { text: "David " },
             { options: ["always", "everyday", "never"], answer: "never" },
-            { text: "." }
+            { text: "makes his bed ." }
           ]
         }
       ]
@@ -199,6 +199,7 @@ window.exerciseModules.push({
     }
   ],
   supports(functionModule) {
-    return functionModule.id === "frequency-adverbs-grade7";
+    return functionModule.id === "frequency-adverbs-grade7"
+      || functionModule.id === "frequency-adverbs";
   }
 });

@@ -266,5 +266,25 @@ const simplePresentDoYouLikeFunction = {
   ]
 };
 
+const simplePresentVideoStartIndex = simplePresentDoYouLikeFunction.sentences.findIndex(
+  (item) => item.id === "school-life-chloe-emma-video"
+);
+const simplePresentVideoItems = simplePresentDoYouLikeFunction.sentences
+  .slice(simplePresentVideoStartIndex, simplePresentVideoStartIndex + 13)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+simplePresentDoYouLikeFunction.sentences.splice(simplePresentVideoStartIndex, simplePresentVideoItems.length, {
+  id: "simple-present-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: simplePresentVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(simplePresentDoYouLikeFunction);

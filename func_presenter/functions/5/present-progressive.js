@@ -454,5 +454,37 @@ const presentProgressiveFunction = {
   ]
 };
 
+const presentProgressiveVideoHubItems = (startId, count) => {
+  const startIndex = presentProgressiveFunction.sentences.findIndex((item) => item.id === startId);
+  return {
+    startIndex,
+    items: presentProgressiveFunction.sentences.slice(startIndex, startIndex + count).map((item) => ({
+      id: item.id,
+      speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+      videoDialogue: item.videoDialogue
+    }))
+  };
+};
+
+const presentProgressiveFirstVideoHub = presentProgressiveVideoHubItems("present-progressive-video-chloe-luna", 16);
+presentProgressiveFunction.sentences.splice(presentProgressiveFirstVideoHub.startIndex, presentProgressiveFirstVideoHub.items.length, {
+  id: "present-progressive-video-hub-1",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: presentProgressiveFirstVideoHub.items
+  }
+});
+
+const presentProgressiveSecondVideoHub = presentProgressiveVideoHubItems("present-progressive-vs-simple-video-mia-giulia", 6);
+presentProgressiveFunction.sentences.splice(presentProgressiveSecondVideoHub.startIndex, presentProgressiveSecondVideoHub.items.length, {
+  id: "present-progressive-video-hub-2",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: presentProgressiveSecondVideoHub.items
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(presentProgressiveFunction);

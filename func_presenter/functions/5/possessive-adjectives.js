@@ -180,5 +180,25 @@ const possessiveAdjectivesFunction = {
   ]
 };
 
+const possessiveAdjectivesVideoStartIndex = possessiveAdjectivesFunction.sentences.findIndex(
+  (item) => item.id === "possessive-video-emma-chloe-sandwich"
+);
+const possessiveAdjectivesVideoItems = possessiveAdjectivesFunction.sentences
+  .slice(possessiveAdjectivesVideoStartIndex, possessiveAdjectivesVideoStartIndex + 8)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+possessiveAdjectivesFunction.sentences.splice(possessiveAdjectivesVideoStartIndex, possessiveAdjectivesVideoItems.length, {
+  id: "possessive-adjectives-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: possessiveAdjectivesVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(possessiveAdjectivesFunction);

@@ -652,5 +652,25 @@ const goingToPlansFunction = {
   ]
 };
 
+const goingToPlansVideoStartIndex = goingToPlansFunction.sentences.findIndex(
+  (item) => item.id === "going-to-plans-video-hannah-emma-valley"
+);
+const goingToPlansVideoItems = goingToPlansFunction.sentences
+  .slice(goingToPlansVideoStartIndex, goingToPlansVideoStartIndex + 22)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+goingToPlansFunction.sentences.splice(goingToPlansVideoStartIndex, goingToPlansVideoItems.length, {
+  id: "going-to-plans-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: goingToPlansVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(goingToPlansFunction);

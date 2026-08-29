@@ -267,5 +267,74 @@ const frequencyAdverbsGrade7Function = {
   ]
 };
 
+const frequencyAdverbsGrade7VideoStartIndex = frequencyAdverbsGrade7Function.sentences.findIndex(
+  (item) => item.id === "frequency-video-ava-olivia"
+);
+const frequencyAdverbsGrade7VideoItems = frequencyAdverbsGrade7Function.sentences
+  .slice(frequencyAdverbsGrade7VideoStartIndex, frequencyAdverbsGrade7VideoStartIndex + 15)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+frequencyAdverbsGrade7Function.sentences.splice(
+  frequencyAdverbsGrade7VideoStartIndex,
+  frequencyAdverbsGrade7VideoItems.length,
+  {
+    id: "frequency-adverbs-grade7-video-hub",
+    noVisual: true,
+    simplePresentVideoHub: {
+      title: "WATCH AND COMPLETE",
+      items: frequencyAdverbsGrade7VideoItems
+    }
+  }
+);
+
+const frequencyExpressionRevealGrade7Slide = {
+  id: "frequency-expressions-grade7-click-reveal",
+  noVisual: true,
+  frequencyExpressionReveal: {
+    rows: [
+      ["once", "a", "day"],
+      ["twice", "a", "week"],
+      ["thrice\nthree times", "a", "month"],
+      ["four times", "a", "year"]
+    ]
+  }
+};
+
+const frequencyExpressionGrade7TestSlide = {
+  id: "frequency-expression-grade7-test",
+  presenceSlide: true,
+  exerciseLink: "frequency-adverbs-choice-grade7",
+  postExerciseSlideId: "frequency-adverbs-grade7-video-hub",
+  testQuestion: {
+    promptLabel: "FREQUENCY EXPRESSION",
+    randomizeQuestions: true,
+    questions: [
+      { targetExpression: "once a day", answer: "günde bir kere", choices: ["günde bir kere", "günde iki kere", "haftada bir kere", "ayda bir kere"] },
+      { targetExpression: "twice a month", answer: "ayda iki kere", choices: ["ayda iki kere", "ayda bir kere", "haftada iki kere", "yılda iki kere"] },
+      { targetExpression: "three times a week", answer: "haftada üç kere", choices: ["haftada üç kere", "haftada iki kere", "ayda üç kere", "yılda üç kere"] },
+      { targetExpression: "four times a year", answer: "yılda dört kere", choices: ["yılda dört kere", "yılda üç kere", "ayda dört kere", "haftada dört kere"] },
+      { targetExpression: "once a month", answer: "ayda bir kere", choices: ["ayda bir kere", "ayda iki kere", "haftada bir kere", "yılda bir kere"] },
+      { targetExpression: "twice a day", answer: "günde iki kere", choices: ["günde iki kere", "günde bir kere", "haftada iki kere", "ayda iki kere"] },
+      { targetExpression: "everyday", answer: "her gün", choices: ["her gün", "her hafta", "her ay", "her yıl"] },
+      { targetExpression: "every morning", answer: "her sabah", choices: ["her sabah", "her akşam", "her hafta", "her gün"] },
+      { targetExpression: "every evening", answer: "her akşam", choices: ["her akşam", "her sabah", "her gün", "her hafta"] },
+      { targetExpression: "every week", answer: "her hafta", choices: ["her hafta", "her gün", "her ay", "her yıl"] },
+      { targetExpression: "every month", answer: "her ay", choices: ["her ay", "her hafta", "her gün", "her yıl"] },
+      { targetExpression: "every year", answer: "her yıl", choices: ["her yıl", "her ay", "her hafta", "her gün"] }
+    ]
+  }
+};
+
+frequencyAdverbsGrade7Function.sentences.splice(
+  frequencyAdverbsGrade7VideoStartIndex,
+  0,
+  frequencyExpressionRevealGrade7Slide,
+  frequencyExpressionGrade7TestSlide
+);
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(frequencyAdverbsGrade7Function);

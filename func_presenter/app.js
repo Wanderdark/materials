@@ -1425,7 +1425,10 @@ function next() {
   if (example?.exerciseLink || example?.exerciseObj) {
     const ex = example.exerciseObj || (window.exerciseModules || []).find((e) => e.id === example.exerciseLink);
     if (ex) {
-      state.postExerciseIndex = state.index + 1;
+      const targetIndex = example.postExerciseSlideId
+        ? state.module.sentences.findIndex((slide) => slide.id === example.postExerciseSlideId)
+        : state.index + 1;
+      state.postExerciseIndex = targetIndex >= 0 ? targetIndex : state.index + 1;
       startSelectedExercise(ex);
       return;
     }

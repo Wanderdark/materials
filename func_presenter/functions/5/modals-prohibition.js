@@ -149,5 +149,25 @@ const modalsProhibitionFunction = {
   ]
 };
 
+const modalsProhibitionVideoStartIndex = modalsProhibitionFunction.sentences.findIndex(
+  (item) => item.id === "school-life-ella-video"
+);
+const modalsProhibitionVideoItems = modalsProhibitionFunction.sentences
+  .slice(modalsProhibitionVideoStartIndex, modalsProhibitionVideoStartIndex + 12)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+modalsProhibitionFunction.sentences.splice(modalsProhibitionVideoStartIndex, modalsProhibitionVideoItems.length, {
+  id: "school-rules-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: modalsProhibitionVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(modalsProhibitionFunction);

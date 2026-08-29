@@ -1,0 +1,96 @@
+/* APP-ANCHOR: Grade 8 preference video hub. */
+.example-card.preference-video-hub-open {
+  display: block;
+  padding: clamp(14px, 1.8vw, 28px) clamp(22px, 3vw, 46px);
+}
+
+.preference-video-hub {
+  display: grid;
+  width: min(100%, 1160px);
+  min-height: 0;
+  margin: 0 auto;
+  align-content: start;
+  gap: clamp(22px, 3vw, 40px);
+}
+
+.preference-video-hub-title {
+  margin: 0;
+  color: #ffd84d;
+  font-size: clamp(28px, 3.1vw, 52px);
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-align: center;
+}
+
+.preference-video-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+  gap: clamp(14px, 1.6vw, 24px);
+}
+
+.preference-video-hub-card {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 14px 10px 12px;
+  border: 2px solid #345697;
+  border-radius: 20px;
+  background: #10264f;
+  color: #f3f6ff;
+  font: inherit;
+  font-size: clamp(16px, 1.35vw, 22px);
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.preference-video-hub-card:hover:not(:disabled),
+.preference-video-hub-card:focus-visible:not(:disabled) {
+  border-color: #ffd84d;
+  background: #183568;
+  outline: none;
+  transform: translateY(-4px);
+}
+
+.preference-video-hub-card img {
+  width: clamp(76px, 7.2vw, 116px);
+  aspect-ratio: 1;
+  border: 4px solid #ffd84d;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.preference-video-hub-card.is-completed {
+  cursor: default;
+}
+
+.preference-video-hub-card.is-completed img,
+.preference-video-hub-card.is-completed > span:not(.preference-video-hub-tick) {
+  filter: grayscale(1);
+  opacity: .38;
+}
+
+.preference-video-hub-tick {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 3px solid #f3fff8;
+  border-radius: 50%;
+  background: #2cc987;
+  color: #061b37;
+  font-size: 27px;
+  font-weight: 1000;
+}
+
+@media (max-width: 700px) {
+  .example-card.preference-video-hub-open { padding: 18px 12px; }
+  .preference-video-hub-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .preference-video-hub-card { padding: 10px 6px 8px; border-radius: 15px; font-size: 13px; }
+  .preference-video-hub-card img { border-width: 3px; }
+}

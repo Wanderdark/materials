@@ -343,5 +343,25 @@ const superlativesFunction = {
   ]
 };
 
+const superlativesVideoStartIndex = superlativesFunction.sentences.findIndex(
+  (item) => item.id === "superlatives-video-chloe-luna-elephant"
+);
+const superlativesVideoItems = superlativesFunction.sentences
+  .slice(superlativesVideoStartIndex, superlativesVideoStartIndex + 7)
+  .map((item) => ({
+    id: item.id,
+    speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
+    videoDialogue: item.videoDialogue
+  }));
+
+superlativesFunction.sentences.splice(superlativesVideoStartIndex, superlativesVideoItems.length, {
+  id: "superlatives-video-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: superlativesVideoItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(superlativesFunction);

@@ -208,9 +208,9 @@ window.SONGS = [
       { from: "2:36.795", to: "2:38.003", text: "Nothing to <fear>", training: { target: "fear", choices: ["fear", "pride", "forest", "smile"] } },
       { from: "2:38.171", to: "2:39.587", text: "When we try.", training: { target: "try", choices: ["try", "sorrow", "storm", "future"] } },
 
-      { from: "2:39.858", to: "2:41.314", text: "Together we can", training: { line: 1, target: "grow", choices: ["grow", "laugh", "shine", "follow"] } },
+      { from: "2:39.858", to: "2:41.314", text: "Together we can", training: { target: "Together", choices: ["Together", "grow", "dream", "weather"] } },
       { from: "2:41.795", to: "2:42.994", text: "Learn and <grow>,", training: { target: "grow", choices: ["grow", "laugh", "shine", "follow"] } },
-      { from: "2:43.147", to: "2:44.219", text: "We have so much", training: { line: 1, target: "world", choices: ["world", "dreams", "forest", "sorrow"] } },
+      { from: "2:43.147", to: "2:44.219", text: "We have so much", training: { target: "much", choices: ["much", "world", "dreams", "touch"] } },
       { from: "2:44.595", to: "2:48.019", text: "To show the <world>.", training: { target: "world", choices: ["world", "dreams", "forest", "sorrow"] } },]
   },
 
@@ -377,7 +377,7 @@ window.SONGS = [
       { from: "1:41.628", to: "1:43.428", text: "And simply <stare>." , training: {"target":"stare","choices":["stare","voices","pretending","scorn"]} },
       { from: "1:45.092", to: "1:47.892", text: "But all their noise helps me see,", training: { target: "noise", choices: ["noise", "journey", "cities", "smile"] } },
       { from: "1:48.204", to: "1:51.036", text: "The only one I should be" , training: {"target":"only","choices":["only","voices","pretending","scorn"]} },
-      { from: "1:51.724", to: "1:57.052", text: "Is me...", training: { line: 1, target: "pretending", choices: ["pretending", "storm", "future", "forest"] } },
+      { from: "1:51.724", to: "1:57.052", text: "Is me...", training: { target: "me", choices: ["me", "life", "way", "sea"] } },
       { from: "1:57.388", to: "1:58.931", text: "No <pretending>," , training: {"target":"pretending","choices":["pretending","voices","scorn","stare"]} },
       { from: "2:00.476", to: "2:03.132", text: "No <forced> dreams,", training: { target: "forced", choices: ["forced", "lonely", "bright", "fallen"] } },
       { from: "2:03.508", to: "2:06.548", text: "Life is my own,", training: { target: "own", choices: ["own", "cities", "journey", "storm"] } },
@@ -448,7 +448,7 @@ window.SONGS = [
       { from: "0:20.858", to: "0:22.386", text: "So we learned", training: { target: "learned", choices: ["learned", "shine", "laugh", "follow"] } },
       { from: "0:24.178", to: "0:25.842", text: "To <dream> so high." , training: {"target":"dream","choices":["dream","sparrow","sky","forest"]} },
       { from: "0:27.786", to: "0:29.482", text: "But each year", training: { target: "year", choices: ["year", "storm", "smile", "cities"] } },
-      { from: "0:31.130", to: "0:33.139", text: "The <forest>s fall." , training: {"target":"forest","choices":["forest","sparrow","sky","fallen"]} },
+      { from: "0:31.130", to: "0:33.139", text: "The <forest>s fall." , training: {"target":"fall","choices":["fall","forest","sparrow","call"]} },
       { from: "0:34.931", to: "0:36.659", text: "Who will hear", training: { target: "hear", choices: ["hear", "dreams", "stone", "future"] } },
       { from: "0:38.195", to: "0:40.035", text: "The <sparrow>'s call?" , training: {"target":"sparrow","choices":["sparrow","sky","forest","fallen"]} },
       { from: "0:42.019", to: "0:45.171", text: "You gave us dreams,", training: { target: "dreams", choices: ["dreams", "forest", "speech", "plate"] } },
@@ -481,7 +481,7 @@ window.SONGS = [
       { from: "2:32.213", to: "2:36.701", text: "Ash… Or rain?" , training: {"target":"rain","choices":["rain","sparrow","sky","forest"]} },
       { from: "2:48.489", to: "2:49.961", text: "We're holding on", training: { target: "holding", choices: ["holding", "future", "memory", "forest"] } },
       { from: "2:51.513", to: "2:53.217", text: "To every tree." , training: {"target":"every","choices":["every","sparrow","sky","forest"]} },
-      { from: "2:55.409", to: "2:55.817", text: "Will you", training: { line: 1, target: "stand", choices: ["stand", "storm", "smile", "cities"] } },
+      { from: "2:55.409", to: "2:55.817", text: "Will you", training: { target: "you", choices: ["you", "me", "they", "blue"] } },
       { from: "2:56.652", to: "2:58.756", text: "Stand here" , training: {"target":"here","choices":["here","sparrow","sky","forest"]} },
       { from: "3:00.508", to: "3:01.644", text: "Next to me?", training: { target: "me", choices: ["me", "future", "forest", "memory"] } },
       { from: "3:07.556", to: "3:13.940", text: "Next to me..." , training: {"target":"Next","choices":["Next","sparrow","sky","forest"]} },
@@ -541,7 +541,7 @@ window.SONGS = [
       { from: "0:35.968", to: "0:37.448", text: "Another school", training: { target: "school", choices: ["school", "storm", "memory", "smile"] } },
       { from: "0:37.992", to: "0:39.936", text: "Burning down." , training: {"target":"down","choices":["down","speech","lie","pain"]} },
       { from: "0:42.302", to: "0:44.374", text: "You write the future", training: { target: "future", choices: ["future", "kitchen", "sorrow", "cities"] } },
-      { from: "0:44.829", to: "0:46.517", text: "With others' <pain>s." , training: {"target":"pain","choices":["pain","speech","lie","sign"]} },
+      { from: "0:44.829", to: "0:46.517", text: "With others' <pain>s." , training: {"target":"pains","choices":["pains","speech","lie","chains"]} },
       { from: "0:47.245", to: "0:49.081", text: "You build your empires", training: { target: "empires", choices: ["empires", "dreams", "forest", "laughter"] } },
       { from: "0:49.312", to: "0:51.640", text: "On others' remains." , training: {"target":"remains","choices":["remains","speech","lie","pain"]} },
       { from: "0:52.632", to: "0:54.704", text: "You shake your hands.", training: { target: "hands", choices: ["hands", "storm", "smile", "future"] } },
@@ -575,7 +575,7 @@ window.SONGS = [
       { from: "2:19.395", to: "2:21.707", text: "When all are gone...", training: { target: "gone", choices: ["gone", "storm", "forest", "smile"] } },
       { from: "2:21.948", to: "2:24.083", text: "What remains?" , training: {"target":"remains","choices":["remains","speech","lie","pain"]} },
       { from: "2:27.428", to: "2:29.244", text: "Empty homes...", training: { target: "homes", choices: ["homes", "cities", "memory", "journey"] } },
-      { from: "2:30.451", to: "2:38.893", text: "And names on <grave>s." , training: {"target":"grave","choices":["grave","speech","lie","pain"]} },
+      { from: "2:30.451", to: "2:38.893", text: "And names on <grave>s." , training: {"target":"graves","choices":["graves","speech","lie","waves"]} },
       { from: "2:54.423", to: "2:56.335", text: "You shake your hands.", training: { target: "hands", choices: ["hands", "dreams", "kitchen", "future"] } },
       { from: "2:56.879", to: "2:58.871", text: "You <sign> the page." , training: {"target":"sign","choices":["sign","speech","lie","pain"]} },
       { from: "2:59.383", to: "3:00.831", text: "Then send the young", training: { target: "young", choices: ["young", "forest", "smile", "cities"] } },
@@ -662,7 +662,7 @@ window.SONGS = [
       { from: "2:22.991", to: "2:25.394", text: "No <familiar> face to see,", training: { target: "familiar", choices: ["familiar", "forest", "cities", "memory"] } },
       { from: "2:26.252", to: "2:29.341", text: "No one calling out my name." , training: {"target":"calling","choices":["calling","kitchen","plate","grin"]} },
       { from: "2:29.893", to: "2:32.978", text: "So tonight I'll leave my door,", training: { target: "tonight", choices: ["tonight", "journey", "storm", "laughter"] } },
-      { from: "2:33.428", to: "2:36.258", text: "Open <wide>r than before." , training: {"target":"wide","choices":["wide","kitchen","plate","grin"]} },
+      { from: "2:33.428", to: "2:36.258", text: "Open <wide>r than before." , training: {"target":"wider","choices":["wider","open","large","rider"]} },
       { from: "2:36.834", to: "2:39.990", text: "Let the noise keep coming through,", training: { target: "noise", choices: ["noise", "future", "kitchen", "smile"] } },
       { from: "2:40.998", to: "2:46.222", text: "Someday I'll be missing all of you." , training: {"target":"missing","choices":["missing","kitchen","plate","grin"]} },
       { from: "2:49.189", to: "2:51.921", text: "Let the whole house make some noise,", training: { target: "house", choices: ["house", "forest", "cities", "memory"] } },
@@ -690,9 +690,9 @@ window.SONGS = [
     zoomgap: 8,
 
     climax: [
-      { at: "0:58", to: "1:18" },
-      { at: "1:47", to: "2:14" },
-{ at: "2:47", to: "3:26" }
+      { at: "0:38", to: "0:52" },
+      { at: "1:08", to: "1:22" },
+{ at: "1:49", to: "2:12" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
@@ -726,7 +726,7 @@ window.SONGS = [
       { from: "0:34.555", to: "0:37.707", text: "Come to school, don't be late!", training: { target: "late", choices: ["late", "organize", "arrange", "solve"] } },
       { from: "0:38.595", to: "0:41.611", text: "At our school, we learn and play,", training: { target: "learn", choices: ["learn", "ancient", "national day", "species"] } },
       { from: "0:42.467", to: "0:45.451", text: "We <obey the rules> each day.", training: { target: "obey the rules", choices: ["obey the rules", "no shouting", "no fighting", "chew gum"] } },
-      { from: "0:46.123", to: "0:49.019", text: "No <shout>ing, no fighting too,", training: { target: "shout", choices: ["shout", "high heels", "law", "utterance"] } },
+      { from: "0:46.123", to: "0:49.019", text: "No <shout>ing, no fighting too,", training: { target: "shouting", choices: ["shouting", "high heels", "law", "outing"] } },
       { from: "0:50.249", to: "0:52.944", text: "Keep it safe for me and you!", training: { target: "safe", choices: ["safe", "protect", "respect", "own"] } },
       { from: "0:54.411", to: "0:56.787", text: "Do you like playing chess?", training: { target: "chess", choices: ["chess", "maths club", "science club", "film club"] } },
       { from: "0:57.347", to: "1:00.684", text: "Yes, I do! The <chess club>'s best!", training: { target: "chess club", choices: ["chess club", "drama club", "sports club", "art club"] } },
@@ -768,9 +768,8 @@ window.SONGS = [
     zoomgap: 8,
 
     climax: [
-      { at: "0:58", to: "1:18" },
-      { at: "1:47", to: "2:14" },
-{ at: "2:47", to: "3:26" }
+      { at: "0:16", to: "0:31" },
+      { at: "1:02", to: "1:50" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
@@ -814,7 +813,7 @@ window.SONGS = [
       { from: "1:07.229", to: "1:10.323", text: "We celebrate in different ways.", training: { target: "ways", choices: ["ways", "days", "friends", "flags"] } },
       { from: "1:11.025", to: "1:14.218", text: "<National days> for me and you,", training: { target: "days", choices: ["days", "country", "flag", "friends"] } },
       { from: "1:14.908", to: "1:18.956", text: "Every <country> has one too.", training: { target: "one", choices: ["one", "national days", "flag", "friends"] } },
-      { from: "1:19.286", to: "1:22.070", text: "<Flag>s are here, it's our day,", training: { target: "Flag", choices: ["Flag", "country", "national days", "friends"] } },
+      { from: "1:19.286", to: "1:22.070", text: "<Flag>s are here, it's our day,", training: { target: "Flags", choices: ["Flags", "country", "national days", "bags"] } },
       { from: "1:22.574", to: "1:25.958", text: "We celebrate in our own way.", training: { target: "way", choices: ["way", "day", "country", "flag"] } },
       { from: "1:26.324", to: "1:29.573", text: "Friends are here, come out and say,", training: { target: "Friends", choices: ["Friends", "flags", "countries", "national days"] } },
       { from: "1:29.927", to: "1:33.360", text: "We celebrate our national day!", training: { target: "day", choices: ["day", "flag", "country", "friends"] } },
@@ -839,9 +838,9 @@ window.SONGS = [
     zoomgap: 8,
 
     climax: [
-      { at: "0:58", to: "1:18" },
-      { at: "1:47", to: "2:14" },
-{ at: "2:47", to: "3:26" }
+      { at: "0:36", to: "0:52" },
+      { at: "1:04", to: "1:19" },
+{ at: "1:35", to: "2:10" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
@@ -914,9 +913,9 @@ window.SONGS = [
     zoomgap: 8,
 
     climax: [
-      { at: "0:58", to: "1:18" },
-      { at: "1:47", to: "2:14" },
-{ at: "2:47", to: "3:26" }
+      { at: "0:24", to: "0:40" },
+      { at: "1:00", to: "1:17" },
+{ at: "1:37", to: "2:20" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
@@ -1012,9 +1011,9 @@ window.SONGS = [
     zoomgap: 8,
 
     climax: [
-      { at: "0:58", to: "1:18" },
-      { at: "1:47", to: "2:14" },
-{ at: "2:47", to: "3:26" }
+      { at: "0:33", to: "0:41" },
+      { at: "1:08", to: "1:21" },
+{ at: "1:55", to: "2:24" }
     ],
 
     /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
@@ -1071,6 +1070,264 @@ window.SONGS = [
       { from: "2:15.641", to: "2:18.817", text: "All my features are part of me.", training: { target: "of me", choices: ["of me", "features", "part", "on sea"] } },
       { from: "2:19.049", to: "2:22.954", text: "My <clothes> may change from day to day,", training: { target: "day", choices: ["day", "clothes", "change", "maze"] } },
       { from: "2:23.369", to: "2:27.746", text: "But I am me in every way.", training: { target: "every way", choices: ["every way", "me", "day", "heavy maze"] } },
+
+  ]
+  },
+
+/* ── GRADE 5 UNIT 4 - HOME TOGETHER ───────────────────────────────────── */
+  {
+    id: "5_4_hometogether",
+    title: "Home Together",
+    artist: "Grade5",
+    audio: "songs/5_4_hometogether.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_4_hometogether.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:58", to: "1:18" },
+      { at: "1:47", to: "2:14" },
+{ at: "2:47", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:06" },
+      { at: "1:23", to: "1:57" },
+{ at: "2:17", to: "2:40" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "rest",    tr: "dinlenmek",          image: "images/rest.webp" },
+      { word: "cook",   tr: "yemek pişirmek",         image: "images/cook.webp" },
+      { word: "play",  tr: "çalmak",      image: "images/play.webp" },
+      { word: "read", tr: "okumak",        image: "images/read.webp" },
+      { word: "share",  tr: "paylaşmak",     image: "images/share.webp" },
+      { word: "bread",   tr: "ekmek", image: "images/bread.webp" },
+      { word: "watering",  tr: "sulamak",           image: "images/watering.webp" },
+      { word: "chess",   tr: "satranç",         image: "images/chess.webp" }
+    ],
+
+    lyrics: [
+
+      { from: "0:11.167", to: "0:14.224", text: "Mum is baking us some <bread>,", training: { target: "bread", choices: ["bread", "cake", "cheese", "red"] } },
+      { from: "0:15.652", to: "0:18.804", text: "Sister's <read>ing on her bed.", training: { target: "reading", choices: ["reading", "writing", "sleeping", "bleeding"] } },
+      { from: "0:20.061", to: "0:23.276", text: "Dad is working on his car,", training: { target: "working", choices: ["working", "washing", "driving", "walking"] } },
+      { from: "0:24.548", to: "0:27.716", text: "I am <play>ing my guitar.", training: { target: "playing", choices: ["playing", "reading", "cooking", "saying"] } },
+      { from: "0:28.924", to: "0:32.140", text: "Brother's playing by the stair,", training: { target: "stair", choices: ["stair", "garden", "chair", "share"] } },
+      { from: "0:33.403", to: "0:36.507", text: "Grandma's <rest>ing in her chair.", training: { target: "resting", choices: ["resting", "cooking", "reading", "nesting"] } },
+      { from: "0:37.812", to: "0:40.907", text: "Grandpa's <watering> the tree,", training: { target: "watering", choices: ["watering", "planting", "cleaning", "catering"] } },
+      { from: "0:41.945", to: "0:45.121", text: "I am just watching these three.", training: { target: "watching", choices: ["watching", "reading", "sleeping", "walking"] } },
+      { from: "0:46.401", to: "0:49.905", text: "We're all doing different things,", training: { target: "doing", choices: ["doing", "reading", "playing", "brewing"] } },
+      { from: "0:50.473", to: "0:54.249", text: "And we enjoy what each one brings.", training: { target: "enjoy", choices: ["enjoy", "share", "help", "a boy"] } },
+      { from: "0:54.985", to: "0:58.577", text: "My whole family is at home,", training: { target: "whole", choices: ["whole", "small", "happy", "goal"] } },
+      { from: "0:59.321", to: "1:01.897", text: "Family means I'm not alone.", training: { target: "family", choices: ["family", "friends", "parents", "melody"] } },
+      { from: "1:06.937", to: "1:09.889", text: "Mum <cook>s dinner every night,", training: { target: "cooks", choices: ["cooks", "reads", "rests", "books"] } },
+      { from: "1:10.553", to: "1:14.153", text: "Now she's <read>ing by the light.", training: { target: "light", choices: ["light", "book", "bed", "kite"] } },
+      { from: "1:15.561", to: "1:18.993", text: "Dad goes walking every day,", training: { target: "walking", choices: ["walking", "working", "cooking", "talking"] } },
+      { from: "1:19.465", to: "1:23.273", text: "Now he's playing <chess> today.", training: { target: "chess", choices: ["chess", "cards", "football", "dress"] } },
+      { from: "1:23.905", to: "1:27.601", text: "We're all doing different things,", training: { target: "different", choices: ["different", "same", "fun", "distant"] } },
+      { from: "1:28.377", to: "1:31.953", text: "And we enjoy what each one brings.", training: { target: "one", choices: ["one", "two", "three", "won"] } },
+      { from: "1:32.624", to: "1:36.369", text: "My whole family is at home,", training: { target: "family", choices: ["family", "friends", "parents", "melody"] } },
+      { from: "1:36.896", to: "1:39.601", text: "Family means I'm not alone.", training: { target: "means", choices: ["means", "says", "asks", "scenes"] } },
+      { from: "1:41.084", to: "1:44.588", text: "At our home we work and play,", training: { target: "work", choices: ["work", "read", "rest", "fork"] } },
+      { from: "1:45.332", to: "1:48.860", text: "Things can change from day to day.", training: { target: "change", choices: ["change", "stay", "stop", "strange"] } },
+      { from: "1:49.932", to: "1:53.420", text: "We can laugh and we can <share>,", training: { target: "share", choices: ["share", "laugh", "cry", "chair"] } },
+      { from: "1:54.158", to: "1:59.157", text: "We can cry but still we care.", training: { target: "cry", choices: ["cry", "laugh", "share", "sky"] } },
+      { from: "1:59.830", to: "2:03.158", text: "We're all doing different things,", training: { target: "things", choices: ["things", "games", "tasks", "rings"] } },
+      { from: "2:03.603", to: "2:07.595", text: "And we enjoy what each one brings.", training: { target: "brings", choices: ["brings", "helps", "takes", "wings"] } },
+      { from: "2:08.115", to: "2:11.995", text: "My whole family is at home,", training: { target: "home", choices: ["home", "school", "garden", "alone"] } },
+      { from: "2:12.603", to: "2:15.251", text: "Family means I'm not alone.", training: { target: "alone", choices: ["alone", "happy", "together", "stone"] } },
+      { from: "2:17.275", to: "2:20.883", text: "We're all doing different things,", training: { target: "we're all", choices: ["we're all", "my family", "at home", "fur ball"] } },
+      { from: "2:21.819", to: "2:25.443", text: "And we enjoy what each one brings.", training: { target: "each", choices: ["each", "every", "some", "beach"] } },
+      { from: "2:26.227", to: "2:29.786", text: "My whole family is at home,", training: { target: "at home", choices: ["at home", "at school", "outside", "a poem"] } },
+      { from: "2:30.539", to: "2:35.515", text: "Family means I'm not alone.", training: { target: "family means", choices: ["family means", "family name", "my friends", "melody scenes"] } },
+
+  ]
+  },
+
+/* ── GRADE 5 UNIT 5 - EXPLORE WITH ME ───────────────────────────────────── */
+  {
+    id: "5_5_explorewithme",
+    title: "Explore With Me",
+    artist: "Grade5",
+    audio: "songs/5_5_explorewithme.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_5_explorewithme.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:44", to: "1:06" },
+      { at: "1:34", to: "1:55" },
+{ at: "2:11", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:06" },
+      { at: "1:23", to: "1:57" },
+{ at: "2:17", to: "2:55" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "street",    tr: "cadde",          image: "images/street.webp" },
+      { word: "square",   tr: "meydan",         image: "images/square.webp" },
+      { word: "crowded",  tr: "kalabalık",      image: "images/crowded.webp" },
+      { word: "explore", tr: "keşfetmek",        image: "images/explore.webp" },
+      { word: "playground",  tr: "oyun bahçesi",     image: "images/playground.webp" },
+      { word: "gym",   tr: "spor salonu", image: "images/gym.webp" },
+      { word: "train",  tr: "antrenman yapmak",           image: "images/train.webp" },
+      { word: "castle",   tr: "kale",         image: "images/castle.webp" }
+    ],
+
+    lyrics: [
+
+      { from: "0:03.343", to: "0:06.273", text: "On our <street>, the kids ride by,", training: { target: "street", choices: ["street", "road", "square", "beat"] } },
+      { from: "0:07.035", to: "0:09.836", text: "Small houses stand under the sky.", training: { target: "houses", choices: ["houses", "gardens", "shops", "buses"] } },
+      { from: "0:10.928", to: "0:13.888", text: "There are gardens here and there,", training: { target: "gardens", choices: ["gardens", "houses", "parks", "hardens"] } },
+      { from: "0:14.675", to: "0:17.667", text: "Tall apartments everywhere.", training: { target: "apartments", choices: ["apartments", "houses", "shops", "departments"] } },
+      { from: "0:18.381", to: "0:21.244", text: "This house is bigger than that one,", training: { target: "bigger", choices: ["bigger", "smaller", "taller", "figure"] } },
+      { from: "0:22.216", to: "0:25.119", text: "That block is taller in the sun.", training: { target: "taller", choices: ["taller", "smaller", "bigger", "caller"] } },
+      { from: "0:26.040", to: "0:28.799", text: "This <street> is quieter today,", training: { target: "quieter", choices: ["quieter", "busier", "louder", "writer"] } },
+      { from: "0:29.855", to: "0:32.943", text: "That road is busier all day.", training: { target: "busier", choices: ["busier", "quieter", "smaller", "buzzer"] } },
+      { from: "0:33.663", to: "0:35.319", text: "From our <street> to the <square>,", training: { target: "street", choices: ["street", "road", "park", "beat"] } },
+      { from: "0:35.591", to: "0:37.207", text: "Something new everywhere.", training: { target: "something", choices: ["something", "nothing", "places", "sunbeam"] } },
+      { from: "0:37.391", to: "0:39.959", text: "Every corner, a place to see,", training: { target: "corner", choices: ["corner", "square", "street", "former"] } },
+      { from: "0:40.298", to: "0:43.986", text: "Come and <explore> with me.", training: { target: "explore", choices: ["explore", "walk", "roam", "before"] } },
+      { from: "0:44.665", to: "0:47.585", text: "Block by block, we walk around,", training: { target: "block", choices: ["block", "street", "park", "clock"] } },
+      { from: "0:48.449", to: "0:51.793", text: "Fun new places can be found.", training: { target: "fun", choices: ["fun", "new", "places", "sun"] } },
+      { from: "0:52.096", to: "0:55.505", text: "Parks and <playground>s, shops and more,", training: { target: "parks", choices: ["parks", "shops", "houses", "marks"] } },
+      { from: "0:56.113", to: "0:59.745", text: "There are places to <explore>.", training: { target: "places", choices: ["places", "parks", "shops", "faces"] } },
+      { from: "0:59.880", to: "1:03.025", text: "Block by block, we like to roam,", training: { target: "block", choices: ["block", "street", "square", "clock"] } },
+      { from: "1:03.593", to: "1:06.433", text: "Every street can feel like home.", training: { target: "street", choices: ["street", "road", "home", "beat"] } },
+      { from: "1:09.344", to: "1:12.025", text: "At the park, we laugh and play,", training: { target: "park", choices: ["park", "gym", "cinema", "shark"] } },
+      { from: "1:12.945", to: "1:15.840", text: "At the <gym>, we <train> today.", training: { target: "gym", choices: ["gym", "park", "school", "him"] } },
+      { from: "1:16.385", to: "1:19.953", text: "Cinema lights shine so bright,", training: { target: "cinema", choices: ["cinema", "castle", "gym", "sinner"] } },
+      { from: "1:20.408", to: "1:24.233", text: "<Castle> walls glow late at night.", training: { target: "castle", choices: ["castle", "cinema", "park", "parcel"] } },
+      { from: "1:24.130", to: "1:25.849", text: "From our <street> to the <square>,", training: { target: "square", choices: ["square", "street", "park", "chair"] } },
+      { from: "1:26.049", to: "1:27.697", text: "Something new everywhere.", training: { target: "new", choices: ["new", "old", "busy", "blue"] } },
+      { from: "1:27.969", to: "1:30.705", text: "Every corner, a place to see,", training: { target: "see", choices: ["see", "corner", "place", "sea"] } },
+      { from: "1:30.646", to: "1:35.159", text: "Come and <explore> with me.", training: { target: "me", choices: ["me", "you", "explore", "sea"] } },
+      { from: "1:35.382", to: "1:38.238", text: "Block by block, we walk around,", training: { target: "walk", choices: ["walk", "roam", "run", "talk"] } },
+      { from: "1:38.622", to: "1:42.110", text: "Fun new places can be found.", training: { target: "new", choices: ["new", "fun", "old", "blue"] } },
+      { from: "1:42.375", to: "1:45.710", text: "Parks and <playground>s, shops and more,", training: { target: "playgrounds", choices: ["playgrounds", "parks", "shops", "play sounds"] } },
+      { from: "1:46.142", to: "1:50.086", text: "There are places to <explore>.", training: { target: "explore", choices: ["explore", "walk", "roam", "before"] } },
+      { from: "1:49.977", to: "1:53.904", text: "Block by block, we like to roam,", training: { target: "like", choices: ["like", "walk", "roam", "bike"] } },
+      { from: "1:54.143", to: "1:56.735", text: "Every <street> can feel like home.", training: { target: "every", choices: ["every", "street", "home", "heavy"] } },
+      { from: "1:57.326", to: "2:00.694", text: "Some <street>s are quiet, some are loud,", training: { target: "quiet", choices: ["quiet", "loud", "busy", "diet"] } },
+      { from: "2:01.230", to: "2:04.390", text: "Some places calm, some places <crowded>.", training: { target: "crowded", choices: ["crowded", "quiet", "empty", "clouded"] } },
+      { from: "2:04.974", to: "2:08.198", text: "Some homes are older, some are new,", training: { target: "older", choices: ["older", "new", "crowded", "shoulder"] } },
+      { from: "2:08.726", to: "2:12.310", text: "Every place has something for you.", training: { target: "place", choices: ["place", "street", "home", "face"] } },
+      { from: "2:12.486", to: "2:15.382", text: "Block by block, we walk around,", training: { target: "around", choices: ["around", "walk", "block", "sound"] } },
+      { from: "2:15.774", to: "2:19.142", text: "Fun new places can be found.", training: { target: "places", choices: ["places", "parks", "shops", "faces"] } },
+      { from: "2:19.462", to: "2:22.710", text: "Parks and <playground>s, shops and more,", training: { target: "shops", choices: ["shops", "parks", "houses", "props"] } },
+      { from: "2:23.372", to: "2:27.060", text: "There are places to <explore>.", training: { target: "there", choices: ["there", "places", "explore", "chair"] } },
+      { from: "2:27.095", to: "2:31.035", text: "Block by block, we like to roam,", training: { target: "roam", choices: ["roam", "walk", "block", "home"] } },
+      { from: "2:31.235", to: "2:33.700", text: "Every <street> can feel like home.", training: { target: "home", choices: ["home", "street", "park", "alone"] } },
+      { from: "2:34.138", to: "2:37.594", text: "Block by block, we walk around,", training: { target: "by block", choices: ["by block", "by street", "walk around", "bike clock"] } },
+      { from: "2:37.954", to: "2:41.204", text: "Fun new places can be found.", training: { target: "found", choices: ["found", "lost", "new", "sound"] } },
+      { from: "2:41.484", to: "2:44.932", text: "Parks and <playground>s, shops and more,", training: { target: "more", choices: ["more", "parks", "shops", "door"] } },
+      { from: "2:45.508", to: "2:48.625", text: "There are places to <explore>.", training: { target: "to explore", choices: ["to explore", "to walk", "places", "blue before"] } },
+      { from: "2:49.145", to: "2:52.529", text: "Block by block, we like to roam,", training: { target: "by block", choices: ["by block", "by street", "like to roam", "bike clock"] } },
+      { from: "2:52.945", to: "2:57.558", text: "Every street can feel like home.", training: { target: "feel", choices: ["feel", "street", "home", "meal"] } },
+
+  ]
+  },
+
+/* ── GRADE 5 UNIT 5 - INSIDE MY HOME ───────────────────────────────────── */
+  {
+    id: "5_5_insidemyhome",
+    title: "Inside My Home",
+    artist: "Grade5",
+    audio: "songs/5_5_insidemyhome.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_5_insidemyhome.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:50", to: "1:06" },
+      { at: "1:34", to: "1:55" },
+{ at: "2:11", to: "3:26" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "fork",    tr: "çatal",          image: "images/fork.webp" },
+      { word: "bathroom",   tr: "banyo",         image: "images/bathroom.webp" },
+      { word: "carpet",  tr: "yatak odası",      image: "images/carpet.webp" },
+      { word: "wardrobe", tr: "gardrop",        image: "images/wardrobe.webp" },
+      { word: "flat",  tr: "daire",     image: "images/flat.webp" },
+      { word: "fridge",   tr: "buzdolabı", image: "images/fridge.webp" },
+      { word: "spoon",  tr: "kaşık",           image: "images/spoon.webp" },
+      { word: "pillow",   tr: "yastık",         image: "images/pillow.webp" }
+    ],
+
+    lyrics: [
+
+          { from: "0:20.015", to: "0:22.375", text: "There's a sofa by the wall,", training: { target: "sofa", choices: ["sofa", "lamp", "table", "so far"] } },
+       { from: "0:22.767", to: "0:24.831", text: "There's a lamp, not very tall.", training: { target: "lamp", choices: ["lamp", "sofa", "chair", "camp"] } },
+       { from: "0:25.263", to: "0:27.335", text: "There are <pillow>s on the bed,", training: { target: "pillows", choices: ["pillows", "chairs", "carpets", "willows"] } },
+       { from: "0:27.591", to: "0:29.903", text: "There's a <wardrobe> painted red.", training: { target: "wardrobe", choices: ["wardrobe", "cupboard", "carpet", "word globe"] } },
+       { from: "0:30.199", to: "0:32.407", text: "There's an armchair by the door,", training: { target: "armchair", choices: ["armchair", "sofa", "table", "farm chair"] } },
+       { from: "0:32.775", to: "0:34.687", text: "There's a <carpet> on the floor.", training: { target: "carpet", choices: ["carpet", "pillow", "wardrobe", "market"] } },
+       { from: "0:35.191", to: "0:37.487", text: "There's a table, there are chairs,", training: { target: "table", choices: ["table", "lamp", "sofa", "cable"] } },
+       { from: "0:37.743", to: "0:39.935", text: "Come on in and look upstairs.", training: { target: "upstairs", choices: ["upstairs", "down below", "inside", "up there"] } },
+       { from: "0:40.359", to: "0:42.239", text: "Look around, what can you see?", training: { target: "see", choices: ["see", "look", "hear", "sea"] } },
+       { from: "0:42.791", to: "0:44.727", text: "Come and take a look with me.", training: { target: "take", choices: ["take", "look", "come", "cake"] } },
+       { from: "0:45.311", to: "0:47.175", text: "There is one and there are two,", training: { target: "one", choices: ["one", "two", "three", "sun"] } },
+       { from: "0:47.935", to: "0:49.863", text: "Every room has something new.", training: { target: "new", choices: ["new", "old", "big", "blue"] } },
+       { from: "0:50.343", to: "0:52.503", text: "There are rooms both big and small,", training: { target: "rooms", choices: ["rooms", "chairs", "walls", "brooms"] } },
+       { from: "0:52.863", to: "0:55.103", text: "There are things along the hall.", training: { target: "things", choices: ["things", "rooms", "flowers", "rings"] } },
+       { from: "0:55.390", to: "0:57.711", text: "There is a mat for my cat,", training: { target: "there is", choices: ["there is", "there are", "it is", "three kids"] } },
+       { from: "0:57.886", to: "1:01.143", text: "There is a fence round the <flat>.", training: { target: "fence", choices: ["fence", "wall", "door", "cents"] } },
+       { from: "1:20.891", to: "1:22.843", text: "There is a <fridge> near the wall,", training: { target: "fridge", choices: ["fridge", "mirror", "cupboard", "bridge"] } },
+       { from: "1:23.091", to: "1:25.291", text: "There are plates both big and small.", training: { target: "plates", choices: ["plates", "forks", "spoons", "gates"] } },
+       { from: "1:25.699", to: "1:27.899", text: "There are <fork>s beside the knives,", training: { target: "forks", choices: ["forks", "spoons", "plates", "corks"] } },
+       { from: "1:28.098", to: "1:30.357", text: "There are <spoon>s of different size.", training: { target: "spoons", choices: ["spoons", "forks", "plates", "moons"] } },
+       { from: "1:30.637", to: "1:32.653", text: "There is a mirror by the sink,", training: { target: "sink", choices: ["sink", "mirror", "towel", "pink"] } },
+       { from: "1:33.497", to: "1:35.249", text: "There is a towel, white and pink.", training: { target: "towel", choices: ["towel", "mirror", "cupboard", "vowel"] } },
+       { from: "1:35.489", to: "1:37.841", text: "There is a cupboard by the door,", training: { target: "cupboard", choices: ["cupboard", "wardrobe", "fridge", "upboard"] } },
+       { from: "1:38.073", to: "1:40.209", text: "There are some flowers on the floor.", training: { target: "flowers", choices: ["flowers", "pictures", "plates", "hours"] } },
+       { from: "1:40.626", to: "1:42.778", text: "From the kitchen to the hall,", training: { target: "kitchen", choices: ["kitchen", "bathroom", "bedroom", "kitten"] } },
+       { from: "1:43.186", to: "1:45.338", text: "There are pictures on the wall.", training: { target: "pictures", choices: ["pictures", "flowers", "chairs", "fixtures"] } },
+       { from: "1:45.762", to: "1:47.786", text: "Bedroom, <bathroom>, dining room,", training: { target: "bathroom", choices: ["bathroom", "bedroom", "kitchen", "classroom"] } },
+       { from: "1:48.298", to: "1:50.490", text: "There are flowers in full bloom.", training: { target: "bloom", choices: ["bloom", "flowers", "garden", "room"] } },
+       { from: "1:50.970", to: "1:52.642", text: "There are rooms both big and small,", training: { target: "big", choices: ["big", "small", "tall", "pig"] } },
+       { from: "1:53.274", to: "1:55.490", text: "There are things along the hall.", training: { target: "along", choices: ["along", "inside", "outside", "a song"] } },
+       { from: "1:55.690", to: "1:58.034", text: "There is a mat for my cat,", training: { target: "mat", choices: ["mat", "table", "carpet", "that"] } },
+       { from: "1:58.202", to: "2:01.538", text: "There is a fence round the <flat>.", training: { target: "round", choices: ["round", "flat", "wall", "ground"] } },
+       { from: "2:11.527", to: "2:15.735", text: "Inside, outside, take a look,", training: { target: "inside", choices: ["inside", "outside", "upstairs", "in sight"] } },
+       { from: "2:16.991", to: "2:20.694", text: "There is a chair and a book.", training: { target: "chair", choices: ["chair", "table", "sofa", "bear"] } },
+       { from: "2:21.806", to: "2:25.998", text: "Up the stairs and down below,", training: { target: "below", choices: ["below", "upstairs", "inside", "hello"] } },
+       { from: "2:25.860", to: "2:29.132", text: "There are lights that softly glow.", training: { target: "glow", choices: ["glow", "lights", "flowers", "snow"] } },
+       { from: "2:31.012", to: "2:33.124", text: "There are rooms both big and small,", training: { target: "small", choices: ["small", "big", "tall", "ball"] } },
+       { from: "2:33.587", to: "2:35.724", text: "There are things along the hall.", training: { target: "hall", choices: ["hall", "wall", "floor", "ball"] } },
+       { from: "2:35.995", to: "2:38.300", text: "There is a mat for my cat,", training: { target: "cat", choices: ["cat", "mat", "bed", "hat"] } },
+       { from: "2:38.547", to: "2:41.000", text: "There is a fence round the <flat>.", training: { target: "flat", choices: ["flat", "house", "room", "hat"] } },
 
   ]
   },
@@ -1154,7 +1411,20 @@ const PHONETIC_DISTRACTORS = Object.freeze({
   "features": "creatures", "clothes": "shows", "wear": "there", "white": "night",
   "style": "while", "fake": "ache", "part": "heart", "blonde": "pond",
   "shirt": "dirt", "shoes": "news", "all my": "fall by", "change": "strange",
-  "of me": "on sea", "every way": "heavy maze"
+  "of me": "on sea", "every way": "heavy maze", "bread": "red", "read": "green",
+  "working": "walking", "stair": "share", "rest": "chest", "watering": "catering",
+  "watching": "walking", "doing": "brewing", "enjoy": "a boy", "whole": "goal",
+  "family": "melody", "cook": "foot", "walking": "talking", "means": "scenes",
+  "work": "fork", "share": "chair", "cry": "sky", "brings": "wings",
+  "home": "alone", "we're all": "fur ball", "at home": "a poem",
+  "family means": "melody scenes",
+  "street": "beat", "square": "chair", "something": "sunbeam", "new": "blue",
+  "corner": "former", "see": "sea", "explore": "before", "me": "key",
+  "block": "clock", "walk": "talk", "around": "sound", "by block": "bike clock",
+  "fun": "sun", "places": "faces", "found": "sound", "parks": "marks",
+  "playgrounds": "play sounds", "shops": "drops", "more": "door", "there": "chair",
+  "to explore": "blue before", "like": "spike", "roam": "home", "every": "heavy",
+  "feel": "meal"
 });
 
 const VISUALLY_DISTINCT_PHONETIC_DISTRACTORS = Object.freeze({
@@ -1212,7 +1482,10 @@ window.SONGS.forEach((song) => {
 const REPEATED_LINE_TRAINING_EXCLUSIONS = new Set([
   "5_2_schooldays",
   "5_2_adayinmylife",
-  "5_3_meineveryway"
+  "5_3_meineveryway",
+  "5_4_hometogether",
+  "5_5_explorewithme",
+  "5_5_insidemyhome"
 ]);
 
 function getPhoneticDistractor(target) {

@@ -37,7 +37,7 @@
   <div id="auto-lb"><div class="alb-title">🏆 HIGH SCORES</div><div id="auto-lb-list"></div></div>
   <div id="roster-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="roster-dialog-title"><div class="modal-backdrop" data-close-roster></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-roster aria-label="Close">×</button><p class="eyebrow">Teacher HUD</p><h2 id="roster-dialog-title">Choose your class</h2><p class="muted">Students marked absent today are excluded automatically.</p><div id="classroom-list" class="classroom-list"></div><p id="classroom-message" class="status-note" aria-live="polite"></p></div></div>
 
-  <script>window.__oliviasMovieMemoriesStudentMode = true; sessionStorage.setItem("fpStudentMode", "1");</script>
+  <script>const oliviasMovieMemoriesMode = new URLSearchParams(location.search).get("mode"); window.__oliviasMovieMemoriesStudentMode = oliviasMovieMemoriesMode === "student"; if (window.__oliviasMovieMemoriesStudentMode) sessionStorage.setItem("fpStudentMode", "1"); else sessionStorage.removeItem("fpStudentMode");</script>
   <script src="../func_presenter/names.js"></script>
   <script src="../func_presenter/teacher-cloud.js"></script>
   <script src="../func_presenter/teacher-control.js"></script>
