@@ -19,6 +19,16 @@ function renderSequentialBoxes(example) {
     return;
   }
 
+  if (data.interaction === "process-expression-reveal") {
+    renderProcessExpressionReveal(data);
+    return;
+  }
+
+  if (data.interaction === "recipe-language-reveal") {
+    renderRecipeLanguageReveal(data);
+    return;
+  }
+
   const root = document.createElement("section");
   const isSplit = Number.isInteger(data.splitAt) && data.splitAt > 0;
   root.className = `sequential-boxes ${isSplit ? "split" : ""}`;
@@ -81,6 +91,140 @@ function renderSequentialBoxes(example) {
   els.presenceView.replaceChildren(root);
 }
 
+function renderRecipeLanguageReveal(data) {
+  els.next.disabled = false;
+  syncHeaderNextButton();
+  els.image.classList.add("hidden");
+  els.fallback.classList.add("hidden");
+
+  const root = document.createElement("section");
+  root.className = "sequential-boxes recipe-language-reveal";
+  const title = document.createElement("h2");
+  title.className = "recipe-language-reveal-title";
+  title.textContent = data.title || "HOW TO ASK ABOUT A RECIPE";
+  const groups = document.createElement("div");
+  groups.className = "recipe-language-reveal-groups";
+  root.append(title, groups);
+
+  let groupIndex = 0;
+  let itemIndex = 0;
+  let currentItems = null;
+  const revealNext = () => {
+    const groupData = data.groups[groupIndex];
+    if (!groupData) return;
+    if (!currentItems) {
+      const group = document.createElement("section");
+      group.className = "recipe-language-reveal-group";
+      currentItems = document.createElement("div");
+      currentItems.className = "recipe-language-reveal-items";
+      if (groupData.heading) {
+        const heading = document.createElement("h3");
+        heading.textContent = groupData.heading;
+        group.append(heading);
+      }
+      group.append(currentItems);
+      groups.append(group);
+    }
+    const item = groupData.items[itemIndex];
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "recipe-language-reveal-card is-active";
+    (item.parts || [{ text: item.text }]).forEach((part) => {
+      const span = document.createElement("span");
+      span.className = part.highlight ? "recipe-language-reveal-highlight" : "";
+      span.textContent = part.text;
+      card.append(span);
+    });
+    card.addEventListener("click", () => {
+      if (!card.classList.contains("is-active")) return;
+      card.classList.remove("is-active");
+      card.classList.add("revealed");
+      itemIndex += 1;
+      if (itemIndex >= groupData.items.length) {
+        groupIndex += 1;
+        itemIndex = 0;
+        currentItems = null;
+      }
+      revealNext();
+    });
+    currentItems.append(card);
+  };
+
+  revealNext();
+  els.presenceView.replaceChildren(root);
+}
+
+function renderProcessExpressionReveal(data) {
+  els.next.disabled = false;
+  syncHeaderNextButton();
+
+  els.image.classList.add("hidden");
+  els.fallback.classList.add("hidden");
+
+  const visualRoot = document.createElement("section");
+  visualRoot.id = "sequentialBoxesVisual";
+  visualRoot.className = "sequential-boxes process-expression-reveal process-expression-reveal-left";
+  const visualHeading = document.createElement("h2");
+  visualHeading.className = "process-expression-reveal-heading";
+  visualHeading.textContent = data.heading || "WE USE THESE EXPRESSIONS";
+  const visualList = document.createElement("div");
+  visualList.className = "process-expression-reveal-list";
+  visualRoot.append(visualHeading, visualList);
+  els.exampleVisualPanel.append(visualRoot);
+
+  const root = document.createElement("section");
+  root.className = "sequential-boxes process-expression-reveal process-expression-reveal-right";
+  const list = document.createElement("div");
+  list.className = "process-expression-reveal-list";
+  const footer = document.createElement("p");
+  footer.className = "process-expression-reveal-footer";
+  const hasFooter = Boolean(data.footer);
+  footer.textContent = data.footer || "";
+  footer.hidden = true;
+  let visibleIndex = 0;
+  const splitAt = Number.isInteger(data.splitAt) ? data.splitAt : 3;
+
+  const revealNext = () => {
+    const item = data.items[visibleIndex];
+    if (!item) {
+      if (hasFooter) footer.hidden = false;
+      return;
+    }
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "process-expression-reveal-item is-active";
+    if (item.questionParts) {
+      row.classList.add("process-expression-reveal-question");
+      item.questionParts.forEach((part) => {
+        const text = document.createElement("span");
+        text.className = part.highlight ? "process-expression-reveal-highlight" : "";
+        text.textContent = part.text;
+        row.append(text);
+      });
+    } else {
+      const expression = document.createElement("span");
+      expression.textContent = item.expression;
+      const meaning = document.createElement("span");
+      meaning.textContent = item.meaning;
+      row.append(expression, meaning);
+    }
+    row.addEventListener("click", () => {
+      if (!row.classList.contains("is-active")) return;
+      row.classList.remove("is-active");
+      row.classList.add("revealed");
+      row.setAttribute("aria-disabled", "true");
+      revealNext();
+    });
+    (visibleIndex < splitAt ? visualList : list).append(row);
+    visibleIndex += 1;
+  };
+
+  revealNext();
+  root.append(list);
+  if (hasFooter) root.append(footer);
+  els.presenceView.replaceChildren(root);
+}
+
 function renderAnswerRevealSequentialBoxes(data) {
   els.next.disabled = false;
   const visualRoot = document.createElement("section");
@@ -136,14 +280,14 @@ function renderInquiryRevealSequentialBoxes(data) {
   els.next.disabled = false;
   const visualRoot = document.createElement("section");
   visualRoot.id = "sequentialBoxesVisual";
-  visualRoot.className = "sequential-boxes-inquiry-left";
+  visualRoot.className = `sequential-boxes-inquiry-left ${data.layoutClass || ""}`;
   const rowList = document.createElement("div");
   rowList.className = "sequential-boxes-inquiry-rows";
   visualRoot.append(rowList);
   els.exampleVisualPanel.append(visualRoot);
 
   const root = document.createElement("section");
-  root.className = "sequential-boxes sequential-boxes-inquiry-right";
+  root.className = `sequential-boxes sequential-boxes-inquiry-right ${data.layoutClass || ""}`;
   const bubbleList = document.createElement("div");
   bubbleList.className = "sequential-boxes-inquiry-bubbles";
   root.append(bubbleList);
@@ -191,12 +335,17 @@ function renderInquiryRevealSequentialBoxes(data) {
       const bubble = document.createElement("button");
       bubble.type = "button";
       bubble.className = "sequential-boxes-inquiry-bubble";
-      const questionWord = document.createElement("span");
-      questionWord.className = "sequential-boxes-inquiry-question-word";
-      questionWord.textContent = item.word;
-      const rest = document.createElement("span");
-      rest.textContent = item.example.slice(item.word.length);
-      bubble.append(questionWord, rest);
+      if (data.answerOnly) {
+        bubble.classList.add("sequential-boxes-inquiry-answer-only");
+        bubble.textContent = item.example;
+      } else {
+        const questionWord = document.createElement("span");
+        questionWord.className = "sequential-boxes-inquiry-question-word";
+        questionWord.textContent = item.word;
+        const rest = document.createElement("span");
+        rest.textContent = item.example.slice(item.word.length);
+        bubble.append(questionWord, rest);
+      }
       makeRevealTrigger(bubble);
       bubbleList.append(bubble);
     }

@@ -1,0 +1,93 @@
+.example-card.recipe-question-info-slide {
+  grid-template-columns: 1fr;
+}
+
+.example-card.recipe-question-info-slide .sentence-panel {
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(28px, 4vw, 64px);
+}
+
+.recipe-question-info {
+  display: grid;
+  gap: clamp(24px, 3vh, 42px);
+  width: min(100%, 1360px);
+  margin: 0 auto;
+}
+
+.recipe-question-info > h2 {
+  margin: 0;
+  color: var(--yellow);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(30px, 3.2vw, 52px);
+  letter-spacing: .07em;
+  text-align: center;
+}
+
+.recipe-question-info-list {
+  display: grid;
+  gap: clamp(15px, 1.8vh, 26px);
+}
+
+.recipe-question-info-row {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  padding: clamp(15px, 1.6vw, 24px) clamp(66px, 5vw, 92px) clamp(15px, 1.6vw, 24px) clamp(20px, 2.2vw, 34px);
+  border: 2px solid rgba(96, 126, 208, .54);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(28, 55, 114, .92), rgba(10, 24, 62, .92));
+}
+
+.recipe-question-info-row.hidden {
+  display: none;
+}
+
+.recipe-question-info-explanation,
+.recipe-question-info-sentence {
+  margin: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.recipe-question-info-explanation {
+  color: var(--yellow);
+  font-size: clamp(17px, 1.65vw, 27px);
+  font-weight: 900;
+}
+
+.recipe-question-info-sentence {
+  color: #f4f7ff;
+  font-size: clamp(24px, 2.45vw, 40px);
+  font-weight: 850;
+}
+
+.recipe-question-info-sentence u {
+  color: #fff;
+  text-decoration-color: var(--yellow);
+  text-decoration-thickness: .1em;
+  text-underline-offset: .14em;
+}
+
+.recipe-question-info-next {
+  position: absolute;
+  top: 50%;
+  right: clamp(14px, 1.5vw, 24px);
+  width: clamp(36px, 3.5vw, 54px);
+  height: clamp(36px, 3.5vw, 54px);
+  border: 2px solid var(--yellow);
+  border-radius: 50%;
+  color: var(--yellow);
+  background: #132857;
+  cursor: pointer;
+  font-size: clamp(32px, 3vw, 46px);
+  line-height: .8;
+  transform: translateY(-50%);
+}
+
+.recipe-question-info-next:hover,
+.recipe-question-info-next:focus-visible {
+  color: #071735;
+  background: var(--yellow);
+  outline: none;
+}

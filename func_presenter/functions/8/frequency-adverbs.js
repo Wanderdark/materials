@@ -278,6 +278,138 @@ const frequencyAdverbsGrade8VideoItems = frequencyAdverbsGrade8Function.sentence
     videoDialogue: item.videoDialogue
   }));
 
+frequencyAdverbsGrade8VideoItems.push(
+  {
+    id: "frequency-r2-benjamin-david-pencil",
+    speakers: ["BENJAMIN", "DAVID"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_benjamin_david.mp4",
+      lines: [
+        { speaker: "BENJAMIN", parts: [{ text: "I " }, { answer: "sometimes", choices: ["always", "sometimes"] }, { text: " lose my pencil. Has anyone found it?" }] },
+        { speaker: "DAVID", parts: [{ text: "Which one is yours?" }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-victoria-noah-ella-homework",
+    speakers: ["VICTORIA", "NOAH", "ELLA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_ella_noah_victoria.mp4",
+      lines: [
+        { speaker: "VICTORIA", parts: [{ text: "I " }, { answer: "always", choices: ["always", "usually"] }, { text: " do my homework." }] },
+        { speaker: "NOAH", parts: [{ text: "I " }, { answer: "never", choices: ["sometimes", "never"] }, { text: " forget my homework." }] },
+        { speaker: "TEACHER", parts: [{ text: "Ella, where is your homework?" }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-david-mia-break",
+    speakers: ["DAVID", "MIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_mia_david.mp4",
+      lines: [
+        { speaker: "DAVID", parts: [{ text: "Mia, why do you " }, { answer: "always", choices: ["sometimes", "always"] }, { text: " sit here during break?" }] },
+        { speaker: "MIA", parts: [{ text: "Because it's quiet." }] },
+        { speaker: "ANNOUNCEMENT", parts: [{ text: "Attention, students!" }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-emma-duties",
+    speakers: ["EMMA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_emma.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "I " }, { answer: "always", choices: ["never", "always"] }, { text: " help my friends with their duties." }] },
+        { speaker: "TEACHER", parts: [{ text: "Emma, who is responsible for your desk?" }] },
+        { speaker: "EMMA", parts: [{ text: "Me, I guess." }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-victoria-schedule",
+    speakers: ["VICTORIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_victoria.mp4",
+      lines: [
+        { speaker: "VICTORIA", parts: [{ text: "I " }, { answer: "always", choices: ["always", "never"] }, { text: " follow my school schedule." }] },
+        { speaker: "TEACHER", parts: [{ text: "Victoria, the robotics meeting started five minutes ago!" }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-victoria-finish-work",
+    speakers: ["VICTORIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_school_life_victoria2.mp4",
+      lines: [
+        { speaker: "VICTORIA", parts: [{ text: "I " }, { answer: "always", choices: ["usually", "always"] }, { text: " finish my work before everyone." }] },
+        { speaker: "TEACHER", parts: [{ text: "Victoria, turn the page." }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-ava-olivia-draw",
+    speakers: ["AVA", "OLIVIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_classroom_life_ava_olivia.mp4",
+      lines: [
+        { speaker: "AVA", parts: [{ text: "Wow, these drawings are really cool!" }] },
+        { speaker: "OLIVIA", parts: [{ text: "Mhm." }] },
+        { speaker: "AVA", parts: [{ answer: "How often", choices: ["Where", "How often"] }, { text: " do you draw?" }] },
+        { speaker: "OLIVIA", parts: [{ answer: "Every day", choices: ["Every day", "twice a month"] }, { text: "." }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-david-hannah-bike",
+    speakers: ["DAVID", "HANNAH"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_classroom_life_david_hannah.mp4",
+      lines: [
+        { speaker: "DAVID", parts: [{ text: "Do you ride your bike to school every day?" }] },
+        { speaker: "HANNAH", parts: [{ text: "Not every day." }] },
+        { speaker: "DAVID", parts: [{ answer: "How often", choices: ["How much", "How often"] }, { text: "?" }] },
+        { speaker: "HANNAH", parts: [{ answer: "On sunny days", choices: ["Every day", "On sunny days"] }, { text: "." }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-benjamin-daniel-basketball",
+    speakers: ["BENJAMIN", "DANIEL"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_classroom_life_benjamin_daniel.mp4",
+      lines: [
+        { speaker: "BENJAMIN", parts: [{ text: "Do you play basketball after school?" }] },
+        { speaker: "DANIEL", parts: [{ answer: "Sometimes", choices: ["Always", "Sometimes"] }, { text: "." }] },
+        { speaker: "BENJAMIN", parts: [{ text: "How often?" }] },
+        { speaker: "DANIEL", parts: [{ answer: "Twice a week", choices: ["Twice a week", "twice a day"] }, { text: "." }] }
+      ]
+    }
+  },
+  {
+    id: "frequency-r2-david-jack-fishing",
+    speakers: ["DAVID", "JACK"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_classroom_life_david_jack.mp4",
+      lines: [
+        { speaker: "DAVID", parts: [{ answer: "How often", choices: ["How often", "When"] }, { text: " do you fish here?" }] },
+        { speaker: "JACK", parts: [{ text: "Not often, only " }, { answer: "twice a week", choices: ["once a month", "twice a week"] }, { text: "." }] }
+      ]
+    }
+  }
+);
+
 frequencyAdverbsGrade8Function.sentences.splice(
   frequencyAdverbsGrade8VideoStartIndex,
   frequencyAdverbsGrade8VideoItems.length,

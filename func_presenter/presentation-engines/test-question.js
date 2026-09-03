@@ -19,12 +19,16 @@ function playTestQuestionSound(isCorrect) {
 
 function getTestQuestionPortrait(speaker) {
   const name = String(speaker || "").trim().toLowerCase();
-  const characterNames = new Set(["ava", "benjamin", "chloe", "daniel", "david", "ella", "emma", "ethan", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"]);
+  const characterNames = new Set(["ava", "benjamin", "camille", "chloe", "daniel", "david", "ella", "emma", "ethan", "giulia", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"]);
   return characterNames.has(name) ? `../olivias_movie_memories/assets/portraits/${name}.webp` : "";
 }
 
 function appendTestQuestionLineText(container, lineText) {
-  String(lineText || "").split(/(_{2,})/g).forEach((part) => {
+  String(lineText || "").split(/(_{2,}|\n)/g).forEach((part) => {
+    if (part === "\n") {
+      container.append(document.createElement("br"));
+      return;
+    }
     if (/^_{2,}$/.test(part)) {
       const gap = document.createElement("span");
       gap.className = "test-question-gap test-question-spinner";

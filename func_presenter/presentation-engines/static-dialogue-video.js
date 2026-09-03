@@ -4,6 +4,7 @@ function clearStaticDialogueVideo() {
   document.getElementById("staticDialogueVideoWrap")?.remove();
   document.getElementById("staticDialogueVideoToggle")?.remove();
   els.exampleCard?.classList.remove("static-dialogue-video-open");
+  els.exampleCard?.classList.remove("static-dialogue-video-fullscreen");
 }
 
 function renderStaticDialogueVideo(example) {
@@ -41,12 +42,13 @@ function renderStaticDialogueVideo(example) {
     document.getElementById("staticDialogueVideoWrap")?.remove();
     els.image.classList.remove("hidden");
     els.exampleCard.classList.remove("static-dialogue-video-open");
+    els.exampleCard.classList.remove("static-dialogue-video-fullscreen");
     toggle.textContent = "🎥";
     toggle.title = "Watch video";
     toggle.setAttribute("aria-label", "Watch video");
   };
 
-  const showVideo = () => {
+  const showVideo = ({ fullScreen = false } = {}) => {
     const wrap = document.createElement("div");
     wrap.id = "staticDialogueVideoWrap";
     wrap.className = "static-dialogue-video-wrap";
@@ -69,12 +71,19 @@ function renderStaticDialogueVideo(example) {
     els.exampleVisualPanel.append(wrap);
     applyAspectRatio();
     els.image.classList.add("hidden");
+    els.fallback.classList.add("hidden");
     els.exampleCard.classList.add("static-dialogue-video-open");
+    els.exampleCard.classList.toggle("static-dialogue-video-fullscreen", fullScreen);
     toggle.textContent = "🖼️";
     toggle.title = "Show image";
     toggle.setAttribute("aria-label", "Show image");
     video.play().catch(() => {});
     video.addEventListener("ended", () => {
+      if (!fullScreen) {
+        if (data.scrambledDialogue) activateScrambledDialogue(example);
+        return;
+      }
+      els.exampleCard.classList.remove("static-dialogue-video-fullscreen");
       if (data.scrambledDialogue) activateScrambledDialogue(example);
     }, { once: true });
   };
@@ -84,4 +93,5 @@ function renderStaticDialogueVideo(example) {
     else showVideo();
   });
   els.exampleVisualPanel.append(toggle);
+  if (data.autoOpen) showVideo({ fullScreen: true });
 }

@@ -64,6 +64,11 @@ function renderExample() {
   clearSuggestionDialogue();
   clearSequentialBoxes();
   clearFrequencyExpressionReveal();
+  clearSplitImageWordMatch();
+  clearQuestionAnswerMatch();
+  clearSimpleProcessIndex();
+  clearRecipeIngredientQuiz();
+  clearRecipeQuestionInfo();
   clearLikesDislikesIntro();
   clearPreferenceComparison();
   clearLikesDislikesPopup();
@@ -90,6 +95,11 @@ function renderExample() {
   const isSuggestionDialogue = Boolean(example.suggestionDialogue);
   const isSequentialBoxes = Boolean(example.sequentialBoxes);
   const isFrequencyExpressionReveal = Boolean(example.frequencyExpressionReveal);
+  const isSplitImageWordMatch = Boolean(example.splitImageWordMatch);
+  const isQuestionAnswerMatch = Boolean(example.questionAnswerMatch);
+  const isSimpleProcessIndex = Boolean(example.simpleProcessIndex);
+  const isRecipeIngredientQuiz = Boolean(example.recipeIngredientQuiz);
+  const isRecipeQuestionInfo = Boolean(example.recipeQuestionInfo);
   const isLikesDislikesIntro = Boolean(example.likesDislikesIntro);
   const isPreferenceComparison = Boolean(example.preferenceComparison);
   const isPreferenceQuestion = example.preferenceComparison?.layout === "question";
@@ -102,7 +112,7 @@ function renderExample() {
   const noVisual = Boolean(example.noVisual);
   const focus = example.focus || example.article || "";
   const highlight = example.highlight || example.article;
-  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide || isFrequencyExpressionReveal || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest
+  const highlightedSentence = isTimePrompt || isTimetableSlide || isPresenceSlide || isFrequencyExpressionReveal || isSplitImageWordMatch || isQuestionAnswerMatch || isRecipeIngredientQuiz || isRecipeQuestionInfo || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest
     ? ""
     : example.highlightSuffix
     ? example.sentence.replace(
@@ -128,6 +138,11 @@ function renderExample() {
   els.exampleCard.classList.toggle("suggestion-dialogue-slide", isSuggestionDialogue);
   els.exampleCard.classList.toggle("sequential-boxes-slide", isSequentialBoxes);
   els.exampleCard.classList.toggle("frequency-expression-reveal-slide", isFrequencyExpressionReveal);
+  els.exampleCard.classList.toggle("split-image-word-match-slide", isSplitImageWordMatch);
+  els.exampleCard.classList.toggle("question-answer-match-slide", isQuestionAnswerMatch);
+  els.exampleCard.classList.toggle("simple-process-index-slide", isSimpleProcessIndex);
+  els.exampleCard.classList.toggle("recipe-ingredient-quiz-slide", isRecipeIngredientQuiz);
+  els.exampleCard.classList.toggle("recipe-question-info-slide", isRecipeQuestionInfo);
   els.exampleCard.classList.toggle("likes-dislikes-intro-slide", isLikesDislikesIntro);
   els.exampleCard.classList.toggle("preference-comparison-slide", isPreferenceComparison);
   els.exampleCard.classList.toggle("preference-question-slide", isPreferenceQuestion);
@@ -140,12 +155,12 @@ function renderExample() {
   els.exampleCard.classList.toggle("video-dialogue-slide", isVideoDialogue);
   els.exampleCard.classList.toggle("preference-video-hub-slide", isPreferenceVideoHub);
   els.exampleCard.classList.toggle("simple-present-video-hub-slide", isSimplePresentVideoHub);
-  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual || isLikesDislikesIntro);
+  els.exampleVisualPanel.classList.toggle("hidden", isTimePrompt || noVisual || isSplitImageWordMatch || isQuestionAnswerMatch || isRecipeQuestionInfo || isLikesDislikesIntro);
   els.timeDigitalDisplay.textContent = example.digitalTime || "";
   els.timeDigitalDisplay.classList.toggle("hidden", !example.digitalTime || isTimePrompt);
   els.timePromptView.classList.toggle("hidden", !isTimePrompt);
   els.timetableAnswerView.classList.toggle("hidden", !isTimetableSlide || !example.answerParts);
-  els.presenceView.classList.toggle("hidden", !isPresenceSlide && !isFrequencyExpressionReveal && !isVideoDialogue && !isLikesDislikesIntro && !isPreferenceComparison && !isLikesDislikesPopup && !isPreferenceTableTest);
+  els.presenceView.classList.toggle("hidden", !isPresenceSlide && !isFrequencyExpressionReveal && !isSplitImageWordMatch && !isQuestionAnswerMatch && !isRecipeIngredientQuiz && !isRecipeQuestionInfo && !isVideoDialogue && !isLikesDislikesIntro && !isPreferenceComparison && !isLikesDislikesPopup && !isPreferenceTableTest);
   if (isTimePrompt) {
     els.timePromptDigital.textContent = example.digitalTime;
     els.timePromptAnswer.textContent = example.answerSentence;
@@ -153,14 +168,14 @@ function renderExample() {
     els.timeReveal.disabled = false;
   }
   [els.article, els.referenceType, els.timeQuestion, els.sentence, els.presentationExampleSentence, els.description, els.ruleNote]
-    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide || isFrequencyExpressionReveal || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest));
+    .forEach((element) => element.classList.toggle("hidden", isTimePrompt || isPresenceSlide || isFrequencyExpressionReveal || isSplitImageWordMatch || isQuestionAnswerMatch || isRecipeIngredientQuiz || isRecipeQuestionInfo || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest));
   els.article.textContent = focus ? focus.toUpperCase() : "";
   els.article.className = `article-badge ${usesMintBadge ? "specific" : ""} ${focus.length > 2 ? "long" : ""} ${example.badgeClass || ""}`;
-  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isFrequencyExpressionReveal || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest);
+  els.article.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isFrequencyExpressionReveal || isSplitImageWordMatch || isQuestionAnswerMatch || isRecipeIngredientQuiz || isRecipeQuestionInfo || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || isPreferenceTableTest);
   els.referenceType.textContent = isTimetableSlide ? "TIMETABLE" : example.referenceType || (example.article === "the" ? "SPECIFIC NOUN" : "NON-SPECIFIC NOUN");
   els.timeQuestion.textContent = example.question || "";
   els.timeQuestion.classList.toggle("hidden", isTimePrompt || !example.question);
-  els.sentence.innerHTML = isFrequencyExpressionReveal || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesPopup || isPreferenceTableTest ? "" : isTimetableSlide
+  els.sentence.innerHTML = isFrequencyExpressionReveal || isSplitImageWordMatch || isRecipeIngredientQuiz || isRecipeQuestionInfo || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesPopup || isPreferenceTableTest ? "" : isTimetableSlide
     ? renderTimetableParts(example.questionParts || example.sentenceParts)
     : highlightedSentence;
   els.sentence.classList.toggle("long-phrase", !isVideoDialogue && (isTimetableSlide || (example.sentence?.length || 0) > 10));
@@ -173,7 +188,7 @@ function renderExample() {
   els.description.textContent = state.module.id === "a-an-the"
     ? `Referring to a ${example.article === "the" ? "specific" : "non-specific"} noun.`
     : state.module.description;
-  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || !els.description.textContent);
+  els.description.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isPresenceSlide || isSplitImageWordMatch || isRecipeIngredientQuiz || isRecipeQuestionInfo || isVideoDialogue || isPreferenceVideoHub || isSimplePresentVideoHub || isLikesDislikesIntro || isPreferenceComparison || isLikesDislikesPopup || !els.description.textContent);
   els.ruleNote.textContent = example.ruleNote || "";
   els.ruleNote.classList.toggle("hidden", isTimePrompt || isTimetableSlide || isVideoDialogue || !example.ruleNote);
   if (isTimetableSlide && example.answerParts) {
@@ -187,6 +202,11 @@ function renderExample() {
   if (isSuggestionDialogue) renderSuggestionDialogue(example);
   if (isSequentialBoxes) renderSequentialBoxes(example);
   if (isFrequencyExpressionReveal) renderFrequencyExpressionReveal(example);
+  if (isSplitImageWordMatch) renderSplitImageWordMatch(example);
+  if (isQuestionAnswerMatch) renderQuestionAnswerMatch(example);
+  if (isSimpleProcessIndex) renderSimpleProcessIndex(example);
+  if (isRecipeIngredientQuiz) renderRecipeIngredientQuiz(example);
+  if (isRecipeQuestionInfo) renderRecipeQuestionInfo(example);
   if (isLikesDislikesIntro) renderLikesDislikesIntro(example);
   if (isPreferenceComparison) renderPreferenceComparison(example);
   if (isLikesDislikesPopup) renderLikesDislikesPopup(example);
@@ -205,7 +225,7 @@ function renderExample() {
     const activeTrait = example.traits?.find((trait) => trait.key === hubState.activeTraitKey) || example.traits?.[0];
     renderPersonalityHubVisual(example, activeTrait);
   }
-  if (!isTimePrompt && !noVisual && !example.personalityHub && !isVideoDialogue && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isLikesDislikesIntro && !isPreferenceComparison && !isLikesDislikesPopup && !isInvitationLetter && !isMessageComprehension && !isTestQuestion && !isPreferenceTableTest) {
+  if (!isTimePrompt && !noVisual && !example.personalityHub && !isRecipeIngredientQuiz && !isRecipeQuestionInfo && !isVideoDialogue && !isPersonalityWordReveal && !isSuggestionDialogue && !isSequentialBoxes && !isLikesDislikesIntro && !isPreferenceComparison && !isLikesDislikesPopup && !isInvitationLetter && !isMessageComprehension && !isTestQuestion && !isPreferenceTableTest) {
     els.brief.textContent = example.visualBrief;
     els.fallback.classList.add("hidden");
     els.image.classList.remove("hidden");
@@ -227,9 +247,12 @@ function renderExample() {
     }
     if (example.staticDialogueVideo) renderStaticDialogueVideo(example);
   }
+  if (example.scrambledDialogue && !example.staticDialogueVideo) activateScrambledDialogue();
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
   const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;
-  els.next.textContent = (isLastVisible && !example.keepNextLabel && !example.exerciseLink && !example.exerciseObj) ? "FINISH" : "NEXT";
+  els.next.textContent = isRecipeQuestionInfo
+    ? "NEXT"
+    : (isLastVisible && !example.keepNextLabel && !example.exerciseLink && !example.exerciseObj) ? "FINISH" : "NEXT";
   syncHeaderNextButton();
   els.dots.replaceChildren(...visibleSentences.map((s) => {
     const actualIdx = state.module.sentences.indexOf(s);

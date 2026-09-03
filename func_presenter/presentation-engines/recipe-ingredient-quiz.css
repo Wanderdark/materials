@@ -1,0 +1,184 @@
+.example-card.recipe-ingredient-quiz-slide {
+  grid-template-columns: minmax(330px, .78fr) minmax(580px, 1.22fr);
+}
+
+.example-card.recipe-ingredient-quiz-slide .visual-panel {
+  align-items: stretch;
+  padding: clamp(22px, 3vw, 46px);
+}
+
+.example-card.recipe-ingredient-quiz-slide .sentence-panel {
+  align-items: stretch;
+  padding: clamp(22px, 3vw, 46px);
+}
+
+.recipe-ingredient-card {
+  display: grid;
+  align-content: start;
+  align-self: center;
+  gap: clamp(16px, 2vw, 28px);
+  width: 100%;
+  padding: clamp(24px, 3vw, 46px);
+  border: 3px solid rgba(255, 216, 77, .72);
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgba(28, 57, 118, .96), rgba(9, 23, 59, .96));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .25);
+}
+
+.recipe-ingredient-card h2,
+.recipe-ingredient-card p {
+  margin: 0;
+}
+
+.recipe-ingredient-card h2 {
+  color: var(--yellow);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(30px, 3.3vw, 54px);
+  letter-spacing: .05em;
+  line-height: 1;
+  text-align: center;
+}
+
+.recipe-ingredient-card p {
+  color: #9db8ff;
+  font-size: clamp(13px, 1.2vw, 20px);
+  font-weight: 950;
+  letter-spacing: .16em;
+}
+
+.recipe-ingredient-card ul {
+  display: grid;
+  gap: clamp(12px, 1.4vh, 20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recipe-ingredient-card li {
+  color: #f4f7ff;
+  font-size: clamp(19px, 1.85vw, 30px);
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.recipe-ingredient-card li::before {
+  margin-right: .5em;
+  color: var(--mint);
+  content: "•";
+}
+
+.recipe-ingredient-quiz {
+  display: grid;
+  gap: clamp(24px, 3vw, 46px);
+  width: 100%;
+}
+
+.recipe-ingredient-quiz > h2 {
+  margin: 0;
+  color: var(--yellow);
+  font-size: clamp(20px, 2vw, 34px);
+  line-height: 1.13;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.recipe-ingredient-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+}
+
+.recipe-ingredient-choice {
+  position: relative;
+  display: block;
+  min-width: 0;
+  height: clamp(130px, 16.5vw, 225px);
+  width: clamp(130px, 16.5vw, 225px);
+  justify-self: center;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: transform .16s ease, opacity .22s ease;
+}
+
+.recipe-ingredient-choice:hover:not(:disabled),
+.recipe-ingredient-choice:focus-visible {
+  transform: translateY(-4px);
+  outline: none;
+}
+
+.recipe-ingredient-choice.choice-1 { border-color: #5875ce; background: #173267; }
+.recipe-ingredient-choice.choice-2 { border-color: #fff0a1; background: #9a7224; }
+.recipe-ingredient-choice.choice-3 { border-color: #ff9b86; background: #8c3038; }
+.recipe-ingredient-choice.choice-4 { border-color: #ffd19a; background: #9a4d1a; }
+
+.recipe-ingredient-choice-letter {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  z-index: 1;
+  color: #fff;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(22px, 2vw, 34px);
+  font-weight: 900;
+}
+
+.recipe-ingredient-choice-visual {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: 0;
+  min-height: 0;
+  padding: 0;
+}
+
+.recipe-ingredient-choice-visual:has(img:only-child) {
+  grid-template-columns: 1fr;
+}
+
+.recipe-ingredient-choice-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  object-fit: cover;
+}
+
+.recipe-ingredient-choice-label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  min-height: 1.25em;
+  padding: 7px 10px;
+  color: #fff;
+  background: rgba(5, 15, 39, .68);
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: clamp(19px, 1.8vw, 30px);
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.recipe-ingredient-choice.correct {
+  border-color: var(--mint);
+  box-shadow: 0 0 24px rgba(101, 230, 184, .52);
+}
+
+.recipe-ingredient-choice.removed {
+  opacity: .32;
+  filter: grayscale(1);
+  pointer-events: none;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .example-card.recipe-ingredient-quiz-slide { grid-template-columns: 1fr; }
+  .recipe-ingredient-card { min-height: auto; }
+}

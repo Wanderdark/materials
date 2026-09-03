@@ -746,6 +746,7 @@ General Interests:
 - Hiking
 - Climbing
 - Outdoor games
+- Trying different cuisines
 
 Personality:
 Adventurous, energetic, cheerful.
@@ -1015,7 +1016,7 @@ Relationships:
 - Close friends: Zoe, Chloe, Victoria, Noah
 
 Hidden lore:
-secret_crush: Noah
+secret_crush: none
 
 Prompt insert:
 Mia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, blue eyes, no glasses, and a shy, gentle expression with a very slight smile or no smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly.
@@ -1219,7 +1220,7 @@ Personality note:
 Zeki ama bazen cimri davranabilen bir ogrenci.
 
 Hated activity:
-Reading books.
+Reading books, cooking.
 
 Phobia:
 Making mistakes.

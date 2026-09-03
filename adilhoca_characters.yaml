@@ -1212,7 +1212,7 @@ students:
         - "cycling"
       likes:
         - "hiking"
-    general_interests: [Camping, Barbecue, Picnics, Hiking, Climbing, "Outdoor games"]
+    general_interests: [Camping, Barbecue, Picnics, Hiking, Climbing, "Outdoor games", "trying different cuisines"]
     personality:
       traits: [Adventurous, energetic, cheerful]
       note: "Maceraci, enerjik ve neseli bir ogrenci."
@@ -1481,8 +1481,8 @@ students:
     school_profile:
       grade: 5
       favorite_subject: "Literature"
-    birthday: {day: 10, month: "October"}
-    zodiac_sign: "Libra"
+    birthday: {day: 22, month: "May"}
+    zodiac_sign: "Gemini"
     born_in: "Türkiye"
     family:
       family_resemblance:
@@ -1589,7 +1589,7 @@ students:
       close_friends: [Zoe, Chloe, Victoria, Noah]
       friend_groups: [Quiet, Creative]
     hidden_lore:
-      secret_crush: "Noah"
+      secret_crush: "none"
     prompt_insert: "Mia, the SAME canonical 12-year-old student from the AdilHoca educational universe. She has long wavy brown hair, blue eyes, no glasses, and a shy, gentle expression with a very slight smile or no smile. Preserve her face, hairstyle, hair color, eye color, age, and overall identity exactly."
 
   - id: NOAH
@@ -1905,7 +1905,7 @@ students:
         - "illogical decisions"
         - "rushing"
         - "disorganization"
-      hated_activity: "reading books"
+      hated_activity: "reading books, cooking"
       phobia: "making mistakes"
       decision_style: "strategic"
       speech_style: "precise"

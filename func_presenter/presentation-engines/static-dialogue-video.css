@@ -6,4 +6,10 @@
 .static-dialogue-video-wrap.static-dialogue-video-square { width: min(500px, 100%); }
 .static-dialogue-video { display: block; width: 100%; height: 100%; border: 2px solid rgba(255,216,77,.52); border-radius: 22px; background: #020713; box-shadow: 0 18px 44px rgba(0,0,0,.34); object-fit: contain; }
 .example-card.static-dialogue-video-open .visual-panel { min-height: 0; padding: clamp(14px, 2vw, 26px); }
+.example-card.static-dialogue-video-open .visual-fallback { display: none !important; }
+.example-card.static-dialogue-video-fullscreen { grid-template-columns: minmax(0, 1fr) minmax(0, 0fr); transition: grid-template-columns .46s ease; }
+.example-card.static-dialogue-video-fullscreen .visual-panel { min-height: 0; padding: clamp(14px, 2vw, 26px); }
+.example-card.static-dialogue-video-fullscreen .sentence-panel { min-width: 0; overflow: hidden; padding: 0; opacity: 0; pointer-events: none; transition: opacity .2s ease, padding .46s ease; }
+.example-card.static-dialogue-video-fullscreen .static-dialogue-video-wrap { width: min(100%, 1280px); aspect-ratio: auto !important; }
+.example-card.static-dialogue-video-fullscreen .static-dialogue-video { width: 100%; height: auto; max-height: 72vh; }
 @media (max-width: 760px) { .static-dialogue-video-toggle { top: 12px; right: 12px; width: 46px; height: 46px; font-size: 22px; } }

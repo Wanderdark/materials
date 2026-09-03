@@ -12161,6 +12161,1874 @@ evidenceEnd: "0:07.405",
     evidenceSentence: "Noah : Who wants to present our project? David : /This problem is a hot potato/!",
   },
 
+{
+    id: "6_school_life_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_hannah.mp4",
+    title: "Hannah pretends to be a teacher.",
+    transcript: "Hannah : OK, kids, listen up! Mrs Brown : Oh, there is a new teacher at our school. Hannah : I'm sorry, Mrs Brown. Mrs Brown : Go to your desk, and /don't do that again/.",
+    answerOptions: [
+      { id: "b", text: "Hannah : Pekala çocuklar, beni dinleyin! Bayan Brown : Okulumuzda yeni bir öğretmen var. Hannah : Üzgünüm Bayan Brown. Bayan Brown : Sırana git ve bunu bir daha yapma." },
+      { id: "a", text: "Hannah : Pekala çocuklar, beni dinleyin! Bayan Brown : Okulumuzda yeni bir öğretmen var. Hannah : Üzgünüm Bayan Brown. Bayan Brown : Bir daha böyle saçmalıklar istemiyorum." }
+    ],
+    easyDistractor: "Hannah : Tamam çocuklar, beni dinleyin! Bayan Brown : Hannah, o benim sandalyem. Hannah : Üzgünüm Bayan Brown. Bayan Brown : Lütfen sırana geç.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [6],
+    functions: ["use_of_there_is_there_are", "imperatives"],
+    theme: "School_life",
+    unit: "school_life",
+    evidenceStart: "0:06.505",
+evidenceEnd: null,
+    evidenceSentence: "Hannah : OK, kids, listen up! Mrs Brown : Oh, there is a new teacher at our school. Hannah : I'm sorry, Mrs Brown. Mrs Brown : Go to your desk, and /don't do that again./",
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Hannah: white polo shirt, dark blue full-length trousers, white sneakers. Mrs Brown: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. SCENE: Gündüz vakti, okulda bir sınıf. Hannah öğretmen masasının sandalyesinde oturuyor. Sınıfta bazı generic öğrenciler vardır. Hannah kendini öğretmen gibi hissederek rahat ve aşırı özgüvenli davranıyor. ACTION: Hannah öğretmen sandalyesinde rahatça oturur. Bir kolunu öğretmen masasının üzerine koyar. Ciddi ve otoriter bir öğretmen taklidi yapar. Sınıfa ders anlatıyormuş gibi başını hafifçe kaldırır ve kendinden emin ve ciddi bir ifadeyle 'OK, kids, listen up!' diye öğretmen taklidi yapar. Kısa bir an boyunca bu artist tavrını sürdürür. Tam o anda sınıf kapısı açılır. Mrs Brown sınıfa girer ve Hannah'ı öğretmen sandalyesinde görür. Mrs Brown sakin, hafif alaycı bir ifadeyle Hannah'a bakar ve: 'Oh, there is a new teacher at our school.' der. Hannah'ın bütün özgüveni anında kaybolur. Hannah hemen öğretmen sandalyesinden ayağa kalkar. Başını hafifçe öne eğer ve mahcup bir ifadeyle: 'I'm sorry, Mrs Brown.' der. Mrs Brown sakin ama ciddi bir şekilde: 'Go to your desk, and don't do that again.' der. Hannah sessizce başını sallayıp mahcup şekilde sırasına doğru yürümeye başlar. Sınıftaki herkes güler. Camera: medium shot of Hannah at the teacher's desk at the beginning. Camera: after Mrs Brown enters, keep both Hannah and Mrs Brown clearly visible in a simple medium two-shot. No complicated camera movement. No character repositioning during the dialogue. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "5_life_in_the_nature_social_2",
+    status: "published",
+    videoSrc: "assets/video/5_life_in_the_nature_social_2.mp4",
+    title: "Ella warns Olivia about opening a mysterious box.",
+    transcript: "Olivia : I wonder what's inside. Ella : Don't forget, /curiosity killed the cat/!",
+    answerOptions: [
+      { id: "a", text: "Olivia : İçinde ne olduğunu merak ediyorum. Ella : Unutma, /fazla merak iyi değildir/!" },
+      { id: "b", text: "Olivia : İçinde ne olduğunu merak ediyorum. Ella : Unutma, merak kediyi kurtardı!" }
+    ],
+    easyDistractor: "Olivia : Kutunun içinde ne olduğunu merak ediyorum. Ella : Hemen aç!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["olivia", "ella"],
+    grades: [5],
+    functions: ["target_social_language"],
+    theme: "life_in_nature",
+    unit: "life_in_nature",
+    evidenceStart: "0:01.646",
+evidenceEnd: "0:04.034",
+    evidenceSentence: "Olivia : I wonder what's inside. Ella : Don't forget, /curiosity killed the cat/!",
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. Use <<<Image2>>> as Ella's canonical identity and appearance reference. Use <<<Audio2>>> as Ella's canonical voice. Tüm replikler İngilizce olacak. Clothing: Olivia wears turquoise long-sleeved top, dark blue jeans, white sneakers. Ella wears red short-sleeved T-shirt, blue long shorts, red sneakers. SCENE Daytime, in a park. Olivia and Ella are standing beside a park bench. A closed box is already sitting on the bench. A light breeze moves their hair slightly. Camera: medium two-shot. Olivia looks closely at the box with a curious expression and says: 'I wonder what's inside.' Camera: Over-the-shoulder shot from Olivia toward Ella. Ella looks at Olivia and says: 'Don't forget, curiosity killed the cat!' Camera: Over-the-shoulder shot from Ella toward Olivia. Olivia gives a small shrug and says: 'I must know.' Camera: medium two-shot. Olivia opens the box. A spring-loaded boxing glove suddenly pops out of the box and hits Olivia in the face. Olivia freezes for a moment, surprised. Ella looks at Olivia with a silent 'I told you so' expression. Olivia turns toward Ella and says: 'Don't say it.' Ella gives a small amused smile.",
+  },
+  {
+    id: "5_life_in_the_nature_social_1",
+    status: "published",
+    videoSrc: "assets/video/5_life_in_the_nature_social_1.mp4",
+    title: "Ava notices Chloe taking the lion's share of pizza.",
+    transcript: "Ava : Chloe, can you share the pizza? Chloe : Of course! Ava : Hey, Why do you get the /lion's share/? Chloe : Because I'm growing.",
+    answerOptions: [
+      { id: "b", text: "Ava : Chloe, pizzayı paylaştırır mısın? Chloe : Tabii! Ava : Hey, Neden /aslan payını/ sen alıyorsun? Chloe : Çünkü ben büyüme çağındayım." },
+      { id: "a", text: "Ava : Chloe, pizzayı paylaştırır mısın? Chloe : Tabii! Ava : Tam aslanların ağzına layık. Chloe : Evet, anne aslanların." }
+    ],
+    easyDistractor: "Ava : Chloe, pizzayı paylaşabilir misin? Chloe : Tabii! Ava : Hey, Neden bende dört dilim var? Chloe : Çünkü ben büyüyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "chloe"],
+    grades: [5],
+    functions: ["target_social_language"],
+    theme: "life_in_nature",
+    unit: "life_in_nature",
+    evidenceStart: "0:04.052",
+evidenceEnd: "0:06.825",
+    evidenceSentence: "Ava : Chloe, can you share the pizza? Chloe : Of course! Ava : Hey, Why do you get the /lion's share/? Chloe : Because I'm growing.",
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Audio2>>> as Chloe's canonical voice. Use Reference images for identity only, Don't use Reference images for clothing or accessory reference. Clothing: Ava: green long-sleeved T-shirt, dark blue long shorts, dark blue sneakers. Chloe: pink short-sleeved top, blue long shorts, pink sneakers. SCENE Daytime, at a picnic table in a park. Ava and Chloe are sitting across from each other. There is a pizza on the table between them. A light breeze moves their hair and nearby leaves slightly. Camera: Over-the-shoulder shot from Chloe toward Ava. Ava looks at the pizza and asks: 'Chloe, can you share the pizza?' Camera: Over-the-shoulder shot from Ava toward Chloe. Chloe smiles and says: 'Of course!' Camera: medium two-shot. Chloe gives Ava one slice of pizza. Chloe puts four slices of pizza on her own plate. Ava looks at her single slice, then at Chloe's four slices. Ava looks at Chloe and says: 'Hey! Why do you get the lion's share?' Camera: medium close shot of Chloe. Chloe looks completely serious and says: 'Because I'm growing.'",
+  },
+  {
+    id: "5_life_in_the_future_social_1",
+    status: "published",
+    videoSrc: "assets/video/5_life_in_the_future_social_1.mp4",
+    title: "Ella suggests taking a stroll by the sea.",
+    transcript: "Ella : Let's /take a stroll/! Olivia : Okay!",
+    answerOptions: [
+      { id: "a", text: "Ella : Hadi biraz /yürüyüş yapalım/! Olivia : Tamam!" },
+      { id: "b", text: "Ella : Hadi fotoğraf çekelim! Olivia : Tamam!" }
+    ],
+    easyDistractor: "Ella : Hadi otele yürüyelim! Olivia : Tamam!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [5],
+    functions: ["target_social_language"],
+    theme: "life_in_the_future",
+    unit: "life_in_the_future",
+    evidenceStart: "0:02.489",
+evidenceEnd: "0:03.724",
+    evidenceSentence: "Ella : Let's /take a stroll/! Olivia : Okay!",
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. Use <<<Image2>>> as Ella's canonical identity and appearance reference. Use <<<Audio2>>> as Ella's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. Tüm replikler İngilizce olacak. KIYAFET: Olivia: turquoise long-sleeved top, dark blue long shorts, white sneakers. Ella: yellow short-sleeved T-shirt, blue long shorts, white sneakers. SCENE Daytime, on a seaside promenade during the holiday. Olivia and Ella are walking together beside the sea. Olivia has a camera in her hands. A light sea breeze moves their hair slightly. Olivia stops to take a photo of the seaside view. Camera: Over-the-shoulder shot from Olivia toward Ella. Ella waits for Olivia and says: 'Let's take a stroll!' Camera: Over-the-shoulder shot from Ella toward Olivia. Olivia lowers her camera, smiles and says: 'Okay!' Olivia and Ella start walking together. Camera: Tracking. After only a few steps, Olivia suddenly notices another beautiful view. Olivia stops again and raises her camera to take another photo. Ella stops walking and looks back at Olivia with a tired but amused expression. Olivia stays focused on taking the photo.",
+  },
+  {
+    id: "5_life_in_the_future_social_3",
+    status: "published",
+    videoSrc: "assets/video/5_life_in_the_future_social_3.mp4",
+    title: "Benjamin prepares far too much for a seaside trip.",
+    transcript: "Emily : Are you ready? Benjamin : We're going on a /jolly/ to the seaside! Oliver : All of that? Benjamin : Of course!",
+    answerOptions: [
+      { id: "b", text: "Emily : Hazır mısın? Benjamin : Deniz kenarına /keyif gezisine/ gidiyoruz! Oliver : Bunların hepsi mi? Benjamin : Tabii ki!" },
+      { id: "a", text: "Emily : Hazır mısın? Benjamin : Deniz kenarına yüzmeye gidiyoruz! Oliver : Bunların hepsi mi? Benjamin : Tabii ki!" }
+    ],
+    easyDistractor: "Emily : Hazır mısın? Benjamin : Dağlara gidiyoruz! Oliver : Bunların hepsini mi götürüyorsun? Benjamin : Tabii ki!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["benjamin", "emily", "oliver"],
+    grades: [5],
+    functions: ["target_social_language"],
+    theme: "life_in_the_future",
+    unit: "life_in_the_future",
+
+    evidenceStart: "0:01.781",
+evidenceEnd: "0:04.136",
+    evidenceSentence: "Emily : Are you ready? Benjamin : We're going on a /jolly/ to the seaside! Oliver : All of that? Benjamin : Of course!",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Image2>>> as Emily's canonical identity and appearance reference. Use <<<Audio2>>> as Emily's canonical voice. Use <<<Image3>>> as Oliver's canonical identity and appearance reference. Use <<<Audio3>>> as Oliver's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. Tüm replikler İngilizce olacak. KIYAFET: Benjamin: blue short-sleeved T-shirt, dark blue full-length trousers, white sneakers. Emily: cream blouse, beige full-length trousers, flat shoes. Oliver: dark green polo shirt, dark grey full-length trousers, casual shoes. SCENE 1 Daytime, at home before leaving for a holiday trip. Benjamin, Emily and Oliver are standing near the front door. A small suitcase and a couple of travel bags are ready nearby. Camera: medium-wide shot. Emily looks at Benjamin and asks: 'Are you ready?' Camera: medium close shot of Benjamin. Benjamin smiles excitedly and says: 'We're going on a jolly to the seaside!' HARD CUT. SCENE 2 A moment later. Camera: medium-wide shot. The family is now standing beside their car, Benjamin is standing beside the luggage with too many seaside items: a beach ball, a folded beach umbrella, and a large inflatable swim ring. He also wears a very large backpack on his back. Emily and Oliver look at all the extra things Benjamin has prepared. Oliver looks at Benjamin and says: 'All of that?' Benjamin smiles and says: 'Of course!' Emily and Oliver exchange an amused look. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "5_life_in_the_future_social_2",
+    status: "published",
+    videoSrc: "assets/video/5_life_in_the_future_social_2.mp4",
+    title: "Mia and Zoe take a breather by the sea.",
+    transcript: "Zoe : What are we going to do today? Mia : Nothing. Mia : /Let's take a breather/ during the holiday, today. Zoe : Good plan.",
+    answerOptions: [
+      { id: "a", text: "Zoe : Bugün ne yapacağız? Mia : Hiçbir şey. Mia : Bugün tatilde /biraz dinlenelim/. Zoe : İyi plan." },
+      { id: "b", text: "Zoe : Bugün ne yapacağız? Mia : Hiçbir şey. Mia : Bugün tatilde bol bol yüzelim. Zoe : İyi plan." }
+    ],
+    easyDistractor: "Zoe : Bugün ne yapacağız? Mia : Hadi yüzmeye gidelim. Zoe : İyi plan.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [5],
+    functions: ["target_social_language"],
+    theme: "life_in_the_future",
+    unit: "life_in_the_future",
+
+  evidenceStart: "0:03.528",
+evidenceEnd: "0:05.894",
+    evidenceSentence: "Zoe : What are we going to do today? Mia : Nothing, /Let's take a breather/ during the holiday, today. Zoe : Good plan.",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Image2>>> as Zoe's canonical identity and appearance reference. Use <<<Audio2>>> as Zoe's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. Clothing: Mia: lavender short-sleeved T-shirt, dark blue long shorts, flip-flops. Zoe: teal short-sleeved T-shirt, beige long shorts, flip-flops. SCENE Daytime, during a seaside holiday. Mia and Zoe are relaxing on two sun loungers near the beach. The sea is clearly visible nearby. Mia has a book with her. A light sea breeze moves their hair slightly. Camera: Over-the-shoulder shot from Mia toward Zoe. Zoe looks at Mia and asks: 'What are we going to do today?' Camera: Over-the-shoulder shot from Zoe toward Mia. Mia looks completely relaxed and says: 'Nothing.' Camera: Over-the-shoulder shot from Mia toward Zoe. Zoe looks slightly surprised and asks: 'Nothing?' Camera: Over-the-shoulder shot from Zoe toward Mia. Mia relaxes back on her sun lounger and says: 'Let's take a breather during the holiday, today.' Zoe thinks for a moment, then smiles and says: 'Good plan.' Camera: medium two-shot. Mia opens her book and starts reading. Zoe relaxes back on her sun lounger. They quietly enjoy the seaside holiday. Visual style: Premium pixar inspired stylized 3D animated-film quality. Natural character animation. Stable identities. Stable anatomy. Natural eye contact and reaction timing.",
+  },
+  {
+    id: "6_school_life_hannah2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_hannah2.mp4",
+    title: "A teacher sends Hannah to the headmistress' office.",
+    transcript: "Teacher : Hannah, turn around and /pay attention/, That's enough, Go to the /headmistress' office/ at once!",
+    answerOptions: [
+      { id: "b", text: "Öğretmen : Hannah, önüne dön ve /dikkatini ver/, Yeter artık, Hemen /müdür odasına/ git!" },
+      { id: "a", text: "Öğretmen : Hannah, konuşma ve dersi dinle, Yeter artık, Hemen Rehberliğe git!" }
+    ],
+    easyDistractor: "Öğretmen : Hannah, arkanı dön ve derse dikkat et. Hannah : Tamam. Öğretmen : Ders bitince müdürün odasına git.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah", "emma"],
+    grades: [6],
+    functions: ["imperatives"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.626",
+evidenceEnd: "0:08.652",
+    evidenceSentence: "Teacher : Hannah, turn around and /pay attention/, That's enough, Go to the /headmistress' office/ at once!",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. Tüm replikler İngilizce olacak. Videodaki konuşan karakterler yalnızca Hannah ve öğretmendir. Emma konuşmaz. Generic öğrenciler konuşmaz. KIYAFET: Hannah: white polo shirt, dark blue full-length trousers, white sneakers. Emma: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. Generic students: white or light blue polo shirts, dark blue full-length trousers, plain sneakers. SCENE Daytime, inside a normally populated classroom during a lesson. Several generic students are seated at desks around the classroom and quietly following the lesson. Hannah is sitting at her desk. Emma is sitting at the desk directly behind Hannah. The camera shows the class medium wide shot. Instead of paying attention, Hannah turns around in her chair and quietly talks to Emma behind her. Emma looks at Hannah but does not speak. The other students continue following the lesson. The teacher notices Hannah. Camera: Over-the-shoulder shot from the teacher toward Hannah. The teacher looks firmly at Hannah and says: 'Hannah, turn around and pay attention!' Hannah turns back toward the front of the classroom. She gives a small casual shrug. HARD CUT. After a brief moment, Hannah turns around again and starts talking to Emma. Camera: medium shot. Hannah is talking to Emma again while the teacher and several other students are also visible as part of the classroom. The teacher notices immediately and becomes visibly annoyed. Camera: Over-the-shoulder shot from Hannah toward the teacher. The teacher says firmly: 'That's enough. Go to the headmistress' office at once!' Camera: medium shot. Hannah's confident attitude immediately disappears. She lowers her head, stands up from her desk and walks toward the classroom door with a disappointed expression. Emma silently watches her leave. The other students remain seated at their desks. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_david",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_david.mp4",
+    title: "David learns about his school responsibilities.",
+    transcript: "Counsellor : David, /help/ new students and show them around the school. David : Okay. Counsellor : And tell them about the school rules. David : Sure. Counsellor : Be /responsible/.",
+    answerOptions: [
+      { id: "a", text: "Danışman : David, yeni öğrencilere /yardım et/ ve onlara okulu gezdir. David : Tamam. Danışman : Onlara okul kurallarını da anlat. David : Elbette. Danışman : /Sorumlu ol/." },
+      { id: "b", text: "Danışman : David, yeni öğrencileri görmezden gel. David : Tamam. Danışman : Onlara okul kurallarını anlatma. David : Elbette. Danışman : Çalışkan ol." }
+    ],
+    easyDistractor: "Danışman : David, yeni öğrencilere yardım et. David : Tamam. Ethan : David, çantan masanın üzerinde. David : Genellikle.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["david", "ethan"],
+    grades: [6],
+    functions: ["imperatives"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:08.238",
+    evidenceSentence: "Counsellor : David, /help/ new students and show them around the school. David : Okay. Counsellor : And tell them about the school rules. David : Sure. Counsellor : Be /responsible/.",
+
+    prompt: "Use <<<Image1>>> as David's canonical identity and appearance reference. Use <<<Audio1>>> as David's canonical voice. Use <<<Image2>>> as Ethan's canonical identity and appearance reference. Use <<<Audio2>>> as Ethan's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. Tüm replikler İngilizce olacak. KIYAFET: David: light blue polo shirt, dark blue full-length trousers, white sneakers. Ethan: light blue polo shirt, dark blue full-length trousers, white sneakers. Counsellor: adult female school counsellor, light blue long-sleeved blouse, dark grey full-length trousers, simple black flat shoes. SCENE Daytime, inside the school counsellor's office. David is sitting across from the school counsellor. The counsellor is talking to David about his roles and responsibilities at school. Ethan is not in the room at the beginning. Camera: Over-the-shoulder shot from David toward the counsellor. The counsellor looks at David and says: 'David, help new students and show them around the school.' Camera: Over-the-shoulder shot from the counsellor toward David. David nods and says: 'Okay.' Camera: Over-the-shoulder shot from David toward the counsellor. The counsellor continues: 'And tell them about the school rules.' Camera: Over-the-shoulder shot from the counsellor toward David. David says confidently: 'Sure.' Camera: Over-the-shoulder shot from David toward the counsellor. The counsellor gives David one final instruction: 'Be responsible.' Camera: Over-the-shoulder shot from the counsellor toward David. David looks completely confident and says: 'I always am.' At that moment, the office door opens. Camera: medium shot. Ethan appears at the open doorway holding David's school backpack. Ethan looks at David and says: 'David, you forgot your backpack.' David freezes. Camera: medium two-shot of David and the counsellor. The counsellor slowly looks at David without saying anything. David notices her look. Camera: medium close shot of David. David looks slightly embarrassed and says: 'Usually.' Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_noah_victoria",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_noah_victoria.mp4",
+    title: "Noah leaves the school microphone on.",
+    transcript: "Noah : Attention, The chess club meets /after school/, Was that okay? Victoria : Shut up, the microphone is still on!",
+    answerOptions: [
+      { id: "b", text: "Noah : Dikkat, Satranç kulübü /okuldan sonra/ toplanacak, İyi miydi? Victoria : Kapa çeneni, Mikrofon hâlâ açık!" },
+      { id: "a", text: "Noah : Dikkat, Satranç kulübü birazdan toplanacak, İyi miydi? Victoria : Kapa çeneni, Mikrofon hâlâ açık!" }
+    ],
+    easyDistractor: "Noah : Dikkat, Satranç kulübü okuldan önce buluşuyor! Victoria : Mikrofon hâlâ açık!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["noah", "victoria"],
+    grades: [6],
+    functions: ["use_of_simple_present_tense"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:01.781",
+evidenceEnd: "0:10.008",
+    evidenceSentence: "Noah : Attention, The chess club meets /after school/, Was that okay? Victoria : Shut up, the microphone is still on!",
+
+    prompt: "Use <<<Image1>>> as Noah's canonical identity and appearance reference. Use <<<Audio1>>> as Noah's canonical voice. Use <<<Image2>>> as Victoria's canonical identity and appearance reference. Use <<<Audio2>>> as Victoria's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Noah: light blue polo shirt, dark blue full-length trousers, white sneakers, rectangular eyeglasses. Victoria: white polo shirt, dark blue full-length trousers, white sneakers, round eyeglasses. SCENE 1: Gündüz, okulun anons odası. Noah ve Victoria okulun anons mikrofonunun yanındalar. Noah mikrofonda, ciddi ve hazır bir şekilde duruyor. Victoria onun yanında sessizce bekliyor. ACTION: Noah mikrofona doğru hafifçe yaklaşır ve okul anonsunu yapmaya hazırlanır. Bu sahnede hiçbir karakter konuşmaz. Bu sahne 2 saniye ekranda kalır. HARD CUT. SCENE 2: Gündüz, normal şekilde öğrencilerin bulunduğu bir okul koridoru. Koridorda birkaç generic öğrenci yürüyor veya dolaplarının yanında duruyor. Duvardaki okul hoparlörü açıkça görünür. Noah ve Victoria bu sahnede fiziksel olarak ASLA görünmez, sadece sesleri hoparlörden duyulur. ACTION: Önce okul hoparlöründen Noah'ın ciddi ve resmi anons sesi duyulur: 'Attention, The chess club meets after school.' Çok kısa bir sessizlik olur. Noah bu anonstan sonra mikrofonu kapatmayı unutmuştur. Noah'ın sesi yine aynı hoparlörden gelir, fakat bu kez resmi anons tonunu bırakmış ve normal şekilde konuşuyordur: 'Was that okay?' Hemen ardından Victoria'nın telaşlı sesi aynı hoparlörden duyulur: 'Shut up, the microphone is still on!' Koridordaki öğrenciler bir an durur, hoparlöre bakar ve gülmeye başlarlar. Visual style: Premium pixar inspired stylized 3D animated-film quality. Natural character animation. Stable identities. Stable anatomy. Natural eye contact and reaction timing.",
+  },
+  {
+    id: "6_school_life_ella",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ella.mp4",
+    title: "Ella forgets the answer to a ceremony question.",
+    transcript: "Teacher : /When/ is the national ceremony? Ella : I forgot.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Millî tören /ne zaman/? Ella : Unuttum." },
+      { id: "b", text: "Öğretmen : Millî tören nerede? Ella : Unuttum." }
+    ],
+    easyDistractor: "Öğretmen : Millî tören ne zaman? Ella : Yarın.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella"],
+    grades: [6],
+    functions: ["use_of_wh_questions_why_when"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.136",
+    evidenceSentence: "Teacher : /When/ is the national ceremony? Ella : I forgot.",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ella: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Ella kendi sırasında oturuyor. Öğretmen sınıfın önünde öğrencilere soru soruyor. Sınıfta birkaç generic öğrenci kendi sıralarında oturuyor ve dersi takip ediyor. ACTION: Öğretmen sınıfa: 'When is the national ceremony?' diye sorar. Ella sorunun cevabını bildiğinden tamamen eminmiş gibi büyük bir hevesle hemen elini kaldırır. Öğretmen Ella'yı seçer. Ella kendinden emin şekilde cevap vermeye hazırlanır. Bir anda durur. Yüzündeki kendinden emin ifade kaybolur ve cevabı hatırlamaya çalışırken birkaç saniye sessizce düşünür. Camera: medium close shot of Ella. Ella sonunda hafif mahcup ve şaşkın bir ifadeyle: 'I forgot.' der.",
+  },
+  {
+    id: "6_school_life_benjamin_david",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_benjamin_david.mp4",
+    title: "Benjamin looks for a lost pencil.",
+    transcript: "Benjamin : I /sometimes/ lose my pencil, Has anyone found it? David : Which one is yours?",
+    answerOptions: [
+      { id: "b", text: "Benjamin : /Bazen/ kalemimi kaybediyorum, Onu bulan oldu mu? David : Hangisi senin?" },
+      { id: "a", text: "Benjamin : Kalemi kaybettim, Onu bulan oldu mu? David : Hangisi senin?" }
+    ],
+    easyDistractor: "Benjamin : Kalemimi kaybettim, Onu bulan oldu mu? David : Mavi kalem senin mi?",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["benjamin", "david"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.075",
+    evidenceSentence: "Benjamin : I /sometimes/ lose my pencil, Has anyone found it? David : Which one is yours?",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio2>>> as David's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Benjamin: light blue polo shirt, dark blue full-length trousers, white sneakers. David: light blue polo shirt, dark blue full-length trousers, white sneakers, a simple school duty badge on a lanyard around his neck. No readable text is required on the badge. SCENE: Gündüz, okulun lost-and-found alanı. David kayıp eşyalarla ilgilenen masanın arkasında görevli olarak duruyor. Boynundaki görevli kartı açıkça görülüyor. Masanın üzerinde açık bir lost-and-found box bulunuyor, ancak sahnenin başlangıcında kutunun içeriği net şekilde gösterilmiyor. Benjamin masanın önünde David ile konuşuyor. ACTION: Benjamin hafif mahcup ve rahat bir ifadeyle: 'I sometimes lose my pencil. Has anyone found it?' der. David kısa bir an düşünür ve masadaki lost-and-found kutusuna bakar. Camera: cut to a close shot of the open lost-and-found box filled with dozens of different pencils. Kutunun içinde aşırı çok sayıda farklı kalem olduğu açıkça görülür. Camera: cut back to David. Over-the-shoulder shot from David toward Benjamin. David: 'Which one is yours?' der. Benjamin umutsuzca David'e bakar. End. Visual style: Premium pixar inspired stylized 3D animated-film quality. Natural character animation. Stable identities. Stable anatomy. Natural eye contact and reaction timing.",
+  },
+  {
+    id: "6_school_life_ella_noah_victoria",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ella_noah_victoria.mp4",
+    title: "Ella forgets her homework while Noah and Victoria are prepared.",
+    transcript: "Victoria : I /always/ do my homework. Noah : I /never/ forget my homework. Teacher : Ella, /where/ is your homework?",
+    answerOptions: [
+      { id: "a", text: "Victoria : Ödevimi /her zaman/ yaparım. Noah : Ödevimi /hiç/ unutmam. Öğretmen : Ella, ödevin /nerede/?" },
+      { id: "b", text: "Victoria : Ödevimi çoğunlukla yaparım. Noah : Ödevimi bazen unuturum. Öğretmen : Ella, ödevini getir." }
+    ],
+    easyDistractor: "Victoria : Ödevimi bazen yaparım. Noah : Ödevimi bazen unuturum. Öğretmen : Ella, çantan nerede?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "noah", "victoria"],
+    grades: [6],
+    functions: ["frequency_adverbs","use_of_wh_questions_who_when_what_where"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:05.871",
+    evidenceSentence: "Victoria : I /always/ do my homework. Noah : I /never/ forget my homework. Teacher : Ella, /where/ is your homework?",
+
+    prompt: "Use <<<Image1>>> as Victoria's canonical identity and appearance reference. Use <<<Audio1>>> as Victoria's canonical voice. Use <<<Image2>>> as Noah's canonical identity and appearance reference. Use <<<Audio2>>> as Noah's canonical voice. Use <<<Image3>>> as Ella's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Victoria: white polo shirt, dark blue full-length trousers, white sneakers, round eyeglasses. Noah: light blue polo shirt, dark blue full-length trousers, white sneakers, rectangular eyeglasses. Ella: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Öğretmen öğrencilerin ödevlerini kontrol ediyor. Victoria, Noah ve Ella kendi sıralarında oturuyorlar. Sınıfta birkaç generic öğrenci de kendi sıralarında oturuyor ve sessizce dersi takip ediyor. Camera: During the face-to-face conversation, use natural over-the-shoulder shot/reverse-shot coverage, showing the speaker from over the other character's shoulder. ACTION: Öğretmen Victoria'nın ödevini kontrol eder. Victoria kendinden emin şekilde: 'I always do my homework.' der. Öğretmen Noah'ın ödevini kontrol eder. Noah sakin ve kendinden emin şekilde: 'I never forget my homework.' der. Öğretmen ardından Ella'ya döner ve: 'Ella, where is your homework?' diye sorar. Ella bir anda donar. Önce öğretmene bakar, sonra kısa bir an kendi sırasına ve okul çantasına bakar. Cevap vermeye çalışır ama hiçbir şey söylemez. Camera: medium close shot of Ella. Ella'nın yüzündeki kendinden emin ifade tamamen kaybolur ve ne yapacağını bilemeden sessizce kalır. End. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_mia_david",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_mia_david.mp4",
+    title: "A loud announcement interrupts Mia's quiet break.",
+    transcript: "David : Mia, /Why do you always/ sit here during break? Mia : Because it's quiet. Announcement : ATTENTION, STUDENTS!",
+    answerOptions: [
+      { id: "b", text: "David : Mia, Teneffüste /neden her zaman/ burada oturuyorsun? Mia : Çünkü sessiz. Anons : DİKKAT, ÖĞRENCİLER!" },
+      { id: "a", text: "David : Mia, Teneffüste genellikle neler yaparsın? Mia : Burada kitap okurum. Anons : DİKKAT, ÖĞRENCİLER!" }
+    ],
+    easyDistractor: "David : Mia, Teneffüste neden burada oturuyorsun? Mia : Çünkü ders çalışıyorum. Anons : DİKKAT, ÖĞRENCİLER!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["mia", "david"],
+    grades: [6],
+    functions: ["frequency_adverbs","use_of_wh_questions_why_when"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:04.607",
+    evidenceSentence: "David : Mia, /Why do you always/ sit here during break? Mia : Because it's quiet. Announcement : ATTENTION, STUDENTS!",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio2>>> as David's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Mia: white polo shirt, dark blue full-length trousers, white sneakers. David: blue polo shirt, dark blue full-length trousers, white sneakers. SCENE: Okulda teneffüs zamanı. Mia ve David, okulun sakin bir okuma alanında yan yana oturuyorlar. Mia'nın elinde açık bir kitap var ve sessizce okuyor. David onun yanında oturuyor. Çevrede birkaç generic öğrenci bulunuyor ancak ortam genel olarak sakin ve sessiz. ACTION: Camera: During the face-to-face conversation, use natural over-the-shoulder shot/reverse-shot coverage, showing the speaker from over the other character's shoulder. Camera: Over-the-shoulder shot from Mia toward David. David says: 'Mia, Why do you always sit here during break?' Camera: Over-the-shoulder shot from David toward Mia. Mia sakin bir şekilde David'e bakmadan 'Because it's quiet.' der. Cümlesini bitirmesinin hemen ardından okul hoparlöründen aniden yüksek ve enerjik bir anons sesi gelir. Camera: medium two-shot. 'ATTENTION, STUDENTS!' Mia irkilir ve okumayı bırakır. Kısa bir sessizlik olur. Mia hiçbir şey söylemeden yavaşça başını kaldırır ve hoparlörün geldiği yöne doğru ifadesiz, hafif bezmiş bir bakış atar. Camera: medium close shot of Mia for her final silent reaction. End. Visual style: Premium pixar inspired stylized 3D animated-film quality. Natural character animation. Stable identities. Stable anatomy. Natural eye contact and reaction timing.",
+  },
+  {
+    id: "6_school_life_emma",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_emma.mp4",
+    title: "Emma forgets to take responsibility for her desk.",
+    transcript: "Emma : I /always/ help my friends with their duties. Teacher : Emma, who is responsible for your desk? Emma : Me, I guess.",
+    answerOptions: [
+      { id: "a", text: "Emma : Arkadaşlarıma görevlerinde /her zaman/ yardım ederim. Öğretmen : Emma, sırandan kim sorumlu? Emma : Sanırım ben." },
+      { id: "b", text: "Emma : Arkadaşlarıma görevlerinde genellikle yardım ederim. Öğretmen : Emma, sırandan kim sorumlu? Emma : Sanırım sen." }
+    ],
+    easyDistractor: "Emma : Arkadaşlarıma bazen görevlerinde yardım ederim. Öğretmen : Emma, sırandan kim sorumlu? Emma : Mia, sanırım.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["emma", "mia"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.732",
+evidenceEnd: "0:03.378",
+    evidenceSentence: "Emma : I /always/ help my friends with their duties. Teacher : Emma, who is responsible for your desk? Emma : Me, I guess.",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use <<<Audio1>>> as Emma's canonical voice. Use <<<Image2>>> as Mia's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Emma: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult male teacher, light beige long-sleeved shirt, dark navy full-length trousers, simple black shoes. Mia: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Emma, sınıf kitaplığının yanında Mia'nın kitapları düzenlemesinde yardım ediyor. Sınıfta birkaç generic öğrenci kendi sıralarında oturuyor ve normal şekilde ders ortamında bulunuyor. Emma'nın kendi sırası sınıfın başka bir bölümünde ve belirgin şekilde dağınık: birkaç kitap ve defter düzensiz şekilde masanın üzerinde duruyor. Camera: During the face-to-face conversation, use natural over-the-shoulder shot/reverse-shot coverage, showing the speaker from over the other character's shoulder. ACTION: Emma, Mia'nın sınıf kitaplığındaki kitapları düzenlemesine yardım eder. Havalı bir ifade ile kameraya bakarak: 'I always help my friends with their duties.' der. Sonra öğretmen Emma'ya: 'Emma, who is responsible for your desk?' diye sorar. Emma'nın kendinden emin ifadesi bir anda kaybolur. HARD CUT. Camera: medium shot of Emma beside her own desk, with the messy desk clearly visible in the same frame. Emma kendi dağınık sırasına bakar. Kısa bir an sessiz kalır. Sonra öğretmene doğru utanmış ve hafif mahcup bir ifadeyle bakarak: 'Me, I guess.' der. End. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_victoria",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_victoria.mp4",
+    title: "Victoria misses the robotics meeting.",
+    transcript: "Victoria : I /always/ follow my school schedule. Teacher : Victoria, the robotics meeting started five minutes ago!",
+    answerOptions: [
+      { id: "b", text: "Victoria : Okul programıma /her zaman/ uyarım. Öğretmen : Victoria, robotik toplantısı beş dakika önce başladı!" },
+      { id: "a", text: "Victoria : Okul programıma hiç uymam. Öğretmen : Victoria, robotik toplantısı beş dakika önce başladı!" }
+    ],
+    easyDistractor: "Victoria : Okul programımı bazen takip ederim. Öğretmen : Victoria, robotik toplantısı şimdi başladı!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["victoria"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.544",
+    evidenceSentence: "Victoria : I /always/ follow my school schedule. Teacher : Victoria, the robotics meeting started five minutes ago!",
+
+    prompt: "Use <<<Image1>>> as Victoria's canonical identity and appearance reference. Use <<<Audio1>>> as Victoria's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Victoria: white polo shirt, dark blue full-length trousers, white sneakers, round eyeglasses. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. SCENE: Gündüz, okulda normal bir sınıf ortamı. Victoria kendi sırasında oturuyor ve ders için hazırlanmış durumda. Sınıfta birkaç generic öğrenci kendi sıralarında oturuyor. Sınıfın kapısı görünür durumda. ACTION: Victoria sakin, ciddi ve kendinden emin bir ifadeyle: 'I always follow my school schedule.' der. Tam o anda öğretmen sınıf kapısında belirir ve Victoria'ya seslenir: 'Victoria, the robotics meeting started five minutes ago!' Victoria bir anda donar. Kendinden emin ifadesi kaybolur. Kısa bir sessizlik olur. Victoria hiçbir şey söylemeden bileğindeki saate bakar. Camera: medium close shot of Victoria for her final silent reaction. Victoria saate bakarken hafif şaşkın ve mahcup bir ifade taşır. End. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "fun_ella",
+    status: "published",
+    videoSrc: "assets/video/fun_ella.mp4",
+    title: "Ella is prepared for class but not for an exam.",
+    transcript: "Ella : I am /very prepared/ to learn something new today. Teacher : OK, kids, Today is the /exam day/, Hope you are all ready.",
+    answerOptions: [
+      { id: "a", text: "Ella : Bugün yeni bir şey öğrenmeye çok hazırım. Öğretmen : Pekala çocuklar, Bugün /sınav günü/, Umarım hepiniz hazırsınızdır." },
+      { id: "b", text: "Ella : Bugün yeni bir şey öğrenmek istiyorum. Öğretmen : Pekala çocuklar, Bugün piknik günü, Umarım hepiniz açsınızdır." }
+    ],
+    easyDistractor: "Ella : Bugün yeni bir şey öğrenmeye hazırım. Öğretmen : Tamam çocuklar, Bugün normal dersimiz var.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella"],
+    grades: [5],
+    functions: ["fun"],
+    theme: "personal_life",
+    unit: "",
+
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:08.096",
+    evidenceSentence: "Ella : I am /very prepared/ to learn something new today. Teacher : OK, kids, Today is the /exam day/, Hope you are all ready.",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Clothing: All students wear white polo T-shirts and dark blue trousers. Scene: Gündüz vakti, okulda bir sınıf. Etrafta generic öğrenciler var. Ella dersten önce masasını mükemmel hazırlamış: kitap, defter, kalem, cetvel, her şeyi sıranın üstüne dizmiş. Medium one shot. Ella says: 'I am very prepared to learn something new today.' Öğretmen içeri girer. Camera: tracking, medium one shot. Teacher says: 'OK, kids. Today is the exam day. Hope you are all ready.' Kamera Ella'ya close-up odaklanır. Ella direkt şok olur.",
+  },
+  {
+    id: "6_school_life_ava_mia",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ava_mia.mp4",
+    title: "Mia finds a kitten behind a plant pot.",
+    transcript: "Kitten : Meow! Mia : Oh, /There is/ a kitten /behind/ the pot! Ava : It doesn't like the rain.",
+    answerOptions: [
+      { id: "b", text: "Yavru kedi : Miyav! Mia : Ah, Saksının /arkasında/ bir yavru kedi /var/! Ava : Yağmuru sevmiyor." },
+      { id: "a", text: "Yavru kedi : Miyav! Mia : Ah, Saksının arkasından bir ses geliyor! Ava : Bir yavru kedi." }
+    ],
+    easyDistractor: "Yavru kedi : Miyav! Mia : Ah, Saksının önünde bir yavru kedi var! Ava : Yağmuru seviyor.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "mia"],
+    grades: [6],
+    functions: ["use_of_there_is_there_are","prepositions_of_place"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:01.893",
+evidenceEnd: "0:08.638",
+    evidenceSentence: "Kitten : Meow! Mia : Oh, /There is/ a kitten /behind/ the pot! Ava : It doesn't like the rain.",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Image2>>> as Ava's canonical identity and appearance reference. Use <<<Audio2>>> as Ava's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Mia: white polo shirt, dark blue full-length trousers, white sneakers. Ava: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, okul sınıfı. Dışarıda yoğun yağmur yağıyor ve yağmur sınıf pencerelerinden açıkça görülüyor, arada şimşek de çakıyor. Sınıfın bir köşesinde büyük bir saksı bitkisi bulunuyor. Küçük, sevimli bir yavru kedi video başlamadan önce zaten saksının arkasına saklanmış durumda. Yavru kedinin varlığı başlangıçta Mia tarafından fark edilmiyor. Mia elindeki küçük watering can ile bitkiyi sulamak için saksının yanında duruyor. Ava Mia'nın yakınında duruyor. ACTION: Mia sakin şekilde bitkiyi sulamaya başlar. Tam bu sırada saksının arkasından küçük yavru kedinin kafası görünür. Yavru kedi belirgin şekilde 'Meow!' diye miyavlar. Mia irkilir ve sulamayı hemen durdurur. Kediye şaşkın ama sevecen bir ifadeyle bakar ve: 'Oh! There is a kitten behind the pot!' der. Ava yavru kediye, ardından pencereden görünen yoğun yağmura bakar. Ava hafifçe gülümseyerek: 'It doesn't like the rain.' der. Mia eğilir ve yavru kediyi bulunduğu yerden dikkatlice kucağına alır. Yavru kedi sakin şekilde Mia'nın kucağında kalır. Ava Mia'nın yanında durur. Mia ve Ava birlikte yavru kediye bakıp sıcak bir şekilde gülümserler. Camera: medium shot at the beginning, keeping Mia, Ava, the plant pot, and the rainy window clearly visible. Camera: when the kitten appears, briefly focus on the kitten behind the pot. Camera: finish with a simple medium two-shot of Mia holding the kitten while Ava stands beside her. No complicated camera movement. No character repositioning during the dialogue. The kitten must already be behind the pot before it is revealed. Do not make the kitten appear from nowhere. Keep the same kitten throughout the video. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_hannah3",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_hannah3.mp4",
+    title: "Hannah's umbrella is much too small for the rain.",
+    transcript: "Hannah : I am well-prepared, /There is/ an umbrella in my bag.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Gayet hazırlıklıyım, Çantamda bir şemsiye /var/." },
+      { id: "b", text: "Hannah : Gayet hazırlıklıyım, Şemsiyemi getirdim." }
+    ],
+    easyDistractor: "Hannah : Pek hazırlıklı değilim, Şemsiyem evde kaldı.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [6],
+    functions: ["use_of_there_is_there_are"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:03.739",
+    evidenceSentence: "Hannah : I am well-prepared, /There is/ an umbrella in my bag.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Hannah: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, okul günü. Dışarıda yoğun yağmur yağıyor. ACTION: Hannah okul binasının içinde, çıkış kapısına yakın bir yerde duruyor. Hannah rahat ve kendinden emin görünüyor. Sırt çantası omzunda. Kamera yoğun yağmuru gösterir. Hannah kendinden emin ve havalı bir ifadeyle: 'I am well-prepared. There is an umbrella in my bag.' der. HARD CUT. Camera: medium full shot outdoors, clearly showing Hannah, the tiny umbrella, and the heavy rain. SCENE: Okul binasının hemen dışında. Yoğun yağmur devam ediyor. Hannah dışarıda yağmurun altında duruyor. Outdoor motion: light natural wind gently moves Hannah's wet hair and clothing while the rain falls. Hannah'ın elinde çok küçük, çocuk oyuncağı boyutunda bir şemsiye var. Şemsiye açık ve Hannah onu başının üzerinde tutuyor. Şemsiye Hannah'ı neredeyse hiç korumuyor. Hannah'ın saçları ve kıyafetleri yağmurdan belirgin şekilde ıslanmış durumda. Hannah küçük şemsiyeye kısa bir süre bakar. Sonra hiçbir şey söylemeden önüne bakar. Yüzünde hafif şaşkın, mahcup ve komik derecede ciddi bir ifade vardır. Şemsiye video boyunca aynı küçük boyutta kalır. Do not show the umbrella opening. Keep the final reaction silent.",
+  },
+  {
+    id: "6_school_life_victoria2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_victoria2.mp4",
+    title: "Victoria discovers the unfinished back page of her worksheet.",
+    transcript: "Victoria : I /always/ finish my work before everyone. Teacher : Victoria, turn the page.",
+    answerOptions: [
+      { id: "a", text: "Victoria : İşimi çoğunlukla herkesten önce bitiririm. Öğretmen : Victoria, Sayfayı çevir." },
+      { id: "b", text: "Victoria : İşimi /her zaman/ herkesten önce bitiririm. Öğretmen : Victoria, Sayfayı çevir." }
+    ],
+    easyDistractor: "Victoria : İşimi herkesten sonra bitiririm. Öğretmen : Victoria, Sayfayı kapat.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["victoria"],
+    grades: [6],
+    functions: ["frequency_adverbs", "imperatives"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.767",
+evidenceEnd: "0:03.571",
+    evidenceSentence: "Victoria : I /always/ finish my work before everyone. Teacher : Victoria, turn the page.",
+
+    prompt: "Use <<<Image1>>> as Victoria's canonical identity and appearance reference. Use <<<Audio1>>> as Victoria's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Victoria: white polo shirt, dark blue full-length trousers, white sneakers, round eyeglasses. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flat shoes. Generic students: standard school uniforms. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Öğrenciler sıralarında bir çalışma kağıdı üzerinde çalışıyorlar. Victoria kendi sırasında oturuyor. Victoria'nın önünde tek bir çalışma kağıdı var. Çalışma kağıdının ön yüzündeki bölümü bitirmiştir ve sakin, kendinden emin bir şekilde kollarını kavuşturur ve 'I always finish my work before everyone' der. ACTION: Victoria cümlesini tamamladıktan sonra öğretmen bulunduğu yerden Victoria'ya seslenir: 'Victoria, turn the page.' Victoria'nın kendinden emin ifadesi birden değişir. Victoria önündeki çalışma kağıdını yalnızca bir kez çevirerek arka yüzünü açar. Çalışma kağıdının arka yüzünde henüz cevaplanmamış birçok soru vardır. Victoria bir an sessizce donar. Sonra hiçbir şey söylemeden hafif mahcup ve şaşkın bir ifadeyle öğretmene doğru bakar. Visual style: Premium pixar inspired stylized 3D animated-film quality. Natural character animation. Stable identities. Stable anatomy. Natural eye contact and reaction timing.",
+  },
+  {
+    id: "6_school_life_benjamin",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_benjamin.mp4",
+    title: "Benjamin's enormous sports bag is full of lunch.",
+    transcript: "Teacher : Benjamin, /what is there/ in that huge bag? Benjamin : My lunch, I'm growing.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Benjamin, O dev çantada /ne var/? Benjamin : Öğle yemeğim, Büyüme çağındayım." },
+      { id: "b", text: "Öğretmen : Benjamin, O dev çanta ne? Benjamin : Beslenme çantam, Büyüme çağındayım." }
+    ],
+    easyDistractor: "Öğretmen : Benjamin, O dev çantada ne var? Benjamin : Ders kitaplarım, Çalışıyorum.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin"],
+    grades: [6],
+    functions: ["use_of_wh_questions_who_when_what_where"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.560",
+evidenceEnd: "0:04.621",
+    evidenceSentence: "Teacher : Benjamin, /what is there/ in that huge bag? Benjamin : My lunch, I'm growing.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. Camera: Always use medium shots. No full body views. CLOTHING: Benjamin: light blue polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult male teacher, light beige long-sleeved shirt, dark navy full-length trousers, simple black shoes. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Benjamin kendi sırasında oturuyor. Benjamin'in yanında normal okul çantasından belirgin şekilde çok daha büyük, devasa bir sports bag duruyor. Sports bag video başlamadan önce zaten Benjamin'in yanında bulunuyor. Çanta video boyunca aynı yerde kalıyor. Çanta kapalı kalıyor ve hiçbir noktada açılmıyor. Several generic students are seated at desks around the classroom and quietly following the lesson. ACTION: Öğretmen sınıfta dolaşırken Benjamin'in yanındaki aşırı büyük sports bag'i fark eder. Öğretmen kısa bir süre devasa spor çantasına bakar. Sonra Benjamin'e hafif şaşkın bir ifadeyle: 'Benjamin, what is there in that huge bag?' diye sorar. Benjamin dev çantaya kısa bir bakış atar. Hiç garip bir şey yokmuş gibi rahat ve doğal bir şekilde: 'My lunch.' der. Öğretmen tekrar dev çantaya bakar ve şaşkınlığı biraz artar. Benjamin gayet ciddi ve rahat bir ifadeyle: 'I'm growing.' der. Öğretmen kısa bir süre Benjamin'e bakar. Benjamin ise tamamen ciddi kalır. Camera: medium two-shot keeping Benjamin, the teacher, and the oversized sports bag clearly visible. No complicated camera movement. Do not open the sports bag. Do not show the contents of the sports bag. Do not move, transform, duplicate, or replace the sports bag. Keep Benjamin and the teacher in the same positions during the dialogue. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_noah_victoria2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_noah_victoria2.mp4",
+    title: "Noah has backups for his backup glasses.",
+    transcript: "Victoria : What are those? Noah : My backup glasses. Victoria : But /there are/ four of them. Noah : /There are/ backups for the backups.",
+    answerOptions: [
+      { id: "a", text: "Victoria : Bunlar ne? Noah : Yedek gözlüklerim. Victoria : Onları ne yapacaksın ki. Noah : Tedbirli olmak lazım." },
+      { id: "b", text: "Victoria : Bunlar ne? Noah : Yedek gözlüklerim. Victoria : Ama onlardan dört tane /var/. Noah : Yedeklerin de yedekleri /var/." }
+    ],
+    easyDistractor: "Victoria : Bunlar ne? Noah : Yedek gözlüklerim. Victoria : Ama onlardan iki tane var. Noah : Yedekleri yok.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["noah", "victoria"],
+    grades: [6],
+    functions: ["use_of_there_is_there_are"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:04.097",
+evidenceEnd: "0:09.032",
+    evidenceSentence: "Victoria : What are those? Noah : My backup glasses. Victoria : But /there are/ four of them. Noah : /There are/ backups for the backups.",
+
+    prompt: "Use <<<Image1>>> as Noah's canonical identity and appearance reference. Use <<<Audio1>>> as Noah's canonical voice. Use <<<Image2>>> as Victoria's canonical identity and appearance reference. Use <<<Audio2>>> as Victoria's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Noah: light blue polo shirt, dark blue full-length trousers, white sneakers, his canonical rectangular eyeglasses. Victoria: white polo shirt, dark blue full-length trousers, white sneakers, her canonical round eyeglasses. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Noah ve Victoria yan yana oturuyor. Noah'ın sırasının üzerinde, kendi taktığı gözlüğe ek olarak, birbirine benzeyen dört adet yedek rectangular eyeglasses açıkça görülüyor. Dört yedek gözlük video başlamadan önce zaten masanın üzerindedir. Gözlükler video boyunca aynı yerde kalır. Several generic students are seated at desks around the classroom and quietly following the lesson. ACTION: Victoria, Noah'ın masasındaki dört yedek gözlüğü fark eder ve şaşkın şekilde onlara bakar. Victoria: 'What are those?' diye sorar. Noah gayet sakin ve ciddi bir ifadeyle: 'My backup glasses.' der. Victoria dört gözlüğe tekrar bakar ve sayılarının fazlalığına şaşırır. Victoria: 'But there are four of them.' der. Noah hiç garip bir şey yokmuş gibi ciddi şekilde: 'There are backups for the backups.' der. Victoria kısa bir süre Noah'a bakar. Noah ise tamamen ciddi kalır. Camera: medium two-shot keeping Noah, Victoria, and all four backup glasses clearly visible. Do not move, pick up, wear, remove, duplicate, replace, or transform any of the backup glasses. Keep all four backup glasses visible on Noah's desk throughout the scene.",
+  },
+  {
+    id: "6_school_life_emma_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_emma_hannah.mp4",
+    title: "Hannah arrives at school ready for every kind of weather.",
+    transcript: "Emma : Hannah, /where/ are you going? Hannah : To school. Emma : Why are you wearing these things? Hannah : I'm always prepared.",
+    answerOptions: [
+      { id: "a", text: "Emma : Hannah, Üstündekiler ne öyle? Hannah : Okula. Emma : Neden bu şeyleri giyiyorsun? Hannah : Her zaman hazırlıklıyım." },
+      { id: "b", text: "Emma : Hannah, Nereye gidiyorsun? Hannah : Okula. Emma : Neden bu şeyleri giyiyorsun? Hannah : Her zaman hazırlıklıyım." }
+    ],
+    easyDistractor: "Emma : Hannah, Nereye gidiyorsun? Hannah : Kütüphaneye. Emma : Neden yağmurluk giyiyorsun? Hannah : Yağmur yağacak.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["emma", "hannah"],
+    grades: [6],
+    functions: ["use_of_wh_questions_who_when_what_where", "askingforreason"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.726",
+evidenceEnd: "0:02.923",
+    evidenceSentence: "Emma : Hannah, /where/ are you going? Hannah : To school. Emma : Why are you wearing these things? Hannah : I'm always prepared.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Audio2>>> as Emma's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Hannah: bright yellow raincoat, small knitted winter beanie, dark sunglasses, dark blue full-length trousers, white sneakers, holding an already-open umbrella. Emma: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, okul girişinin hemen dışında geçen güneşli ve açık bir gün. Hava tamamen güneşli ve yağmur yok. Hannah okul girişine doğru geliyor. Hannah'ın üzerinde parlak sarı bir yağmurluk, küçük bir kışlık bere ve güneş gözlüğü var. Elinde video başlamadan önce zaten açık olan bir şemsiye tutuyor. Emma okul girişinin yakınında duruyor ve Hannah'ı görüyor. CAMERA: During the face-to-face conversation, use natural over-the-shoulder shot/reverse-shot coverage, showing the speaker from over the other character's shoulder. ACTION: Emma, güneşli havada üstünde yağmurluk, kafasında bere ve elinde şemsiyeyle gelen Hannah'ı görünce şaşkın şekilde ona bakar. Outdoor motion: a very light natural breeze gently moves Hannah's hair where visible and slightly moves the edges of her raincoat and Emma's hair. Emma: 'Hannah, where are you going?' diye sorar. Hannah hiç garip bir şey yokmuş gibi rahat ve ciddi şekilde: 'To school.' der. Emma güneşe doğru bir bakıp sonra Hannah'ı baştan aşağı süzer ve 'Why are you wearing these things?' diye sorar. Hannah tamamen ciddi ve cool bir ifadeyle: 'I'm always prepared.' der. Emma'nın yüzünde hafif şaşkın ve eğlenmiş bir ifade kalır. Hannah ise hâlâ yaptığı şeyin tamamen normal olduğunu düşünüyor gibi görünür. Camera: medium two-shot keeping Hannah, Emma, and Hannah's umbrella clearly visible. Keep the weather clearly sunny throughout the entire scene. No rain. The umbrella is already open before the scene begins. Do not open, close, remove, replace, duplicate, or transform the umbrella. Do not add or remove Hannah's raincoat, beanie, sunglasses, or umbrella during the video. No complicated camera movement. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated hair rendering, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_school_life_benjamin2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_benjamin2.mp4",
+    title: "Benjamin's next alarm is right now.",
+    transcript: "Teacher : Benjamin, /when/ is your next alarm? Benjamin : Now.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Benjamin, Bir sonraki alarmın /ne zaman/? Benjamin : Şimdi." },
+      { id: "b", text: "Öğretmen : Benjamin, Neden alarm kuruyorsun? Benjamin : Tenefüs zamanı." }
+    ],
+    easyDistractor: "Öğretmen : Benjamin, Bir sonraki dersin ne zaman? Benjamin : Bir saat sonra.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin"],
+    grades: [6],
+    functions: ["use_of_wh_questions_why_when"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:04.455",
+evidenceEnd: "0:10.031",
+    evidenceSentence: "Teacher : Benjamin, /when/ is your next alarm? Benjamin : Now.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Benjamin: light blue polo shirt, dark blue full-length trousers, white sneakers, a simple digital wristwatch. Teacher: adult male teacher, light beige long-sleeved shirt, dark navy full-length trousers, simple black shoes. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Benjamin sırasında oturuyor. Benjamin'in bileğinde video başlamadan önce zaten takılı olan basit bir dijital kol saati var. Several generic students are seated at desks around the classroom and quietly following the lesson. ACTION: Ders sırasında Benjamin'in dijital kol saatinden kısa bir alarm sesi gelir. Benjamin doğal şekilde bileğine bakar ve saatindeki bir düğmeye basarak alarmı susturur. Kısa bir süre sonra aynı dijital kol saati ikinci kez alarm sesi çıkarır. Benjamin yine bileğine bakar ve alarmı susturur. Öğretmen Benjamin'e dönüp hafif şaşkın ve sabırsız bir ifadeyle: 'Benjamin, when is your next alarm?' diye sorar. Benjamin dijital kol saatine kısa bir bakış atar. Gayet rahat ve ciddi şekilde: 'Now.' der. Benjamin 'Now.' dedikten hemen sonra dijital kol saati üçüncü kez alarm sesi çıkarır. Benjamin kısa süre öğretmene bakar ve tamamen ciddi kalır. Öğretmen Benjamin'e sessizce şaşkın bir ifadeyle bakar. Camera: medium shot keeping Benjamin and the teacher clearly visible. Do not show readable text or numbers on the wristwatch display. The wristwatch remains on Benjamin's wrist throughout the entire video. Do not remove, duplicate, replace, or transform the wristwatch. The alarm sound must clearly come from Benjamin's wristwatch. No complicated camera movement. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_school_life_ethan",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ethan.mp4",
+    title: "Ethan keeps three clocks on his desk to avoid being late.",
+    transcript: "Teacher : Ethan, /there are/ three clocks on your desk. Ethan : Yes, I don't want to be late. Teacher : I can see that.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Ethan, Masandaki saatler ne öyle? Ethan : Evet, Geç kalmak istemiyorum. Öğretmen : Bunu görebiliyorum." },
+      { id: "b", text: "Öğretmen : Ethan, Masanda üç saat /var/. Ethan : Evet, Geç kalmak istemiyorum. Öğretmen : Bunu görebiliyorum." }
+    ],
+    easyDistractor: "Öğretmen : Ethan, Masanda bir saat var. Ethan : Evet, Geç kalmak istemiyorum. Öğretmen : Onu görebiliyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ethan"],
+    grades: [6],
+    functions: ["use_of_there_is_there_are"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.674",
+evidenceEnd: "0:03.234",
+    evidenceSentence: "Teacher : Ethan, /there are/ three clocks on your desk. Ethan : Yes, I don't want to be late. Teacher : I can see that.",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ethan: light blue polo shirt, dark blue full-length trousers, white sneakers, a simple digital wristwatch. Teacher: adult male teacher, light beige long-sleeved shirt, dark navy full-length trousers, simple black shoes. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Ethan kendi sırasında oturuyor. Ethan'ın masasında video başlamadan önce zaten üç farklı saat bulunuyor: bir dijital masa saati, bir analog masa saati, ve bir dijital kol saati. Saatlerde okunabilir yazı veya rakam göstermeye gerek yoktur. Several generic students are seated at desks around the classroom and quietly following the lesson. ACTION: Öğretmen Ethan'ın masasındaki saatleri fark eder. Hafif şaşkın bir ifadeyle: 'Ethan, there are three clocks on your desk.' der. Ethan gayet ciddi ve doğal bir ifadeyle: 'Yes, I don't want to be late.' der. Öğretmen üç saate tekrar bakar, sonra Ethan'a bakarak: 'I can see that.' der. Ethan tamamen ciddi kalır ve bunun son derece normal bir hazırlık olduğunu düşünüyor gibi görünür. Do not show readable text or numbers on any clock display. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_school_life_ella2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ella2.mp4",
+    title: "Ella wakes up when the teacher asks who is sleeping.",
+    transcript: "Teacher : /Who/ is sleeping? Ella : Who?",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Kim uyuyor? Ella : Kim?" },
+      { id: "b", text: "Öğretmen : O ses nerden geldi? Ella : Ne oldu?" }
+    ],
+    easyDistractor: "Öğretmen : Kim konuşuyor? Ella : Ben mi?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella"],
+    grades: [6],
+    functions: ["present_progressive", "use_of_wh_questions_who_when_what_where"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:02.640",
+evidenceEnd: "0:07.848",
+    evidenceSentence: "Teacher : /Who/ is sleeping? Ella : Who?",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ella: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult male teacher, light beige long-sleeved shirt, dark navy full-length trousers, simple black shoes. Camera: Begin with natural classroom coverage including the teacher and students. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu sessiz bir sınıf. Öğretmen ders anlatıyor. Several generic students are seated at desks around the classroom and quietly following the lesson. Ders sırasında sınıfın sessizliği içinde kısa ve belirgin bir horlama sesi duyulur. Öğretmen konuşmayı bırakır ve şaşkın şekilde sınıfa bakar. Öğretmen: 'Who is sleeping?' diye sorar. HARD CUT. Camera: medium shot of Ella. Ella sırasında oturuyor ve farkında olmadan uyuyakalmış durumda. Ella'nın başı hafifçe arkaya düşmüş, gözleri kapalıdır. Ella öğretmenin sorusundan aniden hafifçe irkilerek uyanır. Ella gözlerini açar, etrafına şaşkın ve uykulu şekilde bakar. Ne olduğunu anlamamış gibi: 'Who?' der. Öğretmen sessizce Ella'ya bakar. Ella kısa bir an sonra kendisini ele verdiğini fark eder ve hafif mahcup bir ifadeyle öğretmene bakar. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_emma2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_emma2.mp4",
+    title: "Emma's project group lets her do all the work.",
+    transcript: "Teacher : Emma is /such a team player/ during school projects!",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Emma okul projelerinde hep en başarılı öğrencidir!" },
+      { id: "b", text: "Öğretmen : Emma okul projelerinde /tam bir takım oyuncusudur/!" }
+    ],
+    easyDistractor: "Öğretmen : Emma okul projelerinde hiç çalışmıyor!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["emma"],
+    grades: [6],
+    functions: ["target_social_language"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:01.702",
+evidenceEnd: "0:05.093",
+    evidenceSentence: "Teacher : Emma is /such a team player/ during school projects!",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Adult female teacher wears: light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. All students wear: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Emma ve üç generic öğrenci aynı grup proje masasının etrafında bulunuyor. Masanın üzerinde basit bir school project poster, birkaç renkli kâğıt ve temel okul malzemeleri var. Emma projenin ana kısmıyla aktif şekilde ilgileniyor. Diğer üç öğrenci ise masada oturuyor ve Emma'nın çalışmasını izliyor. Öğretmen birkaç adım uzakta duruyor ve grubu gözlemliyor. ACTION: Emma proje posteri üzerinde dikkatli şekilde çalışır ve son bir küçük düzenleme yapar. Diğer üç öğrenci çalışmaya katılmak yerine rahat şekilde Emma'yı izlemeye devam eder. Öğretmen Emma'nın çalışkanlığından memnun şekilde kameraya bakarak: 'Emma is such a team player during school projects!' der. Emma öğretmenin sözünü duyunca kısa süre memnun şekilde gülümser. Sonra Emma masadaki diğer üç öğrenciye bakar. Üç öğrenci aynı anda Emma'ya başparmaklarını kaldırarak thumbs up yapar. Emma'nın gülümsemesi hafifçe kaybolur. Emma kısa süre sessizce onlara bakar, sanki 'Seriously?' diye düşünüyormuş gibi hafif yorgun ve şaşkın bir ifade takınır. No additional dialogue. Camera: medium group shot keeping Emma, the three generic students, the project table, and the teacher readable within the scene. Keep all characters around the same project table throughout the scene. Do not move characters between desks. Do not pass objects between characters. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+ {
+    id: "6_school_life_ethan_social_2",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ethan_social_2.mp4",
+    title: "Ethan learns he needs to work harder to make the grade.",
+    transcript: "Teacher : OK, kids, I'll give your exam papers, check them quickly, Ethan, /you need to work harder to make the grade/!",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Tamam çocuklar, Sınav kâğıtlarınızı vereceğim, Hızlıca kontrol edin, Ethan, /Notunu yükseltmek için daha çok çalışmalısın/!" },
+      { id: "b", text: "Öğretmen : Tamam çocuklar, Sınav kâğıtlarınızı vereceğim, Hızlıca kontrol edin, Ethan, Düşük not almışsın!" }
+    ],
+    easyDistractor: "Öğretmen : Tamam çocuklar, Sınav kâğıtlarınızı yarın vereceğim, Ethan, Sınavın çok iyi!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ethan"],
+    grades: [6],
+    functions: ["target_social_language"],
+    theme: "School_life",
+    unit: "school_life",
+
+   evidenceStart: "0:04.258",
+evidenceEnd: "0:08.266",
+    evidenceSentence: "Teacher : OK, kids, I'll give your exam papers, check them quickly, Ethan, /you need to work harder to make the grade/!",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. CLOTHING: All students wear light blue polo shirt, dark blue full-length trousers, white sneakers. Female Teacher wears light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. Öğretmen sınav kağıtlarını değerlendirmiş ve sonuçları açıklayacaktır. Camera: medium one-shot. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Öğretmen sınıfa bakarak: 'OK, kids, I'll give your exam papers, check them quickly.' der. Öğretmen daha önce kontrol edip notlandırdığı sınav kağıtlarını öğrencilere geri dağıtıyor. Ethan kendi sırasında oturuyor. Ethan sınavdan iyi bir sonuç aldığına oldukça emin görünüyor. Rahat, kendinden emin ve hafif gururlu bir ifadesi var. Several generic students are seated at desks around the classroom and quietly receiving their graded papers. ACTION: Öğretmen Ethan'ın sırasına yaklaşır. Ethan öğretmenin gelişini kendinden emin bir ifadeyle izler. Öğretmen daha önce notlandırılmış sınav kağıdını Ethan'ın masasının üzerine bırakır. Öğretmen Ethan'a bakarak: 'Ethan, you need to work harder to make the grade!' der. Ethan'ın kendinden emin ifadesi aniden kaybolur. Ethan sessizce sınav kağıdına bakar. Sonra kısa süre öğretmene bakar. Ardından tekrar sınav kağıdına bakar. Ethan hiçbir şey söylemez. Yüzünde belirgin bir hayal kırıklığı ve şaşkınlık vardır. Do not show any readable grade, score, comments, numbers, or text on the exam paper. Camera: medium one-shot focused mainly on Ethan, with the teacher entering the frame naturally when she gives him the paper. Keep the exam paper simple and visually unobtrusive. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_classroom_life_chloe",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_chloe.mp4",
+    title: "Chloe is still carefully writing her name during the exam.",
+    transcript: "Teacher : The exam starts now, You have forty minutes, Chloe, are you still writ/ing/ the first word, It's your name! Chloe : Yes, I want it to look perfect.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Sınav şimdi başlıyor, Kırk dakikanız var, Chloe, Adını yazdın mı? Chloe : Evet, Mükemmel görünüyor." },
+      { id: "b", text: "Öğretmen : Sınav şimdi başlıyor, Kırk dakikanız var, Chloe, Hâlâ ilk kelimeyi mi yazı/yor/sun, o senin adın! Chloe : Evet, Mükemmel görünmesini istiyorum." }
+    ],
+    easyDistractor: "Öğretmen : Sınav bitti, Chloe, Kâğıdını ver. Chloe : Tamam. Öğretmen : Bu senin adın.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:04.487",
+evidenceEnd: "0:07.575",
+    evidenceSentence: "Teacher : The exam starts now, You have forty minutes, Chloe, are you still writ/ing/ the first word, It's your name! Chloe : Yes, I want it to look perfect.",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Chloe and all students wear: white polo shirt, dark blue full-length trousers, white sneakers. Female teacher wears: light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. SCENE: Gündüz, normal bir sınıf. Sınıfta bir sınav başlamak üzere. Chloe kendi sırasında oturuyor. Diğer generic öğrenciler de kendi sıralarında sınava hazır şekilde bekliyor. Her öğrencinin sırasında bir sınav kağıdı bulunuyor. ACTION: Öğretmen sınıfın önünde öğrencilere bakarak: 'The exam starts now. You have forty minutes.' der. Öğrenciler sınava başlar. Burada tüm öğrencilerin aynı hareketle senkronize halde sınava başlatma. 2 tanesi hemen başlasın, 1-2 tanesi bir saniye sonra başlasın. HARD CUT. Yaklaşık on dakika geçmiştir. Sınıftaki diğer öğrenciler sınav kağıtlarına yoğun şekilde cevap yazmaktadır. Chloe ise hâlâ sınav kağıdının en üst kısmına kendi adını son derece yavaş ve dikkatli şekilde yazmaktadır. Chloe yazısının düzgün görünmesine aşırı özen gösteriyor. Öğretmen Chloe'nın sırasında hâlâ en üst satırda uğraştığını fark eder ve yanına yaklaşır. Öğretmen şaşkın şekilde: 'Chloe, are you still writing the first word?' diye sorar. Chloe yazmayı kısa süre durdurur. Gayet ciddi ve doğal bir ifadeyle: 'Yes. I want it to look perfect.' der. Öğretmen Chloe'nın sınav kağıdının en üst kısmına bakar ve: 'It's your name.' der. Chloe kısa süre öğretmene bakar. Sonra hiçbir sorun yokmuş gibi tekrar kağıdına döner ve adını dikkatle yazmaya devam eder. No additional dialogue. Camera: begin with simple classroom coverage for the exam announcement. After the HARD CUT, focus on Chloe at her desk while the other students are already writing normally in the background. Clearly show that Chloe is still working only at the very top of the exam paper. Do not show readable exam questions, answers, grades, scores, or other text on the paper. The visual gag only needs to show that she is still slowly writing in the name area at the top of the paper. Keep Chloe seated throughout the scene. Keep the exam paper on the desk throughout the scene. No complicated camera movement. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_school_life_social_3",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_social_3.mp4",
+    title: "Ella mistakes the choir's applause for a personal spotlight.",
+    transcript: "Teacher : The choir is always /in the spotlight/ during the Republic Day celebrations!",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Koro, Cumhuriyet Bayramı kutlamalarında her zaman /ilgi odağında/ olur!" },
+      { id: "b", text: "Öğretmen : Koro, Cumhuriyet Bayramı kutlamalarında her zaman sahneye çıkar!" }
+    ],
+    easyDistractor: "Öğretmen : Koro, Cumhuriyet Bayramı kutlamalarında her zaman prova yapar!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "chloe", "daniel"],
+    grades: [6],
+    functions: ["target_social_language"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.976",
+evidenceEnd: "0:06.117",
+    evidenceSentence: "Teacher : The choir is always /in the spotlight/ during the Republic Day celebrations!",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Image3>>> as Daniel's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: All students wear: white polo shirt, dark blue full-length trousers, white sneakers. Female teacher wears: elegant light beige blouse, dark navy full-length trousers, simple black flats. SCENE: Okulun Cumhuriyet Bayramı kutlaması sırasında küçük bir sahne. Sahnede toplam altı kişilik okul korosu bulunuyor: Ella, Chloe, Daniel ve üç generic öğrenci. Altı öğrenci sahnede düzenli, basit bir sıra halinde duruyor. Sahne kırmızı-beyaz Cumhuriyet Bayramı dekorasyonları ve Türk bayraklarıyla sade şekilde süslenmiş. No readable banners or text. Koro performansını an önce bitirmiş durumda. Öğretmen sahnenin yakınında duruyor ve koroya gururla bakıyor. ACTION: Koro performansını tamamlar. Seyircilerden güçlü bir alkış sesi gelir. Ella alkışları duyunca çok mutlu olur. Öğretmen koroyu eliyle işaret eder ve kameraya gururla: 'The choir is always in the spotlight during the Republic Day celebrations!' der. Ella öğretmenin sözünü duyunca, övgünün özellikle kendisine geldiğini düşünmüş gibi gururlu şekilde ellerini kaldırarak ve selam verir. Hemen ardından Chloe, Daniel ve diğer üç koro öğrencisi birlikte seyircilere zarif bir şekilde eğilerek selam verir. Ella diğerlerinin de selam verdiğini fark eder. Ella'nın kendinden emin ifadesi hafifçe utanmış ve eğlenmiş bir ifadeye dönüşür. Chloe, Ella'ya kısa ve eğlenmiş bir bakış atar. No additional dialogue. Camera: stable medium-wide shot keeping all six choir students and the teacher clearly readable. Keep exactly six choir students throughout the scene. Do not add additional choir members. No readable text anywhere in the scene. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_hannah.mp4",
+    title: "Hannah finishes counting to five hundred almost instantly.",
+    transcript: "Hannah : I'll count to /five hundred/, You two go and hide, One, two, three, /five hundred/!",
+    answerOptions: [
+      { id: "a", text: "Hannah : Beşe kadar sayacağım, Siz ikiniz gidip saklanın, Bir, iki, üç, beş!" },
+      { id: "b", text: "Hannah : /Beş yüz/e kadar sayacağım, Siz ikiniz gidip saklanın, Bir, iki, üç, /beş yüz/!" }
+    ],
+    easyDistractor: "Hannah : Yüze kadar sayacağım, Siz ikiniz gidip saklanın, Bir, iki, üç, yüz!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah", "emma", "chloe"],
+    grades: [6],
+    functions: ["numbers"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:07.542",
+    evidenceSentence: "Hannah : I'll count to /five hundred/, You two go and hide, One, two, three, /five hundred/!",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Image3>>> as Chloe's canonical identity and appearance reference. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Hannah: light jacket, dark blue long shorts, white sneakers. Emma: light-colored top, red joggers, white sneakers. Chloe: simple pink t-shirt, dark blue shorts, white sneakers. SCENE: Okulun açık oyun alanında geçen gündüz sahnesi. Hannah, Emma ve Chloe saklambaç oynamaya hazırlanıyor. Yakında Hannah'ın yüzünü dönüp sayabileceği düz bir okul duvarı var. Alan açık, öğrencilerin koşarak uzaklaşabileceği kadar geniş. ACTION: Hannah Emma ve Chloe'ye bakarak: 'I'll count to five hundred. You two go and hide.' der. Hannah hemen duvara doğru döner, saklambaç pozisyonuna geçerek yüzünü duvara yaklaştırır ve gözlerini kapatır. Emma ve Chloe hiç vakit kaybetmeden koşarak Hannah'tan uzaklaşmaya başlar. Hannah ciddi şekilde saymaya başlar: 'One... two... three... five hundred!' 'Five hundred!' dedikten hemen sonra Hannah gözlerini açar. Duvara dönük pozisyondan ayrılıp etrafına ciddi ve kararlı gözlerle bakmaya başlar, sanki gerçekten düzgün şekilde beş yüze kadar saymış gibi davranır. Emma ve Chloe bu sırada çoktan uzaklaşmış durumdadır. Camera: medium-wide shot at the beginning, keeping all three girls readable. After Hannah turns to the wall, keep the camera simple and allow Emma and Chloe to run out of the immediate area naturally. Outdoor motion: a light natural breeze gently moves the girls' hair and clothing. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated hair rendering, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_school_life_ella3",
+    status: "published",
+    videoSrc: "assets/video/6_school_life_ella3.mp4",
+    title: "Ella waits for inspiration instead of answering her exam.",
+    transcript: "Teacher : The exam starts now, You have forty minutes, Ella, what are you /waiting for/? Ella : I'm waiting for inspiration.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Sınav başladı, Kırk dakikanız var, Ella, Neye bakıyorsun? Ella : İlham gelmesini bekliyorum." },
+      { id: "b", text: "Öğretmen : Sınav şimdi başlıyor, Kırk dakikanız var, Ella, Ne /bekliyorsun/? Ella : İlham gelmesini bekliyorum." }
+    ],
+    easyDistractor: "Öğretmen : Sınav şimdi başlıyor, Ella, Neden ayaktasın? Ella : Arkadaşımı bekliyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ella"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "School_life",
+    unit: "school_life",
+
+    evidenceStart: "0:05.287",
+evidenceEnd: "0:07.510",
+    evidenceSentence: "Teacher : The exam starts now, You have forty minutes, Ella, what are you /waiting for/? Ella : I'm waiting for inspiration.",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ella: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. Generic students: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, normal şekilde öğrencilerin bulunduğu bir sınıf. Sınıfta bir sınav başlamak üzere. Ella kendi sırasında oturuyor. Diğer generic öğrenciler kendi sıralarında sınava hazır şekilde bekliyor. Öğrencilerin sıralarında sınav kağıtları bulunuyor. ACTION: Öğretmen öğrencilere bakarak: 'The exam starts now. You have forty minutes.' der. Öğrenciler sınava başlarlar. Ella da başlangıçta normal ve rahat görünür. HARD CUT. Camera: focus on the analog clock on the wall. An analog wall clock shows ten minutes passes. HARD CUT. Yaklaşık on dakika geçmiştir. Sınıftaki diğer öğrenciler sınav kağıtlarına yoğunlaşmış şekilde yazmaktadır. Ella ise hiçbir şey yazmadan kollarını önünde kavuşturmuş ve sırasında oturuyor ve ilham bekler bir ifadeyle bakıyor. Öğretmen Ella'nın hiçbir şey yapmadan beklediğini fark eder. Öğretmen şaşkın şekilde Ella'ya bakarak: 'Ella, what are you waiting for?' diye sorar. Ella gayet ciddi ve doğal bir ifadeyle: 'I'm waiting for inspiration.' der. Öğretmen kısa süre sessizce Ella'ya bakar. Ella ise hâlâ sakin şekilde beklemeye devam eder. Camera: use simple classroom coverage. After the time transition, focus mainly on Ella and the teacher. Do not show readable questions, answers, grades, scores, or other text on the exam papers. Ella's exam paper remains blank in appearance. Do not show Ella writing before or after the teacher's question. Do not animate the clock hands moving continuously. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_classroom_life_benjamin",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_benjamin.mp4",
+    title: "Benjamin's class writes examples from a completely blank board.",
+    transcript: "Teacher : What are you /doing/? Benjamin : We are writ/ing/ the examples. Teacher : Which examples, The board is empty!",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Ne yazıyorsunuz? Benjamin : Örnekleri yazdık. Öğretmen : Hangi örnekleri, Tahta boş!" },
+      { id: "b", text: "Öğretmen : Ne /yapıyorsunuz/? Benjamin : Örnekleri yazı/yor/uz. Öğretmen : Hangi örnekleri, Tahta boş!" }
+    ],
+    easyDistractor: "Öğretmen : Ne yapıyorsunuz? Benjamin : Sizi bekliyoruz. Öğretmen : Tahta boş!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["benjamin"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:02.952",
+evidenceEnd: "0:08.294",
+    evidenceSentence: "Teacher : What are you /doing/? Benjamin : We are writ/ing/ the examples. Teacher : Which examples, The board is empty!",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Benjamin and all other students wear light blue polo shirt, dark blue full-length trousers, white sneakers. Female Teacher wears: light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. SCENE: Gündüz, normal bir sınıf. Benjamin ve yaklaşık beş generic öğrenci kendi sıralarında oturuyor. Sınıfın önündeki büyük tahta tamamen boş ve temiz. Tahtada hiçbir yazı, sayı, çizim, şekil, denklem veya işaret yok. Tahta tamamen boş. Öğretmen kısa süreliğine sınıftan ayrılmış ve şimdi sınıfa geri dönüyor. Öğretmen içeri girdiğinde Benjamin ve diğer öğrencilerin hepsi bomboş tahtaya ciddi şekilde bakarak defterlerine not yazıyor. Öğrenciler gerçekten tahtada örnekler varmış gibi son derece normal ve ciddi davranıyor. Öğretmen öğrencilerin yaptığı bu saçma hareketi fark eder. Sonra sınıfın önündeki tamamen boş tahtaya bakar. Ardından tekrar öğrencilere döner ve şaşkın şekilde: 'What are you doing?' diye sorar. Benjamin yazmayı bırakır ve elini kaldırır. Gayet ciddi ve doğal bir ifadeyle: 'We are writing the examples.' der. Öğretmen tekrar bomboş tahtaya bakar. Tahtada gerçekten hiçbir şey olmadığını görür. Öğretmen şaşkın şekilde sınıfa dönerek: 'Which examples? The board is empty!' der. Benjamin ve diğer öğrenciler aynı anda bomboş tahtaya bakar. Tüm sınıf sanki örneklerin gizemli şekilde ortadan kaybolduğuna gerçekten inanmış gibi şaşkın ve dehşete düşmüş şekilde hep birlikte: 'Nooo!' diye tepki verir. Öğretmen hiçbir şey söylemeden sınıfa inanamaz bir ifadeyle bakar. Camera: begin with simple classroom coverage showing the students seriously taking notes. When the teacher checks the board, clearly show that the entire board is completely blank. The classroom board must remain completely blank throughout the entire video. Absolutely no writing, letters, numbers, equations, drawings, diagrams, chalk marks, or other visible content may appear on the board at any point. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_mia_zoe",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_mia_zoe.mp4",
+    title: "Zoe highlights almost every part of her textbook.",
+    transcript: "Mia : What are you do/ing/? Zoe : I'm paint/ing/ the important parts yellow. Mia : So everything is important?",
+    answerOptions: [
+      { id: "a", text: "Mia : Ne yapıyorsun? Zoe : Önemli yerleri sarıya boyuyorum. Mia : Yani her şey önemli mi?" },
+      { id: "b", text: "Mia : Çıkışta ne yapacaksın? Zoe : Biraz resim yapacağız. Mia : Çok önemli mi?" }
+    ],
+    easyDistractor: "Mia : Ne yapıyorsun? Zoe : Sadece başlığı sarıya boyuyorum. Mia : Yani başlık önemli mi?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:01.829",
+evidenceEnd: "0:06.033",
+    evidenceSentence: "Mia : What are you do/ing/? Zoe : I'm paint/ing/ the important parts yellow. Mia : So everything is important?",
+
+    prompt: "Use <<<Image1>>> as Zoe's canonical identity and appearance reference. Use <<<Audio1>>> as Zoe's canonical voice. Use <<<Image2>>> as Mia's canonical identity and appearance reference. Use <<<Audio2>>> as Mia's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Zoe: white polo shirt, dark blue full-length trousers, white sneakers. Mia: white polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, sınıfta sessiz bir çalışma etkinliği yapılıyor. Zoe ve Mia yan yana kendi sıralarında oturuyor. Zoe'nun önünde açık bir ders kitabı var. Zoe elinde sarı fosforlu kalem tutuyor. Kitabın açık sayfasının neredeyse tamamı zaten sarı renkle işaretlenmiş durumda. Sayfadaki yazılar okunabilir olmak zorunda değil. ACTION: Zoe son derece ciddi şekilde kitabındaki küçük bir bölümü sarı fosforlu kalemle işaretlemeye devam eder. Mia bir süre Zoe'yu izler. Sonra kitabın neredeyse tamamen sarıya boyanmış sayfasına bakar. Mia şaşkın şekilde: 'What are you doing?' diye sorar. Zoe hiç duraksamadan, yaptığı şey tamamen normalmiş gibi: 'I'm painting the important parts yellow.' der. Mia tekrar kitabın neredeyse tamamen sarı olan sayfasına bakar. Sonra Zoe'ya dönerek: 'So everything is important?' diye sorar. Zoe gayet ciddi bir ifadeyle başını sallayarak bunu onaylar. No additional dialogue. Camera: use a simple medium two-shot showing Zoe and Mia at their desks. Clearly show the open book in front of Zoe. The yellow highlighting should already cover most of the page from the beginning of the scene. Zoe only adds a small amount more during the scene. Do not make the entire page change color during the shot. Keep both characters seated throughout the scene. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_noah_victoria",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_noah_victoria.mp4",
+    title: "Victoria checks a ruler by measuring it with another ruler.",
+    transcript: "Noah : Victoria, what are you doing? Victoria : I'm check/ing/ the ruler. Noah : With another ruler?",
+    answerOptions: [
+      { id: "a", text: "Noah : Victoria, Ne yapıyorsun? Victoria : Cetveli kontrol ettim. Noah : Başka bir cetvelle mi?" },
+      { id: "b", text: "Noah : Victoria, Ne yapıyorsun? Victoria : Cetveli doğru mu diye kontrol edi/yor/um. Noah : Başka bir cetvelle mi?" }
+    ],
+    easyDistractor: "Noah : Victoria, Ne yapıyorsun? Victoria : Ödevimi kontrol ediyorum. Noah : Başka bir defterle mi?",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["noah", "victoria"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+   evidenceStart: "0:03.384",
+evidenceEnd: "0:05.117",
+    evidenceSentence: "Noah : Victoria, what are you doing? Victoria : I'm check/ing/ the ruler. Noah : With another ruler?",
+
+    prompt: "Use <<<Image1>>> as Victoria's canonical identity and appearance reference. Use <<<Audio1>>> as Victoria's canonical voice. Use <<<Image2>>> as Noah's canonical identity and appearance reference. Use <<<Audio2>>> as Noah's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Victoria: white polo shirt, dark blue full-length trousers, white sneakers. Noah: light blue polo shirt, dark blue full-length trousers, white sneakers. SCENE: Gündüz, sınıfta sessiz bir çalışma etkinliği yapılıyor. Victoria ve Noah yan yana kendi sıralarında oturuyor. Victoria'nın masasının üzerinde iki basit okul cetveli var. Bir cetvel masanın üzerinde düz şekilde duruyor. Victoria ikinci cetveli kullanarak masadaki cetvelin uzunluğunu ciddi ciddi ölçüyor. Noah kendi çalışmasıyla ilgilenirken Victoria'nın ne yaptığını fark ediyor. ACTION: Victoria son derece dikkatli ve ciddi şekilde bir cetveli başka bir cetvelle ölçmeye devam eder. Noah kısa süre Victoria'yı izler. Sonra şaşkın şekilde: 'Victoria, what are you doing?' diye sorar. Victoria ölçmeyi bırakmadan sakin ve ciddi şekilde: 'I'm checking the ruler.' der. Noah iki cetvele bakar. Sonra Victoria'ya dönerek: 'With another ruler?' diye sorar. Victoria son derece ciddi bir ifadeyle başını sallayarak bunu onaylar. Ardından hiçbir gariplik yokmuş gibi cetveli ölçmeye devam eder. No additional dialogue. Camera: use a simple medium two-shot of Victoria and Noah at their desks. Make both rulers clearly visible on Victoria's desk. Clearly show that Victoria is using one ruler to measure the other ruler. The two rulers must remain separate objects throughout the scene. Do not transform, merge, duplicate, or replace the rulers. Do not require readable numbers or measurement markings on the rulers. The visual gag only needs to clearly show one ruler being used to measure another ruler. Keep Victoria and Noah seated throughout the scene. No complicated camera movement or multi-step object actions. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_hannah2",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_hannah2.mp4",
+    title: "Hannah insists she is reading in her dreams.",
+    transcript: "Teacher : Hannah, what are you doing? Hannah : I/'m/ read/ing/. Teacher : You /are/ sleep/ing/! Hannah : I'm read/ing/ in my dreams.",
+    answerOptions: [
+      { id: "a", text: "Öğretmen : Hannah, Ne yapıyorsun? Hannah : Uyuyorum. Öğretmen : Okumalısın! Hannah : Rüyalarımda uyuyacağım." },
+      { id: "b", text: "Öğretmen : Hannah, Ne yapıyorsun? Hannah : Oku/yor/um. Öğretmen : Uyu/yor/sun! Hannah : Rüyalarımda oku/yor/um." }
+    ],
+    easyDistractor: "Öğretmen : Hannah, Ne yapıyorsun? Hannah : Ödevimi yapıyorum. Öğretmen : Kitabını kapat! Hannah : Tamam.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [6],
+    functions: ["present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:04.039",
+evidenceEnd: "0:08.124",
+    evidenceSentence: "Teacher : Hannah, what are you doing? Hannah : I/'m/ read/ing/. Teacher : You /are/ sleep/ing/! Hannah : I'm read/ing/ in my dreams.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Hannah: white polo shirt, dark blue full-length trousers, white sneakers. Teacher: adult female teacher, light beige long-sleeved blouse, dark navy full-length trousers, simple black flats. Generic students: girls wearing white polo shirts and dark blue full-length trousers, boys wearing light blue polo shirts and dark blue full-length trousers, white sneakers. SCENE: Gündüz, sınıfta sessiz okuma etkinliği yapılıyor. Hannah ve birkaç generic öğrenci kendi sıralarında oturuyor. Her öğrencinin önünde açık bir kitap var. Diğer öğrenciler kitaplarını normal şekilde sessizce okuyor. Hannah ise açık kitabını yüzünün önünde tutuyor. ACTION: Sınıf sessizdir. Diğer öğrenciler kitaplarını normal şekilde okumaya devam eder. Hannah açık kitabını yüzünün önünde tutmaktadır. Öğretmen sınıfta dolaşırken Hannah'nın sırasına yaklaşır. Hannah'nın kitabı biraz aşağı iner ve gözlerinin kapalı olduğu ortaya çıkar. Hannah hareketsiz şekilde oturuyor ve belli ki uyuyor. Öğretmen Hannah'ya şaşkın şekilde bakarak: 'Hannah? What are you doing?' diye sorar. Hannah gözlerini açar. Hızlıca önündeki açık kitaba bakar ve hiçbir sorun yokmuş gibi: 'I'm reading.' der. Öğretmen Hannah'nın az önce uyuduğunu bildiği için: 'You are sleeping!' der. Hannah gayet ciddi ve kendinden emin bir ifadeyle: 'I'm reading in my dreams.' der. Öğretmen kısa süre Hannah'ya inanamaz bir ifadeyle bakar. Hannah tekrar kitabına bakarak normal şekilde okumaya devam ediyormuş gibi davranır. No additional dialogue. Camera: begin with simple classroom coverage establishing the silent reading activity. Keep Hannah clearly visible with the open book held in front of her face. When the teacher approaches Hannah, clearly reveal Hannah's closed eyes as the book lowers slightly. After Hannah opens her eyes, keep the interaction focused on Hannah and the teacher. Hannah remains seated throughout the scene. The book remains open throughout the interaction. Do not show readable text on any book pages. Keep the other students quietly reading in the background. No complicated camera movement. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_mia_zoe2",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_mia_zoe2.mp4",
+    title: "Mia is writing for the school newspaper during break.",
+    transcript: "Zoe : You usually read during the break. Mia : Yes, but I'm writ/ing/ for the school newspaper now.",
+    answerOptions: [
+      { id: "a", text: "Zoe : Teneffüste biraz kitap okuyalım mı? Mia : Olur, Ama okul gazetesi yazım bitince." },
+      { id: "b", text: "Zoe : Teneffüste genellikle okursun. Mia : Evet, Ama şimdi okul gazetesi için yazı/yor/um." }
+    ],
+    easyDistractor: "Zoe : Teneffüste genellikle arkadaşlarınla konuşursun. Mia : Evet, Ama şimdi ödevimi yapıyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [6],
+    functions: ["present_progressive_vs_present_simple"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:01.627",
+evidenceEnd: "0:07.472",
+    evidenceSentence: "Zoe : You usually read during the break. Mia : Yes, but I'm writ/ing/ for the school newspaper now.",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Image2>>> as Zoe's canonical identity and appearance reference. Use <<<Audio2>>> as Zoe's canonical voice. All dialogue must be in English. CLOTHING: Mia is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. Zoe is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okulda teneffüs zamanı. Mia bir sırada oturmuş, okul gazetesi için bir yazı yazıyor. Önünde yarısı dolu bir kağıt ve kalem var. Zoe yanında duruyor ve Mia'nın ne yaptığını fark ediyor. Ortam sakin ve doğal bir okul atmosferine sahip. ACTION: Mia kağıda dikkatlice yazmaya devam ederken Zoe ona bakar. Zoe says: 'You usually read during the break.' Mia kısa bir an Zoe'ye bakar, sonra hafifçe gülümser. Mia says: 'Yes, but I'm writing for the school newspaper now.' Mia son birkaç kelimeyi yazdıktan sonra kağıdı hafifçe Zoe'ye doğru çevirir. Zoe kısa bir göz atar ve küçük, sıcak bir onay gülümsemesiyle başını sallar. Mia da hafifçe gülümser ve yazmaya devam eder. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated hair rendering, slightly exaggerated facial expressions, strong visual storytelling.",
+  },
+  {
+    id: "6_classroom_life_daniel_lucas",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_daniel_lucas.mp4",
+    title: "Lucas studies for a test instead of playing football after school.",
+    transcript: "Daniel : You /usually play/ football after school. Lucas : Yes, but I'm study/ing/ for the test today.",
+    answerOptions: [
+      { id: "a", text: "Daniel : Okuldan sonra genellikle futbol oynarsın. Lucas : Evet, Ama bugün sınava çalışı/yor/um." },
+      { id: "b", text: "Daniel : Okuldan sonra futbol oynayacak mısın? Lucas : Evet, Ama şimdi ödevlerimi yapacağım." }
+    ],
+    easyDistractor: "Daniel : Okuldan sonra genellikle basketbol oynarsın. Lucas : Evet, Ama bugün arkadaşımı bekliyorum.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["daniel", "lucas"],
+    grades: [6],
+    functions: ["present_progressive_vs_present_simple"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.269",
+evidenceEnd: "0:04.974",
+    evidenceSentence: "Daniel : You /usually play/ football after school. Lucas : Yes, but I'm study/ing/ for the test today.",
+
+    prompt: "Use <<<Image1>>> as Lucas's canonical identity and appearance reference. Use <<<Audio1>>> as Lucas's canonical voice. Use <<<Image2>>> as Daniel's canonical identity and appearance reference. Use <<<Audio2>>> as Daniel's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Lucas is wearing a light blue polo shirt, dark blue full-length trousers, and white sneakers. Daniel is wearing a light blue polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okul çıkışı. Lucas okulda sakin bir açık hava çalışma alanında bir masada oturmuş, açık kitabı ve defteriyle yaklaşan sınava çalışıyor. Daniel yanında ayakta duruyor ve kolunun altında bir futbol topu tutuyor. Ortam doğal ve sakin bir okul sonrası atmosferine sahip. ACTION: Lucas masada dikkatlice çalışırken Daniel ona bakar. Daniel says: 'You usually play football after school.' Lucas başını kaldırıp Daniel'a bakar. Lucas says: 'Yes, but I'm studying for the test today.' Daniel başını onaylar gibi sallar yumruğunu uzatır ve Lucas da onun yumruğuna kendi yumruğu ile cevap verir. Bu karşılıklı jestten sonra Daniel yürüyerek oradan ayrılır. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_david_ethan",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_david_ethan.mp4",
+    title: "Ethan practises with the band instead of going straight home.",
+    transcript: "David : You /usually/ go home right after school. Ethan : I do, but I'm practis/ing/ with the band today. David : Sounds good!",
+    answerOptions: [
+      { id: "a", text: "David : Okuldan sonra her zaman eve gidersin. Ethan : Giderim, Ama bugün grupla prova yaptık. David : Kulağa iyi geliyor!" },
+      { id: "b", text: "David : Okuldan sonra /genellikle/ eve gidersin. Ethan : Giderim, Ama bugün grupla prova yapı/yor/um. David : Kulağa iyi geliyor!" }
+    ],
+    easyDistractor: "David : Okuldan sonra genellikle kütüphaneye gidersin. Ethan : Giderim, Ama bugün ödev yapıyorum. David : Kulağa iyi geliyor!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["david", "ethan"],
+    grades: [6],
+    functions: ["present_progressive_vs_present_simple"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:01.830",
+evidenceEnd: "0:06.516",
+    evidenceSentence: "David : You usually go home right after school. Ethan : I do, but I'm practis/ing/ with the band today. David : Sounds good!",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio2>>> as David's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ethan is wearing a light blue polo shirt, dark blue full-length trousers, and white sneakers. David is wearing a light blue polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okul çıkışından sonra okulun müzik odası. Ethan bir davul setinin başında kısa bir ritim çalışıyor. David müzik odasının açık kapısında durup onu fark ediyor. Ortam sakin, doğal ve okul sonrası hissi veriyor. ACTION: Ethan kısa ve düzenli bir davul ritmi çalar ve durur. David kapının yanında ona bakar. David says: 'You usually go home right after school.' Ethan David'a bakar. Ethan says: 'I do, but I'm practising with the band today.' David hafifçe gülümser. David says: 'Sounds good!' David ayrılmak için dönerken Ethan'ın az önce çaldığı ritmi parmaklarıyla çok kısa şekilde kapının kenarında taklit eder. Ethan bunu fark eder, küçük bir gülümseme gösterir ve tekrar davuluna döner. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_ella_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_ella_olivia.mp4",
+    title: "Ella takes Olivia's photo for a change.",
+    transcript: "Ella : You usually take the photos. Olivia : I know, but you're tak/ing/ my photo today. Ella : Okay, Don't move!",
+    answerOptions: [
+      { id: "a", text: "Ella : Fotoğrafları genellikle sen çekersin. Olivia : Biliyorum, Ama bugün benim fotoğrafımı sen çekiyorsun. Ella : Tamam, Kıpırdama!" },
+      { id: "b", text: "Ella : Fotoğrafları genellikle ben çekerim. Olivia : Biliyorum, Ama bazen de sen çekiyorsun. Ella : Tamam, Kıpırdama!" }
+    ],
+    easyDistractor: "Ella : Fotoğrafları genellikle telefonla çekersin. Olivia : Biliyorum, Ama bugün resim çiziyorum. Ella : Tamam, Gülümse!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [6],
+    functions: ["present_progressive_vs_present_simple"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:07.001",
+    evidenceSentence: "Ella : You usually take the photos. Olivia : I know, but you're tak/ing/ my photo today. Ella : Okay, Don't move!",
+
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. Use <<<Image2>>> as Ella's canonical identity and appearance reference. Use <<<Audio2>>> as Ella's canonical voice. CLOTHING: Olivia is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. Ella is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okul bahçesinde sakin bir alan. Ella elinde küçük bir fotoğraf makinesi tutuyor. Olivia birkaç adım karşısında duruyor ve fotoğrafının çekilmesini bekliyor. ACTION: Ella kamerayı iki eliyle doğal şekilde tutar. Kamera objektifi sürekli Olivia'ya dönüktür. Olivia kameranın karşısında durur. Camera: Side-view medium two-shot. Keep both Ella and Olivia visible in the same shot. Ella is clearly the person holding the camera, and Olivia is clearly the person being photographed. Do not switch to camera POV. Do not show the camera screen. Do not show the resulting photo. Ella looks at Olivia and says: 'You usually take the photos.' Olivia smiles slightly and says: 'I know, but you're taking my photo today.' Ella raises the camera a little higher, still pointing it directly at Olivia. Ella says: 'Okay. Don't move!' Olivia immediately becomes playfully serious for the photo. She straightens her shoulders, lifts her chin slightly and gives a confident, exaggeratedly professional photo pose while keeping a completely serious face. Ella briefly lowers the camera just a little and gives Olivia a surprised, amused look. Olivia holds the serious pose for another moment, then gives a small smile. Keep the physical relationship consistent throughout: Ella always holds the camera. The camera always points toward Olivia. Olivia never holds the camera. Olivia remains the subject of the photograph. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_chloe_emma",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_chloe_emma.mp4",
+    title: "Emma's science experiment works a little too dramatically.",
+    transcript: "Chloe : You like science experiments, /don't you/? Emma : Yes, especially if they work.",
+    answerOptions: [
+      { id: "a", text: "Chloe : Fen deneylerini seviyor musun? Emma : Evet, Özellikle işe yararlarsa." },
+      { id: "b", text: "Chloe : Fendeneylerini seviyorsun, /öyle değil mi/? Emma : Evet, Özellikle işe yararlarsa." }
+    ],
+    easyDistractor: "Chloe : Deney tüpü hazır mı? Emma : Evet, Şimdi başlayalım.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe", "emma"],
+    grades: [6],
+    functions: ["tag_questions"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:08.095",
+    evidenceSentence: "Chloe : You like science experiments, /don't you/? Emma : Yes, especially if they work.",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use <<<Audio1>>> as Emma's canonical voice. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Audio2>>> as Chloe's canonical voice. CLOTHING: Emma is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. Chloe is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okulun fen laboratuvarı. Emma ve Chloe bir laboratuvar masasının yanında küçük bir deney yapıyor. Masada birkaç basit deney malzemesi ve bir test tüpü var. Emma dikkatle test tüpüne son damlayı eklemeye hazırlanıyor. Chloe yanında merakla izliyor. ACTION: Emma damlalığı test tüpünün üzerinde tutarken Chloe ona bakar. Chloe says: 'You like science experiments, don't you?' Chloe'nin cümlesi bittikten sonra, Emma test tüpüne son damlayı damlatır. Hemen ardından test tüpünden küçük bir patlama olur ve kısa, yoğun bir duman bulutu Emma'nın yüzüne doğru yükselir. Duman dağıldığında Emma'nın yüzünde ve alnında hafif siyah is izleri vardır. Saç modeli ve yüz kimliği değişmez. Emma bir an sessizce Chloe'ye bakar. Emma says, completely deadpan: 'Yes, especially if they work.' Chloe Emma'nın yüzündeki isi fark eder ve küçük, bastırılmış bir gülümseme gösterir. Emma da ciddi ifadesini bir an daha korur. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_ella_olivia2",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_ella_olivia2.mp4",
+    title: "Ella enjoys a small moment in the spotlight during rehearsal.",
+    transcript: "Olivia : You love being on stage, /don't you/? Ella : /Maybe a little/.",
+    answerOptions: [
+      { id: "a", text: "Olivia : Sahnede olmayı seviyor musun? Ella : Çok seviyorum." },
+      { id: "b", text: "Olivia : Sahnede olmayı seviyorsun, /öyle değil mi/? Ella : Belki biraz." }
+    ],
+    easyDistractor: "Olivia : Şarkı sözlerini biliyor musun? Ella : Evet, Sanırım biliyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [6],
+    functions: ["tag_questions"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:02.246",
+evidenceEnd: "0:05.388",
+    evidenceSentence: "Olivia : You love being on stage, /don't you/? Ella : /Maybe a little/.",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Audio2>>> as Olivia's canonical voice. CLOTHING: Ella is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. Olivia is wearing a white polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Okulun küçük sahnesinde prova zamanı. Ella sahnede bir mikrofonla kısa bir şarkı provası yapıyor. Olivia sahnenin yanında onu izliyor. Salon boş ve ortam sakin. ACTION: Ella kısa birkaç melodik sesi söyledikten sonra durur. Olivia ona hafifçe gülümseyerek bakar. Olivia says: 'You love being on stage, don't you?' Ella mütevazı bir ifadeyle omuzlarını çok hafif kaldırır. Ella says: 'Maybe a little.' Olivia oradaki spotlight düğmesine basar, spotlight Ella üzerinde parlar. Ella çok küçük, zarif bir sahne selamı verir. Hareket kısa ve doğal olsun; büyük veya teatral bir gösteriye dönüşmesin. Olivia Ella'yı alkışlar ve ikili birbirine bakarak gülümser. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_chloe_emma2",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_chloe_emma2.mp4",
+    title: "Emma makes Chloe's favorite cupcakes.",
+    transcript: "Chloe : You're making a cake, /aren't you/? Emma : I'm mak/ing/ cupcakes, Your favorite! Chloe : Yay!",
+    answerOptions: [
+      { id: "a", text: "Chloe : Pasta yapıyorsun, öyle değil mi? Emma : Cupcake yapı/yor/um, Senin favorin! Chloe : Yaşasın!" },
+      { id: "b", text: "Chloe : Pasta mı yapıyorsun? Emma : Hayır, Cupcake yapacağım, Senin favorin! Chloe : Yaşasın!" }
+    ],
+    easyDistractor: "Chloe : Kurabiye yapıyorsun, değil mi? Emma : Evet, Çikolatalı kurabiye yapıyorum. Chloe : Yaşasın!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["chloe", "emma"],
+    grades: [6],
+    functions: ["tag_questions","present_progressive"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.871",
+evidenceEnd: "0:05.273",
+    evidenceSentence: "Chloe : You're making a cake, /aren't you/? Emma : I'm mak/ing/ cupcakes, Your favorite! Chloe : Yay!",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Audio2>>> as Emma's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Chloe: pink long-sleeved T-shirt, dark blue jeans, white sneakers. Emma: simple light-colored T-shirt, dark blue full-length casual trousers, white sneakers, clean white cooking apron over her clothes, no chef apron. SCENE: Emma'nın evindeki mutfak. Emma mutfak tezgâhında cupcake hazırlıyor. Tezgâhta karıştırma kabı, birkaç basit pişirme malzemesi ve açık bir un kabı var. Tezgâhın küçük bir bölümü hafifçe unlanmış durumda. Chloe Emma'nın ne yaptığını merakla izliyor. ACTION: Emma karıştırma kabındaki cupcake karışımıyla ilgilenirken Chloe ona bakar. Chloe says: 'You're making a cake, aren't you?' Emma Chloe'ya bakıp küçük bir gülümsemeyle cevap verir. Emma says: 'I'm making cupcakes. Your favorite!' Chloe'nun yüzü hemen aydınlanır. Chloe says: 'Yay!' Chloe heyecanla ellerini birkaç kez alkışlar. Alkış hareketi tezgâhın üzerindeki hafif unu küçük bir un bulutu halinde havaya kaldırır. Un kısa bir an Chloe ve Emma'nın etrafında yayılır ve ikisinin saçlarına hafif beyaz un izleri bırakır. Yüzlerinde un izi olmayacak, sadece saçlarda. Un dağıldığında Chloe ve Emma bir an birbirlerine bakarlar. Chloe'nun sarı buklelerinde ve Emma'nın siyah saçlarında hafif un izleri görünür. İkisi de durumu fark edip doğal şekilde gülümser. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_ava_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_ava_olivia.mp4",
+    title: "Ava learns that Olivia draws every day.",
+    transcript: "Ava : Wow, These drawings are really cool! Olivia : Mhm. Ava : /How often/ do you draw? Olivia : /Every day/.",
+    answerOptions: [
+      { id: "a", text: "Ava : Vay, Bu çizimler gerçekten çok güzel! Olivia : Hı hı. Ava : Ne zaman çizim yaparsın? Olivia : Haftada bir." },
+      { id: "b", text: "Ava : Vay, Bu çizimler gerçekten çok güzel! Olivia : Hı hı. Ava : /Ne sıklıkla/ çizim yaparsın? Olivia : /Her gün/." }
+    ],
+    easyDistractor: "Ava : Bu çizimler çok güzel! Olivia : Teşekkürler. Ava : Ne zaman çizim yaparsın? Olivia : Okuldan sonra.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "olivia"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+   evidenceStart: "0:04.542",
+evidenceEnd: "0:07.521",
+    evidenceSentence: "Ava : Wow, These drawings are really cool! Olivia : Mhm. Ava : /How often/ do you draw? Olivia : /Every day/.",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Audio2>>> as Olivia's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ava wears a white polo shirt, dark blue full-length trousers, and white sneakers. Olivia wears a white polo shirt, dark blue full-length trousers, and white sneakers. No unrequested accessories. SCENE: Okulun açık hava sanat etkinliği alanında Ava ve Olivia bir masanın yanında duruyorlar. Masanın üzerinde Olivia'nın yaptığı birkaç çizim bulunuyor. Ortam sakin, doğal ve gündüz vakti. Hafif bir açık hava esintisi zaman zaman kızların saçlarını doğal şekilde hareket ettiriyor. ACTION: Ava masadaki çizimlere bakar ve gerçekten beğenmiş şekilde: Ava: 'Wow! These drawings are really cool!' Olivia küçük, doğal bir onay ifadesiyle: Olivia: 'Mhm.' Ava çizimlere bakmaya devam ederken doğal şekilde sorar: Ava: 'How often do you draw?' Olivia: 'Every day.' Olivia cevabını verdikten hemen sonra hafif bir rüzgâr eser. Ava ve Olivia'nın saçları doğal şekilde hafifçe dalgalanır. Rüzgâr masadaki çizimlerden yalnızca bir tanesini kaldırıp havaya sürükler ve kadraj dışına çıkarır. Kamera uçan çizimi takip etmez. Kızlar çizimin rüzgârla uzaklaşmasını hafif şaşkın ve sessiz bir ifadeyle izlerler. Çizimin peşinden koşmazlar ve hiçbir ek hareket yapmazlar. End the scene on their shared surprised reaction as the drawing continues drifting away. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_david_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_david_hannah.mp4",
+    title: "Hannah rides her bike to school on sunny days.",
+    transcript: "David : Do you ride your bike to school every day? Hannah : Not every day. David : /How often/? Hannah : On sunny days.",
+    answerOptions: [
+      { id: "a", text: "David : Her gün okula bisikletinle gider misin? Hannah : Her gün değil. David : /Ne sıklıkla/? Hannah : Güneşli günlerde." },
+      { id: "b", text: "David : Her gün okula bisikletinle gider misin? Hannah : Evet, Her gün. David : Ne zaman? Hannah : Her sabah." }
+    ],
+    easyDistractor: "David : Okula yürür müsün? Hannah : Bazen. David : Ne sıklıkla? Hannah : Hafta sonları.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["david", "hannah"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+    evidenceStart: "0:00.571",
+evidenceEnd: "0:07.295",
+    evidenceSentence: "David : Do you ride your bike to school every day? Hannah : Not every day. David : /How often/? Hannah : On sunny days.",
+
+    prompt: "Use <<<Image1>>> as David's canonical identity and appearance reference. Use <<<Audio1>>> as David's canonical voice. Use <<<Image2>>> as Hannah's canonical identity and appearance reference. Use <<<Audio2>>> as Hannah's canonical voice. CLOTHING: David wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. Hannah wears a white polo shirt, dark blue full-length trousers, and white sneakers. No accessories or safety equipments. SCENE: Sabah okul yolunda David ve Hannah bisikletlerine binmiş halde yan yana ilerliyorlar. İkisi de okula gidiyor. Hava açık ve güneşli. Yol sakin ve okul ortamına uygun. Hafif doğal rüzgâr Hannah'nın saçlarını ve her iki karakterin kıyafetlerini hafifçe hareket ettiriyor. ACTION: David ve Hannah konuşma boyunca yan yana, rahat ve doğal bir hızda bisiklet sürmeye devam ederler. David Hannah'ya doğru kısa bir bakış atarak sorar: David: 'Do you ride your bike to school every day?' Hannah doğal şekilde: Hannah: 'Not every day.' David: 'How often?' Hannah: 'On sunny days.' Camera: Use a natural tracking camera. Konuşma bittikten sonra ikisi de herhangi bir ekstra hareket veya tepki vermeden doğal şekilde yan yana bisiklet sürmeye devam ederler. Visual style: Soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "8_cooking_potato_chips",
+    status: "",
+    videoSrc: "assets/video/8_cooking_potato_chips.mp4",
+    title: "Ethan explains how to make potato chips.",
+    transcript: "Ethan : First, slice three potatoes and add some salt on them, Then, heat some oil in a pan and put the sliced potatoes in it, After that, fry the potatoes for twelve to thirteen minutes, Finally, take the potatoes out of the pan and serve.",
+    answerOptions: [
+      { id: "a", text: "Ethan : Önce üç patatesi dilimleyin ve üzerlerine biraz tuz ekleyin, Sonra tavada biraz yağ ısıtın ve dilimlenmiş patatesleri içine koyun, Bundan sonra patatesleri on iki ila on üç dakika kızartın, Son olarak patatesleri tavadan çıkarın ve servis edin." },
+      { id: "b", text: "Ethan : Önce tavada yağı ısıtın ve patatesleri servis edin, Sonra üç patatesi dilimleyin, Bundan sonra patatesleri beş dakika kızartın, Son olarak tuz ekleyin." }
+    ],
+    easyDistractor: "Ethan : Önce iki patatesi haşlayın, Sonra beş dakika bekleyin, Son olarak patatesleri soğuk servis edin.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ethan"],
+    grades: [8],
+    functions: ["describing_a_process"],
+    theme: "cooking",
+    unit: "cooking",
+
+    evidenceStart: null,
+    evidenceEnd: null,
+    evidenceSentence: "Ethan : First, slice three potatoes and add some salt on them, Then, heat some oil in a pan and put the sliced potatoes in it, After that, fry the potatoes for twelve to thirteen minutes, Finally, take the potatoes out of the pan and serve.",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. SCENE: Ethan temiz ve aydınlık bir ev mutfağında patates kızartmasının nasıl yapıldığını adım adım gösteriyor. Mutfak tezgâhında üç patates, tuz ve gerekli basit mutfak malzemeleri bulunuyor. Ocakta kızartma için uygun bir tava bulunuyor. Ethan her aşamayı gerçekleştirirken ilgili İngilizce cümleyi doğal ve anlaşılır şekilde söylüyor. Camera movement throughout the video should feel gently cinematic and alive. Use subtle slow push-ins, gentle pull-backs, and slight natural camera drift where appropriate. Keep all camera movement smooth and restrained. No dramatic zooms, fast camera moves, or orbiting shots. ACTION: STEP 1. Camera: Medium shot with a very slow gentle push-in toward Ethan and the preparation area. Ethan üç patatesi dilimler. Dilimlenmiş patateslerin üzerine biraz tuz eklerken söyler: Ethan: 'First, slice three potatoes and add some salt on them.' HARD CUT. STEP 2. Camera: Medium-close shot with subtle natural camera drift. Tavadaki yağ kızartma için hazırdır. Ethan dilimlenmiş patatesleri tavaya koyarken söyler: Ethan: 'Then, heat some oil in a pan and put the sliced potatoes in it.' HARD CUT. STEP 3. Camera: Start slightly closer to the pan, then gently pull back to include Ethan. Patatesler tavada kızarmaktadır. Ethan kızaran patatesleri göstererek söyler: Ethan: 'After that, fry the potatoes for twelve to thirteen minutes.' Do not attempt to show twelve to thirteen minutes passing in real time. HARD CUT. STEP 4. Camera: Medium shot with a subtle slow push-in as Ethan finishes the recipe. Patatesler artık tamamen pişmiş ve kızarmıştır. Ethan patatesleri tavadan süzgeçle dikkatlice çıkarıp servis tabağına koyarken söyler: Ethan: 'Finally, take the potatoes out of the pan and serve.' Camera: Gently pull back to show Ethan together with the finished plate of fried potatoes. Ethan bitmiş patatesleri doğal şekilde sunar. He does not eat them. No additional dialogue. Keep Ethan's identity, clothing, kitchen environment, and general visual appearance consistent throughout all four steps. Each HARD CUT begins directly at the next preparation stage. Do not show complicated transitions between steps.",
+  },
+  {
+    id: "8_cooking_fried_eggs_hannah",
+    status: "published",
+    videoSrc: "assets/video/8_cooking_fried_eggs_hannah.mp4",
+    title: "Hannah explains how to cook fried eggs.",
+    transcript: "Hannah : First, heat some oil in a pan, Then, crack two eggs directly into the pan, Finally, fry the eggs for five minutes.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Önce tavada biraz yağ ısıtın, Sonra iki yumurtayı doğrudan tavaya kırın, Son olarak yumurtaları beş dakika kızartın." },
+      { id: "b", text: "Hannah : Önce yumurtaları beş dakika kızartın, Sonra tavada yağ ısıtın, Son olarak iki yumurtayı bir kaseye kırın." }
+    ],
+    easyDistractor: "Hannah : Önce bir yumurtayı tavaya kırın, Sonra iki dakika kızartın, Son olarak servis edin.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [8],
+    functions: ["describing_a_process"],
+    theme: "cooking",
+    unit: "cooking",
+
+    evidenceStart: null,
+    evidenceEnd: null,
+    evidenceSentence: "Hannah : First, heat some oil in a pan, Then, crack two eggs directly into the pan, Finally, fry the eggs for five minutes.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as the storyboard and action reference. Use <<<Audio1>>> as Hannah's canonical voice. Follow the three cooking steps shown in <<<Image2>>> in the same order. Hannah is in a bright home kitchen, wearing a light blue T-shirt, dark blue full-length trousers, white sneakers, and a clean white cooking apron. All dialogue must be in English. SCENE 1: Hannah pours a small amount of oil directly into a frying pan on the stove. Hannah says: 'First, heat some oil in a pan.' HARD CUT. SCENE 2: Hannah cracks two eggs directly into the pan. She does not use a bowl and does not beat or mix the eggs. Keep both egg yolks intact. Hannah says: 'Then, crack two eggs directly into the pan.' HARD CUT. SCENE 3: The two eggs are frying in the pan with both yolks still intact. Hannah says: 'Finally, fry the eggs for five minutes.' Use gentle cinematic camera movement: subtle slow push-ins, slight pull-backs, and natural camera drift. Keep the cooking actions clear and easy to follow. Do not make scrambled eggs or an omelette.",
+  },
+  {
+    id: "6_classroom_life_social_2",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_social_2.mp4",
+    title: "Mia learns that she has to discuss the answers with Jack.",
+    transcript: "Mia : Do we have to /discuss the answers in pairs/? Teacher : Yes, Work with Jack on this one.",
+    answerOptions: [
+      { id: "a", text: "Mia : Cevapları deftere yazmak zorunda mıyız? Öğretmen : Evet, Jack'in defterinden bakabilirsin." },
+      { id: "b", text: "Mia : Cevapları /ikili olarak tartışmak/ zorunda mıyız? Öğretmen : Evet, Bu çalışmada Jack ile çalış." }
+    ],
+    easyDistractor: "Mia : Çalışma kâğıdını şimdi verebilir miyiz? Öğretmen : Evet, Masanın üzerine bırak.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["mia", "jack"],
+    grades: [6],
+    functions: ["target_social_language"],
+    theme: "Classroom_life",
+    unit: "classroom_life",
+
+   evidenceStart: "0:01.831",
+evidenceEnd: "0:07.054",
+    evidenceSentence: "Mia : Do we have to /discuss the answers in pairs/? Teacher : Yes, Work with Jack on this one.",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Image2>>> as Jack's canonical identity and appearance reference. Use <<<Audio2>>> as Jack's canonical voice. CLOTHING: Mia wears a white polo shirt, dark blue full-length trousers, and white sneakers. Jack wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. SCENE: Sınıfta öğrenciler ikili çalışma yapmaya hazırlanıyorlar. Mia ve Jack aynı sırada yan yana oturuyorlar. Diğer sıralarda birkaç generic öğrenciler var. Önlerinde çalışma kâğıtları var. ACTION: Mia, Jack'e kısa ve çekingen bir yan bakış atar. Jack ise normal şekilde çalışma kâğıdına bakıyordur ve durumdan habersiz görünür. Mia öğretmene dönerek biraz tereddütlü ama kibar bir şekilde sorar: Mia: 'Do we have to discuss the answers in pairs?' Teacher: 'Yes. Work with Jack on this one.' Mia'nın yüzü cevabı duyunca hafifçe asılır. Boynunu çalışma kağıdına doğru eğer. Tepkisi küçük ve doğal olmalıdır; abartılı şaşkınlık, korku veya komik yüz ifadesi yapmaz. Jack hâlâ sakin ve normal şekilde çalışma kâğıdına bakıyordur. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities, cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "8_cooking_cupcakes_chloe",
+    status: "",
+    videoSrc: "assets/video/8_cooking_cupcakes_chloe.mp4",
+    title: "Chloe explains how to make cupcakes.",
+    transcript: "Chloe : First, preheat the oven, Then, mix two eggs with a cup of sugar, After that, add some milk, flour, oil and baking powder, Next, mix the ingredients and pour the mixture into cupcake papers, Finally, bake the cupcakes for thirty minutes.",
+    answerOptions: [
+      { id: "a", text: "Chloe : Önce fırını önceden ısıtın, Sonra iki yumurtayı bir bardak şekerle karıştırın, Bundan sonra biraz süt, un, yağ ve kabartma tozu ekleyin, Ardından malzemeleri karıştırın ve karışımı cupcake kâğıtlarına dökün, Son olarak cupcake'leri otuz dakika pişirin." },
+      { id: "b", text: "Chloe : Önce cupcake'leri otuz dakika pişirin, Sonra fırını ısıtın, Bundan sonra yumurtaları cupcake kâğıtlarına koyun, Son olarak süt ve şekeri ekleyin." }
+    ],
+    easyDistractor: "Chloe : Önce fırını ısıtın, Sonra hazır cupcake'leri tabağa koyun, Son olarak sıcak servis edin.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["chloe"],
+    grades: [8],
+    functions: ["describing_a_process"],
+    theme: "cooking",
+    unit: "cooking",
+
+    evidenceStart: null,
+    evidenceEnd: null,
+    evidenceSentence: "Chloe : First, preheat the oven, Then, mix two eggs with a cup of sugar, After that, add some milk, flour, oil and baking powder, Next, mix the ingredients and pour the mixture into cupcake papers, Finally, bake the cupcakes for thirty minutes.",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as the storyboard and action reference. Use <<<Audio1>>> as Chloe's canonical voice. Follow the five cupcake-making steps shown in <<<Image2>>> in the same order. Use <<<Image1>>> for Chloe's identity only. Do not copy clothing or accessories from the identity reference. All dialogue must be in English. CLOTHING: Chloe wears a pink short-sleeved T-shirt, dark blue full-length trousers, white sneakers, and a clean white cooking apron. No unrequested accessories. SCENE: Chloe is making cupcakes in a bright home kitchen. Keep Chloe, her clothing, and the general kitchen environment consistent throughout the video. SCENE 1: Chloe sets the oven to 180°C. Chloe: 'First, preheat the oven.' HARD CUT. SCENE 2: Two eggs and one cup of sugar are together in a mixing bowl. Chloe mixes them with a whisk. Chloe: 'Then, mix two eggs with a cup of sugar.' HARD CUT. SCENE 3: Milk, flour, oil, and baking powder are ready beside the mixing bowl. Chloe adds the ingredients to the mixture. Chloe: 'After that, add some milk, flour, oil and baking powder.' HARD CUT. SCENE 4: Chloe mixes the ingredients well. Cupcake papers are already arranged in a cupcake tray. She pours the prepared mixture into the cupcake papers. Chloe: 'Next, mix the ingredients and pour the mixture into cupcake papers.' HARD CUT. SCENE 5: Chloe places the cupcake tray into the oven. Chloe: 'Finally, bake the cupcakes for thirty minutes.' She closes the oven door. Use gentle cinematic camera movement throughout the video: subtle slow push-ins, gentle pull-backs, and slight natural camera drift. Keep the camera movements smooth and restrained. Prioritize clear visibility of each cooking action. No dramatic zooms, fast camera moves, or orbiting shots. Each HARD CUT begins directly at the next preparation stage.",
+  },
+  {
+    id: "8_cooking_ayran_olivia",
+    status: "",
+    videoSrc: "assets/video/8_cooking_ayran_olivia.mp4",
+    title: "Olivia explains how to make ayran.",
+    transcript: "Olivia : First, put the yoghurt into a bowl, Then, add salt in it, Next, stir the mixture, And then, pour water into the mixture, After that, put the mixture into a glass, Finally, serve it cold.",
+    answerOptions: [
+      { id: "a", text: "Olivia : Önce yoğurdu bir kaba koyun, Sonra içine tuz ekleyin, Ardından karışımı karıştırın, Sonra karışıma su dökün, Bundan sonra karışımı bir bardağa koyun, Son olarak soğuk servis edin." },
+      { id: "b", text: "Olivia : Önce suyu bardağa dökün, Sonra yoğurdu soğuk servis edin, Ardından tuz ekleyin, Son olarak karışımı hiç karıştırmayın." }
+    ],
+    easyDistractor: "Olivia : Önce yoğurdu bardağa koyun, Sonra sıcak su ekleyin, Son olarak hemen için.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["olivia"],
+    grades: [8],
+    functions: ["describing_a_process"],
+    theme: "cooking",
+    unit: "cooking",
+
+    evidenceStart: null,
+    evidenceEnd: null,
+    evidenceSentence: "Olivia : First, put the yoghurt into a bowl, Then, add salt in it, Next, stir the mixture, And then, pour water into the mixture, After that, put the mixture into a glass, Finally, serve it cold.",
+
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. CLOTHING: Olivia wears a simple light green short-sleeved T-shirt, dark blue full-length trousers, and white sneakers. SCENE: Olivia temiz ve aydınlık bir ev mutfağında ayran yapımını adım adım gösteriyor. Camera: Medium one shot. Mutfak tezgâhında sade bir karıştırma kabı, yoğurt, tuz, su, bir kaşık ve boş bir bardak bulunuyor. Olivia işlemleri doğal ve anlaşılır şekilde gösterirken her adımı İngilizce olarak anlatıyor. ACTION: STEP 1. Camera: Medium shot with a very slow gentle push-in as Olivia puts the yoghurt into the bowl. Olivia yoğurdu karıştırma kabına koyarken söyler: Olivia: 'First, put the yoghurt into a bowl.' HARD CUT. STEP 2. Camera: Medium-close shot with subtle natural camera drift as Olivia adds the salt. Karıştırma kabında yoğurt hazırdır. Olivia az miktarda tuz eklerken söyler: Olivia: 'Then, add salt in it.' HARD CUT. STEP 3. Camera: Slowly push in slightly toward the bowl while Olivia stirs the mixture. Olivia kaşıkla kaptaki karışımı doğal şekilde karıştırır. Olivia: 'Next, stir the mixture.' Karıştırma hareketi açık ve kolay okunabilir olmalıdır. HARD CUT. STEP 4. Camera: Begin slightly closer and gently pull back as Olivia pours the water into the mixture. Olivia suyu kaptaki karışıma dökerken söyler: Olivia: 'And then, pour water into the mixture.' HARD CUT. STEP 5. Karışım artık hazırlanmıştır. Tezgâhta boş bir bardak bulunur. Olivia hazırladığı ayranı karıştırma kabından bardağa dikkatlice dökerken söyler: Olivia: 'After that, put the mixture into a glass.' Camera: Medium-close shot with a subtle lateral camera move while Olivia pours the mixture into the glass. HARD CUT. STEP 6. Camera: Begin on the finished glass, then gently pull back to include Olivia as she presents the finished ayran. Olivia'nın önünde artık ayranla dolu temiz bir bardak vardır. Olivia bardağı doğal şekilde hafifçe göstererek son adımı söyler: Olivia: 'Finally, serve it cold.' Olivia ayranı içmez. Keep Olivia's identity, clothing, kitchen environment, bowl, and general visual appearance consistent throughout all six steps. Each HARD CUT begins directly at the next preparation stage. Do not show complicated transitions between steps.",
+  },
+  {
+    id: "8_cooking_pizza_emma",
+    status: "",
+    videoSrc: "assets/video/8_cooking_pizza_emma.mp4",
+    title: "Emma explains how to make a vegetable pizza.",
+    transcript: "Emma : First, chop some tomatoes, pepper, onion and mushroom, Then, fry all the vegetables in a pan for fifteen minutes, After that, put the fried vegetables onto the pizza bread and add some cheese on it, Next, bake the pizza for ten minutes and take it out, Finally, serve it hot.",
+    answerOptions: [
+      { id: "a", text: "Emma : Önce biraz domates, biber, soğan ve mantar doğrayın, Sonra tüm sebzeleri tavada on beş dakika kızartın, Bundan sonra kızarmış sebzeleri pizza ekmeğinin üzerine koyun ve üzerine biraz peynir ekleyin, Ardından pizzayı on dakika pişirin ve çıkarın, Son olarak sıcak servis edin." },
+      { id: "b", text: "Emma : Önce pizzayı sıcak servis edin, Sonra sebzeleri pizza ekmeğinin üzerine koyun, Bundan sonra peyniri doğrayın, Son olarak pizzayı tavada on beş dakika kızartın." }
+    ],
+    easyDistractor: "Emma : Önce hazır pizzayı fırına koyun, Sonra beş dakika pişirin, Son olarak soğuk servis edin.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["emma"],
+    grades: [8],
+    functions: ["describing_a_process"],
+    theme: "cooking",
+    unit: "cooking",
+
+    evidenceStart: null,
+    evidenceEnd: null,
+    evidenceSentence: "Emma : First, chop some tomatoes, pepper, onion and mushroom, Then, fry all the vegetables in a pan for fifteen minutes, After that, put the fried vegetables onto the pizza bread and add some cheese on it, Next, bake the pizza for ten minutes and take it out, Finally, serve it hot.",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use <<<Image2>>> as the storyboard and action reference. Use <<<Audio1>>> as Emma's canonical voice. Follow the five pizza-making steps shown in <<<Image2>>> in the same order. Use <<<Image1>>> for Emma's identity only. Do not copy clothing or accessories from the identity reference. All dialogue must be in English. CLOTHING: Emma wears a blue short-sleeved T-shirt, dark blue full-length trousers, white sneakers, and a clean white cooking apron. No unrequested accessories. SCENE: Emma is making a vegetable pizza in a bright home kitchen. Keep Emma, her clothing, and the general kitchen environment consistent throughout the video. SCENE 1: Chopped tomatoes, pepper and onion are already on the kitchen counter. Emma chops some mushrooms. Emma: 'First, chop some tomatoes, pepper, onion and mushroom.' HARD CUT. SCENE 2: Emma fries the chopped tomatoes, pepper, onion and mushrooms together in a pan. Emma: 'Then, fry all the vegetables in a pan for fifteen minutes.' HARD CUT. SCENE 3: A pizza bread is ready on the kitchen counter. Emma puts the fried vegetables onto the pizza bread and adds cheese on top. Emma: 'After that, put the fried vegetables onto the pizza bread and add some cheese on it.' HARD CUT. SCENE 4: Emma puts the prepared pizza into the oven. Emma: 'Next, bake the pizza for ten minutes and take it out.' Do not attempt to show ten minutes passing in real time. HARD CUT. SCENE 5: The pizza is now fully baked. Emma presents the finished hot vegetable pizza. Emma: 'Finally, serve it hot.' Use gentle cinematic camera movement throughout the video: subtle slow push-ins, gentle pull-backs, and slight natural camera drift. Keep all camera movements smooth and restrained. Prioritize clear visibility of each cooking action. Each HARD CUT begins directly at the next preparation stage. Do not show complicated transitions between cooking stages. No additional dialogue.",
+  },
+  {
+    id: "6_classroom_life_benjamin_daniel",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_benjamin_daniel.mp4",
+    title: "Benjamin asks Daniel about playing basketball after school.",
+    transcript: "Benjamin : Do you play basketball after school? Daniel : Sometimes. Benjamin : How often? Daniel : /Twice a week/.",
+    answerOptions: [
+      { id: "a", text: "Benjamin : Okuldan sonra basketbol oynuyor musun? Daniel : /Bazen/. Benjamin : Ne kadar sık? Daniel : /Haftada iki kez/." },
+      { id: "b", text: "Benjamin : Okuldan sonra basketbol oynuyor musun? Daniel : Sıklıkla. Benjamin : Ne kadar sık? Daniel : Haftada üç kez." }
+    ],
+    easyDistractor: "Benjamin : Okuldan sonra basketbol oynuyor musun? Daniel : Hayır. Benjamin : Ne kadar sık? Daniel : Hiçbir zaman.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin", "daniel"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "school_life",
+    unit: "school_life",
+
+    evidenceStart: "0:03.028",
+evidenceEnd: null,
+    evidenceSentence: "Benjamin : Do you play basketball after school? Daniel : Sometimes. Benjamin : How often? Daniel : /Twice a week/.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Image2>>> as Daniel's canonical identity and appearance reference. Use <<<Audio2>>> as Daniel's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Benjamin wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. Daniel wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. No unrequested accessories. SCENE: Okul çıkışında Benjamin ve Daniel okulun basketbol sahasında potanın yakınında konuşuyorlar. Daniel'ın elinde bir basketbol topu var. Basketbol potası sahnede açıkça görülebiliyor. Camera: Don't use full body view. Keep camera at medium shots and over the shoulder shots while face-to-face interaction. ACTION: Benjamin, Daniel'ın elindeki basketbol topunu fark ederek doğal şekilde sorar: Benjamin: 'Do you play basketball after school?' Daniel: 'Sometimes.' Benjamin: 'How often?' Daniel: 'Twice a week.' Daniel cevabını verdikten hemen sonra elindeki basketbol topunu tek eliyle, rahat ve kendinden emin bir hareketle potaya doğru yollar. Top temiz bir şekilde doğrudan potaya girer ve fileden geçer. Daniel atışı fazla önemsemiyormuş gibi rahat kalır. Benjamin potaya kısa bir bakış atar. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_classroom_life_david_jack",
+    status: "published",
+    videoSrc: "assets/video/6_classroom_life_david_jack.mp4",
+    title: "David asks Jack how often he fishes at the lake.",
+    transcript: "David : /How often/ do you fish here? Jack : Not often, Only /twice a week/.",
+    answerOptions: [
+      { id: "a", text: "David : Burada ne kadar süre balık tutuyorsun? Jack : Çok sık değil, Sadece ayda iki kez." },
+      { id: "b", text: "David : Burada /ne sıklıkla/ balık tutuyorsun? Jack : Çok sık değil, Sadece /haftada iki kez/." }
+    ],
+    easyDistractor: "David : Burada ne kadar sık balık tutuyorsun? Jack : Her gün, Sadece yılda üç kez.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["david", "jack"],
+    grades: [6],
+    functions: ["frequency_adverbs"],
+    theme: "school_life",
+    unit: "school_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:04.328",
+    evidenceSentence: "David : /How often/ do you fish here? Jack : Not often, Only /twice a week/.",
+
+    prompt: "Use <<<Image1>>> as Jack's canonical identity and appearance reference. Use <<<Audio1>>> as Jack's canonical voice. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio2>>> as David's canonical voice. SCENE: Jack ve David yaz mevsiminde sakin bir göl kenarındalar. Jack kıyıda oltasıyla balık tutuyor. David yanında duruyor. Hava açık ve sakin. Hafif doğal rüzgâr saçlarını ve kıyafetlerini çok az hareket ettiriyor. ACTION: David, Jack'in balık tuttuğunu görerek doğal şekilde sorar: David: 'How often do you fish here?' Jack: 'Not often. Only twice a week.' Konuşmadan hemen sonra Jack'in oltası aniden gerilir. Jack büyük bir şey yakalamış olabileceğini düşünerek oltayı çabukça çeker. Camera: Keep Jack and David clearly visible during the reaction, then clearly show what is attached to the fishing line. Jack oltayı sudan çıkardığında kancaya bir balık yerine sırılsıklam eski bir şapka takılmıştır. Jack birkaç saniye şapkaya sessizce bakar. David de şapkaya bakar. İkisi de abartılı tepki vermez. Jack'in ifadesi hafif şaşkın ve kuru bir şekilde hayal kırıklığına uğramış görünür. Visual style: Premium stylized 3D animated film aesthetic, expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_clasroom_life_social_1",
+    status: "published",
+    videoSrc: "assets/video/6_clasroom_life_social_1.mp4",
+    title: "David congratulates Ethan on his English test result.",
+    transcript: "Ethan : /I got full marks/ on the English test! David : Really, Well done! Ethan : Thanks!",
+    answerOptions: [
+      { id: "a", text: "Ethan : İngilizce sınavından /tam not aldım/! David : Gerçekten mi, Aferin! Ethan : Teşekkürler!" },
+      { id: "b", text: "Ethan : İngilizce sınavı puanım gayet iyi! David : Gerçekten mi, Aferin! Ethan : Teşekkürler!" }
+    ],
+    easyDistractor: "Ethan : İngilizce sınavından düşük not aldım! David : Üzülme, daha iyi yapabilirsin! Ethan : Teşekkürler!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ethan", "david"],
+    grades: [6],
+    functions: ["target_social_language"],
+    theme: "school_life",
+    unit: "school_life",
+
+    evidenceStart: "0:01.765",
+evidenceEnd: "0:04.459",
+    evidenceSentence: "Ethan : /I got full marks/ on the English test! David : Really, Well done! Ethan : Thanks!",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio2>>> as David's canonical voice. Use reference images for identity only. Don't use reference images for clothing or accessory reference. All dialogue must be in English. CLOTHING: Ethan wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. David wears a light blue polo shirt, dark blue full-length trousers, and white sneakers. No unrequested accessories. SCENE: İngilizce dersinden sonra sınıfta Ethan ve David sıralarında yan yana oturuyorlar. Öğretmen sınav kâğıtlarını yeni dağıtmış. Ethan kendi İngilizce sınav kâğıdına bakıyor. ACTION: Ethan sınav sonucunu görünce yüzü doğal şekilde aydınlanır. Kâğıdı David'a doğru hafifçe çevirerek sevinçle söyler: Ethan: 'I got full marks on the English test!' David Ethan'ın kâğıdına bakar ve gerçekten mutlu olmuş şekilde: David: 'Really? Well done!' Ethan: 'Thanks!' David küçük ve doğal bir fist bump için yumruğunu Ethan'a doğru uzatır. Ethan da gülümseyerek fist bump'a karşılık verir. Camera: Keep Ethan and David clearly visible together during the dialogue and the final fist bump. The test paper may be visible, but do not require readable text or numbers on it. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+
+  {
+    id: "6_personal_life_emma_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_emma_hannah.mp4",
+    title: "Hannah finds Benjamin's beach hat at a picnic area.",
+    transcript: "Hannah : Emma, /Whose/ beach hat is this? Emma : It's Benjamin's. Hannah : Don't tell him.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Emma, bu /kimin/ plaj şapkası kimin? Emma : Benjamin'in. Hannah : Ona söyleme." },
+      { id: "b", text: "Hannah : Emma, bu plaj şapkası nerden çıktı? Emma : Benjamin'in. Hannah : Ona söyleme." }
+    ],
+    easyDistractor: "Hannah : Emma, bu plaj şapkası kimin? Emma : Bilmiyorum. Hannah : Hadi onu sahibine götürelim.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["emma", "hannah"],
+    grades: [6],
+    functions: ["use_of_wh_questions_whose"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:01.512",
+evidenceEnd: "0:03.810",
+    evidenceSentence: "Hannah : Emma, /Whose/ beach hat is this? Emma : It's Benjamin's. Hannah : Don't tell him.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Emma's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Hannah wears a light blue short-sleeved T-shirt, dark blue long shorts, a star necklace and star earrings. Emma wears a soft yellow short-sleeved T-shirt, beige blue jeans. No unrequested accessories. SCENE: Hannah and Emma are spending time together at a quiet outdoor picnic area in a park. They are gathering a few belongings after sitting together. A large casual beach hat is resting nearby. A light breeze gently moves Hannah's and Emma's hair and nearby leaves. Hannah notices the beach hat and picks it up. Hannah: 'Emma, Whose beach hat is this?' Emma looks at the hat. Emma: 'It's Benjamin's.' Hannah studies the hat for a brief moment. She then casually puts Benjamin's beach hat on her own head. Give the action enough time to clearly show Hannah placing the hat on and adjusting it naturally. Emma looks at Hannah with a mildly surprised expression. Hannah looks pleased with the hat. She looks at Emma and says: Hannah: 'Don't tell him.' Emma gives Hannah a small amused look. Hannah keeps wearing the beach hat at the end of the scene. No additional dialogue. Keep the beach hat state consistent: START = the hat is resting nearby. MIDDLE = Hannah picks it up. END = Hannah is wearing it. Do not duplicate the hat. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_ava_chloe",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ava_chloe.mp4",
+    title: "Chloe compares Luna and Buddy in Ava's living room.",
+    transcript: "Chloe : Luna is fast/er than/ Buddy.",
+    answerOptions: [
+      { id: "a", text: "Chloe : Luna, Buddy kadar hızlıdır." },
+      { id: "b", text: "Chloe : Luna, Buddy'den /daha/ hızlıdır." }
+    ],
+    easyDistractor: "Chloe : Luna, Buddy'den daha yavaştır.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "chloe"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:05.937",
+evidenceEnd: null,
+    evidenceSentence: "Chloe : Luna is fast/er than/ Buddy.",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Image3>>> as Buddy's canonical appearance reference. Use <<<Image4>>> as Luna's canonical appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use the reference images for identity and animal appearance only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Ava wears a soft green short-sleeved T-shirt, long shorts, and open-toe slippers. She wears a small colorful friendship bracelet. Chloe wears a light pink short-sleeved top, dark blue full-length trousers, open-toe slippers. She wears a small pink butterfly hair clip and a simple thin bracelet. SCENE: Ava and Chloe are spending time together in the living room of Ava's family home. Ava and Chloe are sitting comfortably together on the sofa. Chloe has brought her cat Luna with her. Luna is sitting calmly on the floor beside the coffee table, close to Chloe. ACTION: Camera: Begin with a natural medium-wide shot that clearly shows Ava and Chloe sitting on the sofa and Luna sitting beside the coffee table. Buddy suddenly notices Luna and makes a quick playful move toward her. Luna reacts immediately. Before Buddy can reach her, Luna quickly jumps from the floor directly onto Chloe's lap. The jump should be fast and clearly readable. Chloe instinctively steadies Luna on her lap. Buddy stops where he is and looks up at Luna. He remains on the floor and happily wags his tail while looking at her. Allow a brief moment for the contrast to register: Luna is already safely sitting on Chloe's lap while Buddy is still standing below, wagging his tail. Chloe looks down at Luna, then toward Buddy with an amused smile. Chloe: 'Luna is faster than Buddy.' Ava smiles at the situation. Luna remains on Chloe's lap. Buddy remains on the floor, looking at Luna and wagging his tail. No additional dialogue. Keep the animal positions clear and consistent: START = Luna is on the floor beside the coffee table. Buddy is elsewhere in the living room. ACTION = Buddy makes one quick move toward Luna. Luna immediately jumps onto Chloe's lap. END = Luna is on Chloe's lap and Buddy is on the floor wagging his tail. Do not duplicate Buddy or Luna. Do not make Buddy jump onto Chloe or the sofa. Do not make Luna run around the room before jumping. The key action is one simple, fast reaction: Buddy moves toward Luna, and Luna immediately jumps onto Chloe's lap. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_hannah_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_hannah_olivia.mp4",
+    title: "Hannah imagines having a French bob like Olivia's.",
+    transcript: "Hannah : Olivia, you/'ve got/ a really cool French bob. Olivia : Mhm, thanks! Hannah : Should I have my hair cut like that? Olivia : No, Hannah, Your hair is cool as it is.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Olivia, gerçekten havalı küt saçların /var/. Olivia : Teşekkürler! Hannah : Saçımı seninki gibi kestirmeli miyim? Olivia : Hayır Hannah, saçın olduğu gibi de havalı." },
+      { id: "b", text: "Hannah : Olivia, gerçekten saçların çok havalı. Olivia : Teşekkürler! Hannah : Saçımı seninki gibi kestirmeli miyim? Olivia : Hayır Hannah, saçın olduğu gibi de havalı." }
+    ],
+    easyDistractor: "Hannah : Olivia, saçın çok uzun. Olivia : Teşekkürler! Hannah : Saçımı uzatmalı mıyım? Olivia : Evet, kesinlikle.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah", "olivia"],
+    grades: [6],
+    functions: ["have_got_has_got"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:03.202",
+    evidenceSentence: "Hannah : Olivia, you/'ve got/ a really cool French bob. Olivia : Mhm, thanks! Hannah : Should I have my hair cut like that? Olivia : No, Hannah, Your hair is cool as it is.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Image3>>> as Hannah's imagined French bob appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Olivia's canonical voice. Use <<<Image1>>> and <<<Image2>>> for character identity only. Use <<<Image3>>> only for Hannah's hairstyle and appearance during the imagination scene. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Hannah wears a red T-shirt, dark blue long shorts. Olivia wears a soft green short-sleeved T-shirt, beige full-length trousers. SCENE: Hannah and Olivia are spending time together at Olivia's home. They are having a relaxed conversation. Hannah initially has her canonical long straight blonde hair as in reference <<<Image1>>>. Hannah looks at Olivia's hair with genuine admiration. Hannah: 'Olivia, you've got a really cool French bob.' Olivia gives a small pleased smile. Olivia: 'Mhm, thanks!' Hannah becomes thoughtful and lightly touches her own long hair. Hannah: 'Should I have my hair cut like that?' pause until Hannah's speech line is complete. HARD CUT TO HANNAH'S IMAGINATION. IMAGINATION SCENE: Hannah imagines herself standing in front of a mirror with the blonde French bob hairstyle shown in <<<Image3>>>. Her hairstyle in this imagination must clearly match <<<Image3>>>. Keep Hannah's facial identity unchanged. Camera: Medium close shot showing Hannah naturally looking at herself in the mirror. Hannah studies her imagined French bob in the mirror for a moment. She lightly touches the ends of her short hair and turns her head slightly, checking how the hairstyle looks from another angle. No dialogue during the imagination. Allow this visual moment enough time to be clearly readable. HARD CUT BACK TO REALITY. Hannah is again beside Olivia with her original long blonde hairstyle. Her hair has NOT actually been cut. Olivia looks at Hannah's long hair and smiles. Olivia: 'No, Hannah. Your hair is cool as it is.' Hannah smiles and lightly runs one hand through her long hair. No additional dialogue. Keep Hannah's hairstyle states strictly separated: REALITY = Hannah has her canonical long blonde hair from <<<Image1>>>. IMAGINATION = Hannah has the blonde French bob from <<<Image3>>>. RETURN TO REALITY = Hannah has her canonical long blonde hair again. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_noah_victoria",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_noah_victoria.mp4",
+    title: "Noah discovers why Victoria has a bandage on her nose.",
+    transcript: "Noah : Victoria, You/'ve got/ a bandage on your nose, What happened? Victoria : I/'ve got/ new VR goggles. Noah : I don't get it.",
+    answerOptions: [
+      { id: "a", text: "Noah : Victoria, Burnuna ne oldu? Victoria : Yeni VR gözlükleri aldım. Noah : Çok iyi, hemen deneyelim." },
+      { id: "b", text: "Noah : Victoria, Burnunda bir yara bandı /var/, Ne oldu? Victoria : Yeni VR gözlüklerim /var/. Noah : Anlamıyorum." }
+    ],
+    easyDistractor: "Noah : Victoria! Burnunda bir yara bandı var! Ne oldu? Victoria : Bisikletten düştüm. Noah : Geçmiş olsun.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["noah", "victoria"],
+    grades: [6],
+    functions: ["have_got_has_got"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:04.582",
+    evidenceSentence: "Noah : Victoria, You/'ve got/ a bandage on your nose, What happened? Victoria : I/'ve got/ new VR goggles. Noah : I don't get it.",
+
+    prompt: "Use <<<Image1>>> as Victoria's canonical identity and appearance reference. Use <<<Image2>>> as Noah's canonical identity and appearance reference. Use <<<Audio1>>> as Victoria's canonical voice. Use <<<Audio2>>> as Noah's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Victoria wears a dark purple short-sleeved T-shirt, dark blue full-length trousers, and white sneakers. Noah wears a dark green short-sleeved T-shirt, beige full-length trousers, and white sneakers. Victoria wears her canonical round glasses during the present-day conversation. Noah wears his canonical rectangular glasses. No unrequested accessories. SCENE: Noah and Victoria meet outdoors at a quiet neighborhood park. Victoria has a small adhesive bandage across the bridge of her nose. The bandage is clearly visible. Camera: Begin with a natural medium two-shot as Noah and Victoria stand together near a park walkway. Noah notices the bandage on Victoria's nose and looks surprised. Noah: 'Victoria! You've got a bandage on your nose! What happened?' Victoria answers calmly, as if her answer explains everything. Victoria: 'I've got new VR goggles.' Noah pauses and looks at Victoria with a confused expression. Noah: 'I don't get it.' HARD CUT TO FLASHBACK. FLASHBACK: Victoria is in her bedroom earlier that day. Victoria is wearing her new VR goggles over her eyes. She is completely focused on the VR game and cannot see the real room around her. Do not show the bandage during the flashback. Camera: Medium-wide shot with Victoria and a wardrobe clearly visible in the same room. Victoria enthusiastically plays the VR game, moving her head and upper body as she reacts to the virtual world. Still wearing the VR goggles, she takes a step forward and walks straight into the wardrobe. Her face and nose bump directly into the wardrobe with a clear sudden impact. Victoria immediately recoils and grabs her nose with both hands. Do not add dialogue during the flashback. HARD CUT BACK TO PRESENT. Victoria and Noah are back at the park. Victoria's VR goggles are gone. Her canonical round glasses are back on. The small bandage is again visible across the bridge of her nose. Noah now understands what happened. Victoria gives him a slightly embarrassed but composed look. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.ialogue.",
+  },
+  {
+    id: "6_personal_life_ella_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ella_olivia.mp4",
+    title: "Olivia surprises Ella with tickets to her favorite band's concert.",
+    transcript: "Olivia : Look what I/'ve got/, Tickets to the concert! Ella : /Whose/ concert? Olivia : Your favorite band! Ella : Yay!",
+    answerOptions: [
+      { id: "a", text: "Olivia : Bak bende ne var, Konser biletleri! Ella : /Kimin/ konseri? Olivia : En sevdiğin grubun! Ella : Yaşasın!" },
+      { id: "b", text: "Olivia : Bak bakalım bu ne, Konser biletleri! Ella : Kimler gelecek? Olivia : En iyi arkadaşların! Ella : Yaşasın!" }
+    ],
+    easyDistractor: "Olivia : Bak ne aldım! Konser biletleri! Ella : Kimin konseri? Olivia : Henüz bilmiyorum. Ella : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [6],
+    functions: ["have_got_has_got", "use_of_wh_questions_whose"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:04.428",
+    evidenceSentence: "Olivia : Look what I/'ve got/! Tickets to the concert! Ella : /Whose/ concert? Olivia : Your favorite band! Ella : Yay!",
+
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Image2>>> as Ella's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. Use <<<Audio2>>> as Ella's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Olivia wears a soft purple short-sleeved T-shirt, beige full-length trousers. She wears a small silver star hair clip. Ella wears a light pink short-sleeved top, dark blue jeans. She wears a colorful beaded bracelet and small heart-shaped earrings. SCENE: Olivia and Ella are spending time together in a cozy café. They are sitting at a small table with drinks in front of them. Olivia has a small envelope or two concert tickets hidden beside her. Camera: Begin with a natural medium two-shot. Olivia smiles excitedly and suddenly brings out the concert tickets. Olivia: 'Look what I've got! Tickets to the concert!' Ella immediately looks interested and leans slightly closer. Ella: 'Whose concert?' Olivia smiles, clearly enjoying the surprise. Olivia: 'Your favorite band!' Ella's face instantly lights up. Ella: 'Yay!' ACTION: Ella reacts with genuine excitement. She gives a quick happy clap and reaches toward the tickets to look at them more closely. Olivia laughs softly at Ella's reaction and holds the tickets out for her. Do not show readable band names, logos, or copyrighted artwork on the tickets. The tickets should simply look like generic concert tickets. No additional dialogue.",
+  },
+  {
+    id: "6_personal_life_chloe_camille",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_chloe_camille.mp4",
+    title: "Chloe notices Camille's new short hairstyle.",
+    transcript: "Chloe : Mum! You/'ve got/ short hair! Camille : Yes, It's my new hairstyle, Do you like it? Chloe : I love it!",
+    answerOptions: [
+      { id: "a", text: "Chloe : Anne, Uzun saçların var! Camille : Evet, bu benim yeni saç stilim, Beğendin mi? Chloe : Bayıldım!" },
+      { id: "b", text: "Chloe : Anne, Kısa saçların /var/! Camille : Evet, bu benim yeni saç stilim, Beğendin mi? Chloe : Bayıldım!" }
+    ],
+    easyDistractor: "Chloe : Anne, Kısa saçların var! Camille : Hayır, sadece saçımı topladım. Chloe : Anladım!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe", "camille"],
+    grades: [6],
+    functions: ["have_got_has_got"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:00.706",
+evidenceEnd: "0:03.124",
+    evidenceSentence: "Chloe : Mum, You/'ve got/ short hair! Camille : Yes, It's my new hairstyle, Do you like it? Chloe : I love it!",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Camille's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Camille's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Chloe wears a soft pink long-sleeved T-shirt, dark blue long shorts, and white sneakers. Camille wears a light beige blouse, dark blue full-length trousers, and simple white shoes. No unrequested accessories. SCENE: Chloe and Camille are at home in a bright, comfortable living room. Camille now has a short blonde pixie haircut. Her new pixie hairstyle should be clearly visible and easy to notice. Keep Camille's exact facial identity, hair color, eye color, skin tone, and overall appearance consistent with <<<Image2>>>. ACTION: Chloe sees Camille's new short hairstyle for the first time. She looks pleasantly surprised and focuses naturally on Camille's hair. Camera: Begin with a natural medium two-shot of Chloe and Camille. Chloe says with warm surprise: Chloe: 'Mum! You've got short hair!' Camille smiles and lightly touches the side of her new pixie haircut. Camille: 'Yes. It's my new hairstyle. Do you like it?' Camera: Use a subtle slow push-in toward Chloe's reaction. Chloe smiles brightly. Chloe: 'I love it!' Camille smiles warmly back at her. Keep the interaction natural, affectionate, and understated. Do not add exaggerated gestures or comedy. No additional dialogue. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_emma_hannah2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_emma_hannah2.mp4",
+    title: "Emma tries on a jacket with a hood for rainy days.",
+    transcript: "Hannah : The jacket /has got/ a hood. Emma : Good, I need one for rainy days. Hannah : Try it on!",
+    answerOptions: [
+      { id: "a", text: "Hannah : Ceketin kapüşonu /var/. Emma : Güzel, yağmurlu günler için birine ihtiyacım var. Hannah : Dene!" },
+      { id: "b", text: "Hannah : Ceketin kapüşonu çok büyük. Emma : Bence güzel, yağmurlu günler için lazım. Hannah : Dene!" }
+    ],
+    easyDistractor: "Hannah : Ceketin kapüşonu var. Emma : Güzel, ama bugün hava güneşli. Hannah : Hadi kasaya gidelim!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["emma", "hannah"],
+    grades: [6],
+    functions: ["expressing_needs", "have_got_has_got"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:00.000",
+evidenceEnd: "0:04.225",
+    evidenceSentence: "Hannah : The jacket /has got/ a hood. Emma : Good, I need one for rainy days. Hannah : Try it on!",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Emma's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Hannah wears a light casual sweatshirt, dark blue full-length trousers, and white sneakers. Emma wears a simple casual long-sleeved top, dark blue full-length trousers, and white sneakers at the beginning of the scene. The jacket Emma tries on is a practical casual rain jacket with a clearly visible hood. No unrequested accessories. SCENE: Hannah and Emma are inside a casual clothing store, looking at jackets together. The scene feels relaxed and natural. A jacket with a visible hood is hanging or being held close to Emma. Camera: Begin with a natural medium two-shot of Hannah and Emma near the jacket section. Hannah looks at the jacket and points naturally toward the hood. Hannah: 'The jacket has got a hood.' Emma looks at the jacket with interest. Emma: 'Good. I need one for rainy days.' Hannah: 'Try it on!' ACTION: Give Emma enough time to physically put the jacket on in a clear, readable way. Do not rush or skip this action. Emma takes the jacket, puts one arm into a sleeve, then the other, and settles the jacket naturally on her shoulders. Camera: Stay with Emma in a medium one shot while she finishes putting the jacket on. After the jacket is fully on, allow a short pause. Emma then reaches back naturally, takes the hood with both hands, and pulls the hood over her head. Give this hood action its own clear moment. Do not combine putting on the jacket and pulling up the hood into one instant movement. Camera: Use a subtle slow push-in as Emma finishes pulling the hood over her head. Emma looks comfortable in the jacket. Hannah gives her a small approving smile. No additional dialogue. Keep the clothing state consistent after Emma puts the jacket on. Do not remove, change, or reset the jacket between shots. Use gentle cinematic camera movement only where helpful. Avoid complicated camera changes during the dressing action. Visual style: expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_daniel_lucas",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_daniel_lucas.mp4",
+    title: "Daniel says Lucas is braver at the haunted house.",
+    transcript: "Daniel : You're /braver than/ me. Lucas : Are you scared? Daniel : No, I'm just careful.",
+    answerOptions: [
+      { id: "a", text: "Daniel : Senden daha cesurum. Lucas : Korkuyor musun? Daniel : Hayır, sadece dikkatliyim." },
+      { id: "b", text: "Daniel : Sen benden /daha cesursun/. Lucas : Korkuyor musun? Daniel : Hayır, sadece dikkatliyim." }
+    ],
+    easyDistractor: "Daniel : İkimiz de çok cesuruz. Lucas : Korkuyor musun? Daniel : Birazcık.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["daniel", "lucas"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:00.000",
+evidenceEnd: "0:01.363",
+    evidenceSentence: "Daniel : You're /braver than/ me. Lucas : Are you scared? Daniel : No, I'm just careful.",
+
+    prompt: "Use <<<Image1>>> as Daniel's canonical identity and appearance reference. Use <<<Image2>>> as Lucas's canonical identity and appearance reference. Use <<<Audio1>>> as Daniel's canonical voice. Use <<<Audio2>>> as Lucas's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Daniel wears a dark red casual T-shirt, black full-length trousers. Lucas wears a light blue polo t-shirt, dark blue jeans. He wears a simple sports watch. SCENE: Daniel and Lucas are standing together outside the entrance of a haunted house attraction at an amusement park in the evening. The entrance behind them is dark and atmospheric, but the scene remains clearly visible. A light evening breeze gently moves their hair and nearby decorations. Daniel looks toward the dark entrance, then at Lucas. Daniel: 'You're braver than me.' Lucas looks at Daniel with a curious expression. Lucas: 'Are you scared?' Daniel tries to stay confident. Daniel: 'No. I'm just careful.' ACTION: Immediately after Daniel finishes speaking, a single bat suddenly flies out of the dark haunted house entrance. The bat quickly passes near Daniel and continues flying away. Daniel reacts instantly. He turns his head sharply toward the bat and follows it with clearly frightened eyes. Do not make Daniel fall, scream, run away, or behave foolishly. Lucas calmly looks at Daniel after seeing his reaction. Daniel remains standing where he is, still watching the bat for a brief moment. Camera: Keep the bat's exit and Daniel's reaction clearly readable in the same general composition. Only one bat appears. Do not create a swarm of bats. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_hannah_lars",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_hannah_lars.mp4",
+    title: "Hannah tries on Lars's new sunglasses for a selfie.",
+    transcript: "Hannah : Dad, You/'ve got/ new sunglasses! Lars : Yes, they are brand new. Hannah : Can I try them on? Lars : Mhm.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Baba, Yeni güneş gözlüklerin var! Lars : Evet, onlar yepyeni. Hannah : Onları deneyebilir miyim? Lars : Hı hı." },
+      { id: "b", text: "Hannah : Baba, Yeni güneş gözlüğü satın almışsın! Lars : Evet, yeni aldım. Hannah : Onları deneyebilir miyim? Lars : Hı hı." }
+    ],
+    easyDistractor: "Hannah : Baba! Yeni güneş gözlüklerin var! Lars : Evet, ama onlar benim için çok küçük. Hannah : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah", "lars"],
+    grades: [6],
+    functions: ["have_got_has_got"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:00.791",
+evidenceEnd: "0:01.248",
+    evidenceSentence: "Hannah : Dad, You/'ve got/ new sunglasses! Lars : Yes, they are brand new. Hannah : Can I try them on? Lars : Mhm.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Lars's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Lars's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Hannah wears an orange short-sleeved T-shirt, medium shorts. Lars wears a simple dark green short-sleeved polo shirt, beige full-length trousers, and casual shoes. Lars is wearing a new pair of sunglasses at the beginning of the scene. SCENE: The scene takes place in the garden of Hannah's family home during the daytime. Lars is sitting comfortably at an outdoor garden table. Hannah approaches him naturally from nearby. A light breeze gently moves Hannah's hair and nearby plants. Hannah notices Lars's new sunglasses and looks pleasantly surprised. Hannah: 'Dad! You've got new sunglasses!' Lars smiles. Lars: 'Yes, they are brand new.' Hannah looks at the sunglasses with interest. Hannah: 'Can I try them on?' Lars gives a small approving nod. Lars: 'Mhm.' ACTION: Lars removes the sunglasses and hands them directly to Hannah. Give Hannah enough time to take the sunglasses clearly and naturally. Hannah puts the sunglasses on her face. Camera: Stay in a medium shot so the handover and Hannah putting on the sunglasses are easy to follow. After Hannah has fully put the sunglasses on, she smiles and moves beside Lars. Hannah takes out her phone and holds it up for a selfie. Lars leans slightly toward Hannah. Camera: Use a subtle slow push-in as Hannah and Lars pose together. Hannah takes the selfie while wearing Lars's new sunglasses. Both smile naturally toward the phone. No additional dialogue. Keep the sunglasses state consistent: START = Lars is wearing the sunglasses. MIDDLE = Lars hands them to Hannah. END = Hannah is wearing the same sunglasses. Do not duplicate the sunglasses. Only one pair of sunglasses exists in the scene. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_david_ethan",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_david_ethan.mp4",
+    title: "Ethan tries on a cap that is bigger than David's.",
+    transcript: "David : That cap is /bigger than/ mine. Ethan : Much bigger.",
+    answerOptions: [
+      { id: "a", text: "David : O şapka benimkinden /daha büyük/. Ethan : Çok daha büyük." },
+      { id: "b", text: "David : O şapka benimkinden daha küçük. Ethan : Çok daha büyük." }
+    ],
+    easyDistractor: "David : O şapka benimkiyle aynı boyda. Ethan : Aynı boyda.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["david", "ethan"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:00.000",
+evidenceEnd: "0:01.957",
+    evidenceSentence: "David : That cap is /bigger than/ mine. Ethan : Much bigger.",
+
+    prompt: "Use <<<Image1>>> as David's canonical identity and appearance reference. Use <<<Image2>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as David's canonical voice. Use <<<Audio2>>> as Ethan's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. SCENE: David and Ethan are at a small outdoor hat stand. David is already wearing a normal-sized cap. Ethan is holding one clearly oversized cap in his hands. The oversized cap should be noticeably bigger than David's cap, but still look like a real wearable cap. ACTION: David looks at the oversized cap Ethan is holding. David: 'That cap is bigger than mine.' Ethan looks at the oversized cap with curiosity. He then puts the oversized cap on his head. Because the cap is too large, it naturally slides down and partially covers his eyes. Ethan uses both hands to lift the front edge of the cap slightly so he can see David. Ethan looks at David from underneath the oversized cap. Ethan: 'Much bigger.' David smiles at Ethan's appearance. No additional dialogue. IMPORTANT: Use only one oversized cap. Do not create duplicate caps in Ethan's hands or on nearby surfaces. David wears his own normal cap on his head throughout the scene. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_ella_chloe",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ella_chloe.mp4",
+    title: "Ella finds Camille's colorful scarf at Chloe's home.",
+    transcript: "Ella : /Whose/ scarf is this? Chloe : It's my mum's. Ella : Can I borrow it?",
+    answerOptions: [
+      { id: "a", text: "Ella : Bu atkı senin mi? Chloe : Benim. Ella : Ödünç alabilir miyim?" },
+      { id: "b", text: "Ella : Bu atkı /kimin/? Chloe : Annemin. Ella : Ödünç alabilir miyim?" }
+    ],
+    easyDistractor: "Ella : Bu atkı kimin? Chloe : Bilmiyorum. Ella : O zaman yatağın üzerinde bırakalım.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ella", "chloe", "camille"],
+    grades: [6],
+    functions: ["use_of_wh_questions_whose"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+evidenceStart: "0:02.821",
+evidenceEnd: "0:05.921",
+    evidenceSentence: "Ella : /Whose/ scarf is this? Chloe : It's my mum's. Ella : Can I borrow it?",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Ella's canonical identity and appearance reference. Use <<<Image3>>> as Camille's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Ella's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. CLOTHING: Chloe wears a soft pink short-sleeved top, dark blue jeans, and slippers. She wears a colorful butterfly necklace. Ella wears a light yellow short-sleeved top, beige long shorts, and slippers. She wears a friendship bracelet. Camille wears a light cream blouse, dark blue full-length trousers, and simple casual shoes. Camille has her canonical short blonde pixie haircut. SCENE: Chloe and Ella are at Chloe's home, getting ready to go out. A few clothes are neatly placed on Chloe's bed. A colorful scarf belonging to Camille is clearly visible among them. The scarf is a stylish colorful women's scarf. Ella notices the colorful scarf and picks it up. Ella: 'Whose scarf is this?' Chloe looks at the scarf. Chloe: 'It's my mum's.' Ella smiles and holds the scarf lightly in front of herself, checking how it looks. Ella şaka yapar şekilde: 'Can I borrow it?' Before Chloe answers, Camille appears naturally at the bedroom doorway. Camille notices Ella holding her scarf. Camera: Briefly include Camille in the same composition so her silent reaction is immediately readable. Ella sees Camille. Ella freezes for a brief moment while still holding the scarf. Camille gives Ella a calm, slightly amused look. Chloe looks between Ella and Camille and smiles. No additional dialogue. Keep the scarf state consistent: START = the scarf is on the bed. MIDDLE = Ella picks it up and holds it. END = Ella is still holding the scarf when Camille appears. Do not duplicate the scarf. Do not make Ella put the scarf on before Camille enters. Keep Camille's entrance simple and natural. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_benjamin_jack",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_benjamin_jack.mp4",
+    title: "Benjamin changes to the shorter ticket line while Jack waits patiently.",
+    transcript: "Benjamin : That line is /shorter than/ this one. Benjamin : You're /more patient than/ me.",
+    answerOptions: [
+      { id: "a", text: "Benjamin : O sıra bundan /daha kısa/. Benjamin : Sen benden /daha sabırlısın/." },
+      { id: "b", text: "Benjamin : O sırayı tercih ederim. Benjamin : Sen en sabırlımızsın." }
+    ],
+    easyDistractor: "Benjamin : O sıra bundan daha kısa. Benjamin : Ben senden daha sabırlıyım.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin", "jack"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+   evidenceStart: "0:01.311",
+evidenceEnd: "0:06.963",
+    evidenceSentence: "Benjamin : That line is /shorter than/ this one. Benjamin : You're /more patient than/ me.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Image2>>> as Jack's canonical identity and appearance reference. Use <<<Image3>>> as the exact first-frame composition and starting-state reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Audio2>>> as Jack's canonical voice. Use <<<Image1>>> and <<<Image2>>> for character identity. Use <<<Image3>>> for the amusement park setting, ticket booths, queue layout, character positions, and starting composition. All dialogue must be in English. SCENE: The video begins exactly from <<<Image3>>>. Benjamin and Jack are together at the back of the longer ticket line, exactly as shown in <<<Image3>>>. Several people are waiting between Benjamin and Jack and their ticket booth. The other ticket booth has the clearly shorter line shown in <<<Image3>>>. Preserve the two ticket booths and the queue layout from <<<Image3>>>. ACTION: Benjamin notices the shorter line at the other ticket booth. He says: 'That line is shorter than this one.' He leaves the longer line and walks over to join the back of the shorter line. Jack does not follow him. Jack stays in the original longer line and calmly waits. Jack remains where he is and continues waiting patiently. After Benjamin has joined the shorter line, he looks back toward Jack and says: 'You're more patient than me.' Don't make Jack speak before joining to the other queue. Jack gives a small relaxed reaction. HARD CUT. This cut represents that a noticeable amount of time has passed. AFTER THE CUT: Benjamin is still waiting in the same shorter line he chose earlier. His line did not move, stays the same and Benjamin still does not have a ticket. Jack has already finished waiting in his original line and has received his ticket. Jack is now out of the queue, standing nearby with one amusement park ticket clearly visible in his hand. Benjamin notices Jack already holding the ticket and looks surprised and slightly disappointed. Jack calmly raises the ticket a little to show Benjamin that he has already got it. Benjamin looks back toward his own line. No additional dialogue. IMPORTANT CONTINUITY: Preserve the starting queue positions from <<<Image3>>>. Benjamin changes lines only once: from the longer line shown in <<<Image3>>> to the shorter line shown in <<<Image3>>>. Jack never changes to the shorter line. Do not rearrange the ticket booths or queues before Benjamin changes lines. After the hard cut: Benjamin is still waiting without a ticket. Jack has already received his ticket. Do not create additional ticket booths. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_hannah_olivia2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_hannah_olivia2.mp4",
+    title: "Hannah wants hair like Olivia's at the salon.",
+    transcript: "Hannah : I want my hair like hers, Her hair is /prettier than/ mine. Hairdresser : So, you want /shorter/ hair? Hannah : No, not shorter, Just prettier.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Saçımı onunki gibi istiyorum, Onun saçı benimkinden daha kısa. Kuaför : Yani daha kısa saç mı istiyorsun? Hannah : Hayır, daha kısa değil, daha güzel istiyorum." },
+      { id: "b", text: "Hannah : Saçımı onunki gibi istiyorum, Onun saçı benimkinden /daha güzel/. Kuaför : Yani /daha kısa/ saç mı istiyorsun? Hannah : Hayır, daha kısa değil, daha güzel istiyorum." }
+    ],
+    easyDistractor: "Hannah : Saçımı onunki gibi istiyorum. Kuaför : Saçını hemen keseceğim. Hannah : Tamam.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah", "olivia"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:06.349",
+    evidenceSentence: "Hannah : I want my hair like hers, Her hair is /prettier than/ mine. Hairdresser : So, you want /shorter/ hair? Hannah : No, not shorter, Just prettier.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use the reference images for character identity and canonical hair appearance. Hannah must keep her canonical long straight blonde hair throughout the entire video. Olivia must keep her canonical neat chin-length brown bob throughout the entire video. Do not change either girl's hairstyle during the video. All dialogue must be in English. SCENE: Hannah and Olivia are at a modern hair salon. They are sitting next to each other in two separate hairdresser chairs in front of a large salon mirror. Two different adult female hairdressers are attending to each girl. Camera: Close over-the-shoulder view from behind Hannah and Olivia, looking toward the large mirror. The backs of Hannah's and Olivia's heads and shoulders are visible in the foreground. Their faces are clearly visible in the mirror reflection. Keep the camera close enough that Hannah and Olivia remain the clear visual focus and their reflected facial identities are easy to recognize. HAIRDRESSERS: Hannah's hairdresser: An adult woman with shoulder-length dark brown hair. She wears rectangular eyeglasses and a black professional salon outfit. She is attending only to Hannah. Olivia's hairdresser: A different adult woman with short curly auburn hair. She does not wear glasses. She wears a dark gray professional salon outfit. She is attending only to Olivia. ACTION: Both girls remain seated while the two hairdressers work naturally with their hair. Hannah says to her hairdresser: 'I want my hair like hers. Her hair is prettier than mine.' Hannah's hairdresser says: 'So, you want shorter hair?' Hannah immediately responds with a small amused smile: 'No, not shorter. Just prettier.' The hairdresser gives Hannah a mildly amused reaction. Olivia hears the exchange and gives Hannah a small amused smile through the mirror. No additional dialogue. IMPORTANT: Hannah's hair is NOT cut during this scene. Hannah must still have her original long blonde hairstyle at the end of the video. Olivia keeps her original short brown bob. The two girls must remain seated in their own separate salon chairs. Each girl has one separate adult female hairdresser. Do not swap the hairdressers between the girls. Do not duplicate Hannah, Olivia, or either hairdresser. The mirror reflections must correspond naturally to the real characters. Keep the salon interaction simple and natural. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_chloe_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_chloe_olivia.mp4",
+    title: "Olivia and Chloe compare Chloe with her sister in a photo album.",
+    transcript: "Olivia : Is this your sister? Chloe : Mhm, She's studying at university in France. Olivia : You're /more beautiful than/ her. Chloe : But her hair is /longer than/ mine.",
+    answerOptions: [
+      { id: "a", text: "Olivia : Bu senin kız kardeşin mi? Chloe : Hı hı, Fransa'da üniversitede okuyor. Olivia : Sen ondan /daha güzelsin/. Chloe : Ama onun saçları benimkinden /daha uzun/." },
+      { id: "b", text: "Olivia : Bu senin kız kardeşin mi? Chloe : Hı hı, Fransa'da üniversitede okuyor. Olivia : Sen onun kadar güzelsin. Chloe : Ama benim saçlarım onunkinden daha uzun." }
+    ],
+    easyDistractor: "Olivia : Bu senin kız kardeşin mi? Chloe : Hı hı, Fransa'da üniversitede okuyor. Olivia : Saçlarınız aynı uzunlukta. Chloe : Evet.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["chloe", "olivia"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+   evidenceStart: "0:06.950",
+evidenceEnd: "0:11.350",
+    evidenceSentence: "Olivia : Is this your sister? Chloe : Mhm, She's studying at university in France. Olivia : You're /more beautiful than/ her. Chloe : But her hair is /longer than/ mine.",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Olivia's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. SCENE: Chloe and Olivia are sitting next to each other on the sofa in Chloe's living room. They are looking through an open family photo album together. They hold the open album naturally in front of them. The photographs and inside pages face Chloe and Olivia. The outer back cover of the album faces the camera. The inside of the album and the photographs are never visible to the camera. The girls can see the photographs, but the camera cannot. ACTION: Olivia looks down at a photograph in the album. Olivia says: 'Is this your sister?' Chloe: 'Mhm. She's studying at university in France.' Olivia looks at the photograph for another brief moment, then looks toward Chloe. Olivia: 'You're more beautiful than her.' Chloe gives Olivia a slightly shy, amused smile. Chloe: 'But her hair is longer than mine.' They continue holding the album naturally together. No additional dialogue. IMPORTANT: Keep the photo album in the girls' hands throughout the scene. Never turn the open album toward the camera. Never show the photographs or inside pages to the viewer. Do not create Chloe's sister as a visible character. Her sister exists only in the unseen photograph they are looking at. Keep the interaction warm and natural, like two friends casually looking through a family photo album together. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_ella_olivia2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ella_olivia2.mp4",
+    title: "Ella wants Olivia to delete a funny photo.",
+    transcript: "Ella : Delete that one quickly! Olivia : No way, It's the /funniest/ photo! Ella : Olivia!",
+    answerOptions: [
+      { id: "a", text: "Ella : Onu hemen sil! Olivia : Olmaz, Bunu saklayacağım! Ella : Olivia!" },
+      { id: "b", text: "Ella : Onu hemen sil! Olivia : Olmaz, Bu /en komik/ fotoğraf! Ella : Olivia!" }
+    ],
+    easyDistractor: "Ella : Onu hemen sil! Olivia : Tamam, Şimdi siliyorum. Ella : Olivia!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ella", "olivia"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:05.343",
+evidenceEnd: "0:08.014",
+    evidenceSentence: "Ella : Delete that one quickly! Olivia : No way, It's the /funniest/ photo! Ella : Olivia!",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use <<<Audio2>>> as Olivia's canonical voice. CLOTHING AND ACCESSORIES: Ella wears: a light yellow short-sleeved T-shirt, dark blue jeans, small silver hoop earrings, a simple colorful friendship bracelet. Olivia wears: a dark blue short-sleeved top, beige long shorts, a small simple hair clip on one side of her bob, a simple wristwatch. Keep these clothes and accessories consistent throughout the entire video. SCENE: A quiet outdoor pedestrian area during the daytime. Ella and Olivia are standing casually beside a clean exterior wall, naturally leaning against it while looking through photos together on Olivia's smartphone. The atmosphere feels relaxed and spontaneous, like two close friends checking photos after spending time outside. Olivia holds the smartphone throughout the scene. The phone screen does not need to be shown clearly to the camera. Do not show or create the actual photo Ella is reacting to. A light natural breeze causes subtle movement in their hair. ACTION: The video begins with Ella and Olivia standing close together beside the wall. Olivia casually scrolls through photos on her smartphone while Ella looks at the screen with her. Ella suddenly notices an embarrassing funny photo of herself and reacts immediately. Ella says: 'Delete that one quickly!' Olivia gives Ella a playful grin and slightly pulls the phone closer to herself. Olivia says: 'No way. It's the funniest photo!' Ella looks at Olivia with playful disbelief and says: 'Olivia!' After Ella's final line, Olivia immediately turns and runs away laughing while still holding the phone. Ella quickly runs after Olivia with a playful annoyed expression. Keep the main dialogue interaction clearly readable before the running begins. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_daniel_noah",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_daniel_noah.mp4",
+    title: "Daniel compares his packing with Noah's for their trip.",
+    transcript: "Daniel : You're /more organized than/ me. Noah : I made a list. Noah : A pillow?",
+    answerOptions: [
+      { id: "a", text: "Daniel : Sen benden /daha düzenlisin/. Noah : Bir liste yaptım. Noah : Bir yastık mı?" },
+      { id: "b", text: "Daniel : Sen benim kadar düzenlisin. Noah : Bir liste yaptım. Noah : Bir yastık mı?" }
+    ],
+    easyDistractor: "Daniel : Sen benden daha düzenlisin. Noah : Valizimi henüz hazırlamadım. Noah : Bir yastık mı?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["daniel", "noah"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:02.262",
+    evidenceSentence: "Daniel : You're /more organized/ than me. Noah : I made a list. Noah : A pillow?",
+
+    prompt: "Use <<<Image1>>> as Daniel's canonical identity and appearance reference. Use <<<Image2>>> as Noah's canonical identity and appearance reference. Use <<<Audio1>>> as Daniel's canonical voice. Use <<<Audio2>>> as Noah's canonical voice. Use the reference images for identity only. Do not copy clothing or accessories from the reference images. All dialogue must be in English. SCENE: Daniel and Noah are preparing for a trip at home. Two open backpacks are in front of them. Noah's backpack looks neat and carefully packed. Daniel's backpack is closed. ACTION: Daniel looks at Noah's neatly packed backpack. Daniel: 'You're more organized than me.' Noah calmly looks at Daniel. Noah: 'I made a list.' Daniel then opens his backpack and reaches into it. He pulls out one unusually large pillow with both hands. The pillow should be clearly oversized for the backpack and immediately readable as a funny surprise. Noah looks at the pillow with mild surprise. Noah: 'A pillow?' Daniel says nothing. He holds the pillow and gives Noah a serious, confident look, as if the pillow proves his point and is obviously necessary. Noah looks back at Daniel, slightly puzzled. No additional dialogue. IMPORTANT: The pillow must not be visible before Daniel pulls it out. Do not create extra pillows. Do not make Daniel look embarrassed or foolish. His final reaction should feel confident and completely serious. Visual style: Soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_daniel_lucas2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_daniel_lucas2.mp4",
+    title: "Daniel explains why he blocks Lucas's basketball shots.",
+    transcript: "Lucas : How do you always block my shots? Daniel : I'm /taller than/ you.",
+    answerOptions: [
+      { id: "a", text: "Lucas : Şutlarımı nasıl her zaman blokluyorsun? Daniel : Senden daha iyi oynuyorum." },
+      { id: "b", text: "Lucas : Şutlarımı nasıl her zaman blokluyorsun? Daniel : Senden /daha uzunum/." }
+    ],
+    easyDistractor: "Lucas : Şutlarımı nasıl her zaman engelliyorsun? Daniel : Çok hızlı koşuyorum.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["daniel", "lucas"],
+    grades: [6],
+    functions: ["comparatives_of_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:06.741",
+evidenceEnd: null,
+    evidenceSentence: "Lucas : How do you always block my shots? Daniel : I'm /taller than/ you.",
+
+    prompt: "Use <<<Image1>>> as Daniel's canonical identity and appearance reference. Use <<<Image2>>> as Lucas's canonical identity and appearance reference. Use <<<Audio1>>> as Daniel's canonical voice. Use <<<Audio2>>> as Lucas's canonical voice. Use the reference images for identity only. All dialogue must be in English. IMPORTANT HEIGHT RELATIONSHIP: Daniel is slightly taller than Lucas. The height difference is small but clearly noticeable. Daniel must NOT be dramatically taller than Lucas. Preserve believable proportions for two boys of the same age. SCENE: Daniel and Lucas are playing one-on-one basketball on an outdoor basketball court. Lucas is attacking and Daniel is defending. ACTION: Lucas gets into position and takes a jump shot toward the hoop. Daniel reacts immediately. Daniel jumps and cleanly blocks Lucas's shot with one hand. After the block, both boys land naturally. Lucas looks at Daniel, slightly frustrated by another successful block. Lucas: 'How do you always block my shots?' Daniel looks at Lucas with a relaxed, confident expression. Daniel: 'I'm taller than you.' Daniel is only slightly taller than Lucas, and this small height difference should remain visually consistent throughout the video. Lucas gives Daniel a mildly annoyed but friendly look. No additional dialogue. IMPORTANT: Keep the basketball action simple and readable. Lucas takes one shot. Daniel makes one clear successful block. Do not show repeated shots or repeated blocks. Do not make Daniel dramatically taller than Lucas. Do not exaggerate their body-size difference. They are the same age, with Daniel only slightly taller. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_ethan_jack",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ethan_jack.mp4",
+    title: "Ethan admits Jack is the strongest after losing arm wrestling.",
+    transcript: "Ethan : Again! Jack : You lost twice. Ethan : Fine, You're the strong/est/.",
+    answerOptions: [
+      { id: "a", text: "Ethan : Bir daha! Jack : İki kez kaybettin. Ethan : Peki, Sen /en güçlüsüsün/." },
+      { id: "b", text: "Ethan : Bir daha! Jack : İki kez kaybettin. Ethan : Peki, Benden daha güçlüsün." }
+    ],
+    easyDistractor: "Ethan : Tekrar! Jack : Berabere kaldık. Ethan : Peki, Bir daha deneyelim.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ethan", "jack"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+  evidenceStart: "0:05.736",
+evidenceEnd: "0:08.096",
+    evidenceSentence: "Ethan : Again! Jack : You lost twice. Ethan : Fine, You're the strong/est/.",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Image2>>> as Jack's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. Use <<<Audio2>>> as Jack's canonical voice. CLOTHING AND ACCESSORIES: Ethan wears: a navy blue short-sleeved T-shirt, dark gray full-length trousers, a simple black sports watch. Jack wears: a forest green short-sleeved T-shirt, dark blue full-length jeans, a simple brown woven wristband. Keep their clothes and accessories consistent throughout the video. SCENE: A quiet outdoor park during the daytime. Ethan and Jack are sitting opposite each other at a wooden picnic table, having an arm-wrestling match. ACTION: The video begins with Jack already in the winning position. Jack is clearly pushing Ethan's hand downward. Ethan is visibly losing the arm-wrestling match. Jack completes the win by pressing Ethan's hand flat onto the tabletop. Ethan must NOT win. Ethan must NOT push Jack's hand down. The winner is Jack. The loser is Ethan. After losing, Ethan immediately says: 'Again!' Jack, who has just won, replies: 'You lost twice.' Ethan then says: 'Fine. You're the strongest.' Keep the arm-wrestling action simple and clear. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_ava_chloe2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_ava_chloe2.mp4",
+    title: "Chloe says Ava's cupcake is the best one.",
+    transcript: "Chloe : Did you make this one? Ava : Yes, Why? Chloe : It's /the best/ one!",
+    answerOptions: [
+      { id: "a", text: "Chloe : Bunu sen mi yaptın? Ava : Evet, Neden? Chloe : Hepsinden daha tatlı olan bu!" },
+      { id: "b", text: "Chloe : Bunu sen mi yaptın? Ava : Evet, Neden? Chloe : Bu /en iyisi/!" }
+    ],
+    easyDistractor: "Chloe : Bunu sen mi yaptın? Ava : Hayır, Annem yaptı. Chloe : Çok güzel!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "chloe"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:06.009",
+evidenceEnd: "0:08.096",
+    evidenceSentence: "Chloe : Did you make this one? Ava : Yes, Why? Chloe : It's /the best/ one!",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Audio2>>> as Chloe's canonical voice. Preserve Ava's and Chloe's exact facial identities, hairstyles, hair colors, eye colors, skin tones, ages, and body proportions. The dialogue in the video must be entirely in English. Only Ava and Chloe speak. CLOTHING AND ACCESSORIES: Ava wears: a soft teal short-sleeved T-shirt, beige full-length trousers, a small simple necklace, a colorful friendship bracelet. Chloe wears: a dark blue short-sleeved top, light blue jeans, small simple earrings, a dark blue hair clip. Keep their clothes and accessories consistent throughout the entire video. SCENE: A cozy home kitchen or dining area during the daytime. Ava and Chloe are beside a table with several different cupcakes arranged on plates. The cupcakes should look clearly different from one another in flavor and decoration, but keep the table simple and uncluttered. ACTION: Chloe picks up one cupcake and takes a bite. She immediately looks pleasantly surprised by the taste and turns toward Ava. Chloe asks: 'Did you make this one?' Ava looks at Chloe and replies: 'Yes. Why?' Chloe smiles, looks at the cupcake in her hand, and says: 'It's the best one!' Ava gives a pleased, slightly proud smile. Keep the action simple. Chloe eats from only one cupcake. Do not make her switch between different cupcakes.",
+  },
+  {
+    id: "6_personal_life_benjamin_david",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_benjamin_david.mp4",
+    title: "Benjamin and David choose the coolest PlayStation game.",
+    transcript: "Benjamin : Which one do you want to play? David : That one, It looks the cool/est/. Benjamin : And /the most/ difficult.",
+    answerOptions: [
+      { id: "a", text: "Benjamin : Hangisini oynamak istiyorsun? David : Şunu, /En havalı/ o görünüyor. Benjamin : Ve /en zoru/." },
+      { id: "b", text: "Benjamin : Hangisini oynamak istiyorsun? David : Şunu, O diğerlerinden daha güzel görünüyor. Benjamin : Ve hepsinden /daha basit/." }
+    ],
+    easyDistractor: "Benjamin : Hangisini oynamak istiyorsun? David : Hiçbirini, TV izlemek istiyorum. Benjamin : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin", "david"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:02.768",
+evidenceEnd: "0:07.245",
+    evidenceSentence: "Benjamin : Which one do you want to play? David : That one! It looks the cool/est/. Benjamin : And /the most/ difficult.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Audio2>>> as David's canonical voice. CLOTHING AND ACCESSORIES: Benjamin wears: a dark green short-sleeved T-shirt, dark blue full-length jeans, a simple black wristwatch. David wears: a burgundy short-sleeved T-shirt, beige full-length trousers, a simple woven wristband. Keep their clothes and accessories consistent throughout the video. SCENE: Benjamin and David are at Benjamin's home, standing or sitting comfortably in front of the TV and choosing a PlayStation game to play. The PlayStation console and controllers are clearly visible near the TV. The TV screen shows a game-selection menu with several visually different game thumbnails. CAMERA: Use an over-the-shoulder two-shot from behind Benjamin and David. Their heads and shoulders are partially visible in the foreground while the TV screen is clearly visible and readable as the main focus of the shot. Don't make the characters look at the camera. The PlayStation console must also remain clearly visible in the composition. Keep this general over-the-shoulder composition throughout the dialogue. ACTION: Benjamin looks at the game-selection screen and asks: 'Which one do you want to play?' David looks through the games and points clearly toward one of the games on the TV screen. David says: 'That one! It looks the coolest.' Benjamin looks at the game David chose and replies: 'And the most difficult.' David gives a satisfied thumbs-up. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_benjamin_jack2",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_benjamin_jack2.mp4",
+    title: "Jack says Benjamin's bedroom is the messiest room ever.",
+    transcript: "Jack : Benjamin, look at your room! Benjamin : What? Jack : This is the messi/est/ room ever.",
+    answerOptions: [
+      { id: "a", text: "Jack : Benjamin, odana bak! Benjamin : Ne? Jack : Bu oda benimkinden bile daha dağınık." },
+      { id: "b", text: "Jack : Benjamin, odana bak! Benjamin : Ne? Jack : Bu hayatımda gördüğüm /en/ dağınık oda." }
+    ],
+    easyDistractor: "Jack : Benjamin, odana bak! Benjamin : Ne? Jack : Odan biraz dağınık.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["benjamin", "jack"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:03.671",
+evidenceEnd: "0:05.760",
+    evidenceSentence: "Jack : Benjamin, look at your room! Benjamin : What? Jack : This is the messi/est/ room ever.",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Image2>>> as Jack's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Audio2>>> as Jack's canonical voice. CLOTHING AND ACCESSORIES: Benjamin wears: a light blue short-sleeved T-shirt, dark gray full-length trousers, a simple black wristwatch. Jack wears: a red short-sleeved T-shirt, dark blue full-length jeans, a simple brown woven wristband. Keep their clothes and accessories consistent throughout the entire video. SCENE: Benjamin's bedroom during the daytime. The room is clearly messy child's bedroom. There are a few clothes on the floor, some books and notebooks in untidy places, an open backpack, and a pair of sneakers left out. Do not overcrowd the room with excessive objects. Benjamin is already inside the room, relaxed and completely unbothered by the mess. Jack enters the room and immediately notices how messy it is. ACTION: Jack looks around the room in surprise and says: 'Benjamin, look at your room!' Benjamin casually looks around as if he does not understand the problem. Benjamin says: 'What?' Jack gestures toward the messy room and says: 'This is the messiest room ever.' Benjamin looks around once more, then gives a small relaxed shrug as if the room looks perfectly normal to him. Keep the humor subtle and character-based. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_personal_life_benjamin_ethan",
+    status: "published",
+    videoSrc: "assets/video/6_personal_life_benjamin_ethan.mp4",
+    title: "Benjamin and Ethan choose the most exciting amusement park ride.",
+    transcript: "Benjamin : The pirate ship is /scarier than/ the ghost train. Ethan : Maybe, but the roller coaster is /the most exciting./",
+    answerOptions: [
+      { id: "a", text: "Benjamin : Korsan gemisi hayalet trenden /daha korkutucu/. Ethan : Belki, ama roller coaster /en heyecanlısı/." },
+      { id: "b", text: "Benjamin : Korsan gemisi en korkuncu. Ethan : Belki, ama roller coaster daha zevkli." }
+    ],
+    easyDistractor: "Benjamin : Korsan gemisi hayalet trenden daha korkutucu. Ethan : Belki, ama ben dönme dolabı seçiyorum.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["benjamin", "ethan"],
+    grades: [6],
+    functions: ["comparative_and_superlative_adjectives"],
+    theme: "personal_life",
+    unit: "personal_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:05.951",
+    evidenceSentence: "Benjamin : The pirate ship is /scarier than/ the ghost train. Ethan : Maybe, but the roller coaster is /the most exciting./",
+
+    prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Image2>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Audio2>>> as Ethan's canonical voice. CLOTHING AND ACCESSORIES: Benjamin wears: a red short-sleeved T-shirt, dark blue full-length jeans, a simple black wristwatch. Ethan wears: a dark teal short-sleeved T-shirt, beige full-length trousers, a simple woven wristband. Keep their clothes and accessories consistent throughout the entire video. SCENE 1: The characters do not look at the camera during face-to-face interaction. They face each other. Benjamin and Ethan are standing together at an amusement park during the night time. In the background, the amusement park clearly includes: a pirate ship ride, a ghost train attraction, a roller coaster. The rides should be visually distinct, bright in night time and easy to recognize. Benjamin and Ethan are looking toward the rides while deciding which one to choose. ACTION: Benjamin looks toward the pirate ship and ghost train and says: 'The pirate ship is scarier than the ghost train.' Ethan looks toward the roller coaster and replies: 'Maybe, but the roller coaster is the most exciting.' HARD CUT TO: SCENE 2: Benjamin and Ethan are now sitting side by side in a roller coaster car in night time. Both boys are secured in their seats. The roller coaster suddenly races quickly down a steep drop. Benjamin and Ethan both scream loudly in fear as the car descends. Their expressions are exaggerated, frightened, and funny. There is no dialogue during the roller coaster payoff. Keep the payoff energetic. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
 
 ];
 
@@ -12172,8 +14040,7 @@ window.LEAGUE_OF_LISTENING_DIFFICULTY_DISTRACTORS = Object.freeze(
 );
 
 window.LEAGUE_OF_LISTENING_FUNCTIONS = Object.freeze({
-accepting: "Accepting",
- accepting: "Accepting",
+  accepting: "Accepting",
   agree_disagree: "Agreeing and Disagreeing",
   asking_about: "Asking about people, things, actions, time and ideas",
   asking_about_opinions: "Asking about opinions",
@@ -12189,6 +14056,8 @@ accepting: "Accepting",
   askingaboutsomeone: "Asking About Someone",
   askingfordirections: "Asking for directions",
   askingforhelp: "Asking for Help",
+  askingforreason: "Asking for Reasons",
+  describing_a_process: "Describing a Process",
   askinginformationabouttime: "Asking for Information About Time",
   confirming_information: "Confirming Information",
   comparatives_of_adjectives: "Expressing comparisons between two people, objects, or ideas",
@@ -12263,6 +14132,7 @@ accepting: "Accepting",
   use_of_wh_questions_what_time: "Use of Wh- Questions (What Time)",
   use_of_wh_questions_why_when: "Use of Wh- Questions (Why, When): Asking for reasons or time-related information about events, actions, or situations.",
   use_of_wh_questions_who_what: "Use of Wh- Questions (Who, What)",
-
+  use_of_wh_questions_whose: "Use of Wh- Questions (Whose): Requesting information about belongings or association.",
+  use_of_wh_questions_who_when_what_where: "Use of wh- questions (who-when-what-where)"
 
 });

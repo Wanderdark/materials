@@ -533,7 +533,6 @@
     duelRoundEnding = false;
     if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
     duelReadyOverlayTimer = null;
-    els.duelReadyOverlay.classList.add("hidden");
     trainingWaiting = true;
     els.trainingVideo.pause();
     showTrainingReplayPrompt();
@@ -1677,6 +1676,7 @@
     trainingWaiting = false;
     trainingAnswered = false;
     els.trainingReplayPrompt.classList.add("hidden");
+    if (duelReady) announceDuelPlayer();
     if (!restartFromIntro && trainingTaskIndex + 1 < trainingTasks.length) {
       playTrainingTask(trainingTaskIndex + 1);
       return;

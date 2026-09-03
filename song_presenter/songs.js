@@ -1331,7 +1331,331 @@ window.SONGS = [
 
   ]
   },
+/* ── GRADE 5 UNIT 6 - BITE BY BITE ───────────────────────────────────── */
+  {
+    id: "5_6_bitebybite",
+    title: "Bite by Bite",
+    artist: "Grade5",
+    audio: "songs/5_6_bitebybite.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_6_bitebybite.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
 
+    climax: [
+      { at: "0:46", to: "1:01" },
+      { at: "1:46", to: "2:00" },
+{ at: "2:39", to: "3:08" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "main dish",    tr: "ana yemek",          image: "images/maindish.webp" },
+      { word: "mushroom",   tr: "mantar",         image: "images/mushroom.webp" },
+      { word: "Delicious",  tr: "leziz",      image: "images/delicious.webp" },
+      { word: "recipe", tr: "tarif",        image: "images/recipe.webp" },
+      { word: "boil",  tr: "haşlamak",     image: "images/boil.webp" },
+      { word: "stir",   tr: "karıştırmak", image: "images/stir.webp" },
+      { word: "spice",  tr: "kaşık",           image: "images/spice.webp" },
+      { word: "flour",   tr: "un",         image: "images/flour.webp" }
+    ],
+
+    lyrics: [
+
+       { from: "0:15.602", to: "0:18.339", text: "We've got pasta, beans and meat,", training: { target: "pasta", choices: ["pasta", "beans", "meat", "faster"] } },
+       { from: "0:19.395", to: "0:22.096", text: "Fresh green salad, good to eat.", training: { target: "Fresh", choices: ["Fresh", "green", "salad", "flesh"] } },
+       { from: "0:23.218", to: "0:26.402", text: "We've got butter, <flour> and oil,", training: { target: "flour", choices: ["flour", "butter", "oil", "flower"] } },
+       { from: "0:27.008", to: "0:29.870", text: "Two fresh <mushroom>s start to <boil>.", training: { target: "mushrooms", choices: ["mushrooms", "beans", "pasta", "classrooms"] } },
+       { from: "0:31.088", to: "0:33.445", text: "Wash the lettuce, slice it thin,", training: { target: "Wash", choices: ["Wash", "slice", "lettuce", "watch"] } },
+       { from: "0:34.651", to: "0:37.311", text: "<Stir> the sauce and mix it in.", training: { target: "sauce", choices: ["sauce", "stir", "mix", "horse"] } },
+       { from: "0:38.256", to: "0:41.320", text: "Add some garlic, salt and <spice>,", training: { target: "spice", choices: ["spice", "garlic", "salt", "ice"] } },
+       { from: "0:42.369", to: "0:45.696", text: "Everything is looking nice.", training: { target: "nice", choices: ["nice", "food", "plate", "rice"] } },
+       { from: "0:46.674", to: "0:49.362", text: "Bite by bite, come taste with me,", training: { target: "Bite", choices: ["Bite", "taste", "share", "light"] } },
+       { from: "0:50.289", to: "0:53.553", text: "Come and share this <recipe>.", training: { target: "recipe", choices: ["recipe", "main dish", "flour", "remedy"] } },
+       { from: "0:54.126", to: "0:57.334", text: "We've got plenty on our plate,", training: { target: "plenty", choices: ["plenty", "plate", "food", "twenty"] } },
+       { from: "0:57.926", to: "1:01.902", text: "Take a bite, it tastes so great.", training: { target: "tastes", choices: ["tastes", "bite", "plate", "waste"] } },
+       { from: "1:15.757", to: "1:18.693", text: "We've got salad, soup and rice,", training: { target: "salad", choices: ["salad", "soup", "rice", "ballad"] } },
+       { from: "1:19.733", to: "1:22.629", text: "Grilled meat sounds really nice.", training: { target: "meat", choices: ["meat", "salad", "soup", "heat"] } },
+       { from: "1:23.341", to: "1:26.269", text: "We've got pasta topped with cheese,", training: { target: "cheese", choices: ["cheese", "pasta", "rice", "peas"] } },
+       { from: "1:26.616", to: "1:29.984", text: "What would you like? Tell me, please.", training: { target: "please", choices: ["please", "taste", "share", "cheese"] } },
+       { from: "1:30.800", to: "1:34.112", text: "Soup or salsa for a starter,", training: { target: "Soup", choices: ["Soup", "salsa", "pasta", "group"] } },
+       { from: "1:34.480", to: "1:37.664", text: "Make your next plate a bit larger.", training: { target: "larger", choices: ["larger", "smaller", "plate", "charger"] } },
+       { from: "1:38.192", to: "1:40.976", text: "Maybe pasta, maybe fish,", training: { target: "fish", choices: ["fish", "pasta", "rice", "dish"] } },
+       { from: "1:42.390", to: "1:45.926", text: "Choose your favorite <main dish>.", training: { target: "favorite", choices: ["favorite", "main dish", "pasta", "flavor it"] } },
+       { from: "1:46.214", to: "1:49.342", text: "Bite by bite, come taste with me,", training: { target: "taste", choices: ["taste", "bite", "recipe", "waste"] } },
+       { from: "1:49.902", to: "1:53.030", text: "Come and share this <recipe>.", training: { target: "share", choices: ["share", "recipe", "taste", "chair"] } },
+       { from: "1:53.721", to: "1:56.713", text: "We've got plenty on our plate,", training: { target: "plate", choices: ["plate", "plenty", "food", "late"] } },
+       { from: "1:57.345", to: "2:01.353", text: "Take a bite, it tastes so great.", training: { target: "Take", choices: ["Take", "bite", "taste", "cake"] } },
+       { from: "2:23.473", to: "2:26.265", text: "There is a food fair in the square,", training: { target: "fair", choices: ["fair", "food", "square", "chair"] } },
+       { from: "2:27.028", to: "2:30.060", text: "<Delicious> dishes everywhere.", training: { target: "Delicious", choices: ["Delicious", "recipe", "main dish", "suspicious"] } },
+       { from: "2:30.410", to: "2:33.490", text: "Taste some great food from afar,", training: { target: "afar", choices: ["afar", "food", "fair", "guitar"] } },
+       { from: "2:33.962", to: "2:38.930", text: "Some of it can be five-star.", training: { target: "star", choices: ["star", "food", "fair", "guitar"] } },
+       { from: "2:39.482", to: "2:42.514", text: "Bite by bite, come taste with me,", training: { target: "by bite", choices: ["by bite", "taste", "share", "my light"] } },
+       { from: "2:42.978", to: "2:46.162", text: "Come and share this <recipe>.", training: { target: "this", choices: ["this", "recipe", "dish", "kiss"] } },
+       { from: "2:46.658", to: "2:49.746", text: "We've got plenty on our plate,", training: { target: "got", choices: ["got", "plenty", "plate", "hot"] } },
+       { from: "2:50.258", to: "2:54.379", text: "Take a bite, it tastes so great.", training: { target: "great", choices: ["great", "bite", "plate", "late"] } },
+
+  ]
+  },
+
+/* ── GRADE 8 UNIT 3 - BITE BY BITE v2───────────────────────────────────── */
+  {
+    id: "8_3_bitebybite",
+    title: "Bite by Bite",
+    artist: "Grade8",
+    audio: "songs/8_3_bitebybite.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/8_3_bitebybite.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:46", to: "1:01" },
+      { at: "1:54", to: "2:08" },
+{ at: "2:53", to: "3:28" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "main dish",    tr: "ana yemek",          image: "images/maindish.webp" },
+      { word: "mushroom",   tr: "mantar",         image: "images/mushroom.webp" },
+      { word: "Delicious",  tr: "leziz",      image: "images/delicious.webp" },
+      { word: "recipe", tr: "tarif",        image: "images/recipe.webp" },
+      { word: "boil",  tr: "haşlamak",     image: "images/boil.webp" },
+      { word: "stir",   tr: "karıştırmak", image: "images/stir.webp" },
+      { word: "spice",  tr: "kaşık",           image: "images/spice.webp" },
+      { word: "flour",   tr: "un",         image: "images/flour.webp" }
+    ],
+
+    lyrics: [
+
+       { from: "0:16.147", to: "0:19.171", text: "We've got pasta, beans and meat,", training: { target: "pasta", choices: ["pasta", "beans", "meat", "faster"] } },
+       { from: "0:20.011", to: "0:23.067", text: "Fresh green salad, good to eat.", training: { target: "Fresh", choices: ["Fresh", "green", "salad", "flesh"] } },
+       { from: "0:23.875", to: "0:27.267", text: "We've got butter, <flour> and oil,", training: { target: "flour", choices: ["flour", "butter", "oil", "flower"] } },
+       { from: "0:27.811", to: "0:31.267", text: "Two fresh <mushroom>s start to <boil>.", training: { target: "mushrooms", choices: ["mushrooms", "beans", "pasta", "classrooms"] } },
+       { from: "0:31.779", to: "0:34.851", text: "Wash the lettuce, slice it thin,", training: { target: "Wash", choices: ["Wash", "slice", "lettuce", "watch"] } },
+       { from: "0:35.587", to: "0:38.707", text: "<Stir> the sauce and mix it in.", training: { target: "sauce", choices: ["sauce", "stir", "mix", "horse"] } },
+       { from: "0:39.539", to: "0:42.659", text: "Add some garlic, salt and <spice>,", training: { target: "spice", choices: ["spice", "garlic", "salt", "ice"] } },
+       { from: "0:43.567", to: "0:46.967", text: "Everything is looking nice.", training: { target: "nice", choices: ["nice", "food", "plate", "rice"] } },
+       { from: "0:47.207", to: "0:50.111", text: "Bite by bite, come taste with me,", training: { target: "Bite", choices: ["Bite", "taste", "share", "light"] } },
+       { from: "0:51.231", to: "0:54.207", text: "Come and share this <recipe>.", training: { target: "recipe", choices: ["recipe", "main dish", "flour", "remedy"] } },
+       { from: "0:55.071", to: "0:57.911", text: "We've got plenty on our plate,", training: { target: "plenty", choices: ["plenty", "plate", "food", "twenty"] } },
+       { from: "0:58.911", to: "1:01.959", text: "Take a bite, it tastes so great.", training: { target: "tastes", choices: ["tastes", "bite", "plate", "waste"] } },
+       { from: "1:24.015", to: "1:26.903", text: "We've got salad, soup and rice,", training: { target: "salad", choices: ["salad", "soup", "rice", "ballad"] } },
+       { from: "1:27.751", to: "1:30.815", text: "Grilled meat sounds really nice.", training: { target: "meat", choices: ["meat", "salad", "soup", "heat"] } },
+       { from: "1:31.591", to: "1:34.535", text: "We've got pasta topped with cheese,", training: { target: "cheese", choices: ["cheese", "pasta", "rice", "peas"] } },
+       { from: "1:34.927", to: "1:38.503", text: "What would you like? Tell me, please.", training: { target: "please", choices: ["please", "taste", "share", "cheese"] } },
+       { from: "1:39.159", to: "1:42.391", text: "Soup or salsa for a starter,", training: { target: "Soup", choices: ["Soup", "salsa", "pasta", "group"] } },
+       { from: "1:42.735", to: "1:46.247", text: "Make your next plate a bit larger.", training: { target: "larger", choices: ["larger", "smaller", "plate", "charger"] } },
+       { from: "1:46.903", to: "1:49.943", text: "Maybe pasta, maybe fish,", training: { target: "fish", choices: ["fish", "pasta", "rice", "dish"] } },
+       { from: "1:50.559", to: "1:54.167", text: "Choose your favorite <main dish>.", training: { target: "favorite", choices: ["favorite", "main dish", "pasta", "flavor it"] } },
+       { from: "1:54.407", to: "1:57.375", text: "Bite by bite, come taste with me,", training: { target: "taste", choices: ["taste", "bite", "recipe", "waste"] } },
+       { from: "1:58.455", to: "2:01.367", text: "Come and share this <recipe>.", training: { target: "share", choices: ["share", "recipe", "taste", "chair"] } },
+       { from: "2:02.365", to: "2:05.093", text: "We've got plenty on our plate,", training: { target: "plate", choices: ["plate", "plenty", "food", "late"] } },
+       { from: "2:06.069", to: "2:08.989", text: "Take a bite, it tastes so great.", training: { target: "Take", choices: ["Take", "bite", "taste", "cake"] } },
+       { from: "2:28.461", to: "2:31.957", text: "There is a food fair in the square,", training: { target: "fair", choices: ["fair", "food", "square", "chair"] } },
+       { from: "2:32.277", to: "2:35.533", text: "<Delicious> dishes everywhere.", training: { target: "Delicious", choices: ["Delicious", "recipe", "main dish", "suspicious"] } },
+       { from: "2:36.133", to: "2:43.197", text: "Taste some great food from afar,", training: { target: "afar", choices: ["afar", "food", "fair", "guitar"] } },
+       { from: "2:43.917", to: "2:49.245", text: "Some of it can be five-star.", training: { target: "star", choices: ["star", "food", "fair", "guitar"] } },
+       { from: "2:55.229", to: "2:58.381", text: "Bite by bite, come taste with me,", training: { target: "by bite", choices: ["by bite", "taste", "share", "my light"] } },
+       { from: "2:59.349", to: "3:02.261", text: "Come and share this <recipe>.", training: { target: "this", choices: ["this", "recipe", "dish", "kiss"] } },
+       { from: "3:03.165", to: "3:06.014", text: "We've got plenty on our plate,", training: { target: "got", choices: ["got", "plenty", "plate", "hot"] } },
+       { from: "3:07.006", to: "3:10.089", text: "Take a bite, it tastes so great.", training: { target: "great", choices: ["great", "bite", "plate", "late"] } },
+  ]
+  },
+
+/* ── GRADE 5 UNIT 7 - INTO THE WILDS───────────────────────────────────── */
+  {
+    id: "5_7_intothewilds",
+    title: "Into the Wilds",
+    artist: "Grade5",
+    audio: "songs/5_7_intothewilds.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_7_intothewilds.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "1:05", to: "1:20" },
+      { at: "2:17", to: "2:31" },
+{ at: "3:09", to: "3:40" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "sharpest teeth",    tr: "en keskin dişler",          image: "images/sharp_teeth.webp" },
+      { word: "eagle",   tr: "kartal",         image: "images/eagle.webp" },
+      { word: "seal",  tr: "fok balığı",      image: "images/seal.webp" },
+      { word: "jungle", tr: "vahşi orman",        image: "images/jungle.webp" },
+      { word: "whale",  tr: "balina",     image: "images/whale.webp" },
+      { word: "wild",   tr: "vahşi", image: "images/wild.webp" },
+      { word: "shark",  tr: "köpek balığı",           image: "images/shark.webp" },
+      { word: "survive",   tr: "hayatta kalmak",         image: "images/survive.webp" }
+    ],
+
+    lyrics: [
+
+       { from: "0:17.229", to: "0:19.509", text: "Tigers walk out in the rain,", training: { target: "Tigers", choices: ["Tigers", "lions", "monkeys", "fighters"] } },
+       { from: "0:21.141", to: "0:23.733", text: "Lions live out on the plain,", training: { target: "Lions", choices: ["Lions", "tigers", "wolves", "irons"] } },
+       { from: "0:25.277", to: "0:27.741", text: "Monkeys can climb up a tree,", training: { target: "Monkeys", choices: ["Monkeys", "lions", "eagles", "donkeys"] } },
+       { from: "0:29.445", to: "0:31.829", text: "Dolphins can swim in the sea.", training: { target: "Dolphins", choices: ["Dolphins", "whales", "eagles", "doll fins"] } },
+       { from: "0:33.085", to: "0:35.589", text: "A rabbit is faster than a bear,", training: { target: "rabbit", choices: ["rabbit", "bear", "giraffe", "habit"] } },
+       { from: "0:37.077", to: "0:39.733", text: "A giraffe is taller than a deer.", training: { target: "giraffe", choices: ["giraffe", "deer", "wolf", "carafe"] } },
+       { from: "0:41.042", to: "0:43.690", text: "A wolf is stronger than a sheep,", training: { target: "wolf", choices: ["wolf", "sheep", "bear", "roof"] } },
+       { from: "0:45.058", to: "0:47.818", text: "A <whale> is bigger than a ship.", training: { target: "whale", choices: ["whale", "ship", "eagle", "tail"] } },
+       { from: "0:49.356", to: "0:52.132", text: "Where do the tigers live today?", training: { target: "tigers", choices: ["tigers", "lions", "eagles", "fighters"] } },
+       { from: "0:53.404", to: "0:56.252", text: "Where do the <eagle>s fly away?", training: { target: "eagles", choices: ["eagles", "whales", "tigers", "beagles"] } },
+       { from: "0:57.588", to: "1:00.868", text: "From the <jungle> to the sea,", training: { target: "jungle", choices: ["jungle", "sea", "plain", "jumble"] } },
+       { from: "1:01.796", to: "1:05.428", text: "Nature's full of life to see.", training: { target: "Nature", choices: ["Nature", "animal", "life", "creature"] } },
+       { from: "1:05.948", to: "1:08.700", text: "Far and wide, from land to sea,", training: { target: "Far", choices: ["Far", "land", "sea", "star"] } },
+       { from: "1:09.844", to: "1:12.812", text: "Every animal, <wild> and free.", training: { target: "wild", choices: ["wild", "free", "animal", "child"] } },
+       { from: "1:13.796", to: "1:17.412", text: "High in the sky, down below,", training: { target: "High", choices: ["High", "sky", "below", "fly"] } },
+       { from: "1:17.884", to: "1:21.116", text: "Watch the world of nature grow.", training: { target: "Watch", choices: ["Watch", "world", "nature", "witch"] } },
+       { from: "1:28.804", to: "1:31.540", text: "Penguins live at the South Pole,", training: { target: "Penguins", choices: ["Penguins", "mice", "parrots", "engines"] } },
+       { from: "1:32.961", to: "1:35.600", text: "Little mice hide in a hole,", training: { target: "mice", choices: ["mice", "parrots", "penguins", "rice"] } },
+       { from: "1:36.952", to: "1:40.600", text: "Parrots can talk, <seal>s can dive,", training: { target: "seals", choices: ["seals", "parrots", "sharks", "meals"] } },
+       { from: "1:41.217", to: "1:44.472", text: "Nature helps them all <survive>.", training: { target: "survive", choices: ["survive", "nature", "animals", "arrive"] } },
+       { from: "1:45.256", to: "1:47.648", text: "The cheetah is the fastest one,", training: { target: "cheetah", choices: ["cheetah", "tiger", "wolf", "cheater"] } },
+       { from: "1:48.800", to: "1:51.721", text: "Chasing prey beneath the sun.", training: { target: "prey", choices: ["prey", "sun", "tree", "day"] } },
+       { from: "1:53.145", to: "1:55.969", text: "The <shark> has the <sharpest teeth>,", training: { target: "shark", choices: ["shark", "whale", "seal", "park"] } },
+       { from: "1:57.449", to: "2:00.341", text: "Swimming through the sea beneath.", training: { target: "Swimming", choices: ["Swimming", "flying", "climbing", "winning"] } },
+       { from: "2:01.173", to: "2:03.853", text: "Where do the tigers live today?", training: { target: "today", choices: ["today", "tigers", "live", "away"] } },
+       { from: "2:05.095", to: "2:07.919", text: "Where do the <eagle>s fly away?", training: { target: "fly", choices: ["fly", "eagles", "away", "sky"] } },
+       { from: "2:09.375", to: "2:12.727", text: "From the <jungle> to the sea,", training: { target: "sea", choices: ["sea", "jungle", "land", "tree"] } },
+       { from: "2:13.559", to: "2:17.183", text: "Nature's full of life to see.", training: { target: "life", choices: ["life", "nature", "see", "wife"] } },
+       { from: "2:17.695", to: "2:20.503", text: "Far and wide, from land to sea,", training: { target: "wide", choices: ["wide", "far", "land", "guide"] } },
+       { from: "2:21.671", to: "2:24.455", text: "Every animal, <wild> and free.", training: { target: "animal", choices: ["animal", "wild", "free", "minimal"] } },
+       { from: "2:25.698", to: "2:29.123", text: "High in the sky, down below,", training: { target: "sky", choices: ["sky", "high", "below", "fly"] } },
+       { from: "2:29.755", to: "2:32.786", text: "Watch the world of nature grow.", training: { target: "world", choices: ["world", "watch", "nature", "curled"] } },
+       { from: "2:49.179", to: "2:52.378", text: "We must keep the rivers clean,", training: { target: "rivers", choices: ["rivers", "forests", "animals", "givers"] } },
+       { from: "2:53.002", to: "2:56.562", text: "Keep the forests fresh and green.", training: { target: "forests", choices: ["forests", "rivers", "animals", "choruses"] } },
+       { from: "2:57.172", to: "3:00.780", text: "We must help the animals too,", training: { target: "help", choices: ["help", "keep", "animals", "yelp"] } },
+       { from: "3:01.308", to: "3:08.987", text: "There's so much that we can do.", training: { target: "much", choices: ["much", "help", "keep", "touch"] } },
+       { from: "3:09.171", to: "3:12.027", text: "Far and wide, from land to sea,", training: { target: "land", choices: ["land", "far", "sea", "hand"] } },
+       { from: "3:13.379", to: "3:16.083", text: "Every animal, <wild> and free.", training: { target: "free", choices: ["free", "wild", "animal", "tree"] } },
+       { from: "3:17.291", to: "3:20.740", text: "High in the sky, down below,", training: { target: "below", choices: ["below", "high", "sky", "hello"] } },
+       { from: "3:21.291", to: "3:24.307", text: "Watch the world of nature grow.", training: { target: "grow", choices: ["grow", "watch", "world", "snow"] } },
+  ]
+  },
+
+
+/* ── GRADE 5 UNIT 7 - INTO THE WILDS───────────────────────────────────── */
+  {
+    id: "7_4_intothewilds",
+    title: "Into the Wilds",
+    artist: "Grade7",
+    audio: "songs/5_7_intothewilds.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/7_4_intothewilds.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "1:05", to: "1:20" },
+      { at: "2:17", to: "2:31" },
+{ at: "3:09", to: "3:40" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "sharpest teeth",    tr: "en keskin dişler",          image: "images/sharp_teeth.webp" },
+      { word: "eagle",   tr: "kartal",         image: "images/eagle.webp" },
+      { word: "seal",  tr: "fok balığı",      image: "images/seal.webp" },
+      { word: "jungle", tr: "vahşi orman",        image: "images/jungle.webp" },
+      { word: "whale",  tr: "balina",     image: "images/whale.webp" },
+      { word: "wild",   tr: "vahşi", image: "images/wild.webp" },
+      { word: "shark",  tr: "köpek balığı",           image: "images/shark.webp" },
+      { word: "survive",   tr: "hayatta kalmak",         image: "images/survive.webp" }
+    ],
+
+    lyrics: [
+
+       { from: "0:17.229", to: "0:19.509", text: "Tigers walk out in the rain,", training: { target: "Tigers", choices: ["Tigers", "lions", "monkeys", "fighters"] } },
+       { from: "0:21.141", to: "0:23.733", text: "Lions live out on the plain,", training: { target: "Lions", choices: ["Lions", "tigers", "wolves", "irons"] } },
+       { from: "0:25.277", to: "0:27.741", text: "Monkeys can climb up a tree,", training: { target: "Monkeys", choices: ["Monkeys", "lions", "eagles", "donkeys"] } },
+       { from: "0:29.445", to: "0:31.829", text: "Dolphins can swim in the sea.", training: { target: "Dolphins", choices: ["Dolphins", "whales", "eagles", "doll fins"] } },
+       { from: "0:33.085", to: "0:35.589", text: "A rabbit is faster than a bear,", training: { target: "rabbit", choices: ["rabbit", "bear", "giraffe", "habit"] } },
+       { from: "0:37.077", to: "0:39.733", text: "A giraffe is taller than a deer.", training: { target: "giraffe", choices: ["giraffe", "deer", "wolf", "carafe"] } },
+       { from: "0:41.042", to: "0:43.690", text: "A wolf is stronger than a sheep,", training: { target: "wolf", choices: ["wolf", "sheep", "bear", "roof"] } },
+       { from: "0:45.058", to: "0:47.818", text: "A <whale> is bigger than a ship.", training: { target: "whale", choices: ["whale", "ship", "eagle", "tail"] } },
+       { from: "0:49.356", to: "0:52.132", text: "Where do the tigers live today?", training: { target: "tigers", choices: ["tigers", "lions", "eagles", "fighters"] } },
+       { from: "0:53.404", to: "0:56.252", text: "Where do the <eagle>s fly away?", training: { target: "eagles", choices: ["eagles", "whales", "tigers", "beagles"] } },
+       { from: "0:57.588", to: "1:00.868", text: "From the <jungle> to the sea,", training: { target: "jungle", choices: ["jungle", "sea", "plain", "jumble"] } },
+       { from: "1:01.796", to: "1:05.428", text: "Nature's full of life to see.", training: { target: "Nature", choices: ["Nature", "animal", "life", "creature"] } },
+       { from: "1:05.948", to: "1:08.700", text: "Far and wide, from land to sea,", training: { target: "Far", choices: ["Far", "land", "sea", "star"] } },
+       { from: "1:09.844", to: "1:12.812", text: "Every animal, <wild> and free.", training: { target: "wild", choices: ["wild", "free", "animal", "child"] } },
+       { from: "1:13.796", to: "1:17.412", text: "High in the sky, down below,", training: { target: "High", choices: ["High", "sky", "below", "fly"] } },
+       { from: "1:17.884", to: "1:21.116", text: "Watch the world of nature grow.", training: { target: "Watch", choices: ["Watch", "world", "nature", "witch"] } },
+       { from: "1:28.804", to: "1:31.540", text: "Penguins live at the South Pole,", training: { target: "Penguins", choices: ["Penguins", "mice", "parrots", "engines"] } },
+       { from: "1:32.961", to: "1:35.600", text: "Little mice hide in a hole,", training: { target: "mice", choices: ["mice", "parrots", "penguins", "rice"] } },
+       { from: "1:36.952", to: "1:40.600", text: "Parrots can talk, <seal>s can dive,", training: { target: "seals", choices: ["seals", "parrots", "sharks", "meals"] } },
+       { from: "1:41.217", to: "1:44.472", text: "Nature helps them all <survive>.", training: { target: "survive", choices: ["survive", "nature", "animals", "arrive"] } },
+       { from: "1:45.256", to: "1:47.648", text: "The cheetah is the fastest one,", training: { target: "cheetah", choices: ["cheetah", "tiger", "wolf", "cheater"] } },
+       { from: "1:48.800", to: "1:51.721", text: "Chasing prey beneath the sun.", training: { target: "prey", choices: ["prey", "sun", "tree", "day"] } },
+       { from: "1:53.145", to: "1:55.969", text: "The <shark> has the <sharpest teeth>,", training: { target: "shark", choices: ["shark", "whale", "seal", "park"] } },
+       { from: "1:57.449", to: "2:00.341", text: "Swimming through the sea beneath.", training: { target: "Swimming", choices: ["Swimming", "flying", "climbing", "winning"] } },
+       { from: "2:01.173", to: "2:03.853", text: "Where do the tigers live today?", training: { target: "today", choices: ["today", "tigers", "live", "away"] } },
+       { from: "2:05.095", to: "2:07.919", text: "Where do the <eagle>s fly away?", training: { target: "fly", choices: ["fly", "eagles", "away", "sky"] } },
+       { from: "2:09.375", to: "2:12.727", text: "From the <jungle> to the sea,", training: { target: "sea", choices: ["sea", "jungle", "land", "tree"] } },
+       { from: "2:13.559", to: "2:17.183", text: "Nature's full of life to see.", training: { target: "life", choices: ["life", "nature", "see", "wife"] } },
+       { from: "2:17.695", to: "2:20.503", text: "Far and wide, from land to sea,", training: { target: "wide", choices: ["wide", "far", "land", "guide"] } },
+       { from: "2:21.671", to: "2:24.455", text: "Every animal, <wild> and free.", training: { target: "animal", choices: ["animal", "wild", "free", "minimal"] } },
+       { from: "2:25.698", to: "2:29.123", text: "High in the sky, down below,", training: { target: "sky", choices: ["sky", "high", "below", "fly"] } },
+       { from: "2:29.755", to: "2:32.786", text: "Watch the world of nature grow.", training: { target: "world", choices: ["world", "watch", "nature", "curled"] } },
+       { from: "2:49.179", to: "2:52.378", text: "We must keep the rivers clean,", training: { target: "rivers", choices: ["rivers", "forests", "animals", "givers"] } },
+       { from: "2:53.002", to: "2:56.562", text: "Keep the forests fresh and green.", training: { target: "forests", choices: ["forests", "rivers", "animals", "choruses"] } },
+       { from: "2:57.172", to: "3:00.780", text: "We must help the animals too,", training: { target: "help", choices: ["help", "keep", "animals", "yelp"] } },
+       { from: "3:01.308", to: "3:08.987", text: "There's so much that we can do.", training: { target: "much", choices: ["much", "help", "keep", "touch"] } },
+       { from: "3:09.171", to: "3:12.027", text: "Far and wide, from land to sea,", training: { target: "land", choices: ["land", "far", "sea", "hand"] } },
+       { from: "3:13.379", to: "3:16.083", text: "Every animal, <wild> and free.", training: { target: "free", choices: ["free", "wild", "animal", "tree"] } },
+       { from: "3:17.291", to: "3:20.740", text: "High in the sky, down below,", training: { target: "below", choices: ["below", "high", "sky", "hello"] } },
+       { from: "3:21.291", to: "3:24.307", text: "Watch the world of nature grow.", training: { target: "grow", choices: ["grow", "watch", "world", "snow"] } },
+  ]
+  },
   /* ── YENİ ŞARKI EKLEMEK İÇİN ────────────────────────────────────────
      Yukarıdaki bloğu kopyala, virgülle ayırarak buraya yapıştır,
      alanları doldur. Hepsi bu. 🙂
@@ -1485,7 +1809,10 @@ const REPEATED_LINE_TRAINING_EXCLUSIONS = new Set([
   "5_3_meineveryway",
   "5_4_hometogether",
   "5_5_explorewithme",
-  "5_5_insidemyhome"
+  "5_5_insidemyhome",
+  "5_6_bitebybite",
+  "8_3_bitebybite",
+  "5_7_intothewilds"
 ]);
 
 function getPhoneticDistractor(target) {

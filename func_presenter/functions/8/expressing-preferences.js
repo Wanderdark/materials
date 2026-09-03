@@ -872,5 +872,103 @@ expressingPreferencesGrade8Function.sentences.splice(firstPreferenceVideoIndex, 
   }
 });
 
+const expressingPreferencesWatchCompleteItems = [
+  {
+    id: "preferences-video-ava-chloe-rain",
+    speakers: ["AVA", "CHLOE"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_ava_chloe5.mp4",
+      lines: [
+        { speaker: "AVA", parts: [{ text: "I enjoy walking in the rain." }] },
+        { speaker: "CHLOE", parts: [{ text: "I " }, { answer: "prefer", choices: ["prefer", "would rather"] }, { text: " staying dry!" }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-benjamin-jack-scooter",
+    speakers: ["BENJAMIN", "JACK"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/8_preferences_benjamin_jack.mp4",
+      lines: [
+        { speaker: "JACK", parts: [{ text: "Let's walk home." }] },
+        { speaker: "BENJAMIN", parts: [{ text: "I'd rather ride my scooter " }, { answer: "than", choices: ["to", "than"] }, { text: " walk." }] },
+        { speaker: "JACK", parts: [{ text: "So, it's decided. We'll walk." }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-ella-olivia-singing",
+    speakers: ["ELLA", "OLIVIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_ella_olivia7.mp4",
+      lines: [
+        { speaker: "ELLA", parts: [{ text: "Would you like to sing this one?" }] },
+        { speaker: "OLIVIA", parts: [{ text: "I " }, { answer: "prefer", choices: ["prefer", "would rather"] }, { text: " listening to singing." }] },
+        { speaker: "ELLA", parts: [{ text: "Fine! I'll sing then!" }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-hannah-emma-picnic",
+    speakers: ["HANNAH", "EMMA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/8_preferences_hannah_emma2.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "I'd rather " }, { answer: "have", choices: ["have", "having"] }, { text: " a picnic first." }] },
+        { speaker: "HANNAH", parts: [{ text: "I prefer " }, { answer: "going", choices: ["go", "going"] }, { text: " for a hike first." }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-hannah-emma-theatre",
+    speakers: ["HANNAH", "EMMA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/8_preferences_hannah_emma.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "Let's watch a movie." }] },
+        { speaker: "HANNAH", parts: [{ text: "I " }, { answer: "would rather", choices: ["prefer", "would rather"] }, { text: " go to the theatre than the cinema." }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-mia-zoe-comedies",
+    speakers: ["MIA", "ZOE"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/8_preferences_mia_zoe.mp4",
+      lines: [
+        { speaker: "ZOE", parts: [{ text: "How about watching the horror movie?" }] },
+        { speaker: "MIA", parts: [{ text: "No way! I prefer comedies " }, { answer: "to", choices: ["to", "than"] }, { text: " horror movies." }] },
+        { speaker: "ZOE", parts: [{ text: "Afraid?" }] }
+      ]
+    }
+  },
+  {
+    id: "preferences-video-chloe-luna-pillows",
+    speakers: ["CHLOE", "LUNA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/8_preferences_chloe_luna.mp4",
+      lines: [
+        { speaker: "CHLOE", parts: [{ text: "Which one do you prefer, red pillow " }, { answer: "or", choices: ["to", "or"] }, { text: " white pillow? So you " }, { answer: "prefer", choices: ["hate", "prefer"] }, { text: " my bag. Great!" }] }
+      ]
+    }
+  }
+];
+
+expressingPreferencesGrade8Function.sentences.push({
+  id: "expressing-preferences-watch-complete-hub",
+  noVisual: true,
+  simplePresentVideoHub: {
+    title: "WATCH AND COMPLETE",
+    items: expressingPreferencesWatchCompleteItems
+  }
+});
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(expressingPreferencesGrade8Function);

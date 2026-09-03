@@ -1455,5 +1455,199 @@ const simplePastTenseGrade7Function = {
   ]
 };
 
+const simplePastGrade7VideoHubItems = [
+  {
+    id: "simplepast-video-ava-chloe-roller-coaster",
+    speakers: ["AVA", "CHLOE"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_ava_chloe.mp4",
+      lines: [
+        { speaker: "AVA", parts: [{ text: "How " }, { answer: "was", choices: ["is", "was"] }, { text: " the roller coaster?" }] },
+        { speaker: "CHLOE", parts: [{ text: "It " }, { answer: "was", choices: ["is", "was"] }, { text: " terrific, but I think the Ferris wheel " }, { answer: "was", choices: ["is", "was"] }, { text: " cool, too." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-benjamin-david-traffic-jam",
+    speakers: ["BENJAMIN", "DAVID"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_benjamin_david.mp4",
+      lines: [
+        { speaker: "BENJAMIN", parts: [{ text: "You're late!" }] },
+        { speaker: "DAVID", parts: [{ text: "I know. We " }, { answer: "were", choices: ["are", "were"] }, { text: " stuck in a traffic jam on the way to the concert!" }] },
+        { speaker: "BENJAMIN", parts: [{ text: "It " }, { answer: "is", choices: ["is", "was"] }, { text: " starting. Come on!" }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-david-ethan-tram",
+    speakers: ["DAVID", "ETHAN"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_david_ethan.mp4",
+      lines: [
+        { speaker: "DAVID", parts: [{ answer: "Was", choices: ["Is", "Was"] }, { text: " the tram crowded after the concert?" }] },
+        { speaker: "ETHAN", parts: [{ text: "Yes, it " }, { answer: "was", choices: ["is", "was"] }, { text: ". We " }, { answer: "were", choices: ["were", "are"] }, { text: " really tired." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-emma-hannah-charity",
+    speakers: ["EMMA", "HANNAH"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_emma_hannah2.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "How " }, { answer: "was", choices: ["is", "was"] }, { text: " the neighbourhood charity event yesterday?" }] },
+        { speaker: "HANNAH", parts: [{ text: "It " }, { answer: "was", choices: ["was", "were"] }, { text: " great. We " }, { answer: "were", choices: ["was", "were"] }, { text: " there to raise money." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-emma-hannah-concert",
+    speakers: ["EMMA", "HANNAH"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_emma_hannah4.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "Hannah, why " }, { answer: "was", choices: ["are", "was"] }, { text: " you so tired?" }] },
+        { speaker: "HANNAH", parts: [{ text: "I " }, { answer: "was", choices: ["am", "was"] }, { text: " at a concert with my family until late." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-hannah-emma-weather",
+    speakers: ["HANNAH", "EMMA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_emma_hannah.mp4",
+      lines: [
+        { speaker: "HANNAH", parts: [{ text: "The weather " }, { answer: "was", choices: ["is", "was"] }, { text: " rainy yesterday." }] },
+        { speaker: "EMMA", parts: [{ text: "Yes, but it " }, { answer: "is", choices: ["is", "was"] }, { text: " sunny today." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-hannah-olivia-exhibition",
+    speakers: ["HANNAH", "OLIVIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_hannah_olivia.mp4",
+      lines: [
+        { speaker: "HANNAH", parts: [{ text: "How " }, { answer: "was", choices: ["was", "were"] }, { text: " the art exhibition?" }] },
+        { speaker: "OLIVIA", parts: [{ text: "It " }, { answer: "was", choices: ["is", "was"] }, { text: " beautiful. We " }, { answer: "were", choices: ["was", "were"] }, { text: " really pleased." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-benjamin-jack-basketball",
+    speakers: ["BENJAMIN", "JACK"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_benjamin_jack.mp4",
+      lines: [
+        { speaker: "JACK", parts: [{ answer: "Was", choices: ["Is", "Was"] }, { text: " it crowded at the basketball match yesterday?" }] },
+        { speaker: "BENJAMIN", parts: [{ text: "Yes, the audience " }, { answer: "was", choices: ["is", "was"] }, { text: " really excited." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-mia-zoe-scared",
+    speakers: ["MIA", "ZOE"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/fun_mia_zoe.mp4",
+      lines: [
+        { speaker: "MIA", parts: [{ text: "I " }, { answer: "am", choices: ["am", "was"] }, { text: " not scared." }] },
+        { speaker: "ZOE", parts: [{ text: "You are not scared?" }] },
+        { speaker: "MIA", parts: [{ text: "I " }, { answer: "wasn't", choices: ["was", "wasn't"] }, { text: " ready." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-mia-coco-mine",
+    speakers: ["MIA", "COCO"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/5_family_life_mia_coco.mp4",
+      lines: [{ speaker: "MIA", parts: [{ text: "That " }, { answer: "was", choices: ["was", "wasn't"] }, { text: " mine!" }] }]
+    }
+  },
+  {
+    id: "simplepast-video-ella-olivia-festival",
+    speakers: ["ELLA", "OLIVIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_ella_olivia.mp4",
+      lines: [
+        { speaker: "OLIVIA", parts: [{ text: "How " }, { answer: "was", choices: ["is", "was"] }, { text: " the local music festival yesterday?" }] },
+        { speaker: "ELLA", parts: [{ text: "It " }, { answer: "was", choices: ["was", "were"] }, { text: " amazing. The musicians " }, { answer: "were", choices: ["was", "were"] }, { text: " great." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-noah-victoria-jazz",
+    speakers: ["NOAH", "VICTORIA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_noah_victoria.mp4",
+      lines: [
+        { speaker: "VICTORIA", parts: [{ answer: "Were", choices: ["Was", "Were"] }, { text: " the musicians at the local jazz festival good?" }] },
+        { speaker: "NOAH", parts: [{ text: "Yes, they " }, { answer: "were", choices: ["are", "were"] }, { text: ". The music " }, { answer: "was", choices: ["is", "was"] }, { text: " fantastic." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-daniel-lucas-skeleton",
+    speakers: ["DANIEL", "LUCAS"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_daniel_lucas.mp4",
+      lines: [
+        { speaker: "DANIEL", parts: [{ text: "There was a skeleton next to that box, " }, { answer: "wasn't", choices: ["was", "wasn't"] }, { text: " there?" }] },
+        { speaker: "LUCAS", parts: [{ text: "No, it's behind you!" }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-hannah-emma-piece",
+    speakers: ["HANNAH", "EMMA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_hannah_emma3.mp4",
+      lines: [
+        { speaker: "EMMA", parts: [{ text: "That " }, { answer: "was", choices: ["was", "were"] }, { text: " your second piece, wasn't it?" }] },
+        { speaker: "HANNAH", parts: [{ text: "No, it " }, { answer: "wasn't", choices: ["was", "wasn't"] }, { text: " my third." }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-olivia-ella-movie",
+    speakers: ["OLIVIA", "ELLA"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_olivia_ella.mp4",
+      lines: [
+        { speaker: "OLIVIA", parts: [{ text: "You " }, { answer: "were", choices: ["are", "were"] }, { text: " asleep during the movie, weren't you?" }] },
+        { speaker: "ELLA", parts: [{ text: "No, I " }, { answer: "wasn't", choices: ["was", "wasn't"] }, { text: "!" }] }
+      ]
+    }
+  },
+  {
+    id: "simplepast-video-mia-zoe-bus",
+    speakers: ["MIA", "ZOE"],
+    videoDialogue: {
+      title: "WATCH, THEN COMPLETE THE DIALOGUE",
+      videoUrl: "https://media.adilhoca.com/video/6_life_in_the_city_mia_zoe.mp4",
+      lines: [
+        { speaker: "ZOE", parts: [{ text: "That " }, { answer: "wasn't", choices: ["was", "wasn't"] }, { text: " our bus, wasn't it?" }] },
+        { speaker: "MIA", parts: [{ text: "Yes, it " }, { answer: "was", choices: ["was", "were"] }, { text: "." }] }
+      ]
+    }
+  }
+];
+
 window.functionModules = window.functionModules || [];
 window.functionModules.push(simplePastTenseGrade7Function);
