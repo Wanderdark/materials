@@ -14030,6 +14030,609 @@ evidenceEnd: "0:05.951",
     prompt: "Use <<<Image1>>> as Benjamin's canonical identity and appearance reference. Use <<<Image2>>> as Ethan's canonical identity and appearance reference. Use <<<Audio1>>> as Benjamin's canonical voice. Use <<<Audio2>>> as Ethan's canonical voice. CLOTHING AND ACCESSORIES: Benjamin wears: a red short-sleeved T-shirt, dark blue full-length jeans, a simple black wristwatch. Ethan wears: a dark teal short-sleeved T-shirt, beige full-length trousers, a simple woven wristband. Keep their clothes and accessories consistent throughout the entire video. SCENE 1: The characters do not look at the camera during face-to-face interaction. They face each other. Benjamin and Ethan are standing together at an amusement park during the night time. In the background, the amusement park clearly includes: a pirate ship ride, a ghost train attraction, a roller coaster. The rides should be visually distinct, bright in night time and easy to recognize. Benjamin and Ethan are looking toward the rides while deciding which one to choose. ACTION: Benjamin looks toward the pirate ship and ghost train and says: 'The pirate ship is scarier than the ghost train.' Ethan looks toward the roller coaster and replies: 'Maybe, but the roller coaster is the most exciting.' HARD CUT TO: SCENE 2: Benjamin and Ethan are now sitting side by side in a roller coaster car in night time. Both boys are secured in their seats. The roller coaster suddenly races quickly down a steep drop. Benjamin and Ethan both scream loudly in fear as the car descends. Their expressions are exaggerated, frightened, and funny. There is no dialogue during the roller coaster payoff. Keep the payoff energetic. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
   },
 
+
+  {
+    id: "6_family_life_mia_giulia",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_mia_giulia.mp4",
+    title: "Mia is changing her room this weekend.",
+    transcript: "Giulia : Why are you packing your books? Mia : I'm chang/ing/ my room this weekend. Giulia : Again?",
+    answerOptions: [
+      { id: "a", text: "Giulia : Kitaplarını neden topluyorsun? Mia : Bu hafta sonu odamı değiştir/eceğim/. Giulia : Yine mi?" },
+      { id: "b", text: "Giulia : Kitaplarını neden topluyorsun? Mia : Şu an odamı değiştiriyorum. Giulia : Yine mi?" }
+    ],
+    easyDistractor: "Giulia : Kitaplarını neden topluyorsun? Mia : Kitaplarımı kütüphaneye götürüyorum. Giulia : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["mia", "giulia"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:01.800",
+evidenceEnd: "0:03.924",
+    evidenceSentence: "Giulia : Why are you packing your books? Mia : I'm chang/ing/ my room this weekend. Giulia : Again?",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Image2>>> as Giulia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Audio2>>> as Giulia's canonical voice. CLOTHING AND ACCESSORIES: Mia: lavender short-sleeved T-shirt, dark blue full-length casual trousers, white sneakers, a simple colorful hair tie worn around one wrist. Giulia: cream casual blouse, dark green full-length trousers, beige casual shoes, small gold stud earrings. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Daytime inside Mia's bedroom. Mia is reorganizing her room for the weekend. Several cardboard boxes are already present in the room. One open box contains books that Mia has been packing. A few remaining books are nearby, making it visually clear that Mia is in the middle of packing and reorganizing her belongings. Giulia is standing nearby, watching Mia with curious amusement. Keep the bedroom natural, comfortable, and lived-in. ACTION AND DIALOGUE: Giulia notices Mia packing her books and asks: 'Why are you packing your books?' Mia continues organizing them and replies: 'I'm changing my room this weekend.' Giulia looks around at the boxes, then looks back at Mia with a mildly amused expression and says: 'Again?' Mia gives Giulia a small, slightly caught-out smile. AFTER THE DIALOGUE: Mia takes one of the already packed books back out of the open box. As Mia lifts the book, a single loose photograph slips naturally from between its pages and falls onto the floor. The photograph lands face-up in a clear, unobstructed area of the floor. IMPORTANT: Do not create, reveal, or define any actual image or recognizable content on the photograph. The photograph content will be manually added later in post-production. Keep the photograph itself visually plain and suitable for later replacement/editing. Mia notices the fallen photograph. Her attention immediately shifts to it. Mia bends down and reaches toward the photograph on the floor. End the video while Mia is reaching toward the fallen photograph. Do not add any additional spoken dialogue after Giulia's 'Again?' Keep the photograph-falling action simple and clearly readable. Do not add additional falling papers, photographs, or objects. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_hannah_lars",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_hannah_lars.mp4",
+    title: "Hannah asks Lars when the ferry arrives.",
+    transcript: "Hannah : What time does the ferry /arrive/? Lars : It /arrives/ at four. Hannah : Good, We still have time.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Feribota saat kaçta binmiştik? Lars : Dört saat önce binmiştik. Hannah : Güzel, Hâlâ vaktimiz var." },
+      { id: "b", text: "Hannah : Feribot saat kaçta /varacak/? Lars : Saat dörtte /varacak/. Hannah : Güzel, Hâlâ vaktimiz var." }
+    ],
+    easyDistractor: "Hannah : Feribot saat kaçta varıyor? Lars : Bilmiyorum, Saatine bakmalıyız. Hannah : Tamam.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["hannah", "lars"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.855",
+    evidenceSentence: "Hannah : What time does the ferry arrive? Lars : It /arrives/ at four. Hannah : Good, We still have time.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Lars's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Lars's canonical voice. CLOTHING AND ACCESSORIES: Hannah: coral red short-sleeved T-shirt, dark blue long shorts, star earrings, small colorful wristband. Lars: light grey casual T-shirt, blue jeans, sunglasses, brown casual shoes, simple black wristwatch. SCENE: Daytime on the open outdoor deck of a moving ferry. Hannah and Lars are standing near the railing with the sea clearly visible behind them. The distant coastline can be seen across the water. A few seagulls are naturally flying around the ferry. The deck should feel active and believable but not crowded. A light natural sea breeze gently moves Hannah's long blonde hair, Lars's clothing, and small loose details around the ferry deck. ACTION AND DIALOGUE: Hannah looks out toward the coastline and asks Lars: 'What time does the ferry arrive?' Lars casually looks toward the sea and answers: 'It arrives at four.' Hannah smiles and says: 'Good. We still have time.' AFTER THE DIALOGUE: Hannah turns her attention toward the nearby seagulls. She holds a small piece of food in one hand and prepares to toss it toward them. As she raises her hand, one seagull suddenly glides noticeably closer than Hannah expected. The seagull does not touch Hannah. Hannah instinctively ducks her head slightly in surprise. A moment later, she realizes what happened and smiles. Lars watches Hannah's reaction with a warm, amused smile. Keep the seagull movement simple and readable: one seagull makes a single close pass near Hannah and continues flying past. Do not show the bird attacking, grabbing food from Hannah's hand, or making physical contact with either character. No additional dialogue. The humor comes from adventurous Hannah confidently preparing to feed the seagulls, then being briefly surprised when one comes much closer than expected. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_hannah_lars2",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_hannah_lars2.mp4",
+    title: "Hannah considers joining Lars's hiking group.",
+    transcript: "Lars : I'm tak/ing/ a group hiking tomorrow. Hannah : Can I come? Lars : Well, can you carry this bag?",
+    answerOptions: [
+      { id: "a", text: "Lars : Yarın bir grubu yürüyüşe götür/eceğim/. Hannah : Gelebilir miyim? Lars : Peki, bu çantayı taşıyabilir misin?" },
+      { id: "b", text: "Lars : Dün bir grubu yürüyüşe götürdüm. Hannah : Beni neden çağırmadın? Lars : Böyle bir çantayı taşıyabilir miydin ki?" }
+    ],
+    easyDistractor: "Lars : Yarın mağazada çalışıyorum. Hannah : Gelebilir miyim? Lars : Peki, bu çantayı taşıyabilir misin?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah", "lars"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.556",
+evidenceEnd: "0:02.760",
+    evidenceSentence: "Lars : I'm tak/ing/ a group hiking tomorrow. Hannah : Can I come? Lars : Well, can you carry this bag?",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Lars's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Lars's canonical voice. CLOTHING AND ACCESSORIES: Hannah: light blue short-sleeved T-shirt, dark blue full-length casual trousers, heart earrings and a small colorful friendship bracelet. Lars: dark green casual outdoor shirt with rolled-up sleeves, beige full-length outdoor trousers, a simple black wristwatch. SCENE: Inside Lars's camping store during the daytime. The store feels like a real, welcoming outdoor equipment shop. Camping and hiking equipment is naturally visible in the background, including a few backpacks, rolled sleeping bags, and camping supplies on shelves. Lars is standing beside a noticeably large, fully packed hiking backpack that is already present in the scene. The backpack should look realistically large and heavy for a 12-year-old to carry, but not absurdly oversized. Hannah is standing near her father, interested and energetic. Keep the scene visually clear and uncluttered. ACTION AND DIALOGUE: Lars is checking the large hiking backpack and getting equipment ready for the next day. Lars says naturally: 'I'm taking a group hiking tomorrow.' Hannah immediately becomes interested and asks eagerly: 'Can I come?' Lars looks at Hannah with a slightly playful expression, then gestures toward the large, heavy hiking backpack beside him. Lars says: 'Well, can you carry this bag?' Only after Lars finishes his line, Hannah looks at her father first. Then Hannah slowly looks at the large backpack. She pauses for a brief moment as she considers it. Without saying anything, Hannah quietly shakes her head no. Lars gives her a small amused smile. Do not add any additional spoken dialogue. Keep Hannah's final silent reaction clearly readable. The humor should come from Hannah's sudden reconsideration after seeing how large and heavy the backpack is. Do not make Hannah look foolish or embarrassed. Keep the father-daughter interaction warm and playful. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_chloe_julien",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_chloe_julien.mp4",
+    title: "Chloe chooses bright pink for Julien's new café project.",
+    transcript: "Chloe : What are you do/ing/ tomorrow, Dad? Julien : I'm design/ing/ a new café. Chloe : Can I choose the colors?",
+    answerOptions: [
+      { id: "a", text: "Chloe : Baba, dün ne yaptın? Julien : Yeni bir kafe tasarladım. Chloe : Pembe mi seçtin?" },
+      { id: "b", text: "Chloe : Baba, yarın ne yap/acak/sın? Julien : Yeni bir kafe /tasarlayacağım/. Chloe : Renkleri seçebilir miyim?" }
+    ],
+    easyDistractor: "Chloe : Baba, yarın ne yapıyorsun? Julien : Yeni bir kafe tasarlıyorum. Chloe : Pembe rengi seçiyorum!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe", "julien"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:03.518",
+    evidenceSentence: "Chloe : What are you do/ing/ tomorrow, Dad? Julien : I'm design/ing/ a new café. Chloe : Can I choose the colors?",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Julien's canonical identity and appearance reference. Use <<<Image3>>> as Luna's canonical appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Julien's canonical voice. CLOTHING AND ACCESSORIES: Chloe: soft pink short-sleeved T-shirt, dark blue full-length trousers, small silver stud earrings. Julien: dark blue casual long-sleeved shirt with the sleeves casually rolled up, beige full-length trousers, simple wristwatch. SCENE: Daytime inside the family living room. Julien is at a table looking through several interior-design color samples for a new café project. A small selection of color samples is spread naturally across the table, including one noticeably bright pink sample. Luna is nearby, calmly sitting on the sofa close to Chloe and Julien. The room should feel like a comfortable lived-in family home rather than a professional design studio. ACTION AND DIALOGUE: Chloe notices the color samples Julien is examining and asks curiously: 'What are you doing tomorrow, Dad?' Julien continues looking through the samples and replies naturally: 'I'm designing a new café.' Chloe immediately becomes interested and asks: 'Can I choose the colors?' After Chloe finishes speaking, Julien lets her choose from the color samples. Without hesitation, Chloe picks the brightest pink sample and holds it up confidently, clearly pleased with her choice. Julien looks at the bright pink sample, then slowly looks at Chloe with a warm, amused 'of course you chose pink' expression. At the same moment, Luna briefly turns her head toward the bright pink sample as if she is also inspecting Chloe's choice. Chloe remains completely satisfied with her decision. Do not add any additional spoken dialogue. Keep the final humor subtle and affectionate. Julien is lightly teasing Chloe through his reaction only; Chloe is never embarrassed or made to look foolish. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_ella_charlotte",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_ella_charlotte.mp4",
+    title: "Ella asks to join Charlotte at a wedding performance.",
+    transcript: "Ella : Are you busy tomorrow evening? Charlotte : Yes, I'm play/ing/ piano at a wedding. Ella : Can I come? Charlotte : Of course, silly.",
+    answerOptions: [
+      { id: "a", text: "Ella : Yarın akşam meşgul müsün? Charlotte : Evet, Bir düğünde piyano çala/cağım/. Ella : Gelebilir miyim? Charlotte : Tabii ki, şapşal şey." },
+      { id: "b", text: "Ella : Dün ne yaptın? Charlotte : Hayır, Bir düğünde piyano çaldım. Ella : Beni neden götürmedin? Charlotte : Bi dahakine, şapşal şey." }
+    ],
+    easyDistractor: "Ella : Yarın akşam meşgul müsün? Charlotte : Evet, Evde piyano çalışıyorum. Ella : Gelebilir miyim? Charlotte : Tabii ki.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ella", "charlotte"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:02.858",
+evidenceEnd: "0:08.940",
+    evidenceSentence: "Ella : Are you busy tomorrow evening? Charlotte : Yes, I'm play/ing/ piano at a wedding. Ella : Can I come? Charlotte : Of course, silly.",
+
+    prompt: "Use <<<Image1>>> as Ella's canonical identity and appearance reference. Use <<<Image2>>> as Charlotte's canonical identity and appearance reference. Use <<<Audio1>>> as Ella's canonical voice. Use <<<Audio2>>> as Charlotte's canonical voice. CLOTHING AND ACCESSORIES: Ella: light yellow short-sleeved T-shirt, dark blue full-length jeans, small silver hoop earrings. Charlotte: burgundy casual blouse, beige full-length trousers, small gold stud earrings, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Late afternoon inside the family living room. Charlotte is sitting at the piano, casually practicing a piece of music at home. Ella is nearby, listening to her mother. The living room should feel warm, comfortable, and naturally lived-in. Keep the piano clearly recognizable without making it dominate the composition. ACTION AND DIALOGUE: While Charlotte is casually practicing the piano, Ella looks at her and asks: 'Are you busy tomorrow evening?' Charlotte pauses her practice, turns naturally toward Ella, and replies: 'Yes, I'm playing piano at a wedding.' Ella becomes interested and asks: 'Can I come?' Charlotte smiles warmly, turns fully toward Ella and says affectionately: 'Of course, silly.' Immediately as she says this, Charlotte gently and affectionately gives Ella's chin a very light playful squeeze with one hand. Ella responds by briefly scrunching her face into a cute, playful expression while her mother gently holds her chin. The gesture is clearly affectionate and playful between mother and daughter. Charlotte releases Ella's chin naturally, and they share a warm smile. Keep the chin gesture gentle, brief, and natural. Do not exaggerate the physical interaction. Do not add any additional spoken dialogue. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_noah_victor",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_noah_victor.mp4",
+    title: "Victor is taking Noah to the dentist on Saturday.",
+    transcript: "Noah : Are you work/ing/ this Saturday, Dad? Victor : No, I'm tak/ing/ you to the dentist. Noah : Very funny.",
+    answerOptions: [
+      { id: "a", text: "Noah : Baba, bu cumartesi ne yapacaksın? Victor : Seni dişçiye bırakacağım. Noah : Çok komik." },
+      { id: "b", text: "Noah : Baba, bu cumartesi çalış/acak/ mısın? Victor : Hayır, Seni dişçiye götür/eceğim/. Noah : Çok komik." }
+    ],
+    easyDistractor: "Noah : Baba, bu cumartesi çalışıyor musun? Victor : Hayır, Evde kalıyorum. Noah : Çok komik.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["noah", "victor"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.390",
+evidenceEnd: "0:05.339",
+    evidenceSentence: "Noah : Are you work/ing/ this Saturday, Dad? Victor : No, I'm tak/ing/ you to the dentist. Noah : Very funny.",
+
+    prompt: "Use <<<Image1>>> as Noah's canonical identity and appearance reference. Use <<<Image2>>> as Victor's canonical identity and appearance reference. Use <<<Audio1>>> as Noah's canonical voice. Use <<<Audio2>>> as Victor's canonical voice. CLOTHING AND ACCESSORIES: Noah: dark green short-sleeved T-shirt, dark blue full-length trousers, white sneakers, his canonical rectangular eyeglasses. Victor: light blue button-up shirt, charcoal full-length trousers, dark brown casual shoes, simple black wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Morning inside the family kitchen. Victor is getting ready to leave the house after breakfast. Noah is nearby and naturally hands Victor a small lunch bag that is already on the kitchen counter. The kitchen should feel comfortable, tidy, and naturally lived-in. ACTION AND DIALOGUE: As Victor gets ready to leave, Noah asks: 'Are you working this Saturday, Dad?' Victor takes the lunch bag from Noah and replies casually: 'No, I'm taking you to the dentist.' Noah initially assumes his father is joking and responds dryly: 'Very funny.' AFTER THE DIALOGUE: Victor looks at Noah while trying not to smile. Noah studies his father's expression for a brief moment and slowly realizes that he is serious. Noah's amused expression gradually disappears. Without saying anything else, Victor calmly takes a small dentist appointment card from his pocket and shows it to Noah. The card only needs to be visually recognizable as an appointment card. Do not require any readable text on it. Noah looks at the appointment card. Then he slowly looks back at Victor, his dentist father, with a subtle 'Seriously?' expression. Victor gives Noah a completely innocent little shrug. Keep the final exchange playful and understated. Noah should not appear frightened, distressed, or humiliated. The humor comes from Noah realizing that his dentist father genuinely arranged a dentist appointment for him. Do not add any additional spoken dialogue. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_ava_david",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_ava_david.mp4",
+    title: "Ava wants to join David's wildlife photography trip.",
+    transcript: "Ava : Where are you go/ing/ tomorrow, Dad? David : I'm photograph/ing/ baby elephants at the wildlife park. Ava : I'm coming with you!",
+    answerOptions: [
+      { id: "a", text: "Ava : Baba, yarın nereye gideceksin? David : Vahşi yaşam parkında yavru fillerin fotoğrafını çek/eceğim/. Ava : Seninle geliyorum!" },
+      { id: "b", text: "Ava : Baba, dün nereye gittin? David : Vahşi yaşam parkında yavru fillerin fotoğrafını çektim. Ava : Bir dahakine seninle geliyorum!" }
+    ],
+    easyDistractor: "Ava : Baba, yarın nereye gidiyorsun? David : Şehir merkezine gidiyorum. Ava : Seninle geliyorum!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ava"],
+    grades: [6],
+    functions: ["present_progressive_for_planned_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+   evidenceStart: "0:00.000",
+evidenceEnd: "0:06.048",
+    evidenceSentence: "Ava : Where are you go/ing/ tomorrow, Dad? David : I'm photograph/ing/ baby elephants at the wildlife park. Ava : I'm coming with you!",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Image2>>> as David's canonical identity and appearance reference. Use <<<Image3>>> as Buddy's canonical appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Audio2>>> as David's canonical voice. CLOTHING AND ACCESSORIES: Ava: soft green short-sleeved T-shirt, beige full-length casual trousers, white sneakers, small colorful friendship bracelet. David: dark blue casual long-sleeved shirt with the sleeves rolled up, olive green full-length trousers, brown casual shoes, simple outdoor wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Daytime inside the family living room. David is preparing his photography equipment for the next day. An open camera bag is on a table with a few pieces of photography equipment beside it. David is casually checking and organizing the equipment. Ava is standing nearby, watching him with curiosity. Buddy is also somewhere naturally within the room, but he is not the initial focus of the scene. ACTION AND DIALOGUE: While David is preparing his camera equipment, Ava asks: 'Where are you going tomorrow, Dad?' David continues checking his equipment and answers naturally: 'I'm photographing baby elephants at the wildlife park.' Ava immediately brightens and confidently declares: 'I'm coming with you!' Ava says this as a statement, not as a question. Immediately afterward, her confidence softens slightly and she looks at David with an innocent, expectant expression, as if silently waiting for his approval. AFTER THE DIALOGUE: Before David answers, he notices something behind Ava and looks past her. Ava notices where her father is looking and turns around. Buddy is sitting patiently near the door, already holding his own leash gently in his mouth as if he has decided that he is coming too. The leash is already in Buddy's mouth when Ava turns around. Do not show Buddy picking it up. Ava looks at Buddy for a moment, then turns back toward David with a pleased, slightly cheeky expression, as if Buddy's support has strengthened her case. David looks between Ava and Buddy and gives them a small amused eyebrow raise. No additional dialogue. Keep Buddy's behavior simple and readable. The humor comes from Ava confidently inviting herself, then discovering that Buddy has apparently done exactly the same thing. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_emma_sophie",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_emma_sophie.mp4",
+    title: "Emma reminds Sophie when work starts.",
+    transcript: "Emma : What time does work start today? Sophie : It /starts/ at eight. Emma : Mum, it's seven fifty-five.",
+    answerOptions: [
+      { id: "a", text: "Emma : İş bugün saat kaçta başlıyor? Sophie : Saat sekizde başladı. Emma : Anne, saat yedi elli beş." },
+      { id: "b", text: "Emma : İş bugün saat kaçta başlıyor? Sophie : Saat sekizde /başlıyor/. Emma : Anne, saat yedi elli beş." }
+    ],
+    easyDistractor: "Emma : İş bugün saat kaçta başlıyor? Sophie : Saat dokuzda başlıyor. Emma : Anne, saat yedi elli beş.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["emma", "sophie"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:02.343",
+evidenceEnd: "0:03.700",
+    evidenceSentence: "Emma : What time does work start today? Sophie : It /starts/ at eight. Emma : Mum, it's seven fifty-five.",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use <<<Image2>>> as Sophie's canonical identity and appearance reference. Use <<<Audio1>>> as Emma's canonical voice. Use <<<Audio2>>> as Sophie's canonical voice. CLOTHING AND ACCESSORIES: Emma: soft yellow short-sleeved T-shirt, dark blue full-length casual trousers, small colorful hair clip, simple wristwatch. Sophie: light blue casual blouse, dark navy full-length trousers, small silver stud earrings, simple wristwatch. SCENE: Morning inside the family kitchen. Emma is sitting at the kitchen table having breakfast. Sophie is nearby, calmly getting ready to leave for work and organizing a few things in her bag. The kitchen should feel warm, comfortable, and naturally lived-in. ACTION AND DIALOGUE: While Sophie casually organizes her bag, Emma asks: 'What time does work start today?' Sophie answers calmly: 'It starts at eight.' Emma checks her wristwatch and says: 'Mum, it's seven fifty-five.' AFTER THE DIALOGUE: Sophie immediately freezes. She immediately checks her wristwatch and looks back at Emma with sudden realization. Emma remains completely calm. Without saying anything, Emma picks up Sophie's car key from the table and holds it out toward her. Sophie quickly takes the key from Emma and hurries out of the scene. Emma watches her leave for a brief moment, then casually returns to eating her breakfast as if nothing unusual happened. No additional dialogue. Keep the comedy understated and driven by Sophie's sudden realization contrasted with Emma's completely calm reaction. Do not create any contradictory clocks or other visible time displays in the scene. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_olivia_fiona",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_olivia_fiona.mp4",
+    title: "Olivia gets popcorn before the outdoor movie starts.",
+    transcript: "Olivia : Let's get some popcorn. Fiona : The movie /starts/ in five minutes. Olivia : Five minutes is enough.",
+    answerOptions: [
+      { id: "a", text: "Olivia : Biraz patlamış mısır alalım. Fiona : Film beş dakika içinde /başlayacak/. Olivia : Beş dakika yeter." },
+      { id: "b", text: "Olivia : Biraz patlamış mısır alalım. Fiona : Film beş dakika önce başladı. Olivia : Beş dakika yeter." }
+    ],
+    easyDistractor: "Olivia : Biraz patlamış mısır alalım. Fiona : Film yarın başlıyor. Olivia : Beş dakika yeter.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["olivia", "fiona"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+   evidenceStart: "0:01.317",
+evidenceEnd: "0:03.265",
+    evidenceSentence: "Olivia : Let's get some popcorn. Fiona : The movie /starts/ in five minutes. Olivia : Five minutes is enough.",
+
+    prompt: "Use <<<Image1>>> as Olivia's canonical identity and appearance reference. Use <<<Image2>>> as Fiona's canonical identity and appearance reference. Use <<<Audio1>>> as Olivia's canonical voice. Use <<<Audio2>>> as Fiona's canonical voice. CLOTHING AND ACCESSORIES: Olivia: light turquoise short-sleeved T-shirt, blue jeans, small colorful friendship bracelet. Fiona: soft pink casual blouse, dark blue full-length trousers, small silver stud earrings, simple wristwatch. SCENE: Early evening at an outdoor cinema. Olivia and Fiona are beside their seats in a comfortable open-air movie area. A large outdoor movie screen is visible in the background, along with rows of outdoor chairs and a small popcorn stand farther away. Other visitors are settling into their seats in the background. The atmosphere should feel lively and cozy without being crowded. A light natural evening breeze gently moves Olivia's hair, Fiona's hair and clothing, and small loose elements around the outdoor cinema. ACTION AND DIALOGUE: Olivia looks toward the popcorn stand and says: 'Let's get some popcorn.' Fiona looks toward the movie screen and replies: 'The movie starts in five minutes.' Olivia confidently answers: 'Five minutes is enough.' HARD CUT: A short moment later, Olivia returns from the popcorn stand carrying two large boxes of popcorn, one in each hand. She looks very pleased with herself, as if she has successfully completed an important mission. AFTER THE DIALOGUE: Olivia carefully begins to sit down in her outdoor chair while still holding both popcorn boxes. As she lowers herself into the seat, she briefly loses her balance. She catches herself immediately and does not fall. During the small wobble, some popcorn spills naturally from one box onto the ground. Only a small amount of popcorn spills. Do not create a huge mess. Olivia freezes. She looks down at the spilled popcorn, then slowly looks up at Fiona with a slightly guilty, worried expression, silently waiting to see what her mother will say. Fiona looks at Olivia and the spilled popcorn. Fiona smiles warmly and gently strokes the top of Olivia's head once. Olivia relaxes and gives her mother a small relieved smile. No additional dialogue. The final mother-daughter interaction should feel warm and affectionate rather than sentimental or exaggerated. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_ava_chloe",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_ava_chloe.mp4",
+    title: "Ava and Chloe decide to see the lions first at the zoo.",
+    transcript: "Chloe : Let's see the monkeys first. Ava : The lion feeding /starts/ in ten minutes. Chloe : Okay, Lions first.",
+    answerOptions: [
+      { id: "a", text: "Chloe : Önce maymunları görelim. Ava : Aslanların beslenmesi on dakika önce başladı. Chloe : Tamam, Önce aslanlar." },
+      { id: "b", text: "Chloe : Önce maymunları görelim. Ava : Aslanların beslenmesi on dakika içinde /başlayacak/. Chloe : Tamam, Önce aslanlar." }
+    ],
+    easyDistractor: "Chloe : Önce maymunları görelim. Ava : Aslanların beslenmesi yarın başlıyor. Chloe : Tamam, Önce aslanlar.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ava", "chloe"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:02.141",
+evidenceEnd: "0:04.442",
+    evidenceSentence: "Chloe : Let's see the monkeys first. Ava : The lion feeding /starts/ in ten minutes. Chloe : Okay, Lions first.",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Audio2>>> as Chloe's canonical voice. CLOTHING AND ACCESSORIES: Ava: soft orange short-sleeved T-shirt, dark blue jeans, small friendship bracelet. Chloe: light pink short-sleeved T-shirt, beige long shorts, small silver stud earrings. Camera: Do not use full body view. SCENE: Daytime at an outdoor zoo walkway near the lion area. Ava and Chloe are walking together with a small zoo map. The lion enclosure is nearby but does not need to dominate the frame. Include natural zoo details such as greenery, wooden signs, railings, and a few distant visitors. The area should feel lively and believable without being crowded. A light natural breeze gently moves Ava's hair, Chloe's long curly hair, their clothing, and nearby leaves. ACTION AND DIALOGUE: Chloe looks at the zoo map and says: 'Let's see the monkeys first.' Ava glances toward the lion area and replies: 'The lion feeding starts in ten minutes.' Chloe immediately changes her mind and says: 'Okay. Lions first.' AFTER THE DIALOGUE: Immediately after Chloe's final line, a strong but natural lion roar is heard from the nearby lion area. Chloe briefly freezes and her eyes widen in surprise. The reaction should be quick and instinctive, not exaggerated fear. Ava notices Chloe's reaction and gives her a small amused smile. Chloe quickly regains her composure. Without saying anything else, Chloe straightens slightly and starts walking toward the lion area with an intentionally serious, confident expression, pretending that the roar did not surprise her at all. Ava follows beside her, still slightly amused. No additional dialogue. Keep the humor subtle and character-driven. Chloe should not appear cowardly or distressed. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_mia_zoe",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_mia_zoe.mp4",
+    title: "Mia and Zoe buy strawberries before the market closes.",
+    transcript: "Zoe : Let's look around first. Mia : But the market /closes/ at five. Zoe : Then grab the strawberries.",
+    answerOptions: [
+      { id: "a", text: "Zoe : Önce etrafa bakalım. Mia : Ama pazar saat beşte açıldı. Zoe : O zaman çilekleri al." },
+      { id: "b", text: "Zoe : Önce etrafa bakalım. Mia : Ama pazar saat beşte /kapanacak/. Zoe : O zaman çilekleri al." }
+    ],
+    easyDistractor: "Zoe : Önce etrafa bakalım. Mia : Ama pazar yarın kapanıyor. Zoe : O zaman çilekleri al.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["mia", "zoe"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:01.239",
+evidenceEnd: "0:04.389",
+    evidenceSentence: "Zoe : Let's look around first. Mia : But the market /closes/ at five. Zoe : Then grab the strawberries.",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Image2>>> as Zoe's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Audio2>>> as Zoe's canonical voice. CLOTHING AND ACCESSORIES: Mia: soft lavender short-sleeved T-shirt, dark blue full-length casual trousers, white sneakers, simple colorful hair tie around one wrist. Zoe: light green short-sleeved T-shirt, beige full-length casual trousers, white sneakers, small silver stud earrings. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Late afternoon at a lively outdoor street market. Mia and Zoe are walking between colorful fruit and vegetable stalls. They stop at a strawberry stand with several neat boxes of strawberries displayed on the counter. Include natural market details such as fabric awnings, handwritten price cards without readable text, baskets, produce crates, and a few distant shoppers. Keep the setting active and believable but not crowded. A light natural breeze gently moves Mia's hair, Zoe's curly hair, their clothing, nearby awnings, and small leaves around the market. ACTION AND DIALOGUE: Zoe looks around at the other stalls and says: 'Let's look around first.' Mia looks at the strawberry stand and replies: 'But the market closes at five.' Zoe looks back at the strawberries and says: 'Then grab the strawberries.' AFTER THE DIALOGUE: Mia does not immediately pick a box. Instead, she studies two different strawberry boxes with an overly serious, thoughtful expression, as if she is making a very important decision. Zoe waits beside her patiently. After a brief moment, Mia finally chooses one box and lifts it with a satisfied little smile. Just as Mia and Zoe are about to leave, the vendor silently places a third box of noticeably larger and better-looking strawberries on the counter. Mia stops. She looks at the box she already chose. Then she looks at the new box. Then back at her own box. Her expression shows a small, silent decision crisis. Zoe notices Mia's dilemma and smiles. Without saying anything, Mia drops the gently takes the first strawberry box from Mia's hands, freeing Mia to choose the new one. Mia immediately picks up the new strawberry box with a relieved, pleased expression. No additional dialogue. Keep the exchange playful and subtle. Do not exaggerate the size of the strawberries or turn the moment into slapstick comedy. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_daniel_lucas",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_daniel_lucas.mp4",
+    title: "Daniel and Lucas get ready for the next go-kart race.",
+    transcript: "Daniel : Let's get our helmets. Lucas : The next race /begins/ in ten minutes. Daniel : Ten minutes, I'm ready now.",
+    answerOptions: [
+      { id: "a", text: "Daniel : Kasklarımızı alalım. Lucas : Bir sonraki yarış on dakika içinde /başlayacak/. Daniel : On dakika mı, Şimdi hazırım." },
+      { id: "b", text: "Daniel : Kasklarımızı alalım. Lucas : Bir sonraki yarış on dakika önce başladı. Daniel : On dakika mı, Anca hazırlandım." }
+    ],
+    easyDistractor: "Daniel : Kasklarımızı alalım. Lucas : Bir sonraki yarış yarın başlıyor. Daniel : Şimdi hazırım.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["daniel", "lucas"],
+    grades: [6],
+    functions: ["simple_present_for_future"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:01.179",
+evidenceEnd: "0:05.748",
+    evidenceSentence: "Daniel : Let's get our helmets. Lucas : The next race /begins/ in ten minutes. Daniel : Ten minutes, I'm ready now.",
+
+    prompt: "Use <<<Image1>>> as Daniel's canonical identity and appearance reference. Use <<<Image2>>> as Lucas's canonical identity and appearance reference. Use <<<Image3>>> as the visual composition reference for the oversized helmet payoff. Use <<<Audio1>>> as Daniel's canonical voice. Use <<<Audio2>>> as Lucas's canonical voice. CLOTHING AND ACCESSORIES: Daniel: orange short-sleeved T-shirt, dark blue full-length casual trousers. Lucas: red short-sleeved T-shirt, dark grey full-length casual trousers, simple sporty wristband. Do not copy clothing or accessories from the canonical reference images. Use <<<Image1>>> and <<<Image2>>> for identity only. SCENE: Daytime at an outdoor go-kart track. Daniel and Lucas are standing together near the helmet area beside the track. Several go-karts can be seen moving naturally around the track in the background. Include recognizable go-kart details such as tire barriers, track fencing, helmet racks, and checkered racing elements. Keep the environment lively but not crowded. A light natural breeze gently moves small flags around the track. CAMERA: Don't use full body view. ACTION AND DIALOGUE: Daniel looks eagerly toward the track and says: 'Let's get our helmets.' Lucas looks toward the track and replies: 'The next race begins in ten minutes.' Daniel confidently answers: 'Ten minutes? I'm ready now.' AFTER THE DIALOGUE: Daniel confidently takes a go-kart helmet from the nearby helmet rack and puts it on. The helmet turns out to be noticeably too large for him. Use <<<Image3>>> as the visual reference for this exact payoff. The oversized helmet settles too low on Daniel's head so that the visor area completely covers his eyes. It should look like a believable adult-sized or wrong-sized go-kart helmet on a child, not a gigantic fantasy helmet. Daniel briefly freezes with the oversized helmet covering his eyes. Despite being unable to see properly, Daniel keeps a deliberately confident posture as if nothing has gone wrong. Lucas looks at Daniel with an amused smile. Lucas reaches over and gently lifts the front of the oversized helmet just enough to reveal Daniel's eyes again. Daniel looks at Lucas. Without showing embarrassment, Daniel gives Lucas a small, serious nod as if everything went exactly according to plan. Lucas responds with a knowing grin. No additional dialogue. Keep the helmet gag visually simple. The helmet must remain noticeably oversized throughout the payoff. Do not automatically resize or normalize the helmet to fit Daniel's head. The low helmet position covering Daniel's eyes is the essential visual joke. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_ava_amina_buddy",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_ava_amina_buddy.mp4",
+    title: "Buddy gets excited when he sees another dog at the park.",
+    transcript: "Amina : Buddy is very happy. Ava : He gets happy /when/ he sees other dogs. Amina : Buddy, wait!",
+    answerOptions: [
+      { id: "a", text: "Amina : Buddy çok mutlu. Ava : Başka köpekleri gör/düğünde/ mutlu oluyor. Amina : Buddy, bekle!" },
+      { id: "b", text: "Amina : Buddy çok enerjik. Ava : Başka köpeklerle karşılaştığında seviniyor. Amina : Buddy, bekle!" }
+    ],
+    easyDistractor: "Amina : Buddy çok mutlu. Ava : Yürüyüşten sonra uyur. Amina : Buddy, bekle!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["ava", "amina"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:03.354",
+evidenceEnd: "0:05.663",
+    evidenceSentence: "Amina : Buddy is very happy. Ava : He gets happy /when/ he sees other dogs. Amina : Buddy, wait!",
+
+    prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Image2>>> as Amina's canonical identity and appearance reference. Use <<<Image3>>> as Buddy's canonical appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Audio2>>> as Amina's canonical voice. CLOTHING AND ACCESSORIES: Ava: light turquoise short-sleeved T-shirt, beige full-length casual trousers, small colorful friendship bracelet. Amina: soft yellow casual blouse, dark blue full-length trousers, small silver stud earrings, simple wristwatch. SCENE: Daytime in a green public park. Ava and Amina are taking Buddy for a relaxed walk along a park path. Ava is holding Buddy's leash naturally. Another dog with its owner is visible farther ahead on the path. Keep the park lively and natural without making it crowded. A light natural breeze gently moves Ava's hair, Amina's hair and clothing, and nearby leaves and grass. ACTION AND DIALOGUE: As they walk together, Amina notices Buddy looking cheerful and says: 'Buddy is very happy.' Ava looks at Buddy and replies: 'He gets happy when he sees other dogs.' After Ava says this, Buddy notices the other dog farther ahead. Buddy immediately becomes more energetic and takes a few quick, excited steps forward. Keep this movement small and controlled. Amina reacts: 'Buddy, wait!' AFTER THE DIALOGUE: Buddy immediately stops. He turns his head back toward Ava and Amina and looks at them with an extremely innocent expression, as if he has done absolutely nothing wrong. Ava looks at Buddy, then gives Amina a small amused smile as if to say, 'See?' Amina smiles at Buddy's innocent reaction. No additional dialogue. Keep Buddy's movement and leash interaction simple.",
+  },
+  {
+    id: "6_family_life_chloe_camille",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_chloe_camille.mp4",
+    title: "Chloe waits for a cookie to cool down at the bakery.",
+    transcript: "Chloe : Can I have a cookie? Camille : You can have one /when/ it cools down. Chloe : Mhm.",
+    answerOptions: [
+      { id: "a", text: "Chloe : Bir kurabiye alabilir miyim? Camille : Soğu/duğunda/ bir tane alabilirsin. Chloe : Hı hı." },
+      { id: "b", text: "Chloe : Bir kurabiye alabilir miyim? Camille : Sıcakken bir tane ye. Chloe : Hı hı." }
+    ],
+    easyDistractor: "Chloe : Bir kurabiye alabilir miyim? Camille : Önce tezgâhı temizlemelisin. Chloe : Hı hı.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["chloe", "camille"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+   evidenceStart: "0:01.593",
+evidenceEnd: "0:04.285",
+    evidenceSentence: "Chloe : Can I have a cookie? Camille : You can have one /when/ it cools down. Chloe : Mhm.",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Camille's canonical identity and appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Camille's canonical voice. CLOTHING AND ACCESSORIES: Chloe: soft pink short-sleeved T-shirt, dark blue full-length casual trousers, small colorful hair clip. Camille: light cream blouse, dark green full-length trousers, beige casual shoes, small gold stud earrings, simple wristwatch. CAMERA: Don't use full body view. SCENE: Daytime inside a warm, inviting bakery. Chloe is standing beside Camille near the bakery counter. A tray of freshly baked cookies has just come out of the oven and is resting safely on the counter. The cookies are visibly hot. Thin, clearly visible wisps of steam gently rise from several cookies throughout the dialogue. The steam must remain visible enough for the viewer to immediately understand that the cookies are still hot. Include simple bakery details such as bread shelves, pastry displays, trays, and baking equipment in the background. Keep the environment natural and believable without making it visually busy. ACTION AND DIALOGUE: Chloe looks eagerly at the freshly baked cookies and asks: 'Can I have a cookie?' Camille looks at the hot cookies and replies: 'You can have one when it cools down.' Chloe answers: 'Mhm.' AFTER THE DIALOGUE: The cookies are still visibly steaming. Chloe waits for a brief moment. Then, with an innocent expression, she slowly begins reaching one hand toward a cookie anyway. Before Chloe can touch it, Camille notices. Without saying anything, Camille calmly slides the cookie tray a short distance farther away from Chloe. Chloe's reaching hand is left hanging in the air. Chloe looks at the tray, then slowly looks at Camille. Camille gives Chloe a warm, amused smile and a small raised-eyebrow expression. Chloe realizes she has been caught and slowly pulls her hand back with a playful, guilty little smile. No additional dialogue. Chloe must never touch the hot cookies. Keep the tray movement small and simple. The visible steam from the cookies is important to the meaning of the dialogue and should remain clearly noticeable during the scene. The final interaction should feel playful and affectionate, not strict or scolding. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_hannah_storm",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_hannah_storm.mp4",
+    title: "Storm ignores Hannah's instruction at the bridge.",
+    transcript: "Hannah : Turn left /when/ you see the bridge. Hannah : Of course, Never listen to me.",
+    answerOptions: [
+      { id: "a", text: "Hannah : Köprüyü gör/düğünde/ sola dön. Hannah : Tabii ki, Beni asla dinleme zaten." },
+      { id: "b", text: "Hannah : Sola dön sonra köprüyü geç. Hannah : Tabii ki, Beni hiç dinleme zaten." }
+    ],
+    easyDistractor: "Hannah : Köprüyü gördüğünde dur. Hannah : Aferin, Beni dinledin.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.161",
+    evidenceSentence: "Hannah : Turn left /when/ you see the bridge. Hannah : Of course, Never listen to me.",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Storm's canonical appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. CLOTHING AND ACCESSORIES: Hannah: light blue short-sleeved T-shirt, dark blue full-length riding trousers, brown riding boots, properly fitted black riding helmet. SCENE: Daytime on a quiet woodland riding trail. Hannah is riding Storm at a calm walking pace along the trail. Ahead of them, a small wooden bridge crosses a narrow stream. Near the bridge, the trail provides a clear opportunity to turn left instead of continuing straight across the bridge. Keep the environment natural and visually simple. A light natural breeze gently moves Hannah's long blonde hair where visible below the riding helmet, her clothing, Storm's mane and tail, and nearby leaves and grass. ACTION AND DIALOGUE: Hannah and Storm calmly approach the wooden bridge. While riding, Hannah looks ahead toward the bridge and naturally tells Storm: 'Turn left when you see the bridge.' Storm continues walking toward the bridge. When they reach the point where Storm could turn left, Storm completely ignores Hannah's instruction. Instead of turning left, Storm calmly and confidently continues straight ahead onto the wooden bridge. The movement should be simple and unmistakable: Storm does not turn left. Storm continues straight across the bridge. Hannah realizes that Storm has ignored her. She looks down toward Storm with a familiar, mildly unimpressed expression and says: 'Of course. Never listen to me.' AFTER THE DIALOGUE: Storm shows absolutely no concern and continues calmly walking across the bridge as if this was always the plan. Hannah gives Storm a small resigned look, then allows herself a subtle amused smile. The humor should come from Storm's calm stubbornness and Hannah clearly being familiar with it. Hannah is never angry or rough with Storm. Do not add any additional dialogue. Keep the riding calm, controlled, and safe. Avoid complicated horse movements or sudden changes of speed. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_david_valeria",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_david_valeria.mp4",
+    title: "David waits for Valeria to finish work before they eat.",
+    transcript: "David : Mum, can we get something to eat? Valeria : /When/ I finish work, we can eat. David : Okay.",
+    answerOptions: [
+      { id: "a", text: "David : Anne, yiyecek bir şeyler alabilir miyiz? Valeria : İşimi bitirmeden önce yemek yiyebiliriz. David : Tamam." },
+      { id: "b", text: "David : Anne, yiyecek bir şeyler alabilir miyiz? Valeria : İşimi bitir/diğimde/ yemek yiyebiliriz. David : Tamam." }
+    ],
+    easyDistractor: "David : Anne, yiyecek bir şeyler alabilir miyiz? Valeria : Önce otele dönmeliyiz. David : Tamam.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["david", "valeria"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:01.837",
+evidenceEnd: "0:03.686",
+    evidenceSentence: "David : Mum, can we get something to eat? Valeria : /When/ I finish work, we can eat. David : Okay.",
+
+    prompt: "Use <<<Image1>>> as David's canonical identity and appearance reference. Use <<<Image2>>> as Valeria's canonical identity and appearance reference. Use <<<Audio1>>> as David's canonical voice. Use <<<Audio2>>> as Valeria's canonical voice. CLOTHING AND ACCESSORIES: David: dark green short-sleeved T-shirt, beige full-length casual trousers, simple sporty wristwatch. Valeria: elegant light blue blouse, dark navy full-length trousers, black professional flat shoes, small silver stud earrings, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Late afternoon inside the lobby of the hotel where Valeria works. Valeria is near the reception desk, calmly finishing a few simple work tasks before leaving. David has come to meet his mother and is waiting nearby. A small hotel café area is visible farther across the lobby. The hotel should feel modern, welcoming, and naturally active, with a few distant guests and staff members in the background. Keep the environment readable and not crowded. ACTION AND DIALOGUE: David looks toward the café area, then turns to Valeria and asks: 'Mum, can we get something to eat?' Valeria looks at David and replies warmly: 'When I finish work, we can eat.' David answers: 'Okay.' AFTER THE DIALOGUE: David gives a patient little nod. A brief moment later, while waiting, David casually takes a small wrapped snack bar from his pocket. Before he opens it, Valeria notices. Valeria silently looks at David. David freezes. He looks at the snack bar in his hand. Then he looks at his mother. Valeria does not say anything. She simply gives David a small amused, knowing look. David pauses for a moment. Then, very slowly and with a slightly guilty expression, he puts the unopened snack bar back into his pocket. Valeria gives him a subtle smile and calmly returns to finishing her work. David remains nearby and waits patiently. No additional dialogue. David must not open or eat the snack bar. Keep the payoff understated and playful. Valeria should not appear angry or strict. The humor comes from David immediately testing the meaning of 'when I finish work' and silently changing his mind when his mother notices. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_mia_giulia2",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_mia_giulia2.mp4",
+    title: "Mia does her homework while Giulia cooks dinner.",
+    transcript: "Giulia : Do you have homework? Mia : Yes, I do my homework /while/ you cook. Giulia : Good idea. Mia : Yummy!",
+    answerOptions: [
+      { id: "a", text: "Giulia : Ödevin var mı? Mia : Evet, Sen yemek pişirir/ken/ ödevimi yapıyorum. Giulia : İyi fikir. Mia : Nefis!" },
+      { id: "b", text: "Giulia : Ödevin var mı? Mia : Evet, Sen yemek pişirmeden önce başladım. Giulia : İyi yapmışsın. Mia : Nefis!" }
+    ],
+    easyDistractor: "Giulia : Ödevin var mı? Mia : Hayır, Yemek yapmana yardım ediyorum. Giulia : İyi fikir. Mia : Nefis!",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["mia", "giulia"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:01.507",
+evidenceEnd: "0:04.000",
+    evidenceSentence: "Giulia : Do you have homework? Mia : Yes, I do my homework /while/ you cook. Giulia : Good idea. Mia : Yummy!",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Image2>>> as Giulia's canonical identity and appearance reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Audio2>>> as Giulia's canonical voice. CLOTHING AND ACCESSORIES: Mia: soft lavender short-sleeved T-shirt, dark blue joggers, small simple hair clip. Giulia: cream short-sleeved blouse, dark green full-length trousers, comfortable brown flat shoes, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Early evening in the family kitchen. Giulia is preparing dinner at the kitchen counter. Mia is sitting at the nearby kitchen table with an open notebook and a few simple school materials, doing her homework. Keep Mia and Giulia close enough that their simultaneous activities are easy to understand in the same scene. The kitchen should feel warm, lived-in, and natural, but not visually crowded. ACTION AND DIALOGUE: Giulia continues preparing dinner and looks toward Mia. Giulia asks: 'Do you have homework?' Mia keeps working in her notebook and replies: 'Yes, I do my homework while you cook.' Giulia smiles and says: 'Good idea.' AFTER THE DIALOGUE: Giulia turns back to the food and continues cooking. Mia keeps writing in her notebook, focused on her homework. A few moments later, Giulia takes a very small tasting spoonful of the food she is preparing. She walks close enough to Mia and gently holds the spoon toward her. Mia notices the spoon without stopping her homework. She keeps her eyes mostly on the notebook, continues holding her pencil, and naturally opens her mouth. Giulia carefully gives Mia the small taste. Mia tastes the food, smiles immediately, and says: 'Yummy!' Mia then continues writing her homework as if this is a completely normal part of studying while her mother cooks. Giulia gives Mia a warm amused smile and returns to cooking. Keep the spoon interaction simple and natural. No spills, no dropped food, no exaggerated feeding motion. Mia should not stop or abandon her homework during the payoff. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_ethan_james",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_ethan_james.mp4",
+    title: "Ethan keeps holding the cabinet door while James repairs it.",
+    transcript: "James : Can you help me, Ethan? Ethan : Sure. James : Hold this /while/ I fix it. James : Okay, you can let go now.",
+    answerOptions: [
+      { id: "a", text: "James : Ethan, bana yardım edebilir misin? Ethan : Tabii. James : Ben tamir etmeden önce bunu tut. James : Tamam, şimdi bırakabilirsin." },
+      { id: "b", text: "James : Ethan, bana yardım edebilir misin? Ethan : Tabii. James : Ben tamir eder/ken/ bunu tut. James : Tamam, şimdi bırakabilirsin." }
+    ],
+    easyDistractor: "James : Ethan, bana yardım edebilir misin? Ethan : Tabii. James : Alet kutusunu getir. James : Tamam, şimdi bırakabilirsin.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["ethan", "james"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:03.590",
+evidenceEnd: "0:04.901",
+    evidenceSentence: "James : Can you help me, Ethan? Ethan : Sure. James : Hold this /while/ I fix it. James : Okay, you can let go now.",
+
+    prompt: "Use <<<Image1>>> as Ethan's canonical identity and appearance reference. Use <<<Image2>>> as James's canonical identity and appearance reference. Use <<<Audio1>>> as Ethan's canonical voice. Use <<<Audio2>>> as James's canonical voice. CLOTHING AND ACCESSORIES: Ethan: dark blue short-sleeved T-shirt, light beige full-length casual trousers, white sneakers, simple sporty wristwatch. James: gray long-sleeved casual shirt with sleeves rolled neatly to the forearms, dark brown full-length trousers, comfortable dark shoes, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: A tidy garage or small home workshop area. James is repairing a loose cabinet door on a simple storage cabinet. The cabinet door is already open. Ethan stands beside him, ready to help. Keep the repair visually simple and easy to understand. Do not show complex tools, loose screws, or complicated mechanical parts. ACTION AND DIALOGUE: James looks at Ethan and says: 'Can you help me, Ethan?' Ethan replies: 'Sure.' James points to the open cabinet door and says: 'Hold this while I fix it.' Ethan uses both hands to hold the cabinet door steady in its open position. James performs a short, simple repair action near the cabinet hinge area. Keep James's repair motion minimal and clear. James finishes the repair, moves his hands away from the cabinet, and looks at Ethan. Ethan is still holding the cabinet door very seriously and has not moved. James smiles and says: 'Okay, you can let go now.' AFTER THE DIALOGUE: Ethan pauses for a brief moment, still maintaining his serious focused expression. Then he finally releases the cabinet door. The repaired door remains stable. Ethan gives a small satisfied 'mission accomplished' nod. James gives him an amused, approving smile. No additional dialogue. Keep the cabinet-door interaction physically simple. Avoid complex hand positions or overlapping hands. James and Ethan should not touch the same part of the cabinet at the same time. The humor comes from Ethan continuing to hold the door even after the repair is clearly finished. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_emma_sophie2",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_emma_sophie2.mp4",
+    title: "Emma learns Sophie can listen while she cooks.",
+    transcript: "Emma : Mum, are you listening? Sophie : Of course, I can listen /while/ I cook. Emma : What did Hannah see? Sophie : A huge dog.",
+    answerOptions: [
+      { id: "a", text: "Emma : Anne, dinliyor musun? Sophie : Tabii, Yemek yapar/ken/ dinleyebilirim. Emma : Hannah ne görmüş? Sophie : Kocaman bir köpek." },
+      { id: "b", text: "Emma : Anne, dinliyor musun? Sophie : Tabii, Yemek yaptıktan sonra dinleyeceğim. Emma : Hannah ne görmüş? Sophie : Kocaman bir köpek." }
+    ],
+    easyDistractor: "Emma : Hannah kocaman bir köpek gördü. Sophie : Anne, dinliyor musun? Sophie : Hayır, Yemeği bitirince konuşalım. Emma : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["emma", "sophie"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:03.251",
+evidenceEnd: "0:07.291",
+    evidenceSentence: "Emma : Mum, are you listening? Sophie : Of course, I can listen /while/ I cook. Emma : What did Hannah see? Sophie : A huge dog.",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity and appearance reference. Use <<<Image2>>> as Sophie's canonical identity and appearance reference. Use <<<Audio1>>> as Emma's canonical voice. Use <<<Audio2>>> as Sophie's canonical voice. CLOTHING AND ACCESSORIES: Emma: soft yellow short-sleeved T-shirt, dark blue full-length casual trousers, white sneakers, small simple hair clip. Sophie: light green short-sleeved blouse, beige full-length trousers, comfortable brown flat shoes, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: Early evening in the family kitchen. Sophie is preparing dinner at the kitchen counter. Emma is nearby, casually telling her mother a story about Hannah. The scene should feel like a natural everyday mother-daughter conversation. ACTION AND DIALOGUE: Emma is animatedly telling her story and says: 'Hannah saw a huge dog and she was like, 'Oh my God!'' Sophie continues preparing the food without looking up or visibly reacting to Emma's story. Emma notices Sophie's lack of reaction. She looks at her mother suspiciously and asks: 'Mum, are you listening?' Sophie continues cooking calmly and replies: 'Of course. I can listen while I cook.' Emma is not completely convinced. She tests her mother: 'What did Hannah see?' Without stopping what she is doing, Sophie immediately answers: 'A huge dog.' AFTER THE DIALOGUE: Emma pauses. Her suspicious expression changes into surprised amusement when she realizes Sophie really was listening. Sophie keeps cooking and gives Emma a small, confident, knowing smile, as if to say, 'See?' Emma smiles, impressed, and continues hanging out with her mother. No additional dialogue. Sophie should continue the same simple cooking activity throughout the conversation. Keep the cooking actions minimal and natural. No complex food handling, spills, steam effects, or complicated utensil choreography. The humor comes from Emma being completely sure her mother is not listening, then discovering that Sophie heard every word. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_chloe_camille2",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_chloe_camille2.mp4",
+    title: "Chloe plays with Luna while Camille waters the flowers.",
+    transcript: "Camille : Can you watch Luna? Chloe : Sure, I can play with her /while/ you water the flowers. Camille : Thanks.",
+    answerOptions: [
+      { id: "a", text: "Camille : Luna'ya bakabilir misin? Chloe : Tabii, Sen çiçekleri suladıktan sonra onunla oynayabilirim. Camille : Teşekkürler." },
+      { id: "b", text: "Camille : Luna'ya bakabilir misin? Chloe : Tabii, Sen çiçekleri sular/ken/ onunla oynayabilirim. Camille : Teşekkürler." }
+    ],
+    easyDistractor: "Camille : Luna'ya bakabilir misin? Chloe : Tabii, Luna'yı bahçeye bırakacağım. Camille : Teşekkürler.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe", "camille"],
+    grades: [6],
+    functions: ["conjunctions_when_while"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:02.049",
+evidenceEnd: "0:05.315",
+    evidenceSentence: "Camille : Can you watch Luna? Chloe : Sure, I can play with her /while/ you water the flowers. Camille : Thanks.",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity and appearance reference. Use <<<Image2>>> as Camille's canonical identity and appearance reference. Use <<<Image3>>> as Luna's canonical appearance reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Camille's canonical voice. CLOTHING AND ACCESSORIES: Chloe: soft pink short-sleeved T-shirt, dark blue full-length casual trousers, small silver butterfly necklace. Camille: light cream short-sleeved blouse, olive green full-length trousers, simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: A pleasant family garden in daylight. Camille is near a flower bed with a watering can, preparing to water the flowers. Chloe is nearby with Luna. The garden should feel natural and lived-in, with a few flowers, green plants, and simple outdoor furniture in the background. A light natural breeze gently moves Chloe's hair, Camille's clothing, and nearby leaves and flowers. ACTION AND DIALOGUE: Camille looks toward Chloe and asks: 'Can you watch Luna?' Chloe replies: 'Sure. I can play with her while you water the flowers.' Camille smiles and says: 'Thanks.' AFTER THE DIALOGUE: Camille begins watering the flowers. Chloe bends down naturally and gently picks Luna up. Chloe holds Luna comfortably against her body and begins softly petting and playing with her. Luna remains calm and relaxed in Chloe's arms. Chloe smiles while continuing to play gently with Luna. Camille briefly looks over at Chloe and Luna, gives them a warm smile, then continues watering the flowers. No additional dialogue. Keep Chloe's interaction with Luna gentle, simple, and natural. Avoid complicated cat movement, jumping, scratching, or sudden motion. The payoff is simply Chloe happily spending time with Luna while Camille waters the flowers. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_mia_emma",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_mia_emma.mp4",
+    title: "Mia learns that Emma's mother is a nurse.",
+    transcript: "Mia : /Which job/ does your mum do? Emma : She's a /nurse/. Mia : Really?",
+    answerOptions: [
+      { id: "a", text: "Mia : Annen /hangi işi/ yapıyor? Emma : O bir /hemşire/. Mia : Gerçekten mi?" },
+      { id: "b", text: "Mia : Annen nerede çalışıyor? Emma : O bir doktor. Mia : Gerçekten mi?" }
+    ],
+    easyDistractor: "Mia : Annen hangi işi yapıyor? Emma : O bugün hastaneye gidiyor. Mia : Gerçekten mi?",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["mia", "emma", "sophie"],
+    grades: [6],
+    functions: ["use_of_wh_questions_which"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:02.939",
+    evidenceSentence: "Mia : /Which job/ does your mum do? Emma : She's a /nurse/. Mia : Really?",
+
+    prompt: "Use <<<Image1>>> as Emma's canonical identity. Use <<<Image2>>> as Mia's canonical identity. Use <<<Image3>>> as Sophie's canonical identity. Use <<<Audio1>>> as Emma's canonical voice. Use <<<Audio2>>> as Mia's canonical voice. CLOTHING AND ACCESSORIES: Emma wears a light blue short-sleeved T-shirt, dark blue full-length casual trousers, white sneakers, and a small simple hair clip. Mia wears a soft lavender short-sleeved T-shirt, beige full-length casual trousers, white sneakers, and a simple friendship bracelet. Sophie wears a clean professional nurse uniform with comfortable closed-toe work shoes and a simple wristwatch. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE: A clean hospital waiting-area corridor. Emma and Mia are standing together near a quiet seating area. Sophie is NOT visible at the beginning of the scene. The hospital environment should be clearly recognizable but calm and not crowded. A few distant staff members may move naturally in the background. ACTION AND DIALOGUE: Mia looks at Emma and asks: 'Which job does your mum do?' Emma replies naturally: 'She's a nurse.' Mia looks slightly surprised and says: 'Really?' AFTER THE DIALOGUE: A moment later, Sophie appears farther down the hospital corridor wearing her nurse uniform. She walks naturally toward Emma and Mia. Mia notices Sophie approaching. Mia looks at Sophie, then briefly looks back at Emma with a small surprised expression as she realizes Emma's mother really is a nurse. Emma gives Mia a subtle amused smile and lightly gestures toward Sophie, as if confirming what she just said. Sophie gives the girls a warm smile as she approaches. No additional dialogue. Sophie must not be visible before Mia asks the question. Do not reveal Sophie's job visually until after Emma has answered. The small payoff comes from Mia immediately seeing the answer confirmed when Sophie appears in her nurse uniform. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_chloe_camille3",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_chloe_camille3.mp4",
+    title: "Chloe takes Luna to Ava's mother at the veterinary clinic.",
+    transcript: "Chloe : Mum, Luna is not well, Let's take her to Ava's mother. Camille : /Which/ job does she do? Chloe : She's a /vet/!",
+    answerOptions: [
+      { id: "a", text: "Chloe : Anne, Luna iyi değil, Onu Ava'nın annesine götürelim. Camille : Onun işyeri nerede? Chloe : O bir doktor!" },
+      { id: "b", text: "Chloe : Anne, Luna iyi değil, Onu Ava'nın annesine götürelim. Camille : O /hangi/ işi yapıyor? Chloe : O bir veteriner!" }
+    ],
+    easyDistractor: "Chloe : Anne, Luna iyi değil. Camille : Onu evde dinlendirelim. Chloe : Tamam.",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["chloe", "camille", "amina"],
+    grades: [6],
+    functions: ["use_of_wh_questions_which"],
+    theme: "family_life",
+    unit: "family_life",
+
+   evidenceStart: "0:04.928",
+evidenceEnd: "0:07.129",
+    evidenceSentence: "Chloe : Mum, Luna is not well, Let's take her to Ava's mother. Camille : /Which/ job does she do? Chloe : She's a /vet/!",
+
+    prompt: "Use <<<Image1>>> as Chloe's canonical identity reference. Use <<<Image2>>> as Camille's canonical identity reference. Use <<<Image3>>> as Luna's canonical appearance reference. Use <<<Image4>>> as Amina's canonical identity reference. Use <<<Audio1>>> as Chloe's canonical voice. Use <<<Audio2>>> as Camille's canonical voice. CLOTHING AND ACCESSORIES: Chloe wears a soft pink short-sleeved T-shirt, dark blue full-length casual trousers, and white sneakers. Camille wears a light cream blouse, dark green full-length trousers, and comfortable beige flat shoes. Amina wears clean professional veterinarian clothing suitable for a small animal clinic, with practical closed-toe shoes. Do not copy clothing or accessories from the canonical reference images. Use the reference images for identity only. SCENE 1: A calm family living room. Chloe is sitting near Luna. Luna looks a little unwell and less energetic than usual. She should appear mildly tired and unhappy, but not seriously ill or distressed. Camille is nearby. ACTION AND DIALOGUE: Chloe looks at Luna with concern, then turns to Camille and says: 'Mum, Luna is not well. Let's take her to Ava's mother.' Camille looks curious and asks: 'Which job does she do?' Chloe replies confidently: 'She's a vet!' HARD CUT TO: SCENE 2: A clean, welcoming veterinary clinic. Luna is now on a simple examination table. Amina is gently checking Luna. Chloe and Camille stand nearby and watch. PAYOFF: Amina finishes a simple part of the examination and holds a small pet treat near Luna. Luna, who looked tired earlier, suddenly becomes more alert and interested in the treat. Chloe notices this immediately and smiles with visible relief. Camille looks at Chloe with a warm 'good idea' expression. Amina gives a small reassuring smile while continuing to care for Luna. No additional dialogue. Keep Luna's condition mild and non-distressing. Avoid dramatic illness, medical procedures, injections, or complicated veterinary equipment. The payoff should feel warm and reassuring: Luna becomes noticeably more interested and lively when she sees the treat. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_emma_hannah",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_emma_hannah.mp4",
+    title: "Emma suggests asking Daniel's father to fix Hannah's bike.",
+    transcript: "Hannah : Emma, my bike is broken. Emma : Let's ask Daniel's father. Hannah : /Which/ job does he do? Emma : He's a /mechanic/!",
+    answerOptions: [
+      { id: "a", text: "Hannah : Emma, bisikletim bozuldu. Emma : Daniel'ın babasına soralım. Hannah : O /hangi/ işi yapıyor? Emma : O bir /tamirci/!" },
+      { id: "b", text: "Hannah : Emma, bisikletim bozuldu. Emma : Daniel'ın babasına soralım. Hannah : Onun iş yeri nerede? Emma : Sanayide!" }
+    ],
+    easyDistractor: "Hannah : Emma, bisikletim bozuk. Emma : Bisikletini eve götürelim. Hannah : Tamam.",
+    correctOptionId: "a",
+    explanation: "",
+    characterIds: ["hannah", "emma", "javier"],
+    grades: [6],
+    functions: ["use_of_wh_questions_which"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:04.873",
+evidenceEnd: "0:07.286",
+    evidenceSentence: "Hannah : Emma, my bike is broken. Emma : Let's ask Daniel's father. Hannah : /Which/ job does he do? Emma : He's a /mechanic/!",
+
+    prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Image3>>> as Javier's canonical identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Emma's canonical voice. WARDROBE AND ACCESSORIES: Hannah wears a light blue short-sleeved T-shirt, dark blue full-length casual trousers, and a sporty wristwatch. Emma wears a soft yellow short-sleeved T-shirt, beige full-length casual trousers, and a simple friendship bracelet. Javier wears a dark gray work shirt, dark blue full-length work trousers, practical dark work shoes, and a simple practical work wristwatch. The clothing shown in the canonical reference images is not part of the scene wardrobe. Use the reference images for identity, while using the clothing and accessories described above for this scene. SCENE 1: Hannah and Emma are outdoors beside Hannah's pink bicycle. The bicycle has a simple mechanical problem and cannot currently be ridden. It should simply be clear from Hannah's behavior that something is wrong with the bicycle and the bicycle does not move. A light natural breeze gently moves Hannah's and Emma's hair and clothing, as well as nearby leaves and vegetation. ACTION AND DIALOGUE: Hannah looks at her bicycle with mild frustration and says: 'Emma, my bike is broken.' Emma looks at the bicycle, thinks for a moment, and says: 'Let's ask Daniel's father.' Hannah looks curiously at Emma and asks: 'Which job does he do?' Emma replies confidently: 'He's a mechanic!' HARD CUT TO: SCENE 2: Javier's professional repair workshop. Hannah's bicycle is now inside the workshop. Javier is crouched beside Hannah's pink bicycle, performing a short and simple inspection near the wheel and chain area. Hannah and Emma stand nearby and watch. Do not show a complicated repair procedure. Avoid detailed tool manipulation, removing bicycle parts, or complex hand-object interactions. PAYOFF: After the brief inspection, Javier stands up and gives Hannah a confident thumbs-up, indicating that he can fix the bicycle. Hannah immediately looks relieved and smiles. Emma turns toward Hannah and gives her a small, playful, confident 'told you' expression. Hannah looks back at Emma with an amused smile. No additional dialogue. Keep the payoff simple and readable. Object rule: The pink bicycle in scene 1 and scene 2 should be exactly same. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+  {
+    id: "6_family_life_mia_olivia",
+    status: "published",
+    videoSrc: "assets/video/6_family_life_mia_olivia.mp4",
+    title: "Olivia visits Mia's bedroom and finds Coco there.",
+    transcript: "Olivia : /Which/ room is upstairs? Mia : My bedroom. Olivia : Can I see it? Mia : Sure!",
+    answerOptions: [
+      { id: "a", text: "Olivia : Yukarıya çıkalım mı? Mia : Olur. Olivia : Hadi çıkalım. Mia : Tabii!" },
+      { id: "b", text: "Olivia : Yukarıda /hangi/ oda var? Mia : Yatak odam. Olivia : Görebilir miyim? Mia : Tabii!" }
+    ],
+    easyDistractor: "Olivia : Yukarıda hangi oda var? Mia : Misafir odası. Olivia : Görebilir miyim? Mia : Tabii!",
+    correctOptionId: "b",
+    explanation: "",
+    characterIds: ["mia", "olivia"],
+    grades: [6],
+    functions: ["use_of_wh_questions_which"],
+    theme: "family_life",
+    unit: "family_life",
+
+    evidenceStart: "0:00.000",
+evidenceEnd: "0:01.747",
+    evidenceSentence: "Olivia : /Which/ room is upstairs? Mia : My bedroom. Olivia : Can I see it? Mia : Sure!",
+
+    prompt: "Use <<<Image1>>> as Mia's canonical identity and appearance reference. Use <<<Image2>>> as Olivia's canonical identity and appearance reference. Use <<<Image3>>> as Coco's canonical appearance reference. Use <<<Image4>>> as Mia's canonical bedroom reference. Use <<<Audio1>>> as Mia's canonical voice. Use <<<Audio2>>> as Olivia's canonical voice. WARDROBE AND ACCESSORIES: Mia wears a soft lavender short-sleeved T-shirt, dark blue jeans, slippers, and a small simple hair clip. Olivia wears a red short-sleeved T-shirt, beige long shorts, white sneakers, and a simple friendship bracelet. The clothing shown in the character reference images is not part of the scene wardrobe. Use the character reference images for identity while using the clothing and accessories described above for this scene. SCENE 1: Inside Mia's family home during Olivia's visit. Mia and Olivia are together on the ground floor near the staircase. The staircase leading upstairs is clearly visible. Mia's bedroom is upstairs, but the bedroom itself is NOT visible yet. Coco is NOT visible during this scene. ACTION AND DIALOGUE: Olivia looks toward the staircase and asks Mia: 'Which room is upstairs?' Mia replies: 'My bedroom.' Olivia asks: 'Can I see it?' Mia answers warmly: 'Sure!' Mia gestures naturally toward the stairs and the girls begin heading upstairs. Camera tracks them low angle as they go up the stairs to second floor of the house. HARD CUT TO: SCENE 2 — MIA'S BEDROOM: Use <<<Image4>>> as the canonical environment reference for Mia's bedroom. Preserve the recognizable room design, furniture, layout, major objects, colors, and overall appearance shown in <<<Image4>>> as closely as possible. Do not redesign Mia's bedroom or replace it with a generic bedroom. Mia and Olivia enter the bedroom. PAYOFF: Coco is already sitting comfortably in its place. Olivia immediately notices Coco and smiles with amusement. Mia stops and looks at Coco with a mildly unimpressed expression. Coco remains completely comfortable and unconcerned. Olivia looks from Coco to Mia, clearly entertained by the situation. Olivia smiles. No additional dialogue. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
+  },
+
+
 ];
 
 window.LEAGUE_OF_LISTENING_DIFFICULTY_DISTRACTORS = Object.freeze(
@@ -14062,6 +14665,7 @@ window.LEAGUE_OF_LISTENING_FUNCTIONS = Object.freeze({
   confirming_information: "Confirming Information",
   comparatives_of_adjectives: "Expressing comparisons between two people, objects, or ideas",
   comparative_and_superlative_adjectives: "Use of Comparative and Superlative Adjectives: Comparing characteristics of animals, things, and/or people.",
+  conjunctions_when_while: "Conjunctions (when, while): Describing actions or events that happen at the same time or one after the other.",
   correcting_behaviour: "Correcting Behaviour",
   countable_uncountable: "Use of Countable and Uncountable nouns: Expressing the quantity of nouns.",
   countries: "Naming countries",
@@ -14105,6 +14709,7 @@ window.LEAGUE_OF_LISTENING_FUNCTIONS = Object.freeze({
   ordering_something: "Ordering something",
   simple_past_tense_was_were: "Use of 'was/were' for Describing past events, states, or conditions.",
   simple_past_tense: "Use of The Simple Past Tense: Expressing actions, events, or situations that started and finished at a specific time in the past.",
+  simple_present_for_future: "The Simple Present for the future: Expressing scheduled or regular events in the future.",
   possessive_adjective: "Possessive 's: Indicating ownership or relationship.",
   possessive_pronouns: "Use of Possessive Pronouns: Showing ownership.",
   present_progressive: "Present Progressive Tense",
@@ -14132,7 +14737,9 @@ window.LEAGUE_OF_LISTENING_FUNCTIONS = Object.freeze({
   use_of_wh_questions_what_time: "Use of Wh- Questions (What Time)",
   use_of_wh_questions_why_when: "Use of Wh- Questions (Why, When): Asking for reasons or time-related information about events, actions, or situations.",
   use_of_wh_questions_who_what: "Use of Wh- Questions (Who, What)",
+  use_of_wh_questions_which: "Wh Questions (Which): Asking for specific information or making distinctions.",
   use_of_wh_questions_whose: "Use of Wh- Questions (Whose): Requesting information about belongings or association.",
   use_of_wh_questions_who_when_what_where: "Use of wh- questions (who-when-what-where)"
+
 
 });
