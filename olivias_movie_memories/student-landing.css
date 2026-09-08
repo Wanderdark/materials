@@ -844,3 +844,493 @@ body.omm-landing-active #override-replay-button {
     display: none;
   }
 }
+
+@media (max-width: 900px) {
+  body.omm-landing-active .app-shell,
+  body.omm-game-active .app-shell {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .omm-landing-grid {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+  }
+
+  .omm-hero {
+    order: -1;
+    height: clamp(250px, 68vw, 340px);
+    min-height: 0;
+  }
+
+  .omm-hero img {
+    object-position: 54% 48%;
+  }
+
+  .omm-landing-copy {
+    padding: 28px 22px 24px;
+  }
+
+  .omm-landing-copy h1 {
+    margin-bottom: 20px;
+    white-space: normal;
+  }
+
+  .omm-action {
+    min-height: 70px;
+    padding: 12px 14px;
+  }
+
+  .omm-action-title {
+    font-size: 1.2rem;
+  }
+
+  .omm-daily-board {
+    order: 2;
+    width: auto;
+    margin: 0 14px 18px;
+    padding: 16px;
+  }
+
+  body.omm-game-active #game-screen {
+    min-height: calc(100dvh - 24px);
+  }
+
+  body.omm-game-active .game-header {
+    position: sticky;
+    z-index: 12;
+    top: 0;
+    align-items: center;
+    margin: -12px -12px 12px;
+    padding: 10px 12px;
+    background: rgba(7, 17, 38, .96);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .2);
+  }
+
+  body.omm-game-active .game-toolbar {
+    flex: 0 0 auto;
+  }
+
+  .round-progress.omm-daily-game-header {
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+  }
+
+  #omm-daily-game-tasks {
+    display: block;
+  }
+
+  .omm-daily-game-title {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .round-progress.omm-daily-game-header .omm-daily-game-title strong {
+    font-size: 1.2rem;
+  }
+
+  .omm-daily-game-list {
+    display: none;
+  }
+
+  body.omm-game-active .game-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  body.omm-game-active .listening-stage {
+    order: 1;
+    min-height: 0;
+    padding: 12px;
+  }
+
+  body.omm-game-active .turn-panel {
+    order: 2;
+    min-height: 0;
+    padding: 16px;
+  }
+
+  body.omm-game-active .video-wrap {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  body.omm-game-active .video-wrap video {
+    max-height: none;
+  }
+
+  body.omm-game-active .stage-topline,
+  body.omm-game-active .video-controls {
+    margin-bottom: 9px;
+  }
+
+  body.omm-game-active .video-action-controls {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body.omm-game-active .video-action-controls button {
+    min-height: 48px;
+  }
+
+  body.omm-game-active .status-note {
+    display: none;
+  }
+
+  body.omm-game-active .active-student-avatar {
+    width: 60px;
+    margin-bottom: 8px;
+  }
+
+  body.omm-game-active #active-student-name {
+    margin: 0 0 14px;
+    font-size: 2rem;
+  }
+
+  body.omm-game-active .appearing-label,
+  body.omm-game-active .video-function {
+    margin-top: 16px;
+  }
+
+  body.omm-game-active .dialogue-characters {
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  body.omm-game-active .dialogue-character {
+    flex: 0 0 58px;
+    width: 58px;
+  }
+
+  body.omm-game-active .video-function strong {
+    font-size: .8rem;
+    line-height: 1.3;
+  }
+
+  body.omm-game-active .joker-deck {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 16px;
+  }
+
+  body.omm-game-active .joker-button {
+    min-height: 62px;
+  }
+
+  body.omm-game-active .answer-panel {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  body.omm-game-active .answer-card {
+    min-height: 72px;
+    padding: 13px;
+    font-size: 1rem;
+  }
+
+  body.omm-game-active .decision-overlay {
+    gap: 10px;
+    padding: 14px;
+  }
+
+  body.omm-game-active .decision-overlay .subtitle-choice {
+    width: min(100%, 420px);
+    padding: 15px;
+  }
+
+  #omm-book {
+    padding: 8px;
+  }
+
+  #omm-book .omm-book-card {
+    display: flex;
+    width: 100%;
+    height: calc(100dvh - 16px);
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  #omm-book .omm-book-head {
+    padding: 4px 6px 8px;
+  }
+
+  #omm-book .omm-book-head h2 {
+    font-size: 2rem;
+  }
+
+  .omm-book-chapter-nav {
+    flex: 0 0 auto;
+    padding: 0 2px 8px;
+  }
+
+  .omm-book-stage {
+    display: grid;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    flex: 1 0 auto;
+    grid-template-columns: 1fr auto 1fr;
+    align-self: stretch;
+    aspect-ratio: auto;
+    background: none;
+  }
+
+  .omm-book-page-title {
+    position: static;
+    width: 100%;
+    grid-column: 1 / -1;
+    padding: 12px 0 10px;
+    transform: none;
+    color: var(--gold);
+    text-shadow: none;
+  }
+
+  .omm-book-page-title span {
+    font-size: 1.1rem;
+  }
+
+  .omm-book-page-title small {
+    color: var(--muted);
+    font-size: .64rem;
+  }
+
+  .omm-book-pages {
+    position: static;
+    display: grid;
+    width: 100%;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0 6px 14px;
+  }
+
+  .omm-memory-slot {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    min-height: 0;
+    transform: none !important;
+  }
+
+  .omm-memory-empty {
+    display: none;
+  }
+
+  .omm-memory-caption {
+    display: block;
+    font-size: .62rem;
+  }
+
+  .omm-book-turn {
+    position: static;
+    width: 46px;
+    height: 46px;
+    margin: 0 6px 14px;
+    transform: none;
+  }
+
+  .omm-book-turn-prev {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .omm-book-turn-next {
+    top: auto;
+    right: auto;
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
+@media (max-width: 900px) and (orientation: portrait) {
+  body.omm-game-active #game-screen {
+    position: relative;
+    display: grid;
+    min-height: calc(100dvh - 24px);
+    place-content: center;
+    overflow: hidden;
+    padding: 28px;
+    text-align: center;
+  }
+
+  body.omm-game-active #game-screen > * {
+    display: none !important;
+  }
+
+  body.omm-game-active #game-screen::before {
+    display: grid;
+    width: 82px;
+    height: 82px;
+    place-items: center;
+    margin: 0 auto 20px;
+    border: 1px solid rgba(244, 169, 64, .7);
+    border-radius: 24px;
+    color: var(--gold);
+    background: rgba(20, 45, 87, .78);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .3);
+    content: "↻";
+    font-size: 3.3rem;
+    font-weight: 700;
+  }
+
+  body.omm-game-active #game-screen::after {
+    display: block;
+    max-width: 270px;
+    color: var(--text);
+    content: "TURN YOUR PHONE\A\A Rotate your device sideways to play Olivia’s Movie Memories.";
+    font: 900 1.8rem/1 "Barlow Condensed", sans-serif;
+    letter-spacing: .05em;
+    white-space: pre-line;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  body.omm-game-active .app-shell {
+    padding: 8px 12px;
+  }
+
+  body.omm-game-active #game-screen {
+    min-height: calc(100dvh - 16px);
+  }
+
+  body.omm-game-active .game-header {
+    min-height: 42px;
+    margin: -8px -12px 8px;
+    padding: 6px 12px;
+  }
+
+  body.omm-game-active .icon-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.25rem;
+  }
+
+  body.omm-game-active .music-control {
+    width: 24px;
+    height: 24px;
+  }
+
+  .round-progress.omm-daily-game-header .omm-daily-game-title span {
+    font-size: .57rem;
+  }
+
+  .round-progress.omm-daily-game-header .omm-daily-game-title strong {
+    font-size: 1rem;
+  }
+
+  body.omm-game-active .game-layout {
+    position: relative;
+    display: block;
+    height: calc(100dvh - 58px);
+    overflow: hidden;
+  }
+
+  body.omm-game-active .turn-panel {
+    position: absolute;
+    z-index: 8;
+    top: 6px;
+    right: 6px;
+    display: block;
+    width: auto;
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  body.omm-game-active .turn-panel > :not(.joker-deck) {
+    display: none !important;
+  }
+
+  body.omm-game-active .listening-stage {
+    min-height: 0;
+    height: 100%;
+  }
+
+  body.omm-game-active .listening-stage {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  body.omm-game-active .video-wrap {
+    min-height: 0;
+    flex: 1 1 auto;
+    aspect-ratio: auto;
+  }
+
+  body.omm-game-active .stage-topline,
+  body.omm-game-active .video-controls {
+    flex: 0 0 auto;
+    margin-bottom: 7px;
+    font-size: .65rem;
+  }
+
+  body.omm-game-active .video-action-controls button {
+    min-height: 38px;
+    padding: 0 9px;
+    font-size: .72rem;
+  }
+
+  body.omm-game-active .joker-deck {
+    display: grid;
+    width: 156px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    margin: 0;
+    border: 1px solid rgba(187, 214, 255, .22);
+    border-radius: 10px;
+    padding: 4px;
+    background: rgba(7, 17, 38, .86);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .24);
+    backdrop-filter: blur(8px);
+  }
+
+  body.omm-game-active .joker-heading {
+    min-height: 14px;
+    font-size: .42rem;
+    letter-spacing: .06em;
+  }
+
+  body.omm-game-active .joker-heading strong {
+    padding: 2px 4px;
+    font-size: .42rem;
+  }
+
+  body.omm-game-active .joker-button {
+    min-height: 33px;
+    padding: 2px;
+    border-radius: 7px;
+  }
+
+  body.omm-game-active .joker-button > span {
+    font-size: .76rem;
+  }
+
+  body.omm-game-active .joker-button strong {
+    display: none;
+  }
+
+  body.omm-game-active .joker-button small {
+    display: none;
+  }
+
+  body.omm-game-active .answer-card {
+    min-height: 58px;
+    padding: 9px 12px;
+    font-size: .85rem;
+  }
+}

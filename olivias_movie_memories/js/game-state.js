@@ -6,7 +6,7 @@ function createGameState({ groups, groupNames, itemPicker, roundLimit }) {
   return {
     groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", score: 0 })) })),
     itemPicker, round: 1, roundLimit, groupIndex: 0, studentIndexes: groups.map(() => 0), turnsInRound: 0,
-    question: null, difficulty: null, videoPlays: 0, subtitlesShown: false, answered: false, doubleOrNothing: false, phase: "announce", timerId: null, secondsLeft: GAME_CONFIG.answerSeconds
+    question: null, difficulty: null, videoPlays: 0, subtitlesShown: false, answered: false, doubleOrNothing: false, slowTime: false, phase: "announce", timerId: null, secondsLeft: GAME_CONFIG.answerSeconds
   };
 }
 
@@ -16,7 +16,7 @@ function activePlayer(state) {
 }
 
 function startQuestion(state) {
-  state.question = state.itemPicker(); state.difficulty = null; state.videoPlays = 0; state.subtitlesShown = false; state.answered = false; state.doubleOrNothing = false; state.secondsLeft = GAME_CONFIG.answerSeconds; state.phase = "video";
+  state.question = state.itemPicker(); state.difficulty = null; state.videoPlays = 0; state.subtitlesShown = false; state.answered = false; state.doubleOrNothing = false; state.slowTime = false; state.secondsLeft = GAME_CONFIG.answerSeconds; state.phase = "video";
   return state.question;
 }
 

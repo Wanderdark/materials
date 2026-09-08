@@ -1,6 +1,6 @@
 (() => {
 window.LeagueListening = window.LeagueListening || {};
-const JOKER_TYPES = Object.freeze(["echo", "timeFreeze", "doubleOrNothing"]);
+const JOKER_TYPES = Object.freeze(["echo", "timeFreeze", "doubleOrNothing", "slowTime"]);
 
 function createJokerState() {
   return { remaining: window.LeagueListening.GAME_CONFIG.jokersPerRound, used: [] };
@@ -10,7 +10,7 @@ function activeJokerState(state) { return state?.groups?.[state.groupIndex]?.jok
 
 function canUseJoker(state, type) {
   const jokers = activeJokerState(state);
-  return Boolean(jokers && JOKER_TYPES.includes(type) && jokers.remaining > 0 && !jokers.used.includes(type));
+  return Boolean(jokers && JOKER_TYPES.includes(type) && jokers.remaining > 0);
 }
 
 function consumeJoker(state, type) {
