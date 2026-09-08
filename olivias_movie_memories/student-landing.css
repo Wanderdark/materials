@@ -1200,16 +1200,32 @@ body.omm-landing-active #override-replay-button {
   }
 
   body.omm-game-active #game-screen {
-    display: grid;
+    position: relative;
+    display: block;
     min-height: 0;
     height: calc(100dvh - 16px);
-    grid-template-rows: auto minmax(0, 1fr);
   }
 
   body.omm-game-active .game-header {
-    min-height: 42px;
-    margin: 0 0 8px;
-    padding: 6px 0;
+    position: absolute;
+    z-index: 12;
+    top: 10px;
+    left: 10px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  body.omm-game-active .game-header .game-toolbar {
+    display: block;
+  }
+
+  body.omm-game-active .game-header .game-toolbar > :not(#exit-game-button),
+  body.omm-game-active .game-header .round-progress,
+  body.omm-game-active .game-header .scoreboard {
+    display: none !important;
   }
 
   body.omm-game-active .icon-button {
@@ -1235,7 +1251,7 @@ body.omm-landing-active #override-replay-button {
     position: relative;
     display: block;
     min-height: 0;
-    height: auto;
+    height: 100%;
     flex: none;
     overflow: hidden;
   }
@@ -1243,8 +1259,8 @@ body.omm-landing-active #override-replay-button {
   body.omm-game-active .turn-panel {
     position: absolute;
     z-index: 8;
-    top: 42px;
-    right: 6px;
+    top: 10px;
+    right: 10px;
     display: block;
     width: auto;
     min-height: 0;
@@ -1268,26 +1284,50 @@ body.omm-landing-active #override-replay-button {
   body.omm-game-active .listening-stage {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: #000;
+    box-shadow: none;
   }
 
   body.omm-game-active .video-wrap {
     min-height: 0;
     flex: 1 1 auto;
     aspect-ratio: auto;
+    border-radius: 0;
   }
 
-  body.omm-game-active .stage-topline,
+  body.omm-game-active .stage-topline {
+    display: none;
+  }
+
   body.omm-game-active .video-controls {
-    flex: 0 0 auto;
-    margin-bottom: 7px;
-    font-size: .65rem;
+    position: absolute;
+    z-index: 7;
+    right: 14px;
+    bottom: 12px;
+    left: 14px;
+    display: block;
+    margin: 0;
+  }
+
+  body.omm-game-active .video-action-controls {
+    display: grid;
+    width: min(440px, 100%);
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0 auto;
   }
 
   body.omm-game-active .video-action-controls button {
-    min-height: 38px;
+    min-height: 42px;
     padding: 0 9px;
-    font-size: .72rem;
+    border-color: rgba(187, 214, 255, .36);
+    background: rgba(7, 17, 38, .86);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+    font-size: .78rem;
   }
 
   body.omm-game-active .joker-deck {
