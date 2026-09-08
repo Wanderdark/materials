@@ -1300,7 +1300,25 @@ body.omm-landing-active #override-replay-button {
   }
 
   body.omm-game-active .stage-topline {
+    position: absolute;
+    z-index: 8;
+    top: 10px;
+    right: 174px;
+    display: block;
+    margin: 0;
+  }
+
+  body.omm-game-active #watch-counter {
     display: none;
+  }
+
+  body.omm-game-active .answer-timer {
+    width: 36px;
+    height: 36px;
+    border-width: 1px;
+    background: rgba(7, 17, 38, .86);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .24);
+    font-size: .84rem;
   }
 
   body.omm-game-active .video-controls {
@@ -1328,6 +1346,19 @@ body.omm-landing-active #override-replay-button {
     background: rgba(7, 17, 38, .86);
     box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
     font-size: .78rem;
+  }
+
+  body.omm-game-active .answer-now-button:disabled {
+    opacity: 1;
+    border-color: rgba(187, 214, 255, .36);
+    color: rgba(244, 247, 255, .72);
+    background: rgba(7, 17, 38, .82);
+  }
+
+  body.omm-game-active .answer-now-button:not(:disabled) {
+    border-color: rgba(74, 222, 128, .9);
+    color: #f4fff7;
+    background: var(--green);
   }
 
   body.omm-game-active .joker-deck {
@@ -1413,6 +1444,43 @@ body.omm-landing-active #override-replay-button {
 
   body.omm-game-active .evidence-overlay p {
     font-size: clamp(1.1rem, 2vw, 1.85rem);
+  }
+
+  /* The feedback state replaces the regular replay / answer controls. */
+  body.omm-game-active .listening-stage:has(.feedback-panel:not([hidden])) .video-controls {
+    display: none;
+  }
+
+  body.omm-game-active .feedback-panel {
+    right: 12px;
+    bottom: 12px;
+    left: auto;
+    width: min(184px, 29vw);
+    padding: 10px;
+    border-radius: 11px;
+    transform: none;
+  }
+
+  body.omm-game-active .feedback-panel strong {
+    font-size: 1.3rem;
+  }
+
+  body.omm-game-active .feedback-panel p {
+    margin: 4px 0 8px;
+    font-size: .62rem;
+    line-height: 1.2;
+  }
+
+  body.omm-game-active .feedback-actions {
+    display: grid;
+    gap: 5px;
+  }
+
+  body.omm-game-active .feedback-actions .primary-button {
+    min-width: 0;
+    min-height: 32px;
+    padding: 0 7px;
+    font-size: .66rem;
   }
 
   body.omm-game-active .answer-card {
