@@ -1200,13 +1200,16 @@ body.omm-landing-active #override-replay-button {
   }
 
   body.omm-game-active #game-screen {
-    min-height: calc(100dvh - 16px);
+    display: grid;
+    min-height: 0;
+    height: calc(100dvh - 16px);
+    grid-template-rows: auto minmax(0, 1fr);
   }
 
   body.omm-game-active .game-header {
     min-height: 42px;
-    margin: -8px -12px 8px;
-    padding: 6px 12px;
+    margin: 0 0 8px;
+    padding: 6px 0;
   }
 
   body.omm-game-active .icon-button {
@@ -1231,14 +1234,16 @@ body.omm-landing-active #override-replay-button {
   body.omm-game-active .game-layout {
     position: relative;
     display: block;
-    height: calc(100dvh - 58px);
+    min-height: 0;
+    height: auto;
+    flex: none;
     overflow: hidden;
   }
 
   body.omm-game-active .turn-panel {
     position: absolute;
     z-index: 8;
-    top: 6px;
+    top: 42px;
     right: 6px;
     display: block;
     width: auto;
