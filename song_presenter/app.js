@@ -226,7 +226,21 @@
     els.library.classList.toggle("hidden", name !== "library");
     els.activity.classList.toggle("hidden", name !== "activity");
     els.complete.classList.toggle("hidden", name !== "complete");
+    updateMobileActivityLayout();
   }
+
+  const phoneViewport = window.matchMedia("(pointer: coarse) and (max-width: 600px), (pointer: coarse) and (max-height: 600px)");
+  const portraitViewport = window.matchMedia("(orientation: portrait)");
+  function updateMobileActivityLayout() {
+    const active = isStudentMode && phoneViewport.matches && !els.activity.classList.contains("hidden");
+    const turnPhone = active && portraitViewport.matches;
+    document.body.classList.toggle("mobile-student-activity", active);
+    $("phoneOrientationGate").hidden = !turnPhone;
+    els.activity.inert = turnPhone;
+  }
+  phoneViewport.addEventListener("change", updateMobileActivityLayout);
+  portraitViewport.addEventListener("change", updateMobileActivityLayout);
+  $("phoneOrientationBack").addEventListener("click", () => els.backButton.click());
 
   function updateStudentTrainingVideoLayout() {
     els.stages[2].classList.toggle("student-training-audio-only", isStudentMode && !videoSrc);

@@ -328,3 +328,56 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
   .pre-image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .activity-footer { grid-template-columns: 1fr 1fr; } .stage-status { display: none; }
 }
+
+/* Phone-only student activity; desktop and teacher layouts retain their defaults. */
+.phone-orientation-gate[hidden] { display: none; }
+.phone-orientation-gate { position: fixed; inset: 0; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px; background: var(--bg); text-align: center; }
+.phone-orientation-gate h1 { margin: 0; color: var(--yellow); font-family: var(--display); font-size: 42px; }
+.phone-orientation-gate p { margin: 0 0 12px; color: var(--muted); }
+.phone-turn-icon { display: grid; place-items: center; width: 100px; height: 58px; border: 4px solid var(--yellow); border-radius: 12px; color: var(--yellow); font-size: 44px; }
+body.mobile-student-activity { height: 100dvh; min-height: 0; overflow: hidden; }
+.mobile-student-activity .app-shell { width: 100%; height: 100dvh; min-height: 0; padding: max(6px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
+.mobile-student-activity .activity-screen { height: 100%; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; gap: 6px; }
+.mobile-student-activity .activity-header, .mobile-student-activity .sg-hud { display: none; }
+.mobile-student-activity .stage-card { border-radius: 14px; }
+.mobile-student-activity .pre-card { grid-template-columns: minmax(110px, 22%) minmax(0, 1fr); }
+.mobile-student-activity .pre-word-rail { padding: 6px; gap: 4px; border-right: 1px solid var(--line); border-bottom: 0; overflow: hidden; }
+.mobile-student-activity .pre-word-rail .panel-kicker { font-size: 9px; }
+.mobile-student-activity .pre-word-bank { flex: 1; min-height: 0; margin: 0; grid-template-columns: minmax(0, 1fr); grid-auto-rows: minmax(0, 1fr); gap: 3px; align-content: stretch; }
+.mobile-student-activity .pre-word-bank .word-chip { min-height: 0; padding: 1px 4px; border-radius: 7px; font-size: clamp(12px, 3.8dvh, 19px); letter-spacing: .02em; line-height: 1.05; overflow-wrap: anywhere; }
+.mobile-student-activity .pre-image-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; }
+.mobile-student-activity .pre-item { width: 100%; min-width: 0; grid-template-rows: minmax(0, 1fr) 28px; gap: 3px; justify-self: stretch; }
+.mobile-student-activity .pre-visual { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 9px; }
+.mobile-student-activity .pre-visual img { min-height: 0; }
+.mobile-student-activity .pre-visual.tr-card { padding: 4px; gap: 3px; }
+.mobile-student-activity .pre-visual.tr-card p { font-size: clamp(14px, 4dvh, 22px); }
+.mobile-student-activity .pre-slot { min-height: 0; padding: 1px 3px; border-radius: 7px; font-size: clamp(12px, 3.6dvh, 18px); letter-spacing: .01em; line-height: 1; overflow-wrap: anywhere; }
+.mobile-student-activity .activity-footer { grid-template-columns: 1fr 1fr; gap: 8px; padding-left: 46px; }
+.mobile-student-activity .activity-footer button { min-width: 0; min-height: 36px; padding: 7px 12px; font-size: 12px; }
+.mobile-student-activity .stage-status { display: none; }
+.mobile-student-activity .corner-menu-return-button { top: auto; bottom: max(6px, env(safe-area-inset-bottom)); left: max(8px, env(safe-area-inset-left)); right: auto; width: 36px; height: 36px; }
+.mobile-student-activity .during-card { grid-template-columns: minmax(0, 32%) minmax(0, 1fr); }
+.mobile-student-activity .player-rail, .mobile-student-activity .lyrics-rail { padding: 8px; gap: 5px; min-width: 0; }
+.mobile-student-activity .player-rail { overflow-y: auto; border-bottom: 0; }
+.mobile-student-activity .player-visual { width: 100%; max-height: 30dvh; }
+.mobile-student-activity .player-song-title { font-size: 20px; }
+.mobile-student-activity .player-song-artist { font-size: 11px; }
+.mobile-student-activity .player-buttons { gap: 6px; }
+.mobile-student-activity .player-button, .mobile-student-activity .player-button.play { width: 36px; height: 36px; flex-shrink: 0; font-size: 17px; }
+.mobile-student-activity .player-button.video-btn { font-size: 11px; }
+.mobile-student-activity .during-word-bank { flex-wrap: wrap; gap: 4px; padding: 4px; }
+.mobile-student-activity .during-word-bank .word-chip { flex: 1 1 20%; min-height: 28px; font-size: 13px; }
+.mobile-student-activity .lyrics-box { max-height: none; }
+.mobile-student-activity .lyrics-kicker { margin-top: 0; font-size: 9px; }
+.mobile-student-activity .during-card.karaoke-mode { grid-template-columns: minmax(0, 1fr); }
+.mobile-student-activity .during-card.karaoke-mode .player-visual { max-height: none; }
+.mobile-student-activity .training-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.mobile-student-activity .student-training-audio-only .training-card { grid-template-columns: minmax(0, 1fr); }
+.mobile-student-activity .training-video-wrap { padding: 8px; }
+.mobile-student-activity .training-video-wrap video { max-height: 75dvh; }
+.mobile-student-activity .training-panel { padding: 10px; gap: 8px; min-height: 0; overflow-y: auto; }
+.mobile-student-activity .training-prompt { font-size: 12px; }
+.mobile-student-activity .training-line { min-height: 0; font-size: clamp(18px, 5.5dvh, 28px); }
+.mobile-student-activity .training-choices { gap: 6px; }
+.mobile-student-activity .training-choice { min-height: 36px; padding: 5px; font-size: 14px; }
+.mobile-student-activity .training-rehear { padding: 7px 10px; font-size: 11px; }
