@@ -338,7 +338,15 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 body.mobile-student-activity { height: 100dvh; min-height: 0; overflow: hidden; }
 .mobile-student-activity .app-shell { width: 100%; height: 100dvh; min-height: 0; padding: max(6px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
 .mobile-student-activity .activity-screen { height: 100%; min-height: 0; grid-template-rows: minmax(0, 1fr) auto; gap: 6px; }
-.mobile-student-activity .activity-header, .mobile-student-activity .sg-hud { display: none; }
+.mobile-student-activity .activity-header { display: none; }
+.mobile-student-activity .sg-hud { bottom: max(5px, env(safe-area-inset-bottom)); left: max(172px, calc(env(safe-area-inset-left) + 164px)); z-index: 91; gap: 6px; padding: 4px 9px 4px 5px; }
+.mobile-student-activity:has(#prevStageButton.invisible) .sg-hud { left: max(52px, calc(env(safe-area-inset-left) + 44px)); }
+.mobile-student-activity .sg-hud .sg-ava { width: 30px; height: 30px; }
+.mobile-student-activity .sg-hud .sg-ava img { border-width: 1px; }
+.mobile-student-activity .sg-hud .sg-ava .sg-alert { top: -2px; right: -2px; width: 9px; height: 9px; border-width: 1px; }
+.mobile-student-activity .sg-hud .sg-name { max-width: 68px; font-size: 10px; }
+.mobile-student-activity .sg-hud .sg-points { font-size: 16px; }
+.mobile-student-activity .sg-hud .sg-rank-mini { width: 22px; height: 22px; }
 .mobile-student-activity .stage-card { border-radius: 14px; }
 .mobile-student-activity .pre-card { grid-template-columns: minmax(110px, 22%) minmax(0, 1fr); }
 .mobile-student-activity .pre-word-rail { padding: 6px; gap: 4px; border-right: 1px solid var(--line); border-bottom: 0; overflow: hidden; }
