@@ -536,6 +536,39 @@
         ]
       },
           ],
+    "5:0": [
+      {
+        id: "school-subjects",
+        title: "School Subjects",
+        words: ["ART", "DRAMA", "SCIENCE"]
+      },
+      {
+        id: "daily-routines-school-activities",
+        title: "Daily Routines & School Activities",
+        words: [
+          "GET UP", "FOLDER", "STAPLER", "PRINTER", "HEADPHONES", "RUBBISH BIN", "CALCULATOR", "SPEAKER", "HIGHLIGHTER",
+          "TALENT SHOW", "CLUB MEETINGS", "LEARN NEW WORDS", "READ", "WRITE", "DO EXPERIMENTS", "DRAW PICTURES", "TALK", "LISTEN", "LOOK", "CHECK"
+        ]
+      },
+      {
+        id: "appearance-personality",
+        title: "Appearance & Personality",
+        words: ["FAT", "TALL", "THIN", "SHORT", "KIND", "FRIENDLY", "FUNNY", "CLEVER"]
+      },
+      {
+        id: "clothing-preferences",
+        title: "Clothing & Preferences",
+        words: [
+          "COAT", "BOOTS", "GLOVES", "CARDIGAN", "SCARF", "TRAINERS", "SLIPPERS", "DRESS", "SANDALS", "SUNGLASSES",
+          "FLIP FLOPS", "HOODIE", "RAINCOAT", "UMBRELLA"
+        ]
+      },
+      {
+        id: "time-seasons",
+        title: "Time & Seasons",
+        words: ["SUMMER", "WINTER", "AUTUMN", "SPRING"]
+      }
+    ],
     "5:1": [
       {
         id: "school-clubs",

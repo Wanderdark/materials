@@ -9,6 +9,63 @@
 // [8] direct Turkish meaning; [9] example sentence; [10] Turkish example sentence.
 
 const QUESTIONS = [
+// ─── GRADE 5 REVISION 1 ──────────────────────────────────────────────────────────
+["A school subject about drawing and creating","Çizim ve yaratıcı çalışmalarla ilgili bir okul dersi","ART",5,1,0,"../images/5/2/53.webp",[],"GÖRSEL SANATLAR","We have art on Monday.","Pazartesi günü görsel sanatlar dersimiz var."],
+["A school subject about acting","Oyunculukla ilgili bir okul dersi","DRAMA",5,1,0,"../images/5/2/15.webp",[],"DRAMA","I like acting in drama class.","Drama dersinde oyunculuk yapmayı seviyorum."],
+["A school subject about nature and experiments","Doğa ve deneylerle ilgili bir okul dersi","SCIENCE",5,2,0,"../images/5/2/6.webp",[],"FEN","We do experiments in science class.","Fen dersinde deneyler yaparız."],
+["Leave your bed after sleeping","Uyuduktan sonra yataktan kalkmak","GET UP",5,1,0,"../func_presenter/images/daily-routines/getup.webp",[],"UYANMAK","I get up at seven.","Saat yedide kalkarım."],
+["Something used to keep papers together","Kağıtları bir arada tutmak için kullanılan şey","FOLDER",5,3,0,"../images/8/5/28.webp",[],"KLASÖR","My worksheets are in this folder.","Çalışma kağıtlarım bu klasörde."],
+["A tool that joins papers together","Kağıtları birbirine tutturmak için kullanılan araç","STAPLER",5,3,0,"../images/5/0/2.webp",[],"TEL ZIMBA","Can I use your stapler?","Tel zımbanı kullanabilir miyim?"],
+["A machine that prints things on paper","Kağıda bir şeyler basan makine","PRINTER",5,1,0,"../images/8/5/17.webp",[],"YAZICI","The printer is next to the computer.","Yazıcı bilgisayarın yanında."],
+["You wear them to listen privately","Sesi yalnızca kendin dinlemek için taktığın şey","HEADPHONES",5,2,0,"../images/8/5/10.webp",[],"KULAKLIK","I listen to music with my headphones.","Kulaklığımla müzik dinlerim."],
+["A container for things you throw away","Çöpe attığın şeyler için kullanılan kutu","RUBBISH BIN",5,2,0,"../images/5/2/59.webp",[],"ÇÖP KUTUSU","Put the paper in the rubbish bin.","Kağıdı çöp kutusuna at."],
+["A small machine for doing maths","Matematik işlemleri yapmak için kullanılan küçük makine","CALCULATOR",5,3,0,"../images/5/0/3.webp",[],"HESAP MAKİNESİ","I use a calculator for this problem.","Bu problem için hesap makinesi kullanıyorum."],
+["A device that produces sound","Ses çıkaran bir cihaz","SPEAKER",5,2,0,"../images/8/5/14.webp",[],"HOPARLÖR","The music comes from the speaker.","Müzik hoparlörden geliyor."],
+["A bright pen used to mark words","Kelimeleri işaretlemek için kullanılan parlak renkli kalem","HIGHLIGHTER",5,3,0,"../images/5/0/4.webp",[],"FOSFORLU KALEM","Mark the important words with a highlighter.","Önemli kelimeleri fosforlu kalemle işaretle."],
+["A show where people show their talents","İnsanların yeteneklerini gösterdiği bir gösteri","TALENT SHOW",5,3,0,"../images/7/1/36.webp",[],"YETENEK GÖSTERİSİ","Ella sings at the talent show.","Ella yetenek gösterisinde şarkı söylüyor."],
+["Meetings for members of a school club","Bir okul kulübünün üyeleri için yapılan toplantılar","CLUB MEETINGS",5,2,0,"../func_presenter/images/simple-present-like/06-school-club.webp",[],"KULÜP TOPLANTILARI","Our club meetings are on Fridays.","Kulüp toplantılarımız cuma günleri."],
+["Study words you did not know before","Daha önce bilmediğin kelimeleri öğrenmek","LEARN NEW WORDS",5,3,0,"../images/6/6/english.webp",[],"YENİ KELİMELER ÖĞRENMEK","I learn new words in English class.","İngilizce dersinde yeni kelimeler öğrenirim."],
+["Look at and understand written words","Yazılı kelimelere bakıp onları anlamak","READ",5,1,0,"../func_presenter/images/simple-present-like/01-reading-books.webp",[],"OKUMAK","I read a book every evening.","Her akşam kitap okurum."],
+["Make words or sentences with a pen","Kalemle kelime veya cümleler yazmak","WRITE",5,1,0,"../func_presenter/images/common/write-diary-mia-13-1.webp",[],"YAZMAK","I write in my diary every night.","Her gece günlüğüme yazarım."],
+["Do scientific tests to learn something","Bir şey öğrenmek için bilimsel deneyler yapmak","DO EXPERIMENTS",5,3,0,"../func_presenter/images/simple-present-like/emma-experiment.webp",[],"DENEY YAPMAK","We do experiments in science class.","Fen dersinde deney yaparız."],
+["Make pictures with a pencil or pen","Kalemle resimler yapmak","DRAW PICTURES",5,2,0,"../images/5/3/59.webp",[],"RESİM ÇİZMEK","I draw pictures in art class.","Görsel sanatlar dersinde resim çizerim."],
+["Speak to someone","Biriyle konuşmak","TALK",5,2,0,"../images/8/4/1.webp",[],"KONUŞMAK","I talk to my friends at school.","Okulda arkadaşlarımla konuşurum."],
+["Pay attention to sounds","Seslere dikkat ederek dinlemek","LISTEN",5,2,0,"../images/5/4/33.webp",[],"DİNLEMEK","Listen to your teacher carefully.","Öğretmenini dikkatlice dinle."],
+["Turn your eyes towards something","Gözlerini bir şeye doğru çevirmek","LOOK",5,2,0,"../images/5/0/1.webp",[],"BAKMAK","Look at the smartboard.","Akıllı tahtaya bak."],
+["Look at something to see if it is correct","Bir şeyin doğru olup olmadığını görmek için kontrol etmek","CHECK",5,3,0,"../images/7/6/7.webp",[],"KONTROL ETMEK","Check your answers before you finish.","Bitirmeden önce cevaplarını kontrol et."],
+
+["Having a large and heavy body","Büyük ve ağır bir vücuda sahip","FAT",5,2,0,"../images/7/1/8.webp",[],"ŞİŞMAN","The cat is short and fat.","Kedi kısa ve şişman."],
+["Having more than average height","Ortalamadan daha uzun boylu","TALL",5,1,0,"../images/5/0/5.webp",[],"UZUN BOYLU","My brother is very tall.","Erkek kardeşim çok uzun boylu."],
+["Having little fat on the body","Vücudunda az yağ bulunan","THIN",5,2,0,"../images/7/1/11.webp",[],"İNCE YAPILI","He is tall and thin.","O uzun boylu ve ince yapılı."],
+["Not tall","Uzun boylu olmayan","SHORT",5,1,0,"../images/5/0/6.webp",[],"KISA","She is short with brown hair.","O kısa boylu ve kahverengi saçlı."],
+
+["Nice and helpful to other people","Başkalarına karşı iyi ve yardımsever","KIND",5,2,0,"../func_presenter/images/personality/chloe.webp",[],"NAZİK","Chloe is kind to everyone.","Chloe herkese karşı naziktir."],
+["Kind and pleasant to other people","Başkalarına karşı sıcak ve arkadaş canlısı","FRIENDLY",5,1,0,"../images/7/1/22.webp",[],"ARKADAŞ CANLISI","Our new student is very friendly.","Yeni öğrencimiz çok arkadaş canlısı."],
+["Making people laugh","İnsanları güldüren","FUNNY",5,1,0,"../func_presenter/images/personality/benjamin.webp",[],"KOMİK","Benjamin is funny and friendly.","Benjamin komik ve arkadaş canlısıdır."],
+["Good at learning and understanding things","Bir şeyleri öğrenmede ve anlamada iyi","CLEVER",5,3,0,"../images/7/1/17.webp",[],"AKILLI","Emma is a clever student.","Emma akıllı bir öğrencidir."],
+
+["A warm piece of clothing worn outside","Dışarıda giyilen sıcak tutan bir kıyafet","COAT",5,2,0,"../images/5/3/27.webp",[],"PALTO","I wear my coat in winter.","Kışın paltomu giyerim."],
+["Strong shoes that cover your ankles","Ayak bileklerini örten sağlam ayakkabılar","BOOTS",5,1,0,"../images/5/0/7.webp",[],"BOT","I wear boots when it snows.","Kar yağdığında bot giyerim."],
+["Clothes you wear on your hands","Ellerine giydiğin kıyafet","GLOVES",5,2,0,"../images/7/2/18.webp",[],"ELDİVEN","My gloves keep my hands warm.","Eldivenlerim ellerimi sıcak tutar."],
+["A warm sweater that opens at the front","Önden açılan sıcak tutan bir hırka","CARDIGAN",5,3,0,"../images/5/0/8.webp",[],"HIRKA","She is wearing a blue cardigan.","O mavi bir hırka giyiyor."],
+["A piece of clothing worn around your neck","Boynunun etrafına taktığın bir giysi","SCARF",5,3,0,"../images/5/3/31.webp",[],"ATKI","I wear a scarf on cold days.","Soğuk günlerde atkı takarım."],
+["Shoes for sports and everyday activities","Spor ve günlük etkinlikler için kullanılan ayakkabılar","TRAINERS",5,3,0,"../images/6/3/60.webp",[],"SPOR AYAKKABISI","I wear trainers at the weekend.","Hafta sonu spor ayakkabısı giyerim."],
+["Soft shoes worn inside the house","Evin içinde giyilen yumuşak ayakkabılar","SLIPPERS",5,1,0,"../images/5/3/76.webp",[],"TERLİK","I wear slippers at home.","Evde terlik giyerim."],
+["A piece of clothing for the whole body","Tüm vücudu örten tek parça kıyafet","DRESS",5,2,0,"../images/5/3/29.webp",[],"ELBİSE","She is wearing a pink dress.","O pembe bir elbise giyiyor."],
+["Open shoes worn in warm weather","Sıcak havalarda giyilen açık ayakkabılar","SANDALS",5,2,0,"../images/5/0/1.webp",[],"TERLİK","I wear sandals in summer.","Yazın sandalet giyerim."],
+["Dark glasses that protect your eyes from sunlight","Gözlerini güneş ışığından koruyan koyu renkli gözlük","SUNGLASSES",5,2,0,"../images/5/3/39.webp",[],"GÜNEŞ GÖZLÜĞÜ","I wear sunglasses on sunny days.","Güneşli günlerde güneş gözlüğü takarım."],
+["Open shoes with a strap between your toes","Parmaklarının arasından geçen bantlı açık terlik","FLIP FLOPS",5,3,0,"../images/5/0/10.webp",[],"PARMAK ARASI TERLİK","I wear flip flops at the beach.","Plajda parmak arası terlik giyerim."],
+["A casual top with a hood","Kapüşonu olan günlük bir üst","HOODIE",5,3,0,"../images/5/3/75.webp",[],"KAPİŞONLU","He is wearing a grey hoodie.","O gri bir kapüşonlu giyiyor."],
+["A coat that keeps you dry in rain","Yağmurda kuru kalmanı sağlayan bir kıyafet","RAINCOAT",5,2,0,"../images/5/0/11.webp",[],"YAĞMURLUK","Take your raincoat because it is raining.","Yağmur yağdığı için yağmurluğunu al."],
+["You hold it over you in the rain","Yağmurda üzerinde tuttuğun şey","UMBRELLA",5,3,0,"../images/5/0/12.webp",[],"ŞEMSİYE","I need my umbrella today.","Bugün şemsiyeme ihtiyacım var."],
+
+["The warmest season of the year","Yılın en sıcak mevsimi","SUMMER",5,1,0,"../func_presenter/images/expressing-preferences/summer.webp",[],"YAZ","I love swimming in summer.","Yazın yüzmeyi severim."],
+["The coldest season of the year","Yılın en soğuk mevsimi","WINTER",5,1,0,"../func_presenter/images/expressing-preferences/winter.webp",[],"KIŞ","It often snows in winter.","Kışın sık sık kar yağar."],
+["The season between summer and winter","Yaz ile kış arasındaki mevsim","AUTUMN",5,3,0,"../func_presenter/images/expressing-preferences/autumn.webp",[],"SONBAHAR","Leaves fall from trees in autumn.","Sonbaharda yapraklar ağaçlardan düşer."],
+["The season between winter and summer","Kış ile yaz arasındaki mevsim","SPRING",5,2,0,"../func_presenter/images/expressing-preferences/spring.webp",[],"İLKBAHAR","Flowers grow in spring.","İlkbaharda çiçekler büyür."],
+
+// ─── GRADE 5 REVISION 2 ──────────────────────────────────────────────────────────
+// ["English definition","Turkish definition","ART",5,1,9,"../images/5/2/53.webp",[],"GÖRSEL SANATLAR","Example sentence English","Example sentence Turkish"],
 
 // ─── GRADE 5 THEME 1 ──────────────────────────────────────────────────────────
 ["A person who helps in an office","Ofiste yardımcı olan kişi","SECRETARY",5,1,1,"../images/6/6/2.webp",[],"SEKRETER","The school secretary helped David find the headmaster's office.","Okul sekreteri, David'in müdürün odasını bulmasına yardım etti."],

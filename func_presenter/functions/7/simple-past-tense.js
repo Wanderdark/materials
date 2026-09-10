@@ -1,3 +1,60 @@
+const makeSimplePastWatchItem = ([id, speakers, videoFile, lines]) => ({
+  id,
+  speakers,
+  videoDialogue: {
+    title: "WATCH, THEN COMPLETE THE DIALOGUE",
+    videoUrl: `https://media.adilhoca.com/video/${videoFile}.mp4`,
+    lines: lines.map(([speaker, parts]) => ({
+      speaker,
+      parts: parts.map((part) => Array.isArray(part)
+        ? { answer: part[0], choices: part[1] }
+        : { text: part })
+    }))
+  }
+});
+
+const simplePastWatchAndCompleteItems = [
+  ["fun_hannah_emma2", ["HANNAH", "EMMA"], "fun_hannah_emma2", [["HANNAH", ["We’re almost there."]], ["EMMA", ["You ", ["said", ["say", "said"]], " that ten minutes ago."]], ["HANNAH", ["And we’re ten minutes closer."]]]],
+  ["6_life_in_the_world_ella_olivia", ["ELLA", "OLIVIA"], "6_life_in_the_world_ella_olivia", [["OLIVIA", ["How ", ["was", ["is", "was"]], " Italy last summer?"]], ["ELLA", ["Amazing, I ", ["sang", ["sang", "singed"]], " at a street festival."]], ["OLIVIA", ["Really?"]]]],
+  ["6_life_in_the_world_emma_hannah", ["EMMA", "HANNAH"], "6_life_in_the_world_emma_hannah", [["EMMA", ["Why ", ["did", ["did", "was"]], " you bring an umbrella?"]], ["HANNAH", ["It ", ["rained", ["rain", "rained"]], " yesterday."]]]],
+  ["6_life_in_the_world_david_ethan", ["DAVID", "ETHAN"], "6_life_in_the_world_david_ethan", [["DAVID", ["I ", ["went", ["goed", "went"]], " to Egypt last summer."]], ["ETHAN", ["What ", ["did", ["did", "were"]], " you do there?"]], ["DAVID", ["I ", ["rode", ["was ride", "rode"]], " a camel!"]]]],
+  ["6_life_in_the_world_daniel_lucas", ["DANIEL", "LUCAS"], "6_life_in_the_world_daniel_lucas", [["DANIEL", ["How ", ["was", ["is", "was"]], " Greece last summer?"]], ["LUCAS", ["Great, I ", ["swam", ["swimmed", "swam"]], " in the sea every day."]], ["DANIEL", ["Every day?"]]]],
+  ["6_life_in_the_world_mia_zoe", ["MIA", "ZOE"], "6_life_in_the_world_mia_zoe", [["ZOE", ["What was your favourite thing in Spain?"]], ["MIA", ["I ", ["ate", ["ate", "was eat"]], " paella for the first time."]], ["ZOE", ["Did you ", ["like", ["like", "liked"]], " it?"]]]],
+  ["6_life_in_the_world_ella_olivia2", ["ELLA", "OLIVIA"], "6_life_in_the_world_ella_olivia2", [["OLIVIA", ["Did you ", ["try", ["try", "tried"]], " this in Italy?"]], ["ELLA", ["Yes, I ", ["tried", ["try", "tried"]], " it last summer."]]]],
+  ["6_life_in_the_world_ava_chloe", ["AVA", "CHLOE"], "6_life_in_the_world_ava_chloe", [["AVA", ["Where did you ", ["get", ["get", "got"]], " that?"]], ["CHLOE", ["I ", ["joined", ["join", "joined"]], " a cooking competition last weekend."]], ["AVA", ["Did you ", ["win", ["win", "won"]], "?"]], ["CHLOE", ["No, I ", ["finished", ["finish", "finished"]], " last."]]]],
+  ["6_life_in_the_world_benjamin_jack", ["BENJAMIN", "JACK"], "6_life_in_the_world_benjamin_jack", [["JACK", ["What did you ", ["do", ["do", "did"]], " last weekend?"]], ["BENJAMIN", ["I visit", ["ed", ["ed", "was visited"]], " a food festival with my family."]], ["JACK", ["Did you ", ["like", ["like", "liked"]], " it?"]], ["BENJAMIN", ["Yes, I taste", ["ed", ["ed", "taste"]], " twelve desserts!"]]]],
+  ["6_life_in_the_world_ava_chloe2", ["AVA", "CHLOE"], "6_life_in_the_world_ava_chloe2", [["AVA", ["Türkiye was great last summer."]], ["CHLOE", ["What did you ", ["like", ["like", "liked"]], " most?"]], ["AVA", ["I ", ["drank", ["drinked", "drank"]], " Turkish coffee for the first time."]]]],
+  ["6_life_in_the_world_mia_zoe2", ["MIA", "ZOE"], "6_life_in_the_world_mia_zoe2", [["ZOE", ["You went to your homeland, Türkiye, after Spain, ", ["didn’t you", ["did you", "didn’t you"]], "?"]], ["MIA", ["Yes, I ", ["wrote", ["was write", "wrote"]], " a postcard to you, remember?"]]]],
+  ["6_life_in_the_world_benjamin_jack2", ["BENJAMIN", "JACK"], "6_life_in_the_world_benjamin_jack2", [["JACK", ["How ", ["was", ["is", "was"]], " Austria last winter?"]], ["BENJAMIN", ["Great, I ", ["learned", ["learned", "learn"]], " to ski."]]]],
+  ["6_life_in_the_world_david_ethan2", ["DAVID", "ETHAN"], "6_life_in_the_world_david_ethan2", [["DAVID", ["What did you ", ["do", ["did", "do"]], " in Italy?"]], ["ETHAN", ["I ", ["made", ["make", "made"]], " pizza with an Italian chef."]], ["DAVID", ["How ", ["did", ["do", "did"]], " it go?"]]]],
+  ["6_life_in_the_world_chloe_hannah", ["CHLOE", "HANNAH"], "6_life_in_the_world_chloe_hannah", [["CHLOE", ["What did you ", ["see", ["saw", "see"]], " in Venezuela?"]], ["HANNAH", ["I ", ["saw", ["seed", "saw"]], " Angel Falls."]]]],
+  ["6_life_in_the_world_daniel_noah", ["DANIEL", "NOAH"], "6_life_in_the_world_daniel_noah", [["NOAH", ["What did you ", ["buy", ["buy", "bought"]], " in Germany?"]], ["DANIEL", ["I ", ["bought", ["bought", "was buy"]], " this cuckoo clock."]]]],
+  ["6_life_in_the_world_lucas_daniel", ["LUCAS", "DANIEL"], "6_life_in_the_world_lucas_daniel", [["LUCAS", ["How was Venice?"]], ["DANIEL", ["Amazing, I ", ["rode", ["rided", "rode"]], " a gondola."]]]],
+  ["6_life_in_the_world_noah_victoria", ["NOAH", "VICTORIA"], "6_life_in_the_world_noah_victoria", [["NOAH", ["What did you do in Cappadocia?"]], ["VICTORIA", ["I ", ["flew", ["flew", "fly"]], " in a hot-air balloon."]]]],
+  ["6_life_in_the_world_chloe_emma", ["CHLOE", "EMMA"], "6_life_in_the_world_chloe_emma", [["CHLOE", ["Did the recipe say two spoons?"]], ["EMMA", ["Yep."]], ["CHLOE", ["But you ", ["added", ["add", "added"]], " five."]], ["EMMA", ["I ", ["got", ["get", "got"]], " excited."]]]],
+  ["6_life_in_the_world_mia_zoe4", ["MIA", "ZOE"], "6_life_in_the_nature_mia_zoe", [["MIA", ["What did you do ", ["last", ["next", "last"]], " Sunday?"]], ["ZOE", ["I ", ["hiked", ["hike", "hiked"]], " with my family."]]]],
+  ["6_life_in_the_nature_hannah_lars", ["HANNAH", "CHLOE"], "6_life_in_the_nature_hannah_lars", [["CHLOE", ["What did you do ", ["last", ["next", "last"]], " winter?"]], ["HANNAH", ["I snowboard", ["ed", ["am snowboarding", "ed"]], " with my dad."]]]],
+  ["6_life_in_the_nature_benjamin_oliver", ["BENJAMIN", "JACK"], "6_life_in_the_nature_benjamin_oliver", [["JACK", ["What ", ["did", ["do", "did"]], " you do last weekend?"]], ["BENJAMIN", ["I ", ["went", ["goed", "went"]], " rafting with my dad."]]]],
+  ["6_life_in_the_nature_ava_chloe", ["AVA", "CHLOE"], "6_life_in_the_nature_ava_chloe", [["CHLOE", ["What happened to your backpack?"]], ["AVA", ["I clean", ["ed", ["was cleaned", "ed"]], " the beach with my mom ", ["yesterday", ["yesterday", "tomorrow"]], "."]]]],
+  ["6_life_in_the_nature_ella_olivia", ["ELLA", "OLIVIA"], "6_life_in_the_nature_ella_olivia", [["ELLA", ["What did you do ", ["yesterday", ["yesterday", "tomorrow"]], "?"]], ["OLIVIA", ["I ", ["tried", ["try", "tried"]], " ice skating for the first time."]]]],
+  ["6_life_in_the_nature_jack_callum", ["JACK", "BENJAMIN"], "6_life_in_the_nature_jack_callum", [["BENJAMIN", ["What ", ["did", ["do", "did"]], " you do last Saturday?"]], ["JACK", ["I sail", ["ed", ["ed", "was sail"]], " with my dad."]]]],
+  ["6_life_in_the_nature_noah_victoria", ["NOAH", "VICTORIA"], "6_life_in_the_nature_noah_victoria", [["VICTORIA", ["This river looks terrible."]], ["NOAH", ["People ", ["polluted", ["pollute", "polluted"]], " it for years."]]]],
+  ["6_life_in_the_nature_benjamin_david", ["BENJAMIN", "DAVID"], "6_life_in_the_nature_benjamin_david", [["BENJAMIN", ["I ", ["swam", ["swim", "swam"]], " with two dolphins last summer!"]], ["DAVID", ["I don’t believe it. How?"]]]],
+  ["6_life_in_the_nature_emma_hannah", ["EMMA", "HANNAH"], "6_life_in_the_nature_emma_hannah", [["EMMA", ["What did you do ", ["last", ["last", "next"]], " weekend?"]], ["HANNAH", ["I ", ["rode", ["rided", "rode"]], " my horse in the forest."]]]],
+  ["6_life_in_the_nature_mia_zoe2", ["MIA", "ZOE"], "6_life_in_the_nature_mia_zoe2", [["MIA", ["What did you do last weekend?"]], ["ZOE", ["I pick", ["ed", ["ed", "pickt"]], " berries in the forest."]], ["MIA", ["Did you ", ["find", ["find", "found"]], " many?"]]]],
+  ["6_life_in_the_nature_chloe_hannah", ["CHLOE", "HANNAH"], "6_life_in_the_nature_chloe_hannah", [["CHLOE", ["What did you do last weekend?"]], ["HANNAH", ["We ", ["camped", ["camp", "camped"]], " in the forest."]], ["CHLOE", ["Did you ", ["have", ["have", "had"]], " fun?"]]]],
+  ["6_life_in_the_nature_olivia_fiona", ["OLIVIA", "FIONA"], "6_life_in_the_nature_olivia_fiona", [["FIONA", ["What did you do this morning?"]], ["OLIVIA", ["I ", ["took", ["take", "took"]], " photos in the park."]]]],
+  ["6_life_in_the_nature_ava_chloe2", ["AVA", "CHLOE"], "6_life_in_the_nature_ava_chloe2", [["CHLOE", ["What did you do this morning?"]], ["AVA", ["I ", ["fed", ["fed", "am feeding"]], " the ducks with my mum."]]]],
+  ["6_life_in_the_nature_mia_zoe3", ["MIA", "ZOE"], "6_life_in_the_nature_mia_zoe3", [["MIA", ["What did you do ", ["last night", ["last night", "tomorrow"]], "?"]], ["ZOE", ["I ", ["watched", ["watched", "watch"]], " the stars with my dad."]]]],
+  ["6_life_in_the_nature_ava_chloe3", ["AVA", "CHLOE"], "6_life_in_the_nature_ava_chloe3", [["CHLOE", ["What ", ["did", ["do", "did"]], " you do yesterday?"]], ["AVA", ["I ", ["planted", ["plant", "planted"]], " a tree with my mum."]]]],
+  ["6_life_in_the_nature_daniel_lucas", ["DANIEL", "LUCAS"], "6_life_in_the_nature_daniel_lucas", [["DANIEL", ["What did you do ", ["yesterday", ["yesterday", "tomorrow"]], "?"]], ["LUCAS", ["I ", ["ran", ["run", "ran"]], " in the forest with my mum."]]]],
+  ["6_life_in_the_world_ava_chloe3", ["AVA", "CHLOE"], "6_life_in_the_world_ava_chloe3", [["AVA", ["You stayed with your sister Élodie in France, ", ["didn’t you", ["don't you", "didn’t you"]], "?"]], ["CHLOE", ["Yes, for two weeks. We ", ["rode", ["ride", "rode"]], " bikes along the Seine."]]]],
+  ["6_life_in_the_world_benajmin_jack", ["BENJAMIN", "JACK"], "6_life_in_the_world_benajmin_jack", [["BENJAMIN", ["You went to your hometown in Scotland on holiday, ", ["didn’t you", ["did you", "didn’t you"]], "?"]], ["JACK", ["Yes, I ", ["climbed", ["climb", "climbed"]], " a mountain with my dad there."]]]],
+  ["6_life_in_the_world_mia_zoe3", ["MIA", "ZOE"], "6_life_in_the_world_mia_zoe3", [["MIA", ["You celebrated your birthday in Greece, ", ["didn’t you", ["wasn't you", "didn’t you"]], "?"]], ["ZOE", ["Yes, we ", ["had", ["had", "have"]], " a party with my family."]]]],
+  ["6_life_in_the_world_ella_olivia3", ["ELLA", "OLIVIA"], "6_life_in_the_world_ella_olivia3", [["OLIVIA", ["You went camping in Australia with your family, ", ["didn’t you", ["did you", "didn’t you"]], "?"]], ["ELLA", ["Yes, we ", ["slept", ["sleeped", "slept"]], " near the beach."]]]],
+  ["6_life_in_the_nature_benjamin_chloe", ["BENJAMIN", "CHLOE"], "6_life_in_the_nature_benjamin_chloe", [["TEACHER", ["Energy consumption became less sustainable over the years, ", ["didn’t it", ["did it", "didn’t it"]], "?"]], ["BENJAMIN", ["Yes, sir, Chloe spends half of the country’s energy while drying her hair."]], ["CHLOE", ["No, I don’t!"]]]]
+].map(makeSimplePastWatchItem);
+
 const simplePastTenseGrade7Function = {
   // README - overlay sentence formats:
   // 1) Old simple format still works:
@@ -1384,6 +1441,14 @@ const simplePastTenseGrade7Function = {
           ]
         }
       ]
+    },
+    {
+      id: "simplepast-watch-and-complete-hub",
+      noVisual: true,
+      simplePresentVideoHub: {
+        title: "WATCH AND COMPLETE",
+        items: simplePastWatchAndCompleteItems
+      }
     },
     {
       id: "simplepast-basic-verb-pool-review",

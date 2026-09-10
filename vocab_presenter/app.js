@@ -12,7 +12,6 @@
     units: $("unitOptions"),
     gradeStatus: $("gradeStatus"),
     unitStatus: $("unitStatus"),
-    poolSummary: $("poolSummary"),
     start: $("startButton"),
     startQuiz: $("startQuizButton"),
     viewCategories: $("viewCategoriesButton"),
@@ -348,6 +347,8 @@
 
   const UNIT_THEMES = {
     5: {
+      0: "Revision Part 1",
+      9: "Revision Part 2",
       1: "School Life",
       2: "Classroom Life",
       3: "Personal Life",
@@ -372,9 +373,13 @@
     units.forEach((unit) => {
       const count = records.filter((item) => item[3] === state.grade && item[5] === unit).length;
       const button = document.createElement("button");
-      button.className = `unit-card-button${state.unit === unit ? " selected" : ""}`;
+      const isRevision = state.grade === 5 && (unit === 0 || unit === 9);
+      button.className = `unit-card-button${isRevision ? " revision-unit-card" : ""}${state.unit === unit ? " selected" : ""}`;
       const theme = UNIT_THEMES[state.grade]?.[unit];
-      button.innerHTML = `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong><small class="opt-count">${count} words</small>${theme ? `<small class="opt-theme">${theme}</small>` : ""}`;
+      const unitLabel = isRevision
+        ? `<span class="opt-kicker">REVISION</span><strong class="opt-revision-title">PART ${unit === 0 ? 1 : 2}</strong>`
+        : `<span class="opt-kicker">UNIT</span><strong class="opt-number">${unit}</strong>`;
+      button.innerHTML = `${unitLabel}<small class="opt-count">${count} words</small>${theme ? `<small class="opt-theme">${theme}</small>` : ""}`;
       button.addEventListener("click", () => {
         state.unit = unit;
         els.unitStatus.textContent = `Unit ${unit} selected`;
@@ -386,7 +391,7 @@
   }
 
   function getCategories() {
-    if (!state.grade || !state.unit || typeof VocabCategoryAdapter === "undefined") return [];
+    if (state.grade === null || state.unit === null || typeof VocabCategoryAdapter === "undefined") return [];
     return VocabCategoryAdapter.get(state.grade, state.unit);
   }
 
@@ -413,15 +418,11 @@
   }
 
   function updateSetupSummary() {
-    const ready = state.grade && state.unit;
-    const count = ready ? getUnitPool().length : 0;
+    const ready = state.grade !== null && state.unit !== null;
     els.start.disabled = !ready;
     els.startQuiz.disabled = !ready;
     els.viewCategories.disabled = !ready;
     els.exercises.disabled = !ready;
-    els.poolSummary.innerHTML = ready
-      ? `<strong>${count}-word presentation ready</strong><span>A quick review appears after every 5 words.</span>`
-      : "<strong>Not ready</strong><span>Select a grade and unit to continue.</span>";
   }
 
   function imagePath(record) {
@@ -2416,7 +2417,6 @@
     els.matchCategoryModal.classList.add("hidden");
     els.anagramScreen.querySelector(".anagram-card").classList.remove("hidden");
     els.setup.classList.remove("hidden");
-    els.poolSummary.innerHTML = `<strong>Ready for another round</strong><span>Select a grade and unit to continue.</span>`;
   }
 
   function enterFullscreen() {

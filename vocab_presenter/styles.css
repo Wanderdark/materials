@@ -1051,6 +1051,7 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
 }
 
 @media (max-width: 900px) {
+  #unitOptions.unit-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .app-shell { padding: 18px; }
   .screen { min-height: calc(100vh - 36px); }
   .word-view { grid-template-columns: 1fr; }
@@ -1067,6 +1068,7 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
 }
 
 @media (max-width: 620px) {
+  #unitOptions.unit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .setup-card { padding: 20px; }
   .grade-grid, .unit-grid { grid-template-columns: repeat(2, 1fr); }
   .start-row { align-items: stretch; flex-direction: column; }
@@ -1275,7 +1277,7 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
 .grade-visual-button.placeholder:hover img { transform: none; }
 
 /* Unit step: big colorful number cards */
-#unitOptions.unit-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+#unitOptions.unit-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
 .unit-card-button {
   display: grid; justify-items: center; gap: 2px;
   min-width: 0; padding: 20px 10px 16px;
@@ -1286,6 +1288,7 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
 }
 .unit-card-button .opt-kicker { color: #7f97d6; font-size: 11px; font-weight: 900; letter-spacing: .28em; transition: color .15s ease; }
 .unit-card-button .opt-number { font-family: var(--font-display); font-size: 62px; font-weight: 800; line-height: 1.02; color: var(--tone); transition: color .15s ease; }
+.unit-card-button .opt-revision-title { font-family: var(--font-display); font-size: clamp(30px, 3vw, 48px); font-weight: 800; line-height: 1.02; color: var(--tone); transition: color .15s ease; }
 .unit-card-button .opt-count { color: var(--u2-dim); font-size: 12px; font-weight: 700; transition: color .15s ease; }
 .unit-card-button:hover {
   transform: translateY(-4px); border-color: var(--tone);
@@ -1299,6 +1302,7 @@ button:focus-visible { outline: 2px solid var(--u2-gold); outline-offset: 2px; }
   color: #14183a;
 }
 .unit-card-button.selected .opt-number { color: #14183a; }
+.unit-card-button.selected .opt-revision-title { color: #14183a; }
 .unit-card-button.selected .opt-kicker { color: rgba(20, 24, 58, .62); }
 .unit-card-button.selected .opt-count { color: rgba(20, 24, 58, .72); }
 

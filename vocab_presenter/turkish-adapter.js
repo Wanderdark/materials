@@ -1030,7 +1030,9 @@
     getMeaning(recordOrWord) {
       const word = Array.isArray(recordOrWord) ? recordOrWord[2] : recordOrWord;
       const key = String(word || "").trim().toUpperCase();
-      return getContestTranslation(recordOrWord, key)
+      const directTurkish = Array.isArray(recordOrWord) ? String(recordOrWord[8] || "").trim() : "";
+      return directTurkish
+        || getContestTranslation(recordOrWord, key)
         || TRANSLATIONS[key]
         || "T?RK?E KAR?ILIK EKS?K";
     },
