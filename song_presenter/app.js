@@ -31,7 +31,7 @@
     duringWordBank: $("duringWordBank"), autofillButton: $("autofillButton"), lyricsBox: $("lyricsBox"),
     trainingVideo: $("trainingVideo"), trainingPrompt: $("trainingPrompt"), trainingLine: $("trainingLine"),
     trainingChoices: $("trainingChoices"), trainingRehearButton: $("trainingRehearButton"), trainingReplayPrompt: $("trainingReplayPrompt"), trainingReplayTitle: $("trainingReplayTitle"), trainingReplayMessage: $("trainingReplayMessage"), trainingReplayYesButton: $("trainingReplayYesButton"), trainingReplayFinishButton: $("trainingReplayFinishButton"),
-    duelReadyOverlay: $("duelReadyOverlay"), duelCurrentPlayer: $("duelCurrentPlayer"), duelReadyPlayer: $("duelReadyPlayer"), duelReadyTeams: $("duelReadyTeams"), duelBeginButton: $("duelBeginButton"),
+    duelReadyOverlay: $("duelReadyOverlay"), duelCurrentPlayer: $("duelCurrentPlayer"), duelReadyPlayer: $("duelReadyPlayer"), duelCurrentPlayerAvatar: $("duelCurrentPlayerAvatar"), duelReadyPlayerAvatar: $("duelReadyPlayerAvatar"), duelReadyTeams: $("duelReadyTeams"), duelBeginButton: $("duelBeginButton"),
     duelScoreboard: $("duelScoreboard"), teamAScore: $("teamAScore"), teamBScore: $("teamBScore"),
     teamAPlayer: $("teamAPlayer"), teamBPlayer: $("teamBPlayer"), duelTurnName: $("duelTurnName"), duelNextPlayer: $("duelNextPlayer"),
     duelSetupOverlay: $("duelSetupOverlay"), duelSetupSubtitle: $("duelSetupSubtitle"), duelTeamInputs: $("duelTeamInputs"), duelTempoPicker: $("duelTempoPicker"), duelModePicker: $("duelModePicker"), duelSetupMessage: $("duelSetupMessage"),
@@ -99,6 +99,7 @@
   let duelPenaltyTimer = null;
   let duelReadyOverlayTimer = null;
   let duelRosterClassroomId = "";
+  let duelPlayerAvatars = new Map();
   let autoZoomWindows = [];   // uzun enstrümantal aralıklar: {start, end}
   let autoZoomActive = false; // otomatik büyüme şu an devrede mi
   let autoZoomGap = 8;        // şarkıya göre ayarlanır (songs.js "zoomgap")
@@ -306,6 +307,7 @@
     trainingBlockSet = 0;
     duelRoundNumber = 1;
     duelRosterClassroomId = "";
+    duelPlayerAvatars = new Map();
     clearDuelPenalty();
     if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
     duelReadyOverlayTimer = null;
@@ -380,6 +382,18 @@
 
   function duelPlayer(team) { return duelTeams[team][duelPlayerIndex[team]] || null; }
 
+  function updateDuelReadyPlayers() {
+    const current = duelPlayer(duelTurn);
+    const next = duelPlayer(duelTurn === 0 ? 1 : 0);
+    [[els.duelCurrentPlayer, els.duelCurrentPlayerAvatar, current], [els.duelReadyPlayer, els.duelReadyPlayerAvatar, next]].forEach(([label, image, name]) => {
+      label.textContent = name || "PLAYER";
+      const avatar = duelPlayerAvatars.get(String(name || "").trim().toLocaleLowerCase("tr-TR"));
+      image.classList.toggle("hidden", !avatar);
+      if (avatar) image.src = avatar;
+      else image.removeAttribute("src");
+    });
+  }
+
   function updateDuelScoreboard() {
     els.teamAScore.textContent = duelScores[0];
     els.teamBScore.textContent = duelScores[1];
@@ -412,8 +426,7 @@
     els.duelSetupOverlay.classList.add("hidden");
     els.duelScoreboard.classList.remove("hidden");
     updateDuelScoreboard();
-    els.duelCurrentPlayer.textContent = duelPlayer(duelTurn) || "PLAYER";
-    els.duelReadyPlayer.textContent = duelPlayer(duelTurn === 0 ? 1 : 0) || "PLAYER";
+    updateDuelReadyPlayers();
     renderDuelReadyTeams();
     els.duelReadyOverlay.classList.add("duel-intro");
     els.duelReadyOverlay.classList.remove("hidden");
@@ -430,8 +443,7 @@
     if (!duelReady) return;
     if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
     els.duelReadyOverlay.classList.remove("duel-intro");
-    els.duelCurrentPlayer.textContent = duelPlayer(duelTurn) || "PLAYER";
-    els.duelReadyPlayer.textContent = duelPlayer(duelTurn === 0 ? 1 : 0) || "PLAYER";
+    updateDuelReadyPlayers();
     renderDuelReadyTeams();
     els.duelReadyOverlay.classList.remove("hidden");
     if (!videoSrc) return;
@@ -591,6 +603,9 @@
     const order = [0, 1, 1, 0];
     duelTeams = [[], []];
     sorted.forEach((student, index) => duelTeams[order[index % order.length]].push(String(student.name).trim()));
+    duelPlayerAvatars = new Map(sorted
+      .filter((student) => student.avatarPath)
+      .map((student) => [String(student.name).trim().toLocaleLowerCase("tr-TR"), student.avatarPath]));
     duelRosterClassroomId = classroom.id;
     els.duelRosterOverlay.classList.add("hidden");
     renderDuelTeamInputs();

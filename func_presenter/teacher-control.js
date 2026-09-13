@@ -23,6 +23,8 @@
   const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
   const normalizeAvatarPath = (path = "") => {
     const value = String(path || "");
+    const remoteCanonicalAvatar = value.match(/^https?:\/\/(?:www\.)?adilhoca\.com\/func_presenter\/images\/avatars\/([^/?#]+)\.webp(?:[?#].*)?$/i);
+    if (remoteCanonicalAvatar) return canonicalAvatarPath(remoteCanonicalAvatar[1]);
     if (/^(?:\.\.\/func_presenter\/)?images\/avatars\//i.test(value)) {
       return canonicalAvatarPath(value.split("/").pop().replace(/\.webp$/i, ""));
     }

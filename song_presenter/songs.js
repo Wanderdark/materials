@@ -1656,6 +1656,105 @@ window.SONGS = [
        { from: "3:21.291", to: "3:24.307", text: "Watch the world of nature grow.", training: { target: "grow", choices: ["grow", "watch", "world", "snow"] } },
   ]
   },
+
+/* ── GRADE 5 UNIT 8 - TIME FOR VACATION───────────────────────────────────── */
+  {
+    id: "5_8_timeforvacation",
+    title: "Time for Vacation",
+    artist: "Grade5",
+    audio: "songs/5_8_timeforvacation.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/5_8_timeforvacation.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "1:02", to: "1:34" },
+      { at: "2:18", to: "2:49" },
+{ at: "3:06", to: "3:50" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "sightseeing",    tr: "gezi",          image: "images/sightseeing.webp" },
+      { word: "vacation",   tr: "tatil",         image: "images/vacation.webp" },
+      { word: "sandcastle",  tr: "kum kalesi",      image: "images/sandcastle.webp" },
+      { word: "seashell", tr: "deniz kabuğu",        image: "images/seashell.webp" },
+      { word: "explore",  tr: "keşfetmek",     image: "images/explore.webp" },
+      { word: "island",   tr: "ada", image: "images/island.webp" },
+      { word: "camel",  tr: "deve",           image: "images/camel.webp" },
+      { word: "view",   tr: "manzara",         image: "images/view.webp" }
+    ],
+
+    lyrics: [
+
+      { from: "0:19.707", to: "0:23.138", text: "School is out, <vacation> time,", training: { target: "School", choices: ["School", "cool", "vacation", "time"] } },
+      { from: "0:23.586", to: "0:26.242", text: "I'm going to pack my bag tonight.", training: { target: "pack", choices: ["pack", "back", "bag", "beach"] } },
+      { from: "0:27.394", to: "0:30.050", text: "My family is going on a trip,", training: { target: "family", choices: ["family", "finally", "trip", "vacation"] } },
+      { from: "0:30.298", to: "0:33.314", text: "And we're leaving in the morning light.", training: { target: "morning", choices: ["morning", "warning", "evening", "light"] } },
+      { from: "0:34.042", to: "0:36.738", text: "I'm going to swim beside the beach,", training: { target: "swim", choices: ["swim", "slim", "beach", "zoo"] } },
+      { from: "0:37.354", to: "0:40.514", text: "We're going to <explore> the seaside too.", training: { target: "explore", choices: ["explore", "floor", "travel", "seaside"] } },
+      { from: "0:41.541", to: "0:44.701", text: "There's a whole new place to discover,", training: { target: "whole", choices: ["whole", "hole", "place", "world"] } },
+      { from: "0:45.077", to: "0:48.273", text: "And so many things we want to do.", training: { target: "things", choices: ["things", "wings", "holiday", "view"] } },
+      { from: "0:49.817", to: "0:50.804", text: "Where are you going to go?", training: { target: "Where", choices: ["Where", "wear", "What", "go"] } },
+      { from: "0:51.601", to: "0:52.977", text: "What are you going to see?", training: { target: "What", choices: ["What", "yacht", "see", "go"] } },
+      { from: "0:53.219", to: "0:55.180", text: "Tell me all about your holiday,", training: { target: "Tell", choices: ["Tell", "tail", "holiday", "vacation"] } },
+      { from: "0:55.492", to: "0:57.461", text: "And come along with me.", training: { target: "along", choices: ["along", "a long", "come", "me"] } },
+      { from: "0:57.684", to: "0:58.425", text: "What are you going to do?", training: { target: "do", choices: ["do", "zoo", "go", "see"] } },
+      { from: "0:58.969", to: "1:00.562", text: "Where are you going to go?", training: { target: "go", choices: ["go", "glow", "Where", "see"] } },
+      { from: "1:00.994", to: "1:03.034", text: "I'm going to enjoy every day,", training: { target: "enjoy", choices: ["enjoy", "a toy", "every", "day"] } },
+      { from: "1:03.508", to: "1:05.379", text: "There's a whole wide world to know.", training: { target: "wide", choices: ["wide", "ride", "whole", "world"] } },
+      { from: "1:05.951", to: "1:09.263", text: "We're going to travel, we're going to <explore>,", training: { target: "travel", choices: ["travel", "gravel", "explore", "trip"] } },
+      { from: "1:09.911", to: "1:12.928", text: "We're going to see so much more.", training: { target: "much", choices: ["much", "match", "more", "view"] } },
+      { from: "1:13.559", to: "1:16.847", text: "Pack your bag, our holiday starts today,", training: { target: "bag", choices: ["bag", "back", "holiday", "today"] } },
+      { from: "1:17.527", to: "1:20.167", text: "Come on, we're going away!", training: { target: "away", choices: ["away", "a wave", "Come", "today"] } },
+      { from: "1:34.722", to: "1:38.362", text: "My family is going to visit an <island>,", training: { target: "island", choices: ["island", "highland", "family", "camel"] } },
+      { from: "1:38.666", to: "1:42.434", text: "We're going to collect <seashell>s by the sea.", training: { target: "seashells", choices: ["seashells", "see shelves", "sandcastle", "island"] } },
+      { from: "1:42.682", to: "1:46.041", text: "I'm going to build a giant <sandcastle>,", training: { target: "sandcastle", choices: ["sandcastle", "sand tassel", "seashells", "camel"] } },
+      { from: "1:46.393", to: "1:49.106", text: "With my family next to me.", training: { target: "next", choices: ["next", "nest", "family", "me"] } },
+      { from: "1:49.417", to: "1:52.433", text: "We're going to go <sightseeing>,", training: { target: "sightseeing", choices: ["sightseeing", "side seating", "explore", "view"] } },
+      { from: "1:52.849", to: "1:56.042", text: "And enjoy every amazing <view>.", training: { target: "view", choices: ["view", "few", "amazing", "seaside"] } },
+      { from: "1:56.681", to: "2:00.217", text: "We're going to have fun at the zoo,", training: { target: "zoo", choices: ["zoo", "blue", "fun", "beach"] } },
+      { from: "2:00.401", to: "2:03.561", text: "There's always something new to do.", training: { target: "always", choices: ["always", "hallways", "something", "new"] } },
+      { from: "2:04.385", to: "2:06.071", text: "Where are you going to go?", training: { target: "going", choices: ["going", "glowing", "Where", "vacation"] } },
+      { from: "2:06.528", to: "2:07.967", text: "What are you going to see?", training: { target: "see", choices: ["see", "sea", "What", "view"] } },
+      { from: "2:08.231", to: "2:10.081", text: "Tell me all about your holiday,", training: { target: "about", choices: ["about", "a boat", "Tell", "holiday"] } },
+      { from: "2:10.289", to: "2:12.409", text: "And come along with me.", training: { target: "come", choices: ["come", "gum", "along", "me"] } },
+      { from: "2:12.243", to: "2:13.389", text: "What are you going to do?", training: { target: "What", choices: ["What", "yacht", "do", "go"] } },
+      { from: "2:13.709", to: "2:15.277", text: "Where are you going to go?", training: { target: "are", choices: ["are", "air", "Where", "go"] } },
+      { from: "2:15.589", to: "2:18.357", text: "I'm going to enjoy every day,", training: { target: "day", choices: ["day", "they", "enjoy", "holiday"] } },
+      { from: "2:18.248", to: "2:20.112", text: "There's a whole wide world to know.", training: { target: "world", choices: ["world", "word", "wide", "whole"] } },
+      { from: "2:21.070", to: "2:24.038", text: "We're going to travel, we're going to <explore>,", training: { target: "explore", choices: ["explore", "floor", "travel", "seaside"] } },
+      { from: "2:24.654", to: "2:27.622", text: "We're going to see so much more.", training: { target: "more", choices: ["more", "mower", "much", "view"] } },
+      { from: "2:28.286", to: "2:32.068", text: "Pack your bag, our holiday starts today,", training: { target: "starts", choices: ["starts", "hearts", "bag", "holiday"] } },
+      { from: "2:32.153", to: "2:34.961", text: "Come on, we're going away!", training: { target: "Come", choices: ["Come", "gum", "away", "today"] } },
+      { from: "2:49.215", to: "2:52.935", text: "Maybe we're going to ride a <camel>,", training: { target: "camel", choices: ["camel", "camera", "ride", "island"] } },
+      { from: "2:53.383", to: "2:56.807", text: "On a family trip across the sand.", training: { target: "sand", choices: ["sand", "hand", "trip", "beach"] } },
+      { from: "2:57.095", to: "3:00.607", text: "Maybe we're going to try snorkelling,", training: { target: "snorkelling", choices: ["snorkelling", "storytelling", "swimming", "seashells"] } },
+      { from: "3:01.724", to: "3:04.580", text: "And <explore> a different land.", training: { target: "land", choices: ["land", "lend", "explore", "island"] } },
+      { from: "3:06.140", to: "3:08.309", text: "What are you going to do?", training: { target: "you", choices: ["you", "ewe", "What", "do"] } },
+      { from: "3:09.224", to: "3:12.064", text: "Where are you going to go?", training: { target: "to", choices: ["to", "two", "Where", "go"] } },
+      { from: "3:12.624", to: "3:15.808", text: "I'm going to enjoy every day,", training: { target: "every", choices: ["every", "a very", "enjoy", "day"] } },
+      { from: "3:16.536", to: "3:19.640", text: "There's a whole wide world to know.", training: { target: "know", choices: ["know", "no", "world", "wide"] } },
+      { from: "3:22.102", to: "3:25.142", text: "We're going to travel, we're going to <explore>,", training: { target: "going", choices: ["going", "glowing", "travel", "explore"] } },
+      { from: "3:25.734", to: "3:28.830", text: "We're going to see so much more.", training: { target: "see", choices: ["see", "sea", "much", "view"] } },
+      { from: "3:29.326", to: "3:34.470", text: "Pack your bag, our holiday starts today,", training: { target: "holiday", choices: ["holiday", "all day", "bag", "starts"] } },
+      { from: "3:34.998", to: "3:37.806", text: "Come on, we're going away!", training: { target: "going", choices: ["going", "glowing", "away", "Come"] } },
+  ]
+  },
+
+
   /* ── YENİ ŞARKI EKLEMEK İÇİN ────────────────────────────────────────
      Yukarıdaki bloğu kopyala, virgülle ayırarak buraya yapıştır,
      alanları doldur. Hepsi bu. 🙂
@@ -1812,7 +1911,8 @@ const REPEATED_LINE_TRAINING_EXCLUSIONS = new Set([
   "5_5_insidemyhome",
   "5_6_bitebybite",
   "8_3_bitebybite",
-  "5_7_intothewilds"
+  "5_7_intothewilds",
+  "5_8_timeforvacation"
 ]);
 
 function getPhoneticDistractor(target) {
