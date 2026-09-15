@@ -1135,7 +1135,7 @@ const QUESTIONS = [
   ["Having little or no hair on the head.","Başında az veya hiç saç olmayan.","BALD",7,1,1,"../images/7/1/30.webp",[],"KEL","My grandfather is bald.","Dedem keldir."],
   ["Short and fat.","Kısa ve şişman.","STUMPY",7,3,1,"../images/7/1/31.webp",[],"BODUR","The little tree is short and stumpy.","Küçük ağaç kısa ve bodurdur."],
   ["Doesn't like to spend or share money.","Para harcamayı veya paylaşmayı sevmeyen.","STINGY",7,2,1,"../images/7/1/32.webp",[],"CİMRİ","Victoria is stingy and does not like spending money.","Victoria cimridir ve para harcamayı sevmez."],
-  ["Hair growing above the upper lip.","Üst dudağın üzerindeki kıllar.","MOUSTACHE",7,2,1,"../images/7/1/33.webp",[],"BIYIK","Benjamin's father has a thick moustache.","Benjamin'in babasının kalın bir bıyığı vardır."],
+  ["Hair growing above the upper lip.","Üst dudağın üzerindeki kıllar.","MOUSTACHE",7,2,1,"../images/7/1/33.webp",[],"BIYIK","His father has a thick moustache.","Onun babasının kalın bir bıyığı vardır."],
   ["Enjoying being with other people.","Başkalarıyla takılmaktan keyif alan.","SOCIABLE",7,2,1,"../images/7/1/34.webp",[],"SOSYAL","Ella is sociable and enjoys talking to everyone.","Ella sosyaldir ve herkesle konuşmaktan hoşlanır."],
   ["Liking dangerous or risky activities.","Heyecanlı veya riskli aktiviteleri seven.","ADVENTUROUS",7,2,1,"../images/7/1/35.webp",[],"MACERASEVER","Hannah is adventurous and loves exploring new places.","Hannah maceraseverdir ve yeni yerler keşfetmeyi sever."],
   ["Very good at doing something.","Bir şeyi yapmada çok yetenekli.","TALENTED",7,3,1,"../images/7/1/36.webp",[],"YETENEKLİ","Chloe is talented at dancing and playing the piano.","Chloe dans etmekte ve piyano çalmakta yeteneklidir."],
