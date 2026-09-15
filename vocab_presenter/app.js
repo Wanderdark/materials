@@ -103,6 +103,7 @@
     imageFallback: $("imageFallback"),
     wordGuessPanel: $("wordGuessPanel"),
     wordGuessOptions: $("wordGuessOptions"),
+    skipWordGuess: $("skipWordGuessButton"),
     wordTitleRow: $("wordTitleRow"),
     englishWord: $("englishWord"),
     speakWord: $("speakWordButton"),
@@ -1668,6 +1669,12 @@
     });
   }
 
+  function skipWordGuess() {
+    if (state.mode !== "word" || state.wordStage !== "guess") return;
+    state.wordStage = "feedback";
+    revealEnglish();
+  }
+
   function revealEnglish() {
     if (state.mode !== "word" || state.wordStage !== "feedback") return;
     state.wordStage = "english";
@@ -2482,6 +2489,7 @@
   els.turkishPoint.addEventListener("click", awardTurkishMeaningPoint);
   els.speakWord.addEventListener("click", speakWord);
   els.teacherExampleSpeak.addEventListener("click", speakTeacherExample);
+  els.skipWordGuess.addEventListener("click", skipWordGuess);
   els.teacherExampleImage.addEventListener("click", toggleTeacherExampleImage);
   els.wordImage.addEventListener("click", openPresentationImageOverlay);
   if (!isStudentVocabularyMode) els.imageOverlaySpeak.addEventListener("click", speakImageOverlaySentence);

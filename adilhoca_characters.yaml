@@ -1323,7 +1323,7 @@ students:
         - "gardening"
       likes:
         - "hiking"
-    general_interests: [Football, DIY, "Board games", "Washing the family car", Hiking]
+    general_interests: [DIY, "Board games", "Washing the family car", Hiking]
     personality:
       traits: [Selfish, stubborn, patient]
       note: "Inatci, sabirli ve bazen bencil davranabilen bir ogrenci."

@@ -569,6 +569,8 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
   background: #7e2d2d;
   box-shadow: 0 0 20px rgba(255, 122, 89, .20);
 }
+.skip-word-guess-button { display: block; min-width: 128px; margin: 18px auto 0; padding: 11px 20px; border: 1px solid rgba(143, 166, 255, .55); border-radius: 12px; background: rgba(18, 35, 78, .8); color: #b8c8f5; font-family: var(--font-display, sans-serif); font-size: 16px; font-weight: 900; letter-spacing: .12em; cursor: pointer; transition: transform .16s ease, border-color .16s ease, color .16s ease; }
+.skip-word-guess-button:hover { transform: translateY(-2px); border-color: #ffd84d; color: #fff0a6; }
 
 .meaning-block,
 .definition-block {
@@ -1590,7 +1592,7 @@ body.student-vocab-mode #studentDictionaryImage,
 .teacher-example-block { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.10); }
 .teacher-example-block > span { color: #8fa6d9; font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .teacher-example-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, .05); }
-.teacher-example-row p { flex: 1; margin: 0; color: #e7edff; font-size: 16px; font-style: italic; font-weight: 650; line-height: 1.45; }
+.teacher-example-row p { flex: 1; margin: 0; color: #e7edff; font-size: clamp(18px, 2.2vw, 25px); font-style: italic; font-weight: 650; line-height: 1.45; }
 .teacher-example-row button { flex: 0 0 auto; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(143, 166, 255, .3); border-radius: 13px; background: #173267; cursor: pointer; font-size: 20px; }
 .teacher-example-row button:disabled { opacity: .34; cursor: not-allowed; }
 .teacher-example-row #teacherExampleImageButton.is-active { border-color: var(--u2-gold); background: rgba(255, 216, 77, .2); }

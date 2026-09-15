@@ -817,7 +817,6 @@ Parent Hobbies:
 - Callum (father): Fishing
 
 General Interests:
-- Football
 - DIY
 - Board games
 - Washing the family car

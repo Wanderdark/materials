@@ -2791,29 +2791,6 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
   },
 
   {
-    id: "5_life_in_the_city_chloe_ava",
-    status: "",
-    needsRemaster: true,
-    videoSrc: "assets/video/5_life_in_the_city_chloe_ava.mp4",
-    title: "Ava and Chloe compare a giraffe and a zebra.",
-    transcript: "Ava : The giraffe is tall/er than/ the zebra. Chloe : Yes, and it has only seven bones in its neck, just like us.",
-    answerOptions: [
-      { id: "a", text: "Ava : Zürafa zebradan /daha/ uzun. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca yedi kemik var." },
-      { id: "b", text: "Ava : Zürafa zebradan daha büyük. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca yedi kemik var." }
-    ],
-    easyDistractor: "Ava : Zürafa zebradan daha akıllı. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca beş kemik var.",
-    correctOptionId: "a",
-    characterIds: ["chloe","ava"],
-    grades: [5],
-    functions: ["comparatives_of_adjectives"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: "0:00.000",
-    evidenceEnd: "0:02.480",
-    evidenceSentence: "Ava : The giraffe is tall/er than/ the zebra.",
-  },
-
-  {
     id: "5_life_in_the_city_lucas_jack",
     status: "published",
     videoSrc: "assets/video/5_life_in_the_city_lucas_jack.mp4",
@@ -3342,10 +3319,10 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
     evidenceSentence: "Olivia : Me too, but these are cheap/er/.",
   },
 
-  {
+ {
     id: "5_life_in_the_city_benjamin_jack",
-    status: "",
-    needsRemaster: true,
+    status: "published",
+    needsRemaster: false,
     videoSrc: "assets/video/5_life_in_the_city_benjamin_jack.mp4",
     title: "Benjamin and Jack enjoy a quieter place for fishing.",
     transcript: "Benjamin : It’s quiet/er/ here /than/ in town. Jack : Much /better/ for fishing.",
@@ -3360,10 +3337,11 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
     functions: ["comparatives_of_adjectives"],
     theme: "life_in_the_city",
     unit: "life_in_the_city",
-    evidenceStart: "0:00.000",
-    evidenceEnd: "0:03.380",
+   evidenceStart: "0:00.634",
+evidenceEnd: "0:04.781",
     evidenceSentence: "Benjamin : It’s quiet/er/ here /than/ in town. Jack : Much /better/ for fishing.",
   },
+
 
   {
     id: "5_life_in_the_city_daniel_lucas",
@@ -7989,8 +7967,8 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
 
   {
     id: "school_trip_museum_benjamin_david",
-    status: "",
-    needsRemaster: true,
+    status: "published",
+    needsRemaster: false,
     videoSrc: "assets/video/school_trip_museum_benjamin_david.mp4",
     title: "Benjamin and David looking at some",
     transcript: "Benjamin : Wow, Look at that, It's /amazing/! David : I've never seen one before.",
@@ -8005,8 +7983,8 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
     functions: ["expressingsurprise"],
     theme: "school-trip",
     unit: "",
-    evidenceStart: "0:01.963",
-    evidenceEnd: "0:05.779",
+ evidenceStart: "0:00.000",
+evidenceEnd: "0:03.518",
     evidenceSentence: "Benjamin : Wow, Look at that, It's /amazing/!",
   },
 
@@ -16862,6 +16840,28 @@ evidenceEnd: "0:06.966",
     prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Emma's canonical identity and appearance reference. Use <<<Image3>>> as Hannah's canonical AGE-25 future identity and appearance reference. Use <<<Image4>>> as Emma's canonical AGE-25 future identity and appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. Use <<<Audio2>>> as Emma's canonical voice. PRESENT-DAY SCENE: On a mild, lightly breezy spring afternoon, Hannah and her best friend Emma are standing beside a high round table near a small outdoor snack kiosk. They have just bought simple snacks and are casually spending time together. Hannah wears a burgundy long-sleeved sweatshirt with a small retro checkerboard graphic, full-length dark trousers, and a simple woven bracelet. Emma wears a muted blue long-sleeved sweatshirt with a small abstract wavy-line graphic, full-length charcoal trousers, and a simple wristwatch. Before the conversation begins, Emma holds a smartphone out in front of herself and Hannah. Hannah naturally leans slightly closer to Emma and they quickly take one cheerful selfie together. After taking the selfie, Emma lowers the phone so they can both look at the photo on the screen. While Hannah is still looking at the phone, the moment naturally makes her think about the future. Hannah asks: 'Do you think we will still use phones in the future?' Emma replies: 'No. I think we won't need phones.' FLASHFORWARD TRANSITION: Immediately after Emma finishes speaking, transition approximately thirteen years into the future. Use a very brief soft white flash combined with quick motion blur and a very short smooth whoosh sound. The transition lasts only a fraction of a second. Do not morph the children into their adult versions. Make a clean transition into a completely separate future scene. The first visible future moment already shows Hannah at age 25 using <<<Image3>>> as her appearance reference. Emma's adult holographic appearance must use <<<Image4>>>. Hannah and Emma are the same best friends approximately thirteen years later. Adult Hannah and adult Emma must both clearly read as women in their mid-twenties rather than teenagers. FUTURE SCENE — APPROXIMATELY 13 YEARS LATER: Adult Hannah is in an elegant futuristic living space with advanced communication technology naturally integrated into the environment. She wears a simple solid deep-green long-sleeved top and dark trousers. There is no smartphone, tablet, laptop, or handheld communication device in Hannah's hands. Hannah makes one simple natural hand gesture. A life-size volumetric holographic communication projection of 25-year-old Emma appears nearby. The holographic Emma has realistic three-dimensional depth and clearly uses <<<Image4>>> as her adult identity and appearance. She appears as a sophisticated luminous volumetric presence rather than a flat screen or ordinary video call. Adult Emma wears a simple solid soft-gray top. The holographic projection is clearly recognizable as Emma and visually distinct from a physically present person through subtle translucent light and holographic qualities. Adult Emma smiles naturally and says: 'Hi, Hannah!' Adult Hannah smiles back and replies: 'Hi, Emma!' Their interaction feels effortless and familiar, showing that they are still close friends thirteen years later. There is no physical phone involved in their communication. The main visual payoff is the contrast between the two time periods: As children, Hannah and Emma needed a physical smartphone for their shared selfie. As adults, they can communicate face-to-face through life-size volumetric holographic technology without using phones. Hold briefly on adult Hannah naturally interacting with holographic adult Emma. CUT. VOICE CONTINUITY: All present-day dialogue spoken by 12-year-old Hannah must use <<<Audio1>>>. All present-day dialogue spoken by 12-year-old Emma must use <<<Audio2>>>. Adult Hannah's future line 'Hi, Emma!' should sound like a naturally matured 25-year-old version of Hannah's voice. Adult Emma's future line 'Hi, Hannah!' should sound like a naturally matured 25-year-old version of Emma's voice. The adult voices should preserve the recognizable vocal identities of <<<Audio1>>> and <<<Audio2>>> while naturally sounding approximately thirteen years older. ABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT. Do not display any spoken dialogue as text anywhere in the video. Do not generate subtitles, captions, closed captions, dialogue text, speech text, or transcription on screen. All dialogue must exist as AUDIO ONLY. There must be zero readable text anywhere in the frame. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
   },
 
+ {
+    id: "5_life_in_the_city_chloe_ava",
+    status: "published",
+    needsRemaster: false,
+    videoSrc: "assets/video/5_life_in_the_city_chloe_ava.mp4",
+    title: "Ava and Chloe compare a giraffe and a zebra.",
+    transcript: "Ava : The giraffe is tall/er than/ the zebra. Chloe : Yes, and it has only seven bones in its neck, just like us.",
+    answerOptions: [
+      { id: "a", text: "Ava : Zürafa zebradan /daha/ uzun. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca yedi kemik var." },
+      { id: "b", text: "Ava : Zürafa zebradan daha büyük. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca yedi kemik var." }
+    ],
+    easyDistractor: "Ava : Zürafa zebradan daha akıllı. Chloe : Evet, ve boynunda tıpkı bizimki gibi yalnızca beş kemik var.",
+    correctOptionId: "a",
+    characterIds: ["chloe","ava"],
+    grades: [5],
+    functions: ["comparatives_of_adjectives"],
+    theme: "life_in_the_city",
+    unit: "life_in_the_city",
+  evidenceStart: "0:01.575",
+evidenceEnd: "0:03.575",
+    evidenceSentence: "Ava : The giraffe is tall/er than/ the zebra.",
+  },
 
 
 ];

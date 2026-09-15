@@ -154,6 +154,19 @@
     .tc-avatar-image-crop { width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
     .tc-level-badge, .tc-student .tc-level-badge { position: absolute; top: -8px; right: -8px; z-index: 4; display: grid; width: 25px; height: 25px; box-sizing: border-box; margin: 0; place-items: center; border: 2px solid #fff0a6; border-radius: 50%; background: #173671; color: #fff8cf; font-family: var(--font-display, sans-serif); font-size: 10px; font-weight: 900; letter-spacing: 0; line-height: 1; box-shadow: 0 2px 9px rgba(0, 0, 0, .46), 0 0 10px rgba(255, 216, 77, .26); }
     .tc-level-badge.is-inline { position: static; display: grid; flex: 0 0 auto; width: 22px; height: 22px; margin: 0; place-items: center; border-width: 1px; color: #fff8cf; font-size: 9px; line-height: 1; }
+    .tc-level-up-overlay { position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center; padding: 24px; background: rgba(2, 8, 28, .78); backdrop-filter: blur(7px); animation: tcLevelUpBackdrop .25s ease-out; }
+    .tc-level-up-card { width: min(430px, 100%); overflow: hidden; border: 2px solid #ffe27a; border-radius: 28px; background: radial-gradient(circle at 50% 0%, #324eaa 0%, #13235c 42%, #08122f 100%); color: #fff; text-align: center; box-shadow: 0 24px 80px rgba(0, 0, 0, .62), 0 0 44px rgba(255, 216, 77, .46); animation: tcLevelUpCard .38s cubic-bezier(.2, 1.35, .4, 1); }
+    .tc-level-up-title { margin: 0; padding: 22px 16px 13px; color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 6vw, 48px); font-weight: 900; letter-spacing: .08em; line-height: 1; text-shadow: 0 3px 0 #aa7210, 0 0 18px rgba(255, 228, 99, .8); }
+    .tc-level-up-name { margin: 0; color: #fff; font-family: var(--font-display, sans-serif); font-size: clamp(22px, 4vw, 31px); font-weight: 900; letter-spacing: .06em; }
+    .tc-level-up-portrait { display: grid; width: 142px; height: 142px; margin: 18px auto; place-items: center; overflow: hidden; border: 5px solid #fff1a7; border-radius: 50%; background: #10255b; color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: 54px; font-weight: 900; box-shadow: 0 0 0 7px rgba(255, 216, 77, .18), 0 0 28px rgba(255, 216, 77, .6); }
+    .tc-level-up-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .tc-level-up-message { min-height: 29px; margin: 0 18px 14px; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 22px; font-weight: 900; letter-spacing: .05em; }
+    .tc-level-up-next { margin: 0; padding: 15px; border-top: 1px solid rgba(255, 241, 167, .24); border-bottom: 1px solid rgba(255, 241, 167, .24); background: rgba(4, 11, 37, .34); color: #dbe7ff; font: 800 16px/1.35 var(--font-ui, sans-serif); }
+    .tc-level-up-next strong { color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: 22px; }
+    .tc-level-up-close { width: calc(100% - 36px); margin: 18px; padding: 15px; border: 0; border-radius: 14px; background: var(--u2-grad-gold, #ffd84d); color: #10183b; font-family: var(--font-display, sans-serif); font-size: 22px; font-weight: 900; letter-spacing: .08em; cursor: pointer; box-shadow: 0 5px 0 #b98216; }
+    .tc-level-up-close:active { transform: translateY(3px); box-shadow: 0 2px 0 #b98216; }
+    @keyframes tcLevelUpBackdrop { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes tcLevelUpCard { from { opacity: 0; transform: scale(.72) translateY(24px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .tc-avatar-flipped { transform: scaleX(-1); }
     @keyframes tcNamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
     .tc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
@@ -470,7 +483,7 @@
   const effectiveScore = (student) => (Number(student?.points) || 0) + Math.max(0, Math.floor(Number(student?.stars) || 0)) * 10;
   const studentLevel = (student) => {
     const score = Math.max(0, effectiveScore(student));
-    const earlyLevelStarts = [0, 11, 31, 61, 101, 151, 211, 281, 361, 461];
+    const earlyLevelStarts = [0, 11, 32, 61, 101, 151, 211, 281, 361, 461];
     let level = 1;
     earlyLevelStarts.forEach((start, index) => {
       if (score >= start) level = index + 1;
@@ -487,6 +500,22 @@
     }
     return 99;
   };
+  const nextLevelStart = (student) => {
+    const score = Math.max(0, effectiveScore(student));
+    const level = studentLevel(student);
+    const earlyLevelStarts = [0, 11, 32, 61, 101, 151, 211, 281, 361, 461];
+    if (level < 10) return earlyLevelStarts[level];
+    if (level >= 99) return null;
+
+    let nextStart = 571;
+    let nextRange = 120;
+    for (let nextLevel = 11; nextLevel <= 99; nextLevel += 1) {
+      if (score < nextStart) return nextStart;
+      nextStart += nextRange;
+      nextRange += 10;
+    }
+    return null;
+  };
   const createLevelBadge = (student, inline = false) => {
     const badge = el("span", `tc-level-badge${inline ? " is-inline" : ""}`, String(studentLevel(student)));
     badge.title = `Level ${studentLevel(student)}`;
@@ -497,10 +526,49 @@
   const avatarUnlocksBetween = (previousLevel, currentLevel) => Object.entries(AVATAR_UNLOCK_LEVELS)
     .filter(([, requiredLevel]) => requiredLevel > previousLevel && requiredLevel <= currentLevel)
     .map(([name]) => name.toUpperCase());
+  const levelUpMessages = ["GOOD JOB!", "WELL DONE!", "YOU ARE AWESOME!", "EXCELLENT!", "CONGRATULATIONS!"];
+  const levelUpQueue = [];
+  let levelUpOverlayOpen = false;
+  const showNextLevelUpOverlay = () => {
+    if (levelUpOverlayOpen || !levelUpQueue.length) return;
+    levelUpOverlayOpen = true;
+    const student = levelUpQueue.shift();
+    const nextLevel = nextLevelStart(student);
+    const overlay = el("div", "tc-level-up-overlay");
+    const card = el("section", "tc-level-up-card");
+    const title = el("h2", "tc-level-up-title", "LEVEL UP !!!");
+    const name = el("p", "tc-level-up-name", student.name);
+    const portrait = el("div", "tc-level-up-portrait", student.name.slice(0, 1).toLocaleUpperCase("tr-TR"));
+    if (student.avatarPath) {
+      const image = document.createElement("img");
+      image.src = student.avatarPath;
+      image.alt = `${student.name} portrait`;
+      image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
+      image.addEventListener("load", () => portrait.replaceChildren(image), { once: true });
+    }
+    const message = el("p", "tc-level-up-message", levelUpMessages[Math.floor(Math.random() * levelUpMessages.length)]);
+    const nextCopy = el("p", "tc-level-up-next");
+    nextCopy.innerHTML = nextLevel === null ? "<strong>MAX LEVEL</strong>" : `Next level at: <strong>${nextLevel}</strong>`;
+    const close = el("button", "tc-level-up-close", "COOL!");
+    close.type = "button";
+    close.addEventListener("click", () => {
+      overlay.remove();
+      levelUpOverlayOpen = false;
+      showNextLevelUpOverlay();
+    });
+    card.append(title, name, portrait, message, nextCopy, close);
+    overlay.append(card);
+    document.body.append(overlay);
+    const cheer = new Audio("../func_presenter/sounds/cheer.mp3");
+    cheer.volume = .9;
+    cheer.play().catch(() => {});
+  };
   const notifyLevelUp = (student, previousLevel) => {
     const currentLevel = studentLevel(student);
     if (currentLevel <= previousLevel) return;
     showToast(`${student.name} - Level Up: ${currentLevel}!`, "success");
+    levelUpQueue.push({ ...student });
+    showNextLevelUpOverlay();
     const unlockedAvatars = avatarUnlocksBetween(previousLevel, currentLevel);
     if (unlockedAvatars.length) {
       showToast(`${student.name} new avatars available`, "success");

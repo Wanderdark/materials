@@ -223,6 +223,15 @@ body::before {
 }
 .ss-rename-btn:hover { background:rgba(96,165,250,.2); border-color:var(--p1); }
 .ss-rename-btn.hidden { display:none; }
+.ss-roster-import {
+  font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; padding:11px 20px;
+  background:linear-gradient(135deg,#5135a5,#8054d7);
+  border:1.5px solid #a68aff; border-radius:12px; color:#fff;
+  cursor:pointer; transition:transform .12s, filter .15s;
+  box-shadow:0 4px 18px rgba(95,65,190,.26);
+}
+.ss-roster-import:hover { transform:translateY(-2px); filter:brightness(1.12); }
 .ss-continue-btn {
   font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700;
   letter-spacing:.14em; text-transform:uppercase; padding:14px 32px;
@@ -233,6 +242,39 @@ body::before {
 }
 .ss-continue-btn:disabled { opacity:.35; cursor:not-allowed; transform:none!important; box-shadow:none!important; }
 .ss-continue-btn:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 7px 28px rgba(34,197,94,.5); }
+.wd-roster-overlay {
+  position:fixed; inset:0; z-index:9835;
+  background:rgba(2,8,26,.82); backdrop-filter:blur(7px);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+}
+.wd-roster-overlay.hidden { display:none; }
+.wd-roster-modal {
+  position:relative; width:min(92vw,560px); max-height:min(82vh,720px);
+  overflow:auto; padding:30px; border:2px solid #8069db; border-radius:24px;
+  background:linear-gradient(145deg,#112957,#0a1739);
+  box-shadow:0 20px 60px rgba(0,0,0,.48); color:#eff4ff;
+}
+.wd-roster-eyebrow {
+  color:#ffe15c; font-size:13px; font-weight:1000;
+  letter-spacing:.16em; margin-bottom:8px;
+}
+.wd-roster-modal h2 { margin:0; font-size:clamp(25px,4vw,37px); line-height:1.05; }
+.wd-roster-modal p { margin:12px 0 22px; color:#afc5f5; font-size:16px; line-height:1.45; }
+.wd-roster-close {
+  position:absolute; right:16px; top:15px; width:42px; height:42px;
+  border-radius:12px; border:1px solid #5374c9; background:#142b5d;
+  color:#dce8ff; font-size:27px; cursor:pointer;
+}
+.wd-roster-class-list { display:grid; gap:10px; }
+.wd-roster-class-btn {
+  display:flex; justify-content:space-between; gap:12px; align-items:center;
+  width:100%; padding:15px 17px; border:2px solid #416ab4;
+  border-radius:14px; background:#102658; color:#fff; text-align:left;
+  cursor:pointer; font-weight:900; font-size:18px;
+}
+.wd-roster-class-btn:hover { border-color:#ffe15c; background:#17336b; transform:translateY(-1px); }
+.wd-roster-class-meta { color:#8fb2ef; font-size:13px; white-space:nowrap; }
+.wd-roster-message { min-height:20px; margin-top:14px; color:#ffd15c; font-size:14px; font-weight:800; }
 
 /* ─── RENAME OVERLAY ─── */
 #overlay-rename {
@@ -1146,9 +1188,22 @@ body::before {
     <div class="ss-class-pool" id="ss-class-pool"></div>
     <div class="ss-count-row">
       <div class="ss-count" id="ss-count">Henüz seçilmedi</div>
+      <button id="ss-roster-import-btn" class="ss-roster-import" type="button" onclick="openWdRosterClassPicker()">IMPORT FROM ROSTER</button>
       <button id="ss-rename-btn" class="ss-rename-btn hidden" onclick="openRenameOverlay()">✎ RENAME</button>
       <button class="ss-continue-btn" id="ss-continue-btn" disabled onclick="proceedStudentSelection()">DEVAM →</button>
     </div>
+  </div>
+</div>
+
+<!-- Teacher HUD: roster import -->
+<div id="wd-roster-class-overlay" class="wd-roster-overlay hidden" onclick="if(event.target===this)closeWdRosterClassPicker()">
+  <div class="wd-roster-modal" role="dialog" aria-modal="true" aria-labelledby="wd-roster-class-title">
+    <button class="wd-roster-close" type="button" aria-label="Close" onclick="closeWdRosterClassPicker()">×</button>
+    <div class="wd-roster-eyebrow">TEACHER HUD</div>
+    <h2 id="wd-roster-class-title">SELECT A ROSTER</h2>
+    <p>Import every student from the selected Teacher HUD roster into this player list.</p>
+    <div id="wd-roster-class-list" class="wd-roster-class-list"></div>
+    <div id="wd-roster-class-message" class="wd-roster-message"></div>
   </div>
 </div>
 
@@ -1362,6 +1417,9 @@ body::before {
   </div>
 </div>
 
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
 //  POWER-UP CONFIG
@@ -2816,6 +2874,7 @@ let _easyStudents = new Set();      // easy mode'lu öğrenci adları (all-caps 
 let _ssSelected   = [];   // [{name, slot}]  — max 2, sırasıyla P1/P2
 let _ssMode       = 'duel';
 let _ssLastChip   = null; // son seçilen chip element (rename için)
+let _importedRosterStudents = [];
 let _rnSlot       = null; // rename edilecek slot index (1..18)
 let _rnText       = '';
 let _rnKbHandler  = null;
@@ -2919,13 +2978,78 @@ function _saveSSNames() {
   try { localStorage.setItem(_SS_KEY, JSON.stringify(names)); } catch(e) {}
 }
 
+function closeWdRosterClassPicker() {
+  document.getElementById('wd-roster-class-overlay')?.classList.add('hidden');
+}
+
+function openWdRosterClassPicker() {
+  const overlay = document.getElementById('wd-roster-class-overlay');
+  const list = document.getElementById('wd-roster-class-list');
+  const message = document.getElementById('wd-roster-class-message');
+  if (!overlay || !list || !message) return;
+
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const usable = classrooms.filter(classroom => Array.isArray(classroom.roster) && classroom.roster.length);
+  list.replaceChildren();
+  message.textContent = '';
+
+  if (!usable.length) {
+    message.textContent = 'Create a roster from the Teacher HUD first.';
+  } else {
+    usable.forEach(classroom => {
+      const button = document.createElement('button');
+      const name = document.createElement('span');
+      const meta = document.createElement('span');
+      button.type = 'button';
+      button.className = 'wd-roster-class-btn';
+      name.textContent = classroom.name || 'MY CLASS';
+      meta.className = 'wd-roster-class-meta';
+      meta.textContent = classroom.roster.length + ' students';
+      button.append(name, meta);
+      button.addEventListener('click', () => importWdRosterClass(classroom.id));
+      list.append(button);
+    });
+  }
+  overlay.classList.remove('hidden');
+}
+
+function importWdRosterClass(classroomId) {
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const classroom = classrooms.find(item => item.id === classroomId);
+  const message = document.getElementById('wd-roster-class-message');
+  if (!classroom || !Array.isArray(classroom.roster)) return;
+
+  const names = classroom.roster
+    .map(student => (student?.name || '').trim())
+    .filter(Boolean);
+
+  if (!names.length) {
+    if (message) message.textContent = 'This roster has no students.';
+    return;
+  }
+
+  _importedRosterStudents = names;
+  buildStudentPool();
+  closeWdRosterClassPicker();
+}
+
 function buildStudentPool() {
   _ssSelected = []; _ssLastChip = null;
   _easyStudents = _loadEasyStudents();
   const pool = document.getElementById('ss-class-pool');
   pool.innerHTML = '';
   const teacherMode = window.CLASSES && CLASSES.length > 0;
-  if (teacherMode) {
+  if (_importedRosterStudents.length) {
+    _importedRosterStudents.forEach((name, index) => {
+      const chip = document.createElement('button');
+      chip.className = 'ss-chip';
+      chip.textContent = name;
+      chip.dataset.name = name;
+      chip.dataset.slot = index + 1;
+      chip.onclick = () => _ssToggle({ name: chip.dataset.name, slot: index + 1 }, chip);
+      pool.appendChild(chip);
+    });
+  } else if (teacherMode) {
     // names.js yüklendi — sınıf listesini direkt göster (tüm sınıfların öğrencileri)
     CLASSES.forEach(cls => {
       cls.students.forEach(s => {
@@ -2992,6 +3116,7 @@ function _updateSSCount() {
   const n = _ssSelected.length;
   const el = document.getElementById('ss-count');
   const teacherMode = window.CLASSES && CLASSES.length > 0;
+  const rosterMode = _importedRosterStudents.length > 0;
   const tournamentMode = _ssMode === 'tournament';
   document.getElementById('ss-heading').textContent = tournamentMode ? 'TURNUVA OYUNCU SEÇİMİ' : 'OYUNCU SEÇİMİ';
   document.getElementById('ss-sub').innerHTML = tournamentMode
@@ -3009,7 +3134,7 @@ function _updateSSCount() {
   // RENAME butonu: sadece web modunda, son seçilen chip varsa
   const rnBtn = document.getElementById('ss-rename-btn');
   if (rnBtn) {
-    const canRename = !teacherMode && !tournamentMode && _ssLastChip !== null;
+    const canRename = !teacherMode && !rosterMode && !tournamentMode && _ssLastChip !== null;
     rnBtn.classList.toggle('hidden', !canRename);
   }
 }
