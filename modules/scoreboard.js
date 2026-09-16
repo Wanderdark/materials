@@ -320,7 +320,7 @@ function calcStarMap(){
   const teamTotals = [0,1].map(gi =>
     groupStudents[gi].reduce((s,_,si) => s + studentScoreMap[gi][si], 0)
   );
-  const leadTeam   = teamTotals[0] >= teamTotals[1] ? 0 : 1;
+  const leadTeam   = teamTotals[0] === teamTotals[1] ? null : (teamTotals[0] > teamTotals[1] ? 0 : 1);
   const teamTopPts = [0,1].map(gi =>
     groupStudents[gi].length ? Math.max(...groupStudents[gi].map((_,si) => studentScoreMap[gi][si])) : 0
   );
@@ -333,7 +333,7 @@ function calcStarMap(){
       const pts = studentScoreMap[gi][si];
       const key = `${gi}-${si}`;
       if(pts === 0){ starMap[key] = 0; return; }
-      let stars = gi === leadTeam ? 2 : 1;
+      let stars = leadTeam === null ? 1 : (gi === leadTeam ? 2 : 1);
       if(pts === teamTopPts[gi]) stars++;
       if(overallTop > 0 && pts === overallTop) stars++;
       starMap[key] = Math.min(4, stars);

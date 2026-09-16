@@ -19,16 +19,23 @@
   const HELP_SEEN_KEY = "fpTeacherControlHelpSeenV1";
   const controlScriptUrl = document.currentScript?.src || location.href;
   const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
-  const canonicalAvatarPath = (name) => new URL(`images/avatars/${name.toLowerCase()}.webp`, controlScriptUrl).href;
+  const canonicalAvatarPath = (name) => `images/avatars/${name.toLowerCase()}.webp`;
   const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
   const normalizeAvatarPath = (path = "") => {
     const value = String(path || "");
     const remoteCanonicalAvatar = value.match(/^https?:\/\/(?:www\.)?adilhoca\.com\/func_presenter\/images\/avatars\/([^/?#]+)\.webp(?:[?#].*)?$/i);
     if (remoteCanonicalAvatar) return canonicalAvatarPath(remoteCanonicalAvatar[1]);
+    const localCanonicalAvatar = value.match(/^file:\/\/\/.*\/func_presenter\/images\/avatars\/([^/?#]+)\.webp(?:[?#].*)?$/i);
+    if (localCanonicalAvatar) return canonicalAvatarPath(localCanonicalAvatar[1]);
     if (/^(?:\.\.\/func_presenter\/)?images\/avatars\//i.test(value)) {
       return canonicalAvatarPath(value.split("/").pop().replace(/\.webp$/i, ""));
     }
     return value;
+  };
+  const resolveAvatarPath = (path = "") => {
+    const value = normalizeAvatarPath(path);
+    if (!value) return "";
+    try { return new URL(value, controlScriptUrl).href; } catch { return value; }
   };
   const state = {
     version: 4,
@@ -541,7 +548,7 @@
     const portrait = el("div", "tc-level-up-portrait", student.name.slice(0, 1).toLocaleUpperCase("tr-TR"));
     if (student.avatarPath) {
       const image = document.createElement("img");
-      image.src = student.avatarPath;
+      image.src = resolveAvatarPath(student.avatarPath);
       image.alt = `${student.name} portrait`;
       image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
       image.addEventListener("load", () => portrait.replaceChildren(image), { once: true });
@@ -793,7 +800,7 @@
     rosterButton.title = chosen ? `${chosen.name} is chosen — Class roster` : "Class roster";
     if (chosen?.avatarPath) {
       const avatar = document.createElement("img");
-      avatar.src = chosen.avatarPath;
+      avatar.src = resolveAvatarPath(chosen.avatarPath);
       avatar.alt = `${chosen.name} avatar`;
       avatar.className = "tc-roster-avatar";
       avatar.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(chosen.avatarPath));
@@ -816,6 +823,14 @@
   }
 
   function applyCloudState(snapshot) {
+    const classroomsToCheck = Array.isArray(snapshot?.classrooms)
+      ? snapshot.classrooms
+      : [{ roster: snapshot?.roster }];
+    const needsAvatarPathMigration = classroomsToCheck.some((classroom) =>
+      Array.isArray(classroom?.roster) && classroom.roster.some((student) =>
+        typeof student?.avatarPath === "string" && normalizeAvatarPath(student.avatarPath) !== student.avatarPath
+      )
+    );
     if (Array.isArray(snapshot?.classrooms) && snapshot.classrooms.length) {
       state.classrooms = snapshot.classrooms.map((classroom, index) => createClassroom(`CLASS ${index + 1}`, classroom));
       state.activeClassroomId = state.classrooms.some((classroom) => classroom.id === snapshot.activeClassroomId)
@@ -832,6 +847,7 @@
     resetRandomPool();
     syncSelectedTrigger();
     persistLocal();
+    if (needsAvatarPathMigration) window.TeacherCloud?.scheduleSync?.(state);
     updateHud();
   }
 
@@ -1264,7 +1280,7 @@
     const levelBadge = showLevel ? createLevelBadge(student) : null;
     const image = document.createElement("img");
     const imageCrop = el("div", "tc-avatar-image-crop");
-    image.src = student.avatarPath;
+    image.src = resolveAvatarPath(student.avatarPath);
     image.alt = `${student.name} avatar`;
     image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
     image.addEventListener("error", () => {
@@ -1359,7 +1375,7 @@
           option.append(el("div", "tc-no-photo-frame"), document.createTextNode(avatar.name));
         } else {
           const image = document.createElement("img");
-          image.src = avatar.path;
+          image.src = resolveAvatarPath(avatar.path);
           image.alt = avatar.name;
           image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(avatar.path));
           option.append(image, document.createTextNode(avatar.name.toUpperCase()));

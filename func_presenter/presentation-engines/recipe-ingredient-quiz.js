@@ -70,8 +70,6 @@ function renderRecipeIngredientQuiz(example) {
         if (option !== button) option.classList.add("removed");
       });
       button.classList.add("correct");
-      if (firstAttempt) window.StudentGame?.onCorrect();
-      window.TeacherControl?.onCorrect();
     });
     options.append(button);
   });

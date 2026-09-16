@@ -372,8 +372,6 @@ function renderVideoDialoguePractice(example) {
             if (option !== button) option.classList.add("removed");
           });
           button.classList.add("correct");
-          if (firstAttempt) window.StudentGame?.onCorrect();
-          window.TeacherControl?.onCorrect();
           const nextButton = document.createElement("button");
           nextButton.type = "button";
           nextButton.className = "primary-button video-dialogue-classification-next video-dialogue-classification-visual-next";

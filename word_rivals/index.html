@@ -1805,7 +1805,7 @@ function transferRvrFinalStarsToRoster() {
   const awards = [0, 1].flatMap((groupIndex) =>
     groupStudents[groupIndex].map((name, studentIndex) => ({
       name,
-      points: (Number(starMap[`${groupIndex}-${studentIndex}`]) || 0) * 5
+      points: (Number(starMap[`${groupIndex}-${studentIndex}`]) || 0) * 2
     }))
   ).filter((award) => award.name && award.points > 0);
 
@@ -2194,6 +2194,26 @@ function _startRound() {
     }
   }
 }
+
+// Akıllı tahta: ilk temas cevabı kabul eder; aynı temasın sonraki click'i yok sayılır.
+document.addEventListener('pointerdown', e => {
+  if (e.isPrimary === false) return;
+  const cell = e.target.closest('.img-cell');
+  if (!cell) return;
+  const match = /^cell-([ab])-(\d+)$/.exec(cell.id || '');
+  if (!match) return;
+  e.preventDefault();
+  cell.dataset.pointerHandled = '1';
+  handleClick(match[1], Number(match[2]));
+}, true);
+
+document.addEventListener('click', e => {
+  const cell = e.target.closest('.img-cell');
+  if (!cell || cell.dataset.pointerHandled !== '1') return;
+  delete cell.dataset.pointerHandled;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+}, true);
 
 function handleClick(side, pos) {
   if (!roundActive || _clickLocked) return;
@@ -3133,7 +3153,9 @@ function _duelTimerTick() {
   if (_duelTimerSec <= 0) {
     _stopDuelTimer();
     if (!roundActive) return;
-    const winnerGi = teamHP[1] > teamHP[0] ? 1 : 0;
+    const winnerGi = teamHP[1] > teamHP[0]
+      ? 1
+      : teamHP[0] > teamHP[1] ? 0 : null;
     _endDuel(winnerGi);
   }
 }
@@ -3185,10 +3207,12 @@ function _endDuel(duelWinnerGi) {
     if (g) { g.style.transition = 'opacity .4s'; g.style.opacity = '0'; g.style.pointerEvents = ''; }
   });
 
-  // Kaybeden takımın avatarını _dmg görseline geçir
-  const loserGi = 1 - duelWinnerGi;
-  avatarDmgTriggered[loserGi] = true;
-  applyGameAvatars();
+  // Beraberlikte kaybeden avatarı yok; kazanan varsa rakibin avatarını _dmg yap.
+  if (duelWinnerGi !== null) {
+    const loserGi = 1 - duelWinnerGi;
+    avatarDmgTriggered[loserGi] = true;
+    applyGameAvatars();
+  }
 
   // 1. Skor ekranı için veriyi puan verilmeden önce topla
   const duelData = _captureDuelData(duelWinnerGi);
