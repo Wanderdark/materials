@@ -14,6 +14,23 @@ function clearVideoDialoguePractice() {
   }
 }
 
+function bindVideoStopAt(video, stopAt, onStop) {
+  const stopAtSeconds = Number(stopAt);
+  if (!Number.isFinite(stopAtSeconds) || stopAtSeconds <= 0) return;
+  let reachedStopAt = false;
+  const stopAtLimit = () => {
+    if (video.currentTime < stopAtSeconds) return;
+    video.pause();
+    if (video.currentTime > stopAtSeconds) video.currentTime = stopAtSeconds;
+    if (reachedStopAt) return;
+    reachedStopAt = true;
+    onStop();
+  };
+  video.addEventListener("timeupdate", stopAtLimit);
+  video.addEventListener("seeking", stopAtLimit);
+  video.addEventListener("play", stopAtLimit);
+}
+
 function createVideoDialogueChoice(part, onAnswer) {
   const group = document.createElement("span");
   group.className = "video-dialogue-choice";
@@ -394,6 +411,7 @@ function renderVideoDialoguePractice(example) {
       classificationStarted = true;
       renderSpeakerClassification();
     };
+    bindVideoStopAt(video, data.videoStopAt, startSpeakerClassification);
     video.addEventListener("ended", startSpeakerClassification, { once: true });
     video.addEventListener("error", startSpeakerClassification, { once: true });
     practice.append(...(portrait ? [portrait] : []), ...(kicker ? [kicker] : []), lines, classification);
@@ -416,6 +434,7 @@ function renderVideoDialoguePractice(example) {
       els.exampleCard.classList.add("video-dialogue-practice-open");
       practice.classList.remove("hidden");
     };
+    bindVideoStopAt(video, data.videoStopAt, openPractice);
     openButton.addEventListener("click", openPractice);
     visual.append(openButton);
     video.addEventListener("ended", openPractice, { once: true });

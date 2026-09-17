@@ -440,10 +440,6 @@ const presentProgressiveFunction = {
       videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_benjamin_oliver.mp4", lines: [{ speaker: "BENJAMIN", parts: [{ text: "You usually swim in the morning, Dad." }] }, { speaker: "OLIVER", parts: [{ text: "Yes, but I'm " }, { answer: "resting", choices: ["rest", "rests", "resting"] }, { text: " today." }] }] }
     },
     {
-      id: "present-progressive-vs-simple-video-daniel-javier",
-      videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_daniel_javier.mp4", lines: [{ speaker: "DANIEL", parts: [{ text: "You usually fix cars, Dad." }] }, { speaker: "JAVIER", parts: [{ text: "Yes, but I'm " }, { answer: "fixing", choices: ["fix", "fixes", "fixing"] }, { text: " my bicycle today." }] }] }
-    },
-    {
       id: "present-progressive-vs-simple-video-lucas-gabriel",
       videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_family_life_lucas_gabriel.mp4", lines: [{ speaker: "LUCAS", parts: [{ text: "You usually work on Saturdays, Dad." }] }, { speaker: "GABRIEL", parts: [{ text: "Yes, but we're " }, { answer: "having", choices: ["have", "has", "having"] }, { text: " a picnic today." }] }, { speaker: "LUCAS", parts: [{ text: "Yesss!" }] }] }
     },

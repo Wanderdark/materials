@@ -130,17 +130,6 @@ const simplePresentDoYouLikeFunction = {
       ]
     },
     {
-      id: "school-life-chloe-emma-video",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/5_school_life_chloe_emma.mp4",
-        lines: [
-          { speaker: "CHLOE", parts: [{ text: "Do you like " }, { answer: "doing", choices: ["do", "doing"] }, { text: " science experiments?" }] },
-          { speaker: "EMMA", parts: [{ text: "Yes I do, they're exciting." }] }
-        ]
-      }
-    },
-    {
       id: "school-life-noah-victoria-video",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",

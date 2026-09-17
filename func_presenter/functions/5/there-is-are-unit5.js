@@ -527,14 +527,6 @@ thereIsAreUnit5Function.sentences.push(
     videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ella_olivia.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Is there " }, { answer: "a dictionary", choices: ["a notebook", "a dictionary"] }, { text: " in your bag?" }] }, { speaker: "OLIVIA", parts: [{ text: "Yes, " }, { answer: "there is", choices: ["there is", "there isn't"] }, { text: ". You can borrow it." }] }] }
   },
   {
-    id: "unit5-classroom-life-chloe-scissors-video",
-    videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_chloe.mp4", lines: [{ speaker: "CHLOE", parts: [{ text: "Are there any scissors in the " }, { answer: "bookcase", choices: ["bag", "bookcase"] }, { text: "?" }] }, { speaker: "ART TEACHER", parts: [{ text: "Yes, there " }, { answer: "are", choices: ["is", "are"] }, { text: ". They're next to the glue." }] }] }
-  },
-  {
-    id: "unit5-classroom-life-daniel-victoria-seats-video",
-    videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_daniel_victoria.mp4", lines: [{ speaker: "DANIEL", parts: [{ answer: "Are there", choices: ["Is there", "Are there"] }, { text: " any free seats near the smartboard?" }] }, { speaker: "VICTORIA", parts: [{ answer: "Yes", choices: ["Yes", "no"] }, { text: ", there are two." }] }] }
-  },
-  {
     id: "unit5-classroom-life-ava-classroom-video",
     videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ava.mp4", lines: [{ speaker: "AVA", parts: [{ text: "Is there a " }, { answer: "teacher", choices: ["teacher", "student"] }, { text: " in the classroom?" }] }, { speaker: "ASSISTANT HEADMASTER", parts: [{ text: "Yes, there " }, { answer: "is", choices: ["are", "is"] }, { text: ". She's beside the bookcase." }] }] }
   },

@@ -35,10 +35,48 @@ function renderFriendSorter(example) {
   zones.className = "friend-sorter-zones";
 
   let selectedCard = null;
+  let expandedCard = null;
+  let expandedSourceCard = null;
   const setSelectedCard = (card) => {
     selectedCard?.classList.remove("selected");
     selectedCard = card;
     selectedCard?.classList.add("selected");
+  };
+  const closeExpandedCard = () => {
+    expandedCard?.remove();
+    expandedCard = null;
+    expandedSourceCard = null;
+  };
+  const toggleExpandedCard = (card, cardData) => {
+    if (card.dataset.sorted === "true") return;
+    if (expandedSourceCard === card) {
+      closeExpandedCard();
+      return;
+    }
+    closeExpandedCard();
+    const cardRect = card.getBoundingClientRect();
+    const gridRect = cardGrid.getBoundingClientRect();
+    const gap = Number.parseFloat(getComputedStyle(cardGrid).columnGap) || 0;
+    const width = Math.min(gridRect.width, (cardRect.width * 2) + gap);
+    const height = Math.min(gridRect.height, (cardRect.height * 2) + gap);
+    const overlay = document.createElement("button");
+    overlay.type = "button";
+    overlay.className = "friend-sorter-expanded-card";
+    overlay.style.width = `${width}px`;
+    overlay.style.height = `${height}px`;
+    overlay.style.left = `${Math.max(0, Math.min(cardRect.left - gridRect.left, gridRect.width - width))}px`;
+    overlay.style.top = `${Math.max(0, Math.min(cardRect.top - gridRect.top, gridRect.height - height))}px`;
+    const portrait = document.createElement("img");
+    portrait.src = `../olivias_movie_memories/assets/portraits/${cardData.name.toLowerCase()}.webp`;
+    portrait.alt = cardData.name;
+    const text = document.createElement("p");
+    text.innerHTML = `<strong>This is ${cardData.name}.</strong> ${cardData.text}`;
+    overlay.append(portrait, text);
+    overlay.addEventListener("click", closeExpandedCard);
+    cardGrid.append(overlay);
+    expandedCard = overlay;
+    expandedSourceCard = card;
+    setSelectedCard(card);
   };
   const placeCard = (card, category, target) => {
     if (!card || card.dataset.sorted === "true") return;
@@ -56,6 +94,7 @@ function renderFriendSorter(example) {
     card.classList.remove("selected");
     card.classList.add("sorted");
     target.append(card);
+    if (expandedSourceCard === card) closeExpandedCard();
     selectedCard = null;
   };
   const makeZone = (category, label) => {
@@ -84,12 +123,12 @@ function renderFriendSorter(example) {
     card.dataset.category = cardData.category;
     card.draggable = true;
     const portrait = document.createElement("img");
-    portrait.src = `images/dialogue/${cardData.name.toLowerCase()}_front.webp`;
+    portrait.src = `../olivias_movie_memories/assets/portraits/${cardData.name.toLowerCase()}.webp`;
     portrait.alt = cardData.name;
     const text = document.createElement("p");
     text.innerHTML = `<strong>This is ${cardData.name}.</strong> ${cardData.text}`;
     card.append(portrait, text);
-    card.addEventListener("click", () => setSelectedCard(card));
+    card.addEventListener("click", () => toggleExpandedCard(card, cardData));
     card.addEventListener("dragstart", (event) => {
       setSelectedCard(card);
       event.dataTransfer.setData("text/plain", card.id);

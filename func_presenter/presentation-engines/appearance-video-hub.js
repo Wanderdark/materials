@@ -25,6 +25,7 @@ function renderAppearanceVideoHub(example) {
         videoDialogue: {
           title: "WATCH, THEN COMPLETE THE DIALOGUE",
           videoUrl: character.videoUrl,
+          videoStopAt: character.videoStopAt,
           lines: character.lines,
           onComplete: () => {
             hubState.completed[character.name] = true;

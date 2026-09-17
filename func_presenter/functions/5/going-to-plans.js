@@ -526,14 +526,6 @@ const goingToPlansFunction = {
       }
     },
     {
-      id: "going-to-plans-video-daniel-jack-question",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_daniel_jack.mp4",
-        lines: [{ speaker: "JACK", parts: [{ answer: "What", choices: ["What", "Where"] }, { text: " are you going to do on the mid-term holiday?" }] }]
-      }
-    },
-    {
       id: "going-to-plans-video-mia-zoe-summer",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
@@ -579,14 +571,6 @@ const goingToPlansFunction = {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
         videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_ava_amina_buddy.mp4",
         lines: [{ speaker: "AVA", parts: [{ text: "Where are we going to go this summer?" }] }, { speaker: "AMINA", parts: [{ text: "We're going to visit " }, { answer: "Kenya", choices: ["London", "Kenya"] }] }]
-      }
-    },
-    {
-      id: "going-to-plans-video-chloe-julien-camille-sandcastle",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/5_life_in_the_universe_chloe_julien_camille.mp4",
-        lines: [{ speaker: "JULIEN", parts: [{ text: "What are you going to do today?" }] }, { speaker: "CHLOE", parts: [{ text: "I'm going to " }, { answer: "build a giant sandcastle", choices: ["collect sea shells", "build a giant sandcastle"] }] }]
       }
     },
     {

@@ -308,28 +308,6 @@ const thereIsAreFunction = {
       }
     },
     {
-      id: "classroom-life-chloe-scissors-video",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_chloe.mp4",
-        lines: [
-          { speaker: "CHLOE", parts: [{ text: "Are there any scissors in the " }, { answer: "bookcase", choices: ["bag", "bookcase"] }, { text: "?" }] },
-          { speaker: "ART TEACHER", parts: [{ text: "Yes, there " }, { answer: "are", choices: ["is", "are"] }, { text: ". They're next to the glue." }] }
-        ]
-      }
-    },
-    {
-      id: "classroom-life-daniel-victoria-seats-video",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/5_classroom_life_daniel_victoria.mp4",
-        lines: [
-          { speaker: "DANIEL", parts: [{ answer: "Are there", choices: ["Is there", "Are there"] }, { text: " any free seats near the smartboard?" }] },
-          { speaker: "VICTORIA", parts: [{ answer: "Yes", choices: ["Yes", "no"] }, { text: ", there are two." }] }
-        ]
-      }
-    },
-    {
       id: "classroom-life-ava-classroom-video",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",

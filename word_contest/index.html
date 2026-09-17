@@ -2897,18 +2897,21 @@ function announceWinner() {
 
   const activeScores = grpIdxs().map(i => groupScores[i]);
   const maxScore  = Math.max(...activeScores);
-  const winnerIdx = activeScores.indexOf(maxScore);
-  const winnerName = groupNames[winnerIdx].trim() || ('GRUP ' + (winnerIdx+1));
+  const winningGroups = grpIdxs().filter(i => groupScores[i] === maxScore);
+  const winnerIdx = winningGroups[0];
+  const winnerName = winningGroups.length > 1
+    ? winningGroups.map(i => groupNames[i].trim() || ('GRUP ' + (i+1))).join(' & ') + ' tie!'
+    : (groupNames[winnerIdx].trim() || ('GRUP ' + (winnerIdx+1))) + ' wins!';
 
   // Sol panel: kazanan ilanı
-  document.getElementById('wl-group').textContent = winnerName + ' wins!';
+  document.getElementById('wl-group').textContent = winnerName;
   document.getElementById('wl-pts').textContent   = maxScore;
 
   const allDiv = document.getElementById('wl-all');
   allDiv.innerHTML = '';
   grpIdxs().forEach(i => {
     const p = document.createElement('p');
-    if(i === winnerIdx) p.className = 'w-top';
+    if(winningGroups.includes(i)) p.className = 'w-top';
     const gn = groupNames[i].trim() || ('GRUP ' + (i+1));
     p.innerHTML = `<span>${gn}</span><strong>${groupScores[i]} pts</strong>`;
     allDiv.appendChild(p);
@@ -3726,12 +3729,15 @@ function importWcRosterClass(classroomId) {
 
 function wcFinalStarAwards() {
   const activeGroups = grpIdxs();
-  const ranking = activeGroups.slice().sort((a, b) => groupScores[b] - groupScores[a]);
+  const groupRank = activeGroups.reduce((ranks, groupIndex) => {
+    ranks[groupIndex] = 1 + activeGroups.filter(i => groupScores[i] > groupScores[groupIndex]).length;
+    return ranks;
+  }, {});
   const overallTop = Math.max(0, ...activeGroups.flatMap((gi) => studentScoreMap[gi] || []));
   const awards = [];
 
   activeGroups.forEach((gi) => {
-    const rank = ranking.indexOf(gi) + 1;
+    const rank = groupRank[gi];
     const groupTop = Math.max(0, ...(studentScoreMap[gi] || []));
     groupStudents[gi].forEach((name, studentIndex) => {
       const points = Number(studentScoreMap[gi][studentIndex]) || 0;
@@ -3757,7 +3763,7 @@ function transferWcFinalStarsToRoster() {
   if (wcFinalStarsTransferred || !wcImportedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
   const awards = wcFinalStarAwards()
     .filter((award) => award.name && award.stars > 0)
-    .map((award) => ({ name: award.name, points: award.stars * 5 }));
+    .map((award) => ({ name: award.name, points: award.stars * 2 }));
   const result = window.TeacherControl.awardFinalPoints(awards, wcImportedRosterClassroomId);
   if (result?.awarded?.length) {
     wcFinalStarsTransferred = true;
@@ -4306,8 +4312,9 @@ function renderScoresPanels(listElId, gridElId) {
 
   // Grup sıralaması hesapla (aktif gruplara göre)
   const activeGIs   = grpIdxs();
-  const groupRanking = activeGIs.slice().sort((a,b) => groupScores[b] - groupScores[a]);
-  const groupRank    = [0,1,2].map(gi => groupRanking.indexOf(gi) + 1 || activeGIs.length + 1);
+  const groupRank    = [0,1,2].map(gi => activeGIs.includes(gi)
+    ? 1 + activeGIs.filter(i => groupScores[i] > groupScores[gi]).length
+    : activeGIs.length + 1);
   const trophies  = ['🥇','🥈','🥉'];
 
   // Yıldız hesaplama fonksiyonu
