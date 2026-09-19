@@ -5,6 +5,15 @@ const personalityTraitsGrade7Source = window.functionModules.find((module) => (
 const personalityTraitsGrade8Function = JSON.parse(JSON.stringify(personalityTraitsGrade7Source));
 personalityTraitsGrade8Function.id = "personality-traits-grade8";
 personalityTraitsGrade8Function.grade = 8;
+personalityTraitsGrade8Function.sentences
+  .filter((slide) => slide.appearanceVideoHub)
+  .flatMap((slide) => slide.items)
+  .forEach((item) => {
+    const character = item.appearanceVideoCharacter;
+    if (!character?.videoUrl) return;
+    character.videoUrl = character.videoUrl.replace(/\.mp4$/, "_14.mp4");
+    if (/(?:chloe|hannah)_14\.mp4$/.test(character.videoUrl)) delete character.videoStopAt;
+  });
 
 const personalityTraitsGrade8ExtraWords = [
   { word: "kind", definition: "is caring and helpful to other people.", imagePath: "images/personality/ava.webp" },

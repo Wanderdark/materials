@@ -367,7 +367,7 @@ body::before {
   line-height: 1; min-height: 12px;
 }
 .ph-pu-history span { font-size: 11px; }
-.ph-right { margin-left: auto; flex-shrink: 0; }
+.ph-right { margin-left: auto; flex-shrink: 0; display:flex; flex-direction:column; align-items:center; }
 .player-header.p2 .ph-right { margin-left: 0; }
 .player-header.p2 .ph-left  { margin-left: auto; text-align: right; }
 .ph-turn {
@@ -387,6 +387,18 @@ body::before {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(9px,1vw,12px); font-weight: 700; letter-spacing: .2em;
   color: rgba(251,191,36,0.55);
+}
+.ph-resign {
+  margin-top:2px; padding:3px 9px;
+  font-family:'Barlow Condensed',sans-serif; font-size:9px; font-weight:800; line-height:1;
+  letter-spacing:.14em; text-transform:uppercase; border-radius:7px;
+  border:1px solid rgba(248,113,113,.34); background:rgba(127,29,29,.22);
+  color:rgba(254,202,202,.58); cursor:pointer; transition:all .12s;
+}
+.ph-resign:hover { border-color:rgba(248,113,113,.7); color:#fecaca; background:rgba(185,28,28,.34); }
+.ph-resign.confirm {
+  border-color:#f87171; color:#fff; background:rgba(220,38,38,.78);
+  box-shadow:0 0 14px rgba(248,113,113,.25);
 }
 .player-header.p1.active-player .ph-name {
   color: var(--p1);
@@ -1288,6 +1300,7 @@ body::before {
       </div>
       <div class="ph-right">
         <div class="ph-score" id="score-0">0</div>
+        <button class="ph-resign" id="resign-0" onclick="handleResign(0)">RESIGN</button>
       </div>
     </div>
 
@@ -1301,6 +1314,7 @@ body::before {
       <img class="ph-zapped-img" src="images/zapped.webp" alt="">
       <div class="ph-right">
         <div class="ph-score" id="score-1">0</div>
+        <button class="ph-resign" id="resign-1" onclick="handleResign(1)">RESIGN</button>
       </div>
       <div class="ph-left">
         <div class="ph-turn" style="justify-content:flex-end">TURN ◀</div>
@@ -1502,6 +1516,7 @@ let scores     = [0, 0];
 const WIN      = 10;
 let gameActive = false;
 let busy       = false;
+let resignConfirmPl = null;
 
 let selectedGrades = new Set();
 let selectedUnits  = new Set();
@@ -2053,7 +2068,7 @@ function resetDuelState() {
   gameActive = false; busy = false;
   combo = null; djState = null; minus1IfWrong = false; plus2IfCorrect = false; knockbackHit = false;
   simMode = null; freezeState = null; stunnedPending = false; stunnedState = null;
-  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null;
+  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null; resignConfirmPl = null;
   p1WordCount = 0; p1PuPending = false; mirrorPuType = null; mirrorPuTarget = -1; mirrorPuDelay = 0;
   _clickLog = [[],[]]; _spamLocked = [false,false]; _spamStudents = [new Set(),new Set()];
   _puDisabled = false;
@@ -2103,7 +2118,7 @@ function startGame() {
   gameActive = true; busy = false;
   combo = null; djState = null; minus1IfWrong = false; plus2IfCorrect = false; knockbackHit = false;
   simMode = null; freezeState = null; stunnedPending = false; stunnedState = null;
-  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null;
+  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null; resignConfirmPl = null;
   p1WordCount = 0; p1PuPending = false; mirrorPuType = null; mirrorPuTarget = -1; mirrorPuDelay = 0;
   _clickLog = [[],[]]; _spamLocked = [false,false]; _spamStudents = [new Set(),new Set()];
   _puDisabled = false;
@@ -2235,6 +2250,13 @@ function renderHeader() {
   document.getElementById('ts-name-p2').textContent = playerNames[1];
   document.getElementById('turn-shout-p1').classList.toggle('active', activePl===0);
   document.getElementById('turn-shout-p2').classList.toggle('active', activePl===1);
+  [0,1].forEach(pl => {
+    const btn = document.getElementById('resign-' + pl);
+    if (!btn) return;
+    const confirming = resignConfirmPl === pl;
+    btn.textContent = confirming ? 'SURE?' : 'RESIGN';
+    btn.classList.toggle('confirm', confirming);
+  });
   updatePuHeaderImages();
 }
 
@@ -2282,6 +2304,34 @@ function changeScore(pl, delta) {
   se.classList.remove('bump'); void se.offsetWidth; se.classList.add('bump');
   setTimeout(() => se.classList.remove('bump'), 400);
   renderHeader();
+}
+
+function handleResign(pl) {
+  if (!gameActive) return;
+  if (resignConfirmPl !== pl) {
+    resignConfirmPl = pl;
+    renderHeader();
+    return;
+  }
+  const winner = 1 - pl;
+  resignConfirmPl = null;
+  fairFinishState = null;
+  scores[winner] = WIN;
+  gameActive = false;
+  busy = false;
+  combo = null; djState = null; minus1IfWrong = false; plus2IfCorrect = false; knockbackHit = false;
+  simMode = null; freezeState = null; stunnedPending = false; stunnedState = null;
+  teleportPending = false; mirrorPuType = null; mirrorPuTarget = -1; mirrorPuDelay = 0; p1PuPending = false; _puDoneCallback = null;
+  document.getElementById('pu-overlay').style.display = 'none';
+  document.getElementById('sim-choice-overlay').style.display = 'none';
+  document.getElementById('combo-hud').style.display = 'none';
+  document.getElementById('freeze-hud').style.display = 'none';
+  document.getElementById('stunned-hud').style.display = 'none';
+  document.getElementById('sim-hud').style.display = 'none';
+  setBtns(false);
+  clearDjBadge();
+  renderHeader();
+  setTimeout(() => showWin(winner), 350);
 }
 
 function _clearEffectsForFairFinish() {
@@ -2758,7 +2808,7 @@ function playAgain() {
   gameActive = true; busy = false;
   combo = null; djState = null; minus1IfWrong = false; plus2IfCorrect = false; knockbackHit = false;
   simMode = null; freezeState = null; stunnedPending = false; stunnedState = null;
-  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null;
+  teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null; resignConfirmPl = null;
   p1WordCount = 0; p1PuPending = false; mirrorPuType = null; mirrorPuTarget = -1; mirrorPuDelay = 0;
   _clickLog = [[],[]]; _spamLocked = [false,false]; _spamStudents = [new Set(),new Set()];
   _puDisabled = false;
@@ -2780,6 +2830,7 @@ function playAgain() {
 
 function showWin(winner) {
   fairFinishState = null;
+  resignConfirmPl = null;
   _addWin(playerNames[winner]);
   if (_tournamentActiveMatch !== null && !_tournamentResultSaved) {
     const match = _tournamentMatches[_tournamentActiveMatch];

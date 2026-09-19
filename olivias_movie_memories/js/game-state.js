@@ -2,10 +2,22 @@
 window.LeagueListening = window.LeagueListening || {};
 const { GAME_CONFIG, teamColors, createJokerState, resetRoundJokers } = window.LeagueListening;
 
+function createTurnOrder(groups) {
+  const order = [];
+  const longestTeam = Math.max(0, ...groups.map((students) => students.length));
+  for (let studentIndex = 0; studentIndex < longestTeam; studentIndex += 1) {
+    groups.forEach((students, groupIndex) => {
+      if (students[studentIndex]) order.push({ groupIndex, studentIndex });
+    });
+  }
+  return order;
+}
+
 function createGameState({ groups, groupNames, itemPicker, roundLimit }) {
+  const turnOrder = createTurnOrder(groups);
   return {
     groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", score: 0 })) })),
-    itemPicker, round: 1, roundLimit, groupIndex: 0, studentIndexes: groups.map(() => 0), turnsInRound: 0,
+    itemPicker, round: 1, roundLimit, turnOrder, groupIndex: turnOrder[0]?.groupIndex || 0, studentIndexes: groups.map(() => 0), turnsInRound: 0,
     question: null, difficulty: null, videoPlays: 0, subtitlesShown: false, answered: false, doubleOrNothing: false, slowTime: false, phase: "announce", timerId: null, secondsLeft: GAME_CONFIG.answerSeconds
   };
 }
@@ -43,15 +55,15 @@ function answerQuestion(state, optionId) {
 
 function advanceTurn(state) {
   state.turnsInRound += 1;
-  const totalPlayers = state.groups.reduce((sum, group) => sum + group.students.length, 0);
-  if (state.turnsInRound >= totalPlayers) { state.phase = "roundComplete"; return "roundComplete"; }
-  state.studentIndexes[state.groupIndex] = (state.studentIndexes[state.groupIndex] + 1) % state.groups[state.groupIndex].students.length;
-  state.groupIndex = (state.groupIndex + 1) % state.groups.length;
+  if (state.turnsInRound >= state.turnOrder.length) { state.phase = "roundComplete"; return "roundComplete"; }
+  const nextTurn = state.turnOrder[state.turnsInRound];
+  state.groupIndex = nextTurn.groupIndex;
+  state.studentIndexes[nextTurn.groupIndex] = nextTurn.studentIndex;
   state.phase = "announce";
   return "next";
 }
 
-function continueRound(state) { state.round += 1; state.turnsInRound = 0; state.phase = "announce"; resetRoundJokers(state); return state.round <= state.roundLimit; }
+function continueRound(state) { state.round += 1; state.turnsInRound = 0; state.phase = "announce"; state.groupIndex = state.turnOrder[0]?.groupIndex || 0; state.studentIndexes = state.groups.map(() => 0); resetRoundJokers(state); return state.round <= state.roundLimit; }
 
 Object.assign(window.LeagueListening, { activePlayer, advanceTurn, answerQuestion, chooseNoSubtitles, continueRound, createGameState, recordVideoPlay, revealSubtitles, setDifficulty, startQuestion });
 })();

@@ -15,6 +15,13 @@
     Ella: "https://open.spotify.com/artist/5bMPXxCpR4PFSQSHzu0BLK"
   };
 
+  function resolveDuelAvatarPath(path) {
+    const value = String(path || "").trim();
+    const canonical = value.match(/(?:^|\/)func_presenter\/images\/avatars\/([^/?#]+\.webp)(?:[?#].*)?$/i)
+      || value.match(/(?:^|\/)images\/avatars\/([^/?#]+\.webp)(?:[?#].*)?$/i);
+    return canonical ? `../func_presenter/images/avatars/${canonical[1]}` : value;
+  }
+
   const els = {
     library: $("libraryScreen"), activity: $("activityScreen"), complete: $("completeScreen"),
     songGrid: $("songGrid"),
@@ -30,7 +37,7 @@
     playButton: $("playButton"), videoButton: $("videoButton"), micButton: $("micButton"), replayButton: $("replayButton"),
     duringWordBank: $("duringWordBank"), autofillButton: $("autofillButton"), lyricsBox: $("lyricsBox"),
     trainingVideo: $("trainingVideo"), trainingPrompt: $("trainingPrompt"), trainingLine: $("trainingLine"),
-    trainingChoices: $("trainingChoices"), trainingRehearButton: $("trainingRehearButton"), trainingReplayPrompt: $("trainingReplayPrompt"), trainingReplayTitle: $("trainingReplayTitle"), trainingReplayMessage: $("trainingReplayMessage"), trainingReplayYesButton: $("trainingReplayYesButton"), trainingReplayFinishButton: $("trainingReplayFinishButton"),
+    trainingChoices: $("trainingChoices"), trainingRehearButton: $("trainingRehearButton"), trainingVideoToggleButton: $("trainingVideoToggleButton"), trainingReplayPrompt: $("trainingReplayPrompt"), trainingReplayTitle: $("trainingReplayTitle"), trainingReplayMessage: $("trainingReplayMessage"), trainingReplayYesButton: $("trainingReplayYesButton"), trainingReplayFinishButton: $("trainingReplayFinishButton"),
     duelReadyOverlay: $("duelReadyOverlay"), duelCurrentPlayer: $("duelCurrentPlayer"), duelReadyPlayer: $("duelReadyPlayer"), duelCurrentPlayerAvatar: $("duelCurrentPlayerAvatar"), duelReadyPlayerAvatar: $("duelReadyPlayerAvatar"), duelReadyTeams: $("duelReadyTeams"), duelBeginButton: $("duelBeginButton"),
     duelScoreboard: $("duelScoreboard"), teamAScore: $("teamAScore"), teamBScore: $("teamBScore"),
     teamAPlayer: $("teamAPlayer"), teamBPlayer: $("teamBPlayer"), duelTurnName: $("duelTurnName"), duelNextPlayer: $("duelNextPlayer"),
@@ -83,6 +90,7 @@
   let trainingAnsweredCount = 0;
   let trainingRound = 1;
   let trainingBlockSet = 0;
+  let trainingVideoVisible = false;
   let duelRoundNumber = 1;
   let duelRoundEnding = false;
   let trainingFadeFrame = null;
@@ -100,10 +108,7 @@
   let duelReadyOverlayTimer = null;
   let duelRosterClassroomId = "";
   let duelPlayerAvatars = new Map();
-  let autoZoomWindows = [];   // uzun enstrümantal aralıklar: {start, end}
-  let autoZoomActive = false; // otomatik büyüme şu an devrede mi
-  let autoZoomGap = 8;        // şarkıya göre ayarlanır (songs.js "zoomgap")
-  const AUTOZOOM_LEAD = 2;    // sonraki satıra bu kadar kala geri küçülür
+  const KARAOKE_LINE_LEAD = 2;
   let climaxMoments = [];        // {at, duration} — mp3/video timeline'ı için
   let karaokeClimaxMoments = []; // {at, duration} — karaoke videosunun kendi timeline'ı için
   let climaxTimer = null;        // aktif emitter interval'i
@@ -245,6 +250,43 @@
 
   function updateStudentTrainingVideoLayout() {
     els.stages[2].classList.toggle("student-training-audio-only", isStudentMode && !videoSrc);
+  }
+
+  function getTrainingTimingDelay() {
+    return trainingVideoVisible && videoSrc ? getVideoTimingDelay(song) : 0;
+  }
+
+  function updateTrainingVideoToggle() {
+    const canToggle = trainingStarted && duelReady && !isStudentMode && Boolean(videoSrc);
+    els.trainingVideoToggleButton.classList.toggle("hidden", !canToggle);
+    if (canToggle) els.trainingVideoToggleButton.textContent = trainingVideoVisible ? "👥 SCORES" : "🎥 VIDEO";
+  }
+
+  function setTrainingVideoVisible(show) {
+    trainingVideoVisible = Boolean(show && duelReady && !isStudentMode && videoSrc);
+    const showScores = duelReady && !isStudentMode && !trainingVideoVisible;
+    els.trainingVideo.classList.toggle("hidden", showScores);
+    els.duelReadyOverlay.classList.toggle("hidden", !showScores);
+    if (showScores) els.duelReadyOverlay.classList.remove("duel-intro");
+    updateTrainingVideoToggle();
+  }
+
+  function switchTrainingMedia(showVideo) {
+    if (!duelReady || isStudentMode || !videoSrc) return;
+    const video = els.trainingVideo;
+    const wasPlaying = !video.paused;
+    const lyricTime = video.currentTime + getTrainingTimingDelay();
+    setTrainingVideoVisible(showVideo);
+    const source = trainingVideoVisible ? videoSrc : (song.audio || videoSrc);
+    if (video.currentSrc === new URL(source, location.href).href) return;
+    video.pause();
+    video.src = source;
+    applySongTempo(video);
+    video.onloadedmetadata = () => {
+      video.currentTime = Math.max(0, lyricTime - getTrainingTimingDelay());
+      if (wasPlaying) video.play().catch(() => {});
+    };
+    video.load();
   }
 
   function setStage(n) {
@@ -446,7 +488,7 @@
     updateDuelReadyPlayers();
     renderDuelReadyTeams();
     els.duelReadyOverlay.classList.remove("hidden");
-    if (!videoSrc) return;
+    if (!trainingVideoVisible) return;
     duelReadyOverlayTimer = setTimeout(() => {
       els.duelReadyOverlay.classList.add("hidden");
       duelReadyOverlayTimer = null;
@@ -605,7 +647,7 @@
     sorted.forEach((student, index) => duelTeams[order[index % order.length]].push(String(student.name).trim()));
     duelPlayerAvatars = new Map(sorted
       .filter((student) => student.avatarPath)
-      .map((student) => [String(student.name).trim().toLocaleLowerCase("tr-TR"), student.avatarPath]));
+      .map((student) => [String(student.name).trim().toLocaleLowerCase("tr-TR"), resolveDuelAvatarPath(student.avatarPath)]));
     duelRosterClassroomId = classroom.id;
     els.duelRosterOverlay.classList.add("hidden");
     renderDuelTeamInputs();
@@ -627,7 +669,7 @@
   els.duelBeginButton.addEventListener("click", () => {
     if (!duelReady || !els.duelReadyOverlay.classList.contains("duel-intro")) return;
     els.duelReadyOverlay.classList.remove("duel-intro");
-    if (videoSrc) els.duelReadyOverlay.classList.add("hidden");
+    setTrainingVideoVisible(false);
     startTraining();
   });
 
@@ -875,11 +917,9 @@
   function updateKaraoke(t) {
     let idx = -1;
     for (let i = 0; i < karaokeLines.length; i++) {
-      /* Satır, from'dan AUTOZOOM_LEAD (2 sn) önce BOŞ dolumla vurgulanır —
-         video otomatik küçüldüğünde göz sıradaki satırı hazır bulur,
-         from gelince şerit dolmaya başlar. (Önceki satır hâlâ sürüyorsa
-         öncelik onda; döngü sırası bunu garantiler.) */
-      if (t >= karaokeLines[i].from - AUTOZOOM_LEAD && t < karaokeLines[i].to) { idx = i; break; }
+      /* Satır, başlangıcından iki saniye önce vurgulanır; satır başladığında
+         ilerleme şeridi dolmaya başlar. */
+      if (t >= karaokeLines[i].from - KARAOKE_LINE_LEAD && t < karaokeLines[i].to) { idx = i; break; }
     }
     if (idx !== karaokeIdx) {
       if (karaokeIdx >= 0 && karaokeLines[karaokeIdx]) {
@@ -911,7 +951,7 @@
     const overlay = els.playerVisual.querySelector(".video-lyric-overlay");
     const card = document.querySelector(".during-card");
     const line = karaokeLines[karaokeIdx];
-    const visible = overlay && card && playerMode === "video" && !autoZoomActive &&
+    const visible = overlay && card && playerMode === "video" &&
       card.classList.contains("karaoke-mode") && line;
     if (!overlay) return;
     overlay.classList.toggle("hidden", !visible);
@@ -984,7 +1024,6 @@
       lastMediaT = t;
       if (karaokeLines.length) updateKaraoke(playerMode === "video" ? t + getVideoTimingDelay(song) : t);
       if (climaxMoments.length || karaokeClimaxMoments.length) updateClimax(t);
-      if (playerMode === "video" && autoZoomWindows.length) updateAutoZoom(t);
       if (censoredWindows.length || karaokeCensoredWindows.length) updateCensor(t);
     };
     el.onplay = () => { updatePlayIcon(true); const n = $("coverNote"); if (n) n.classList.add("playing"); };
@@ -1016,8 +1055,8 @@
     const wasOn = card.classList.contains("karaoke-mode");
     card.classList.toggle("karaoke-mode", on);
     syncVideoLyricOverlay();
-    /* Büyük videodan (manuel ya da otomatik autozoom) çıkınca, panel tekrar
-       görünür olduğunda o anki söz satırını ortaya kaydır — göz nerede
+    /* Büyük videodan çıkınca, panel tekrar görünür olduğunda o anki söz
+       satırını ortaya kaydır — göz nerede
        kaldığını hemen bulsun */
     if (wasOn && !on && karaokeIdx >= 0 && karaokeLines[karaokeIdx]) {
       const line = karaokeLines[karaokeIdx].el;
@@ -1063,7 +1102,6 @@
     els.videoButton.classList.remove("active");
     els.micButton.classList.add("active");
     setKaraokeLayout(false);
-    autoZoomActive = false;
     censorActive = false;
     revealKaraokeLyrics();
     els.audio.play().catch(() => {});
@@ -1109,22 +1147,6 @@
     }
   }
 
-  /* VID modunda uzun enstrümantal aralarda otomatik büyü / satır gelmeden küçül.
-     Kenar tetiklemeli: pencere sınırları arasında öğretmenin elle yaptığı
-     büyütme/küçültmeye karışmaz. */
-  function updateAutoZoom(t) {
-    const inGap = autoZoomWindows.some((w) => {
-      /* Outro penceresi: şarkının kalan süresi eşikten kısaysa sayma */
-      if (w.end === Infinity && mediaEl && isFinite(mediaEl.duration) &&
-          mediaEl.duration - w.start <= autoZoomGap) return false;
-      return t >= w.start && t < w.end;
-    });
-    if (inGap !== autoZoomActive) {
-      autoZoomActive = inGap;
-      setKaraokeLayout(inGap);
-    }
-  }
-
   /* Video moduna kaldığı yerden, karaoke moduna BAŞTAN geçilir.
      mode: "video" → videos/ klasörü, "karaoke" → kareoke/ klasörü
      (Karaoke videolarının timing'i mp3 ile aynı olmadığından senkron yok) */
@@ -1157,7 +1179,6 @@
       els.videoButton.classList.toggle("active", mode === "video");
       els.micButton.classList.toggle("active", mode === "karaoke");
       setKaraokeLayout(mode === "karaoke");
-      autoZoomActive = false;
       coverBaseHidden = true; // bu modda video baştan görünür, sadece sansürde kapanır
       censorActive = false;
       refreshCoverOverlay();
@@ -1208,7 +1229,6 @@
     els.videoButton.classList.remove("active");
     els.micButton.classList.remove("active");
     setKaraokeLayout(false);
-    autoZoomActive = false;
     coverBaseHidden = false; // audio modunda kapak her zaman görünür
     censorActive = false;
     refreshCoverOverlay();
@@ -1224,7 +1244,7 @@
     playerMode = show ? "video" : "audio";
     syncVideoLyricOverlay();
     els.videoButton.classList.toggle("active", show);
-    if (!show) { setKaraokeLayout(false); autoZoomActive = false; }
+    if (!show) setKaraokeLayout(false);
   }
 
   /* Video modundan kaldığı yerden, karaoke modundan BAŞTAN audio'ya dönülür */
@@ -1251,7 +1271,6 @@
     els.videoButton.classList.remove("active");
     els.micButton.classList.remove("active");
     setKaraokeLayout(false);
-    autoZoomActive = false;
     const autoplay = wasPlaying || fromKaraoke; // karaoke'den çıkınca mp3 baştan çalar
     if (autoplay) els.audio.play();
     updatePlayIcon(autoplay);
@@ -1313,6 +1332,7 @@
       if (song !== thisSong) return;
       videoSrc = src;
       updateStudentTrainingVideoLayout();
+      updateTrainingVideoToggle();
       if (isStudentMode && stage === 2 && trainingStarted && els.trainingVideo.src !== videoSrc) {
         const resumeAt = els.trainingVideo.currentTime;
         els.trainingVideo.pause();
@@ -1382,26 +1402,6 @@
     if (firstLine && typeof firstLine !== "string" &&
         parseTime(firstLine.from) === 0 && parseTime(firstLine.to) === 0) {
       karaokeLines = [];
-    }
-
-    /* — VID otomatik büyüme pencereleri: satırlar arası uzun enstrümantal
-         aralıklarda (> AUTOZOOM_GAP sn) video kendiliğinden geniş ekrana
-         geçer, sonraki satıra AUTOZOOM_LEAD sn kala geri küçülür — */
-    autoZoomWindows = [];
-    autoZoomActive = false;
-    autoZoomGap = (typeof song.zoomgap === "number") ? song.zoomgap : 8;
-    const zoomEnabled = song.zoomfactor !== false; // songs.js'te yazmazsan/true ise açık
-    if (zoomEnabled && karaokeLines.length) {
-      const first = karaokeLines[0];
-      if (first.from > autoZoomGap) autoZoomWindows.push({ start: 0, end: first.from - AUTOZOOM_LEAD });
-      for (let i = 0; i < karaokeLines.length - 1; i++) {
-        const gap = karaokeLines[i + 1].from - karaokeLines[i].to;
-        if (gap > autoZoomGap) {
-          autoZoomWindows.push({ start: karaokeLines[i].to, end: karaokeLines[i + 1].from - AUTOZOOM_LEAD });
-        }
-      }
-      const last = karaokeLines[karaokeLines.length - 1];
-      if (isFinite(last.to)) autoZoomWindows.push({ start: last.to, end: Infinity }); // outro
     }
 
     /* — Climax anları: {at, to} → saniyeye çevir.
@@ -1605,10 +1605,10 @@
         }, task.active ? Math.max(0, lineDuration - 420) : lineDuration);
       };
       if (continuePlayback) {
-        scheduleLineEnd(els.trainingVideo.currentTime + getVideoTimingDelay(song));
+        scheduleLineEnd(els.trainingVideo.currentTime + getTrainingTimingDelay());
         return;
       }
-      const sourceTime = Math.max(0, task.from - getVideoTimingDelay(song));
+      const sourceTime = Math.max(0, task.from - getTrainingTimingDelay());
       if (startFromIntro) {
         els.trainingVideo.currentTime = 0;
         const startTask = () => {
@@ -1635,9 +1635,13 @@
 
   function startTraining() {
     trainingStarted = true;
-    if (isStudentMode) els.duelReadyOverlay.classList.add("hidden");
+    if (duelReady && !isStudentMode) setTrainingVideoVisible(false);
+    else if (isStudentMode) {
+      trainingVideoVisible = Boolean(videoSrc);
+      els.duelReadyOverlay.classList.add("hidden");
+    }
     if (!trainingTasks.length) { completeStage(); return; }
-    const source = videoSrc || song.audio;
+    const source = trainingVideoVisible && videoSrc ? videoSrc : (song.audio || videoSrc);
     if (!source) { els.trainingPrompt.textContent = "No media source found for this training."; return; }
     els.trainingVideo.src = source;
     applySongTempo(els.trainingVideo);
@@ -1654,6 +1658,8 @@
     setRehearEnabled(false);
     els.trainingVideo.volume = 1;
     trainingStarted = false;
+    trainingVideoVisible = false;
+    updateTrainingVideoToggle();
   }
 
   function advanceTrainingTask(continuePlayback = false) {
@@ -1705,6 +1711,7 @@
     trainingWaiting = false;
     trainingAnswered = false;
     els.trainingReplayPrompt.classList.add("hidden");
+    if (duelReady && !isStudentMode) switchTrainingMedia(false);
     if (duelReady) announceDuelPlayer();
     if (!restartFromIntro && trainingTaskIndex + 1 < trainingTasks.length) {
       playTrainingTask(trainingTaskIndex + 1);
@@ -1795,7 +1802,7 @@
     const task = trainingTasks[trainingTaskIndex];
     if (!task || trainingWaiting || stageDone[2]) return;
     if (!task.active) return;
-    const lyricTime = els.trainingVideo.currentTime + getVideoTimingDelay(song);
+    const lyricTime = els.trainingVideo.currentTime + getTrainingTimingDelay();
     if (lyricTime >= task.to) {
       if (trainingAnswered) {
         if (duelRoundEnding) { finishDuelRound(); return; }
@@ -1815,6 +1822,7 @@
       playTrainingTask(trainingTaskIndex);
     }
   });
+  els.trainingVideoToggleButton.addEventListener("click", () => switchTrainingMedia(!trainingVideoVisible));
   els.trainingReplayYesButton.addEventListener("click", () => startTrainingReplay(false));
   els.trainingReplayFinishButton.addEventListener("click", () => { completeStage(); finishSongActivity(); });
 

@@ -106,9 +106,12 @@
       <!-- ── PAGE 3 · AFTER-LISTENING ── -->
       <div id="trainingStage" class="stage hidden">
         <article class="stage-card training-card">
-          <div class="training-video-wrap">
-            <video id="trainingVideo" playsinline preload="metadata"></video>
-            <div id="duelReadyOverlay" class="duel-ready-overlay hidden"><div class="duel-ready-announcement"><div><span>NOW PLAYING:</span><div class="duel-ready-name-row"><img id="duelCurrentPlayerAvatar" class="duel-ready-player-avatar hidden" alt=""><strong id="duelCurrentPlayer">PLAYER</strong></div></div><div><span>GET READY:</span><div class="duel-ready-name-row"><strong id="duelReadyPlayer">PLAYER</strong><img id="duelReadyPlayerAvatar" class="duel-ready-player-avatar hidden" alt=""></div></div></div><div id="duelReadyTeams" class="duel-ready-teams"></div><button id="duelBeginButton" type="button">BEGIN</button></div>
+          <div class="training-media-column">
+            <div class="training-video-wrap">
+              <video id="trainingVideo" playsinline preload="metadata"></video>
+              <div id="duelReadyOverlay" class="duel-ready-overlay hidden"><div class="duel-ready-announcement"><div><span>NOW PLAYING:</span><div class="duel-ready-name-row"><img id="duelCurrentPlayerAvatar" class="duel-ready-player-avatar hidden" alt=""><strong id="duelCurrentPlayer">PLAYER</strong></div></div><div><span>GET READY:</span><div class="duel-ready-name-row"><strong id="duelReadyPlayer">PLAYER</strong><img id="duelReadyPlayerAvatar" class="duel-ready-player-avatar hidden" alt=""></div></div></div><div id="duelReadyTeams" class="duel-ready-teams"></div><button id="duelBeginButton" type="button">BEGIN</button></div>
+            </div>
+            <button id="trainingVideoToggleButton" class="secondary-button training-video-toggle hidden" type="button">🎥 VIDEO</button>
           </div>
           <div class="training-panel">
             <p id="trainingPrompt" class="training-prompt">Listen and choose the missing word.</p>

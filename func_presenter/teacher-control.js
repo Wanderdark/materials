@@ -16,6 +16,7 @@
 
   const STORE_KEY = "fpTeacherClassroomV1";
   const CLOUD_STORE_KEY = "fpTeacherCloudClassroomsV1";
+  const CLASS_LOCK_KEY = "fpTeacherActiveClassLockV1";
   const HELP_SEEN_KEY = "fpTeacherControlHelpSeenV1";
   const controlScriptUrl = document.currentScript?.src || location.href;
   const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
@@ -458,6 +459,9 @@
 
   function save(options = {}) {
     persistLocal();
+    if (options.changeType) {
+      localStorage.setItem("fpTeacherSupabaseExplicitChangeV1", JSON.stringify({ type: options.changeType, at: Date.now() }));
+    }
     if (options.deferPoints) window.TeacherCloud?.schedulePointSync?.(state);
     else window.TeacherCloud?.scheduleSync?.(state);
   }
@@ -548,10 +552,10 @@
     const portrait = el("div", "tc-level-up-portrait", student.name.slice(0, 1).toLocaleUpperCase("tr-TR"));
     if (student.avatarPath) {
       const image = document.createElement("img");
-      image.src = resolveAvatarPath(student.avatarPath);
       image.alt = `${student.name} portrait`;
       image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
       image.addEventListener("load", () => portrait.replaceChildren(image), { once: true });
+      image.src = resolveAvatarPath(student.avatarPath);
     }
     const message = el("p", "tc-level-up-message", levelUpMessages[Math.floor(Math.random() * levelUpMessages.length)]);
     const nextCopy = el("p", "tc-level-up-next");
@@ -1041,11 +1045,18 @@
 
   function classBar() {
     const bar = el("div", "tc-class-bar");
+    const lockedClassId = sessionStorage.getItem(CLASS_LOCK_KEY) || "";
     state.classrooms.forEach((classroom) => {
+      if (lockedClassId && classroom.id !== lockedClassId) return;
       const tab = el("button", `tc-class-tab${classroom.id === state.activeClassroomId ? " is-active" : ""}`, classroom.name);
       tab.type = "button";
       tab.addEventListener("click", () => {
-        if (classroom.id === state.activeClassroomId) return;
+        if (lockedClassId) return;
+        sessionStorage.setItem(CLASS_LOCK_KEY, classroom.id);
+        if (classroom.id === state.activeClassroomId) {
+          closeOverlays();
+          return;
+        }
         activateClassroom(classroom.id);
         resetRandomPool();
         syncSelectedTrigger();
@@ -1055,6 +1066,7 @@
       });
       bar.append(tab);
     });
+    if (lockedClassId) return bar;
     const add = el("button", "tc-class-tab is-add", "+");
     add.type = "button";
     add.title = "Create another class";
@@ -1132,6 +1144,10 @@
       ? "Switch classes above, or choose a student to review the current score."
       : "Choose a student to review the current score.");
     if (cloudMode) card.append(classBar());
+    if (cloudMode && !sessionStorage.getItem(CLASS_LOCK_KEY)) {
+      card.append(el("div", "tc-empty", "Choose the classroom for this smart board first."));
+      return;
+    }
     const grid = el("div", "tc-student-grid");
     sortRosterStudents(state.roster).forEach((student) => {
       const item = studentCard(student, { showChosen: true, ranked: true, showAvatar: true });
@@ -1388,7 +1404,7 @@
             student.points = 10;
             student.stars = 0;
           }
-          save();
+          save({ changeType: "avatar" });
           openStudentProfile(student.id);
           if (guidedTutorial?.step === 11) window.setTimeout(() => setGuidedTutorialStep(12), 0);
         });
@@ -1878,7 +1894,7 @@
     state.pointBank = 0;
     state.selectedStudentId = "";
     syncSelectedTrigger();
-    save({ deferPoints: true });
+    save({ deferPoints: true, changeType: "increment" });
     updateHud();
     playTeacherFeedback(true);
     showToast(`+${awarded} points awarded to ${student.name}.`, "success");
@@ -1909,7 +1925,7 @@
     const student = getStudent(studentId);
     if (!student) return;
     student.points -= 1;
-    save({ deferPoints: true });
+    save({ deferPoints: true, changeType: "decrement" });
     updateHud();
     playTeacherFeedback(false);
     showToast(`-1 point from ${student.name}.`, "danger");

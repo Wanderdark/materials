@@ -46,6 +46,10 @@ function createRandomItemPicker(items) {
   }
   const storageKey = "oliviasMovieMemoriesTeacherHistoryV1";
   const playable = getPlayableItems(items);
+  const priorityItems = playable
+    .filter((item) => Number.isInteger(Number(item.priority)) && Number(item.priority) > 0)
+    .sort((left, right) => Number(left.priority) - Number(right.priority));
+  const regularItems = playable.filter((item) => !priorityItems.includes(item));
   const shuffle = (list) => {
     const shuffled = [...list];
     for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -55,27 +59,37 @@ function createRandomItemPicker(items) {
     return shuffled;
   };
   let shown = new Set();
+  let priorityShown = new Set();
   let excluded = new Set();
   try {
     const history = JSON.parse(localStorage.getItem(storageKey) || "{}");
     shown = new Set(history.shown || []);
+    priorityShown = new Set(history.priorityShown || []);
     excluded = new Set(history.excluded || []);
   } catch (_) {}
   const saveHistory = () => localStorage.setItem(storageKey, JSON.stringify({
     shown: [...shown],
+    priorityShown: [...priorityShown],
     excluded: [...excluded]
   }));
-  const available = () => playable.filter((item) => !excluded.has(item.id));
-  if (available().length && available().every((item) => shown.has(item.id))) {
+  const availableRegularItems = () => regularItems.filter((item) => !excluded.has(item.id));
+  if (availableRegularItems().length && availableRegularItems().every((item) => shown.has(item.id))) {
     shown.clear();
     saveHistory();
   }
-  let pool = shuffle(available().filter((item) => !shown.has(item.id)));
+  let priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !priorityShown.has(item.id));
+  let pool = shuffle(availableRegularItems().filter((item) => !shown.has(item.id)));
   const pick = () => {
+    const priorityItem = priorityPool.shift();
+    if (priorityItem) {
+      priorityShown.add(priorityItem.id);
+      saveHistory();
+      return priorityItem;
+    }
     if (!pool.length) {
       shown.clear();
       saveHistory();
-      pool = shuffle(available());
+      pool = shuffle(availableRegularItems());
     }
     const item = pool.pop() || null;
     if (item) {
@@ -87,6 +101,7 @@ function createRandomItemPicker(items) {
 
   pick.remove = (id) => {
     pool = pool.filter((item) => item.id !== id);
+    priorityPool = priorityPool.filter((item) => item.id !== id);
     excluded.add(id);
     saveHistory();
   };

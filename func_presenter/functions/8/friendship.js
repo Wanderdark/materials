@@ -39,7 +39,7 @@ const friendshipGrade8Function = {
       id: "friendship-video-ethan-david",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_ethan.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_ethan_14.mp4",
         lines: [
           { speaker: "ETHAN", parts: [{ text: "I can " }, { answer: "always", choices: ["always", "never"] }, { text: " count on David." }] }
         ]
@@ -49,19 +49,9 @@ const friendshipGrade8Function = {
       id: "friendship-video-zoe-mia",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_zoe.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_zoe_14.mp4",
         lines: [
           { speaker: "ZOE", parts: [{ text: "I always " }, { answer: "rely on", choices: ["tell lies", "rely on"] }, { text: " Mia." }] }
-        ]
-      }
-    },
-    {
-      id: "friendship-video-noah-victoria",
-      videoDialogue: {
-        title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_noah.mp4",
-        lines: [
-          { speaker: "NOAH", parts: [{ text: "Victoria and I have " }, { answer: "something", choices: ["nothing", "something"] }, { text: " in common." }] }
         ]
       }
     },
@@ -69,7 +59,7 @@ const friendshipGrade8Function = {
       id: "friendship-video-mia-zoe",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_mia.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_mia_14.mp4",
         lines: [
           { speaker: "MIA", parts: [{ text: "Zoe always " }, { answer: "keeps secrets", choices: ["keeps secrets", "keeps promises"] }, { text: "." }] }
         ]
@@ -79,7 +69,7 @@ const friendshipGrade8Function = {
       id: "friendship-video-jack-benjamin",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_jack.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_jack_14.mp4",
         lines: [
           { speaker: "JACK", parts: [{ text: "Benjamin always " }, { answer: "backs me up", choices: ["tells lies", "backs me up"] }, { text: "." }] }
         ]
@@ -89,7 +79,7 @@ const friendshipGrade8Function = {
       id: "friendship-video-david-ethan",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_david.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_david_14.mp4",
         lines: [
           { speaker: "DAVID", parts: [{ text: "Ethan and I always " }, { answer: "get on well", choices: ["get on well", "argue"] }, { text: " with each other." }] }
         ]
@@ -99,7 +89,7 @@ const friendshipGrade8Function = {
       id: "friendship-video-hannah-emma",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_hannah.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_hannah_14.mp4",
         lines: [
           { speaker: "HANNAH", parts: [{ text: "Emma " }, { answer: "always", choices: ["always", "never"] }, { text: " supports me." }] }
         ]
@@ -109,7 +99,8 @@ const friendshipGrade8Function = {
       id: "friendship-video-ella-olivia",
       videoDialogue: {
         title: "WATCH, THEN COMPLETE THE DIALOGUE",
-        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_ella.mp4",
+        videoUrl: "https://media.adilhoca.com/video/introduce_best_friend_ella_14.mp4",
+        videoStopAt: 10,
         lines: [
           { speaker: "ELLA", parts: [{ text: "Olivia and I have " }, { answer: "similar", choices: ["different", "similar"] }, { text: " interests." }] }
         ]
@@ -170,6 +161,7 @@ const friendshipGrade8VideoStartIndex = friendshipGrade8Function.sentences.findI
 );
 const friendshipGrade8VideoItems = friendshipGrade8Function.sentences
   .slice(friendshipGrade8VideoStartIndex, friendshipGrade8VideoStartIndex + 8)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
