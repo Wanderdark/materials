@@ -28,9 +28,13 @@ function resolveRosterAvatarPath(path = "") {
   return /^images\/avatars\//i.test(value) ? `../func_presenter/${value}` : value;
 }
 
+function getStudentLevel(student) {
+  return Math.max(1, Number(window.TeacherControl?.getStudentLevel?.(student)) || 1);
+}
+
 function distributeBalanced(classroom, groupCount) {
   const teams = Array.from({ length: groupCount }, () => []);
-  const students = getPresentStudents(classroom).map((student) => ({ name: student.name.trim(), avatarPath: resolveRosterAvatarPath(student.avatarPath), score: effectiveScore(student) }))
+  const students = getPresentStudents(classroom).map((student) => ({ name: student.name.trim(), avatarPath: resolveRosterAvatarPath(student.avatarPath), level: getStudentLevel(student), score: effectiveScore(student) }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, "tr", { sensitivity: "base" }));
   const order = [...Array(groupCount).keys(), ...[...Array(groupCount).keys()].reverse()];
   students.forEach((student, index) => teams[order[index % order.length]].push(student));

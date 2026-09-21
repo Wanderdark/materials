@@ -185,6 +185,7 @@ const possessiveAdjectivesVideoStartIndex = possessiveAdjectivesFunction.sentenc
 );
 const possessiveAdjectivesVideoItems = possessiveAdjectivesFunction.sentences
   .slice(possessiveAdjectivesVideoStartIndex, possessiveAdjectivesVideoStartIndex + 8)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

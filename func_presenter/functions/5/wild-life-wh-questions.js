@@ -251,6 +251,7 @@ const wildLifeWhQuestionsVideoStartIndex = wildLifeWhQuestionsFunction.sentences
 );
 const wildLifeWhQuestionsVideoItems = wildLifeWhQuestionsFunction.sentences
   .slice(wildLifeWhQuestionsVideoStartIndex, wildLifeWhQuestionsVideoStartIndex + 4)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

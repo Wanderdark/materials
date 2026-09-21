@@ -557,6 +557,7 @@ const thereIsAreUnit5VideoStartIndex = thereIsAreUnit5Function.sentences.findInd
 );
 const thereIsAreUnit5VideoItems = thereIsAreUnit5Function.sentences
   .slice(thereIsAreUnit5VideoStartIndex, thereIsAreUnit5VideoStartIndex + 9)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

@@ -190,6 +190,19 @@ body::before {
   font-size:clamp(13px,1.6vw,17px); letter-spacing:.08em;
   color:var(--muted); text-align:center; margin-top:-6px;
 }
+.ss-random-row {
+  display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-top:-6px;
+}
+.ss-random-row.hidden { display:none; }
+.ss-random-btn {
+  font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:800;
+  letter-spacing:.1em; text-transform:uppercase; padding:9px 14px;
+  border:1.5px solid rgba(251,191,36,.42); border-radius:10px;
+  color:#fbbf24; background:rgba(251,191,36,.08); cursor:pointer;
+  transition:transform .12s, background .15s, border-color .15s;
+}
+.ss-random-btn:hover:not(:disabled) { transform:translateY(-2px); background:rgba(251,191,36,.17); border-color:#fbbf24; }
+.ss-random-btn:disabled { opacity:.32; cursor:not-allowed; transform:none!important; }
 .ss-class-pool {
   display:flex; flex-wrap:wrap; align-content:flex-start; gap:10px;
   padding:20px; background:rgba(255,255,255,.025);
@@ -408,6 +421,32 @@ body::before {
   color: var(--p2);
   animation: namePulsate 1.5s ease-in-out infinite;
 }
+/* ── TEACHER HUD PORTRAITS ── */
+.duel-portrait-panel { position:absolute; top:22px; z-index:4; pointer-events:none; }
+.duel-portrait-panel.p1 { left:24px; }
+.duel-portrait-panel.p2 { right:24px; }
+.duel-student-portrait { position:relative; width:104px; aspect-ratio:1; border:3px solid #5276bb; border-radius:22px; background:#09132c; box-shadow:0 0 0 3px rgba(82,118,187,.2); isolation:isolate; }
+.duel-student-portrait img { display:block; position:relative; z-index:1; width:100%; height:100%; border-radius:18px; object-fit:cover; }
+.portrait-level-badge { position:absolute; z-index:4; right:-9px; bottom:-9px; min-width:38px; padding:3px 6px; border:2px solid #d8e8ff; border-radius:999px; background:#173671; color:#fff8cf; font-family:'Barlow Condensed',sans-serif; font-size:.72rem; font-weight:900; letter-spacing:.06em; line-height:1.1; text-align:center; box-shadow:0 2px 9px rgba(0,0,0,.46),0 0 10px rgba(255,216,77,.26); }
+.portrait-level-ring { position:absolute; z-index:3; inset:-8px; border:2px solid transparent; border-radius:28px; pointer-events:none; }
+.duel-student-portrait.level-tier-2 { border-color:#85d7ff; box-shadow:0 0 0 3px rgba(133,215,255,.2),0 0 18px rgba(133,215,255,.22); }
+.duel-student-portrait.level-tier-3 { border-color:#f4c34f; box-shadow:0 0 0 3px rgba(244,195,79,.25),0 0 21px rgba(244,195,79,.26); }
+.duel-student-portrait.level-tier-4 { border-color:#ffd84d; box-shadow:0 0 0 3px rgba(255,216,77,.28),0 0 25px rgba(255,216,77,.48); }
+.duel-student-portrait.level-tier-5 { border-color:#ffd84d; box-shadow:0 0 0 3px rgba(255,216,77,.34),0 0 30px rgba(255,216,77,.68); }
+.duel-student-portrait.level-tier-5 .portrait-level-ring { border-color:rgba(255,216,77,.92); animation:portraitSpinShrink 4.4s linear infinite; }
+.duel-student-portrait.level-tier-6 { border-color:#d8a4ff; box-shadow:0 0 0 3px rgba(216,164,255,.38),0 0 31px rgba(255,216,77,.64),0 0 42px rgba(186,104,255,.5); }
+.duel-student-portrait.level-tier-6 .portrait-level-ring { border-color:#e2aaff #ffd84d #c68cff #fff0a6; animation:portraitSpinShrink 3.8s linear infinite; }
+.duel-student-portrait.level-tier-7 { border-color:#e7b6ff; box-shadow:0 0 0 3px rgba(231,182,255,.44),0 0 34px rgba(255,216,77,.78),0 0 52px rgba(186,104,255,.68); }
+.duel-student-portrait.level-tier-7 .portrait-level-ring { border-color:#f0b7ff #ffe377 #c97cff #fff0a6; animation:portraitSpinShrink 3s linear infinite; }
+.portrait-spark { position:absolute; z-index:4; top:50%; left:50%; width:10px; height:10px; border-radius:50%; background:#fff9cf; box-shadow:0 0 12px 3px #ffd85c; transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(-52px); animation:portraitSpark 1s ease-out forwards; pointer-events:none; }
+.portrait-ambient-spark { position:absolute; z-index:5; top:50%; left:50%; color:#fff8ca; font-size:1.35rem; font-weight:900; line-height:1; text-shadow:0 0 5px #fff,0 0 13px #ffd85c,0 0 22px rgba(244,169,64,.85); transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1)); animation:portraitAmbientSpark 1.35s ease-in-out forwards; pointer-events:none; }
+@keyframes portraitSpinShrink { 0%,100% { transform:rotate(0) scale(1); } 50% { transform:rotate(180deg) scale(.9); } 100% { transform:rotate(360deg) scale(1); } }
+@keyframes portraitSpark { to { opacity:0; transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(-88px) scale(.18); } }
+@keyframes portraitAmbientSpark { 0%,100% { opacity:0; filter:brightness(.8); transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1)) scale(.45); } 35%,62% { opacity:1; filter:brightness(1.5); transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1)) scale(1.15); } }
+body.lite-mode .duel-student-portrait { box-shadow:0 0 0 3px rgba(82,118,187,.2); }
+body.lite-mode .duel-student-portrait .portrait-level-ring, body.lite-mode .portrait-spark, body.lite-mode .portrait-ambient-spark { display:none; }
+body.lite-mode .player-header .ph-name { animation:none !important; }
+@media (prefers-reduced-motion:reduce) { .duel-student-portrait .portrait-level-ring, .portrait-spark, .portrait-ambient-spark { animation:none !important; display:none; } }
 @keyframes namePulsate {
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(1.1); }
@@ -475,6 +514,8 @@ body::before {
   font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
   color: rgba(255,255,255,0.15);
 }
+#duel-lite-mode-button { margin-top:5px; min-height:24px; border:1px solid rgba(77,169,255,.6); border-radius:7px; padding:0 7px; color:#b9d9ff; background:rgba(77,169,255,.1); font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:900; letter-spacing:.08em; cursor:pointer; }
+body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; background:rgba(244,169,64,.16); }
 #fs-btn {
   position: fixed; bottom: 10px; right: 52px; z-index: 200;
   width: 32px; height: 32px; border-radius: 50%;
@@ -954,9 +995,26 @@ body::before {
 #win-scores {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(30px,4.5vw,52px); color: var(--white);
-  letter-spacing: .04em; margin-bottom: 30px;
+  letter-spacing: .04em; margin-bottom: 18px;
 }
 .ws-sep { color: rgba(251,191,36,.4); margin: 0 14px; }
+.win-hud-transfer {
+  margin: 0 0 24px; padding: 14px 16px;
+  border: 1px solid rgba(59,130,246,.32); border-radius: 14px;
+  background: rgba(15,23,42,.72); color: rgba(219,234,254,.9);
+  font-family: 'Barlow Condensed', sans-serif; letter-spacing: .08em; text-transform: uppercase;
+}
+.win-hud-transfer.hidden { display: none; }
+.win-hud-title { font-size: 15px; font-weight: 800; color: #bfdbfe; margin-bottom: 6px; }
+.win-hud-detail { font-size: 13px; color: rgba(219,234,254,.7); margin-bottom: 10px; letter-spacing: .06em; }
+.win-hud-btn {
+  width: 100%; padding: 10px 12px; border: none; border-radius: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
+  background: linear-gradient(135deg,#14532d,#22c55e); color: #ecfdf5;
+}
+.win-hud-btn:disabled { cursor: default; opacity: .62; }
+.win-hud-status { min-height: 16px; margin-top: 8px; font-size: 12px; color: rgba(251,191,36,.78); letter-spacing: .06em; }
 .win-again {
   width: 100%; padding: 17px;
   font-family: 'Barlow Condensed', sans-serif;
@@ -1034,7 +1092,15 @@ body::before {
   font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:.1em;
 }
 .tr-reset.confirming { border-color:#ef4444; background:#991b1b; color:#fff; box-shadow:0 0 16px rgba(239,68,68,.35); }
-#tournament-matches { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; overflow-y:auto; min-height:0; padding:2px; }
+#tournament-matches { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; overflow-y:auto; min-height:0; padding:2px; }
+#tournament-matches.semi-layout {
+  grid-template-columns:repeat(2,minmax(430px,520px));
+  justify-content:center; align-content:center; gap:22px;
+}
+#tournament-matches.final-layout {
+  grid-template-columns:minmax(620px,780px);
+  justify-content:center; align-content:center;
+}
 .tr-continue {
   display:none; flex-shrink:0; width:100%; padding:14px 20px; border:0; border-radius:13px; cursor:pointer;
   background:linear-gradient(135deg,#92400e,#d97706); color:#fff7d6;
@@ -1043,49 +1109,115 @@ body::before {
 }
 .tr-continue:hover { transform:translateY(-2px); box-shadow:0 9px 30px rgba(217,119,6,.55); }
 .tr-match {
-  display:grid; grid-template-columns:minmax(0,1fr); align-items:center; gap:7px;
-  padding:10px; border:1px solid rgba(255,255,255,.09); border-radius:14px; background:rgba(255,255,255,.035);
+  display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:5px;
+  padding:7px; border:1px solid rgba(255,255,255,.09); border-radius:14px; background:rgba(255,255,255,.035);
 }
 .tr-player, .tr-opponent {
-  min-height:48px; display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:8px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; letter-spacing:.05em;
+  position:relative; min-height:108px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:22px 6px 25px; border-radius:11px; font-family:'Barlow Condensed',sans-serif; text-align:center; overflow:visible;
 }
-.tr-player-name { flex:1; min-width:0; }
+.tr-player-name {
+  position:absolute; top:5px; left:6px; right:6px; padding:2px 5px; border-radius:6px;
+  background:rgba(0,0,0,.34); border:1px solid rgba(255,255,255,.12);
+  font-size:11px; font-weight:800; letter-spacing:.06em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.tr-avatar {
+  width:96px; height:96px; flex:0 0 96px; border-radius:8px; object-fit:cover; margin-top:8px;
+  border:1.5px solid rgba(255,255,255,.16); box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
+.tr-avatar-fallback {
+  width:96px; height:96px; flex:0 0 96px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+  margin-top:8px; border:1.5px solid rgba(255,255,255,.16); background:rgba(255,255,255,.08);
+  font-family:'Bebas Neue',sans-serif; font-size:42px; letter-spacing:.04em; box-shadow:0 4px 12px rgba(0,0,0,.3);
+}
 .tr-score {
-  min-width:38px; padding:5px 7px; margin-left:8px; border-radius:8px;
-  background:rgba(0,0,0,.34); border:1px solid rgba(255,255,255,.16);
-  color:#fff; font-family:'Bebas Neue',sans-serif; font-size:21px; line-height:1;
+  position:absolute; left:50%; bottom:-1px; transform:translateX(-50%);
+  min-width:38px; height:24px; padding:0 7px; border-radius:7px 7px 0 0;
+  display:flex; align-items:center; justify-content:center;
+  background:#facc15; border:2px solid #fff200; color:#0f1c3a;
+  font-family:'Bebas Neue',sans-serif; font-size:16px; line-height:1;
+  box-shadow:0 0 14px rgba(250,204,21,.32);
 }
-.tr-player { background:rgba(96,165,250,.12); border:1px solid rgba(96,165,250,.3); color:#93c5fd; }
-.tr-opponent { background:rgba(251,146,60,.1); border:1px dashed rgba(251,146,60,.42); color:#fdba74; cursor:pointer; }
-.tr-opponent.hidden-opponent { color:rgba(251,191,36,.75); font-size:22px; }
+.tr-player { background:rgba(96,165,250,.12); border:1.5px solid rgba(96,165,250,.42); color:#93c5fd; }
+.tr-opponent { background:rgba(251,146,60,.1); border:1.5px dashed rgba(251,146,60,.48); color:#fdba74; cursor:pointer; }
+.tr-opponent.hidden-opponent { color:rgba(251,191,36,.75); font-family:'Bebas Neue',sans-serif; font-size:30px; }
 .tr-opponent.revealed { border-style:solid; cursor:default; animation:trReveal .35s cubic-bezier(.34,1.56,.64,1); }
 .tr-player.tr-winner, .tr-opponent.tr-winner {
   border-color:#fbbf24; color:#fde68a; background:rgba(251,191,36,.16);
   box-shadow:0 0 18px rgba(251,191,36,.52), inset 0 0 14px rgba(251,191,36,.08);
 }
-.tr-winner .tr-score { border-color:#fbbf24; color:#fbbf24; box-shadow:0 0 10px rgba(251,191,36,.35); }
+.tr-winner .tr-score { border-color:#fbbf24; color:#0f1c3a; box-shadow:0 0 10px rgba(251,191,36,.35); }
 .tr-player.tr-eliminated, .tr-opponent.tr-eliminated {
   border-color:rgba(148,163,184,.2); background:rgba(71,85,105,.16); color:rgba(148,163,184,.42);
   box-shadow:none; filter:grayscale(1);
 }
 .tr-eliminated .tr-score { color:rgba(148,163,184,.45); border-color:rgba(148,163,184,.18); background:rgba(0,0,0,.2); }
-.tr-vs { font-family:'Bebas Neue',sans-serif; font-size:22px; color:rgba(255,255,255,.25); text-align:center; }
+.tr-vs { font-family:'Bebas Neue',sans-serif; font-size:19px; color:#fbbf24; text-align:center; align-self:center; }
 .tr-play {
-  padding:10px 8px; border:0; border-radius:9px; cursor:pointer; background:#16a34a; color:white;
-  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.08em;
+  grid-column:1 / -1; padding:7px 8px; border:0; border-radius:9px; cursor:pointer; background:#16a34a; color:white;
+  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:.1em;
 }
 .tr-play:disabled { opacity:.22; cursor:not-allowed; }
 .tr-match.completed { border-color:rgba(251,191,36,.38); }
+#tournament-matches.semi-layout .tr-match {
+  gap:10px; padding:14px; border-radius:20px;
+}
+#tournament-matches.semi-layout .tr-player,
+#tournament-matches.semi-layout .tr-opponent {
+  min-height:170px; padding:30px 12px 34px; border-radius:16px;
+}
+#tournament-matches.semi-layout .tr-player-name {
+  top:8px; left:10px; right:10px; padding:4px 8px; border-radius:8px;
+  font-size:16px; letter-spacing:.08em;
+}
+#tournament-matches.semi-layout .tr-avatar,
+#tournament-matches.semi-layout .tr-avatar-fallback {
+  width:132px; height:132px; flex-basis:132px; border-radius:12px;
+}
+#tournament-matches.semi-layout .tr-avatar-fallback { font-size:54px; }
+#tournament-matches.semi-layout .tr-score {
+  min-width:54px; height:30px; font-size:21px; bottom:-1px;
+}
+#tournament-matches.semi-layout .tr-vs { font-size:32px; }
+#tournament-matches.semi-layout .tr-play {
+  padding:12px 10px; border-radius:12px; font-size:26px;
+}
+#tournament-matches.final-layout .tr-match {
+  gap:18px; padding:22px; border-radius:24px;
+}
+#tournament-matches.final-layout .tr-player,
+#tournament-matches.final-layout .tr-opponent {
+  min-height:230px; padding:42px 18px 45px; border-radius:20px;
+}
+#tournament-matches.final-layout .tr-player-name {
+  top:10px; left:14px; right:14px; padding:6px 10px; border-radius:10px;
+  font-size:22px; letter-spacing:.09em;
+}
+#tournament-matches.final-layout .tr-avatar,
+#tournament-matches.final-layout .tr-avatar-fallback {
+  width:178px; height:178px; flex-basis:178px; border-radius:16px;
+}
+#tournament-matches.final-layout .tr-avatar-fallback { font-size:72px; }
+#tournament-matches.final-layout .tr-score {
+  min-width:72px; height:38px; font-size:28px; bottom:-1px; border-radius:10px 10px 0 0;
+}
+#tournament-matches.final-layout .tr-vs { font-size:46px; }
+#tournament-matches.final-layout .tr-play {
+  padding:16px 12px; border-radius:15px; font-size:34px;
+}
 @keyframes trReveal { from { opacity:0; transform:scale(.7) rotateX(75deg); } to { opacity:1; transform:none; } }
 @media(max-width:800px) {
-  #tournament-matches { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  #tournament-matches, #tournament-matches.semi-layout, #tournament-matches.final-layout { grid-template-columns:1fr; }
 }
-@media(max-width:480px) { #tournament-matches { grid-template-columns:1fr; } }
+@media(max-width:480px) {
+  #tournament-matches { grid-template-columns:1fr; }
+  .tr-match { grid-template-columns:1fr; }
+  .tr-play { grid-column:auto; }
+}
 
 #tournament-champion {
-  position:fixed; inset:0; z-index:950; display:none; align-items:center; justify-content:center;
-  overflow:hidden; background:radial-gradient(circle at center,rgba(120,70,0,.38),rgba(4,7,20,.97) 62%);
+  position:fixed; inset:0; z-index:10050; display:none; align-items:center; justify-content:center;
+  overflow:hidden; background:radial-gradient(circle at center,#3a2404 0%,#11101a 42%,#040714 72%);
 }
 #tournament-champion.open { display:flex; }
 .tc-modal {
@@ -1094,9 +1226,25 @@ body::before {
   box-shadow:0 0 100px rgba(251,191,36,.42); animation:winPop .55s cubic-bezier(.34,1.56,.64,1);
 }
 .tc-crown { font-size:78px; animation:namePulsate 1.5s ease-in-out infinite; }
+.tc-portrait-wrap {
+  width:150px; height:150px; margin:8px auto 18px; border-radius:18px;
+  border:2px solid rgba(251,191,36,.75); background:rgba(251,191,36,.08);
+  box-shadow:0 0 32px rgba(251,191,36,.38); overflow:hidden;
+}
+.tc-portrait-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+.tc-portrait-fallback {
+  width:100%; height:100%; display:none; align-items:center; justify-content:center;
+  font-family:'Bebas Neue',sans-serif; font-size:72px; color:#fbbf24;
+  background:radial-gradient(circle,rgba(251,191,36,.16),rgba(15,23,42,.82));
+}
 .tc-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(42px,7vw,76px); color:#fbbf24; letter-spacing:.12em; text-shadow:0 0 35px rgba(251,191,36,.8); }
-.tc-name { font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,6vw,64px); color:#fff; letter-spacing:.08em; margin:12px 0 25px; }
-.tc-close { padding:14px 34px; border:0; border-radius:12px; cursor:pointer; background:#b45309; color:#fff7d6; font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:.12em; }
+.tc-name {
+  font-family:'Bebas Neue',sans-serif; font-size:clamp(34px,6vw,64px);
+  color:#fbbf24; letter-spacing:.08em; margin:12px 0 25px;
+  text-shadow:0 0 12px rgba(251,191,36,.95),0 0 30px rgba(251,191,36,.72),0 0 54px rgba(245,158,11,.55);
+  animation:namePulsate 1.35s ease-in-out infinite;
+}
+.tc-close { min-width:150px; padding:12px 16px; border:0; border-radius:12px; cursor:pointer; background:#b45309; color:#fff7d6; font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:.06em; white-space:nowrap; }
 .tc-confetti { position:absolute; top:-12vh; width:10px; height:18px; animation:tcFall linear infinite; }
 @keyframes tcFall { to { transform:translateY(120vh) rotate(900deg); } }
 .champ-badge { color:#fbbf24; margin-left:5px; text-shadow:0 0 8px rgba(251,191,36,.6); }
@@ -1197,6 +1345,12 @@ body::before {
     <div class="ss-logo">WORD TOURNAMENT</div>
     <div class="ss-heading" id="ss-heading">OYUNCU SEÇİMİ</div>
     <div class="ss-sub" id="ss-sub">İki öğrenciye tıkla — ilk seçilen <span style="color:var(--p1)">P1</span>, ikinci seçilen <span style="color:var(--p2)">P2</span></div>
+    <div class="ss-random-row hidden" id="ss-random-row">
+      <button class="ss-random-btn" type="button" data-random-count="2" onclick="selectRandomTournamentStudents(2)">2 RANDOM</button>
+      <button class="ss-random-btn" type="button" data-random-count="4" onclick="selectRandomTournamentStudents(4)">4 RANDOM</button>
+      <button class="ss-random-btn" type="button" data-random-count="8" onclick="selectRandomTournamentStudents(8)">8 RANDOM</button>
+      <button class="ss-random-btn" type="button" data-random-count="16" onclick="selectRandomTournamentStudents(16)">16 RANDOM</button>
+    </div>
     <div class="ss-class-pool" id="ss-class-pool"></div>
     <div class="ss-count-row">
       <div class="ss-count" id="ss-count">Henüz seçilmedi</div>
@@ -1227,7 +1381,7 @@ body::before {
       <div class="tr-title">TOURNAMENT CHART</div>
       <button class="tr-reset" id="tr-reset-btn" onclick="resetTournament()">RESET TOURNAMENT</button>
     </div>
-    <div class="tr-sub" id="tournament-sub">Boş rakip slotlarına tıklayarak eşleşmeleri tek tek açıkla.</div>
+    <div class="tr-sub" id="tournament-sub"></div>
     <div id="tournament-matches"></div>
     <button class="tr-continue" id="tr-continue-btn" onclick="continueTournament()">CONTINUE</button>
   </div>
@@ -1237,6 +1391,10 @@ body::before {
   <div id="tc-confetti-layer"></div>
   <div class="tc-modal">
     <div class="tc-crown">👑</div>
+    <div class="tc-portrait-wrap">
+      <img id="tc-portrait" alt="">
+      <div class="tc-portrait-fallback" id="tc-portrait-fallback">?</div>
+    </div>
     <div class="tc-title">TOURNAMENT CHAMPION</div>
     <div class="tc-name" id="tc-name"></div>
     <button class="tc-close" onclick="closeTournamentChampion()">VIEW TOURNAMENT</button>
@@ -1307,6 +1465,7 @@ body::before {
     <div class="header-mid">
       <div class="header-mid-logo">WORD TOURNAMENT</div>
       <div class="header-mid-badge" style="color:#fbbf24">Designed by ADİL FIRAT OKTAV</div>
+      <button id="duel-lite-mode-button" type="button" onclick="toggleDuelLiteMode()">LITE</button>
     </div>
 
     <div class="player-header p2" id="p2-header">
@@ -1329,6 +1488,8 @@ body::before {
   </header>
 
   <div id="game-stage">
+    <div class="duel-portrait-panel p1" id="duel-portrait-panel-0" hidden><div class="duel-student-portrait level-tier-1" id="duel-student-portrait-0"><img id="duel-student-avatar-0" alt=""><span class="portrait-level-ring" aria-hidden="true"></span><span class="portrait-level-badge" id="duel-student-level-0">LV. 1</span></div></div>
+    <div class="duel-portrait-panel p2" id="duel-portrait-panel-1" hidden><div class="duel-student-portrait level-tier-1" id="duel-student-portrait-1"><img id="duel-student-avatar-1" alt=""><span class="portrait-level-ring" aria-hidden="true"></span><span class="portrait-level-badge" id="duel-student-level-1">LV. 1</span></div></div>
     <div class="pu-zone pu-zone-p1"><img id="p1-pu-img" src="" alt=""></div>
     <div class="pu-zone pu-zone-p2"><img id="p2-pu-img" src="" alt=""></div>
     <div class="turn-shout turn-shout-p1" id="turn-shout-p1">
@@ -1427,6 +1588,12 @@ body::before {
     <div id="win-name"></div>
     <div class="win-sub">WINS!</div>
     <div id="win-scores"></div>
+    <div class="win-hud-transfer hidden" id="win-hud-transfer">
+      <div class="win-hud-title">HUD PUAN AKTARIMI</div>
+      <div class="win-hud-detail" id="win-hud-detail"></div>
+      <button class="win-hud-btn" id="win-hud-btn" onclick="transferWinHudPoints()">HUD'A AKTAR</button>
+      <div class="win-hud-status" id="win-hud-status"></div>
+    </div>
     <button class="win-again" id="win-again-btn" onclick="endGame()">END GAME</button>
   </div>
 </div>
@@ -1862,8 +2029,8 @@ function buzzPressed() {
 function simultaneousChoice(who) {
   document.getElementById('sim-choice-overlay').style.display = 'none';
 
-  if (who === 'p1' || who === 'both') changeScore(0, 1);
-  if (who === 'p2' || who === 'both') changeScore(1, 1);
+  if (who === 'p1' || who === 'both') { changeScore(0, 1); celebrateDuelPortrait(0); }
+  if (who === 'p2' || who === 'both') { changeScore(1, 1); celebrateDuelPortrait(1); }
 
   // Win check
   if (scores[0] >= WIN || scores[1] >= WIN) {
@@ -2060,6 +2227,7 @@ function freshDeck() { return shuffle([...filteredPool()]); }
 function resetDuelState() {
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   _ttsTimers.forEach(t => clearTimeout(t)); _ttsTimers = [];
+  clearDuelPortraitEffects();
 
   activePl = 0; scores = [0,0]; currentIdx = 0;
   deck = []; _easyImgPool = []; _easyDeck = [];
@@ -2113,6 +2281,8 @@ function startGame() {
   ];
   document.getElementById('p1-name').textContent = playerNames[0];
   document.getElementById('p2-name').textContent = playerNames[1];
+  playerProfiles = playerNames.map(_resolveDuelStudentProfile);
+  renderDuelPortraits();
   document.getElementById('p1-pu-history').innerHTML = '';
   document.getElementById('p2-pu-history').innerHTML = '';
   gameActive = true; busy = false;
@@ -2258,6 +2428,94 @@ function renderHeader() {
     btn.classList.toggle('confirm', confirming);
   });
   updatePuHeaderImages();
+}
+
+let _duelPortraitIntervals = [null, null];
+let playerProfiles = [null, null];
+
+function portraitTier(level) {
+  return level >= 13 ? 7 : level >= 11 ? 6 : level >= 9 ? 5 : level >= 7 ? 4 : level >= 5 ? 3 : level >= 3 ? 2 : 1;
+}
+
+function portraitAmbientSpec(level) {
+  return level >= 13 ? { interval:900, count:3 } : level >= 11 ? { interval:2000, count:3 } : level >= 9 ? { interval:3000, count:3 } : level >= 7 ? { interval:4000, count:2 } : level >= 5 ? { interval:6000, count:1 } : null;
+}
+
+function emitDuelPortraitAmbientStars(pl, level) {
+  const portrait = document.getElementById('duel-student-portrait-' + pl);
+  const spec = portraitAmbientSpec(level);
+  if (!portrait || !spec || portrait.closest('[hidden]') || document.body.classList.contains('lite-mode')) return;
+  for (let index = 0; index < spec.count; index++) {
+    const spark = document.createElement('span');
+    spark.className = 'portrait-ambient-spark';
+    spark.textContent = '✦';
+    spark.style.setProperty('--spark-angle', `${Math.random() * 360}deg`);
+    spark.style.setProperty('--spark-distance', `${50 + Math.random() * 13}px`);
+    spark.addEventListener('animationend', () => spark.remove(), { once:true });
+    portrait.append(spark);
+  }
+}
+
+function scheduleDuelPortraitAmbientStars(pl, level) {
+  clearInterval(_duelPortraitIntervals[pl]);
+  _duelPortraitIntervals[pl] = null;
+  const spec = portraitAmbientSpec(level);
+  if (!spec || document.body.classList.contains('lite-mode')) return;
+  emitDuelPortraitAmbientStars(pl, level);
+  _duelPortraitIntervals[pl] = setInterval(() => emitDuelPortraitAmbientStars(pl, level), spec.interval);
+}
+
+function clearDuelPortraitEffects() {
+  _duelPortraitIntervals.forEach(interval => clearInterval(interval));
+  _duelPortraitIntervals = [null, null];
+  document.querySelectorAll('.duel-student-portrait .portrait-spark, .duel-student-portrait .portrait-ambient-spark').forEach(spark => spark.remove());
+}
+
+function renderDuelPortraits() {
+  clearDuelPortraitEffects();
+  playerProfiles.forEach((student, pl) => {
+    const panel = document.getElementById('duel-portrait-panel-' + pl);
+    const portrait = document.getElementById('duel-student-portrait-' + pl);
+    const image = document.getElementById('duel-student-avatar-' + pl);
+    const badge = document.getElementById('duel-student-level-' + pl);
+    const hasPortrait = Boolean(student?.avatarPath);
+    panel.hidden = !hasPortrait;
+    if (!hasPortrait) return;
+    const level = Math.max(1, Number(student.level) || 1);
+    portrait.className = 'duel-student-portrait level-tier-' + portraitTier(level);
+    portrait.dataset.level = String(level);
+    badge.textContent = 'LV. ' + level;
+    image.alt = student.name + ' avatar';
+    image.src = student.avatarPath;
+    image.onerror = () => { panel.hidden = true; clearInterval(_duelPortraitIntervals[pl]); };
+    scheduleDuelPortraitAmbientStars(pl, level);
+  });
+}
+
+function celebrateDuelPortrait(pl) {
+  const portrait = document.getElementById('duel-student-portrait-' + pl);
+  if (!portrait || portrait.closest('[hidden]') || document.body.classList.contains('lite-mode')) return;
+  const level = Number(portrait.dataset.level || 1);
+  const count = level >= 10 ? 10 : level >= 8 ? 8 : level >= 5 ? 6 : level >= 3 ? 4 : 0;
+  portrait.querySelectorAll('.portrait-spark').forEach(spark => spark.remove());
+  for (let index = 0; index < count; index++) {
+    const spark = document.createElement('span');
+    spark.className = 'portrait-spark';
+    spark.style.setProperty('--spark-angle', `${index * (360 / count)}deg`);
+    spark.addEventListener('animationend', () => spark.remove(), { once:true });
+    portrait.append(spark);
+  }
+}
+
+function setDuelLiteMode(enabled) {
+  document.body.classList.toggle('lite-mode', enabled);
+  localStorage.setItem('wordDuelLiteModeV1', enabled ? '1' : '0');
+  document.getElementById('duel-lite-mode-button')?.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+  if (document.getElementById('game-screen').style.display === 'flex') renderDuelPortraits();
+}
+
+function toggleDuelLiteMode() {
+  setDuelLiteMode(!document.body.classList.contains('lite-mode'));
 }
 
 function updatePuHeaderImages() {
@@ -2500,6 +2758,7 @@ function handleAnswer(correct) {
   trackP1Word();
   playSound(correct ? 'correct' : 'wrong');
   showFlash(correct);
+  if (correct) celebrateDuelPortrait(activePl);
 
   // Görsel kart reveal
   if (_isCurrentImgCard) {
@@ -2847,7 +3106,121 @@ function showWin(winner) {
   document.getElementById('win-name').textContent = playerNames[winner];
   document.getElementById('win-scores').innerHTML =
     scores[0] + '<span class="ws-sep">—</span>' + scores[1];
+  updateWinHudTransfer();
   document.getElementById('win-overlay').classList.add('open');
+}
+
+function _loserHudPoints(score) {
+  if (score >= 6) return 2;
+  if (score >= 3) return 1;
+  return 0;
+}
+
+function _activeTournamentMatch() {
+  if (_tournamentActiveMatch === null) return null;
+  return _tournamentMatches[_tournamentActiveMatch] || null;
+}
+
+function _winHudAwardsForMatch(match) {
+  if (!match || !match.score || match.winnerSide === null || match.winnerSide === undefined) return [];
+  const names = [
+    match.p1?.displayName || match.p1?.name || playerNames[0],
+    match.p2?.displayName || match.p2?.name || playerNames[1]
+  ];
+  const winnerSide = match.winnerSide;
+  const loserSide = 1 - winnerSide;
+  const awards = [
+    { name: names[winnerSide], points: _ROUND_HUD_WIN_POINTS[_tournamentRound] || 0 },
+    { name: names[loserSide], points: _loserHudPoints(Number(match.score[loserSide]) || 0) }
+  ];
+  return awards.filter(award => award.name && award.points > 0);
+}
+
+function _wdRosterNameKey(name) {
+  return String(name || '').trim().replace(/\s+/g, ' ').toLocaleUpperCase('tr-TR');
+}
+
+function _resolveDuelStudentProfile(name) {
+  const key = _wdRosterNameKey(name);
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const student = classrooms.flatMap(classroom => classroom.roster || []).find(item => _wdRosterNameKey(item?.name) === key)
+    || _importedRosterStudents.find(item => _wdRosterNameKey(item?.name) === key);
+  if (!student?.avatarPath) return null;
+  const avatarPath = /^(?:https?:|file:|data:|\/)/i.test(student.avatarPath)
+    ? student.avatarPath
+    : '../func_presenter/' + String(student.avatarPath).replace(/^\.\//, '');
+  return {
+    ...student,
+    level: window.TeacherControl?.getStudentLevel?.(student) || 1,
+    avatarPath
+  };
+}
+
+function _resolveWinHudClassroomId(match) {
+  if (_wdImportedRosterClassroomId) return _wdImportedRosterClassroomId;
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const names = [
+    match?.p1?.displayName || match?.p1?.name || playerNames[0],
+    match?.p2?.displayName || match?.p2?.name || playerNames[1]
+  ].map(_wdRosterNameKey).filter(Boolean);
+  const found = classrooms.find(classroom => {
+    const rosterNames = new Set((classroom.roster || []).map(student => _wdRosterNameKey(student?.name)));
+    return names.every(name => rosterNames.has(name));
+  });
+  if (found?.id) {
+    _wdImportedRosterClassroomId = found.id;
+    _saveTournamentState();
+    return found.id;
+  }
+  return '';
+}
+
+function updateWinHudTransfer(message) {
+  const box = document.getElementById('win-hud-transfer');
+  const detail = document.getElementById('win-hud-detail');
+  const button = document.getElementById('win-hud-btn');
+  const status = document.getElementById('win-hud-status');
+  if (!box || !detail || !button || !status) return;
+
+  const match = _activeTournamentMatch();
+  const canTransfer = !!match && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  box.classList.toggle('hidden', !canTransfer);
+  if (!canTransfer) return;
+
+  _resolveWinHudClassroomId(match);
+  const awards = _winHudAwardsForMatch(match);
+  detail.textContent = awards.length
+    ? awards.map(award => award.name + ' +' + award.points).join(' / ')
+    : 'Bu maç için aktarılacak HUD puanı yok.';
+  button.disabled = match.hudAwardsTransferred || !awards.length;
+  button.textContent = match.hudAwardsTransferred ? '✓ PUANLAR AKTARILDI' : 'BU PUANLARI HUD\'A AKTAR';
+  status.textContent = message || '';
+}
+
+function transferWinHudPoints() {
+  const match = _activeTournamentMatch();
+  if (!match || match.hudAwardsTransferred) {
+    updateWinHudTransfer();
+    return;
+  }
+  if (typeof window.TeacherControl?.awardFinalPoints !== 'function') {
+    updateWinHudTransfer('Teacher HUD roster hazır değil.');
+    return;
+  }
+  const awards = _winHudAwardsForMatch(match);
+  if (!awards.length) {
+    updateWinHudTransfer('Bu maç için aktarılacak puan yok.');
+    return;
+  }
+  const classroomId = _resolveWinHudClassroomId(match);
+  const result = window.TeacherControl.awardFinalPoints(awards, classroomId);
+  if (!result?.awarded?.length) {
+    updateWinHudTransfer('Eşleşen roster öğrencisi bulunamadı.');
+    return;
+  }
+  match.hudAwardsTransferred = true;
+  _saveTournamentState();
+  updateWinHudTransfer('Puanlar Teacher HUD\'a aktarıldı.');
 }
 
 function endGame() {
@@ -2920,12 +3293,14 @@ function toggleFS() {
 try { CLASSES; } catch(e) { window.CLASSES = []; }
 
 let playerNames   = ['STUDENT 1', 'STUDENT 2'];
+setDuelLiteMode(localStorage.getItem('wordDuelLiteModeV1') === '1');
 let _easyMode     = [false, false]; // hangi player easy mode'da
 let _easyStudents = new Set();      // easy mode'lu öğrenci adları (all-caps canonical)
 let _ssSelected   = [];   // [{name, slot}]  — max 2, sırasıyla P1/P2
 let _ssMode       = 'duel';
 let _ssLastChip   = null; // son seçilen chip element (rename için)
 let _importedRosterStudents = [];
+let _wdImportedRosterClassroomId = '';
 let _rnSlot       = null; // rename edilecek slot index (1..18)
 let _rnText       = '';
 let _rnKbHandler  = null;
@@ -2945,6 +3320,7 @@ const _TOURNAMENT_KEY = 'word_duel_tournament';
 const _CHAMPIONS_KEY = 'word_duel_champions';
 const _ROUND_ORDER = ['first', 'quarter', 'semi', 'final'];
 const _ROUND_TITLES = { first:'TOURNAMENT CHART', quarter:'QUARTER FINALS', semi:'SEMI FINALS', final:'FINAL' };
+const _ROUND_HUD_WIN_POINTS = { first: 3, quarter: 4, semi: 5, final: 8 };
 
 function _saveTournamentState() {
   try {
@@ -2957,6 +3333,7 @@ function _saveTournamentState() {
       rounds: _tournamentRounds,
       round: _tournamentRound,
       champion: _tournamentChampion,
+      rosterClassroomId: _wdImportedRosterClassroomId,
       updatedAt: Date.now()
     }));
   } catch(e) {}
@@ -2976,6 +3353,7 @@ function _loadTournamentState() {
       _tournamentRound = saved.round || 'first';
       _tournamentChampion = saved.champion || null;
     }
+    _wdImportedRosterClassroomId = saved.rosterClassroomId || _wdImportedRosterClassroomId || '';
     _tournamentMatches = _tournamentRounds[_tournamentRound] || [];
     _tournamentActiveMatch = null;
     _tournamentResultSaved = false;
@@ -3070,16 +3448,17 @@ function importWdRosterClass(classroomId) {
   const message = document.getElementById('wd-roster-class-message');
   if (!classroom || !Array.isArray(classroom.roster)) return;
 
-  const names = classroom.roster
-    .map(student => (student?.name || '').trim())
-    .filter(Boolean);
+  const students = classroom.roster
+    .filter(student => (student?.name || '').trim())
+    .map(student => ({ ...student, name:(student.name || '').trim() }));
 
-  if (!names.length) {
+  if (!students.length) {
     if (message) message.textContent = 'This roster has no students.';
     return;
   }
 
-  _importedRosterStudents = names;
+  _importedRosterStudents = students;
+  _wdImportedRosterClassroomId = classroom.id || classroomId;
   buildStudentPool();
   closeWdRosterClassPicker();
 }
@@ -3091,11 +3470,11 @@ function buildStudentPool() {
   pool.innerHTML = '';
   const teacherMode = window.CLASSES && CLASSES.length > 0;
   if (_importedRosterStudents.length) {
-    _importedRosterStudents.forEach((name, index) => {
+    _importedRosterStudents.forEach((student, index) => {
       const chip = document.createElement('button');
       chip.className = 'ss-chip';
-      chip.textContent = name;
-      chip.dataset.name = name;
+      chip.textContent = student.name;
+      chip.dataset.name = student.name;
       chip.dataset.slot = index + 1;
       chip.onclick = () => _ssToggle({ name: chip.dataset.name, slot: index + 1 }, chip);
       pool.appendChild(chip);
@@ -3152,11 +3531,33 @@ function _ssToggle(s, chip) {
   }
 }
 
+function selectRandomTournamentStudents(count) {
+  if (_ssMode !== 'tournament') return;
+  const chips = Array.from(document.querySelectorAll('#ss-class-pool .ss-chip'));
+  if (chips.length < count) return;
+  _ssSelected = shuffle(chips.map((chip, index) => ({
+    name: chip.dataset.name,
+    slot: chip.dataset.slot ? Number(chip.dataset.slot) : null,
+    _chipIndex: index
+  }))).slice(0, count).map(item => ({
+    name: item.name,
+    slot: item.slot,
+    _chipIndex: item._chipIndex
+  }));
+  _ssLastChip = null;
+  _ssRefreshColors();
+  _updateSSCount();
+  _tournamentSavedSelection = _ssSelected.map(x => ({ name: x.name, slot: x.slot }));
+  _saveTournamentState();
+}
+
 function _ssRefreshColors() {
   // Tüm chip'leri sıfırla
   document.querySelectorAll('#ss-class-pool .ss-chip').forEach(c => c.classList.remove('sel-p1', 'sel-p2', 'sel-tournament'));
   _ssSelected.forEach((s, i) => {
-    const chip = s.slot !== null
+    const chip = s._chipIndex !== undefined
+      ? document.querySelectorAll('#ss-class-pool .ss-chip')[s._chipIndex]
+      : s.slot !== null
       ? document.querySelector(`#ss-class-pool .ss-chip[data-slot="${s.slot}"]`)
       : document.querySelector(`#ss-class-pool .ss-chip[data-name="${s.name}"]`);
     if (chip) chip.classList.add(_ssMode === 'tournament' ? 'sel-tournament' : (i === 0 ? 'sel-p1' : 'sel-p2'));
@@ -3173,6 +3574,14 @@ function _updateSSCount() {
   document.getElementById('ss-sub').innerHTML = tournamentMode
     ? 'Turnuvaya katılacak <span style="color:#fbbf24">2, 4, 8 veya 16 öğrenci</span> seç'
     : 'İki öğrenciye tıkla — ilk seçilen <span style="color:var(--p1)">P1</span>, ikinci seçilen <span style="color:var(--p2)">P2</span>';
+  const randomRow = document.getElementById('ss-random-row');
+  if (randomRow) {
+    const available = document.querySelectorAll('#ss-class-pool .ss-chip').length;
+    randomRow.classList.toggle('hidden', !tournamentMode);
+    randomRow.querySelectorAll('.ss-random-btn').forEach(btn => {
+      btn.disabled = !tournamentMode || available < Number(btn.dataset.randomCount);
+    });
+  }
   if (tournamentMode) {
     const startRound = { 2:'FINAL', 4:'SEMI FINALS', 8:'QUARTER FINALS', 16:'FIRST ROUND' }[n];
     el.textContent = n + ' / 16 öğrenci seçildi' + (startRound ? ' — ' + startRound + ' hazır' : '');
@@ -3245,7 +3654,8 @@ function _createRoundMatches(players, revealImmediately) {
     revealed: !!revealImmediately,
     score: null,
     winner: null,
-    winnerSide: null
+    winnerSide: null,
+    hudAwardsTransferred: false
   }));
 }
 
@@ -3274,6 +3684,50 @@ function continueTournament() {
   if (_tournamentChampion) showTournamentChampion();
 }
 
+function _tournamentAvatarPath(name) {
+  const slug = String(name || '')
+    .trim()
+    .toLocaleLowerCase('tr-TR')
+    .replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c')
+    .replace(/[^a-z0-9]+/g, '');
+  return slug ? '../images/avatars/' + slug + '.webp' : '';
+}
+
+function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
+  const card = document.createElement(side === 'opponent' ? 'button' : 'div');
+  card.className = (side === 'opponent' ? 'tr-opponent ' : 'tr-player ') + stateClass;
+  if (hidden) {
+    card.classList.add('hidden-opponent');
+    card.textContent = '?';
+    return card;
+  }
+
+  const displayName = player?.displayName || player?.name || '';
+  const name = document.createElement('div');
+  name.className = 'tr-player-name';
+  name.textContent = displayName;
+
+  const avatar = document.createElement('img');
+  avatar.className = 'tr-avatar';
+  avatar.alt = '';
+  avatar.src = _tournamentAvatarPath(displayName);
+
+  const fallback = document.createElement('div');
+  fallback.className = 'tr-avatar-fallback';
+  fallback.textContent = (displayName.trim()[0] || '?').toLocaleUpperCase('tr-TR');
+  fallback.style.display = 'none';
+  avatar.onerror = () => { avatar.style.display = 'none'; fallback.style.display = 'flex'; };
+
+  card.append(name, avatar, fallback);
+  if (score !== null && score !== undefined) {
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'tr-score';
+    scoreEl.textContent = score;
+    card.appendChild(scoreEl);
+  }
+  return card;
+}
+
 function renderTournamentChart() {
   _tournamentResetConfirm = false;
   const resetBtn = document.getElementById('tr-reset-btn');
@@ -3287,6 +3741,8 @@ function renderTournamentChart() {
   }
   const root = document.getElementById('tournament-matches');
   const continueBtn = document.getElementById('tr-continue-btn');
+  root.classList.toggle('semi-layout', _tournamentRound === 'semi');
+  root.classList.toggle('final-layout', _tournamentRound === 'final');
   root.innerHTML = '';
   _tournamentMatches.forEach((match, index) => {
     const row = document.createElement('div');
@@ -3296,39 +3752,25 @@ function renderTournamentChart() {
     const p1Eliminated = !!match.winner && !p1Won;
     const p2Eliminated = !!match.winner && !p2Won;
 
-    const p1 = document.createElement('div');
-    p1.className = 'tr-player' + (p1Won ? ' tr-winner' : '') + (p1Eliminated ? ' tr-eliminated' : '');
-    const p1Name = document.createElement('span');
-    p1Name.className = 'tr-player-name';
-    p1Name.textContent = match.p1.displayName;
-    p1.appendChild(p1Name);
-    if (match.score) {
-      const p1Score = document.createElement('span');
-      p1Score.className = 'tr-score';
-      p1Score.textContent = match.score[0];
-      p1.appendChild(p1Score);
-    }
+    const p1 = _buildTournamentPlayerCard(
+      match.p1,
+      'player',
+      (p1Won ? ' tr-winner' : '') + (p1Eliminated ? ' tr-eliminated' : ''),
+      match.score ? match.score[0] : null,
+      false
+    );
 
     const vs = document.createElement('div');
     vs.className = 'tr-vs';
     vs.textContent = 'VS';
 
-    const p2 = document.createElement('button');
-    p2.className = 'tr-opponent ' + (match.revealed ? 'revealed' : 'hidden-opponent') + (p2Won ? ' tr-winner' : '') + (p2Eliminated ? ' tr-eliminated' : '');
-    if (match.revealed) {
-      const p2Name = document.createElement('span');
-      p2Name.className = 'tr-player-name';
-      p2Name.textContent = match.p2.displayName;
-      p2.appendChild(p2Name);
-      if (match.score) {
-        const p2Score = document.createElement('span');
-        p2Score.className = 'tr-score';
-        p2Score.textContent = match.score[1];
-        p2.appendChild(p2Score);
-      }
-    } else {
-      p2.textContent = '?';
-    }
+    const p2 = _buildTournamentPlayerCard(
+      match.p2,
+      'opponent',
+      (match.revealed ? 'revealed' : '') + (p2Won ? ' tr-winner' : '') + (p2Eliminated ? ' tr-eliminated' : ''),
+      match.score ? match.score[1] : null,
+      !match.revealed
+    );
     p2.disabled = match.revealed;
     p2.onclick = () => revealTournamentOpponent(index);
 
@@ -3348,13 +3790,7 @@ function renderTournamentChart() {
   continueBtn.textContent = _tournamentRound === 'final'
     ? 'ANNOUNCE CHAMPION'
     : 'CONTINUE TO ' + _ROUND_TITLES[nextRound];
-  document.getElementById('tournament-sub').textContent = _tournamentChampion
-    ? _tournamentChampion.displayName + ' TOURNAMENT CHAMPION'
-    : roundComplete
-      ? _ROUND_TITLES[_tournamentRound] + ' COMPLETED — REVIEW THE RESULTS'
-      : _tournamentRound === 'final'
-        ? 'FINALISTS READY — START THE CHAMPIONSHIP MATCH'
-        : 'Boş rakip slotlarına tıklayarak eşleşmeleri tek tek açıkla. Tamamlanan maç: ' + completed + ' / ' + _tournamentMatches.length;
+  document.getElementById('tournament-sub').textContent = '';
 }
 
 function revealTournamentOpponent(index) {
@@ -3385,10 +3821,21 @@ function closeTournament() {
 }
 
 let _tournamentFinalAudio = null;
+let _tournamentFinalCheerAudio = null;
 
 function showTournamentChampion() {
   if (!_tournamentChampion) return;
-  document.getElementById('tc-name').textContent = _tournamentChampion.displayName;
+  const championName = _tournamentChampion.displayName || _tournamentChampion.name || '';
+  document.getElementById('tc-name').textContent = championName;
+  const portrait = document.getElementById('tc-portrait');
+  const fallback = document.getElementById('tc-portrait-fallback');
+  if (portrait && fallback) {
+    fallback.textContent = (championName.trim()[0] || '?').toLocaleUpperCase('tr-TR');
+    fallback.style.display = 'none';
+    portrait.style.display = 'block';
+    portrait.onerror = () => { portrait.style.display = 'none'; fallback.style.display = 'flex'; };
+    portrait.src = _tournamentAvatarPath(championName);
+  }
   const layer = document.getElementById('tc-confetti-layer');
   layer.innerHTML = '';
   const colors = ['#fbbf24','#60a5fa','#fb923c','#4ade80','#f472b6','#fff'];
@@ -3403,14 +3850,20 @@ function showTournamentChampion() {
   }
   document.getElementById('tournament-champion').classList.add('open');
   if (_tournamentFinalAudio) { _tournamentFinalAudio.pause(); _tournamentFinalAudio.currentTime = 0; }
+  if (_tournamentFinalCheerAudio) { _tournamentFinalCheerAudio.pause(); _tournamentFinalCheerAudio.currentTime = 0; }
   _tournamentFinalAudio = new Audio('sounds/final.mp3');
   _tournamentFinalAudio.volume = .65;
   _tournamentFinalAudio.play().catch(() => {});
+  _tournamentFinalCheerAudio = new Audio('sounds/finalcheer.mp3');
+  _tournamentFinalCheerAudio.volume = .9;
+  _tournamentFinalCheerAudio.loop = false;
+  _tournamentFinalCheerAudio.play().catch(() => {});
 }
 
 function closeTournamentChampion() {
   document.getElementById('tournament-champion').classList.remove('open');
   if (_tournamentFinalAudio) { _tournamentFinalAudio.pause(); _tournamentFinalAudio.currentTime = 0; }
+  if (_tournamentFinalCheerAudio) { _tournamentFinalCheerAudio.pause(); _tournamentFinalCheerAudio.currentTime = 0; }
 }
 
 function resetTournament() {

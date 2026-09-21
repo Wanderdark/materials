@@ -641,6 +641,7 @@ const goingToPlansVideoStartIndex = goingToPlansFunction.sentences.findIndex(
 );
 const goingToPlansVideoItems = goingToPlansFunction.sentences
   .slice(goingToPlansVideoStartIndex, goingToPlansVideoStartIndex + 22)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

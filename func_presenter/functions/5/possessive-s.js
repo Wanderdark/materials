@@ -422,6 +422,7 @@ const possessiveSVideoStartIndex = possessiveSFunction.sentences.findIndex(
 );
 const possessiveSVideoItems = possessiveSFunction.sentences
   .slice(possessiveSVideoStartIndex, possessiveSVideoStartIndex + 6)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Team Challengers is a teacher-led wheel and quiz game for two or three teams.">
+  <title>Team Challengers | AdilHoca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-orb orb-one"></div><div class="background-orb orb-two"></div>
+  <main class="app-shell">
+    <section id="setup-screen" class="screen setup-screen" aria-labelledby="setup-title">
+      <button id="setup-fullscreen-button" class="fullscreen-button setup-fullscreen-button" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button>
+      <div class="brand-lockup">
+        <span class="brand-mark">⚡</span>
+        <div><p class="eyebrow">AdilHoca · Teacher Tool</p><h1 id="setup-title">Team Challengers</h1><p class="hero-copy">Build your teams. Spin the wheel. Take the challenge.</p></div>
+      </div>
+      <div class="setup-grid">
+        <article class="setup-card accent-purple">
+          <div class="step-number">01</div><p class="eyebrow">Groups</p><h2>Build your teams</h2>
+          <div class="choice-row" role="group" aria-label="Number of teams">
+            <button class="choice-button is-selected" type="button" data-group-count="2">2 TEAMS</button>
+            <button class="choice-button" type="button" data-group-count="3">3 TEAMS</button>
+          </div>
+          <div id="group-name-fields" class="group-name-fields"></div>
+        </article>
+        <article class="setup-card accent-cyan">
+          <div class="step-number">02</div><p class="eyebrow">Players</p><h2>Choose your challengers</h2>
+          <p class="muted">Import a class from Teacher HUD or add students manually.</p>
+          <button id="open-roster-button" class="primary-button" type="button">👥 IMPORT FROM TEACHER HUD</button>
+          <div id="roster-status" class="status-note" aria-live="polite">No class selected yet.</div>
+          <div class="manual-student-row"><input id="manual-student-input" type="text" maxlength="36" placeholder="Student name"><select id="manual-student-team" aria-label="Team for new student"></select><button id="add-student-button" class="secondary-button" type="button">ADD</button></div>
+        </article>
+        <article class="setup-card team-card accent-pink">
+          <div class="step-number">03</div><p class="eyebrow">Line-up</p><h2>Team lists</h2>
+          <div id="team-editor" class="team-editor"></div>
+          <button id="proceed-selection-button" class="primary-button start-button" type="button" disabled>PROCEED TO GRADE SELECTION <span>→</span></button>
+        </article>
+      </div>
+    </section>
+
+    <section id="selection-screen" class="screen selection-screen" hidden aria-labelledby="selection-title">
+      <button id="selection-fullscreen-button" class="fullscreen-button setup-fullscreen-button" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button>
+      <div class="selection-heading"><p class="eyebrow">Question Pool</p><h1 id="selection-title">Choose Your Challenge</h1><p class="hero-copy">Select the grade and unit for this game.</p></div>
+      <div class="curriculum-grid">
+        <article class="setup-card filter-card accent-purple">
+          <div class="step-number">04</div><p class="eyebrow">Grade</p><h2>Choose the grade</h2>
+          <label class="curriculum-field" for="grade-select"><span>GRADE LEVEL</span><select id="grade-select"></select></label>
+        </article>
+        <article class="setup-card filter-card accent-cyan">
+          <div class="step-number">05</div><p class="eyebrow">Unit</p><h2>Choose the unit</h2>
+          <label class="curriculum-field" for="unit-select"><span>CURRICULUM UNIT</span><select id="unit-select"></select></label>
+          <p id="question-pool-status" class="pool-status" aria-live="polite"></p>
+        </article>
+      </div>
+      <div class="selection-actions"><button id="back-to-teams-button" class="secondary-button" type="button">← BACK TO TEAMS</button><button id="start-game-button" class="primary-button" type="button" disabled>START THE CHALLENGE <span>→</span></button></div>
+    </section>
+
+    <section id="game-screen" class="screen game-screen" hidden>
+      <header class="game-header">
+        <div class="header-brand"><span>⚡</span><div><small>TEAM</small><strong>CHALLENGERS</strong></div></div>
+        <div class="round-progress"><span id="round-label">ROUND 1</span><strong id="turn-label">TURN 1 / 1</strong></div>
+        <div id="scoreboard" class="scoreboard" aria-label="Team scores"></div>
+        <div class="header-actions"><button id="lite-mode-button" class="lite-mode-button" type="button" aria-label="Toggle lite mode" aria-pressed="false">LITE</button><button id="fullscreen-button" class="fullscreen-button" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button><button id="finish-game-button" class="finish-button" type="button">FINISH</button></div>
+      </header>
+      <div class="game-layout">
+        <aside class="player-panel">
+          <span id="active-team-chip" class="team-chip">TEAM</span>
+          <div id="active-portrait" class="active-portrait level-tier-1" hidden><img id="active-avatar" class="active-avatar" alt=""><span class="portrait-level-ring" aria-hidden="true"></span><span id="active-student-level" class="portrait-level-badge">LV. 1</span></div>
+          <h2 id="active-student-name">Ready?</h2>
+          <div id="answer-timer" class="answer-timer" hidden aria-live="polite"><strong id="answer-timer-value">32</strong><small>SEC</small></div>
+          <div id="joker-status" class="joker-status" aria-live="polite"></div>
+          <strong id="spin-result-value" class="spin-result-value"></strong>
+          <div id="spin-result-actions" class="spin-result-actions" hidden><div><button id="keep-spin-button" class="secondary-button" type="button">KEEP THESE POINTS</button><button id="spin-again-button" class="joker-button joker-spin-button" type="button">🃏 USE JOKER: SPIN AGAIN</button></div></div>
+          <button id="next-turn-button" class="primary-button next-challenger-button" type="button" hidden>NEXT CHALLENGER <span>→</span></button>
+        </aside>
+        <section class="challenge-stage">
+          <div id="wheel-zone" class="wheel-zone">
+            <div class="wheel-title"><strong>SPIN THE WHEEL!</strong></div>
+            <div class="wheel-wrap"><div class="wheel-pointer">▼</div><canvas id="points-wheel" width="520" height="520" aria-label="20 segment points wheel"></canvas><button id="spin-wheel-button" class="spin-button" type="button">SPIN</button></div>
+          </div>
+          <div id="question-zone" class="question-zone" hidden>
+            <div class="question-topline"><div id="question-jokers" class="question-jokers"><button id="fifty-fifty-button" class="joker-button" type="button">50:50</button><button id="double-points-button" class="joker-button" type="button">✕2 POINTS</button></div><button id="start-timer-button" class="start-timer-button" type="button">⌛ START TIMER</button><div class="points-badge"><small>FOR</small><strong id="question-points">0</strong><small>POINTS</small></div></div>
+            <div id="question-context" class="question-context"></div>
+            <h2 id="question-text"></h2>
+            <div id="answer-grid" class="answer-grid"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="round-screen" class="screen decision-screen" hidden>
+      <div class="decision-card"><span class="decision-icon">🏁</span><p class="eyebrow">Round complete</p><h2>Every challenger has played!</h2><p id="round-message" class="muted"></p><div id="round-scoreboard" class="round-scoreboard"></div><div class="choice-row"><button id="continue-round-button" class="primary-button" type="button">PLAY ANOTHER ROUND</button><button id="end-round-button" class="secondary-button" type="button">FINISH GAME</button></div></div>
+    </section>
+  </main>
+
+  <div id="winner-overlay" aria-hidden="true">
+    <div class="winner-wrapper">
+      <div class="winner-ann" style="position:relative;overflow:hidden">
+        <div class="winner-rays"></div><div class="winner-crown-big" style="position:relative;z-index:1">👑</div><div class="winner-title-big">WINNER!</div>
+        <div class="winner-ann-group" id="wl-group"></div><div class="winner-ann-pts" id="wl-pts"></div><div class="winner-ann-sub">points</div><div class="winner-ann-all" id="wl-all"></div>
+        <button class="winner-transfer-stars" id="winner-transfer-stars" type="button">⭐ YILDIZLARI PUANA AKTAR</button>
+        <button class="winner-play-again" id="winner-play-again" type="button">PLAY AGAIN</button>
+        <button class="winner-exit" id="winner-exit" type="button">✕ Tam Ekrandan Çık</button>
+      </div>
+      <div class="winner-scores-section">
+        <div class="sp-left"><div class="sp-left-title">🏆 High Scores</div><div id="winner-scores-list"></div></div>
+        <div class="sp-right"><div class="sp-right-title">Grup Detayları</div><div class="sg-grid" id="winner-group-grid"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="award-breakdown-overlay" class="award-breakdown-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="award-breakdown-title">
+    <button class="award-breakdown-backdrop" type="button" data-close-award-breakdown aria-label="Close reward details"></button>
+    <section class="award-breakdown-card"><button class="award-breakdown-close" type="button" data-close-award-breakdown aria-label="Ödül detaylarını kapat">×</button><p class="eyebrow">HUD Ödül Detayı</p><h2 id="award-breakdown-title"></h2><div id="award-breakdown-list" class="award-breakdown-list"></div><p id="award-breakdown-total" class="award-breakdown-total"></p></section>
+  </div>
+
+  <div id="roster-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="roster-dialog-title"><div class="modal-backdrop" data-close-roster></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-roster aria-label="Close">×</button><p class="eyebrow">Teacher HUD</p><h2 id="roster-dialog-title">Choose your class</h2><p class="muted">Students marked absent today are excluded and present students are balanced by roster score.</p><div id="classroom-list" class="classroom-list"></div><p id="classroom-message" class="status-note" aria-live="polite"></p></div></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>window.__forceTeacherControl = true;</script>
+  <script src="js/dependencies.js"></script>
+  <script src="questions.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/question-templates.js"></script>
+  <script src="js/roster-adapter.js"></script>
+  <script src="js/game-state.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/wheel.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/final-scores.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>

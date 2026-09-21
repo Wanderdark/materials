@@ -352,6 +352,13 @@
     pointSyncTimer = window.setTimeout(() => pushState(state).catch(() => {}), POINT_SYNC_DELAY);
   }
 
+  function syncPointsNow(state) {
+    if (!session?.access_token) return Promise.resolve(false);
+    write(POINTS_DIRTY_KEY, true);
+    clearTimeout(pointSyncTimer);
+    return pushState(state);
+  }
+
   function getAccount() { return { signedIn: Boolean(session?.access_token), email: session?.user?.email || "" }; }
 
   window.TeacherCloud = {
@@ -364,6 +371,7 @@
     signOut,
     scheduleSync,
     schedulePointSync,
+    syncPointsNow,
     syncNow: () => pushState(hooks?.getState?.()),
     getAccount,
     isSignedIn: () => Boolean(session?.access_token)

@@ -618,6 +618,7 @@ const haveGotHasGotVideoStartIndex = haveGotHasGotFunction.sentences.findIndex(
 );
 const haveGotHasGotVideoItems = haveGotHasGotFunction.sentences
   .slice(haveGotHasGotVideoStartIndex, haveGotHasGotVideoStartIndex + 7)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

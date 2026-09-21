@@ -154,6 +154,7 @@ const modalsProhibitionVideoStartIndex = modalsProhibitionFunction.sentences.fin
 );
 const modalsProhibitionVideoItems = modalsProhibitionFunction.sentences
   .slice(modalsProhibitionVideoStartIndex, modalsProhibitionVideoStartIndex + 12)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

@@ -328,6 +328,7 @@ const objectPronounsVideoStartIndex = objectPronounsFunction.sentences.findIndex
 );
 const objectPronounsVideoItems = objectPronounsFunction.sentences
   .slice(objectPronounsVideoStartIndex, objectPronounsVideoStartIndex + 9)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

@@ -380,6 +380,7 @@ const thereIsAreVideoStartIndex = thereIsAreFunction.sentences.findIndex(
 );
 const thereIsAreVideoItems = thereIsAreFunction.sentences
   .slice(thereIsAreVideoStartIndex, thereIsAreVideoStartIndex + 9)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

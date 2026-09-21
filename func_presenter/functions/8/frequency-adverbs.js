@@ -268,6 +268,7 @@ const frequencyAdverbsGrade8VideoStartIndex = frequencyAdverbsGrade8Function.sen
 );
 const frequencyAdverbsGrade8VideoItems = frequencyAdverbsGrade8Function.sentences
   .slice(frequencyAdverbsGrade8VideoStartIndex, frequencyAdverbsGrade8VideoStartIndex + 15)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

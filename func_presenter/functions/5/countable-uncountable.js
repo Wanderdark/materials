@@ -472,6 +472,7 @@ const countableUncountableVideoStartIndex = countableUncountableFunction.sentenc
 );
 const countableUncountableVideoItems = countableUncountableFunction.sentences
   .slice(countableUncountableVideoStartIndex, countableUncountableVideoStartIndex + 6)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

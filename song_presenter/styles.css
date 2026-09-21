@@ -231,6 +231,8 @@ a.reset-progress-button:hover { border-color: var(--yellow); }
 .training-spinner::after { width: .54em; height: .54em; border: .11em solid rgba(255, 210, 51, .28); border-top-color: var(--yellow); border-radius: 50%; content: ""; animation: trainingSpin .8s linear infinite; }
 .training-spinner.countdown { position: relative; width: 1.15em; height: 1.15em; vertical-align: -.16em; color: var(--yellow); font-family: var(--display); font-size: .72em; font-weight: 900; line-height: 1; text-align: center; }
 .training-spinner.countdown::after { position: absolute; width: .92em; height: .92em; border-width: .08em; }
+.lite-mode .duel-ready-teams span.active { animation: none; }
+.lite-mode .training-spinner::after { animation: none; }
 @keyframes trainingSpin { to { transform: rotate(360deg); } }
 .training-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .training-choice { min-height: 58px; padding: 10px; border: 0; border-radius: 14px; color: #fff; font-weight: 900; cursor: pointer; text-shadow: 0 1px 2px rgba(0,0,0,.35); transition: transform .14s ease, filter .14s ease; }

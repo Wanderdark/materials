@@ -406,6 +406,7 @@ const canPermissionVideoStartIndex = canPermissionFunction.sentences.findIndex(
 );
 const canPermissionVideoItems = canPermissionFunction.sentences
   .slice(canPermissionVideoStartIndex, canPermissionVideoStartIndex + 16)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

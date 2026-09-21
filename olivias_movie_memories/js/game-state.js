@@ -16,7 +16,7 @@ function createTurnOrder(groups) {
 function createGameState({ groups, groupNames, itemPicker, roundLimit }) {
   const turnOrder = createTurnOrder(groups);
   return {
-    groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", score: 0 })) })),
+    groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", level: typeof student === "string" ? 1 : Math.max(1, Number(student.level) || 1), score: 0 })) })),
     itemPicker, round: 1, roundLimit, turnOrder, groupIndex: turnOrder[0]?.groupIndex || 0, studentIndexes: groups.map(() => 0), turnsInRound: 0,
     question: null, difficulty: null, videoPlays: 0, subtitlesShown: false, answered: false, doubleOrNothing: false, slowTime: false, phase: "announce", timerId: null, secondsLeft: GAME_CONFIG.answerSeconds
   };

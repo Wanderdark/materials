@@ -96,7 +96,7 @@
     teacherFeaturedTools.append(leagueFeatured);
     const practiceChoice=document.querySelector("#teacher-flow button");
     function renderTeacherToolCard(card,{icon,category,title,description,accent}){card.classList.add(`flow-tool--${accent}`);card.innerHTML=`<div class="flow-tool-icon" aria-hidden="true">${icon}</div><p class="flow-category">${category}</p><h3>${title}</h3><p>${description}</p><span class="flow-action">Open tool <span aria-hidden="true">→</span></span>`}
-    const iconCard='<svg viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2.5"></rect><path d="M8 8h8M8 12h5M8 16h4"></path></svg>',iconGrammar='<svg viewBox="0 0 24 24"><path d="M9 5H6v5M15 5h3v5M9 19H6v-5M15 19h3v-5"></path><path d="M10 12h4"></path></svg>',iconTrophy='<svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"></path><path d="M8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8.5 20h7M10 17h4"></path></svg>',iconGames='<svg viewBox="0 0 24 24"><path d="M7 9h10a4 4 0 0 1 3.8 5.2l-.7 2.2a2 2 0 0 1-3.4.7L15 15h-6l-1.7 2.1a2 2 0 0 1-3.4-.7l-.7-2.2A4 4 0 0 1 7 9Z"></path><path d="M8 12v3M6.5 13.5h3M16.5 12.5h.01M18 14h.01"></path></svg>';
+    const iconCard='<svg viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2.5"></rect><path d="M8 8h8M8 12h5M8 16h4"></path></svg>',iconGrammar='<svg viewBox="0 0 24 24"><path d="M9 5H6v5M15 5h3v5M9 19H6v-5M15 19h3v-5"></path><path d="M10 12h4"></path></svg>',iconTrophy='<svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0V4Z"></path><path d="M8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8.5 20h7M10 17h4"></path></svg>',iconGames='<svg viewBox="0 0 24 24"><path d="M7 9h10a4 4 0 0 1 3.8 5.2l-.7 2.2a2 2 0 0 1-3.4.7L15 15h-6l-1.7 2.1a2 2 0 0 1-3.4-.7l-.7-2.2A4 4 0 0 1 7 9Z"></path><path d="M8 12v3M6.5 13.5h3M16.5 12.5h.01M18 14h.01"></path></svg>',iconTeam='<svg viewBox="0 0 24 24"><path d="M13 2 5.5 13h5L9.5 22 18.5 10h-5L13 2Z"></path></svg>';
     renderTeacherToolCard(teacherChoices.querySelector('a[href="vocab_presenter/index.html?mode=teacher"]'),{icon:iconCard,category:"Vocabulary",title:"Word Presenter",description:"Present unit vocabulary using large visual flashcards.",accent:"presenter"});
     renderTeacherToolCard(teacherChoices.querySelector('a[href="func_presenter/index.html?mode=teacher"]'),{icon:iconGrammar,category:"Grammar",title:"Grammar Presenter",description:"Teach grammar topics through interactive classroom presentations.",accent:"grammar"});
     renderTeacherToolCard(practiceChoice,{icon:iconGames,category:"Practice",title:"Practice with Games",description:"Open classroom games and reinforce the lesson through guided practice.",accent:"practice"});
@@ -106,6 +106,14 @@
     renderTeacherToolCard(tournamentChoice,{icon:iconTrophy,category:"Competition",title:"Word Tournament",description:"Reinforce learned vocabulary through a tournament-style classroom activity.",accent:"tournament"});
     document.querySelector("#teacher-tools .feature-list").insertAdjacentHTML("beforeend","<li>Classroom management</li>");
     teacherChoices.insertBefore(tournamentChoice,practiceChoice);
+    const teamChallengersGrid=document.createElement("div");
+    teamChallengersGrid.className="flow-grid teacher-flow-grid";
+    const teamChallengersChoice=document.createElement("a");
+    teamChallengersChoice.className="flow-choice";
+    teamChallengersChoice.href="team_challengers/index.html";
+    renderTeacherToolCard(teamChallengersChoice,{icon:iconTeam,category:"Test",title:"Team Challengers",description:"Build teams, spin the wheel and answer curriculum-based quiz questions in a lively classroom challenge.",accent:"tournament"});
+    teamChallengersGrid.append(teamChallengersChoice);
+    teacherChoices.after(teamChallengersGrid);
     const teacherGameDetails={
       "word_master/index.html":["Guess the hidden word letter by letter. Use jokers, earn points and unlock bonus rounds for extra challenges!","Team"],
       "word_rivals/index.html":["Two teams go head-to-head in a fast-paced vocabulary activity. Answer correctly to earn points and lead your team to victory!","Team"],

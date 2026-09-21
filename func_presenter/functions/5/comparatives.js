@@ -397,6 +397,7 @@ const comparativesVideoStartIndex = comparativesFunction.sentences.findIndex(
 );
 const comparativesVideoItems = comparativesFunction.sentences
   .slice(comparativesVideoStartIndex, comparativesVideoStartIndex + 20)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],

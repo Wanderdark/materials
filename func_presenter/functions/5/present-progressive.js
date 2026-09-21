@@ -454,7 +454,9 @@ const presentProgressiveVideoHubItems = (startId, count) => {
   const startIndex = presentProgressiveFunction.sentences.findIndex((item) => item.id === startId);
   return {
     startIndex,
-    items: presentProgressiveFunction.sentences.slice(startIndex, startIndex + count).map((item) => ({
+    items: presentProgressiveFunction.sentences.slice(startIndex, startIndex + count)
+      .filter((item) => item.videoDialogue)
+      .map((item) => ({
       id: item.id,
       speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
       videoDialogue: item.videoDialogue

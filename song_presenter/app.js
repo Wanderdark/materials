@@ -90,7 +90,7 @@
   let trainingAnsweredCount = 0;
   let trainingRound = 1;
   let trainingBlockSet = 0;
-  let trainingVideoVisible = false;
+  let trainingMediaMode = "scores";
   let duelRoundNumber = 1;
   let duelRoundEnding = false;
   let trainingFadeFrame = null;
@@ -253,31 +253,39 @@
   }
 
   function getTrainingTimingDelay() {
-    return trainingVideoVisible && videoSrc ? getVideoTimingDelay(song) : 0;
+    return trainingMediaMode !== "scores" && videoSrc ? getVideoTimingDelay(song) : 0;
   }
 
   function updateTrainingVideoToggle() {
     const canToggle = trainingStarted && duelReady && !isStudentMode && Boolean(videoSrc);
     els.trainingVideoToggleButton.classList.toggle("hidden", !canToggle);
-    if (canToggle) els.trainingVideoToggleButton.textContent = trainingVideoVisible ? "👥 SCORES" : "🎥 VIDEO";
+    if (!canToggle) return;
+    const nextLabel = { scores: "🎥 + 👥", overlay: "🎥 VIDEO", video: "👥 SCORES" };
+    els.trainingVideoToggleButton.textContent = nextLabel[trainingMediaMode];
   }
 
-  function setTrainingVideoVisible(show) {
-    trainingVideoVisible = Boolean(show && duelReady && !isStudentMode && videoSrc);
-    const showScores = duelReady && !isStudentMode && !trainingVideoVisible;
-    els.trainingVideo.classList.toggle("hidden", showScores);
+  function setTrainingMediaMode(mode) {
+    const allowed = ["scores", "overlay", "video"];
+    trainingMediaMode = duelReady && !isStudentMode && videoSrc && allowed.includes(mode) ? mode : "scores";
+    const showVideo = trainingMediaMode !== "scores";
+    const showScores = duelReady && !isStudentMode && trainingMediaMode !== "video";
+    els.trainingVideo.classList.toggle("hidden", !showVideo);
     els.duelReadyOverlay.classList.toggle("hidden", !showScores);
-    if (showScores) els.duelReadyOverlay.classList.remove("duel-intro");
+    if (showScores) {
+      if (duelReadyOverlayTimer) clearTimeout(duelReadyOverlayTimer);
+      duelReadyOverlayTimer = null;
+      els.duelReadyOverlay.classList.remove("duel-intro");
+    }
     updateTrainingVideoToggle();
   }
 
-  function switchTrainingMedia(showVideo) {
+  function switchTrainingMedia(mode) {
     if (!duelReady || isStudentMode || !videoSrc) return;
     const video = els.trainingVideo;
     const wasPlaying = !video.paused;
     const lyricTime = video.currentTime + getTrainingTimingDelay();
-    setTrainingVideoVisible(showVideo);
-    const source = trainingVideoVisible ? videoSrc : (song.audio || videoSrc);
+    setTrainingMediaMode(mode);
+    const source = trainingMediaMode === "scores" ? (song.audio || videoSrc) : videoSrc;
     if (video.currentSrc === new URL(source, location.href).href) return;
     video.pause();
     video.src = source;
@@ -488,7 +496,7 @@
     updateDuelReadyPlayers();
     renderDuelReadyTeams();
     els.duelReadyOverlay.classList.remove("hidden");
-    if (!trainingVideoVisible) return;
+    if (trainingMediaMode !== "video") return;
     duelReadyOverlayTimer = setTimeout(() => {
       els.duelReadyOverlay.classList.add("hidden");
       duelReadyOverlayTimer = null;
@@ -544,13 +552,13 @@
     els.duelFinalTransferButton.hidden = !canTransfer;
     els.duelFinalTransferButton.disabled = duelFinalScoresTransferred;
     els.duelFinalTransferButton.textContent = duelFinalScoresTransferred ? "✓ PUANLAR AKTARILDI" : "⭐ YILDIZLARI PUANA AKTAR";
-    els.duelFinalTransferNote.textContent = canTransfer ? "Each star transfers as 5 roster points." : "Roster transfer is available when the class is imported from the roster.";
+    els.duelFinalTransferNote.textContent = canTransfer ? "Each star transfers as 2 HUD points." : "Roster transfer is available when the class is imported from the roster.";
     els.duelFinalScores.classList.remove("hidden");
   }
 
   function transferDuelFinalScores() {
     if (duelFinalScoresTransferred || !duelRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== "function") return;
-    const awards = getDuelFinalAwards().filter((award) => award.name && award.stars > 0).map((award) => ({ name: award.name, points: award.stars * 5 }));
+    const awards = getDuelFinalAwards().filter((award) => award.name && award.stars > 0).map((award) => ({ name: award.name, points: award.stars * 2 }));
     const result = window.TeacherControl.awardFinalPoints(awards, duelRosterClassroomId);
     if (!result?.awarded?.length) { ToastManager.show("NO MATCHING ROSTER STUDENTS FOUND", "warn", 3000); return; }
     duelFinalScoresTransferred = true;
@@ -669,7 +677,7 @@
   els.duelBeginButton.addEventListener("click", () => {
     if (!duelReady || !els.duelReadyOverlay.classList.contains("duel-intro")) return;
     els.duelReadyOverlay.classList.remove("duel-intro");
-    setTrainingVideoVisible(false);
+    setTrainingMediaMode("scores");
     startTraining();
   });
 
@@ -1635,13 +1643,13 @@
 
   function startTraining() {
     trainingStarted = true;
-    if (duelReady && !isStudentMode) setTrainingVideoVisible(false);
+    if (duelReady && !isStudentMode) setTrainingMediaMode("scores");
     else if (isStudentMode) {
-      trainingVideoVisible = Boolean(videoSrc);
+      trainingMediaMode = videoSrc ? "video" : "scores";
       els.duelReadyOverlay.classList.add("hidden");
     }
     if (!trainingTasks.length) { completeStage(); return; }
-    const source = trainingVideoVisible && videoSrc ? videoSrc : (song.audio || videoSrc);
+    const source = trainingMediaMode === "scores" ? (song.audio || videoSrc) : videoSrc;
     if (!source) { els.trainingPrompt.textContent = "No media source found for this training."; return; }
     els.trainingVideo.src = source;
     applySongTempo(els.trainingVideo);
@@ -1658,7 +1666,7 @@
     setRehearEnabled(false);
     els.trainingVideo.volume = 1;
     trainingStarted = false;
-    trainingVideoVisible = false;
+    trainingMediaMode = "scores";
     updateTrainingVideoToggle();
   }
 
@@ -1711,7 +1719,7 @@
     trainingWaiting = false;
     trainingAnswered = false;
     els.trainingReplayPrompt.classList.add("hidden");
-    if (duelReady && !isStudentMode) switchTrainingMedia(false);
+    if (duelReady && !isStudentMode) switchTrainingMedia("scores");
     if (duelReady) announceDuelPlayer();
     if (!restartFromIntro && trainingTaskIndex + 1 < trainingTasks.length) {
       playTrainingTask(trainingTaskIndex + 1);
@@ -1822,7 +1830,10 @@
       playTrainingTask(trainingTaskIndex);
     }
   });
-  els.trainingVideoToggleButton.addEventListener("click", () => switchTrainingMedia(!trainingVideoVisible));
+  els.trainingVideoToggleButton.addEventListener("click", () => {
+    const nextMode = { scores: "overlay", overlay: "video", video: "scores" }[trainingMediaMode];
+    switchTrainingMedia(nextMode);
+  });
   els.trainingReplayYesButton.addEventListener("click", () => startTrainingReplay(false));
   els.trainingReplayFinishButton.addEventListener("click", () => { completeStage(); finishSongActivity(); });
 
@@ -1918,6 +1929,7 @@
   /* LITE: düşük performans modu — climax emoji efektlerini kapatır */
   function applyLite() {
     els.liteButton.classList.toggle("lite-on", liteMode);
+    document.body.classList.toggle("lite-mode", liteMode);
     if (liteMode) stopClimax();
   }
   els.liteButton.addEventListener("click", () => {

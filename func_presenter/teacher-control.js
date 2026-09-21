@@ -2044,6 +2044,7 @@
 
     if (classroom.id === state.activeClassroomId) state.roster = classroom.roster;
     save({ deferPoints: true });
+    window.TeacherCloud?.syncPointsNow?.(state)?.catch?.(() => {});
     updateHud();
 
     const awardGroups = new Map();
@@ -2133,6 +2134,7 @@
     onCorrect,
     awardStars,
     awardFinalPoints,
+    getStudentLevel: (student) => studentLevel(student),
     getSelectedStudent: () => getStudent()?.name || "",
     getRoster: () => state.roster.map((student) => ({ ...student })),
     getPointBank: () => state.pointBank,

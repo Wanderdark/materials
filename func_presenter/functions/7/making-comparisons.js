@@ -397,6 +397,7 @@ const makingComparisonsVideoStartIndex = makingComparisonsFunction.sentences.fin
 );
 const makingComparisonsVideoItems = makingComparisonsFunction.sentences
   .slice(makingComparisonsVideoStartIndex, makingComparisonsVideoStartIndex + 20)
+  .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,
     speakers: [...new Set((item.videoDialogue.lines || []).map((line) => line.speaker).filter(Boolean))],
@@ -414,4 +415,3 @@ makingComparisonsFunction.sentences.splice(makingComparisonsVideoStartIndex, mak
 
 window.functionModules = window.functionModules || [];
 window.functionModules.push(makingComparisonsFunction);
-
