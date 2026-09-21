@@ -1754,6 +1754,130 @@ window.SONGS = [
   ]
   },
 
+/* ── GRADE 7 UNIT 1 - DIFFERENT LOOKS ───────────────────────────────────── */
+  {
+    id: "7_1_differentlooks",
+    title: "Different Looks",
+    artist: "Grade7",
+    audio: "songs/7_1_differentlooks.mp3",
+    video: null,
+    videotimingdelay: "",
+    image: "thumbnails/7_1_differentlooks.webp",
+    spotify: "",
+    videoclose: null,
+    zoomfactor: true,
+    zoomgap: 8,
+
+    climax: [
+      { at: "0:50", to: "1:23" },
+      { at: "1:54", to: "2:26" },
+{ at: "3:03", to: "3:35" }
+    ],
+
+    /* karaoke videosunun kendi timing'ine göre — dinleyip doldur */
+    kareoke_climax: [{ at: "0:44", to: "1:00" },
+      { at: "1:51", to: "2:00" },
+{ at: "2:30", to: "2:41" }],
+
+    /* çocuklar için sakıncalı sahne varsa {at,to} ekle — bkz rehber */
+    censored: [],
+    kareoke_censored: [],
+
+    words: [
+      { word: "curly",    tr: "kıvırcık",          image: "images/curly.webp" },
+      { word: "cheerful",   tr: "neşeli",         image: "images/cheerful.webp" },
+      { word: "straight",  tr: "düz",      image: "images/straight.webp" },
+      { word: "freckles", tr: "çiller",        image: "images/freckles.webp" },
+      { word: "wavy",  tr: "dalgalı",     image: "images/wavy.webp" },
+      { word: "eyes",   tr: "gözler", image: "images/eye.webp" },
+      { word: "different",  tr: "farklı",           image: "images/different.webp" },
+      { word: "slim",   tr: "ince yapılı",         image: "images/slim.webp" }
+    ],
+
+    lyrics: [
+
+      { from: "0:11.547", to: "0:14.539", text: "She's got long and <curly> hair," },
+      { from: "0:15.570", to: "0:18.731", text: "Green <eyes> and a <cheerful> smile." },
+      { from: "0:19.627", to: "0:23.059", text: "Her sister's hair is short and <straight>," },
+      { from: "0:23.915", to: "0:26.955", text: "They have a <different> style." },
+      { from: "0:27.586", to: "0:30.890", text: "He's got brown hair and blue <eyes>," },
+      { from: "0:31.571", to: "0:34.963", text: "He's tall and <slim> with <freckles> too." },
+      { from: "0:35.538", to: "0:38.915", text: "His brother's short with <wavy> hair," },
+      { from: "0:39.298", to: "0:42.826", text: "They don't look alike, it's true." },
+      { from: "0:44.075", to: "0:45.715", text: "Curly, <wavy>, short or straight," },
+      { from: "0:46.018", to: "0:47.803", text: "Dark or light, there's lots to see." },
+      { from: "0:48.074", to: "0:49.795", text: "Take a look at everyone," },
+      { from: "0:49.938", to: "0:51.770", text: "Everyone looks differently." },
+      { from: "0:51.930", to: "0:53.860", text: "What does she look like?" },
+      { from: "0:53.987", to: "0:55.451", text: "Tell me what you see." },
+      { from: "0:55.571", to: "0:57.419", text: "She's got <curly> hair," },
+      { from: "0:57.555", to: "0:59.563", text: "And her <eyes> are green." },
+      { from: "1:00.043", to: "1:01.715", text: "What does he look like?" },
+      { from: "1:01.859", to: "1:03.435", text: "Tell me about him." },
+      { from: "1:03.579", to: "1:05.171", text: "He's got short dark hair," },
+      { from: "1:05.331", to: "1:07.115", text: "And he's tall and <slim>." },
+      { from: "1:07.387", to: "1:08.597", text: "What do they look like?" },
+      { from: "1:08.708", to: "1:10.725", text: "Tell me once again." },
+      { from: "1:10.844", to: "1:12.309", text: "Tell me about your family," },
+      { from: "1:12.612", to: "1:14.877", text: "Tell me about your friends." },
+      { from: "1:15.036", to: "1:16.866", text: "Long or short," },
+      { from: "1:17.066", to: "1:18.914", text: "Dark hair or light," },
+      { from: "1:20.050", to: "1:21.610", text: "Tell me, tell me," },
+      { from: "1:21.778", to: "1:23.419", text: "What do they look like?" },
+      { from: "1:31.624", to: "1:33.273", text: "My cousin's taller than me," },
+      { from: "1:33.464", to: "1:35.472", text: "His hair is shorter than mine." },
+      { from: "1:35.624", to: "1:37.368", text: "His <eyes> are gray, mine are blue," },
+      { from: "1:37.600", to: "1:39.120", text: "And that's completely fine." },
+      { from: "1:39.272", to: "1:41.568", text: "My best friend has long <straight> hair," },
+      { from: "1:41.736", to: "1:43.240", text: "Mine is <curly> and dark." },
+      { from: "1:43.400", to: "1:45.136", text: "She's a little shorter than me," },
+      { from: "1:45.280", to: "1:46.960", text: "So we're easy to tell apart." },
+      { from: "1:47.264", to: "1:48.704", text: "<curly>, <wavy>, short or <straight>," },
+      { from: "1:48.872", to: "1:50.656", text: "Dark or light, there's lots to see." },
+      { from: "1:50.800", to: "1:52.592", text: "Take a look at everyone," },
+      { from: "1:52.760", to: "1:54.680", text: "Everyone looks differently." },
+      { from: "1:54.856", to: "1:56.571", text: "What does she look like?" },
+      { from: "1:56.699", to: "1:58.259", text: "Tell me what you see." },
+      { from: "1:58.403", to: "2:00.251", text: "She's got <curly> hair," },
+      { from: "2:00.371", to: "2:02.659", text: "And her <eyes> are green." },
+      { from: "2:02.787", to: "2:04.419", text: "What does he look like?" },
+      { from: "2:04.571", to: "2:06.015", text: "Tell me about him." },
+      { from: "2:06.311", to: "2:07.894", text: "He's got short dark hair," },
+      { from: "2:08.062", to: "2:09.710", text: "And he's tall and <slim>." },
+      { from: "2:09.846", to: "2:11.294", text: "What do they look like?" },
+      { from: "2:11.438", to: "2:13.446", text: "Tell me once again." },
+      { from: "2:13.590", to: "2:14.894", text: "Tell me about your family," },
+      { from: "2:15.046", to: "2:17.848", text: "Tell me about your friends." },
+      { from: "2:17.992", to: "2:19.568", text: "Long or short," },
+      { from: "2:19.728", to: "2:22.128", text: "Dark hair or light," },
+      { from: "2:22.520", to: "2:24.016", text: "Tell me, tell me," },
+      { from: "2:24.384", to: "2:26.040", text: "What do they look like?" },
+      { from: "2:33.763", to: "2:35.699", text: "Who's got <curly> hair?" },
+      { from: "2:35.883", to: "2:37.667", text: "Who's got blue <eyes>?" },
+      { from: "2:37.819", to: "2:39.515", text: "Who's a little shorter?" },
+      { from: "2:39.691", to: "2:41.571", text: "Who's really tall?" },
+      { from: "2:41.755", to: "2:43.347", text: "Who's got <freckles>?" },
+      { from: "2:43.515", to: "2:45.355", text: "Who's got <straight> hair?" },
+      { from: "2:45.523", to: "2:47.195", text: "Take another look," },
+      { from: "2:47.379", to: "2:49.419", text: "You'll see them everywhere." },
+      { from: "2:49.870", to: "2:51.166", text: "What does she look like?" },
+      { from: "2:51.326", to: "2:52.846", text: "Tell me what you see." },
+      { from: "2:53.022", to: "2:54.630", text: "She's got <curly> hair," },
+      { from: "2:54.830", to: "2:57.126", text: "And her <eyes> are green." },
+      { from: "2:57.310", to: "2:58.830", text: "What does he look like?" },
+      { from: "2:58.990", to: "3:00.534", text: "Tell me about him." },
+      { from: "3:00.702", to: "3:02.398", text: "He's got short dark hair," },
+      { from: "3:02.581", to: "3:04.422", text: "And he's tall and <slim>." },
+      { from: "3:03.981", to: "3:05.617", text: "What do they look like?" },
+      { from: "3:05.785", to: "3:07.793", text: "Tell me once again." },
+      { from: "3:07.945", to: "3:09.521", text: "Tell me about your family," },
+      { from: "3:09.673", to: "3:12.209", text: "Tell me about your friends." },
+      { from: "3:12.369", to: "3:13.873", text: "Long or short," },
+      { from: "3:14.121", to: "3:16.361", text: "Dark hair or light," },
+      { from: "3:16.769", to: "3:18.473", text: "Tell me, tell me," },
+      { from: "3:18.713", to: "3:20.593", text: "What do they look like?" },
+  ]
+  },
 
   /* ── YENİ ŞARKI EKLEMEK İÇİN ────────────────────────────────────────
      Yukarıdaki bloğu kopyala, virgülle ayırarak buraya yapıştır,
@@ -1761,6 +1885,51 @@ window.SONGS = [
      ------------------------------------------------------------------ */
 
 ];
+
+/* ── GRADE 7 UNIT 1 - DIFFERENT LOOKS TRAINING ─────────────────────────── */
+(() => {
+  const song = window.SONGS.find(song => song.id === "7_1_differentlooks");
+  if (!song) return;
+
+  const targets = [
+    "long", "cheerful", "straight", "style", "blue", "freckles", "wavy", "alike",
+    "short", "light", "look", "differently", "she", "see", "hair", "green",
+    "he", "him", "dark", "tall", "they", "once", "family", "friends",
+    "long", "dark", "tell", "do", "cousin", "mine", "gray", "fine",
+    "friend", "dark", "little", "easy", "wavy", "lots", "take", "looks",
+    "does", "what", "got", "eyes", "look", "about", "short", "slim",
+    "look", "again", "your", "about", "short", "light", "me", "like",
+    "curly", "blue", "shorter", "really", "freckles", "straight", "another", "them",
+    "look", "tell", "curly", "her", "does", "tell", "hair", "he",
+    "what", "tell", "about", "tell", "or", "hair", "tell", "they"
+  ];
+
+  const soundAlikes = {
+    long: "song", cheerful: "careful", straight: "late", style: "smile",
+    blue: "true", freckles: "speckles", wavy: "baby", alike: "a lake",
+    short: "sport", light: "night", look: "book", differently: "carefully",
+    she: "sea", see: "sea", hair: "fair", green: "screen", he: "sea",
+    him: "hymn", dark: "park", tall: "ball", they: "day", once: "wants",
+    family: "melody", friends: "ends", tell: "tail", do: "dew",
+    cousin: "dozen", mine: "line", gray: "day", fine: "line", friend: "end",
+    little: "brittle", easy: "busy", lots: "spots", take: "cake", looks: "books",
+    does: "buzz", what: "yacht", got: "hot", eyes: "rise", about: "a boat",
+    slim: "swim", again: "a game", your: "yore", me: "sea", like: "bike",
+    curly: "early", shorter: "porter", really: "freely", another: "mother",
+    them: "then", her: "fur", or: "oar"
+  };
+
+  const fallbackChoices = ["hair", "eyes", "curly", "wavy", "straight", "slim", "different", "smile", "look", "friends"];
+
+  song.lyrics.forEach((line, index) => {
+    const target = targets[index];
+    const choices = [target, soundAlikes[target]];
+    fallbackChoices.forEach(choice => {
+      if (choices.length < 4 && !choices.includes(choice)) choices.push(choice);
+    });
+    line.training = { target, choices };
+  });
+})();
 
 /* Her training sorusunda en az bir ses benzeri güçlü çeldirici bulunur.
    Türev ekleri yerine rhyme / yakın ses eşleşmeleri tercih edilir. */
@@ -1912,7 +2081,8 @@ const REPEATED_LINE_TRAINING_EXCLUSIONS = new Set([
   "5_6_bitebybite",
   "8_3_bitebybite",
   "5_7_intothewilds",
-  "5_8_timeforvacation"
+  "5_8_timeforvacation",
+  "7_1_differentlooks"
 ]);
 
 function getPhoneticDistractor(target) {

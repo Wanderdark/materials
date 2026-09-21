@@ -38,6 +38,7 @@ function playVideoRange(video, startAt, endAt) {
       finished = true;
       if (frameId) cancelAnimationFrame(frameId);
       video.removeEventListener("ended", finish);
+      video.removeEventListener("evidence-skip", finish);
       video.pause();
       resolve();
     };
@@ -50,6 +51,7 @@ function playVideoRange(video, startAt, endAt) {
       video.addEventListener("ended", finish, { once: true });
       video.play().then(() => { frameId = requestAnimationFrame(monitor); }).catch(finish);
     };
+    video.addEventListener("evidence-skip", finish, { once: true });
     if (video.readyState >= HTMLMediaElement.HAVE_METADATA) begin();
     else video.addEventListener("loadedmetadata", begin, { once: true });
   });

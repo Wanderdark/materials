@@ -27,8 +27,8 @@ function activePlayer(state) {
   return { group, student: group.students[state.studentIndexes[state.groupIndex]] };
 }
 
-function startQuestion(state) {
-  state.question = state.itemPicker(); state.difficulty = null; state.videoPlays = 0; state.subtitlesShown = false; state.answered = false; state.doubleOrNothing = false; state.slowTime = false; state.secondsLeft = GAME_CONFIG.answerSeconds; state.phase = "video";
+function startQuestion(state, item = state.itemPicker()) {
+  state.question = item; state.difficulty = null; state.videoPlays = 0; state.subtitlesShown = false; state.answered = false; state.doubleOrNothing = false; state.slowTime = false; state.secondsLeft = GAME_CONFIG.answerSeconds; state.phase = "video";
   return state.question;
 }
 

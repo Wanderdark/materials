@@ -79,6 +79,12 @@ function createRandomItemPicker(items) {
   }
   let priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !priorityShown.has(item.id));
   let pool = shuffle(availableRegularItems().filter((item) => !shown.has(item.id)));
+  const refillRegularPool = () => {
+    if (pool.length) return;
+    shown.clear();
+    saveHistory();
+    pool = shuffle(availableRegularItems());
+  };
   const pick = () => {
     const priorityItem = priorityPool.shift();
     if (priorityItem) {
@@ -86,11 +92,7 @@ function createRandomItemPicker(items) {
       saveHistory();
       return priorityItem;
     }
-    if (!pool.length) {
-      shown.clear();
-      saveHistory();
-      pool = shuffle(availableRegularItems());
-    }
+    refillRegularPool();
     const item = pool.pop() || null;
     if (item) {
       shown.add(item.id);
@@ -104,6 +106,21 @@ function createRandomItemPicker(items) {
     priorityPool = priorityPool.filter((item) => item.id !== id);
     excluded.add(id);
     saveHistory();
+  };
+  pick.hasPendingPriority = () => priorityPool.length > 0;
+  pick.availableCharacterIds = () => {
+    refillRegularPool();
+    return new Set(pool.flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
+  };
+  pick.pickForCharacter = (characterId) => {
+    refillRegularPool();
+    const matchingItems = pool.filter((item) => item.characterIds?.includes(characterId));
+    const item = matchingItems[Math.floor(Math.random() * matchingItems.length)] || null;
+    if (!item) return null;
+    pool = pool.filter((candidate) => candidate.id !== item.id);
+    shown.add(item.id);
+    saveHistory();
+    return item;
   };
 
   return pick;

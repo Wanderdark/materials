@@ -3412,48 +3412,31 @@ function closeWdRosterClassPicker() {
 }
 
 function openWdRosterClassPicker() {
-  const overlay = document.getElementById('wd-roster-class-overlay');
-  const list = document.getElementById('wd-roster-class-list');
-  const message = document.getElementById('wd-roster-class-message');
-  if (!overlay || !list || !message) return;
-
-  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
-  const usable = classrooms.filter(classroom => Array.isArray(classroom.roster) && classroom.roster.length);
-  list.replaceChildren();
-  message.textContent = '';
-
-  if (!usable.length) {
-    message.textContent = 'Create a roster from the Teacher HUD first.';
-  } else {
-    usable.forEach(classroom => {
-      const button = document.createElement('button');
-      const name = document.createElement('span');
-      const meta = document.createElement('span');
-      button.type = 'button';
-      button.className = 'wd-roster-class-btn';
-      name.textContent = classroom.name || 'MY CLASS';
-      meta.className = 'wd-roster-class-meta';
-      meta.textContent = classroom.roster.length + ' students';
-      button.append(name, meta);
-      button.addEventListener('click', () => importWdRosterClass(classroom.id));
-      list.append(button);
-    });
+  const teacher = window.TeacherControl;
+  const classroomId = teacher?.isActiveClassroomLocked?.()
+    ? teacher.getActiveClassroomId?.()
+    : '';
+  if (!classroomId) {
+    alert('Lock a classroom from the Teacher HUD roster first.');
+    return;
   }
-  overlay.classList.remove('hidden');
+  importWdRosterClass(classroomId);
 }
 
 function importWdRosterClass(classroomId) {
   const classrooms = window.TeacherControl?.getClassrooms?.() || [];
   const classroom = classrooms.find(item => item.id === classroomId);
-  const message = document.getElementById('wd-roster-class-message');
-  if (!classroom || !Array.isArray(classroom.roster)) return;
+  if (!classroom || !Array.isArray(classroom.roster)) {
+    alert('The locked Teacher HUD classroom could not be found.');
+    return;
+  }
 
   const students = classroom.roster
     .filter(student => (student?.name || '').trim())
     .map(student => ({ ...student, name:(student.name || '').trim() }));
 
   if (!students.length) {
-    if (message) message.textContent = 'This roster has no students.';
+    alert('The locked Teacher HUD classroom has no students.');
     return;
   }
 

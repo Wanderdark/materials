@@ -3647,45 +3647,24 @@ function closeWcRosterClassPicker() {
 }
 
 function openWcRosterClassPicker() {
-  const overlay = document.getElementById('wc-roster-class-overlay');
-  const list = document.getElementById('wc-roster-class-list');
-  const message = document.getElementById('wc-roster-class-message');
-  if (!overlay || !list || !message) return;
-
-  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
-  const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.length);
-  list.replaceChildren();
-  message.textContent = '';
-
-  if (!usable.length) {
-    message.textContent = 'Create a roster from the Teacher HUD first.';
-  } else {
-    usable.forEach((classroom) => {
-      const absentIds = classroom.attendanceDate === wcRosterTodayKey()
-        ? new Set(classroom.absentStudentIds || [])
-        : new Set();
-      const presentCount = classroom.roster.filter((student) => !absentIds.has(student.id)).length;
-      const button = document.createElement('button');
-      const name = document.createElement('span');
-      const meta = document.createElement('span');
-      button.type = 'button';
-      button.className = 'wc-roster-class-btn';
-      name.textContent = classroom.name || 'MY CLASS';
-      meta.className = 'wc-roster-class-meta';
-      meta.textContent = `${presentCount} present`;
-      button.append(name, meta);
-      button.addEventListener('click', () => importWcRosterClass(classroom.id));
-      list.append(button);
-    });
+  const teacher = window.TeacherControl;
+  const classroomId = teacher?.isActiveClassroomLocked?.()
+    ? teacher.getActiveClassroomId?.()
+    : '';
+  if (!classroomId) {
+    showToast('Önce Teacher HUD rosterında bir sınıfı kilitleyin.');
+    return;
   }
-  overlay.classList.remove('hidden');
+  importWcRosterClass(classroomId);
 }
 
 function importWcRosterClass(classroomId) {
   const classrooms = window.TeacherControl?.getClassrooms?.() || [];
   const classroom = classrooms.find((item) => item.id === classroomId);
-  const message = document.getElementById('wc-roster-class-message');
-  if (!classroom || !Array.isArray(classroom.roster)) return;
+  if (!classroom || !Array.isArray(classroom.roster)) {
+    showToast('Kilitli Teacher HUD sınıfı bulunamadı.');
+    return;
+  }
 
   const absentIds = classroom.attendanceDate === wcRosterTodayKey()
     ? new Set(classroom.absentStudentIds || [])
@@ -3696,11 +3675,11 @@ function importWcRosterClass(classroomId) {
       || a.name.localeCompare(b.name, 'tr'));
 
   if (students.length < groupCount) {
-    if (message) message.textContent = `At least ${groupCount} present students are needed.`;
+    showToast(`En az ${groupCount} mevcut öğrenci gerekli.`);
     return;
   }
   if (students.length > STD_SLOTS * groupCount) {
-    if (message) message.textContent = `This game supports up to ${STD_SLOTS * groupCount} students.`;
+    showToast(`Bu oyun en fazla ${STD_SLOTS * groupCount} öğrenciyi destekliyor.`);
     return;
   }
 

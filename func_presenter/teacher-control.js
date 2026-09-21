@@ -87,6 +87,11 @@
     .tc-hud .tc-chosen-banner { position: absolute; bottom: calc(100% + 4px); left: 6px; display: flex; align-items: center; width: var(--tc-controls-width, 220px); height: auto; min-height: 24px; padding: 4px 10px; border: 1px solid rgba(101, 230, 184, .72); border-radius: 10px 10px 4px 4px; background: rgba(11, 69, 60, .96); color: #dfffee; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .07em; opacity: 0; pointer-events: none; transform: translateY(6px); transition: opacity .18s ease, transform .18s ease, border-color .14s ease, background-color .14s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
     .tc-hud .tc-chosen-banner.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .tc-hud .tc-chosen-banner.is-resetting { border-color: #ffab9b; background: rgba(102, 41, 38, .96); color: #fff0e9; }
+    .tc-whistle-progress-overlay { position: fixed; inset: 0; z-index: 12000; display: grid; place-items: center; background: rgba(3, 8, 22, .18); opacity: 0; pointer-events: none; transition: opacity .12s ease; }
+    .tc-whistle-progress-overlay.is-visible { opacity: 1; }
+    .tc-whistle-progress-panel { width: min(620px, calc(100vw - 48px)); padding: 18px 20px 20px; border: 2px solid rgba(255, 255, 255, .82); border-radius: 18px; background: rgba(8, 16, 40, .94); box-shadow: 0 14px 42px rgba(0, 0, 0, .45); }
+    .tc-whistle-progress-label { margin-bottom: 10px; color: #fff; font-family: var(--font-display, sans-serif); font-size: 42px; font-weight: 900; letter-spacing: .04em; line-height: 1; text-align: center; }
+    .tc-whistle-progress-bar { width: 0%; height: 34px; border-radius: 10px; background: #31d158; box-shadow: 0 0 18px rgba(49, 209, 88, .56); transition: width .05s linear, background .1s linear; }
     .tc-hud .tc-help-tip { position: absolute; bottom: calc(100% + 8px); left: 0; width: min(260px, calc(100vw - 18px)); padding: 8px 11px; border: 1px solid rgba(255, 216, 77, .74); border-radius: 11px; background: rgba(22, 32, 68, .98); color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 800; letter-spacing: .035em; line-height: 1.35; box-shadow: 0 10px 24px rgba(0, 0, 0, .34); pointer-events: none; }
     .tc-hud .tc-help.is-first-run { border-color: #ffd84d; color: #fff6c8; background: #203d85; box-shadow: 0 0 0 3px rgba(255, 216, 77, .22), 0 0 18px rgba(255, 216, 77, .72), 0 0 34px rgba(255, 216, 77, .4); animation: tcHelpPromptGlow 1.1s ease-in-out infinite; }
     .tc-hud .tc-help-tip { display: grid; gap: 8px; pointer-events: auto; }
@@ -188,6 +193,8 @@
     .tc-pin-key.is-utility { color: #ffc2c2; font-size: 12px; letter-spacing: .04em; }
     .tc-auth-note { color: #a9bbef; font: 700 13px/1.45 var(--font-ui, sans-serif); margin: 10px 0 0; }
     .tc-hud .tc-account.is-connected { border-color: #61e7b6; color: #d9fff0; box-shadow: 0 0 12px rgba(97, 231, 182, .32); }
+    .tc-hud .tc-sync { color: #b9d9ff; }
+    .tc-hud .tc-sync:disabled { opacity: .38; cursor: default; }
     .tc-action { padding: 12px 17px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 15px; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
     .tc-action.primary { border: 0; background: var(--u2-grad-gold, #ffd84d); color: #14183a; }
     .tc-action.danger { border-color: rgba(255, 128, 102, .64); color: #ffab9b; }
@@ -380,6 +387,17 @@
 
   let teacherFeedbackAudio = null;
   let randomBeepContext = null;
+  let whistleAudio = null;
+  let whistleStartedAt = 0;
+  let whistleStopTimer = 0;
+  let whistleCooldownUntil = 0;
+  let whistleProgressOverlay = null;
+  let whistleProgressBar = null;
+  let whistleProgressLabel = null;
+  let whistleProgressFrame = 0;
+  let whistleProgressTimer = 0;
+  let whistlePenaltyShown = false;
+  let syncShortcutCooldownUntil = 0;
 
   function playTeacherFeedback(isCorrect) {
     if (teacherFeedbackAudio) {
@@ -388,6 +406,95 @@
     }
     teacherFeedbackAudio = new Audio(teacherSoundPath(isCorrect ? "correct" : "wrong"));
     teacherFeedbackAudio.play().catch(() => {});
+  }
+
+  function startWhistle() {
+    const now = performance.now();
+    if (now < whistleCooldownUntil) return;
+    whistleCooldownUntil = now + 1200;
+    clearTimeout(whistleStopTimer);
+    whistleAudio?.pause();
+    whistleAudio = new Audio(new URL("../sounds/whistle.mp3", controlScriptUrl).href);
+    whistleAudio.volume = 1;
+    whistleAudio.preload = "auto";
+    whistleStartedAt = now;
+    whistlePenaltyShown = false;
+    clearTimeout(whistleProgressTimer);
+    whistleProgressTimer = window.setTimeout(() => showWhistleProgress(whistleStartedAt), 300);
+    whistleAudio.play().catch(() => {});
+  }
+
+  function stopWhistle() {
+    if (!whistleAudio) return;
+    clearTimeout(whistleProgressTimer);
+    hideWhistleProgress();
+    const elapsed = performance.now() - whistleStartedAt;
+    if (elapsed < 1000) {
+      clearTimeout(whistleStopTimer);
+      whistleStopTimer = window.setTimeout(() => {
+        whistleAudio?.pause();
+        if (whistleAudio) whistleAudio.currentTime = 0;
+      }, Math.max(0, 1000 - elapsed));
+    } else {
+      whistleAudio.pause();
+      whistleAudio.currentTime = 0;
+    }
+  }
+
+  function showWhistleProgress(startedAt) {
+    if (!whistleProgressOverlay) {
+      whistleProgressOverlay = el("div", "tc-whistle-progress-overlay");
+      const panel = el("div", "tc-whistle-progress-panel");
+      whistleProgressLabel = el("div", "tc-whistle-progress-label", "5");
+      whistleProgressBar = el("div", "tc-whistle-progress-bar");
+      panel.append(whistleProgressLabel, whistleProgressBar);
+      whistleProgressOverlay.append(panel);
+      document.body.append(whistleProgressOverlay);
+    }
+    whistleProgressOverlay.classList.add("is-visible");
+    const update = (timestamp) => {
+      if (!whistleProgressOverlay?.classList.contains("is-visible")) return;
+      const progress = Math.min(1, Math.max(0, (timestamp - startedAt) / 5000));
+      whistleProgressBar.style.width = `${progress * 100}%`;
+      whistleProgressLabel.textContent = progress >= 1 ? "0" : String(Math.ceil(5 - progress * 5));
+      whistleProgressBar.style.background = progress < .5
+        ? "linear-gradient(90deg, #31d158, #ffd60a)"
+        : "linear-gradient(90deg, #ffd60a, #ff453a)";
+      if (progress >= 1 && !whistlePenaltyShown) {
+        whistlePenaltyShown = true;
+        hideWhistleProgress();
+        openWhistlePenaltyConfirm();
+        return;
+      }
+      whistleProgressFrame = requestAnimationFrame(update);
+    };
+    cancelAnimationFrame(whistleProgressFrame);
+    whistleProgressFrame = requestAnimationFrame(update);
+  }
+
+  function hideWhistleProgress() {
+    cancelAnimationFrame(whistleProgressFrame);
+    whistleProgressOverlay?.classList.remove("is-visible");
+    if (whistleProgressBar) whistleProgressBar.style.width = "0%";
+  }
+
+  function openWhistlePenaltyConfirm() {
+    const card = makeOverlay("CLASSROOM", "TÜM SINIFA EKSİ VERİLSİN Mİ?", "");
+    const actions = el("div", "tc-actions");
+    const yes = el("button", "tc-action danger", "EVET");
+    const no = el("button", "tc-action", "HAYIR");
+    yes.type = no.type = "button";
+    yes.addEventListener("click", () => {
+      const students = presentStudents();
+      students.forEach((student) => { student.points = (Number(student.points) || 0) - 1; });
+      if (students.length) save({ deferPoints: true, changeType: "decrement" });
+      updateHud();
+      closeOverlays();
+      showToast(students.length ? `-1 point applied to ${students.length} students.` : "No present students.");
+    });
+    no.addEventListener("click", closeOverlays);
+    actions.append(yes, no);
+    card.append(actions);
   }
 
   function playRandomBeep(index) {
@@ -441,6 +548,10 @@
   }
 
   const cloudClassroomsEnabled = () => Boolean(window.TeacherCloud?.isSignedIn?.());
+  const hasSyncClassroomLock = () => {
+    const lockedClassroomId = sessionStorage.getItem(CLASS_LOCK_KEY) || "";
+    return Boolean(lockedClassroomId && lockedClassroomId === state.activeClassroomId);
+  };
 
   function restoreGuestClassroom() {
     loadFromStorage(STORE_KEY);
@@ -824,6 +935,11 @@
     if (!chosen) chosenBanner.classList.remove("is-resetting");
     accountButton?.classList.toggle("is-connected", Boolean(window.TeacherCloud?.isSignedIn?.()));
     accountButton?.setAttribute("aria-label", window.TeacherCloud?.isSignedIn?.() ? "Cloud account connected" : "Sign in to cloud backup");
+    const canSync = Boolean(window.TeacherCloud?.isSignedIn?.() && hasSyncClassroomLock());
+    const syncCoolingDown = Date.now() < syncShortcutCooldownUntil;
+    syncButton.disabled = !canSync || syncCoolingDown;
+    syncButton.title = syncCoolingDown ? "Sync cooldown" : canSync ? "Sync now" : "Choose and lock a classroom from the roster first";
+    syncButton.setAttribute("aria-label", syncButton.title);
   }
 
   function applyCloudState(snapshot) {
@@ -908,7 +1024,10 @@
       const sync = el("button", "tc-action primary", "SYNC NOW");
       const signOut = el("button", "tc-action danger", "SIGN OUT");
       sync.type = signOut.type = "button";
+      sync.disabled = !hasSyncClassroomLock();
+      sync.title = sync.disabled ? "Choose and lock a classroom from the roster first" : "Sync now";
       sync.addEventListener("click", async () => {
+        if (!hasSyncClassroomLock()) return;
         sync.disabled = true;
         try { await cloud.syncNow(); showToast("Classroom synced."); } catch (error) { showToast(error.message || "Sync failed."); }
         sync.disabled = false;
@@ -1054,6 +1173,7 @@
         if (lockedClassId) return;
         sessionStorage.setItem(CLASS_LOCK_KEY, classroom.id);
         if (classroom.id === state.activeClassroomId) {
+          updateHud();
           closeOverlays();
           return;
         }
@@ -2101,27 +2221,45 @@
   const minusButton = el("button", "tc-minus", "➖");
   const helpButton = el("button", "tc-help", "?");
   const accountButton = el("button", "tc-account", "☁");
+  const syncButton = el("button", "tc-sync", "🔄");
+  const whistleButton = el("button", "tc-whistle", "📣");
   const bank = el("button", "tc-bank", "ROSTER");
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
   const collapseButton = el("button", "tc-collapse", "<");
-  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = chosenBanner.type = collapseButton.type = "button";
+  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = syncButton.type = whistleButton.type = chosenBanner.type = collapseButton.type = "button";
   bank.type = "button";
   rosterButton.title = "Class roster";
   plusButton.title = "Award the point pool";
   minusButton.title = "Remove one point";
   helpButton.title = "Student management help";
   accountButton.title = "Cloud account";
+  syncButton.title = "Sync now";
+  syncButton.setAttribute("aria-label", syncButton.title);
+  whistleButton.title = "Whistle — press briefly or hold";
+  whistleButton.setAttribute("aria-label", whistleButton.title);
   rosterButton.addEventListener("click", openRoster);
   randomButton.addEventListener("click", openRandomStudent);
   plusButton.addEventListener("click", awardCurrentPool);
   minusButton.addEventListener("click", () => openStudentPicker("remove"));
   helpButton.addEventListener("click", openHelp);
   accountButton.addEventListener("click", openAccount);
+  syncButton.addEventListener("click", async () => {
+    if (!window.TeacherCloud?.isSignedIn?.() || syncButton.disabled) return;
+    syncShortcutCooldownUntil = Date.now() + 5000;
+    syncButton.disabled = true;
+    try { await window.TeacherCloud.syncNow(); showToast("Classroom synced."); }
+    catch (error) { showToast(error.message || "Sync failed."); }
+    updateHud();
+    window.setTimeout(updateHud, Math.max(0, syncShortcutCooldownUntil - Date.now()));
+  });
+  whistleButton.addEventListener("pointerdown", (event) => { event.preventDefault(); startWhistle(); });
+  whistleButton.addEventListener("pointerup", stopWhistle);
+  whistleButton.addEventListener("pointercancel", stopWhistle);
   bank.addEventListener("click", requestPoolReset);
   chosenBanner.addEventListener("click", requestChosenReset);
   collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
-  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, bank);
+  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, whistleButton, bank);
   hud.append(chosenBanner, controls, collapseButton);
   document.body.append(hud);
 
@@ -2149,6 +2287,7 @@
       }));
     },
     getActiveClassroomId: () => state.activeClassroomId,
+    isActiveClassroomLocked: hasSyncClassroomLock,
     setActiveClassroom,
     isCloudClassroomsEnabled: cloudClassroomsEnabled
   };

@@ -84,10 +84,16 @@
 
   async function openRosterPicker() {
     await TC.dependenciesReady;
-    TC.els.rosterDialog.hidden = false; TC.els.classroomList.replaceChildren(); TC.els.classroomMessage.textContent = "";
-    const classrooms = TC.getClassrooms().filter((room) => room.roster?.some((student) => String(student?.name || "").trim()));
-    if (!classrooms.length) { TC.els.classroomMessage.textContent = "Create or sync a class roster in Teacher HUD first."; return; }
-    classrooms.forEach((room) => { const button = document.createElement("button"); button.type = "button"; button.className = "classroom-card"; const name = document.createElement("strong"); name.textContent = room.name || "CLASS"; const count = document.createElement("span"); count.textContent = `${TC.getPresentStudents(room).length} present · ${(room.roster || []).length} students`; button.append(name, count); button.addEventListener("click", () => { setupGroups = TC.distributeBalanced(room, groupCount).concat([[]]).slice(0, 3); classroomId = room.id; TC.setActiveClassroom(classroomId); TC.els.rosterStatus.textContent = `${room.name || "Class"}: ${TC.getPresentStudents(room).length} present students balanced across teams.`; TC.els.rosterDialog.hidden = true; syncSetup(); }); TC.els.classroomList.appendChild(button); });
+    const teacher = window.TeacherControl;
+    const lockedClassroomId = teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : "";
+    const room = TC.getClassrooms().find((item) => item.id === lockedClassroomId);
+    if (!room) { TC.showToast("Lock a classroom from the Teacher HUD roster first."); return; }
+    const presentStudents = TC.getPresentStudents(room);
+    if (!presentStudents.length) { TC.showToast("The locked Teacher HUD classroom has no present students."); return; }
+    setupGroups = TC.distributeBalanced(room, groupCount).concat([[]]).slice(0, 3);
+    classroomId = room.id;
+    TC.els.rosterStatus.textContent = `${room.name || "Class"}: ${presentStudents.length} present students balanced across teams.`;
+    syncSetup();
   }
 
   function startGame() {

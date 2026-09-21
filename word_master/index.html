@@ -5486,42 +5486,13 @@ function closeRosterClassPicker() {
 }
 
 function openRosterClassPicker() {
-  const overlay = document.getElementById('roster-class-overlay');
-  const list = document.getElementById('roster-class-list');
-  const message = document.getElementById('roster-class-message');
-  if(!overlay || !list || !message) return;
-
-  overlay.classList.remove('hidden');
-  list.innerHTML = '';
-  message.style.display = 'none';
-
-  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
-  const usable = classrooms.filter(classroom =>
-    Array.isArray(classroom.roster) && classroom.roster.some(student => String(student?.name || '').trim())
-  );
-  if(!usable.length) {
-    message.textContent = 'Create or sync a class roster from the teacher HUD first.';
-    message.style.display = 'block';
+  const teacher = window.TeacherControl;
+  const classroomId = teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '';
+  if(!classroomId) {
+    showToast('Lock a classroom from the Teacher HUD roster first.');
     return;
   }
-
-  usable.forEach(classroom => {
-    const absentIds = classroom.attendanceDate === rosterTodayKey()
-      ? new Set(classroom.absentStudentIds || [])
-      : new Set();
-    const total = classroom.roster.filter(student => String(student?.name || '').trim()).length;
-    const present = classroom.roster.filter(student =>
-      String(student?.name || '').trim() && !absentIds.has(student.id)
-    ).length;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'roster-class-card';
-    button.innerHTML = `<span class="roster-class-name"></span><span class="roster-class-count"></span>`;
-    button.querySelector('.roster-class-name').textContent = classroom.name || 'CLASS';
-    button.querySelector('.roster-class-count').textContent = `${present} present · ${total} students`;
-    button.addEventListener('click', () => importRosterClass(classroom.id));
-    list.appendChild(button);
-  });
+  importRosterClass(classroomId);
 }
 
 function importRosterClass(classroomId) {
@@ -5543,8 +5514,7 @@ function importRosterClass(classroomId) {
 
   const message = document.getElementById('roster-class-message');
   if(!students.length) {
-    message.textContent = 'There are no present students in this class today.';
-    message.style.display = 'block';
+    showToast('There are no present students in this class today.');
     return;
   }
 

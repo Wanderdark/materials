@@ -95,6 +95,7 @@
   let duelRoundEnding = false;
   let trainingFadeFrame = null;
   let trainingPauseTimer = null;
+  let trainingReplayUnlockTimer = null;
   let duelTeams = [[], []];
   let duelPlayerIndex = [0, 0];
   let duelScores = [0, 0];
@@ -629,26 +630,17 @@
   }
 
   function openDuelRosterPicker() {
-    const classrooms = window.TeacherControl?.getClassrooms?.() || [];
-    const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.some((student) => String(student?.name || "").trim()));
-    els.duelRosterClassList.innerHTML = "";
-    els.duelRosterMessage.textContent = "";
-    els.duelRosterOverlay.classList.remove("hidden");
-    if (!usable.length) { els.duelRosterMessage.textContent = "Create or sync a class roster from the teacher HUD first."; return; }
-    usable.forEach((classroom) => {
-      const absent = classroom.attendanceDate === rosterTodayKey() ? new Set(classroom.absentStudentIds || []) : new Set();
-      const present = (classroom.roster || []).filter((student) => String(student?.name || "").trim() && !absent.has(student.id));
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "duel-roster-class";
-      button.innerHTML = `<strong>${classroom.name || "CLASS"}</strong><span>${present.length} present students</span>`;
-      button.addEventListener("click", () => importDuelRoster(classroom, present));
-      els.duelRosterClassList.appendChild(button);
-    });
+    const teacher = window.TeacherControl;
+    const classroomId = teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : "";
+    const classroom = (teacher?.getClassrooms?.() || []).find((item) => item.id === classroomId);
+    if (!classroom) { ToastManager.show("LOCK A CLASSROOM FROM THE TEACHER HUD ROSTER FIRST", "warn", 3000); return; }
+    const absent = classroom.attendanceDate === rosterTodayKey() ? new Set(classroom.absentStudentIds || []) : new Set();
+    const present = (classroom.roster || []).filter((student) => String(student?.name || "").trim() && !absent.has(student.id));
+    importDuelRoster(classroom, present);
   }
 
   function importDuelRoster(classroom, present) {
-    if (!present.length) { els.duelRosterMessage.textContent = "There are no present students in this class today."; return; }
+    if (!present.length) { ToastManager.show("THERE ARE NO PRESENT STUDENTS IN THIS CLASS TODAY", "warn", 3000); return; }
     const sorted = present.slice().sort((a, b) => rosterScore(b) - rosterScore(a) || String(a.name).localeCompare(String(b.name), "tr", { sensitivity: "base" }));
     const order = [0, 1, 1, 0];
     duelTeams = [[], []];
@@ -1708,9 +1700,21 @@
     els.trainingReplayMessage.textContent = "";
     els.trainingReplayYesButton.textContent = duelReady ? `YES, PLAY ROUND ${duelRoundNumber + 1}` : "YES, PLAY AGAIN";
     els.trainingReplayPrompt.classList.remove("hidden");
+    els.trainingReplayYesButton.disabled = true;
+    els.trainingReplayFinishButton.disabled = true;
+    if (trainingReplayUnlockTimer !== null) clearTimeout(trainingReplayUnlockTimer);
+    trainingReplayUnlockTimer = setTimeout(() => {
+      els.trainingReplayYesButton.disabled = false;
+      els.trainingReplayFinishButton.disabled = false;
+      trainingReplayUnlockTimer = null;
+    }, 3000);
   }
 
   function startTrainingReplay(restartFromIntro = true) {
+    if (trainingReplayUnlockTimer !== null) {
+      clearTimeout(trainingReplayUnlockTimer);
+      trainingReplayUnlockTimer = null;
+    }
     if (duelReady && hasFullDuelRound()) {
       duelRoundPending = duelTeams.map((team) => new Set(team.map((_, index) => index)));
       duelRoundNumber++;

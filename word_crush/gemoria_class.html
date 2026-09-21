@@ -835,6 +835,7 @@
           <div class="ss-count" id="ss-count">0 seçildi</div>
           <button id="ss-rename-btn" class="ss-rename-btn" style="visibility:hidden;pointer-events:none" onclick="openRenameOverlay()">✎ RENAME</button>
           <button class="pair-with-btn" id="pair-with-btn" onclick="onPairWithBtn()" disabled>⚭ PAIR WITH</button>
+          <button class="gs-open-btn" type="button" onclick="importGemoriaRoster()">👥 ROSTERDEN AKTAR</button>
           <button id="gs-open-overlay-btn" class="gs-open-btn" onclick="openGuestOverlay()">✦ MİSAFİR EKLE</button>
           <button class="ss-continue-btn" id="ss-continue-btn" disabled onclick="goToHub()">DEVAM →</button>
         </div>
@@ -973,6 +974,9 @@
   <script src="core/audio.js?v=fade-to-black-1"></script>
   <script src="core/game-state.js?v=custom-endless-1"></script>
   <script src="ui/toast.js?v=campaign-select-1"></script>
+  <script>window.__forceTeacherControl = true;</script>
+  <script src="../func_presenter/teacher-cloud.js"></script>
+  <script src="../func_presenter/teacher-control.js"></script>
   <script src="ui/screens.js?v=custom-endless-1"></script>
   <script src="ui/game-board.js?v=fade-to-black-1"></script>
   <script src="core/profile.js?v=custom-endless-1"></script>
@@ -1018,6 +1022,7 @@
   // ── Student select state (birebir word_hunt) ───────────────
   const _teacherMode = false;
   let selectedClass     = null;
+  let importedRosterStudents = [];
   let selectedPlayers   = [];
   let pairs             = [];   // stores [studentObj, studentObj]
   let _pairingMode      = false;
@@ -1168,6 +1173,7 @@
   // ── Student select entry & hub routing ────────────────────
   function openStudentSelect(){
     selectedClass = null;
+    importedRosterStudents = [];
     _spGrades = _loadSpGrades();
     buildStudentPool();
     _buildGradeButtons();
@@ -1186,7 +1192,18 @@
     _pairingMode = false; _pairingSource = null;
     _lastSelected = null; _lastSelectedObj = null; _guestSlotCounter = 100;
     const pool = document.getElementById('ss-class-pool'); pool.innerHTML = '';
-    if(_teacherMode && selectedClass){
+    if(importedRosterStudents.length){
+      importedRosterStudents.forEach((student, index) => {
+        const s = {...student, name: String(student.name || '').trim(), slot: index + 1};
+        const chip = document.createElement('button');
+        chip.className = 'ss-chip';
+        chip.textContent = s.name;
+        chip.dataset.name = s.name;
+        chip.dataset.slot = s.slot;
+        chip.onclick = () => togglePlayer(s, chip);
+        pool.appendChild(chip);
+      });
+    } else if(_teacherMode && selectedClass){
       selectedClass.students.forEach(s => {
         const chip = document.createElement('button');
         chip.className = 'ss-chip';
@@ -1275,10 +1292,32 @@
     const rnBtn = document.getElementById('ss-rename-btn');
     if(rnBtn){
       const inPair = _lastSelectedObj && pairs.some(([a,b]) => a === _lastSelectedObj || b === _lastSelectedObj);
-      const canRename = !_teacherMode && _lastSelectedObj && !inPair;
+      const canRename = !_teacherMode && !importedRosterStudents.length && _lastSelectedObj && !inPair;
       rnBtn.style.visibility = canRename ? 'visible' : 'hidden';
       rnBtn.style.pointerEvents = canRename ? '' : 'none';
     }
+  }
+
+  function gemoriaRosterTodayKey(){
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  }
+
+  function importGemoriaRoster(){
+    const teacher = window.TeacherControl;
+    const classroomId = teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '';
+    const classroom = (teacher?.getClassrooms?.() || []).find((item) => item.id === classroomId);
+    if(!classroom){ showToast('Önce Teacher HUD rosterında bir sınıfı kilitleyin.', 'warn', 4000); return; }
+    const absentIds = classroom.attendanceDate === gemoriaRosterTodayKey()
+      ? new Set(classroom.absentStudentIds || [])
+      : new Set();
+    const students = (classroom.roster || [])
+      .filter((student) => String(student?.name || '').trim() && !absentIds.has(student.id))
+      .map((student) => ({...student, name: String(student.name).trim()}));
+    if(!students.length){ showToast('Kilitli sınıfta bugün mevcut öğrenci yok.', 'warn', 4000); return; }
+    importedRosterStudents = students;
+    buildStudentPool();
+    showToast(`${classroom.name || 'Sınıf'}: ${students.length} öğrenci rosterden aktarıldı.`, null, 3000);
   }
 
   function _updatePairWithBtn(){

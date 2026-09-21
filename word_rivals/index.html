@@ -80,6 +80,7 @@ body.lite .team-hdr,body.lite .word-box,body.lite .center-brand,body.lite #joker
 body.lite .vs-svg{filter:none}
 body.lite .dmg-star-svg{filter:none}
 body.lite .hp-heart{animation:none}
+body.lite #duel-timer.dt-shake{animation:none!important;transform:none!important}
 #fs-btn:hover{color:var(--gold);background:rgba(255,140,0,.18);border-color:var(--gold)}
 #fs-btn:active{transform:scale(.88)}
 /* Oyun başlayınca SCORES+FS soru kutusunun biraz üstüne, ortaya */
@@ -172,10 +173,13 @@ body.tb-mode .team-joker-row{display:flex}
 #panel-center{width:170px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;padding:10px 8px}
 
 /* ── TEAM HEADER ── */
-.team-hdr{flex-shrink:0;background:rgba(0,0,0,.72);border-radius:10px;padding:8px 10px;backdrop-filter:blur(6px)}
+.team-hdr{position:relative;flex-shrink:0;background:rgba(0,0,0,.72);border-radius:10px;padding:8px 10px;backdrop-filter:blur(6px)}
 #panel-a .team-hdr{padding-right:102px;border:1.5px solid rgba(74,138,244,.4)}
 #panel-b .team-hdr{padding-left:102px;border:1.5px solid rgba(255,85,119,.4)}
 .th-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.team-hud-avatar{position:absolute;top:14px;width:80px;height:80px;border:2px solid rgba(255,216,77,.7);border-radius:14px;object-fit:cover;background:#09132c;display:none;z-index:3;box-shadow:0 0 16px rgba(255,216,77,.28)}
+#panel-a .team-hud-avatar{right:10px}
+#panel-b .team-hud-avatar{left:10px}
 .team-name-lbl{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.2vw,30px);letter-spacing:.1em;color:#FFE600;font-weight:800}
 #tname-a{color:var(--a);text-shadow:0 0 20px rgba(74,138,244,.55)}
 #tname-b{color:var(--b);text-shadow:0 0 20px rgba(255,85,119,.55)}
@@ -603,7 +607,7 @@ body.tb-mode .team-joker-row{display:flex}
 .dso-fighter{display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,2.4vw,26px);font-weight:700;letter-spacing:.1em;padding:11px 18px;border-radius:12px}
 .dso-fighter-a{background:rgba(74,138,244,.12);border:1.5px solid rgba(74,138,244,.35);color:#4A8AF4;justify-content:flex-start}
 .dso-fighter-b{background:rgba(255,85,119,.12);border:1.5px solid rgba(255,85,119,.35);color:#ff5577;justify-content:flex-start}
-.dso-fighter-emoji{font-size:1.3em;flex-shrink:0}
+.dso-hud-avatar{width:34px;height:34px;flex:0 0 34px;border:1px solid rgba(255,216,77,.55);border-radius:9px;object-fit:cover;background:#09132c;display:none}
 .dso-fighter-name{flex:1;text-align:left}
 .dso-fighter-dir{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);flex-shrink:0;white-space:nowrap}
 .dso-fight-btn{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3.5vw,40px);letter-spacing:.16em;background:linear-gradient(135deg,#CC5500,var(--gold));border:none;border-radius:14px;color:#fff;padding:14px 60px;cursor:pointer;box-shadow:0 4px 28px rgba(204,85,0,.5);transition:transform .12s,box-shadow .15s;margin-top:4px}
@@ -858,10 +862,11 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
         <span class="rb-tag" id="rb-tag-a"></span>
         <div class="hp-number" id="hp-val-a">100 <span class="hp-heart">❤</span></div>
       </div>
+      <img class="team-hud-avatar" id="team-hud-avatar-a" src="" alt="">
       <div class="hp-outer"><div class="hp-fill" id="hp-fill-a"></div></div>
       <div class="team-joker-row" id="joker-row-a">🃏 <span class="tjr-count" id="joker-count-a">×0</span></div>
     </div>
-    <div class="player-row" id="pdisp-a">—</div>
+    <div class="player-row" id="pdisp-a"><span id="player-name-a">—</span></div>
     <div class="img-grid" id="grid-a">
       <div class="img-cell" id="cell-a-0" onclick="handleClick('a',0)"><img id="img-a-0" src="" alt="game image" decoding="async"><div class="wrong-cooldown-badge" id="badge-a-0">✕</div></div>
       <div class="img-cell" id="cell-a-1" onclick="handleClick('a',1)"><img id="img-a-1" src="" alt="game image" decoding="async"><div class="wrong-cooldown-badge" id="badge-a-1">✕</div></div>
@@ -954,10 +959,11 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
         <span class="rb-tag" id="rb-tag-b"></span>
         <div class="hp-number" id="hp-val-b">100 <span class="hp-heart">❤</span></div>
       </div>
+      <img class="team-hud-avatar" id="team-hud-avatar-b" src="" alt="">
       <div class="hp-outer"><div class="hp-fill" id="hp-fill-b"></div></div>
       <div class="team-joker-row" id="joker-row-b">🃏 <span class="tjr-count" id="joker-count-b">×0</span></div>
     </div>
-    <div class="player-row" id="pdisp-b">—</div>
+    <div class="player-row" id="pdisp-b"><span id="player-name-b">—</span></div>
     <div class="img-grid" id="grid-b">
       <div class="img-cell" id="cell-b-0" onclick="handleClick('b',0)"><img id="img-b-0" src="" alt="game image" decoding="async"><div class="wrong-cooldown-badge" id="badge-b-0">✕</div></div>
       <div class="img-cell" id="cell-b-1" onclick="handleClick('b',1)"><img id="img-b-1" src="" alt="game image" decoding="async"><div class="wrong-cooldown-badge" id="badge-b-1">✕</div></div>
@@ -1277,12 +1283,12 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
     <div class="dso-divider"></div>
     <div class="dso-vs-row">
       <div class="dso-fighter dso-fighter-a">
-        <span class="dso-fighter-emoji">🥊</span>
+        <img class="dso-hud-avatar" id="dso-hud-avatar-a" src="" alt="">
         <span class="dso-fighter-name" id="dso-name-a">—</span>
         <span class="dso-fighter-dir">◀ TO THE LEFT</span>
       </div>
       <div class="dso-fighter dso-fighter-b">
-        <span class="dso-fighter-emoji">🥋</span>
+        <img class="dso-hud-avatar" id="dso-hud-avatar-b" src="" alt="">
         <span class="dso-fighter-name" id="dso-name-b">—</span>
         <span class="dso-fighter-dir">TO THE RIGHT ▶</span>
       </div>
@@ -1697,45 +1703,24 @@ function closeRvrRosterClassPicker() {
 }
 
 function openRvrRosterClassPicker() {
-  const overlay = document.getElementById('rvr-roster-class-overlay');
-  const list = document.getElementById('rvr-roster-class-list');
-  const message = document.getElementById('rvr-roster-class-message');
-  if (!overlay || !list || !message) return;
-
-  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
-  const usable = classrooms.filter((classroom) => Array.isArray(classroom.roster) && classroom.roster.length);
-  list.replaceChildren();
-  message.textContent = '';
-
-  if (!usable.length) {
-    message.textContent = 'Create a roster from the Teacher HUD first.';
-  } else {
-    usable.forEach((classroom) => {
-      const absentIds = classroom.attendanceDate === rvrRosterTodayKey()
-        ? new Set(classroom.absentStudentIds || [])
-        : new Set();
-      const presentCount = classroom.roster.filter((student) => !absentIds.has(student.id)).length;
-      const button = document.createElement('button');
-      const name = document.createElement('span');
-      const meta = document.createElement('span');
-      button.type = 'button';
-      button.className = 'rvr-roster-class-btn';
-      name.textContent = classroom.name || 'MY CLASS';
-      meta.className = 'rvr-roster-class-meta';
-      meta.textContent = `${presentCount} present`;
-      button.append(name, meta);
-      button.addEventListener('click', () => importRvrRosterClass(classroom.id));
-      list.append(button);
-    });
+  const teacher = window.TeacherControl;
+  const classroomId = teacher?.isActiveClassroomLocked?.()
+    ? teacher.getActiveClassroomId?.()
+    : '';
+  if (!classroomId) {
+    alert('Lock a classroom from the Teacher HUD roster first.');
+    return;
   }
-  overlay.classList.remove('hidden');
+  importRvrRosterClass(classroomId);
 }
 
 function importRvrRosterClass(classroomId) {
   const classrooms = window.TeacherControl?.getClassrooms?.() || [];
   const classroom = classrooms.find((item) => item.id === classroomId);
-  const message = document.getElementById('rvr-roster-class-message');
-  if (!classroom || !Array.isArray(classroom.roster)) return;
+  if (!classroom || !Array.isArray(classroom.roster)) {
+    alert('The locked Teacher HUD classroom could not be found.');
+    return;
+  }
 
   const absentIds = classroom.attendanceDate === rvrRosterTodayKey()
     ? new Set(classroom.absentStudentIds || [])
@@ -1746,15 +1731,15 @@ function importRvrRosterClass(classroomId) {
       || a.name.localeCompare(b.name, 'tr'));
 
   if (students.length < 2) {
-    if (message) message.textContent = 'At least two present students are needed.';
+    alert('At least two present students are needed.');
     return;
   }
   if (students.length > STD_SLOTS * 2) {
-    if (message) message.textContent = `This game supports up to ${STD_SLOTS * 2} students.`;
+    alert(`This game supports up to ${STD_SLOTS * 2} students.`);
     return;
   }
   if (students.length % 2) {
-    if (message) message.textContent = 'Mark attendance so both teams can have the same number of students.';
+    alert('Mark attendance so both teams can have the same number of students.');
     return;
   }
 
@@ -1940,6 +1925,18 @@ function _updateHP() {
   });
 }
 
+function _setRvrPlayerDisplay(gi, name) {
+  const side = gi === 0 ? 'a' : 'b';
+  const nameEl = document.getElementById('player-name-' + side);
+  const avatar = document.getElementById('team-hud-avatar-' + side);
+  if (nameEl) nameEl.textContent = name || '—';
+  if (!avatar) return;
+  const src = _getRvrHudAvatarSrc(name);
+  avatar.style.display = src ? 'block' : 'none';
+  avatar.src = src;
+  avatar.alt = src ? `${name} avatar` : '';
+}
+
 function _updatePlayerDisplays() {
   if (_gameMode === 'turnbased' && _tbTurnOrder.length) {
     const turn = _tbTurnOrder[_tbTurnIdx] || _tbTurnOrder[_tbTurnOrder.length - 1];
@@ -1950,11 +1947,11 @@ function _updatePlayerDisplays() {
       if (!el) return;
       if (gi === turn.gi) {
         // Aktif oyuncu
-        el.textContent = groupStudents[gi][turn.si] || '—';
+        _setRvrPlayerDisplay(gi, groupStudents[gi][turn.si] || '—');
       } else {
         // Bekleyen takım — bir sonraki oyuncusunu göster
         const next = _tbTurnOrder.find((t, i) => i >= _tbTurnIdx && t.gi === gi);
-        el.textContent = next ? (groupStudents[gi][next.si] || '—') : '—';
+        _setRvrPlayerDisplay(gi, next ? (groupStudents[gi][next.si] || '—') : '—');
       }
     });
   } else {
@@ -1962,7 +1959,7 @@ function _updatePlayerDisplays() {
       const id = gi === 0 ? 'pdisp-a' : 'pdisp-b';
       const el = document.getElementById(id);
       if (!el) return;
-      el.textContent = groupStudents[gi][currentSlotIdx[gi]] || '—';
+      _setRvrPlayerDisplay(gi, groupStudents[gi][currentSlotIdx[gi]] || '—');
     });
   }
 }
@@ -3375,11 +3372,31 @@ function _nextBackground() {
 }
 
 // ── DUEL START MODAL ─────────────────────────────────────
+function _getRvrHudAvatarSrc(name) {
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const classroom = classrooms.find(item => item.id === importedRosterClassroomId);
+  const student = classroom?.roster?.find(item =>
+    String(item.name || '').trim().toLocaleLowerCase('tr-TR') === String(name || '').trim().toLocaleLowerCase('tr-TR')
+  );
+  const path = String(student?.avatarPath || '').trim();
+  if (!path) return '';
+  if (/^(?:https?:)?\/\//i.test(path) || path.startsWith('/')) return path;
+  return new URL('../func_presenter/' + path.replace(/^\/+/, ''), document.baseURI).href;
+}
+
 function _showDuelStartModal(duelNum, nameA, nameB, customTitle) {
   _nextBackground();  // her duel başında sıradaki background
   document.getElementById('dso-title').textContent  = customTitle || `⚔ DUEL ${duelNum} STARTS! ⚔`;
   document.getElementById('dso-name-a').textContent = nameA;
   document.getElementById('dso-name-b').textContent = nameB;
+  [['a', nameA], ['b', nameB]].forEach(([side, name]) => {
+    const avatar = document.getElementById('dso-hud-avatar-' + side);
+    if (!avatar) return;
+    const src = _getRvrHudAvatarSrc(name);
+    avatar.style.display = src ? 'block' : 'none';
+    avatar.src = src;
+    avatar.alt = src ? `${name} avatar` : '';
+  });
 
   // Avatar görüntülerini yükle ve sıfırla
   [[0, 'dso-av-wrap-a', 'dso-avatar-left'], [1, 'dso-av-wrap-b', 'dso-avatar-right']]

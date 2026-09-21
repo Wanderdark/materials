@@ -5,6 +5,7 @@
   const SESSION_KEY = "fpTeacherSupabaseSessionV1";
   const CLASSROOM_KEY = "fpTeacherSupabaseClassroomIdV1";
   const POINTS_DIRTY_KEY = "fpTeacherSupabasePointsDirtyV1";
+  const EXPLICIT_CHANGE_KEY = "fpTeacherSupabaseExplicitChangeV1";
   const PROFILE_TABLE = "teacher_profiles";
   const POINT_SYNC_DELAY = 120000;
   const PASSWORD_RESET_FLAG = "password-reset";
@@ -218,8 +219,27 @@
     syncing = true;
     try {
       const userId = session.user.id;
-      const classrooms = localClassrooms(state);
+      const allClassrooms = localClassrooms(state);
+      const activeClassroomId = state?.activeClassroomId || allClassrooms[0]?.id || "";
+      const classrooms = allClassrooms.filter((classroom) => classroom.id === activeClassroomId);
       if (!classrooms.length) return false;
+      const activeClassroom = classrooms[0];
+      const cloudStudents = await rest(`classroom_students?select=id,name,points,stars,avatar_id,sort_order&classroom_id=eq.${encodeURIComponent(activeClassroom.id)}&order=sort_order.asc`);
+      const localTotal = (activeClassroom.roster || []).reduce((sum, student) => sum + (Number(student.points) || 0), 0);
+      const cloudTotal = (Array.isArray(cloudStudents) ? cloudStudents : []).reduce((sum, student) => sum + (Number(student.points) || 0), 0);
+      const explicitChange = read(EXPLICIT_CHANGE_KEY);
+      if (cloudStudents.length && cloudTotal > localTotal && !explicitChange) {
+        const cloudClassroom = {
+          ...activeClassroom,
+          roster: cloudStudents.map(localStudent)
+        };
+        hooks?.applyState?.({
+          classrooms: allClassrooms.map((classroom) => classroom.id === activeClassroom.id ? cloudClassroom : classroom),
+          activeClassroomId
+        });
+        clear(POINTS_DIRTY_KEY);
+        return true;
+      }
       const classroomRows = classrooms.map((classroom) => ({ id: classroom.id, owner_id: userId, name: classroom.name || "My Classroom" }));
       await rest("classrooms?on_conflict=id", {
         method: "POST",
@@ -236,15 +256,10 @@
         });
       }
 
-      const currentStudentIds = new Set(studentRows.map((student) => student.id));
-      await Promise.all([...knownStudentIds].filter((id) => !currentStudentIds.has(id)).map((id) => rest(`classroom_students?id=eq.${encodeURIComponent(id)}`, { method: "DELETE" })));
-      knownStudentIds = currentStudentIds;
-
-      const currentClassroomIds = new Set(classrooms.map((classroom) => classroom.id));
-      await Promise.all([...knownClassroomIds].filter((id) => !currentClassroomIds.has(id)).map((id) => rest(`classrooms?id=eq.${encodeURIComponent(id)}`, { method: "DELETE" })));
-      knownClassroomIds = currentClassroomIds;
-      const activeId = state?.activeClassroomId || classrooms[0].id;
-      localStorage.setItem(CLASSROOM_KEY, activeId);
+      knownStudentIds = new Set([...knownStudentIds, ...studentRows.map((student) => student.id)]);
+      knownClassroomIds.add(classrooms[0].id);
+      localStorage.setItem(CLASSROOM_KEY, classrooms[0].id);
+      clear(EXPLICIT_CHANGE_KEY);
       clear(POINTS_DIRTY_KEY);
       return true;
     } finally {

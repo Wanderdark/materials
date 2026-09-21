@@ -863,6 +863,7 @@ body.lite .kb-key{animation:none!important}
       <div class="ss-count" id="ss-count">0 seçildi</div>
       <button id="ss-rename-btn" class="ss-rename-btn hidden" onclick="openRenameOverlay()">✎ RENAME</button>
       <button class="pair-with-btn" id="pair-with-btn" onclick="onPairWithBtn()" disabled>⚭ PAIR WITH</button>
+      <button class="gs-open-btn" type="button" onclick="importWordHuntRoster()">👥 ROSTERDEN AKTAR</button>
       <button id="gs-open-overlay-btn" class="gs-open-btn" onclick="openGuestOverlay()">✦ MİSAFİR EKLE</button>
       <button class="ss-continue-btn" id="ss-continue-btn" disabled onclick="openSeatAssign()">KOLTUK ATAMASINA GEÇ →</button>
     </div>
@@ -1161,6 +1162,9 @@ body.lite .kb-key{animation:none!important}
 <script src="names.js" onerror="void 0"></script>
 <script src="rgbkeyboard.js"></script>
 <script src="word_categories.js"></script>
+<script>window.__forceTeacherControl = true;</script>
+<script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/teacher-control.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════
 //  WORD HUNT — Game Logic
@@ -1348,6 +1352,7 @@ const BONUS_CATEGORIES = [
 
 // ── GAME STATE ───────────────────────────────────────────
 let selectedClass  = null;
+let importedRosterStudents = [];
 let selectedPlayers = [];    // [{name,level}]
 let pairs = [];              // [[studentObj, studentObj], ...] — çiftler
 let _pairingMode      = false;  // pair seçimi aktif mi
@@ -1665,6 +1670,7 @@ function openSettings(){
 
 function selectClass(cls){
   selectedClass=cls;
+  importedRosterStudents=[];
   const sub=document.getElementById('ss-sub');
   if(sub) sub.innerHTML=`Öğrencilere tıkla — min 3, her sıraya en az 1 · Sınıf: <strong style="color:var(--gold)">${cls.label}</strong>`;
   buildStudentPool();
@@ -1675,6 +1681,7 @@ function selectClass(cls){
 function openWebStudentSelect(){
   playMenuMusic();
   selectedClass=null;
+  importedRosterStudents=[];
   const sub=document.getElementById('ss-sub');
   if(sub) sub.innerHTML='Oynamasını istediğiniz sayıda öğrenciyi aktifleştirin · Seçtikten sonra <span style="color:var(--gold)">RENAME</span> ile isim yazabilirsiniz';
   buildStudentPool();
@@ -1687,7 +1694,18 @@ function buildStudentPool(){
   _pairingMode=false; _pairingSource=null;
   _lastSelected=null; _lastSelectedObj=null; _guestSlotCounter=100;
   const pool=document.getElementById('ss-class-pool'); pool.innerHTML='';
-  if(_teacherMode && selectedClass){
+  if(importedRosterStudents.length){
+    importedRosterStudents.forEach((student,index)=>{
+      const s={...student,name:String(student.name||'').trim(),slot:index+1};
+      const chip=document.createElement('button');
+      chip.className='ss-chip';
+      chip.textContent=s.name;
+      chip.dataset.name=s.name;
+      chip.dataset.slot=s.slot;
+      chip.onclick=()=>togglePlayer(s,chip);
+      pool.appendChild(chip);
+    });
+  } else if(_teacherMode && selectedClass){
     selectedClass.students.forEach(s=>{
       const chip=document.createElement('button');
       chip.className='ss-chip';
@@ -1783,9 +1801,31 @@ function updateSSCount(){
   const rnBtn=document.getElementById('ss-rename-btn');
   if(rnBtn){
     const inPair=_lastSelectedObj&&pairs.some(([a,b])=>a===_lastSelectedObj||b===_lastSelectedObj);
-    const canRename=!_teacherMode&&_lastSelectedObj&&!inPair;
+    const canRename=!_teacherMode&&!importedRosterStudents.length&&_lastSelectedObj&&!inPair;
     rnBtn.classList.toggle('hidden',!canRename);
   }
+}
+
+function wordHuntRosterTodayKey(){
+  const now=new Date();
+  return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+}
+
+function importWordHuntRoster(){
+  const teacher=window.TeacherControl;
+  const classroomId=teacher?.isActiveClassroomLocked?.()?teacher.getActiveClassroomId?.():'';
+  const classroom=(teacher?.getClassrooms?.()||[]).find(item=>item.id===classroomId);
+  if(!classroom){ alert('Önce Teacher HUD rosterında bir sınıfı kilitleyin.'); return; }
+  const absentIds=classroom.attendanceDate===wordHuntRosterTodayKey()
+    ?new Set(classroom.absentStudentIds||[])
+    :new Set();
+  const students=(classroom.roster||[])
+    .filter(student=>String(student?.name||'').trim()&&!absentIds.has(student.id))
+    .map(student=>({...student,name:String(student.name).trim()}));
+  if(!students.length){ alert('Kilitli sınıfta bugün mevcut öğrenci yok.'); return; }
+  importedRosterStudents=students;
+  selectedClass=null;
+  buildStudentPool();
 }
 
 // ── PAIR WITH ─────────────────────────────────────────────

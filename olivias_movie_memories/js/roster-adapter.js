@@ -14,6 +14,12 @@ function getClassrooms() {
   return window.TeacherControl?.getClassrooms?.() || [];
 }
 
+function getLockedClassroom() {
+  if (!window.TeacherControl?.isActiveClassroomLocked?.()) return null;
+  const activeClassroomId = window.TeacherControl?.getActiveClassroomId?.();
+  return getClassrooms().find((classroom) => classroom.id === activeClassroomId) || null;
+}
+
 function setActiveClassroom(classroomId) {
   return window.TeacherControl?.setActiveClassroom?.(classroomId) || false;
 }
@@ -64,5 +70,5 @@ function transferRosterPoints(groups, classroomId, ratio) {
   return window.TeacherControl?.awardFinalPoints?.(awards, classroomId) || { awarded: [], missing: [] };
 }
 
-Object.assign(window.LeagueListening, { distributeBalanced, getClassrooms, getPresentStudents, setActiveClassroom, getRosterPointAwards, transferRosterPoints });
+Object.assign(window.LeagueListening, { distributeBalanced, getClassrooms, getLockedClassroom, getPresentStudents, setActiveClassroom, getRosterPointAwards, transferRosterPoints });
 })();
