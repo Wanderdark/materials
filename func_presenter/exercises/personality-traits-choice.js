@@ -27,22 +27,22 @@ const personalityTraitChoiceItems = [
 ];
 
 const personalityTraitChoiceCharacters = [
-  { name: "Ava", gender: "girl", imagePath: "images/common/students/13/ava.webp", traits: ["polite", "thoughtful", "responsible"] },
-  { name: "Benjamin", gender: "boy", imagePath: "images/common/students/13/benjamin.webp", traits: ["easy-going", "laid-back", "friendly", "funny"] },
-  { name: "Chloe", gender: "girl", imagePath: "images/common/students/13/chloe.webp", traits: ["sensitive", "polite"] },
-  { name: "Daniel", gender: "boy", imagePath: "images/common/students/13/daniel.webp", traits: ["clumsy", "energetic", "confident"] },
-  { name: "David", gender: "boy", imagePath: "images/common/students/13/david.webp", traits: ["honest", "thoughtful", "responsible", "reliable"] },
-  { name: "Ella", gender: "girl", imagePath: "images/common/students/13/ella.webp", traits: ["cheerful", "outgoing", "sociable", "forgetful"] },
-  { name: "Emma", gender: "girl", imagePath: "images/common/students/13/emma.webp", traits: ["friendly", "helpful", "generous", "reliable"] },
-  { name: "Ethan", gender: "boy", imagePath: "images/common/students/13/ethan.webp", traits: ["determined", "punctual"] },
-  { name: "Hannah", gender: "girl", imagePath: "images/common/students/13/hannah.webp", traits: ["adventurous", "energetic", "cheerful"] },
-  { name: "Jack", gender: "boy", imagePath: "images/common/students/13/jack.webp", traits: ["selfish", "stubborn", "patient"] },
-  { name: "Lucas", gender: "boy", imagePath: "images/common/students/13/lucas.webp", traits: ["determined", "energetic"] },
-  { name: "Mia", gender: "girl", imagePath: "images/common/students/13/mia.webp", traits: ["shy", "thoughtful"] },
-  { name: "Noah", gender: "boy", imagePath: "images/common/students/13/noah.webp", traits: ["intelligent", "hardworking"] },
-  { name: "Olivia", gender: "girl", imagePath: "images/common/students/13/olivia.webp", traits: ["funny", "creative"] },
-  { name: "Victoria", gender: "girl", imagePath: "images/common/students/13/victoria.webp", traits: ["intelligent", "stingy"] },
-  { name: "Zoe", gender: "girl", imagePath: "images/common/students/13/zoe.webp", traits: ["shy", "thoughtful", "patient"] }
+  { name: "Ava", gender: "girl", imagePath: "images/common/students/ava.webp", traits: ["polite", "thoughtful", "responsible"] },
+  { name: "Benjamin", gender: "boy", imagePath: "images/common/students/benjamin.webp", traits: ["easy-going", "laid-back", "friendly", "funny"] },
+  { name: "Chloe", gender: "girl", imagePath: "images/common/students/chloe.webp", traits: ["sensitive", "polite"] },
+  { name: "Daniel", gender: "boy", imagePath: "images/common/students/daniel.webp", traits: ["clumsy", "energetic", "confident"] },
+  { name: "David", gender: "boy", imagePath: "images/common/students/david.webp", traits: ["honest", "thoughtful", "responsible", "reliable"] },
+  { name: "Ella", gender: "girl", imagePath: "images/common/students/ella.webp", traits: ["cheerful", "outgoing", "sociable", "forgetful"] },
+  { name: "Emma", gender: "girl", imagePath: "images/common/students/emma.webp", traits: ["friendly", "helpful", "generous", "reliable"] },
+  { name: "Ethan", gender: "boy", imagePath: "images/common/students/ethan.webp", traits: ["determined", "punctual"] },
+  { name: "Hannah", gender: "girl", imagePath: "images/common/students/hannah.webp", traits: ["adventurous", "energetic", "cheerful"] },
+  { name: "Jack", gender: "boy", imagePath: "images/common/students/jack.webp", traits: ["selfish", "stubborn", "patient"] },
+  { name: "Lucas", gender: "boy", imagePath: "images/common/students/lucas.webp", traits: ["determined", "energetic"] },
+  { name: "Mia", gender: "girl", imagePath: "images/common/students/mia.webp", traits: ["shy", "thoughtful"] },
+  { name: "Noah", gender: "boy", imagePath: "images/common/students/noah.webp", traits: ["intelligent", "hardworking"] },
+  { name: "Olivia", gender: "girl", imagePath: "images/common/students/olivia.webp", traits: ["funny", "creative"] },
+  { name: "Victoria", gender: "girl", imagePath: "images/common/students/victoria.webp", traits: ["intelligent", "stingy"] },
+  { name: "Zoe", gender: "girl", imagePath: "images/common/students/zoe.webp", traits: ["shy", "thoughtful", "patient"] }
 ];
 
 const personalityTraitChoiceBlacklist = {

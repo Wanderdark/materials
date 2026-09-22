@@ -30,23 +30,34 @@ function renderPersonalityWordReveal(example) {
     word.className = "personality-word-reveal-word";
     word.classList.toggle("is-long", item.word.length >= 10);
     word.textContent = item.word;
+    const definitionWrap = document.createElement("div");
+    definitionWrap.className = "personality-word-reveal-definition-wrap hidden";
     const definition = document.createElement("p");
-    definition.className = "personality-word-reveal-definition hidden";
+    definition.className = "personality-word-reveal-definition";
     definition.textContent = item.definition;
+    const nextItem = data.words?.[index + 1];
+    const nextButton = document.createElement("button");
+    nextButton.type = "button";
+    nextButton.className = "personality-word-reveal-next";
+    nextButton.textContent = ">";
+    nextButton.setAttribute("aria-label", "Show next word");
+    nextButton.classList.toggle("hidden", !nextItem);
+    nextButton.addEventListener("click", () => {
+      if (!nextItem) return;
+      rows[index + 1]?.classList.remove("hidden");
+      els.image.src = nextItem.imagePath;
+      els.image.alt = nextItem.word;
+      nextButton.disabled = true;
+    });
+    definitionWrap.append(definition, nextButton);
     word.addEventListener("click", () => {
       if (row.classList.contains("revealed")) return;
       row.classList.add("revealed");
       word.disabled = true;
       new Audio("sounds/correct.mp3").play().catch(() => {});
-      definition.classList.remove("hidden");
-      const nextItem = data.words?.[index + 1];
-      if (rows[index + 1]) rows[index + 1].classList.remove("hidden");
-      if (nextItem) {
-        els.image.src = nextItem.imagePath;
-        els.image.alt = nextItem.word;
-      }
+      definitionWrap.classList.remove("hidden");
     });
-    row.append(word, definition);
+    row.append(word, definitionWrap);
     rows.push(row);
     list.append(row);
   });

@@ -195,6 +195,21 @@
     .tc-hud .tc-account.is-connected { border-color: #61e7b6; color: #d9fff0; box-shadow: 0 0 12px rgba(97, 231, 182, .32); }
     .tc-hud .tc-sync { color: #b9d9ff; }
     .tc-hud .tc-sync:disabled { opacity: .38; cursor: default; }
+    .tc-hud .tc-timer { display: flex; align-items: center; gap: 2px; }
+    .tc-hud .tc-timer-display { width: 44px; padding: 0 3px; font-family: var(--font-display, sans-serif); font-size: 13px; font-weight: 900; letter-spacing: .02em; }
+    .tc-hud .tc-timer-display.is-alarming { border-color: #ff7066; background: #7a1d2d; color: #fff2ee; animation: tcTimerAlarmPulse .8s ease-in-out infinite; }
+    .tc-hud .tc-timer-play { width: 20px; height: 24px; padding: 0; border-radius: 7px; font-size: 11px; }
+    .tc-hud .tc-timer-play:disabled { opacity: .38; cursor: default; transform: none; }
+    .tc-timer-preset-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .tc-timer-preset { min-height: 48px; border: 1px solid #36549d; border-radius: 12px; background: #14295a; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 16px; font-weight: 900; letter-spacing: .05em; cursor: pointer; }
+    .tc-timer-preset:hover { border-color: #ffd84d; background: #25376d; color: #ffd84d; }
+    .tc-timer-live-display { margin: 6px 0 18px; color: #ffd84d; font-family: var(--font-display, sans-serif); font-size: clamp(76px, 16vw, 150px); font-weight: 900; letter-spacing: .04em; line-height: .9; text-align: center; text-shadow: 0 0 28px rgba(255, 216, 77, .38); }
+    .tc-timer-live-display.is-alarming { color: #ff9d91; text-shadow: 0 0 30px rgba(255, 112, 102, .64); animation: tcTimerAlarmPulse .8s ease-in-out infinite; }
+    .tc-timer-live-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .tc-timer-live-actions button { min-height: 50px; }
+    .tc-timer-time-up { margin: 18px 0 24px; color: #ff665b; font-family: var(--font-display, sans-serif); font-size: clamp(58px, 14vw, 122px); font-weight: 900; letter-spacing: .06em; line-height: .88; text-align: center; text-shadow: 0 0 28px rgba(255, 82, 72, .72); animation: tcTimeUpFlash .7s steps(2, end) infinite; }
+    @keyframes tcTimeUpFlash { 50% { opacity: .24; transform: scale(.97); } }
+    @keyframes tcTimerAlarmPulse { 0%, 100% { box-shadow: 0 0 0 rgba(255, 112, 102, 0); } 50% { box-shadow: 0 0 14px rgba(255, 112, 102, .85); } }
     .tc-action { padding: 12px 17px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 15px; font-weight: 800; letter-spacing: .06em; cursor: pointer; }
     .tc-action.primary { border: 0; background: var(--u2-grad-gold, #ffd84d); color: #14183a; }
     .tc-action.danger { border-color: rgba(255, 128, 102, .64); color: #ffab9b; }
@@ -398,6 +413,157 @@
   let whistleProgressTimer = 0;
   let whistlePenaltyShown = false;
   let syncShortcutCooldownUntil = 0;
+  const HUD_TIMER_DEFAULT_SECONDS = 120;
+  let hudTimerDefaultSeconds = HUD_TIMER_DEFAULT_SECONDS;
+  let hudTimerRemainingSeconds = HUD_TIMER_DEFAULT_SECONDS;
+  let hudTimerDeadline = 0;
+  let hudTimerInterval = 0;
+  let hudTimerAlarmAudio = null;
+  let hudTimerAlarmActive = false;
+  let hudTimerPaused = false;
+  let hudTimerDisplayButton = null;
+  let hudTimerPlayButton = null;
+  let hudTimerLiveDisplay = null;
+  let hudTimerLivePauseButton = null;
+
+  function formatHudTimer(seconds) {
+    const safeSeconds = Math.max(0, Math.ceil(seconds));
+    return `${Math.floor(safeSeconds / 60)}:${String(safeSeconds % 60).padStart(2, "0")}`;
+  }
+
+  function updateHudTimer() {
+    if (!hudTimerDisplayButton || !hudTimerPlayButton) return;
+    hudTimerDisplayButton.textContent = formatHudTimer(hudTimerRemainingSeconds);
+    hudTimerDisplayButton.classList.toggle("is-alarming", hudTimerAlarmActive);
+    hudTimerDisplayButton.title = hudTimerAlarmActive ? "Stop alarm and reset timer" : "Choose timer duration";
+    hudTimerPlayButton.textContent = hudTimerInterval ? "■" : "▶";
+    hudTimerPlayButton.disabled = hudTimerAlarmActive;
+    hudTimerPlayButton.title = hudTimerInterval ? "Stop and reset timer" : hudTimerAlarmActive ? "Stop the alarm first" : hudTimerPaused ? "Resume timer" : "Start timer";
+    if (hudTimerLiveDisplay && !document.contains(hudTimerLiveDisplay)) {
+      hudTimerLiveDisplay = null;
+      hudTimerLivePauseButton = null;
+    }
+    if (hudTimerLiveDisplay) {
+      hudTimerLiveDisplay.textContent = formatHudTimer(hudTimerRemainingSeconds);
+      hudTimerLiveDisplay.classList.toggle("is-alarming", hudTimerAlarmActive);
+      hudTimerLivePauseButton.textContent = hudTimerAlarmActive ? "🔕 STOP ALARM" : hudTimerPaused ? "▶ RESUME" : "⏸ PAUSE";
+    }
+  }
+
+  function stopHudTimerCountdown(reset = false) {
+    clearInterval(hudTimerInterval);
+    hudTimerInterval = 0;
+    hudTimerDeadline = 0;
+    if (reset) {
+      hudTimerRemainingSeconds = hudTimerDefaultSeconds;
+      hudTimerPaused = false;
+    }
+    updateHudTimer();
+  }
+
+  function pauseHudTimer() {
+    if (!hudTimerInterval) return;
+    clearInterval(hudTimerInterval);
+    hudTimerInterval = 0;
+    hudTimerDeadline = 0;
+    hudTimerPaused = true;
+    updateHudTimer();
+  }
+
+  function stopHudTimerAlarm() {
+    hudTimerAlarmAudio?.pause();
+    if (hudTimerAlarmAudio) hudTimerAlarmAudio.currentTime = 0;
+    hudTimerAlarmActive = false;
+    hudTimerPaused = false;
+    hudTimerRemainingSeconds = hudTimerDefaultSeconds;
+    updateHudTimer();
+  }
+
+  function startHudTimerAlarm() {
+    hudTimerAlarmAudio?.pause();
+    hudTimerAlarmAudio = new Audio(new URL("../sounds/alarm.mp3", controlScriptUrl).href);
+    hudTimerAlarmAudio.loop = true;
+    hudTimerAlarmAudio.preload = "auto";
+    hudTimerAlarmActive = true;
+    openHudTimerAlarmOverlay();
+    hudTimerAlarmAudio.play().catch(() => {});
+    updateHudTimer();
+  }
+
+  function tickHudTimer() {
+    hudTimerRemainingSeconds = Math.max(0, Math.ceil((hudTimerDeadline - Date.now()) / 1000));
+    if (hudTimerRemainingSeconds > 0) { updateHudTimer(); return; }
+    stopHudTimerCountdown();
+    hudTimerPaused = false;
+    startHudTimerAlarm();
+  }
+
+  function startHudTimer() {
+    if (hudTimerInterval || hudTimerAlarmActive) return;
+    if (!hudTimerPaused) hudTimerRemainingSeconds = hudTimerDefaultSeconds;
+    hudTimerDeadline = Date.now() + hudTimerRemainingSeconds * 1000;
+    hudTimerPaused = false;
+    tickHudTimer();
+    hudTimerInterval = window.setInterval(tickHudTimer, 250);
+    updateHudTimer();
+  }
+
+  function openHudTimerPresets() {
+    if (hudTimerAlarmActive) { stopHudTimerAlarm(); return; }
+    if (hudTimerInterval || hudTimerPaused) { openHudTimerLiveOverlay(); return; }
+    stopHudTimerCountdown(true);
+    const card = makeOverlay("TIMER", "SET TIMER", "Choose the countdown duration.");
+    const grid = el("div", "tc-timer-preset-grid");
+    [[30, "30 SECONDS"], [60, "1 MIN"], [120, "2 MIN"], [180, "3 MIN"], [240, "4 MIN"], [300, "5 MIN"]].forEach(([seconds, label]) => {
+      const button = el("button", "tc-timer-preset", label);
+      button.type = "button";
+      button.addEventListener("click", () => {
+        hudTimerDefaultSeconds = seconds;
+        hudTimerRemainingSeconds = seconds;
+        closeOverlays();
+        updateHudTimer();
+      });
+      grid.append(button);
+    });
+    card.append(grid);
+  }
+
+  function openHudTimerLiveOverlay() {
+    const card = makeOverlay("TIMER", "COUNTDOWN", "The countdown continues while this panel is open.");
+    const minimize = card.querySelector(".tc-close");
+    minimize.textContent = "—";
+    minimize.title = "Minimize timer";
+    minimize.setAttribute("aria-label", minimize.title);
+    hudTimerLiveDisplay = el("div", "tc-timer-live-display", formatHudTimer(hudTimerRemainingSeconds));
+    hudTimerLivePauseButton = el("button", "tc-action primary", "⏸ PAUSE");
+    hudTimerLivePauseButton.type = "button";
+    hudTimerLivePauseButton.addEventListener("click", () => {
+      if (hudTimerAlarmActive) stopHudTimerAlarm();
+      else if (hudTimerPaused) startHudTimer();
+      else pauseHudTimer();
+    });
+    const actions = el("div", "tc-timer-live-actions");
+    actions.append(hudTimerLivePauseButton);
+    card.append(hudTimerLiveDisplay, actions);
+    updateHudTimer();
+  }
+
+  function openHudTimerAlarmOverlay() {
+    const card = makeOverlay("TIMER", "TIME UP!");
+    const minimize = card.querySelector(".tc-close");
+    minimize.textContent = "—";
+    minimize.title = "Stop alarm and minimize timer";
+    minimize.setAttribute("aria-label", minimize.title);
+    minimize.addEventListener("click", stopHudTimerAlarm);
+    const timeUp = el("div", "tc-timer-time-up", "TIME UP!");
+    const stopButton = el("button", "tc-action danger", "🔕 STOP ALARM");
+    stopButton.type = "button";
+    stopButton.addEventListener("click", () => {
+      stopHudTimerAlarm();
+      closeOverlays();
+    });
+    card.append(timeUp, stopButton);
+  }
 
   function playTeacherFeedback(isCorrect) {
     if (teacherFeedbackAudio) {
@@ -532,6 +698,7 @@
       state.classrooms = [classroom];
       state.activeClassroomId = classroom.id;
     }
+    restoreLockedClassroom();
     activateClassroom(state.activeClassroomId, false);
   }
 
@@ -548,8 +715,38 @@
   }
 
   const cloudClassroomsEnabled = () => Boolean(window.TeacherCloud?.isSignedIn?.());
+  function getLockedClassroomId() {
+    let classroomId = localStorage.getItem(CLASS_LOCK_KEY) || "";
+    if (!classroomId) {
+      classroomId = sessionStorage.getItem(CLASS_LOCK_KEY) || "";
+      if (classroomId) localStorage.setItem(CLASS_LOCK_KEY, classroomId);
+    }
+    return classroomId;
+  }
+
+  function lockClassroom(classroomId) {
+    localStorage.setItem(CLASS_LOCK_KEY, classroomId);
+    sessionStorage.removeItem(CLASS_LOCK_KEY);
+  }
+
+  function clearClassroomLock() {
+    localStorage.removeItem(CLASS_LOCK_KEY);
+    sessionStorage.removeItem(CLASS_LOCK_KEY);
+  }
+
+  function restoreLockedClassroom() {
+    const classroomId = getLockedClassroomId();
+    if (!classroomId) return false;
+    if (!state.classrooms.some((classroom) => classroom.id === classroomId)) {
+      clearClassroomLock();
+      return false;
+    }
+    state.activeClassroomId = classroomId;
+    return true;
+  }
+
   const hasSyncClassroomLock = () => {
-    const lockedClassroomId = sessionStorage.getItem(CLASS_LOCK_KEY) || "";
+    const lockedClassroomId = getLockedClassroomId();
     return Boolean(lockedClassroomId && lockedClassroomId === state.activeClassroomId);
   };
 
@@ -743,6 +940,7 @@
     if (restoreState) {
       state.classrooms = restoreState.classrooms;
       state.activeClassroomId = restoreState.activeClassroomId;
+      restoreLockedClassroom();
       activateClassroom(state.activeClassroomId, false);
       state.selectedStudentId = restoreState.selectedStudentId;
       randomHistory.drawnIds = [...restoreState.randomDrawnIds];
@@ -940,6 +1138,7 @@
     syncButton.disabled = !canSync || syncCoolingDown;
     syncButton.title = syncCoolingDown ? "Sync cooldown" : canSync ? "Sync now" : "Choose and lock a classroom from the roster first";
     syncButton.setAttribute("aria-label", syncButton.title);
+    updateHudTimer();
   }
 
   function applyCloudState(snapshot) {
@@ -956,12 +1155,14 @@
       state.activeClassroomId = state.classrooms.some((classroom) => classroom.id === snapshot.activeClassroomId)
         ? snapshot.activeClassroomId
         : state.classrooms[0].id;
+      restoreLockedClassroom();
       activateClassroom(state.activeClassroomId, false);
     } else if (Array.isArray(snapshot?.roster)) {
       const classroom = createClassroom("MY CLASS", snapshot);
       state.classrooms = [classroom];
       state.activeClassroomId = classroom.id;
-      activateClassroom(classroom.id, false);
+      restoreLockedClassroom();
+      activateClassroom(state.activeClassroomId, false);
     } else return;
     state.selectedStudentId = "";
     resetRandomPool();
@@ -1164,14 +1365,14 @@
 
   function classBar() {
     const bar = el("div", "tc-class-bar");
-    const lockedClassId = sessionStorage.getItem(CLASS_LOCK_KEY) || "";
+    const lockedClassId = getLockedClassroomId();
     state.classrooms.forEach((classroom) => {
       if (lockedClassId && classroom.id !== lockedClassId) return;
       const tab = el("button", `tc-class-tab${classroom.id === state.activeClassroomId ? " is-active" : ""}`, classroom.name);
       tab.type = "button";
       tab.addEventListener("click", () => {
         if (lockedClassId) return;
-        sessionStorage.setItem(CLASS_LOCK_KEY, classroom.id);
+        lockClassroom(classroom.id);
         if (classroom.id === state.activeClassroomId) {
           updateHud();
           closeOverlays();
@@ -1243,6 +1444,7 @@
       commitActiveClassroom();
       state.classrooms = state.classrooms.filter((classroom) => classroom.id !== current.id);
       if (!state.classrooms.length) state.classrooms.push(createClassroom());
+      clearClassroomLock();
       activateClassroom(state.classrooms[0].id, false);
       resetRandomPool();
       syncSelectedTrigger();
@@ -1261,10 +1463,10 @@
     const current = activeClassroom();
     const cloudMode = cloudClassroomsEnabled();
     const card = makeOverlay("CLASSROOM", cloudMode ? (current?.name || "CLASS ROSTER") : "CLASS ROSTER", cloudMode
-      ? "Switch classes above, or choose a student to review the current score."
+      ? "Choose a student to review the current score."
       : "Choose a student to review the current score.");
     if (cloudMode) card.append(classBar());
-    if (cloudMode && !sessionStorage.getItem(CLASS_LOCK_KEY)) {
+    if (cloudMode && !getLockedClassroomId()) {
       card.append(el("div", "tc-empty", "Choose the classroom for this smart board first."));
       return;
     }
@@ -1304,13 +1506,19 @@
     resetPoints.disabled = !state.roster.length;
     actions.append(edit, attendance, resetPoints);
     if (cloudMode) {
+      const changeClassroom = el("button", "tc-action", "CHANGE CLASSROOM");
+      changeClassroom.type = "button";
+      changeClassroom.addEventListener("click", () => {
+        clearClassroomLock();
+        openRoster();
+      });
       const rename = el("button", "tc-action", "RENAME CLASS");
       rename.type = "button";
       rename.addEventListener("click", () => openClassNameDialog("rename"));
       const removeClass = el("button", "tc-action danger", "DELETE CLASS");
       removeClass.type = "button";
       removeClass.addEventListener("click", deleteActiveClassroom);
-      actions.append(rename, removeClass);
+      actions.append(changeClassroom, rename, removeClass);
     }
     card.append(grid, actions);
     if (guidedTutorial?.step === 3) setGuidedTutorialStep(4);
@@ -1843,6 +2051,11 @@
     }
     const student = drawRandomStudent();
     if (!student) return;
+    if (state.pointBank > 0) {
+      state.pointBank = 0;
+      save();
+      updateHud();
+    }
     isRandomDrawing = true;
     randomButton.disabled = true;
     const card = makeOverlay("", "RANDOM PICK");
@@ -2222,12 +2435,15 @@
   const helpButton = el("button", "tc-help", "?");
   const accountButton = el("button", "tc-account", "☁");
   const syncButton = el("button", "tc-sync", "🔄");
+  const timerControl = el("div", "tc-timer");
+  hudTimerDisplayButton = el("button", "tc-timer-display", formatHudTimer(hudTimerRemainingSeconds));
+  hudTimerPlayButton = el("button", "tc-timer-play", "▶");
   const whistleButton = el("button", "tc-whistle", "📣");
   const bank = el("button", "tc-bank", "ROSTER");
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
   const collapseButton = el("button", "tc-collapse", "<");
-  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = syncButton.type = whistleButton.type = chosenBanner.type = collapseButton.type = "button";
+  rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = syncButton.type = hudTimerDisplayButton.type = hudTimerPlayButton.type = whistleButton.type = chosenBanner.type = collapseButton.type = "button";
   bank.type = "button";
   rosterButton.title = "Class roster";
   plusButton.title = "Award the point pool";
@@ -2236,6 +2452,11 @@
   accountButton.title = "Cloud account";
   syncButton.title = "Sync now";
   syncButton.setAttribute("aria-label", syncButton.title);
+  hudTimerDisplayButton.addEventListener("click", openHudTimerPresets);
+  hudTimerPlayButton.addEventListener("click", () => {
+    if (hudTimerInterval) stopHudTimerCountdown(true);
+    else startHudTimer();
+  });
   whistleButton.title = "Whistle — press briefly or hold";
   whistleButton.setAttribute("aria-label", whistleButton.title);
   rosterButton.addEventListener("click", openRoster);
@@ -2259,7 +2480,8 @@
   bank.addEventListener("click", requestPoolReset);
   chosenBanner.addEventListener("click", requestChosenReset);
   collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
-  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, whistleButton, bank);
+  timerControl.append(hudTimerDisplayButton, hudTimerPlayButton);
+  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, timerControl, whistleButton, bank);
   hud.append(chosenBanner, controls, collapseButton);
   document.body.append(hud);
 

@@ -23,6 +23,7 @@ const els = {
   functionIntroTitle: $("functionIntroTitle"),
   pronounTable: $("pronounTable"),
   fullscreen: $("fullscreenButton"),
+  textSize: $("accessibilityTextSizeButton"),
   headerNext: $("headerNextButton"),
   headerLast: $("headerLastButton"),
   gradeLabel: $("gradeLabel"),
@@ -1806,6 +1807,39 @@ function showExerciseResult() {
 }
 
 // APP-ANCHOR: Fullscreen and post-exercise navigation.
+const presentationTextScaleSteps = [1, 1.15, 1.25];
+let presentationTextScaleStep = 0;
+
+function applyPresentationTextScale() {
+  const scale = presentationTextScaleSteps[presentationTextScaleStep];
+  els.presentation.querySelectorAll("h1, h2, h3, h4, h5, h6, p, button, span, strong, small, label, li, legend").forEach((element) => {
+    if (element.dataset.a11yBaseFontSize === undefined) {
+      element.dataset.a11yBaseFontSize = window.getComputedStyle(element).fontSize;
+      element.dataset.a11yOriginalFontSize = element.style.fontSize;
+    }
+    if (scale === 1) {
+      element.style.fontSize = element.dataset.a11yOriginalFontSize;
+      return;
+    }
+    const baseFontSize = Number.parseFloat(element.dataset.a11yBaseFontSize);
+    if (Number.isFinite(baseFontSize)) element.style.fontSize = `${baseFontSize * scale}px`;
+  });
+  els.textSize.classList.toggle("is-active", presentationTextScaleStep > 0);
+  els.textSize.dataset.textScale = presentationTextScaleStep;
+  els.textSize.setAttribute("aria-pressed", String(presentationTextScaleStep > 0));
+  els.textSize.setAttribute("aria-label", `Text size: ${Math.round(scale * 100)}%. Click to change.`);
+  els.textSize.title = `Text size: ${Math.round(scale * 100)}%`;
+}
+
+function cyclePresentationTextScale() {
+  presentationTextScaleStep = (presentationTextScaleStep + 1) % presentationTextScaleSteps.length;
+  applyPresentationTextScale();
+}
+
+new MutationObserver(() => {
+  if (presentationTextScaleStep > 0) applyPresentationTextScale();
+}).observe(els.presentation, { childList: true, subtree: true });
+
 function toggleFullscreen() {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen?.().catch(() => {});
@@ -1868,6 +1902,7 @@ els.roomNext.addEventListener("click", () => {
   renderRoomTarget();
 });
 els.back.addEventListener("click", returnToSetup);
+els.textSize.addEventListener("click", cyclePresentationTextScale);
 els.fullscreen.addEventListener("click", toggleFullscreen);
 els.previous.addEventListener("click", previous);
 els.next.addEventListener("click", next);

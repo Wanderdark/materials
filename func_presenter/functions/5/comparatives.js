@@ -251,6 +251,57 @@ const comparativesFunction = {
       ]
     },
     {
+      id: "comparatives-irregular",
+      presenceSlide: true,
+      kicker: "COMPARATIVES",
+      title: "IRREGULAR COMPARATIVES",
+      imagePath: "images/comperatives/zoe_better_mia.webp",
+      showAllItems: true,
+      listClass: "ppt-comp-diamond",
+      items: [
+        {
+          kind: "category-list",
+          parts: [{ text: "good → better" }],
+          overlayData: {
+            imagePath: "images/comperatives/zoe_better_mia.webp",
+            sentence: "Zoe's drawing is <better> than Mia's drawing.",
+            imageAspect: "1/1", overlaySize: true
+          }
+        },
+        {
+          kind: "category-list",
+          parts: [{ text: "bad → worse" }],
+          overlayData: {
+            imagePath: "images/comperatives/today_worse_yesterday.webp",
+            sentence: "Today's weather is <worse> than yesterday's.",
+            imageAspect: "1/1", overlaySize: true
+          }
+        },
+        {
+          kind: "category-list",
+          parts: [{ text: "IRREGULAR COMPARATIVES" }]
+        },
+        {
+          kind: "category-list",
+          parts: [{ text: "far → farther" }],
+          overlayData: {
+            imagePath: "images/comperatives/hannah_far.webp",
+            sentence: "The park is <farther> from Hannah than the library.",
+            imageAspect: "1/1", overlaySize: true
+          }
+        },
+        {
+          kind: "category-list",
+          parts: [{ text: "little → less" }],
+          overlayData: {
+            imagePath: "images/comperatives/bottle_little.webp",
+            sentence: "There is <less> water in the small bottle than in the big bottle.",
+            imageAspect: "1/1", overlaySize: true
+          }
+        }
+      ]
+    },
+    {
       id: "comparatives-video-ella-sunny",
       videoDialogue: { title: "WATCH, THEN COMPLETE THE DIALOGUE", videoUrl: "https://media.adilhoca.com/video/5_classroom_life_ella_sunny2.mp4", lines: [{ speaker: "ELLA", parts: [{ text: "Try again, but try " }, { answer: "better", choices: ["gooder", "better"] }, { text: "." }] }] }
     },

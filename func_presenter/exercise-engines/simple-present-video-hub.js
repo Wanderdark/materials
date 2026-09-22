@@ -85,8 +85,8 @@ function renderSimplePresentVideoHub(example) {
             ...item.videoDialogue,
             autoplay: true,
             onHubReturn: () => renderExample(),
-            onComplete: (isCorrect) => {
-              if (isCorrect) stateForHub.completed[item.id] = true;
+            onComplete: () => {
+              stateForHub.completed[item.id] = true;
             }
           }
         });

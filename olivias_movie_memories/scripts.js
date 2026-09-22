@@ -12,10 +12,10 @@ window.LEAGUE_OF_LISTENING_ITEMS = [
     priority: "1",
     videoSrc: "assets/video/6_school_life_hannah.mp4",
     title: "Hannah pretends to be a teacher.",
-    transcript: "Hannah : OK, kids, listen up! Mrs Brown : Oh, there is a new teacher at our school.",
+    transcript: "Hannah : OK, kids, listen up! Mrs Brown : Oh, there is a new /teacher/ at our school.",
     answerOptions: [
-      { id: "b", text: "Hannah : Pekala çocuklar, beni dinleyin! Bayan Brown : Ooo, Okulumuzda yeni bir öğretmen var."},
-      { id: "a", text: "Hannah : Pekala çocuklar, ders başlıyor! Bayan Brown : Ooo, Okulumuzda yeni bir öğretmen var."}
+      { id: "b", text: "Hannah : Pekala çocuklar, beni dinleyin! Bayan Brown : Ooo, Okulumuzda yeni bir öğrenci var."},
+      { id: "a", text: "Hannah : Pekala çocuklar, ders başlıyor! Bayan Brown : Ooo, Okulumuzda yeni bir /öğretmen/ var."}
     ],
     easyDistractor: "Hannah : Tamam çocuklar, ders başlıyor! Bayan Brown : Ooo, Okulumuzda yeni bir öğrenci var.",
     correctOptionId: "b",
@@ -135,10 +135,10 @@ evidenceEnd: "0:03.690",
     priority: "6",
     videoSrc: "assets/video/6_life_in_the_city_mia_lars.mp4",
     title: "Lars helps Mia find the library.",
-    transcript: "Lars : Mia! What are you doing with so many books? Mia : Hello, sir, I think I'm a bit lost, Where is the library? Lars : It's /opposite/ the hospital, Here, I'll help you.",
+    transcript: "Lars : Mia! What are you doing with so many books? Mia : Hello, sir, I think I'm a bit lost, Where is the /library/? Lars : It's /opposite/ the hospital, Here, I'll help you.",
     answerOptions: [
-      { id: "b", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, Kütüphane nerede? Lars : Hastanenin /karşısında/, Gel, sana yardım edeyim." },
-      { id: "a", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, Kütüphane nerede? Lars : Hastanenin bitişiğinde, Gel, sana yardım edeyim." }
+      { id: "b", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, Okul nerede? Lars : Hastanenin /karşısında/, Gel, sana yardım edeyim." },
+      { id: "a", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, /Kütüphane/ nerede? Lars : Hastanenin bitişiğinde, Gel, sana yardım edeyim." }
     ],
     easyDistractor: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Kütüphane nerede? Lars : Hastanenin yanında.",
     correctOptionId: "b",
@@ -159,10 +159,10 @@ evidenceEnd: "0:08.907",
     priority: "7",
     videoSrc: "assets/video/6_life_in_the_future_emma_hannah.mp4",
     title: "Hannah and Emma predict phone-free holographic communication.",
-    transcript: "Hannah : Do you think we /will/ still use phones in the future? Emma : No, I think we /won't/ need phones.",
+    transcript: "Hannah : Do you think we will still /use phones/ in the future? Emma : No, I think we /won't/ need phones.",
     answerOptions: [
       { id: "a", text: "Hannah : Sence gelecekte hâlâ telefon /kullanacak/ mıyız? Emma : Hayır, Bence telefonlara ihtiyacımız /olmayacak/." },
-      { id: "b", text: "Hannah : Sence telefon bu kadar gerekli mi bizim için? Emma : Evet, Telefonlara ihtiyacımız olduğunu düşünüyorum." }
+      { id: "b", text: "Hannah : Sence gelecekte hala yemek yiyecek miyiz? Emma : Evet, Evet yemeğe ihtiyacımız olacak tabi ki." }
     ],
     easyDistractor: "Hannah : Gelecekte hâlâ telefon kullanacağımızı düşünüyor musun? Emma : Evet, Telefonlara ihtiyacımız olacağını düşünüyorum.",
     correctOptionId: "a",
@@ -208,10 +208,10 @@ evidenceEnd: null,
     priority: "9",
     videoSrc: "assets/video/6_life_in_the_future_mia_giulia.mp4",
     title: "Mia predicts she will teach with future technology.",
-    transcript: "Giulia : Which job will you do in the future? Mia : I will be a teacher and use /future technology/ in my classroom.",
+    transcript: "Giulia : Which job will you do in the future? Mia : I will be a /teacher/ and use /future technology/ in my classroom.",
     answerOptions: [
-      { id: "b", text: "Giulia : Gelecekte hangi işi yapacaksın? Mia : Öğretmen olacağım ve sınıfımda /gelecek teknolojisini/ kullanacağım." },
-      { id: "a", text: "Giulia : Gelecekte hangi işi yapacaksın? Mia : Öğretmen olacağım ve öğrencilerime yeni şeyler öğreteceğim." }
+      { id: "b", text: "Giulia : Gelecekte hangi işi yapacaksın? Mia : /Öğretmen/ olacağım ve sınıfımda /gelecek teknolojisini/ kullanacağım." },
+      { id: "a", text: "Giulia : Gelecekte hangi işi yapacaksın? Mia : Çocuk bakıcısı olacağım ve çocuklara ilginç oyunlar oynatacağım." }
     ],
     easyDistractor: "Giulia : Gelecekte hangi işi yapacaksın? Mia : Doktor olacağım ve hastanede çalışacağım.",
     correctOptionId: "b",
@@ -284,7 +284,7 @@ evidenceEnd: "0:05.465",
     transcript: "Ella : /Try again/, but try /better/.",
     answerOptions: [
       { id: "a", text: "Ella : /Tekrar dene/, ama /daha iyi/ dene." },
-      { id: "b", text: "Ella : Tekrar deneme, belli ki ben daha iyiyim." }
+      { id: "b", text: "Ella : Boşuna uğraşma, belli ki ben daha iyiyim." }
     ],
     easyDistractor: "Ella : Tekrar dene, ama daha yavaş dene.",
     correctOptionId: "a",
@@ -305,8 +305,8 @@ evidenceEnd: "0:05.465",
     title: "Emma's science experiment works a little too dramatically.",
     transcript: "Chloe : You like science experiments, /don't you/? Emma : Yes, especially if they work.",
     answerOptions: [
-      { id: "a", text: "Chloe : Fen deneylerini seviyor musun? Emma : Evet, Özellikle işe yararlarsa." },
-      { id: "b", text: "Chloe : Fendeneylerini seviyorsun, /öyle değil mi/? Emma : Evet, Özellikle işe yararlarsa." }
+      { id: "a", text: "Chloe : Fen derslerini seviyor musun? Emma : Evet, Özellikle deney yapmayı." },
+      { id: "b", text: "Chloe : Fen deneylerini seviyorsun, /öyle değil mi/? Emma : Evet, Özellikle işe yararlarsa." }
     ],
     easyDistractor: "Chloe : Deney tüpü hazır mı? Emma : Evet, Şimdi başlayalım.",
     correctOptionId: "b",
@@ -440,7 +440,7 @@ evidenceEnd: "0:05.286",
     transcript: "Hannah : I'm from Norway, I /never/ get cold, Well, It's a little cold.",
     answerOptions: [
       { id: "a", text: "Hannah : Ben Norveçliyim, /Asla/ üşümem, Şey, hava birazcık soğukmuş." },
-      { id: "b", text: "Hannah : Ben Norveçliyim, nadiren üşürüm, Şey, hava birazcık soğukmuş." }
+      { id: "b", text: "Hannah : Ben Norveçliyim, soğuğu çok severim, Şey, o kadar da sevmem." }
     ],
     easyDistractor: "Hannah : Norveçliyim, Hiçbir zaman üşümem, Şey, Hava çok sıcak.",
     correctOptionId: "a",
@@ -531,7 +531,7 @@ evidenceEnd: "0:04.525",
     title: "Ella and Olivia find a duck and her ducklings.",
     transcript: "Olivia : Where did the duck go? Ella : It's /behind/ the bush. Olivia : Look at the babies!",
     answerOptions: [
-      { id: "b", text: "Olivia : Ördek nereye gitti? Ella : Çalının arkasında. Olivia : Yavrulara bak!" },
+      { id: "b", text: "Olivia : Ördek nereye gitti? Ella : Çalının /arkasında/. Olivia : Yavrulara bak!" },
       { id: "a", text: "Olivia : Ördek nerede? Ella : Çalının önünde. Olivia : Yavrulara bak!" }
     ],
     easyDistractor: "Olivia : Ördek nereye gitti? Ella : Çalının yanında. Olivia : Yavrulara bak!",
@@ -579,9 +579,9 @@ evidenceEnd: "0:04.723",
     priority: "24",
     videoSrc: "assets/video/6_personal_life_ella_olivia2.mp4",
     title: "Ella wants Olivia to delete a funny photo.",
-    transcript: "Ella : Delete that one quickly! Olivia : No way, It's the /funniest/ photo! Ella : Olivia!",
+    transcript: "Ella : /Delete/ that one quickly! Olivia : No way, It's the /funniest/ photo! Ella : Olivia!",
     answerOptions: [
-      { id: "a", text: "Ella : Onu hemen sil! Olivia : Olmaz, Bunu saklayacağım! Ella : Olivia!" },
+      { id: "a", text: "Ella : Onu hemen bana ver! Olivia : Olmaz, Bunu saklayacağım! Ella : Olivia!" },
       { id: "b", text: "Ella : Onu hemen sil! Olivia : Olmaz, Bu /en komik/ fotoğraf! Ella : Olivia!" }
     ],
     easyDistractor: "Ella : Onu hemen sil! Olivia : Tamam, Şimdi siliyorum. Ella : Olivia!",
@@ -606,10 +606,10 @@ evidenceEnd: "0:08.014",
     priority: "25",
     videoSrc: "assets/video/6_life_in_the_world_lucas_daniel.mp4",
     title: "Daniel tells Lucas about riding a gondola in Venice.",
-    transcript: "Lucas : How was Venice? Daniel : Amazing, I /rode/ a gondola.",
+    transcript: "Lucas : How was Venice? Daniel : /Amazing/, I /rode/ a gondola.",
     answerOptions: [
-      { id: "a", text: "Lucas : Venedik nasıldı? Daniel : Harikaydı, Gondola bindim." },
-      { id: "b", text: "Lucas : Venediğe mi gideceksin? Daniel : Evet, Gondola bineceğim." }
+      { id: "a", text: "Lucas : Venedik nasıldı? Daniel : /Harikaydı/, Gondola /bindim/." },
+      { id: "b", text: "Lucas : Venedik güzel miydi? Daniel : Berbattı, Gondoldan düştüm." }
     ],
     easyDistractor: "Lucas : Venedik nasıldı? Daniel : Harikaydı! Kanalları yürüyerek gezdim.",
     correctOptionId: "a",
@@ -661,9 +661,9 @@ evidenceEnd: "0:07.417",
     priority: "27",
     videoSrc: "assets/video/5_family_life_chloe_luna.mp4",
     title: "Chloe asks Luna what she is doing.",
-    transcript: "Chloe : Luna, /what’re you doing/, fine, you play it, I’ll listen.",
+    transcript: "Chloe : Luna, /what’re you doing/, fine, you play it, I’ll /listen/.",
     answerOptions: [
-      { id: "a", text: "Chloe : Luna, /ne yapıyorsun/, tamam, sen çal, ben dinleyeceğim." },
+      { id: "a", text: "Chloe : Luna, /ne yapıyorsun/, tamam, sen çal, ben /dinleyeceğim/." },
       { id: "b", text: "Chloe : Luna, nereye gidiyorsun, tamam, sen çal, ben dışarı çıkacağım." }
     ],
     easyDistractor: "Chloe : Luna, ne yapıyorsun, tamam, sen onu bırak, ben oynayacağım.",
@@ -685,10 +685,10 @@ evidenceEnd: "0:07.417",
     needsRemaster: false,
     videoSrc: "assets/video/school_trip_museum_chloe.mp4",
     title: "Chloe asks a teacher for directions to the exit.",
-    transcript: "Chloe : Where's the exit? Teacher : Go straight ahead, /Turn left/. Chloe : My left or your left?",
+    transcript: "Chloe : Where's the exit? Teacher : /Go straight ahead/, /Turn left/. Chloe : My left or your left?",
     answerOptions: [
       { id: "a", text: "Chloe : Çıkış nerede? Öğretmen : Dümdüz ilerle, /Sola dön/. Chloe : Benim solum mu sizin solunuz mu?" },
-      { id: "b", text: "Chloe : Çıkış nerede? Öğretmen : Dümdüz ilerle, Sağa dön. Chloe : Benim solum mu sizin solunuz mu?" }
+      { id: "b", text: "Chloe : Çıkış nerede? Öğretmen : Geri dön, Sağa gir. Chloe : Benim solum mu sizin solunuz mu?" }
     ],
     easyDistractor: "Chloe : Çıkış nerede? Öğretmen : Sağ dön, Dümdüz git.",
     correctOptionId: "a",
@@ -708,10 +708,10 @@ evidenceEnd: "0:06.283",
     priority: "29",
     videoSrc: "assets/video/6_life_in_the_city_chloe_ava.mp4",
     title: "Chloe and Ava find a lost dog.",
-    transcript: "Chloe : Ava, look, Is that the lost dog? Ava : Yes, It's /in front of/ the café. Chloe : Let's call the owner!",
+    transcript: "Chloe : Ava, look, Is that the lost dog? Ava : Yes, It's /in front of/ the café. Chloe : /Let's call the owner/!",
     answerOptions: [
       { id: "b", text: "Chloe : Ava, bak, Bu kayıp köpek mi? Ava : Evet, Kafenin /önünde/. Chloe : Sahibine telefon edelim!" },
-      { id: "a", text: "Chloe : Ava, bak, Bu kayıp köpek mi? Ava : Evet, Kafenin yanında. Chloe : Sahibine telefon edelim!" }
+      { id: "a", text: "Chloe : Ava, bak, Bu kayıp köpek mi? Ava : Evet, Kafenin yanında. Chloe : Hadi onu sahiplenelim!" }
     ],
     easyDistractor: "Chloe : Ava, bak! Bu kayıp köpek mi? Ava : Evet! Kafenin yanında. Chloe : Sahibine telefon edelim!",
     correctOptionId: "b",
@@ -736,7 +736,7 @@ evidenceEnd: "0:07.138",
     transcript: "Emily : What should we have for dinner? Oliver : /Let's eat out/! Benjamin : Great!",
     answerOptions: [
       { id: "b", text: "Emily : Akşam yemeğinde ne yiyelim? Oliver : /Dışarıda yiyelim/! Benjamin : Harika!" },
-      { id: "a", text: "Emily : Akşam yemeğinde ne yiyelim? Oliver : Pizza yiyelim! Benjamin : Harika!" }
+      { id: "a", text: "Emily : Akşam yemeğinde ne yiyelim? Oliver : Hamburger yiyelim! Benjamin : Harika!" }
     ],
     easyDistractor: "Emily : Akşam yemeğinde ne yiyelim? Oliver : Dışarıda yiyelim! Benjamin : Belki yarın!",
     correctOptionId: "b",
@@ -758,10 +758,10 @@ evidenceEnd: "0:02.718",
     priority: "31",
     videoSrc: "assets/video/5_classroom_life_social_2.mp4",
     title: "A teacher reminds Chloe not to skip lessons.",
-    transcript: "Teacher : Chloe, why didn't you come to school yesterday? Chloe : I was at my cousin's friend's uncle's daughter's wedding. Teacher : /Don't skip the lesson next time/!",
+    transcript: "Teacher : Chloe, /why/ didn't you come to school yesterday? Chloe : I was at my cousin's friend's uncle's daughter's wedding. Teacher : /Don't skip the lesson next time/!",
     answerOptions: [
-      { id: "b", text: "Öğretmen : Chloe, dün neden okula gelmedin? Chloe : Kuzenimin arkadaşının amcasının kızının düğünündeydim. Öğretmen : Bir dahaki sefere dersi asma!" },
-      { id: "a", text: "Öğretmen : Chloe, dün neden okula gelmedin? Chloe : Kuzenimin arkadaşının amcasının kızının düğünündeydim. Öğretmen : Bir dahaki sefere izin kağıdı getir!" }
+      { id: "b", text: "Öğretmen : Chloe, dün /neden/ okula gelmedin? Chloe : Kuzenimin arkadaşının amcasının kızının düğünündeydim. Öğretmen : Bir dahaki sefere dersi asma!" },
+      { id: "a", text: "Öğretmen : Chloe, dün neredeydin? Chloe : Kuzenimin arkadaşının amcasının kızının düğünündeydim. Öğretmen : Bir dahaki sefere izin kağıdı getir!" }
     ],
     easyDistractor: "Öğretmen : Chloe, dün neden okula gelmedin? Chloe : Kuzenimin düğünündeydim. Öğretmen : Bir dahaki sefere dersi asma!",
     correctOptionId: "b",
@@ -806,12 +806,12 @@ evidenceEnd: "0:05.616",
     priority: "33",
     videoSrc: "assets/video/fun_ava_buddy.mp4",
     title: "Ava is surprised by Buddy.",
-    transcript: "Ava : How am I going to /open/ this, How can you do that?",
+    transcript: "Ava : /How/ am I going to open this. Ava : /How/ can you do that?",
     answerOptions: [
-      { id: "a", text: "Ava : Bunu kim açacak, Bunu neden yapabiliyorsun?" },
-      { id: "b", text: "Ava : Bunu nasıl /açacağım/, Bunu nasıl yapabiliyorsun?" }
+      { id: "a", text: "Ava : Bunu kim açacak. Ava : Bunu neden yapabiliyorsun?" },
+      { id: "b", text: "Ava : Bunu /nasıl/ açacağım. Ava : Bunu /nasıl/ yapabiliyorsun?" }
     ],
-    easyDistractor: "Ava : Bunu nasıl açacağım, Bunu ne zaman yapıyorsun?",
+    easyDistractor: "Ava : Bunu nasıl açacağım. Ava : Bunu ne zaman yapıyorsun?",
     correctOptionId: "b",
     characterIds: ["ava","buddy"],
     grades: [5],
@@ -820,7 +820,7 @@ evidenceEnd: "0:05.616",
     unit: "",
     evidenceStart: "0:00.000",
     evidenceEnd: "0:01.997",
-    evidenceSentence: "Ava : How am I going to /open/ this, How can you do that?",
+    evidenceSentence: "Ava : How am I going to /open/ this. Ava : /How/ can you do that?",
   },
 
 {
