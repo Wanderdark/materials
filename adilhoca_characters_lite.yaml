@@ -44,6 +44,8 @@ relative_height_system:
 students:
   - id: AVA
     name: "Ava"
+    surname: "Bloom"
+    full_name: "Ava Bloom"
     gender: "girl"
     age: 12
     relative_height: {scale: 2, label: "short", note: "Short; caring and gentle presence."}
@@ -61,6 +63,8 @@ students:
 
   - id: BENJAMIN
     name: "Benjamin"
+    surname: "Waters"
+    full_name: "Benjamin Waters"
     gender: "boy"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
@@ -79,6 +83,8 @@ students:
 
   - id: CHLOE
     name: "Chloe"
+    surname: "Roses"
+    full_name: "Chloe Roses"
     gender: "girl"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
@@ -97,6 +103,8 @@ students:
 
   - id: DANIEL
     name: "Daniel"
+    surname: "Sun"
+    full_name: "Daniel Sun"
     gender: "boy"
     age: 12
     relative_height: {scale: 4, label: "above average height", note: "Above average height; adventurous and energetic."}
@@ -114,6 +122,8 @@ students:
 
   - id: DAVID
     name: "David"
+    surname: "Mesa"
+    full_name: "David Mesa"
     gender: "boy"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
@@ -131,6 +141,8 @@ students:
 
   - id: ELLA
     name: "Ella"
+    surname: "Vale"
+    full_name: "Ella Vale"
     gender: "girl"
     age: 12
     relative_height: {scale: 5, label: "tallest students", note: "Tallest girl; useful for comparative adjective scenes."}
@@ -149,6 +161,8 @@ students:
 
   - id: EMMA
     name: "Emma"
+    surname: "Sakurai"
+    full_name: "Emma Sakurai"
     gender: "girl"
     age: 12
     relative_height: {scale: 4, label: "above average height", note: "Above average height; balanced presence in group scenes."}
@@ -166,6 +180,8 @@ students:
 
   - id: ETHAN
     name: "Ethan"
+    surname: "Hills"
+    full_name: "Ethan Hills"
     gender: "boy"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
@@ -183,6 +199,8 @@ students:
 
   - id: HANNAH
     name: "Hannah"
+    surname: "Snow"
+    full_name: "Hannah Snow"
     gender: "girl"
     age: 12
     relative_height: {scale: 4, label: "above average height", note: "Above average height; active outdoor personality."}
@@ -201,6 +219,8 @@ students:
 
   - id: JACK
     name: "Jack"
+    surname: "Storm"
+    full_name: "Jack Storm"
     gender: "boy"
     age: 12
     relative_height: {scale: 4, label: "above average height", note: "Above average height; confident and active."}
@@ -218,6 +238,8 @@ students:
 
   - id: LUCAS
     name: "Lucas"
+    surname: "Rivers"
+    full_name: "Lucas Rivers"
     gender: "boy"
     age: 12
     relative_height: {scale: 5, label: "tallest students", note: "Tallest boy; useful for clear tall / taller than comparisons."}
@@ -235,6 +257,8 @@ students:
 
   - id: MIA
     name: "Mia"
+    surname: "?"
+    full_name: "Mia ?"
     gender: "girl"
     age: 12
     relative_height: {scale: 2, label: "short", note: "Short; shy and quiet presence."}
@@ -253,6 +277,8 @@ students:
 
   - id: NOAH
     name: "Noah"
+    surname: "Pines"
+    full_name: "Noah Pines"
     gender: "boy"
     age: 12
     relative_height: {scale: 1, label: "shortest students", note: "Shortest boy; useful for clear short / shorter than comparisons."}
@@ -271,6 +297,8 @@ students:
 
   - id: OLIVIA
     name: "Olivia"
+    surname: "Frost"
+    full_name: "Olivia Frost"
     gender: "girl"
     age: 12
     relative_height: {scale: 3, label: "average height", note: "Average height."}
@@ -288,6 +316,8 @@ students:
 
   - id: VICTORIA
     name: "Victoria"
+    surname: "Mist"
+    full_name: "Victoria Mist"
     gender: "girl"
     age: 12
     relative_height: {scale: 2, label: "short", note: "Short; calm, analytical presence."}
@@ -306,6 +336,8 @@ students:
 
   - id: ZOE
     name: "Zoe"
+    surname: "Laurel"
+    full_name: "Zoe Laurel"
     gender: "girl"
     age: 12
     relative_height: {scale: 1, label: "shortest students", note: "Shortest girl; useful for clear short / shorter than comparisons."}

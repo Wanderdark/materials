@@ -8,6 +8,60 @@
 
   window.TEAM_CHALLENGERS_QUESTIONS = Object.freeze([
     question({
+      id: "g8u1-friendship-01", template: "dialogue", category: "Friendship",
+      lines: [{ speaker: "Ethan", text: "David always keeps his promises. I can ____ him." }],
+      question: "Which option CANNOT complete Ethan's sentence?",
+      options: ["trust", "count on", "rely on", "apologize"], answer: 3
+    }),
+    question({
+      id: "g8u1-friendship-02", template: "dialogue", category: "Friendship",
+      lines: [{ speaker: "Ella", text: "Olivia and I both enjoy music and art. We have a lot in ____." }],
+      question: "Which option completes Ella's sentence correctly?",
+      options: ["common", "together", "reliable", "secrets"], answer: 0
+    }),
+    question({
+      id: "g8u1-friendship-03", template: "dialogue", category: "Friendship",
+      lines: [{ speaker: "Zoe", text: "Mia and I rarely argue because we listen to each other." }],
+      question: "What does Zoe mean?",
+      options: ["They get on well.", "They tell lies.", "They have nothing in common.", "They never support each other."], answer: 0
+    }),
+    question({
+      id: "g8u1-friendship-04", template: "dialogue", category: "Friendship",
+      lines: [{ speaker: "Jack", text: "Benjamin always ____ me up when I have a problem." }],
+      question: "Which option completes the sentence correctly?",
+      options: ["backs", "counts", "apologizes", "accepts"], answer: 0
+    }),
+    question({
+      id: "g8u1-friendship-05", template: "situation", category: "Friendship",
+      situation: "Hannah is planning a school camping event. Emma stays after school to help her organize it.",
+      question: "Which sentence best describes Emma as a friend?",
+      options: ["She supports Hannah.", "She tells Hannah lies.", "She never keeps promises.", "She always argues with Hannah."], answer: 0
+    }),
+    question({
+      id: "g8u1-friendship-06", template: "friendOpinions", category: "Friendship",
+      opinions: [{ speaker: "Ava", text: "Chloe always keeps her promises." }, { speaker: "Benjamin", text: "Jack and I have a lot in common. We both enjoy outdoor activities." }, { speaker: "Noah", text: "Victoria helps me solve difficult problems." }, { speaker: "Ella", text: "Olivia and I rarely argue." }],
+      question: "Who talks about having similar likes, dislikes and interests?",
+      options: ["Ava", "Benjamin", "Noah", "Ella"], optionPortraits: ["Ava", "Benjamin", "Noah", "Ella"], answer: 1
+    }),
+    question({
+      id: "g8u1-friendship-07", template: "writingExercise", category: "Friendship",
+      speaker: "Elena",
+      instruction: "Write two sentences about a close friend. Mention one thing you have in common and one quality that makes your friendship strong.",
+      question: "Which paragraph best follows Elena's instruction?",
+      options: ["Olivia and Ella both enjoy music and art. Ella is cheerful, and they always get on well.", "Olivia is creative. She is going to the cinema after school.", "Olivia and Ella both enjoy music and art. They never help each other.", "Ella is cheerful. Olivia doesn't know what she likes."], answer: 0
+    }),
+    question({
+      id: "g8u1-personality-01", template: "personalityProfiles", category: "Personality",
+      profiles: [
+        { speaker: "Ava", text: "I always consider other people's feelings before I speak." },
+        { speaker: "Daniel", text: "I often drop things and bump into chairs." },
+        { speaker: "Ethan", text: "I never give up, even when a task is difficult." },
+        { speaker: "Ella", text: "I enjoy meeting new people and talking to them." }
+      ],
+      question: "Which student is determined?",
+      options: ["Ava", "Daniel", "Ethan", "Ella"], optionPortraits: ["Ava", "Daniel", "Ethan", "Ella"], answer: 2
+    }),
+    question({
       id: "g8u1-ara-01", template: "dialogue", category: "Accepting",
       lines: [{ speaker: "Olivia", text: "Would you like to see a movie with me on Saturday?" }, { speaker: "Ella", text: "____ I love going to the cinema." }],
       question: "Which response completes the dialogue?",
@@ -183,23 +237,45 @@
       options: ["He accepts the suggestion.", "He refuses and asks for an alternative.", "He makes an excuse about being busy.", "He invites Lucas to the park."], answer: 1
     }),
     question({
-      id: "g8u1-friendship-priority-01", priority: true, template: "writingExercise", category: "Friendship",
+      id: "g8u1-friendship-priority-01", priority: 1, template: "writingExercise", category: "Friendship",
       speaker: "Elena", instruction: "Hi, everyone! Today, I want you to write a sentence describing your friendship with a person in your life.",
       question: "In which paragraph are only good things mentioned?",
       options: ["I sometimes spend time with Victoria, but I can't trust her because she shares my secrets with other people.", "Whenever I invite Ethan to go out, he always has an excuse. We never spend time together.", "Lucas never keeps his promises. It is too bad that he never backs me up.", "Jack and I have similar interests. We count on and respect each other. He is always there whenever I need."],
       optionPortraits: ["Victoria", "Ethan", "Lucas", "Jack"], answer: 3
     }),
     question({
-      id: "g8u1-friendship-priority-02", priority: true, template: "friendOpinions", category: "Friendship",
+      id: "g8u1-friendship-priority-02", priority: 1, template: "friendOpinions", category: "Friendship",
       opinions: [{ speaker: "Olivia", text: "Ella always remembers my birthday and prepares a celebration." }, { speaker: "Ethan", text: "I don't enjoy spending time with Daniel." }, { speaker: "Mia", text: "I don't trust Hannah, so I don't share my secrets with her." }, { speaker: "Lucas", text: "Noah doesn't support me when I need him." }],
-      question: "According to the opinions above, who says something positive about his or her friend?",
+      question: "Which student says something positive about his or her friend?",
       options: ["Olivia", "Ethan", "Mia", "Lucas"], optionPortraits: ["Olivia", "Ethan", "Mia", "Lucas"], answer: 0
     }),
     question({
-      id: "g8u1-friendship-priority-03", priority: true, template: "friendMessages", category: "Friendship",
+      id: "g8u1-friendship-priority-03", priority: 1, template: "friendMessages", category: "Friendship",
       messages: [{ speaker: "Lucas", text: "I have two tickets for a football match at the city stadium. Would you like to go together?" }, { speaker: "Daniel", text: "We are going ice-skating on Wednesday. Would you like to come with us?" }, { speaker: "Mia", text: "Thanks for the invitation. Six o'clock is okay for me, too. See you there." }, { speaker: "Ella", text: "Hannah and I are having a movie night on Sunday. I would be glad if you join us." }],
       question: "Olivia has received messages from her friends. Who did NOT invite Olivia to an event?",
       options: ["Lucas", "Daniel", "Mia", "Ella"], optionPortraits: ["Lucas", "Daniel", "Mia", "Ella"], answer: 2
+    }),
+    question({
+      id: "g8u1-friendship-chat-01", priority: 2, template: "chatThread", category: "Accepting an Invitation",
+      messages: [{ speaker: "Jack", side: "incoming", text: "Hi, Lucas, how are you?" }, { speaker: "Lucas", side: "outgoing", text: "Thanks, Jack, and you?" }, { speaker: "Jack", side: "incoming", text: "Thanks. I'm organizing a farewell party for Daniel. Would you like to join us?" }, { speaker: "Lucas", side: "outgoing", text: "Oh! He is my best friend. I can't refuse this invitation. Can you text me the time and place, please?" }, { speaker: "Jack", side: "incoming", text: "Sure." }],
+      question: "According to the conversation, Lucas ...",
+      options: ["invites Jack to Daniel's farewell party.", "asks for some details about the event.", "refuses the invitation.", "cannot join the event."], answer: 1
+    }),
+    question({
+      id: "g8u1-invitation-card-01", priority: 2, template: "invitationCard", category: "Reading an Invitation",
+      host: "NORTHBRIDGE SECONDARY SCHOOL", event: "GRADUATION PARTY",
+      message: "Let’s celebrate our wonderful memories together. We hope you can join us!",
+      date: "Friday, June 12", venue: "Skyline Terrace", time: "6:30 p.m. – 10:30 p.m.", fee: "$25 per person",
+      contact: "graduation@northbridge.edu", replyBy: "June 5",
+      question: "Which question cannot be answered from this invitation?",
+      options: ["How much is the fee?", "What is the deadline for replying?", "What time does the party start?", "How many people will join the party?"], answer: 3
+    }),
+    question({
+      id: "g8u1-personality-table-01", priority: 2, template: "dataTable", category: "Personality",
+      columns: ["David", "Emma", "Ethan", "Jack"],
+      rows: [{ label: "Honest", values: [true, false, false, false] }, { label: "Generous", values: [false, true, false, false] }, { label: "Punctual", values: [false, false, true, false] }, { label: "Thoughtful", values: [true, false, false, false] }, { label: "Stubborn", values: [false, false, false, true] }],
+      question: "Which statement is NOT true according to the table?",
+      options: ["David always tells the truth and cares about his friends.", "You can count on Emma. She likes sharing, too.", "Jack never changes his mind.", "Ethan never comes to meetings on time."], answer: 3
     })
   ]);
 })();

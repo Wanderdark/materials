@@ -17,6 +17,7 @@
   let pickQuestion = TC.createQuestionPicker([]);
   const wheel = new TC.PointsWheel($("#points-wheel"), $("#spin-wheel-button"), TC.CONFIG.wheelSegments);
   const liteModeStorageKey = "teamChallengersLiteModeV1";
+  const textScaleStorageKey = "teamChallengersQuestionTextScaleV1";
 
   function currentQuestionPool() { return TC.filterQuestions(allQuestions, curriculumSelection); }
 
@@ -29,6 +30,21 @@
 
   function storedLiteMode() {
     try { return localStorage.getItem(liteModeStorageKey) === "1"; } catch { return false; }
+  }
+
+  function setQuestionTextScale(scale) {
+    const safeScale = [100, 150, 200].includes(scale) ? scale : 100;
+    const button = $("#text-scale-button");
+    TC.els.questionZone.dataset.textScale = String(safeScale);
+    button.dataset.textScale = String(safeScale);
+    button.textContent = `A+ ${safeScale}%`;
+    button.title = `Question text size: ${safeScale}%`;
+    button.setAttribute("aria-pressed", String(safeScale !== 100));
+    try { localStorage.setItem(textScaleStorageKey, String(safeScale)); } catch {}
+  }
+
+  function storedQuestionTextScale() {
+    try { return Number(localStorage.getItem(textScaleStorageKey)) || 100; } catch { return 100; }
   }
 
   function stopAnswerTimer() {
@@ -126,7 +142,7 @@
 
   function openQuestionForWheelValue(value) {
     if (!state || !value || state.phase !== "spin") return;
-    const question = pickQuestion();
+    const question = TC.shuffleQuestionOptions(pickQuestion());
     if (!TC.setWheelValue(state, value, question)) return;
     pendingWheelValue = null; TC.renderGame(state); TC.showQuestion(question, value, answerQuestion);
   }
@@ -141,16 +157,30 @@
     pendingWheelValue = null; TC.renderGame(state); TC.showWheel(); wheel.reset(); spinWheel();
   }
 
+  function closeJokerOverlay() {
+    $("#tc-joker-overlay").hidden = true;
+  }
+
+  function openJokerOverlay() {
+    if (!state) return;
+    const canUseFifty = TC.canUseJoker(state, "fiftyFifty");
+    const canUseDouble = TC.canUseJoker(state, "doublePoints");
+    if (!canUseFifty && !canUseDouble) return;
+    $("#tc-joker-fifty-button").disabled = !canUseFifty;
+    $("#tc-joker-double-button").disabled = !canUseDouble;
+    $("#tc-joker-overlay").hidden = false;
+  }
+
   function useFiftyFifty() {
     if (!state || !TC.useJoker(state, "fiftyFifty")) return;
     const wrongAnswers = state.question.options.map((_, index) => index).filter((index) => index !== state.question.answer);
     for (let index = wrongAnswers.length - 1; index > 0; index -= 1) { const swapIndex = Math.floor(Math.random() * (index + 1)); [wrongAnswers[index], wrongAnswers[swapIndex]] = [wrongAnswers[swapIndex], wrongAnswers[index]]; }
-    TC.eliminateAnswers(wrongAnswers.slice(0, 2)); TC.renderGame(state);
+    TC.eliminateAnswers(wrongAnswers.slice(0, 2)); closeJokerOverlay(); TC.renderGame(state);
   }
 
   function useDoublePoints() {
     if (!state || !TC.useJoker(state, "doublePoints")) return;
-    TC.activateDoublePoints(state.wheelValue * 2); TC.renderGame(state);
+    TC.activateDoublePoints(state.wheelValue * 2); closeJokerOverlay(); TC.renderGame(state);
   }
 
   function answerQuestion(index, timedOut = false) {
@@ -239,10 +269,11 @@
   TC.els.teamEditor.addEventListener("click", (event) => { const button = event.target.closest("[data-remove-student]"); if (!button) return; setupGroups[Number(button.dataset.removeGroup)].splice(Number(button.dataset.removeStudent), 1); syncSetup(); });
   $("#add-student-button").addEventListener("click", addManualStudent); TC.els.manualName.addEventListener("keydown", (event) => { if (event.key === "Enter") addManualStudent(); });
   $("#open-roster-button").addEventListener("click", openRosterPicker); document.querySelectorAll("[data-close-roster]").forEach((button) => button.addEventListener("click", () => { TC.els.rosterDialog.hidden = true; })); document.querySelectorAll("[data-close-award-breakdown]").forEach((button) => button.addEventListener("click", closeAwardBreakdown));
-  TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addEventListener("click", startGame); $("#back-to-teams-button").addEventListener("click", () => TC.showScreen("setup")); $("#spin-wheel-button").addEventListener("click", spinWheel); $("#keep-spin-button").addEventListener("click", keepSpinResult); $("#spin-again-button").addEventListener("click", useSpinAgain); $("#fifty-fifty-button").addEventListener("click", useFiftyFifty); $("#double-points-button").addEventListener("click", useDoublePoints); $("#next-turn-button").addEventListener("click", handleNextTurn); $("#continue-round-button").addEventListener("click", continueRound); $("#end-round-button").addEventListener("click", finishGame);
+  TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addEventListener("click", startGame); $("#back-to-teams-button").addEventListener("click", () => TC.showScreen("setup")); $("#spin-wheel-button").addEventListener("click", spinWheel); $("#keep-spin-button").addEventListener("click", keepSpinResult); $("#spin-again-button").addEventListener("click", useSpinAgain); $("#use-joker-button").addEventListener("click", openJokerOverlay); $("#tc-joker-fifty-button").addEventListener("click", useFiftyFifty); $("#tc-joker-double-button").addEventListener("click", useDoublePoints); $("#tc-joker-cancel-button").addEventListener("click", closeJokerOverlay); $("#tc-joker-overlay").addEventListener("click", (event) => { if (event.target.id === "tc-joker-overlay") closeJokerOverlay(); }); $("#next-turn-button").addEventListener("click", handleNextTurn); $("#continue-round-button").addEventListener("click", continueRound); $("#end-round-button").addEventListener("click", finishGame);
   $("#finish-game-button").addEventListener("click", finishGame);
   $("#start-timer-button").addEventListener("click", startAnswerTimer);
   $("#lite-mode-button").addEventListener("click", () => setLiteMode(!document.body.classList.contains("lite-mode")));
+  $("#text-scale-button").addEventListener("click", () => { const current = Number(TC.els.questionZone.dataset.textScale) || 100; setQuestionTextScale(current === 100 ? 150 : current === 150 ? 200 : 100); });
   $("#fullscreen-button").addEventListener("click", toggleFullscreen);
   $("#setup-fullscreen-button").addEventListener("click", toggleFullscreen);
   $("#selection-fullscreen-button").addEventListener("click", toggleFullscreen);
@@ -250,6 +281,7 @@
   const templateErrors = TC.validateQuestionTemplates(allQuestions); if (templateErrors.length) console.error("Question template errors:", templateErrors);
   armAutoFullscreen(TC.els.setup);
   setLiteMode(storedLiteMode());
+  setQuestionTextScale(storedQuestionTextScale());
   syncSetup();
   initializeCurriculumFilters();
 })();

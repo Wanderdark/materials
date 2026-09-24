@@ -361,8 +361,8 @@
   }
 
   function schedulePointSync(state) {
-    if (!session?.access_token) return;
     write(POINTS_DIRTY_KEY, true);
+    if (!session?.access_token) return;
     clearTimeout(pointSyncTimer);
     pointSyncTimer = window.setTimeout(() => pushState(state).catch(() => {}), POINT_SYNC_DELAY);
   }

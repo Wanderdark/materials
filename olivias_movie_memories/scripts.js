@@ -137,8 +137,8 @@ evidenceEnd: "0:03.690",
     title: "Lars helps Mia find the library.",
     transcript: "Lars : Mia! What are you doing with so many books? Mia : Hello, sir, I think I'm a bit lost, Where is the /library/? Lars : It's /opposite/ the hospital, Here, I'll help you.",
     answerOptions: [
-      { id: "b", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, Okul nerede? Lars : Hastanenin /karşısında/, Gel, sana yardım edeyim." },
-      { id: "a", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, /Kütüphane/ nerede? Lars : Hastanenin bitişiğinde, Gel, sana yardım edeyim." }
+      { id: "b", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, /Kütüphane/ nerede? Lars : Hastanenin /karşısında/, Gel, sana yardım edeyim." },
+      { id: "a", text: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Merhaba efendim, Sanırım biraz kayboldum, Okul nerede? Lars : Hastanenin bitişiğinde, Gel, sana yardım edeyim." }
     ],
     easyDistractor: "Lars : Mia, Bu kadar kitapla ne yapıyorsun? Mia : Kütüphane nerede? Lars : Hastanenin yanında.",
     correctOptionId: "b",

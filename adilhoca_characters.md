@@ -91,6 +91,8 @@ These are NOT fixed centimeter values. They are relative visual proportions. Cha
 
 ## STUDENT_001 - Ava
 
+Full name: Ava Bloom
+
 AI Character Card:
 
 Ava is a 12-year-old girl from the AdilHoca educational universe. She has shoulder-length curly black hair and green eyes. She does not wear glasses. Her default facial expression is a warm, gentle smile. Preserve her shoulder-length curly black hairstyle, green eyes, and gentle caring identity across all images.
@@ -165,6 +167,8 @@ Ava, the SAME canonical 12-year-old student from the AdilHoca educational univer
 ---
 
 ## STUDENT_002 - Benjamin
+
+Full name: Benjamin Waters
 
 AI Character Card:
 
@@ -244,6 +248,8 @@ Benjamin, the SAME canonical 12-year-old student from the AdilHoca educational u
 
 ## STUDENT_003 - Chloe
 
+Full name: Chloe Roses
+
 AI Character Card:
 
 Chloe is a 12-year-old girl from the AdilHoca educational universe. She has long curly blonde hair and blue eyes. She does not wear glasses. Her default facial expression is a soft, thoughtful smile. Preserve her long curly blonde hairstyle, blue eyes, and sensitive creative identity across all images.
@@ -322,6 +328,8 @@ Chloe, the SAME canonical 12-year-old student from the AdilHoca educational univ
 
 ## STUDENT_004 - Daniel
 
+Full name: Daniel Sun
+
 AI Character Card:
 
 Daniel is a 12-year-old boy from the AdilHoca educational universe. He has shoulder-length straight black hair with a middle part and slightly thick eyebrows. He does not wear glasses. His default facial expression is a confident smirk. Preserve his shoulder-length straight black middle-parted hairstyle, slightly thick eyebrows, and adventurous confident identity across all images.
@@ -398,6 +406,8 @@ Daniel, the SAME canonical 12-year-old student from the AdilHoca educational uni
 
 ## STUDENT_005 - David
 
+Full name: David Mesa
+
 AI Character Card:
 
 David is a 12-year-old boy from the AdilHoca educational universe. He has very short black hair that is neatly trimmed, with slight natural texture, brown eyes, and thin eyebrows. He does not wear glasses. His default facial expression is a calm, reassuring smile. Preserve his very short neatly trimmed black hairstyle, slight natural hair texture, thin eyebrows, brown eyes, and dependable caring identity across all images.
@@ -471,6 +481,8 @@ David, the SAME canonical 12-year-old student from the AdilHoca educational univ
 ---
 
 ## STUDENT_006 - Ella
+
+Full name: Ella Vale
 
 AI Character Card:
 
@@ -553,6 +565,8 @@ Ella, the SAME canonical 12-year-old student from the AdilHoca educational unive
 
 ## STUDENT_007 - Emma
 
+Full name: Emma Sakurai
+
 AI Character Card:
 
 Emma is a 12-year-old girl from the AdilHoca educational universe. She has long straight black hair and warm brown eyes. She does not wear glasses. Her default facial expression is a friendly smile. Preserve her long straight black hairstyle, brown eyes, youthful facial identity, and supportive leader identity across all images.
@@ -632,6 +646,8 @@ Emma, the SAME canonical 12-year-old student from the AdilHoca educational unive
 
 ## STUDENT_008 - Ethan
 
+Full name: Ethan Hills
+
 AI Character Card:
 
 Ethan is a 12-year-old boy from the AdilHoca educational universe. He has a tall-looking face and a slim-looking youthful build. He has short curly blonde hair and clear blue eyes. He does not wear glasses. His default facial expression is a focused neutral expression. Preserve his youthful rounded facial features, short curly blonde hairstyle, blue eyes, and disciplined focused identity across all images.
@@ -706,6 +722,8 @@ Ethan, the SAME canonical 12-year-old student from the AdilHoca educational univ
 ---
 
 ## STUDENT_009 - Hannah
+
+Full name: Hannah Snow
 
 AI Character Card:
 
@@ -792,6 +810,8 @@ Hannah, the SAME canonical 12-year-old student from the AdilHoca educational uni
 
 ## STUDENT_010 - Jack
 
+Full name: Jack Storm
+
 AI Character Card:
 
 Jack is a 12-year-old boy from the AdilHoca educational universe. He has short straight black hair and brown eyes. He does not wear glasses. His default facial expression is a self-confident smirk. Preserve his short straight black hairstyle, brown eyes, and confident youthful identity across all images.
@@ -865,6 +885,8 @@ Jack, the SAME canonical 12-year-old student from the AdilHoca educational unive
 ---
 
 ## STUDENT_011 - Lucas
+
+Full name: Lucas Rivers
 
 AI Character Card:
 
@@ -940,6 +962,8 @@ Lucas, the SAME canonical 12-year-old student from the AdilHoca educational univ
 ---
 
 ## STUDENT_012 - Mia
+
+Full name: Mia ?
 
 AI Character Card:
 
@@ -1024,6 +1048,8 @@ Mia, the SAME canonical 12-year-old student from the AdilHoca educational univer
 
 ## STUDENT_013 - Noah
 
+Full name: Noah Pines
+
 AI Character Card:
 
 Noah is a 12-year-old boy from the AdilHoca educational universe. He has short straight brown hair and green eyes. He wears rectangular eyeglasses. His default facial expression is a thoughtful neutral expression. Preserve his short straight brown hairstyle, green eyes, rectangular glasses, and studious logical identity across all images.
@@ -1102,6 +1128,8 @@ Noah, the SAME canonical 12-year-old student from the AdilHoca educational unive
 
 ## STUDENT_014 - Olivia
 
+Full name: Olivia Frost
+
 AI Character Card:
 
 Olivia is a 12-year-old girl from the AdilHoca educational universe. She has chin-length French bob brown hair, slightly thick eyebrows, and green eyes. She does not wear glasses. Her default facial expression is a curious creative smile. Preserve her chin-length French bob hairstyle, brown hair color, slightly thick eyebrows, green eyes, youthful rounded facial identity, and creative observant identity across all images.
@@ -1177,6 +1205,8 @@ Olivia, the SAME canonical 12-year-old student from the AdilHoca educational uni
 ---
 
 ## STUDENT_015 - Victoria
+
+Full name: Victoria Mist
 
 AI Character Card:
 
@@ -1255,6 +1285,8 @@ Victoria, the SAME canonical 12-year-old student from the AdilHoca educational u
 ---
 
 ## STUDENT_016 - Zoe
+
+Full name: Zoe Laurel
 
 AI Character Card:
 

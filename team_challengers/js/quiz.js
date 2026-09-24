@@ -10,8 +10,21 @@
     return result;
   }
 
+  function shuffleQuestionOptions(question) {
+    const shuffled = shuffle(question.options.map((text, originalIndex) => ({ text, originalIndex, portrait: question.optionPortraits?.[originalIndex] })));
+    const answer = shuffled.findIndex((option) => option.originalIndex === question.answer);
+    return {
+      ...question,
+      options: shuffled.map((option) => option.text),
+      answer,
+      ...(question.optionPortraits ? { optionPortraits: shuffled.map((option) => option.portrait) } : {})
+    };
+  }
+
   function createQuestionPicker(questions) {
-    let priorityQueue = [];
+    let reviewQueue = [];
+    let priorityOneQueue = [];
+    let priorityTwoQueue = [];
     let regularQueue = [];
     let previousId = "";
 
@@ -22,11 +35,13 @@
     }
 
     return () => {
-      if (!priorityQueue.length && !regularQueue.length) {
-        priorityQueue = shuffleQueue(questions.filter((question) => question.priority === true));
-        regularQueue = shuffleQueue(questions.filter((question) => question.priority !== true));
+      if (!reviewQueue.length && !priorityOneQueue.length && !priorityTwoQueue.length && !regularQueue.length) {
+        reviewQueue = questions.filter((question) => question.reviewFirst === true);
+        priorityOneQueue = shuffleQueue(questions.filter((question) => (question.priority === 1 || question.priority === true) && question.reviewFirst !== true));
+        priorityTwoQueue = shuffleQueue(questions.filter((question) => question.priority === 2 && question.reviewFirst !== true));
+        regularQueue = shuffleQueue(questions.filter((question) => question.priority !== 1 && question.priority !== 2 && question.priority !== true && question.reviewFirst !== true));
       }
-      const queue = priorityQueue.length ? priorityQueue : regularQueue;
+      const queue = reviewQueue.length ? reviewQueue : priorityOneQueue.length ? priorityOneQueue : priorityTwoQueue.length ? priorityTwoQueue : regularQueue;
       const question = queue.shift();
       previousId = question?.id || "";
       return question;
@@ -55,5 +70,5 @@
       && Number(question.unit) === Number(selection.unit));
   }
 
-  Object.assign(TC, { buildQuestionCatalog, createQuestionPicker, filterQuestions });
+  Object.assign(TC, { buildQuestionCatalog, createQuestionPicker, filterQuestions, shuffleQuestionOptions });
 })();

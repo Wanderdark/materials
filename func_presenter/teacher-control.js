@@ -20,7 +20,7 @@
   const HELP_SEEN_KEY = "fpTeacherControlHelpSeenV1";
   const controlScriptUrl = document.currentScript?.src || location.href;
   const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
-  const canonicalAvatarPath = (name) => `images/avatars/${name.toLowerCase()}.webp`;
+  const canonicalAvatarPath = (name) => `images/avatars/v2/${name.toLowerCase()}.webp`;
   const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
   const normalizeAvatarPath = (path = "") => {
     const value = String(path || "");

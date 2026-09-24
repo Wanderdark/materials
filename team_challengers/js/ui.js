@@ -2,7 +2,7 @@
   const TC = window.TeamChallengers;
   const $ = (selector) => document.querySelector(selector);
   const els = {
-    setup: $("#setup-screen"), selection: $("#selection-screen"), game: $("#game-screen"), round: $("#round-screen"), groupNames: $("#group-name-fields"), teamEditor: $("#team-editor"), manualName: $("#manual-student-input"), manualTeam: $("#manual-student-team"), proceed: $("#proceed-selection-button"), start: $("#start-game-button"), gradeSelect: $("#grade-select"), unitSelect: $("#unit-select"), poolStatus: $("#question-pool-status"), rosterDialog: $("#roster-dialog"), classroomList: $("#classroom-list"), classroomMessage: $("#classroom-message"), rosterStatus: $("#roster-status"), scoreboard: $("#scoreboard"), roundLabel: $("#round-label"), turnLabel: $("#turn-label"), activePortrait: $("#active-portrait"), activeAvatar: $("#active-avatar"), activeLevel: $("#active-student-level"), activeTeam: $("#active-team-chip"), activeName: $("#active-student-name"), jokerStatus: $("#joker-status"), answerTimer: $("#answer-timer"), answerTimerValue: $("#answer-timer-value"), nextTurn: $("#next-turn-button"), wheelZone: $("#wheel-zone"), spinResultActions: $("#spin-result-actions"), spinResultValue: $("#spin-result-value"), spinAgain: $("#spin-again-button"), questionZone: $("#question-zone"), questionContext: $("#question-context"), fiftyFifty: $("#fifty-fifty-button"), doublePoints: $("#double-points-button"), startTimer: $("#start-timer-button"), questionPoints: $("#question-points"), questionText: $("#question-text"), answers: $("#answer-grid"), roundMessage: $("#round-message"), roundScores: $("#round-scoreboard"), winner: $("#winner-overlay"), toast: $("#toast")
+    setup: $("#setup-screen"), selection: $("#selection-screen"), game: $("#game-screen"), round: $("#round-screen"), groupNames: $("#group-name-fields"), teamEditor: $("#team-editor"), manualName: $("#manual-student-input"), manualTeam: $("#manual-student-team"), proceed: $("#proceed-selection-button"), start: $("#start-game-button"), gradeSelect: $("#grade-select"), unitSelect: $("#unit-select"), poolStatus: $("#question-pool-status"), rosterDialog: $("#roster-dialog"), classroomList: $("#classroom-list"), classroomMessage: $("#classroom-message"), rosterStatus: $("#roster-status"), scoreboard: $("#scoreboard"), activePortrait: $("#active-portrait"), activeAvatar: $("#active-avatar"), activeLevel: $("#active-student-level"), activeTeam: $("#active-team-chip"), activeName: $("#active-student-name"), jokerStatus: $("#joker-status"), answerTimer: $("#answer-timer"), answerTimerValue: $("#answer-timer-value"), nextTurn: $("#next-turn-button"), wheelZone: $("#wheel-zone"), spinResultActions: $("#spin-result-actions"), spinResultValue: $("#spin-result-value"), spinAgain: $("#spin-again-button"), useJoker: $("#use-joker-button"), questionControls: $("#question-controls"), questionPointsBadge: $("#question-points-badge"), questionZone: $("#question-zone"), questionContext: $("#question-context"), startTimer: $("#start-timer-button"), questionPoints: $("#question-points"), questionText: $("#question-text"), answers: $("#answer-grid"), roundMessage: $("#round-message"), roundScores: $("#round-scoreboard"), winner: $("#winner-overlay"), toast: $("#toast")
   };
 
   let portraitAmbientTimer = null;
@@ -67,7 +67,6 @@
 
   function renderGame(state) {
     const active = TC.activeTurn(state);
-    els.roundLabel.textContent = `ROUND ${state.round}`; els.turnLabel.textContent = `TURN ${state.turnIndex + 1} / ${state.turnOrder.length}`;
     els.scoreboard.replaceChildren();
     state.groups.forEach((group) => { const card = document.createElement("div"); card.className = `score-card${group.id === active.group.id ? " is-active" : ""}`; card.dataset.groupId = group.id; card.style.setProperty("--team-color", `var(--${group.color})`); const name = document.createElement("span"); name.textContent = group.name; const score = document.createElement("strong"); score.textContent = group.score; card.append(name, score); els.scoreboard.appendChild(card); });
     const level = Math.max(1, Number(active.student.level) || 1); const playerKey = `${active.groupIndex}:${active.studentIndex}:${active.student.id}:${level}`;
@@ -87,13 +86,13 @@
     els.jokerStatus.hidden = capacity === 0;
     els.jokerStatus.textContent = `🃏 JOKERS ${remaining} / ${capacity}`;
     els.spinAgain.disabled = !TC.canUseJoker(state, "spinAgain");
-    els.fiftyFifty.disabled = !TC.canUseJoker(state, "fiftyFifty");
-    els.doublePoints.disabled = !TC.canUseJoker(state, "doublePoints");
-    els.doublePoints.classList.toggle("is-active", state.turnJokers.doublePoints);
+    const canUseQuestionJoker = TC.canUseJoker(state, "fiftyFifty") || TC.canUseJoker(state, "doublePoints");
+    els.useJoker.disabled = !canUseQuestionJoker;
+    els.useJoker.textContent = canUseQuestionJoker ? "🃏 USE JOKER" : "🃏 JOKER USED";
   }
 
   function resetAnswerTimerView() {
-    els.answerTimer.hidden = true; els.answerTimer.className = "answer-timer"; els.answerTimerValue.textContent = String(TC.CONFIG.answerTimerSeconds);
+    els.answerTimer.hidden = true; els.answerTimer.className = "header-answer-timer"; els.answerTimerValue.textContent = String(TC.CONFIG.answerTimerSeconds);
     els.startTimer.disabled = false; els.startTimer.textContent = "⌛ START TIMER";
   }
 
@@ -106,7 +105,7 @@
   }
 
   function showWheel() {
-    els.wheelZone.hidden = false; els.questionZone.hidden = true; els.spinResultActions.hidden = true; els.spinResultValue.textContent = ""; els.nextTurn.hidden = true; resetAnswerTimerView();
+    els.wheelZone.hidden = false; els.questionZone.hidden = true; els.questionControls.hidden = true; els.questionPointsBadge.hidden = true; els.spinResultActions.hidden = true; els.spinResultValue.textContent = ""; els.nextTurn.hidden = true; resetAnswerTimerView();
   }
 
   function showSpinResult(points) {
@@ -115,9 +114,9 @@
   }
 
   function showQuestion(question, points, onAnswer) {
-    els.wheelZone.hidden = true; els.questionZone.hidden = false; els.spinResultActions.hidden = true; els.nextTurn.hidden = true; resetAnswerTimerView();
+    els.wheelZone.hidden = true; els.questionZone.hidden = false; els.questionControls.hidden = false; els.questionPointsBadge.hidden = false; els.spinResultActions.hidden = true; els.nextTurn.hidden = true; resetAnswerTimerView();
     els.questionPoints.textContent = points; TC.renderQuestionTemplate(els.questionContext, question); els.questionText.textContent = question.question; els.answers.replaceChildren();
-    question.options.forEach((optionText, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "answer-button"; button.dataset.answerIndex = index; const letter = document.createElement("b"); letter.textContent = String.fromCharCode(65 + index); const portraitName = question.optionPortraits?.[index]; if (portraitName) { const portrait = document.createElement("img"); portrait.className = "answer-option-portrait"; TC.attachPortrait(portrait, portraitName); button.classList.add("has-option-portrait"); button.append(letter, portrait); } const text = document.createElement("span"); text.textContent = optionText; button.append(text); button.addEventListener("click", () => onAnswer(index)); els.answers.appendChild(button); });
+    question.options.forEach((optionText, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "answer-button"; button.dataset.answerIndex = index; const letter = document.createElement("span"); letter.className = "answer-option-label"; letter.textContent = String.fromCharCode(65 + index); letter.style.cssText = "display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:10px;background:linear-gradient(145deg,#7c3aed,#db2777);color:#fff;font:800 17px/1 'Barlow Condensed',sans-serif"; const portraitName = question.optionPortraits?.[index]; if (portraitName) { const portrait = document.createElement("img"); portrait.className = "answer-option-portrait"; TC.attachPortrait(portrait, portraitName); button.classList.add("has-option-portrait"); button.append(letter, portrait); } else button.append(letter); const text = document.createElement("span"); text.textContent = optionText; button.append(text); button.addEventListener("click", () => onAnswer(index)); els.answers.appendChild(button); });
   }
 
   function eliminateAnswers(indices) {
@@ -130,7 +129,7 @@
 
   function showFeedback(result, selectedIndex, correctIndex, timedOut = false) {
     [...els.answers.children].forEach((button, index) => { button.disabled = true; if (result.correct && index === correctIndex) button.classList.add("is-correct"); else if (!result.correct && index === selectedIndex) button.classList.add("is-wrong"); });
-    els.startTimer.disabled = true; els.startTimer.textContent = timedOut ? "⌛ TIME'S UP" : "ANSWERED"; els.answerTimer.hidden = !timedOut;
+    els.startTimer.disabled = true; els.startTimer.textContent = timedOut ? "⌛ TIME'S UP" : "ANSWERED"; els.answerTimer.hidden = true;
     els.nextTurn.hidden = false; els.nextTurn.disabled = false; els.nextTurn.dataset.action = result.correct ? "next" : "reveal"; els.nextTurn.textContent = result.correct ? "NEXT CHALLENGER →" : "REVEAL ANSWER";
   }
 

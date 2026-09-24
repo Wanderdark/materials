@@ -3647,7 +3647,8 @@ function _buildUnitButtons() {
     const cnt = QUESTIONS.filter(q => q[q.length - 1] && !_isCatUnit(q[2]) && selectedGrades.has(q[1]) && q[2] === u).length;
     const btn = document.createElement('button');
     btn.className = 'sc-unit-btn' + (selectedUnits.has(u) ? ' active' : '');
-    btn.innerHTML = `Ünite ${u}<small>${cnt}</small>`;
+    const unitLabel = u === 0 ? 'Revision 1' : `Ünite ${u}`;
+    btn.innerHTML = `${unitLabel}<small>${cnt}</small>`;
     btn.onclick = () => {
       if (selectedUnits.has(u) && selectedUnits.size === 1 && selectedCategories.size === 0) {
         const w = document.getElementById('sc-unit-warn');
