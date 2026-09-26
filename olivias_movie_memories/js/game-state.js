@@ -48,8 +48,9 @@ function answerQuestion(state, optionId) {
   state.answered = true; state.phase = "answered";
   const correct = optionId === state.question.correctOptionId;
   const basePoints = state.subtitlesShown ? GAME_CONFIG.score.withSubtitles : GAME_CONFIG.score.withoutSubtitles;
-  const points = correct ? basePoints * (GAME_CONFIG.score.difficultyMultiplier[state.difficulty] || 1) * (state.doubleOrNothing ? 2 : 1) : 0;
-  if (correct) { const { group, student } = activePlayer(state); group.score += points; student.score += points; }
+  const studentPoints = correct ? basePoints * (GAME_CONFIG.score.difficultyMultiplier[state.difficulty] || 1) : 0;
+  const points = studentPoints * (state.doubleOrNothing ? 2 : 1);
+  if (correct) { const { group, student } = activePlayer(state); group.score += points; student.score += studentPoints; }
   return { correct, points, correctOptionId: state.question.correctOptionId, doubleOrNothing: state.doubleOrNothing };
 }
 

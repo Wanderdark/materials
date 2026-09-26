@@ -8,7 +8,7 @@ window.LeagueListening.GAME_CONFIG = Object.freeze({
   defaultRoundLimit: 10,
   streak: Object.freeze({ bonusAt: 3, bonusPoints: 50, jokerAt: 5 }),
   score: Object.freeze({ withSubtitles: 100, withoutSubtitles: 200, difficultyMultiplier: Object.freeze({ easy: 0.5, medium: 1 }) }),
-  rosterPointRatio: Object.freeze({ gamePoints: 100, rosterPoints: 1 })
+  rosterPointRatio: Object.freeze({ gamePoints: 300, rosterPoints: 1 })
 });
 
 window.LeagueListening.VIDEO_BASE_URL = "https://media.adilhoca.com/video/";

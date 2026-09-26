@@ -26,8 +26,7 @@
     const slug = String(speaker || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
     if (!slug) return [];
     return [
-      `../olivias_movie_memories/assets/portraits/${slug}.webp`,
-      `../OYUN_SITESI/olivias_movie_memories/assets/portraits/${slug}.webp`
+      `../func_presenter/images/avatars/v2/${slug}.webp`
     ];
   }
 

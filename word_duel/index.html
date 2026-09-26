@@ -3667,13 +3667,46 @@ function continueTournament() {
   if (_tournamentChampion) showTournamentChampion();
 }
 
-function _tournamentAvatarPath(name) {
-  const slug = String(name || '')
+function _tournamentAvatarSlug(name) {
+  return String(name || '')
     .trim()
     .toLocaleLowerCase('tr-TR')
     .replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c')
     .replace(/[^a-z0-9]+/g, '');
-  return slug ? '../images/avatars/' + slug + '.webp' : '';
+}
+
+function _tournamentAvatarPaths(name) {
+  const slug = _tournamentAvatarSlug(name);
+  return slug ? ['../func_presenter/images/avatars/v2/' + slug + '.webp', '../images/avatars/' + slug + '.webp'] : [];
+}
+
+function _tournamentAvatarPath(name) {
+  return _tournamentAvatarPaths(name)[0] || '';
+}
+
+function _applyTournamentAvatar(img, fallback, name) {
+  const paths = _tournamentAvatarPaths(name);
+  let pathIndex = 0;
+  const showFallback = () => {
+    img.style.display = 'none';
+    fallback.style.display = 'flex';
+  };
+  img.onload = () => {
+    fallback.style.display = 'none';
+    img.style.display = 'block';
+  };
+  img.onerror = () => {
+    pathIndex += 1;
+    if (pathIndex < paths.length) img.src = paths[pathIndex];
+    else showFallback();
+  };
+  if (!paths.length) {
+    showFallback();
+    return;
+  }
+  fallback.style.display = 'none';
+  img.style.display = 'block';
+  img.src = paths[0];
 }
 
 function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
@@ -3693,13 +3726,12 @@ function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
   const avatar = document.createElement('img');
   avatar.className = 'tr-avatar';
   avatar.alt = '';
-  avatar.src = _tournamentAvatarPath(displayName);
 
   const fallback = document.createElement('div');
   fallback.className = 'tr-avatar-fallback';
   fallback.textContent = (displayName.trim()[0] || '?').toLocaleUpperCase('tr-TR');
   fallback.style.display = 'none';
-  avatar.onerror = () => { avatar.style.display = 'none'; fallback.style.display = 'flex'; };
+  _applyTournamentAvatar(avatar, fallback, displayName);
 
   card.append(name, avatar, fallback);
   if (score !== null && score !== undefined) {
@@ -3816,8 +3848,7 @@ function showTournamentChampion() {
     fallback.textContent = (championName.trim()[0] || '?').toLocaleUpperCase('tr-TR');
     fallback.style.display = 'none';
     portrait.style.display = 'block';
-    portrait.onerror = () => { portrait.style.display = 'none'; fallback.style.display = 'flex'; };
-    portrait.src = _tournamentAvatarPath(championName);
+    _applyTournamentAvatar(portrait, fallback, championName);
   }
   const layer = document.getElementById('tc-confetti-layer');
   layer.innerHTML = '';
