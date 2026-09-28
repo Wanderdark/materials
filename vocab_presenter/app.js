@@ -371,6 +371,7 @@
 
     els.units.className = "option-grid unit-grid";
     const units = uniqueSorted(records.filter((item) => item[3] === state.grade).map((item) => item[5]));
+    if (state.grade === 5) units.sort((a, b) => (a === 9 ? 0.5 : a) - (b === 9 ? 0.5 : b));
     units.forEach((unit) => {
       const count = records.filter((item) => item[3] === state.grade && item[5] === unit).length;
       const button = document.createElement("button");

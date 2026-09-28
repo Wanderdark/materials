@@ -569,6 +569,26 @@
         words: ["SUMMER", "WINTER", "AUTUMN", "SPRING"]
       }
     ],
+    "5:9": [
+      {
+        id: "jobs-occupations",
+        title: "Jobs & Occupations",
+        words: [
+          "TEACHER", "FARMER", "DOCTOR", "SINGER", "POLICE OFFICER",
+          "DENTIST", "LAWYER", "GREENGROCER", "CHEMIST", "BAKER"
+        ]
+      },
+      {
+        id: "places",
+        title: "Places",
+        words: ["ZOO", "MUSEUM", "CINEMA", "SEASIDE", "LAGOON"]
+      },
+      {
+        id: "sea-animals",
+        title: "Sea Animals",
+        words: ["DOLPHIN", "CRAB", "SEA TURTLE", "JELLYFISH"]
+      }
+    ],
     "5:1": [
       {
         id: "school-clubs",

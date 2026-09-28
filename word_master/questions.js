@@ -63,10 +63,26 @@ const QUESTIONS = [
 ["The coldest season of the year","Yılın en soğuk mevsimi","WINTER",5,1,0,"../func_presenter/images/expressing-preferences/winter.webp",[],"KIŞ","It often snows in winter.","Kışın sık sık kar yağar."],
 ["The season between summer and winter","Yaz ile kış arasındaki mevsim","AUTUMN",5,3,0,"../func_presenter/images/expressing-preferences/autumn.webp",[],"SONBAHAR","Leaves fall from trees in autumn.","Sonbaharda yapraklar ağaçlardan düşer."],
 ["The season between winter and summer","Kış ile yaz arasındaki mevsim","SPRING",5,2,0,"../func_presenter/images/expressing-preferences/spring.webp",[],"İLKBAHAR","Flowers grow in spring.","İlkbaharda çiçekler büyür."],
-
 // ─── GRADE 5 REVISION 2 ──────────────────────────────────────────────────────────
-// ["English definition","Turkish definition","ART",5,1,9,"../images/5/2/53.webp",[],"GÖRSEL SANATLAR","Example sentence English","Example sentence Turkish"],
-
+["A person who helps students learn","Öğrencilerin öğrenmesine yardım eden kişi","TEACHER",5,1,9,"../images/5/9/1.webp",[],"ÖĞRETMEN","A teacher helps students learn new things","Öğretmen, öğrencilerin yeni şeyler öğrenmesine yardım eder."],
+["A person who grows crops and keeps animals","Ürün yetiştiren ve hayvan besleyen kişi","FARMER",5,1,9,"../images/6/4/71.webp",[],"ÇİFTÇİ","A farmer grows fruit and vegetables.","Çiftçi, sebze ve meyve yetiştirir."],
+["A person who treats sick people","Hasta insanları tedavi eden kişi","DOCTOR",5,1,9,"../images/5/9/2.webp",[],"DOKTOR","A doctor works at a hospital and take care of patients.","Doktor hastanede çalışır ve hastalara bakar."],
+["A person who sings songs","Şarkı söyleyen kişi","SINGER",5,2,9,"../images/5/9/3.webp",[],"ŞARKICI","A singer sings songs.","Şarkıcı şarkı söyler."],
+["A person who keeps people safe","İnsanları güvende tutan kişi","POLICE OFFICER",5,1,9,"../images/6/4/70.webp",[],"POLİS MEMURU","A police officer keeps the city safe.","Polis memuru şehri güvende tutar."],
+["A person who treats your teeth","Dişlerini tedavi eden kişi","DENTIST",5,2,9,"../images/5/9/4.webp",[],"DİŞÇİ","A dentist treats teeth.","Dişçi dişleri tedavi eder."],
+["A person who helps people with legal problems","İnsanlara hukuki sorunlarda yardım eden kişi","LAWYER",5,1,9,"../images/6/4/64.webp",[],"AVUKAT","A lawyer defends people at court.","Avukat mahkemede insanları savunur."],
+["A person who sells fruit and vegetables","Meyve ve sebze satan kişi","GREENGROCER",5,2,9,"../images/7/8/3.webp",[],"MANAV","A greengrocer sells fruit and vegetables.","Manav meyve ve sebze satar."],
+["A person who prepares and sells medicine","İlaç hazırlayan ve satan kişi","CHEMIST",5,3,9,"../images/7/3/36.webp",[],"ECZACI","A chemist sells medicine.","Eczacı ilaç satar."],
+["A person who makes and sells bread","Ekmek yapan ve satan kişi","BAKER",5,2,9,"../images/5/9/5.webp",[],"FIRINCI","A baker sells fresh bread .","Fırıncı taze ekmek satar."],
+["A place where you can see animals","Hayvanları görebileceğin bir yer","ZOO",5,1,9,"../images/5/8/21.webp",[],"HAYVANAT BAHÇESİ","You can see animals at a zoo.","Hayvanat bahçesinde hayvanları görebilirsiniz."],
+["A place where you can see historical objects","Tarihi eserleri görebileceğin bir yer","MUSEUM",5,1,9,"../images/5/9/6.webp",[],"MÜZE","You can look at ancient objects and learn about history at a museum.","Müzede antik eşyalara bakıp tarih hakkında bilgi edinebilirsiniz."],
+["A place where you can watch films","Film izleyebileceğin bir yer","CINEMA",5,1,9,"../images/5/9/7.webp",[],"SİNEMA","You can watch films at a cinema.","Sinemada film izleyebilirsiniz."],
+["The area next to the sea","Denizin yanındaki bölge","SEASIDE",5,2,9,"../images/5/8/25.webp",[],"DENİZ KIYISI","You can swim and relax at the seaside.","Deniz kıysına yüzmeye gidebilir ve dinlenebilirsiniz."],
+["A small area of water near the sea","Deniz yakınındaki küçük su alanı","LAGOON",5,3,9,"../images/5/9/9.webp",[],"LAGÜN(KIYI GÖLÜ)","The water in the lagoon is calm and clear","Lagündeki su sakin ve temiz."],
+["A friendly and intelligent sea animal","Dost canlısı ve zeki bir deniz hayvanı","DOLPHIN",5,2,9,"../images/5/9/8.webp",[],"YUNUS","Dolphins are friendly sea animals.","Yunuslar dost deniz hayvanlarıdır."],
+["A sea animal with a hard shell and claws","Sert kabuğu ve kıskaçları olan deniz hayvanı","CRAB",5,3,9,"../images/5/9/10.webp",[],"YENGEÇ","The crab walks sideways on the sand.","Yengeçler kumda yan yan yürür."],
+["A turtle that lives in the sea","Denizde yaşayan bir kaplumbağa","SEA TURTLE",5,2,9,"../images/5/9/11.webp",[],"SU KAPLUMBASI","The sea turtle is swimming in the clear blue water.","Su kaplumbası temiz mavi suda yüzüyor."],
+["A soft sea animal with long tentacles","Uzun dokunaçları olan yumuşak bir deniz hayvanı","JELLYFISH",5,3,9,"../images/5/9/12.png",[],"DENİZ ANASI","The jellyfish floats in the ocean.","Denizanası okyanusta süzülür."],
 // ─── GRADE 5 THEME 1 ──────────────────────────────────────────────────────────
 ["A person who helps in an office","Ofiste yardımcı olan kişi","SECRETARY",5,1,1,"../images/6/6/2.webp",[],"SEKRETER","The school secretary helped David find the headmaster's office.","Okul sekreteri, David'in müdürün odasını bulmasına yardım etti."],
 ["A club for acting","Tiyatro yapılan kulüp","DRAMA CLUB",5,1,1,"../images/5/2/15.webp",[],"DRAMA KULÜBÜ","Daniel joined the drama club because he likes acting.","Daniel, aktörlüğü sevdiği için drama kulübüne katıldı."],
@@ -1142,7 +1158,7 @@ const QUESTIONS = [
   ["Hair growing on a man's chin and face.","Erkeğin çenesi ve yüzündeki kıllar.","BEARD",7,2,1,"../images/7/1/37.webp",[],"SAKAL","Lucas's father has a short beard.","Lucas'ın babasının kısa bir sakalı vardır."],
   ["Very pretty or attractive.","Çok güzel veya çekici.","BEAUTIFUL",7,1,1,"../images/7/1/38.webp",[],"GÜZEL","The garden looks beautiful in spring.","Bahçe ilkbaharda çok güzel görünür."],
   ["Something people wear to see better.","İnsanların daha iyi görmek için taktığı şey.","GLASSES",7,1,1,"../images/7/1/39.webp",[],"GÖZLÜK","Noah wears rectangular glasses.","Noah dikdörtgen gözlük takar."],
-  ["Good-looking (usually for a man).","Erkekler için kullanılan çekici anlamına gelen kelime.","HANDSOME",7,2,1,"../images/7/1/40.webp",[],"YAKIŞIKLI","Daniel is a handsome boy with a confident smile.","Daniel kendinden emin gülümsemesi olan yakışıklı bir çocuktur."],
+  ["Good-looking (usually for a man).","Erkekler için kullanılan çekici anlamına gelen kelime.","HANDSOME",7,2,1,"../images/7/1/40.webp",[],"YAKIŞIKLI","Benjamin is a handsome boy with a confident smile.","Benjamin kendinden emin gülümsemesi olan yakışıklı bir çocuktur."],
   ["Not young and not old.","Ne genç ne de yaşlı.","MIDDLE AGED",7,2,1,"../images/7/1/41.webp",[],"ORTA YAŞLI","The middle-aged man works as a doctor.","Orta yaşlı adam doktor olarak çalışıyor."],
   ["Not good-looking.","Güzel görünmeyen, çirkin.","UGLY",7,1,1,"../images/7/1/42.webp",[],"ÇİRKİN","Nobody should call another person ugly.","Hiç kimse başka birine çirkin dememelidir."],
 

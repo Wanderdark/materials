@@ -1828,6 +1828,11 @@
       fadeOutTrainingAtLineEnd();
     }
   });
+  els.trainingVideo.addEventListener("ended", () => {
+    if (!trainingAnswered || stageDone[2]) return;
+    if (duelRoundEnding) { finishDuelRound(); return; }
+    advanceTrainingTask();
+  });
 
   els.trainingRehearButton.addEventListener("click", () => {
     if (trainingWaiting && trainingTaskIndex >= 0) {

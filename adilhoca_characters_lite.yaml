@@ -13,7 +13,6 @@ canonical_rules:
 signature_activity_index:
   pet_care: Ava
   swimming: Benjamin
-  dancing: Chloe
   electric_scooter: Daniel
   family_holidays: David
   singing: Ella
@@ -94,7 +93,7 @@ students:
     expression_note: "Cok hafif, nazik bir gulumseme. Duygularini yuzune yansitir."
     default_voice_pitch: 1.27
     hobbies:
-      loves: ["dancing"]
+      loves: []
       likes: ["playing the piano"]
     personality:
       traits: [Sensitive, polite]

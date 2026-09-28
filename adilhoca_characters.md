@@ -267,10 +267,9 @@ Default voice pitch:
 1.27
 
 Favorite / Signature Activity:
-Dancing.
+None assigned.
 
 Hobbies:
-- Loves: dancing
 - Likes: playing the piano
 
 Parent Hobbies:
@@ -279,10 +278,8 @@ Parent Hobbies:
 
 General Interests:
 - Drama
-- Pottery
 - Birthday parties
 - Baking desserts
-- Singing
 
 Personality:
 Sensitive, polite.
