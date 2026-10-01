@@ -246,7 +246,7 @@ function renderAnswerRevealSequentialBoxes(data) {
     portraits.className = "sequential-boxes-answer-portraits";
     question.people.forEach((person) => {
       const portrait = document.createElement("img");
-      portrait.src = `images/avatars/${person.toLowerCase()}.webp`;
+      portrait.src = `images/avatars/v2/${person.toLowerCase()}.webp`;
       portrait.alt = person;
       portraits.append(portrait);
     });

@@ -204,73 +204,35 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         title: "WATCH, THEN COMPLETE AVA'S PREFERENCES",
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_ava.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/ava.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_ava_14.mp4",
+        portraitPath: "images/avatars/v2/ava.webp",
         portraitAlt: "Ava",
         sequentialLines: true,
         lines: [
           {
             speaker: "AVA",
             parts: [
-              { text: "She prefers " },
-              { slot: true, answers: ["green"] },
-              { text: " to " },
-              { slot: true, answers: ["purple", "red", "blue"] },
-              { text: "." }
-            ],
-            imageChoices: [
-              { value: "green", imagePath: "images/expressing-preferences/green.webp" },
-              { value: "purple", imagePath: "images/expressing-preferences/purple.webp" },
-              { value: "red", imagePath: "images/expressing-preferences/red.webp" },
-              { value: "blue", imagePath: "images/expressing-preferences/blue.webp" }
+              { text: "She would rather " },
+              { answer: "help animals", choices: ["watching TV","play football","help animals"] },
+              { text: " " },
+              { answer: "than", choices: ["to", "than"] },
+              { text: " go shopping." }
+            ]
+          },
+          {
+            speaker: "AVA",
+            parts: [
+              { text: "She would rather " },
+              { answer: "walk in nature", choices: ["walk in nature","walking in nature","read a book"] },
+              { text: " than spend time in crowded places." }
             ]
           },
           {
             speaker: "AVA",
             parts: [
               { text: "She prefers " },
-              { slot: true, answers: ["salad"] },
-              { text: " to " },
-              { slot: true, answers: ["steak", "spaghetti", "hamburger"] },
-              { text: "." }
-            ],
-            imageChoices: [
-              { value: "salad", imagePath: "images/expressing-preferences/salad.webp" },
-              { value: "steak", imagePath: "images/expressing-preferences/steak.webp" },
-              { value: "spaghetti", imagePath: "images/expressing-preferences/sphagetti.webp" },
-              { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }
-            ]
-          },
-          {
-            speaker: "AVA",
-            parts: [
-              { text: "She would rather study " },
-              { slot: true, answers: ["English"] },
-              { text: " than " },
-              { slot: true, answers: ["Maths", "science", "PE"] },
-              { text: "." }
-            ],
-            imageChoices: [
-              { value: "English", imagePath: "images/expressing-preferences/english.webp" },
-              { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" },
-              { value: "science", imagePath: "images/expressing-preferences/science.webp" },
-              { value: "PE", imagePath: "images/expressing-preferences/pe.webp" }
-            ]
-          },
-          {
-            speaker: "AVA",
-            parts: [
-              { text: "She prefers " },
-              { slot: true, answers: ["spring"] },
-              { text: " to " },
-              { slot: true, answers: ["Winter", "autumn", "summer"] },
-              { text: "." }
-            ],
-            imageChoices: [
-              { value: "spring", imagePath: "images/expressing-preferences/spring.webp" },
-              { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" },
-              { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" },
-              { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }
+              { answer: "eating salad", choices: ["eat salad","eating salad","eating pizza"] },
+              { text: " to eating fast food." }
             ]
           }
         ]
@@ -280,30 +242,36 @@ const expressingPreferencesGrade8Function = {
       id: "benjamin-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_benjamin.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/benjamin.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_benjamin_14.mp4",
+        portraitPath: "images/avatars/v2/benjamin.webp",
         portraitAlt: "Benjamin",
         sequentialLines: true,
         lines: [
           {
             speaker: "BENJAMIN",
-            parts: [{ text: "Benjamin prefers " }, { slot: true, answers: ["blue"] }, { text: " to " }, { slot: true, answers: ["green", "purple", "red"] }, { text: "." }],
-            imageChoices: [{ value: "blue", imagePath: "images/expressing-preferences/blue.webp" }, { value: "green", imagePath: "images/expressing-preferences/green.webp" }, { value: "purple", imagePath: "images/expressing-preferences/purple.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "swimming in the sea", choices: ["swimming in the sea","play football","playing basketball"] },
+              { text: " " },
+              { answer: "to", choices: ["to", "than"] },
+              { text: " swimming in the pool." }
+            ]
           },
           {
             speaker: "BENJAMIN",
-            parts: [{ text: "Benjamin would rather eat " }, { slot: true, answers: ["hamburgers"] }, { text: " than " }, { slot: true, answers: ["salad", "steak", "spaghetti"] }, { text: "." }],
-            imageChoices: [{ value: "hamburgers", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }, { value: "spaghetti", imagePath: "images/expressing-preferences/sphagetti.webp" }]
+            parts: [
+              { text: "He would rather " },
+              { answer: "ride his scooter", choices: ["riding his scooter","play video games","ride his scooter"] },
+              { text: " than walk." }
+            ]
           },
           {
             speaker: "BENJAMIN",
-            parts: [{ text: "Benjamin prefers " }, { slot: true, answers: ["P.E."] }, { text: " to " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "P.E.", imagePath: "images/expressing-preferences/pe.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
-          },
-          {
-            speaker: "BENJAMIN",
-            parts: [{ text: "Benjamin prefers " }, { slot: true, answers: ["summer"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "autumn"] }, { text: "." }],
-            imageChoices: [{ value: "summer", imagePath: "images/expressing-preferences/summer.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "relaxing on the beach", choices: ["relax on the beach","relaxing on the beach","playing volleyball"] },
+              { text: " to joining activities." }
+            ]
           }
         ]
       }
@@ -312,30 +280,36 @@ const expressingPreferencesGrade8Function = {
       id: "chloe-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_chloe.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/chloe.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_chloe_14.mp4",
+        portraitPath: "images/avatars/v2/chloe.webp",
         portraitAlt: "Chloe",
         sequentialLines: true,
         lines: [
           {
             speaker: "CHLOE",
-            parts: [{ text: "Chloe prefers " }, { slot: true, answers: ["pink"] }, { text: " to " }, { slot: true, answers: ["green", "purple", "red"] }, { text: "." }],
-            imageChoices: [{ value: "pink", imagePath: "images/expressing-preferences/pink.webp" }, { value: "green", imagePath: "images/expressing-preferences/green.webp" }, { value: "purple", imagePath: "images/expressing-preferences/purple.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "eating cupcakes", choices: ["eat cupcakes","eating cupcakes","eating sandwiches"] },
+              { text: " " },
+              { answer: "to", choices: ["to", "than"] },
+              { text: " eating other desserts." }
+            ]
           },
           {
             speaker: "CHLOE",
-            parts: [{ text: "Chloe prefers " }, { slot: true, answers: ["cupcake"] }, { text: " to " }, { slot: true, answers: ["blueberry pancakes", "chocolate cookies", "apple pie"] }, { text: "." }],
-            imageChoices: [{ value: "cupcake", imagePath: "images/expressing-preferences/cupcake.webp" }, { value: "blueberry pancakes", imagePath: "images/expressing-preferences/blueberry_pancakes.webp" }, { value: "chocolate cookies", imagePath: "images/expressing-preferences/chocolate_cookies.webp" }, { value: "apple pie", imagePath: "images/expressing-preferences/apple_pie.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "attending art lessons", choices: ["attending art lessons","attend music lessons","attending drama lessons"] },
+              { text: " to attending physical education classes." }
+            ]
           },
           {
             speaker: "CHLOE",
-            parts: [{ text: "Chloe prefers " }, { slot: true, answers: ["arts"] }, { text: " to " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "arts", imagePath: "../song_presenter/images/arts.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
-          },
-          {
-            speaker: "CHLOE",
-            parts: [{ text: "Chloe prefers " }, { slot: true, answers: ["spring"] }, { text: " to " }, { slot: true, answers: ["Winter", "autumn", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "enjoying spring", choices: ["enjoy spring","enjoying autumn","enjoying spring"] },
+              { text: " to enjoying other seasons." }
+            ]
           }
         ]
       }
@@ -344,30 +318,36 @@ const expressingPreferencesGrade8Function = {
       id: "david-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_david.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/david.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_david_14.mp4",
+        portraitPath: "images/avatars/v2/david.webp",
         portraitAlt: "David",
         sequentialLines: true,
         lines: [
           {
             speaker: "DAVID",
-            parts: [{ text: "David prefers " }, { slot: true, answers: ["navy blue"] }, { text: " to " }, { slot: true, answers: ["red", "orange", "yellow"] }, { text: "." }],
-            imageChoices: [{ value: "navy blue", imagePath: "images/expressing-preferences/navy_blue.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }, { value: "yellow", imagePath: "images/expressing-preferences/yellow.webp" }]
+            parts: [
+              { text: "He would rather " },
+              { answer: "travel", choices: ["watching TV","play basketball","travel"] },
+              { text: " " },
+              { answer: "than", choices: ["to", "than"] },
+              { text: " stay at home." }
+            ]
           },
           {
             speaker: "DAVID",
-            parts: [{ text: "David would rather eat " }, { slot: true, answers: ["grilled fish"] }, { text: " than " }, { slot: true, answers: ["steak", "pasta", "salad"] }, { text: "." }],
-            imageChoices: [{ value: "grilled fish", imagePath: "images/expressing-preferences/grilled_fish.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }, { value: "pasta", imagePath: "images/expressing-preferences/pasta.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "camping", choices: ["camp","camping","cycling"] },
+              { text: " to staying in a hotel." }
+            ]
           },
           {
             speaker: "DAVID",
-            parts: [{ text: "David would rather study " }, { slot: true, answers: ["geography"] }, { text: " than " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "geography", imagePath: "images/expressing-preferences/geography.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
-          },
-          {
-            speaker: "DAVID",
-            parts: [{ text: "David prefers " }, { slot: true, answers: ["summer"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "autumn"] }, { text: "." }],
-            imageChoices: [{ value: "summer", imagePath: "images/expressing-preferences/summer.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "eating fish", choices: ["eating fish","eat fish","eating pasta"] },
+              { text: " to eating meat." }
+            ]
           }
         ]
       }
@@ -376,25 +356,34 @@ const expressingPreferencesGrade8Function = {
       id: "ella-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_ella.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/ella.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_ella_14.mp4",
+        portraitPath: "images/avatars/v2/ella.webp",
         portraitAlt: "Ella",
         sequentialLines: true,
         lines: [
           {
             speaker: "ELLA",
-            parts: [{ text: "Ella prefers " }, { slot: true, answers: ["yellow"] }, { text: " to " }, { slot: true, answers: ["navy blue", "red", "orange"] }, { text: "." }],
-            imageChoices: [{ value: "yellow", imagePath: "images/expressing-preferences/yellow.webp" }, { value: "navy blue", imagePath: "images/expressing-preferences/navy_blue.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "eat pasta", choices: ["eat pasta","eating salad","eat soup"] },
+              { text: " than eat pizza." }
+            ]
           },
           {
             speaker: "ELLA",
-            parts: [{ text: "Ella would rather eat " }, { slot: true, answers: ["spaghetti"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "steak"] }, { text: "." }],
-            imageChoices: [{ value: "spaghetti", imagePath: "images/expressing-preferences/sphagetti.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "sing", choices: ["singing","dance","sing"] },
+              { text: " than play the piano." }
+            ]
           },
           {
             speaker: "ELLA",
-            parts: [{ text: "Ella prefers " }, { slot: true, answers: ["summer"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "autumn"] }, { text: "." }],
-            imageChoices: [{ value: "summer", imagePath: "images/expressing-preferences/summer.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "enjoying summer", choices: ["enjoy summer","enjoying summer","enjoying spring"] },
+              { text: " to enjoying winter." }
+            ]
           }
         ]
       }
@@ -403,30 +392,28 @@ const expressingPreferencesGrade8Function = {
       id: "emma-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_emma.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/emma.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_emma_14.mp4",
+        portraitPath: "images/avatars/v2/emma.webp",
         portraitAlt: "Emma",
         sequentialLines: true,
         lines: [
           {
             speaker: "EMMA",
-            parts: [{ text: "Emma prefers " }, { slot: true, answers: ["purple"] }, { text: " to " }, { slot: true, answers: ["pink", "green", "red"] }, { text: "." }],
-            imageChoices: [{ value: "purple", imagePath: "images/expressing-preferences/purple.webp" }, { value: "pink", imagePath: "images/expressing-preferences/pink.webp" }, { value: "green", imagePath: "images/expressing-preferences/green.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "cooking at home", choices: ["cook at home","watching TV","cooking at home"] },
+              { text: " " },
+              { answer: "to", choices: ["to", "than"] },
+              { text: " eating out." }
+            ]
           },
           {
             speaker: "EMMA",
-            parts: [{ text: "Emma would rather eat " }, { slot: true, answers: ["vegetable soup"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "steak"] }, { text: "." }],
-            imageChoices: [{ value: "vegetable soup", imagePath: "images/expressing-preferences/vegetable_soup.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }]
-          },
-          {
-            speaker: "EMMA",
-            parts: [{ text: "Emma would rather study " }, { slot: true, answers: ["science"] }, { text: " than " }, { slot: true, answers: ["English", "Maths", "P.E."] }, { text: "." }],
-            imageChoices: [{ value: "science", imagePath: "images/expressing-preferences/science.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "P.E.", imagePath: "images/expressing-preferences/pe.webp" }]
-          },
-          {
-            speaker: "EMMA",
-            parts: [{ text: "Emma prefers " }, { slot: true, answers: ["spring"] }, { text: " to " }, { slot: true, answers: ["Winter", "autumn", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "study science", choices: ["study science","studying science","study history"] },
+              { text: " than study languages." }
+            ]
           }
         ]
       }
@@ -435,30 +422,34 @@ const expressingPreferencesGrade8Function = {
       id: "ethan-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_ethan.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/ethan.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_ethan_14.mp4",
+        portraitPath: "images/avatars/v2/ethan.webp",
         portraitAlt: "Ethan",
         sequentialLines: true,
         lines: [
           {
             speaker: "ETHAN",
-            parts: [{ text: "Ethan prefers " }, { slot: true, answers: ["dark blue"] }, { text: " to " }, { slot: true, answers: ["orange", "red", "yellow"] }, { text: "." }],
-            imageChoices: [{ value: "dark blue", imagePath: "images/expressing-preferences/dark_blue.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "yellow", imagePath: "images/expressing-preferences/yellow.webp" }]
+            parts: [
+              { text: "He would rather " },
+              { answer: "play the drums", choices: ["playing the drums","play the drums","play football"] },
+              { text: " than play the violin." }
+            ]
           },
           {
             speaker: "ETHAN",
-            parts: [{ text: "Ethan would rather eat " }, { slot: true, answers: ["steak"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "spaghetti"] }, { text: "." }],
-            imageChoices: [{ value: "steak", imagePath: "images/expressing-preferences/steak.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "spaghetti", imagePath: "images/expressing-preferences/sphagetti.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "playing golf", choices: ["play tennis","playing golf","playing basketball"] },
+              { text: " to playing football." }
+            ]
           },
           {
             speaker: "ETHAN",
-            parts: [{ text: "Ethan would rather study " }, { slot: true, answers: ["Maths"] }, { text: " than " }, { slot: true, answers: ["English", "science", "P.E."] }, { text: "." }],
-            imageChoices: [{ value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }, { value: "P.E.", imagePath: "images/expressing-preferences/pe.webp" }]
-          },
-          {
-            speaker: "ETHAN",
-            parts: [{ text: "Ethan prefers " }, { slot: true, answers: ["autumn"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "He prefers " },
+              { answer: "reading mystery books", choices: ["read mystery books","reading comics","reading mystery books"] },
+              { text: " to reading adventure books." }
+            ]
           }
         ]
       }
@@ -467,57 +458,26 @@ const expressingPreferencesGrade8Function = {
       id: "hannah-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_hannah.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/hannah.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_hannah_14.mp4",
+        portraitPath: "images/avatars/v2/hannah.webp",
         portraitAlt: "Hannah",
         sequentialLines: true,
         lines: [
           {
             speaker: "HANNAH",
-            parts: [{ text: "Hannah prefers " }, { slot: true, answers: ["sky blue"] }, { text: " to " }, { slot: true, answers: ["orange", "red", "yellow"] }, { text: "." }],
-            imageChoices: [{ value: "sky blue", imagePath: "images/expressing-preferences/sky_blue.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "yellow", imagePath: "images/expressing-preferences/yellow.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "eating grilled meat", choices: ["eating grilled meat","eat grilled meat","eating vegetable soup"] },
+              { text: " to eating all other foods." }
+            ]
           },
           {
             speaker: "HANNAH",
-            parts: [{ text: "Hannah would rather eat " }, { slot: true, answers: ["barbecue"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "pizza"] }, { text: "." }],
-            imageChoices: [{ value: "barbecue", imagePath: "images/expressing-preferences/bbq.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "pizza", imagePath: "images/expressing-preferences/pizza.webp" }]
-          },
-          {
-            speaker: "HANNAH",
-            parts: [{ text: "Hannah prefers " }, { slot: true, answers: ["P.E."] }, { text: " to " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "P.E.", imagePath: "images/expressing-preferences/pe.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
-          },
-          {
-            speaker: "HANNAH",
-            parts: [{ text: "Hannah prefers " }, { slot: true, answers: ["summer"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "autumn"] }, { text: "." }],
-            imageChoices: [{ value: "summer", imagePath: "images/expressing-preferences/summer.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }]
-          }
-        ]
-      }
-    },
-    {
-      id: "jack-favourites-video-practice",
-      videoDialogue: {
-        hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_jack.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/jack.webp",
-        portraitAlt: "Jack",
-        sequentialLines: true,
-        lines: [
-          {
-            speaker: "JACK",
-            parts: [{ text: "Jack prefers " }, { slot: true, answers: ["dark green"] }, { text: " to " }, { slot: true, answers: ["red", "blue", "orange"] }, { text: "." }],
-            imageChoices: [{ value: "dark green", imagePath: "images/expressing-preferences/dark_green.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "blue", imagePath: "images/expressing-preferences/blue.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }]
-          },
-          {
-            speaker: "JACK",
-            parts: [{ text: "Jack would rather eat " }, { slot: true, answers: ["sandwich"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "steak"] }, { text: "." }],
-            imageChoices: [{ value: "sandwich", imagePath: "images/expressing-preferences/sandwich.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }]
-          },
-          {
-            speaker: "JACK",
-            parts: [{ text: "Jack prefers " }, { slot: true, answers: ["autumn"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "ride her horse", choices: ["riding her horse","play basketball","ride her horse"] },
+              { text: " than cycle." }
+            ]
           }
         ]
       }
@@ -526,25 +486,34 @@ const expressingPreferencesGrade8Function = {
       id: "mia-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_mia.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/mia.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_mia_14.mp4",
+        portraitPath: "images/avatars/v2/mia.webp",
         portraitAlt: "Mia",
         sequentialLines: true,
         lines: [
           {
             speaker: "MIA",
-            parts: [{ text: "Mia prefers " }, { slot: true, answers: ["lavender"] }, { text: " to " }, { slot: true, answers: ["orange", "red", "yellow"] }, { text: "." }],
-            imageChoices: [{ value: "lavender", imagePath: "images/expressing-preferences/lavender.webp" }, { value: "orange", imagePath: "images/expressing-preferences/orange.webp" }, { value: "red", imagePath: "images/expressing-preferences/red.webp" }, { value: "yellow", imagePath: "images/expressing-preferences/yellow.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "writing in her diary", choices: ["write a letter","writing in her diary","drawing pictures"] },
+              { text: " to posting on social media." }
+            ]
           },
           {
             speaker: "MIA",
-            parts: [{ text: "Mia would rather eat " }, { slot: true, answers: ["chocolate cookies"] }, { text: " than " }, { slot: true, answers: ["blueberry pancakes", "cupcake", "apple pie"] }, { text: "." }],
-            imageChoices: [{ value: "chocolate cookies", imagePath: "images/expressing-preferences/chocolate_cookies.webp" }, { value: "blueberry pancakes", imagePath: "images/expressing-preferences/blueberry_pancakes.webp" }, { value: "cupcake", imagePath: "images/expressing-preferences/cupcake.webp" }, { value: "apple pie", imagePath: "images/expressing-preferences/apple_pie.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "read a novel", choices: ["read a novel","reading a novel","draw a picture"] },
+              { text: " than listen to music." }
+            ]
           },
           {
             speaker: "MIA",
-            parts: [{ text: "Mia prefers " }, { slot: true, answers: ["autumn"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "visiting quiet places", choices: ["visiting quiet places","visit quiet places","visiting museums"] },
+              { text: " to visiting crowded places." }
+            ]
           }
         ]
       }
@@ -553,25 +522,34 @@ const expressingPreferencesGrade8Function = {
       id: "olivia-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_olivia.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/olivia.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_olivia_14.mp4",
+        portraitPath: "images/avatars/v2/olivia.webp",
         portraitAlt: "Olivia",
         sequentialLines: true,
         lines: [
           {
             speaker: "OLIVIA",
-            parts: [{ text: "Olivia would rather eat " }, { slot: true, answers: ["blueberry pancakes"] }, { text: " than " }, { slot: true, answers: ["chocolate cookies", "cupcake", "apple pie"] }, { text: "." }],
-            imageChoices: [{ value: "blueberry pancakes", imagePath: "images/expressing-preferences/blueberry_pancakes.webp" }, { value: "chocolate cookies", imagePath: "images/expressing-preferences/chocolate_cookies.webp" }, { value: "cupcake", imagePath: "images/expressing-preferences/cupcake.webp" }, { value: "apple pie", imagePath: "images/expressing-preferences/apple_pie.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "taking photos", choices: ["take notes","taking photos","playing tennis"] },
+              { text: " to painting pictures." }
+            ]
           },
           {
             speaker: "OLIVIA",
-            parts: [{ text: "Olivia prefers " }, { slot: true, answers: ["arts"] }, { text: " to " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "arts", imagePath: "../song_presenter/images/arts.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "listening to instrumental music", choices: ["listen to instrumental music","listening to podcasts","listening to instrumental music"] },
+              { text: " to listening to music with vocals." }
+            ]
           },
           {
             speaker: "OLIVIA",
-            parts: [{ text: "Olivia prefers " }, { slot: true, answers: ["spring"] }, { text: " to " }, { slot: true, answers: ["Winter", "autumn", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "go to the cinema", choices: ["going to the cinema","go to the cinema","go swimming"] },
+              { text: " than watch TV." }
+            ]
           }
         ]
       }
@@ -580,25 +558,26 @@ const expressingPreferencesGrade8Function = {
       id: "victoria-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_victoria.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/victoria.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_victoria_14.mp4",
+        portraitPath: "images/avatars/v2/victoria.webp",
         portraitAlt: "Victoria",
         sequentialLines: true,
         lines: [
           {
             speaker: "VICTORIA",
-            parts: [{ text: "Victoria would rather eat " }, { slot: true, answers: ["sushi"] }, { text: " than " }, { slot: true, answers: ["grilled fish", "steak", "pizza"] }, { text: "." }],
-            imageChoices: [{ value: "sushi", imagePath: "images/expressing-preferences/sushi.webp" }, { value: "grilled fish", imagePath: "images/expressing-preferences/grilled_fish.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }, { value: "pizza", imagePath: "images/expressing-preferences/pizza.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "coding", choices: ["coding","code","playing chess"] },
+              { text: " to hanging out with friends." }
+            ]
           },
           {
             speaker: "VICTORIA",
-            parts: [{ text: "Victoria prefers " }, { slot: true, answers: ["I.T."] }, { text: " to " }, { slot: true, answers: ["English", "Maths", "science"] }, { text: "." }],
-            imageChoices: [{ value: "I.T.", imagePath: "images/expressing-preferences/it.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "science", imagePath: "images/expressing-preferences/science.webp" }]
-          },
-          {
-            speaker: "VICTORIA",
-            parts: [{ text: "Victoria prefers " }, { slot: true, answers: ["Winter"] }, { text: " to " }, { slot: true, answers: ["spring", "autumn", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "play chess", choices: ["playing chess","go swimming","play chess"] },
+              { text: " than read books." }
+            ]
           }
         ]
       }
@@ -607,25 +586,36 @@ const expressingPreferencesGrade8Function = {
       id: "zoe-favourites-video-practice",
       videoDialogue: {
         hideTitle: true,
-        videoUrl: "https://media.adilhoca.com/video/favorites_zoe.mp4",
-        portraitPath: "../olivias_movie_memories/assets/portraits/zoe.webp",
+        videoUrl: "https://media.adilhoca.com/video/8_preferences_zoe_14.mp4",
+        portraitPath: "images/avatars/v2/zoe.webp",
         portraitAlt: "Zoe",
         sequentialLines: true,
         lines: [
           {
             speaker: "ZOE",
-            parts: [{ text: "Zoe would rather eat " }, { slot: true, answers: ["pizza"] }, { text: " than " }, { slot: true, answers: ["hamburger", "salad", "steak"] }, { text: "." }],
-            imageChoices: [{ value: "pizza", imagePath: "images/expressing-preferences/pizza.webp" }, { value: "hamburger", imagePath: "images/expressing-preferences/hamburger.webp" }, { value: "salad", imagePath: "images/expressing-preferences/salad.webp" }, { value: "steak", imagePath: "images/expressing-preferences/steak.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "listening to soft music", choices: ["listen to soft music","reading a novel","listening to soft music"] },
+              { text: " to listening to loud music." }
+            ]
           },
           {
             speaker: "ZOE",
-            parts: [{ text: "Zoe would rather study " }, { slot: true, answers: ["science"] }, { text: " than " }, { slot: true, answers: ["English", "Maths", "P.E."] }, { text: "." }],
-            imageChoices: [{ value: "science", imagePath: "images/expressing-preferences/science.webp" }, { value: "English", imagePath: "images/expressing-preferences/english.webp" }, { value: "Maths", imagePath: "images/expressing-preferences/maths.webp" }, { value: "P.E.", imagePath: "images/expressing-preferences/pe.webp" }]
+            parts: [
+              { text: "She would rather " },
+              { answer: "solve a crossword puzzle", choices: ["solve a crossword puzzle","watching TV","read a comic"] },
+              { text: " " },
+              { answer: "than", choices: ["to", "than"] },
+              { text: " play a video game." }
+            ]
           },
           {
             speaker: "ZOE",
-            parts: [{ text: "Zoe prefers " }, { slot: true, answers: ["autumn"] }, { text: " to " }, { slot: true, answers: ["Winter", "spring", "summer"] }, { text: "." }],
-            imageChoices: [{ value: "autumn", imagePath: "images/expressing-preferences/autumn.webp" }, { value: "Winter", imagePath: "images/expressing-preferences/winter.webp" }, { value: "spring", imagePath: "images/expressing-preferences/spring.webp" }, { value: "summer", imagePath: "images/expressing-preferences/summer.webp" }]
+            parts: [
+              { text: "She prefers " },
+              { answer: "stargazing", choices: ["stargaze","stargazing","drawing pictures"] },
+              { text: " to watching TV." }
+            ]
           }
         ]
       }
@@ -857,7 +847,7 @@ const preferenceVideoItems = expressingPreferencesGrade8Function.sentences
   .filter((item) => item.id?.endsWith("-favourites-video-practice"))
   .map((item) => ({
     name: item.videoDialogue.portraitAlt,
-    avatarPath: `images/avatars/${item.videoDialogue.portraitAlt.toLowerCase()}.webp`,
+    avatarPath: `images/avatars/v2/${item.videoDialogue.portraitAlt.toLowerCase()}.webp`,
     videoDialogue: item.videoDialogue
   }));
 const firstPreferenceVideoIndex = expressingPreferencesGrade8Function.sentences.findIndex(
@@ -882,19 +872,6 @@ const expressingPreferencesWatchCompleteItems = [
       lines: [
         { speaker: "AVA", parts: [{ text: "I enjoy walking in the rain." }] },
         { speaker: "CHLOE", parts: [{ text: "I " }, { answer: "prefer", choices: ["prefer", "would rather"] }, { text: " staying dry!" }] }
-      ]
-    }
-  },
-  {
-    id: "preferences-video-benjamin-jack-scooter",
-    speakers: ["BENJAMIN", "JACK"],
-    videoDialogue: {
-      title: "WATCH, THEN COMPLETE THE DIALOGUE",
-      videoUrl: "https://media.adilhoca.com/video/8_preferences_benjamin_jack.mp4",
-      lines: [
-        { speaker: "JACK", parts: [{ text: "Let's walk home." }] },
-        { speaker: "BENJAMIN", parts: [{ text: "I'd rather ride my scooter " }, { answer: "than", choices: ["to", "than"] }, { text: " walk." }] },
-        { speaker: "JACK", parts: [{ text: "So, it's decided. We'll walk." }] }
       ]
     }
   },

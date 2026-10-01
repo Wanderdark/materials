@@ -1340,7 +1340,7 @@ students:
         - "gardening"
       likes:
         - "hiking"
-    general_interests: [DIY, "Board games", "Washing the family car", Hiking]
+    general_interests: [DIY, "Board games", Hiking]
     personality:
       traits: [Selfish, stubborn, patient]
       note: "Inatci, sabirli ve bazen bencil davranabilen bir ogrenci."
@@ -1453,7 +1453,7 @@ students:
         - "playing football"
       likes:
         - "swimming"
-    general_interests: [Basketball, Running, "Board games", "Washing the car", "Outdoor sports"]
+    general_interests: [Basketball, Running, "Board games", "Outdoor sports"]
     personality:
       traits: [Determined, energetic]
       note: "Kararli ve enerjik bir ogrenci."

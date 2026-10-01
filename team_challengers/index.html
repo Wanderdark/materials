@@ -111,6 +111,7 @@
             <button class="choice-button" type="button" data-group-count="3">3 TEAMS</button>
           </div>
           <div id="group-name-fields" class="group-name-fields"></div>
+          <label class="curriculum-field" for="game-mode-select"><span>GAME FORMAT</span><select id="game-mode-select"><option value="classic">CLASSIC</option><option value="difficulty" selected>DIFFICULTY BASED</option></select></label>
         </article>
         <article class="setup-card accent-cyan">
           <div class="step-number">02</div><p class="eyebrow">Players</p><h2>Choose your challengers</h2>
@@ -148,8 +149,8 @@
       <header class="game-header">
         <div class="header-brand-wrap"><div class="header-brand"><span>⚡</span><div><small>TEAM</small><strong>CHALLENGERS</strong></div></div><div id="answer-timer" class="header-answer-timer" hidden aria-live="polite"><strong id="answer-timer-value">32</strong><small>SEC</small></div></div>
         <div id="scoreboard" class="scoreboard" aria-label="Team scores"></div>
-        <div id="question-points-badge" class="points-badge header-points-badge" hidden><small>For</small><strong id="question-points">0</strong><small>Pts</small></div><div id="question-controls" class="header-question-controls" hidden><button id="use-joker-button" class="joker-button" type="button">🃏 USE JOKER</button><button id="start-timer-button" class="start-timer-button" type="button">⌛ START TIMER</button></div>
-        <div class="header-actions"><button id="next-turn-button" class="primary-button" style="padding:8px 12px;font-size:13px;white-space:nowrap" type="button" hidden>NEXT CHALLENGER <span>→</span></button><button id="lite-mode-button" class="lite-mode-button" type="button" aria-label="Toggle lite mode" aria-pressed="false">LITE</button><button id="text-scale-button" type="button" aria-label="Change question text size" aria-pressed="false" data-text-scale="100" title="Question text size: default">A+ 100%</button><button id="fullscreen-button" class="fullscreen-button" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button><button id="finish-game-button" class="finish-button" type="button">FINISH</button></div>
+        <div id="header-points-group" class="header-points-group" hidden><div id="question-difficulty-badge" class="question-difficulty-badge" hidden><strong id="question-difficulty-name"></strong><span id="question-difficulty-stars"></span></div><div id="question-points-badge" class="points-badge header-points-badge" hidden><small>For</small><strong id="question-points">0</strong><small>Pts</small></div></div><div id="question-controls" class="header-question-controls" hidden><button id="use-joker-button" class="joker-button" type="button">🃏 USE JOKER</button><button id="start-timer-button" class="start-timer-button" type="button">TIMER</button></div>
+        <div class="header-actions"><button id="next-turn-button" class="primary-button" style="padding:8px 12px;font-size:13px;white-space:nowrap" type="button" aria-label="Next challenger" hidden>NEXT</button><button id="scores-button" class="lite-mode-button" type="button" aria-haspopup="dialog" aria-controls="team-scores-overlay" aria-expanded="false">SCORES</button><button id="lite-mode-button" class="lite-mode-button" type="button" aria-label="Toggle lite mode" aria-pressed="false">LITE</button><button id="text-scale-button" type="button" aria-label="Change question text size" aria-pressed="false" data-text-scale="100" title="Question text size: default">A+ 100%</button><button id="fullscreen-button" class="fullscreen-button" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button><button id="finish-game-button" class="finish-button" type="button" aria-label="Finish game">END</button></div>
       </header>
       <div class="game-layout">
         <aside class="player-panel">
@@ -163,7 +164,14 @@
         <section class="challenge-stage">
           <div id="wheel-zone" class="wheel-zone">
             <div class="wheel-title"><strong>SPIN THE WHEEL!</strong></div>
-            <div class="wheel-wrap"><div class="wheel-pointer">▼</div><canvas id="points-wheel" width="520" height="520" aria-label="20 segment points wheel"></canvas><button id="spin-wheel-button" class="spin-button" type="button">SPIN</button></div>
+            <div class="wheel-wrap"><div class="wheel-pointer">▼</div><canvas id="points-wheel" width="520" height="520" aria-label="20 segment points wheel"></canvas><button id="spin-wheel-button" class="spin-button" type="button" aria-describedby="spin-power-hint">SPIN</button><div id="spin-power-bar" class="spin-power-bar" role="progressbar" aria-label="Spin power" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><div id="spin-power-fill" class="spin-power-fill"></div></div></div>
+            <p id="spin-power-hint" class="wheel-hint">Tap to spin · Hold and release to control the speed</p>
+          </div>
+          <div id="difficulty-zone" class="difficulty-zone" hidden aria-labelledby="difficulty-title">
+            <h2 id="difficulty-title">CHOOSE YOUR CHALLENGE</h2>
+            <p id="difficulty-base-points"></p>
+            <div class="difficulty-choices"><button id="difficulty-easy" class="secondary-button" type="button" data-difficulty="1">★ EASY · ×1</button><button id="difficulty-medium" class="secondary-button" type="button" data-difficulty="2">★★ MEDIUM · ×1.5</button></div>
+            <p>Choose before seeing the question. Unavailable levels are disabled.</p>
           </div>
           <div id="question-zone" class="question-zone" hidden>
             <div id="question-context" class="question-context"></div>
@@ -203,6 +211,8 @@
   <div id="tc-joker-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="tc-joker-overlay-title"><section class="tc-joker-modal"><h2 id="tc-joker-overlay-title" class="tc-joker-modal-title">🃏 CHOOSE A JOKER</h2><p class="tc-joker-modal-sub">Pick one joker for this question.</p><div class="tc-joker-cards"><button id="tc-joker-fifty-button" class="tc-joker-card fifty" type="button"><span class="tc-joker-icon">50:50</span><span class="tc-joker-text"><span class="tc-joker-title">REMOVE TWO ANSWERS</span><span class="tc-joker-desc">Two incorrect choices are disabled.</span></span></button><button id="tc-joker-double-button" class="tc-joker-card double" type="button"><span class="tc-joker-icon">×2</span><span class="tc-joker-text"><span class="tc-joker-title">DOUBLE THE POINTS</span><span class="tc-joker-desc">A correct answer earns twice as much.</span></span></button></div><button id="tc-joker-cancel-button" class="tc-joker-cancel" type="button">CANCEL</button></section></div>
 
   <div id="roster-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="roster-dialog-title"><div class="modal-backdrop" data-close-roster></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-roster aria-label="Close">×</button><p class="eyebrow">Teacher HUD</p><h2 id="roster-dialog-title">Choose your class</h2><p class="muted">Students marked absent today are excluded and present students are balanced by roster score.</p><div id="classroom-list" class="classroom-list"></div><p id="classroom-message" class="status-note" aria-live="polite"></p></div></div>
+  <div id="auto-lb" role="button" tabindex="0" aria-label="Close high scores and continue" aria-hidden="true"><div class="alb-title">🏆 HIGH SCORES</div><div id="auto-lb-list"></div></div>
+  <div id="team-scores-overlay" class="team-scores-overlay" hidden><div class="team-scores-backdrop" data-close-team-scores></div><section class="team-scores-card" role="dialog" aria-modal="true" aria-labelledby="team-scores-title"><div class="team-scores-heading"><h2 id="team-scores-title">SCORES</h2><button id="team-scores-close" type="button" data-close-team-scores aria-label="Close scores">×</button></div><div id="team-scores-groups" class="team-scores-groups"></div></section></div>
   <div id="toast" role="status" aria-live="polite"></div>
 
   <script>window.__forceTeacherControl = true;</script>
@@ -217,6 +227,7 @@
   <script src="js/quiz.js"></script>
   <script src="js/final-scores.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/leaderboard.js"></script>
   <script src="js/app.js?v=3"></script>
 </body>
 </html>

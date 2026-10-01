@@ -62,12 +62,15 @@
   object-fit: cover;
 }
 
-.preference-video-hub-card.is-completed {
+.preference-video-hub-card.is-completed,
+.preference-video-hub-card.is-unavailable {
   cursor: default;
 }
 
 .preference-video-hub-card.is-completed img,
-.preference-video-hub-card.is-completed > span:not(.preference-video-hub-tick) {
+.preference-video-hub-card.is-completed > span:not(.preference-video-hub-tick),
+.preference-video-hub-card.is-unavailable img,
+.preference-video-hub-card.is-unavailable > span {
   filter: grayscale(1);
   opacity: .38;
 }

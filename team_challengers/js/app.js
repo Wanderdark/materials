@@ -10,7 +10,9 @@
   let finalTransferred = false;
   let answerTimerId = null;
   let answerSecondsLeft = TC.CONFIG.answerTimerSeconds;
+  let timerSoundMuted = false;
   let pendingWheelValue = null;
+  let pendingQuestion = null;
   const allQuestions = window.TEAM_CHALLENGERS_QUESTIONS || [];
   const questionCatalog = TC.buildQuestionCatalog(allQuestions);
   let curriculumSelection = { grade: null, unit: null };
@@ -48,7 +50,7 @@
   }
 
   function stopAnswerTimer() {
-    clearInterval(answerTimerId); answerTimerId = null; TC.stopTimerSound();
+    clearInterval(answerTimerId); answerTimerId = null; timerSoundMuted = false; TC.stopTimerSound();
   }
 
   function resetAnswerTimer() {
@@ -56,10 +58,11 @@
   }
 
   function startAnswerTimer() {
-    if (!state || state.phase !== "answer" || state.answered || answerTimerId) return;
-    answerSecondsLeft = TC.CONFIG.answerTimerSeconds; TC.stopBackgroundMusic(); TC.playTimerSound(); TC.startAnswerTimerView(); TC.updateAnswerTimerView(answerSecondsLeft);
+    if (!state || state.phase !== "answer" || state.answered) return;
+    if (answerTimerId) { timerSoundMuted = true; TC.stopTimerSound(); return; }
+    timerSoundMuted = false; answerSecondsLeft = TC.CONFIG.answerTimerSeconds; TC.stopBackgroundMusic(); TC.playTimerSound(); TC.startAnswerTimerView(); TC.updateAnswerTimerView(answerSecondsLeft);
     answerTimerId = setInterval(() => {
-      answerSecondsLeft -= 1; TC.updateAnswerTimerView(answerSecondsLeft);
+      answerSecondsLeft -= 1; TC.updateAnswerTimerView(answerSecondsLeft); if (timerSoundMuted && answerSecondsLeft > 0 && answerSecondsLeft <= 5) TC.playTimerCountdownAlert(answerSecondsLeft);
       if (answerSecondsLeft > 0) return;
       stopAnswerTimer(); answerQuestion(-1, true);
     }, 1000);
@@ -82,7 +85,10 @@
 
   function refreshUnits() {
     const grade = questionCatalog.find((item) => item.grade === Number(TC.els.gradeSelect.value));
-    fillSelect(TC.els.unitSelect, grade?.units || [], (item) => item.unit, (item) => `UNIT ${item.unit}`);
+    fillSelect(TC.els.unitSelect, grade?.units || [], (item) => item.unit, (item) => {
+      const name = grade?.grade === 8 ? ({ 1: "FRIENDSHIP", 2: "TEEN LIFE" })[item.unit] : "";
+      return `UNIT ${item.unit}${name ? " - " + name : ""}`;
+    });
     refreshQuestionPool();
   }
 
@@ -118,7 +124,7 @@
     const questionPool = currentQuestionPool();
     if (!questionPool.length) { TC.showToast("Choose a grade and unit with available questions."); return; }
     pickQuestion = TC.createQuestionPicker(questionPool);
-    state = TC.createGameState(activeGroups, groupNames.slice(0, groupCount)); finalTransferred = false; finalAwards = []; TC.showScreen("game"); armAutoFullscreen(TC.els.game); prepareTurn();
+    state = TC.createGameState(activeGroups, groupNames.slice(0, groupCount), $("#game-mode-select").value); finalTransferred = false; finalAwards = []; TC.showScreen("game"); armAutoFullscreen(TC.els.game); prepareTurn();
   }
 
   function proceedToCurriculum() {
@@ -127,12 +133,21 @@
     TC.showScreen("selection"); armAutoFullscreen(TC.els.selection);
   }
 
-  function prepareTurn() { resetAnswerTimer(); TC.renderGame(state); TC.showWheel(); wheel.reset(); }
+  function prepareTurn() {
+    resetAnswerTimer(); $("#difficulty-zone").hidden = true;
+    pendingQuestion = state.gameMode === "classic" ? pickQuestion() : null;
+    if (state.gameMode === "difficulty") {
+      const review = pickQuestion.peekReview();
+      if (review) pendingQuestion = pickQuestion(review.difficulty);
+    }
+    if (pendingQuestion?.reviewFirst === true) { openQuestionForWheelValue(50); return; }
+    TC.renderGame(state); TC.showWheel(); wheel.reset();
+  }
 
-  async function spinWheel() {
-    if (!state || state.phase !== "spin") return;
+  async function spinWheel(power) {
+    if (!state || state.phase !== "spin" || wheel.spinning) return;
     TC.startWheelTicks(TC.CONFIG.wheelSpinMs);
-    const value = await wheel.spin();
+    const value = await wheel.spin(power);
     TC.stopWheelTicks();
     if (!value || state.phase !== "spin") return;
     if (value === 100) { TC.playFeedbackSound("cheer"); TC.launchJackpotConfetti(); }
@@ -140,11 +155,28 @@
     pendingWheelValue = value; TC.renderGame(state); TC.showSpinResult(value);
   }
 
-  function openQuestionForWheelValue(value) {
-    if (!state || !value || state.phase !== "spin") return;
-    const question = TC.shuffleQuestionOptions(pickQuestion());
+  function openQuestionForWheelValue(value, difficulty) {
+    if (!state || !value || !["spin", "difficulty"].includes(state.phase)) return;
+    if (state.gameMode === "difficulty" && difficulty === undefined && !pendingQuestion?.reviewFirst) { showDifficultyChoice(value); return; }
+    const selected = pendingQuestion || pickQuestion(difficulty);
+    if (!selected) return;
+    const question = TC.shuffleQuestionOptions(selected);
     if (!TC.setWheelValue(state, value, question)) return;
-    pendingWheelValue = null; TC.renderGame(state); TC.showQuestion(question, value, answerQuestion);
+    pendingQuestion = null; pendingWheelValue = null; $("#difficulty-zone").hidden = true;
+    TC.renderGame(state); TC.showQuestion(question, TC.questionPoints(state), answerQuestion, state.gameMode);
+  }
+
+  function showDifficultyChoice(value) {
+    pendingWheelValue = value; state.phase = "difficulty";
+    TC.showWheel(); TC.els.wheelZone.hidden = true; TC.renderGame(state);
+    const available = pickQuestion.availableDifficulties();
+    $("#difficulty-base-points").textContent = `WHEEL: ${value} POINTS`;
+    document.querySelectorAll("[data-difficulty]").forEach((button) => {
+      const difficulty = Number(button.dataset.difficulty);
+      button.disabled = !available.includes(difficulty);
+      button.textContent = difficulty === 1 ? `★ EASY · ×1 · ${value} POINTS` : `★★ MEDIUM · ×1.5 · ${value * 1.5} POINTS`;
+    });
+    $("#difficulty-zone").hidden = false;
   }
 
   function keepSpinResult() {
@@ -180,7 +212,7 @@
 
   function useDoublePoints() {
     if (!state || !TC.useJoker(state, "doublePoints")) return;
-    TC.activateDoublePoints(state.wheelValue * 2); closeJokerOverlay(); TC.renderGame(state);
+    TC.activateDoublePoints(TC.questionPoints(state) * 2); closeJokerOverlay(); TC.renderGame(state);
   }
 
   function answerQuestion(index, timedOut = false) {
@@ -201,8 +233,11 @@
   }
 
   function handleNextTurn() {
+    if (!state || TC.els.nextTurn.disabled) return;
     if (TC.els.nextTurn.dataset.action === "reveal") { TC.revealAnswer(state?.question?.answer); return; }
-    nextTurn();
+    if (state.phase !== "score") return;
+    TC.els.nextTurn.disabled = true;
+    TC.showLeaderboard(state, nextTurn);
   }
 
   function closeAwardBreakdown() {
@@ -214,6 +249,9 @@
 
   async function finishGame() {
     if (!state) return;
+    TC.hideLeaderboard();
+    TC.closeTeamScores();
+    wheel.cancelCharge();
     stopAnswerTimer();
     await TC.dependenciesReady;
     TC.stopPortraitEffects();
@@ -240,10 +278,23 @@
     }
   }
 
+  async function exitFullscreen() {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+      TC.showToast("For browser full screen, press F11 or Esc.");
+      return;
+    }
+    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.msExitFullscreen;
+    try {
+      if (!exit) throw new Error("Fullscreen exit is unavailable");
+      await exit.call(document);
+    } catch {
+      TC.showToast("Could not exit full screen. Press Esc or F11.");
+    }
+  }
+
   function toggleFullscreen() {
-    if (document.fullscreenElement || document.webkitFullscreenElement) {
-      const exit = document.exitFullscreen || document.webkitExitFullscreen;
-      if (exit) { const result = exit.call(document); result?.catch?.(() => {}); }
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+      exitFullscreen();
       return;
     }
     requestFullscreen();
@@ -269,15 +320,31 @@
   TC.els.teamEditor.addEventListener("click", (event) => { const button = event.target.closest("[data-remove-student]"); if (!button) return; setupGroups[Number(button.dataset.removeGroup)].splice(Number(button.dataset.removeStudent), 1); syncSetup(); });
   $("#add-student-button").addEventListener("click", addManualStudent); TC.els.manualName.addEventListener("keydown", (event) => { if (event.key === "Enter") addManualStudent(); });
   $("#open-roster-button").addEventListener("click", openRosterPicker); document.querySelectorAll("[data-close-roster]").forEach((button) => button.addEventListener("click", () => { TC.els.rosterDialog.hidden = true; })); document.querySelectorAll("[data-close-award-breakdown]").forEach((button) => button.addEventListener("click", closeAwardBreakdown));
-  TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addEventListener("click", startGame); $("#back-to-teams-button").addEventListener("click", () => TC.showScreen("setup")); $("#spin-wheel-button").addEventListener("click", spinWheel); $("#keep-spin-button").addEventListener("click", keepSpinResult); $("#spin-again-button").addEventListener("click", useSpinAgain); $("#use-joker-button").addEventListener("click", openJokerOverlay); $("#tc-joker-fifty-button").addEventListener("click", useFiftyFifty); $("#tc-joker-double-button").addEventListener("click", useDoublePoints); $("#tc-joker-cancel-button").addEventListener("click", closeJokerOverlay); $("#tc-joker-overlay").addEventListener("click", (event) => { if (event.target.id === "tc-joker-overlay") closeJokerOverlay(); }); $("#next-turn-button").addEventListener("click", handleNextTurn); $("#continue-round-button").addEventListener("click", continueRound); $("#end-round-button").addEventListener("click", finishGame);
+TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addEventListener("click", startGame); $("#back-to-teams-button").addEventListener("click", () => TC.showScreen("setup")); $("#keep-spin-button").addEventListener("click", keepSpinResult); $("#spin-again-button").addEventListener("click", useSpinAgain); $("#use-joker-button").addEventListener("click", openJokerOverlay); $("#tc-joker-fifty-button").addEventListener("click", useFiftyFifty); $("#tc-joker-double-button").addEventListener("click", useDoublePoints); $("#tc-joker-cancel-button").addEventListener("click", closeJokerOverlay); $("#tc-joker-overlay").addEventListener("click", (event) => { if (event.target.id === "tc-joker-overlay") closeJokerOverlay(); }); $("#next-turn-button").addEventListener("click", handleNextTurn); $("#continue-round-button").addEventListener("click", continueRound); $("#end-round-button").addEventListener("click", finishGame);
   $("#finish-game-button").addEventListener("click", finishGame);
+  $("#scores-button").addEventListener("click", () => {
+    if (!state || state.phase !== "spin" || TC.els.wheelZone.hidden || wheel.spinning) return;
+    wheel.cancelCharge(); TC.showTeamScores(state);
+  });
+  const closeScores = () => { TC.closeTeamScores(); $("#scores-button").focus(); };
+  document.querySelectorAll("[data-close-team-scores]").forEach((button) => button.addEventListener("click", closeScores));
+  document.addEventListener("keydown", (event) => {
+    if ($("#team-scores-overlay").hidden) return;
+    if (event.key === "Escape") { event.preventDefault(); closeScores(); }
+    else if (event.key === "Tab") { event.preventDefault(); $("#team-scores-close").focus(); }
+  });
   $("#start-timer-button").addEventListener("click", startAnswerTimer);
+  wheel.bindSpin(spinWheel, () => !!state && state.phase === "spin" && !pendingWheelValue);
+  document.querySelectorAll("[data-difficulty]").forEach((button) => button.addEventListener("click", () => {
+    if (state?.phase !== "difficulty" || button.disabled) return;
+    openQuestionForWheelValue(pendingWheelValue, Number(button.dataset.difficulty));
+  }));
   $("#lite-mode-button").addEventListener("click", () => setLiteMode(!document.body.classList.contains("lite-mode")));
   $("#text-scale-button").addEventListener("click", () => { const current = Number(TC.els.questionZone.dataset.textScale) || 100; setQuestionTextScale(current === 100 ? 150 : current === 150 ? 200 : 100); });
   $("#fullscreen-button").addEventListener("click", toggleFullscreen);
   $("#setup-fullscreen-button").addEventListener("click", toggleFullscreen);
   $("#selection-fullscreen-button").addEventListener("click", toggleFullscreen);
-  $("#winner-transfer-stars").addEventListener("click", transferPoints); $("#winner-play-again").addEventListener("click", () => location.reload()); $("#winner-exit").addEventListener("click", () => document.exitFullscreen?.().catch(() => {}));
+  $("#winner-transfer-stars").addEventListener("click", transferPoints); $("#winner-play-again").addEventListener("click", () => location.reload()); $("#winner-exit").addEventListener("click", exitFullscreen);
   const templateErrors = TC.validateQuestionTemplates(allQuestions); if (templateErrors.length) console.error("Question template errors:", templateErrors);
   armAutoFullscreen(TC.els.setup);
   setLiteMode(storedLiteMode());

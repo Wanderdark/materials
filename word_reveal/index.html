@@ -543,6 +543,9 @@ body.game-active #lite-btn{display:flex!important}
 /* ── ROUND END (CONTINUE?) OVERLAY ── */
 #round-end-overlay{position:fixed;inset:0;z-index:8600;background:rgba(4,2,16,.93);display:flex;align-items:center;justify-content:center}
 #round-end-overlay.hidden{display:none}
+#round-end-overlay .reo-box{max-width:1200px;max-height:94vh;overflow-y:auto;padding:24px}
+#round-end-overlay .scores-panels{height:55vh;margin:20px 0;text-align:left}
+#round-end-overlay .reo-round-label{font-size:clamp(24px,3vw,40px);color:var(--gold)}
 .reo-box{background:linear-gradient(145deg,#1e0d4e,#0f0628);border:2px solid var(--gold);border-radius:28px;padding:44px 60px 40px;text-align:center;max-width:520px;width:90%;box-shadow:0 0 100px rgba(255,215,0,.12);animation:modalIn .4s cubic-bezier(.175,.885,.32,1.275)}
 .reo-round-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(14px,1.8vw,20px);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .reo-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,86px);color:var(--gold);letter-spacing:.08em;text-shadow:0 0 30px rgba(255,215,0,.6);line-height:1;margin-bottom:6px}
@@ -883,13 +886,21 @@ body.game-active #lite-btn{display:flex!important}
 
 <!-- ═══════════ ROUND END / CONTINUE? ═══════════ -->
 <div id="round-end-overlay" class="hidden">
-  <div class="reo-box">
-    <div class="reo-round-label">ROUND <span id="reo-num">2</span></div>
-    <div class="reo-title">TAMAMLANDI</div>
-    <div class="reo-continue">DEVAM EDELİM Mİ?</div>
+  <div class="reo-box scores-modal">
+    <div class="reo-round-label">ROUND <span id="reo-num">1</span> Complete</div>
+    <div class="scores-panels">
+      <div class="sp-left">
+        <div class="sp-left-title">PLAYER SCORES</div>
+        <div id="reo-left" style="display:flex;flex-direction:column;gap:7px;overflow-y:auto;flex:1"></div>
+      </div>
+      <div class="sp-right">
+        <div class="sp-right-title">TEAM SCORES</div>
+        <div class="sg-grid" id="reo-right"></div>
+      </div>
+    </div>
     <div class="reo-btns">
-      <button class="reo-btn reo-no" onclick="roundEndNo()">▶ YENİ ROUND</button>
-      <button class="reo-btn reo-yes" onclick="roundEndYes()">🏆 SONUÇLAR</button>
+      <button class="reo-btn reo-no" onclick="roundEndNo()">▶ CONTINUE</button>
+      <button class="reo-btn reo-yes" onclick="roundEndYes()">🏆 FINISH</button>
     </div>
   </div>
 </div>
@@ -1088,6 +1099,7 @@ let wrImportedRosterClassroomId = '';
 let wrFinalStarsTransferred = false;
 let roundNumber        = 1;
 let turnsThisRound     = 0;
+let _roundTurns        = [0,0,0];
 let _slotRevealed      = [new Array(8).fill(false),new Array(8).fill(false),new Array(8).fill(false)];
 
 // ── SPAM DETECTION ──
@@ -1643,7 +1655,6 @@ function importWrRosterClass(classroomId) {
 
 function wrFinalStarAwards() {
   const activeGIs = [0, 1, 2].slice(0, groupCount);
-  const ranking = activeGIs.slice().sort((a, b) => groupScores[b] - groupScores[a]);
   const all = activeGIs.flatMap((gi) => (groupStudents[gi] || []).map((name, si) => ({
     name,
     pts: Number(studentScoreMap[gi][si]?.pts) || 0,
@@ -1653,7 +1664,7 @@ function wrFinalStarAwards() {
   const awards = [];
 
   activeGIs.forEach((gi) => {
-    const rank = ranking.indexOf(gi) + 1;
+    const rank = 1 + activeGIs.filter((g) => groupScores[g] > groupScores[gi]).length;
     const students = (groupStudents[gi] || []).map((name, si) => ({
       name,
       pts: Number(studentScoreMap[gi][si]?.pts) || 0
@@ -1669,24 +1680,55 @@ function wrFinalStarAwards() {
   return awards;
 }
 
+function wrTransferClassroomId() {
+  const teacher = window.TeacherControl;
+  return wrImportedRosterClassroomId || (teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '') || '';
+}
+
 function updateWrFinalStarsTransferButton() {
   const button = document.getElementById('wr-transfer-stars');
   if (!button) return;
-  const canTransfer = !!wrImportedRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === 'function';
-  button.hidden = !canTransfer;
+  const canTransfer = !!wrTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  button.hidden = false;
   button.disabled = wrFinalStarsTransferred;
+  button.title = canTransfer ? '1 yıldız = 2 HUD puanı' : 'Teacher HUD rosterında sınıfı kilitleyin.';
   button.textContent = wrFinalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
 }
 
 function transferWrFinalStarsToRoster() {
-  if (wrFinalStarsTransferred || !wrImportedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
+  if (wrFinalStarsTransferred) return;
+  const teacher = window.TeacherControl;
+  if (typeof teacher?.awardFinalPoints !== 'function') {
+    showToast('Teacher HUD hazır değil. Sayfayı yenileyip tekrar deneyin.', 'warn', 4500);
+    return;
+  }
+  const classroomId = wrTransferClassroomId();
+  const classroom = teacher.getClassrooms?.().find(item => item.id === classroomId);
+  if (!classroom) {
+    showToast('Önce Teacher HUD rosterında doğru sınıfı kilitleyin.', 'warn', 4500);
+    return;
+  }
   const awards = wrFinalStarAwards()
     .filter((award) => award.name && award.stars > 0)
-    .map((award) => ({ name: award.name, points: award.stars * 5 }));
-  const result = window.TeacherControl.awardFinalPoints(awards, wrImportedRosterClassroomId);
+    .map((award) => ({ name: award.name, points: award.stars * 2 }));
+  if (!awards.length) {
+    showToast('Aktarılacak yıldız yok.', 'warn', 3500);
+    return;
+  }
+  const normalizeName = name => String(name || '').trim().replace(/\s+/g, ' ').toLocaleUpperCase('tr-TR');
+  const rosterNames = new Set((classroom.roster || []).map(student => normalizeName(student.name)));
+  const missing = awards.filter(award => !rosterNames.has(normalizeName(award.name)));
+  if (missing.length) {
+    showToast('Rosterda bulunamayan öğrenciler: ' + missing.map(award => award.name).join(', '), 'warn', 6000);
+    return;
+  }
+  const result = teacher.awardFinalPoints(awards, classroomId);
   if (result?.awarded?.length) {
     wrFinalStarsTransferred = true;
     updateWrFinalStarsTransferButton();
+    showToast('✓ Yıldızlar HUD puanlarına aktarıldı (1 yıldız = 2 puan).', 'success', 4500);
+  } else {
+    showToast('Puanlar aktarılamadı. Roster sınıfını kontrol edin.', 'warn', 4500);
   }
 }
 
@@ -1907,12 +1949,14 @@ function onJokerPressed() {
   // Show panel
   const panel = document.getElementById('joker-panel');
   if(panel) panel.style.display = 'flex';
+  document.getElementById('stop-btn').textContent = '↩ BACK';
   _updateJokerBtn();
 }
 
 function onJokerSelected(type) {
   const panel = document.getElementById('joker-panel');
   if(panel) panel.style.display = 'none';
+  document.getElementById('stop-btn').textContent = '🛑 STOP!';
   _jokerCounts[activeGroup]--;
   _updateJokerBtn();
   if(type === 'SHATTER') {
@@ -2151,6 +2195,7 @@ function startGame() {
   activeGroup      = 0;
   roundNumber      = 1;
   turnsThisRound   = 0;
+  _roundTurns      = [0,0,0];
   gameActive       = true;
   _clickLog        = [[],[],[]];
   _spamLocked      = [false,false,false];
@@ -2412,7 +2457,7 @@ function _doBeginTurn() {
   updateStudentOnCard();
   // stop button stays disabled until READY is pressed
   const sb = document.getElementById('stop-btn');
-  if(sb) sb.disabled=true;
+  if(sb) { sb.disabled=true; sb.textContent='🛑 STOP!'; }
 
   // FLASH bonus: leaderboard 3sn gösteriliyor olabilir — önce bekle, sonra blurlu önizle
   if(_roundBonus[gi] === 'FLASH') {
@@ -2440,6 +2485,14 @@ function onReadyPressed() {
 }
 
 function onStopPressed() {
+  const panel = document.getElementById('joker-panel');
+  if(panel && panel.style.display === 'flex') {
+    panel.style.display = 'none';
+    document.getElementById('stop-btn').textContent = '🛑 STOP!';
+    startReveal();
+    _updateJokerBtn();
+    return;
+  }
   if(_spamLocked[activeGroup]) return;
   if(_detectSpam(activeGroup)) return;
   // X-RAY active: shatter at current crosshair position, then continue reveal normally
@@ -2923,20 +2976,22 @@ function advanceTurn() {
     currentSlotIdx[gi] = (currentSlotIdx[gi]+1) % groupStudents[gi].length;
   }
   // advance group
-  const prevGroup = activeGroup;
+  _roundTurns[gi]++;
   let next = (activeGroup+1) % groupCount;
   // skip groups with no students
   let tries=0;
-  while(tries<groupCount && (!groupStudents[next]||groupStudents[next].length===0)) {
+  while(tries<groupCount && (!groupStudents[next]||_roundTurns[next]>=groupStudents[next].length)) {
     next=(next+1)%groupCount; tries++;
   }
   activeGroup=next;
   turnsThisRound++;
   const totalStudents = [0,1,2].slice(0,groupCount).reduce((s,g)=>s+(groupStudents[g]?.length||0),0);
-  if(turnsThisRound >= Math.max(1,totalStudents) && turnsThisRound%groupCount===0) {
+  if(turnsThisRound >= Math.max(1,totalStudents)) {
     const completedRound = roundNumber;
     roundNumber++;
     turnsThisRound = 0;
+    _roundTurns = [0,0,0];
+    activeGroup = [0,1,2].slice(0,groupCount).find(g => groupStudents[g]?.length > 0) ?? 0;
     // Reset per-round bonus flags
     _roundSpun           = [false,false,false];
     _gpGroups            = [false,false,false];
@@ -2952,16 +3007,12 @@ function advanceTurn() {
     for(let i=0;i<3;i++){
       if(_bonusPool[i].length===0) _bonusPool[i]=[...ALL_BONUSES];
     }
-    if(completedRound >= 2) {
-      // Show CONTINUE? overlay 2 seconds after round ends
-      const reoNum = document.getElementById('reo-num');
-      if(reoNum) reoNum.textContent = completedRound;
-      setTimeout(() => {
-        document.getElementById('round-end-overlay').classList.remove('hidden');
-      }, 2000);
-    } else {
-      showRoundOverlay(roundNumber, ()=>beginTurn());
-    }
+    stopReveal();
+    document.getElementById('stop-btn').disabled = true;
+    if(jBtn) jBtn.style.display = 'none';
+    document.getElementById('reo-num').textContent = completedRound;
+    openScoresPopup('reo-left', 'reo-right', false);
+    document.getElementById('round-end-overlay').classList.remove('hidden');
     return;
   }
   beginTurn();
@@ -3294,9 +3345,9 @@ function _showBonusBanner(text, color) {
 
 
 // ── SCORES POPUP ──
-function openScoresPopup() {
-  const leftEl  = document.getElementById('sc-pop-left');
-  const rightEl = document.getElementById('sc-pop-right');
+function openScoresPopup(leftId = 'sc-pop-left', rightId = 'sc-pop-right', showPopup = true) {
+  const leftEl  = document.getElementById(leftId);
+  const rightEl = document.getElementById(rightId);
   if(!leftEl || !rightEl) return;
   leftEl.innerHTML=''; rightEl.innerHTML='';
 
@@ -3342,6 +3393,12 @@ function openScoresPopup() {
     hdr.className='sg-hdr';
     hdr.textContent=groupNames[gi];
     col.appendChild(hdr);
+    if(!showPopup) {
+      const total=document.createElement('div');
+      total.className='sg-total';
+      total.textContent=groupScores[gi]||0;
+      col.appendChild(total);
+    }
     if(!students.length){
       const empty=document.createElement('div');
       empty.className='sg-row';
@@ -3362,7 +3419,7 @@ function openScoresPopup() {
     rightEl.appendChild(col);
   });
 
-  document.getElementById('scores-overlay').classList.add('open');
+  if(showPopup) document.getElementById('scores-overlay').classList.add('open');
 }
 
 function closeScoresPopup() {
@@ -3428,9 +3485,11 @@ function showWinner() {
   all.sort((a,b)=>b.pts-a.pts);
 
   // Winner group
-  const gi = groupScores.slice(0,groupCount).indexOf(Math.max(...groupScores.slice(0,groupCount)));
-  document.getElementById('wl-group').textContent = groupNames[gi].trim()||('GRUP '+(gi+1));
-  document.getElementById('wl-pts').textContent   = groupScores[gi];
+  const winningScore = Math.max(...groupScores.slice(0,groupCount));
+  const winners = [0,1,2].slice(0,groupCount).filter(g=>groupScores[g]===winningScore);
+  document.querySelector('.winner-title-big').textContent = winners.length > 1 ? 'BERABERLİK!' : 'WINNER!';
+  document.getElementById('wl-group').textContent = winners.map(g=>groupNames[g].trim()||('GRUP '+(g+1))).join(' & ');
+  document.getElementById('wl-pts').textContent   = winningScore;
 
   // Top 4 in announcement panel
   const allEl = document.getElementById('wl-all');
@@ -3451,8 +3510,9 @@ function showWinner() {
     const medals=['sp-gold','sp-silver','sp-bronze'];
     all.slice(0,5).forEach((s,i)=>{
       const row=document.createElement('div');
-      row.className='sp-row '+(medals[i]||'');
-      row.innerHTML=`<div class="sp-rk">${i+1}</div><div class="sp-info"><div class="sp-name">${s.name}</div><div class="sp-grp">${s.group}</div></div><div class="sp-pts">${s.pts}</div>`;
+      const rank=1+all.filter(student=>student.pts>s.pts).length;
+      row.className='sp-row '+(medals[rank-1]||'');
+      row.innerHTML=`<div class="sp-rk">${rank}</div><div class="sp-info"><div class="sp-name">${s.name}</div><div class="sp-grp">${s.group}</div></div><div class="sp-pts">${s.pts}</div>`;
       listEl.appendChild(row);
     });
   }
@@ -3465,7 +3525,7 @@ function showWinner() {
     const activeGIs=[0,1,2].slice(0,groupCount);
     const sortedGIs=[...activeGIs].sort((a,b)=>groupScores[b]-groupScores[a]);
     const groupRank={};
-    sortedGIs.forEach((g,i)=>{ groupRank[g]=i+1; });
+    sortedGIs.forEach(g=>{ groupRank[g]=1+activeGIs.filter(other=>groupScores[other]>groupScores[g]).length; });
     const trophies=['🥇','🥈','🥉'];
     const overallTop=Math.max(...all.map(s=>s.pts),0);
 
@@ -3512,8 +3572,9 @@ function showWinner() {
           if(s.pts>0 && s.pts===overallTop && rank!==1) stars++;
           const maxStars=3;
           const row=document.createElement('div');
-          row.className='sg-row'+(idx===0?' sg-top':'');
-          row.innerHTML=`<div class="sg-rank">${idx+1}</div><div class="sg-sname">${s.name}</div>${renderStars(stars,maxStars)}<div class="sg-spts">${s.pts}</div>`;
+          const studentRank=1+students.filter(student=>student.pts>s.pts).length;
+          row.className='sg-row'+(studentRank===1?' sg-top':'');
+          row.innerHTML=`<div class="sg-rank">${studentRank}</div><div class="sg-sname">${s.name}</div>${renderStars(stars,maxStars)}<div class="sg-spts">${s.pts}</div>`;
           col.appendChild(row);
         });
       }
@@ -3535,6 +3596,7 @@ function playAgain() {
   groupScores=[0,0,0];
   currentSlotIdx=[0,0,0];
   activeGroup=0; roundNumber=1; turnsThisRound=0;
+  _roundTurns=[0,0,0];
   [0,1,2].forEach(gi=>{ studentScoreMap[gi]=(groupStudents[gi]||[]).map(n=>({name:n,pts:0})); });
   _clickLog=[[],[],[]]; _spamLocked=[false,false,false]; _spamStudents=[new Set(),new Set(),new Set()];
   _streak=[0,0,0];

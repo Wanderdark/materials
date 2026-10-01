@@ -3124,8 +3124,8 @@ function _activeTournamentMatch() {
 function _winHudAwardsForMatch(match) {
   if (!match || !match.score || match.winnerSide === null || match.winnerSide === undefined) return [];
   const names = [
-    match.p1?.displayName || match.p1?.name || playerNames[0],
-    match.p2?.displayName || match.p2?.name || playerNames[1]
+    _tournamentPlayerDisplayName(match.p1) || playerNames[0],
+    _tournamentPlayerDisplayName(match.p2) || playerNames[1]
   ];
   const winnerSide = match.winnerSide;
   const loserSide = 1 - winnerSide;
@@ -3160,8 +3160,8 @@ function _resolveWinHudClassroomId(match) {
   if (_wdImportedRosterClassroomId) return _wdImportedRosterClassroomId;
   const classrooms = window.TeacherControl?.getClassrooms?.() || [];
   const names = [
-    match?.p1?.displayName || match?.p1?.name || playerNames[0],
-    match?.p2?.displayName || match?.p2?.name || playerNames[1]
+    _tournamentPlayerDisplayName(match?.p1) || playerNames[0],
+    _tournamentPlayerDisplayName(match?.p2) || playerNames[1]
   ].map(_wdRosterNameKey).filter(Boolean);
   const found = classrooms.find(classroom => {
     const rosterNames = new Set((classroom.roster || []).map(student => _wdRosterNameKey(student?.name)));
@@ -3647,7 +3647,7 @@ function _advanceTournamentIfReady() {
   if (_tournamentRound === 'final') {
     if (!_tournamentChampion) {
       _tournamentChampion = _tournamentMatches[0].winner;
-      _addChampionship(_tournamentChampion.displayName);
+      _addChampionship(_tournamentPlayerDisplayName(_tournamentChampion));
     }
     return;
   }
@@ -3684,6 +3684,15 @@ function _tournamentAvatarPath(name) {
   return _tournamentAvatarPaths(name)[0] || '';
 }
 
+function _tournamentPlayerDisplayName(player) {
+  if (typeof player === 'string') return player;
+  return player?.displayName || player?.name || '';
+}
+
+function _tournamentPlayerEasy(player) {
+  return typeof player === 'object' && !!player?.easy;
+}
+
 function _applyTournamentAvatar(img, fallback, name) {
   const paths = _tournamentAvatarPaths(name);
   let pathIndex = 0;
@@ -3718,7 +3727,7 @@ function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
     return card;
   }
 
-  const displayName = player?.displayName || player?.name || '';
+  const displayName = _tournamentPlayerDisplayName(player);
   const name = document.createElement('div');
   name.className = 'tr-player-name';
   name.textContent = displayName;
@@ -3762,8 +3771,9 @@ function renderTournamentChart() {
   _tournamentMatches.forEach((match, index) => {
     const row = document.createElement('div');
     row.className = 'tr-match' + (match.winner ? ' completed' : '');
-    const p1Won = match.winnerSide === 0 || (match.winnerSide === undefined && match.winner && match.winner.name === match.p1.name);
-    const p2Won = match.winnerSide === 1 || (match.winnerSide === undefined && match.winner && match.winner.name === match.p2.name);
+    const winnerName = _tournamentPlayerDisplayName(match.winner);
+    const p1Won = match.winnerSide === 0 || (match.winnerSide === undefined && winnerName && winnerName === _tournamentPlayerDisplayName(match.p1));
+    const p2Won = match.winnerSide === 1 || (match.winnerSide === undefined && winnerName && winnerName === _tournamentPlayerDisplayName(match.p2));
     const p1Eliminated = !!match.winner && !p1Won;
     const p2Eliminated = !!match.winner && !p2Won;
 
@@ -3822,8 +3832,8 @@ function startTournamentMatch(index) {
   _tournamentActiveMatch = index;
   _tournamentResultSaved = false;
   _saveTournamentState();
-  playerNames = [match.p1.displayName, match.p2.displayName];
-  _easyMode = [match.p1.easy, match.p2.easy];
+  playerNames = [_tournamentPlayerDisplayName(match.p1), _tournamentPlayerDisplayName(match.p2)];
+  _easyMode = [_tournamentPlayerEasy(match.p1), _tournamentPlayerEasy(match.p2)];
   document.getElementById('screen-tournament').classList.add('hidden');
   document.getElementById('settings-overlay').style.display = 'flex';
 }
@@ -3840,7 +3850,7 @@ let _tournamentFinalCheerAudio = null;
 
 function showTournamentChampion() {
   if (!_tournamentChampion) return;
-  const championName = _tournamentChampion.displayName || _tournamentChampion.name || '';
+  const championName = _tournamentPlayerDisplayName(_tournamentChampion);
   document.getElementById('tc-name').textContent = championName;
   const portrait = document.getElementById('tc-portrait');
   const fallback = document.getElementById('tc-portrait-fallback');

@@ -34,18 +34,31 @@
       return queue;
     }
 
-    return () => {
+    function activeQueue() {
       if (!reviewQueue.length && !priorityOneQueue.length && !priorityTwoQueue.length && !regularQueue.length) {
         reviewQueue = questions.filter((question) => question.reviewFirst === true);
         priorityOneQueue = shuffleQueue(questions.filter((question) => (question.priority === 1 || question.priority === true) && question.reviewFirst !== true));
         priorityTwoQueue = shuffleQueue(questions.filter((question) => question.priority === 2 && question.reviewFirst !== true));
         regularQueue = shuffleQueue(questions.filter((question) => question.priority !== 1 && question.priority !== 2 && question.priority !== true && question.reviewFirst !== true));
       }
-      const queue = reviewQueue.length ? reviewQueue : priorityOneQueue.length ? priorityOneQueue : priorityTwoQueue.length ? priorityTwoQueue : regularQueue;
-      const question = queue.shift();
+      return reviewQueue.length ? reviewQueue : priorityOneQueue.length ? priorityOneQueue : priorityTwoQueue.length ? priorityTwoQueue : regularQueue;
+    }
+
+    const pick = (difficulty) => {
+      const firstQueue = activeQueue();
+      const queue = difficulty === undefined ? firstQueue : [reviewQueue, priorityOneQueue, priorityTwoQueue, regularQueue].find((items) => items.some((question) => question.difficulty === difficulty)) || [];
+      const index = difficulty === undefined ? 0 : queue.findIndex((question) => question.difficulty === difficulty);
+      if (index < 0) return undefined;
+      const [question] = queue.splice(index, 1);
       previousId = question?.id || "";
       return question;
     };
+    pick.availableDifficulties = () => {
+      activeQueue();
+      return [...new Set([...reviewQueue, ...priorityOneQueue, ...priorityTwoQueue, ...regularQueue].map((question) => question.difficulty))];
+    };
+    pick.peekReview = () => activeQueue().find((question) => question.reviewFirst === true);
+    return pick;
   }
 
   function buildQuestionCatalog(questions) {

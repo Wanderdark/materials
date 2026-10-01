@@ -39,11 +39,12 @@ function renderPreferenceVideoHub(example) {
   grid.className = "preference-video-hub-grid";
 
   data.items.forEach((character) => {
+    const unavailable = !character.videoDialogue;
     const completed = Boolean(hubState.completed[character.name]);
     const card = document.createElement("button");
     card.type = "button";
-    card.className = `preference-video-hub-card${completed ? " is-completed" : ""}`;
-    card.disabled = completed;
+    card.className = `preference-video-hub-card${completed ? " is-completed" : ""}${unavailable ? " is-unavailable" : ""}`;
+    card.disabled = completed || unavailable;
     card.setAttribute("aria-label", `${character.name}'s preference video`);
 
     const image = document.createElement("img");
@@ -58,7 +59,7 @@ function renderPreferenceVideoHub(example) {
       tick.className = "preference-video-hub-tick";
       tick.textContent = "✓";
       card.append(tick);
-    } else {
+    } else if (!unavailable) {
       card.addEventListener("click", () => {
         clearPreferenceVideoHubPractice();
         sentencePanel?.classList.remove("hidden");

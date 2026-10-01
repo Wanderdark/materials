@@ -3,6 +3,10 @@
 
   const TEMPLATE_INDEX = Object.freeze({
     dialogue: Object.freeze({ label: "Dialogue", description: "Portrait-supported conversation with one or more speakers.", requiredFields: ["lines"] }),
+    ticketChoice: Object.freeze({ label: "Ticket Choice", description: "Compare two preferences and choose a matching event ticket.", requiredFields: ["opinions", "tickets"] }),
+    reading: Object.freeze({ label: "Reading", description: "Read a passage and choose the matching statement.", requiredFields: ["passage"] }),
+    traitMap: Object.freeze({ label: "Trait Map", description: "A character portrait surrounded by personality traits.", requiredFields: ["speaker", "traits"] }),
+    scheduleDialogue: Object.freeze({ label: "Schedule Dialogue", description: "Use a character's schedule to complete a conversation.", requiredFields: ["speaker", "schedule", "lines"] }),
     situation: Object.freeze({ label: "Situation", description: "A real-life communication task presented as a scenario.", requiredFields: ["situation"] }),
     classification: Object.freeze({ label: "Classification", description: "Classify a sentence by its communicative function.", requiredFields: ["statement"] }),
     sequence: Object.freeze({ label: "Conversation Flow", description: "Choose the line that logically completes a conversation sequence.", requiredFields: ["lines"] }),
@@ -26,7 +30,7 @@
     const slug = String(speaker || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-");
     if (!slug) return [];
     return [
-      `../func_presenter/images/avatars/v2/${slug}.webp`
+      `../olivias_movie_memories/assets/portraits/${slug}.webp`
     ];
   }
 
@@ -73,6 +77,64 @@
     const dialogue = makeElement("div", numbered ? "dialogue-card sequence-card" : "dialogue-card");
     question.lines.forEach((line, index) => dialogue.appendChild(createDialogueLine(line, numbered, index)));
     container.appendChild(dialogue);
+  }
+
+  function renderTicketChoice(container, question) {
+    if (question.passage) { container.appendChild(makeElement("p", "ticket-passage", question.passage)); return; }
+    const grid = makeElement("div", "ticket-speakers");
+    question.opinions.forEach((opinion) => {
+      const card = makeElement("article", "ticket-speaker");
+      const portrait = makeElement("img", "ticket-portrait");
+      attachPortrait(portrait, opinion.speaker);
+      const copy = makeElement("div", "ticket-speech");
+      copy.append(makeElement("strong", "ticket-speaker-name", opinion.speaker), makeElement("p", "ticket-speech-text", opinion.text));
+      card.append(portrait, copy); grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  }
+
+  function renderTicketOptions(container, question) {
+    if (question.template !== "ticketChoice") return;
+    [...container.children].forEach((button, index) => {
+      const ticket = question.tickets.find((item) => item.title === question.options[index]);
+      if (!ticket) return;
+      button.classList.add("concert-ticket", "ticket-" + ticket.theme);
+      const copy = button.lastElementChild;
+      copy.className = "ticket-copy"; copy.replaceChildren();
+      copy.append(makeElement("small", "ticket-genre", ticket.genre), makeElement("strong", "ticket-title", ticket.title));
+      if (ticket.day || ticket.time) copy.appendChild(makeElement("span", "ticket-details", [ticket.day, ticket.time].filter(Boolean).join(" · ")));
+      if (ticket.image) {
+        const image = makeElement("img", "ticket-image");
+        image.src = ticket.image; image.alt = ticket.genre + " concert";
+        button.insertBefore(image, copy); button.classList.add("has-ticket-image");
+      }
+      button.appendChild(makeElement("span", "ticket-stub", "ADMIT ONE"));
+    });
+  }
+
+  function renderTraitMap(container, question) {
+    const card = makeElement("div", "trait-map");
+    const identity = makeElement("div", "trait-map-identity");
+    const portrait = makeElement("img", "trait-map-portrait");
+    attachPortrait(portrait, question.speaker);
+    identity.append(portrait, makeElement("strong", "trait-map-name", question.speaker));
+    card.appendChild(identity);
+    question.traits.forEach((trait) => card.appendChild(makeElement("span", "trait-map-label", trait)));
+    container.appendChild(card);
+  }
+
+  function renderScheduleDialogue(container, question) {
+    const context = makeElement("div", "schedule-dialogue");
+    context.appendChild(makeElement("strong", "schedule-owner", question.speaker + "'s schedule"));
+    const schedule = makeElement("div", "schedule-grid");
+    question.schedule.forEach((item) => {
+      const card = makeElement("article", "schedule-day");
+      card.append(makeElement("strong", "schedule-day-name", item.day), makeElement("span", "schedule-time", item.time), makeElement("p", "schedule-activity", item.activity));
+      schedule.appendChild(card);
+    });
+    context.appendChild(schedule);
+    renderDialogue(context, question);
+    container.appendChild(context);
   }
 
   function renderSituation(container, question) {
@@ -143,6 +205,25 @@
     container.appendChild(grid);
   }
 
+  function renderInlineFriendOptions(container, question) {
+    const items = question.template === "friendOpinions" ? question.opinions : question.template === "friendMessages" ? question.messages : null;
+    if (!items || items.length !== question.options.length || new Set(question.options).size !== items.length || !question.options.every((name) => items.some((item) => item.speaker === name))) return false;
+    const ordered = question.options.map((name) => items.find((item) => item.speaker === name));
+    const preview = makeElement("div");
+    const isPhone = question.template === "friendMessages";
+    if (isPhone) renderFriendMessages(preview, { ...question, messages: ordered });
+    else renderFriendOpinions(preview, { ...question, opinions: ordered });
+    [...preview.firstElementChild.children].forEach((card, index) => {
+      const button = container.children[index];
+      const letter = button.firstElementChild;
+      card.firstElementChild.insertBefore(letter, card.firstElementChild.firstElementChild);
+      button.classList.remove("has-option-portrait");
+      button.classList.add("inline-friend-option", isPhone ? "friend-message-phone" : "friend-opinion-card");
+      button.replaceChildren(...card.children);
+    });
+    return true;
+  }
+
   function renderChatThread(container, question) {
     const phone = makeElement("article", "chat-thread-phone");
     const top = makeElement("div", "chat-thread-top");
@@ -207,6 +288,10 @@
     const template = question.template || "dialogue";
     if (!TEMPLATE_INDEX[template]) return;
     if (template === "dialogue") renderDialogue(container, question);
+    else if (template === "ticketChoice") renderTicketChoice(container, question);
+    else if (template === "reading") container.appendChild(makeElement("p", "reading-passage", question.passage));
+    else if (template === "traitMap") renderTraitMap(container, question);
+    else if (template === "scheduleDialogue") renderScheduleDialogue(container, question);
     else if (template === "situation") renderSituation(container, question);
     else if (template === "classification") renderClassification(container, question);
     else if (template === "sequence") renderDialogue(container, question, true);
@@ -229,5 +314,5 @@
     });
   }
 
-  Object.assign(TC, { QUESTION_TEMPLATE_INDEX: TEMPLATE_INDEX, attachPortrait, renderQuestionTemplate, validateQuestionTemplates });
+  Object.assign(TC, { QUESTION_TEMPLATE_INDEX: TEMPLATE_INDEX, attachPortrait, renderInlineFriendOptions, renderQuestionTemplate, renderTicketOptions, validateQuestionTemplates });
 })();

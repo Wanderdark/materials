@@ -309,6 +309,7 @@ function renderVideoDialoguePractice(example) {
     let sequentialIndex = 0;
     const renderSequentialLine = () => {
       const line = data.lines[sequentialIndex];
+      let remainingChoices = (line.parts || []).filter((part) => part.choices || part.imageChoices).length;
       lines.replaceChildren(line.imageChoices
         ? createVideoDialogueImageSlotLine(line, (isCorrect) => {
           if (sequentialIndex >= data.lines.length - 1) {
@@ -326,6 +327,8 @@ function renderVideoDialoguePractice(example) {
           window.setTimeout(renderSequentialLine, 650);
           return;
         }
+        remainingChoices -= 1;
+        if (remainingChoices > 0) return;
         if (sequentialIndex >= data.lines.length - 1) {
           data.onComplete?.(!hasWrongAnswer);
           return;

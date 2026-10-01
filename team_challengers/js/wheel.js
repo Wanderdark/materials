@@ -39,7 +39,68 @@
       ctx.beginPath(); ctx.arc(center, center, radius, 0, Math.PI * 2); ctx.lineWidth = 8; ctx.strokeStyle = "#fff"; ctx.stroke();
     }
 
-    spin() {
+    bindSpin(onSpin, canSpin) {
+      this.powerBar = document.querySelector("#spin-power-bar");
+      this.powerFill = document.querySelector("#spin-power-fill");
+      this.chargeFrame = null;
+      this.chargePointer = null;
+      const powerAt = (elapsed) => {
+        const cycle = Math.max(0, elapsed - 200) % 4000;
+        return cycle <= 2000 ? cycle / 2000 : (4000 - cycle) / 2000;
+      };
+      const update = () => {
+        if (this.chargePointer === null) return;
+        const elapsed = performance.now() - this.chargeStarted;
+        if (elapsed >= 200) {
+          const power = powerAt(elapsed);
+          TC.updateSpinPowerSound(power);
+          this.powerBar.hidden = false;
+          this.powerFill.style.transform = `scaleX(${power})`;
+          this.powerBar.setAttribute("aria-valuenow", String(Math.round(power * 100)));
+          this.button.classList.add("is-charging");
+        }
+        this.chargeFrame = requestAnimationFrame(update);
+      };
+      this.button.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0 || this.spinning || this.button.disabled || this.chargePointer !== null || !canSpin()) return;
+        event.preventDefault();
+        this.chargePointer = event.pointerId;
+        this.chargeStarted = performance.now();
+        TC.prepareSpinPowerSound();
+        this.button.setPointerCapture(event.pointerId);
+        this.chargeFrame = requestAnimationFrame(update);
+      });
+      this.button.addEventListener("pointerup", (event) => {
+        if (event.pointerId !== this.chargePointer) return;
+        event.preventDefault();
+        const elapsed = performance.now() - this.chargeStarted;
+        const power = elapsed >= 200 ? powerAt(elapsed) : undefined;
+        this.cancelCharge();
+        if (canSpin() && !this.spinning && !this.button.disabled) onSpin(power);
+      });
+      ["pointercancel", "lostpointercapture"].forEach((type) => this.button.addEventListener(type, () => this.cancelCharge()));
+      ["contextmenu", "selectstart", "dragstart"].forEach((type) => this.button.addEventListener(type, (event) => event.preventDefault()));
+      this.button.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (event.detail === 0 && this.chargePointer === null && canSpin() && !this.spinning && !this.button.disabled) onSpin();
+      });
+      window.addEventListener("blur", () => this.cancelCharge());
+      document.addEventListener("visibilitychange", () => { if (document.hidden) this.cancelCharge(); });
+    }
+
+    cancelCharge() {
+      TC.stopSpinPowerSound();
+      if (this.chargeFrame !== null) cancelAnimationFrame(this.chargeFrame);
+      this.chargeFrame = null;
+      const pointer = this.chargePointer;
+      this.chargePointer = null;
+      if (pointer !== null && pointer !== undefined && this.button.hasPointerCapture(pointer)) this.button.releasePointerCapture(pointer);
+      if (this.powerBar) this.powerBar.hidden = true;
+      if (this.powerFill) this.powerFill.style.transform = "scaleX(0)";
+      this.button.classList.remove("is-charging");
+    }
+
+    spin(power) {
       if (this.spinning) return Promise.resolve(null);
       this.spinning = true;
       this.button.disabled = true;
@@ -48,7 +109,8 @@
       const desired = (360 - (selectedIndex * segmentDegrees + segmentDegrees / 2)) % 360;
       const current = ((this.rotation % 360) + 360) % 360;
       const extra = (desired - current + 360) % 360;
-      this.rotation += (6 + Math.floor(Math.random() * 3)) * 360 + extra;
+      const turns = power === undefined ? 6 + Math.floor(Math.random() * 3) : 3 + Math.round(Math.max(0, Math.min(1, power)) * 9);
+      this.rotation += turns * 360 + extra;
       this.canvas.style.transform = `rotate(${this.rotation}deg)`;
       return new Promise((resolve) => {
         let settled = false;
@@ -58,7 +120,7 @@
       });
     }
 
-    reset() { this.button.disabled = false; this.draw(); }
+    reset() { this.cancelCharge(); this.button.disabled = false; this.draw(); }
   }
 
   TC.PointsWheel = PointsWheel;

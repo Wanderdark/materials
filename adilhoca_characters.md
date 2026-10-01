@@ -836,7 +836,6 @@ Parent Hobbies:
 General Interests:
 - DIY
 - Board games
-- Washing the family car
 - Hiking
 
 Personality:
@@ -913,7 +912,6 @@ General Interests:
 - Basketball
 - Running
 - Board games
-- Washing the car
 - Outdoor sports
 
 Personality:

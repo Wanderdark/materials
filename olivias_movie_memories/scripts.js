@@ -1116,7 +1116,190 @@ evidenceEnd: "0:07.104",
     evidenceSentence: "Jack : I can catch a bigg/er/ fish /than/ that.",
   },
 
+{
+  id: "canonical_ella",
+  status: "published",
+  priority: "46",
+  videoSrc: "assets/video/canonical_ella.mp4",
+  title: "Ella dreams of becoming a singer when she grows up.",
+  transcript: "Ella : I /enjoy/ playing guitar and singing, I'll /definitely/ be a singer when I grow up.",
+  answerOptions: [
+    { id: "a", text: "Ella : Gitar çalmaktan ve şarkı söylemekten /hoşlanıyorum/, büyüdüğümde /kesinlikle/ şarkıcı olacağım." },
+    { id: "b", text: "Ella : Gitar çalmada ve şarkı söylemede çok iyiyim, büyüdüğümde belki şarkıcı olurum." }
+  ],
+  easyDistractor: "Ella : Gitar çalmaktan ve şarkı söylemekten nefret ediyorum, büyüdüğümde müzikle ilgilenmeyeceğim.",
+  correctOptionId: "a",
+  characterIds: ["ella", "ethan"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
 
+  evidenceStart: "0:02.119",
+evidenceEnd: "0:07.791",
+
+  evidenceSentence: "Ella : I /enjoy/ playing guitar and singing, I'll /definitely/ be a singer when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Ella's canonical voice.\nUse <<<Image2>>> as 25-year-old Ella's future identity and appearance reference.\nUse <<<Image3>>> as 25-year-old Ethan's future identity and appearance reference.\nLOCATION / SETTING:\nThe first part takes place in a comfortable family living room with a relaxed musical atmosphere.\nTIME AND WEATHER:\nEarly evening, mild and pleasant weather with warm natural light still entering through the windows.\nPRE-ACTION:\nThe video begins with 12-year-old Ella already sitting comfortably with an acoustic guitar.\nShe is playing a short, pleasant guitar passage for about 2–3 seconds.\nCLOTHING:\n12-year-old Ella wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nAdult Ella wears a stylish but simple rock-performance outfit with a dark fitted jacket, a simple top, and black full-length trousers.\nAdult Ethan wears a simple dark rock-band T-shirt and black full-length trousers.\nACCESSORIES:\n12-year-old Ella wears a small silver star-shaped necklace.\nAdult Ella wears a simple silver pendant necklace.\nAdult Ethan wears a dark wristband.\nSCENE / ACTION:\nElla naturally finishes the short guitar passage.\nShe keeps the guitar with her and turns her attention directly toward the camera, establishing clear eye contact.\nElla keeps direct eye contact throughout the entire first line:\nElla:\n\"I enjoy playing guitar and singing.\"\nAfter the line, Ella gives the guitar strings one final light strum.\nShe then looks directly back at the camera with a cheerful, confident expression and clearly re-establishes eye contact.\nElla keeps direct eye contact throughout the entire second line:\nElla:\n\"I'll definitely be a singer when I grow up.\"\nImmediately after Ella finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Ella physically aging or morphing during the transition.\nAs the light clears, reveal adult Ella from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Ella is now the lead singer of a rock band performing live on a concert stage.\nShe stands at the front of the stage holding a handheld microphone and confidently sings a short energetic rock vocal phrase.\nBehind her, the band is actively playing live.\nAdult Ethan from <<<Image3>>> is clearly recognizable as the band's drummer.\nHe is seated naturally behind a full drum kit and energetically plays the drums while Ella performs.\nKeep adult Ella as the main focus of the future scene, while adult Ethan remains clearly visible and recognizable as the drummer.\nThe performance feels like a genuine live rock-band performance rather than a posed group shot.\nAdult Ella finishes the short vocal phrase with confident stage presence while Ethan playing drums behind her.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_ava_chloe2",
+  status: "published",
+  priority: "47",
+  videoSrc: "assets/video/canonical_ava_chloe2.mp4",
+  title: "Ava gives a careless driver a lesson about littering.",
+  transcript: "Ava : You really /shouldn't/ throw rubbish around. Driver : Really, why not? Ava : Did you /like/ that, That's why.",
+  answerOptions: [
+    { id: "a", text: "Ava : Gerçekten etrafa çöp /atmamalısınız/. Sürücü : Gerçekten mi, neden? Ava : Bundan /hoşlandınız mı/, İşte bu yüzden." },
+    { id: "b", text: "Ava : Çöpünüzü çöp tenekesine atın. Sürücü : Gerçekten mi, neden? Ava : Bunu gördünüz mü, İşte bu yüzden." }
+  ],
+  easyDistractor: "Ava : Çöpünüzü istediğiniz yere atabilirsiniz. Sürücü : Gerçekten mi, neden olmasın? Ava : Bundan hoşlandınız mı, İşte bu yüzden.",
+  correctOptionId: "a",
+  characterIds: ["ava", "chloe"],
+  grades: [5,6,7,8],
+  functions: ["correcting_behaviour"],
+  theme: "canonical",
+  unit: "",
+
+ evidenceStart: "0:02.669",
+evidenceEnd: "0:11.478",
+
+  evidenceSentence: "Ava : You really /shouldn't/ throw rubbish around. Driver : Really, why not? Ava : Did you /like/ that, That's why.",
+
+  prompt: "Use <<<Image1>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ava's canonical voice.\nUse <<<Image2>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Chloe's canonical voice.\nUse <<<Image3>>>  as Chloe's Bermuda shorts reference.\nSETTING:\nA pleasant residential street beside a small public park on a mild spring afternoon.\nA car is parked legally beside the pavement.\nThe driver's side window is already fully open.\nA generic adult male driver is sitting normally in the driver's seat.\nPRE-ACTION:\nAva and Chloe are walking together along the pavement beside the park.\nChloe is casually holding an EMPTY crumpled chip packet in one hand.\nThe packet is clearly empty and belongs to Chloe.\nAs the girls approach the parked car, the driver casually throws a DIFFERENT piece of rubbish out through his open window onto the pavement.\nThe driver's rubbish lands clearly on the ground beside the car.\nAva immediately notices what he has done.\nHer expression changes from relaxed to clearly disapproving.\nChloe notices Ava's reaction and stops with her.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>>  and dark green full-length casual trousers.\nChloe wears her existing upper clothing from <<<Image2>>>  and the exact dark navy long Bermuda shorts shown in <<<Image3>>> .\nThe Bermuda shorts extend slightly below her knees.\nDo not shorten them into ordinary shorts.\nSCENE:\nAva walks the short distance to the already-open driver's window.\nShe remains controlled and polite, but clearly disapproves of his behavior.\nAva says:\n\"You really shouldn't throw rubbish around.\"\nThe driver looks at Ava with a smug, dismissive expression and replies sarcastically:\n\"Really? Why not?\"\nAva pauses for a brief moment.\nWithout saying anything yet, Ava reaches back and takes the EMPTY chip packet that Chloe is already holding.\nChloe is surprised by Ava's sudden action but does not resist.\nAva immediately tosses Chloe's empty chip packet through the driver's already-open window and into the car.\nThe packet lands inside the car.\nAva looks directly at the stunned driver and says calmly:\n\"Did you like that? That's why.\"\nThe driver's smug expression disappears completely.\nHe stares at Ava in speechless surprise.\nChloe looks at Ava with a surprised expression, clearly not expecting her normally polite friend to do that.\nAva remains composed and serious.\nCUT.\nACTION CONTINUITY:\nThe driver throws only ONE piece of rubbish onto the pavement at the beginning.\nThat rubbish stays on the pavement and is NEVER picked up or thrown back into the car.\nChloe's empty chip packet is a completely separate object.\nChloe is already holding the empty chip packet before the confrontation begins.\nAva takes ONLY Chloe's empty chip packet.\nThe driver's window is already fully open before any dialogue begins and remains open throughout the entire scene.\nAva throws Chloe's empty chip packet through that open window only once.\nDo not confuse the two pieces of rubbish.\nDo not make Chloe throw anything.\nDo not make the driver leave the car.\nDo not make Ava physically touch or threaten the driver.\nREACTION:\nThe driver's attitude should clearly progress from careless, to smug and sarcastic, to completely surprised.\nAva should remain recognizably polite and controlled even while making her point.\nShe is firm because littering genuinely bothers her, not because she is looking for a confrontation.\nChloe's final reaction should be genuine surprise at Ava's unexpected boldness.\nDo not make Ava or Chloe laugh, celebrate, high-five, or act triumphant.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+{
+  id: "canonical_hannah",
+  status: "published",
+  priority: "48",
+  videoSrc: "assets/video/canonical_hannah.mp4",
+  title: "Hannah takes on a challenging downhill cycling trail.",
+  transcript: "Hannah : This might be a bit /challenging/, but I /must/ try it. Hannah : /Don't even think/ of trying this yourself!",
+  answerOptions: [
+    { id: "b", text: "Hannah : Bu biraz /zorlayıcı/ olabilir ama bunu /denemeliyim/. Hannah : Bunu kendin denemeyi /aklından bile geçirme/!" },
+    { id: "a", text: "Hannah : Bu kolay olmayacak ama denemek istiyorum. Hannah : Bunu bir gün sen de denemelisin!" }
+  ],
+  easyDistractor: "Hannah : Bu parkur çok kolay, bunu denememe gerek yok. Hannah : Sen de hemen denemelisin!",
+  correctOptionId: "b",
+  characterIds: ["hannah"],
+  grades: [7,8],
+  functions: ["use_of_modal_must_for_external_obligation", "giving_a_warning"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.311",
+evidenceEnd: null,
+
+  evidenceSentence: "Hannah : This might be a bit /challenging/, but I /must/ try it, don't even think of /trying/ this yourself!",
+
+  prompt: "Use <<<Image1>>>  as 12-year-old Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Hannah's canonical voice.\nSETTING:\nA rugged outdoor cycling trail on a grassy hillside surrounded by open countryside.\nThe trail begins at the top of a fairly steep hill and continues downhill through an exciting natural obstacle course with uneven dirt terrain, bends, bumps, small mounds, shallow dips, scattered rocks, and rough trail sections.\nThe route should look genuinely challenging and adventurous, but still believable as an off-road cycling trail.\nTIME / WEATHER:\nA bright summer afternoon.\nWarm, dry weather with clear visibility.\nThe ground and cycling trail are dry.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>>  and clothing from reference image <<<Image2>>>  \nACCESSORIES:\nHannah wears a simple sporty wristwatch.\nHannah is NOT wearing a helmet.\nDo not add a helmet, cap, hat, head protection, or any other headwear.\nPRE-ACTION:\nAt the beginning of the video, Hannah is already sitting on her mountain bike at the top of the hill.\nShe is stationary and looking down at the steep obstacle-filled cycling trail ahead.\nFor a brief moment, her usual confidence gives way to uncertainty.\nHer expression clearly suggests that she is wondering whether she can actually manage the difficult downhill trail.\nShe studies the route ahead and says:\nHannah:\n\"This might be a bit challenging, but I must try it.\"\nACTION:\nHannah commits to the challenge and starts cycling downhill.\nShe rapidly gains speed as she rides down the rugged trail.\nCreate an exciting, energetic downhill mountain-bike sequence.\nHannah confidently handles the uneven dirt terrain, bends, bumps, small mounds, shallow dips, and rough sections of the trail.\nHer bicycle responds naturally to the terrain.\nHer body moves naturally with the bike as she balances through the descent.\nLet the downhill ride feel fast, dynamic, physical, and genuinely adventurous.\nHannah becomes visibly more excited and confident as the descent continues.\nNear the end of the downhill ride, while she is still cycling forward, Hannah briefly looks toward the viewer with an excited expression and says:\nHannah:\n\"Don't even think of trying this yourself!\"\nShe immediately returns her attention to the trail and continues riding downhill.\nDo not add crashes or falls.\nDo not add any other characters.\nDo not add any additional dialogue.\nCUT while Hannah is still riding forward with energy.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY. <<<Image2>>>"
+},
+
+{
+    id: "heartwarming_ella_charlotte",
+    status: "published",
+    priority: "49",
+    videoSrc: "assets/video/heartwarming_ella_charlotte.mp4",
+    title: "Ella discovers why Charlotte kept her childhood drawing.",
+    transcript: "Ella : Did I really draw that? Charlotte : You did, You were /six/. Ella : Why did you keep it? Charlotte : Because everything you make is /special/ to me.",
+    answerOptions: [
+      { id: "a", text: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Evet, sen çizdin, /Altı/ yaşındaydın. Ella : Neden sakladın? Charlotte : Çünkü yaptığın her şey benim için /özel/." },
+      { id: "b", text: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Evet, sen çizdin, Sekiz yaşındaydın. Ella : Neden sakladın? Charlotte : Çünkü yaptığın hiçbir şey benim için değerli." }
+    ],
+    easyDistractor: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Hayır ben çizdim, On yaşındaydım. Ella : Neden sakladın? Charlotte : Çünkü yaptığın her şey benim için özel.",
+    correctOptionId: "a",
+    characterIds: ["ella", "charlotte"],
+    grades: [5,6,7,8],
+    functions: ["simple_past_tense"],
+    theme: "heartwarming",
+    unit: "heartwarming",
+   evidenceStart: "0:02.846",
+evidenceEnd: "0:10.604",
+    evidenceSentence: "Ella : Did I really draw that? Charlotte : You did, You were /six/. Ella : Why did you keep it? Charlotte : Because everything you make is /special/ to me.",
+    prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference. Use <<<Audio1>>> as Ella's canonical voice. Use <<<Image2>>> as Charlotte's canonical identity, appearance, and upper-clothing reference. Use <<<Audio2>>> as Charlotte's canonical voice. LOCATION / SETTING: A warm, comfortable family living room. A small storage box containing a few old family keepsakes is open on a table. TIME: Evening. PRE-ACTION / OPENING: The scene begins before either character speaks. Charlotte is standing beside the table, quietly looking through the old keepsake box. She finds a simple childhood drawing made by Ella when she was six years old. The drawing looks clearly handmade by a young child: colorful, imperfect, charming, and simple. Charlotte picks it up naturally and looks at it with a small, nostalgic smile. Ella notices her mother looking at something and walks over beside her. Ella looks down at the drawing in Charlotte's hands. Only then does the conversation begin. CLOTHING: Ella wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers. Charlotte wears her existing upper clothing from <<<Image2>>> and beige full-length casual trousers. DRAWING ORIENTATION — CRITICAL: The childhood drawing is a private object being examined by Ella and Charlotte. Charlotte holds the drawing naturally so that the FRONT of the drawing faces Charlotte and Ella. The drawing must NEVER be turned outward toward the viewer. Charlotte must NEVER hold it like a poster, presentation, sign, or picture being displayed to an audience. Ella and Charlotte look at the FRONT of the drawing together. Whenever the front of the childhood drawing is visible to the viewer, it must be seen naturally from BEHIND or OVER THE SHOULDER of Ella and Charlotte. The viewer sees the drawing because the viewpoint is behind the characters, NOT because either character turns the paper toward the viewer. Maintain this physical relationship: ELLA + CHARLOTTE → FRONT OF DRAWING. The front of the drawing faces the characters. The back of the paper faces away from them. Do not flip, rotate, reverse, or reorient the drawing during the conversation. SCENE / DIALOGUE: Ella looks at the childhood drawing with amused surprise. Ella asks: 'Did I really draw that?' Charlotte looks at the drawing with a warm, nostalgic expression and replies: 'You did. You were six.' Ella studies the drawing for another brief moment. She then looks at her mother and asks: 'Why did you keep it?' Charlotte turns her attention from the drawing to Ella. With quiet warmth, Charlotte replies: 'Because everything you make is special to me.' Ella pauses. Her amused expression softens as she realizes how much the drawing means to her mother. Ella does not say anything else. She spontaneously moves closer and hugs Charlotte. Charlotte is briefly touched by the unexpected gesture and naturally hugs her daughter back. The childhood drawing remains safely in Charlotte's hand during the hug. Do not drop it. Do not turn it toward the viewer. CUT on the warm mother-daughter embrace. EMOTIONAL DIRECTION: The scene is warm, nostalgic, sincere, and understated. The childhood drawing itself is not valuable or impressive. Its emotional value comes entirely from the fact that Ella made it when she was little and Charlotte kept it. Charlotte's final line: 'Because everything you make is special to me.' should be gentle and completely sincere. Ella begins the scene amused by her old drawing. Her emotional progression is: curiosity → amused surprise at her childhood drawing → wonders why her mother kept it → understands its emotional meaning → quietly touched → spontaneous hug → CUT. Do not make Ella cry. Do not make either character look toward the viewer. No exaggerated emotional reactions. No broad theatrical smiles. No comedy after Charlotte's final line. Do not add readable words, letters, names, or numbers to the childhood drawing. Keep the drawing visually simple and clearly child-made. Do not generate subtitles. All dialogue must exist as AUDIO ONLY."
+  },
+
+{
+  id: "fun_chloe_elodie",
+  status: "published",
+  priority: "50",
+  videoSrc: "assets/video/fun_chloe_elodie.mp4",
+  title: "Chloe and Élodie play a familiar song together.",
+  transcript: "Élodie : Little sis, you still play that song? Chloe : You /taught/ it to me. Élodie : /Why don't we/ play together?",
+  answerOptions: [
+    { id: "b", text: "Élodie : Küçük kardeşim, hâlâ o şarkıyı çalıyor musun? Chloe : Onu bana sen /öğrettin/. Élodie : Neden /birlikte/ çalmıyoruz?" },
+    { id: "a", text: "Élodie : Küçük kardeşim, hâlâ o şarkıyı çalıyor musun? Chloe : Onu sen bestelemiştin. Élodie : Birlikte çalalım mı?" }
+  ],
+  easyDistractor: "Élodie : Küçük kardeşim, piyano çalmayı bıraktın mı? Chloe : Evet, artık piyano çalmıyorum. Élodie : O zaman dışarı çıkalım.",
+  correctOptionId: "b",
+  characterIds: ["chloe"],
+  grades: [5, 6, 7, 8],
+  functions: ["use_of_simple_present_tense", "simple_past_tense", "makingasuggestion"],
+  theme: "fun",
+  unit: "",
+
+  evidenceStart: "0:02.254",
+evidenceEnd: "0:09.241",
+
+  evidenceSentence: "Élodie : Little sis, you still play that song? Chloe : You /taught/ it to me. Élodie : /Why don't we/ play together?",
+
+  prompt: " Use <<<Image1>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Chloe's canonical voice.\nUse <<<Image2>>>  as Élodie's canonical identity and appearance reference.\n\nSETTING:\nA cozy bedroom at home on a quiet autumn evening.\nA piano is positioned in the room.\nÉlodie is visiting home from university.\nPRE-ACTION:\nChloe is sitting at the piano, softly playing a familiar song.\nÉlodie enters the room and quietly listens for a moment.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nÉlodie wears a simple solid-color long-sleeved top and dark full-length casual trousers.\n\nACCESSORIES:\nChloe wears small butterfly earrings and a star necklace.\nÉlodie wears an elegant necklace.\nSCENE:\nÉlodie listens to Chloe playing and smiles gently.\nShe asks:\n\"Little sis, you still play that song?\"\nChloe looks toward her sister and replies:\n\"You taught it to me.\"\nÉlodie walks over to the piano and says warmly:\n\"Why don't we play together?\"\nChloe smiles and moves slightly to make room for her.\nÉlodie sits beside Chloe.\nThey begin playing the piano together.\nChloe and Élodie exchange a brief warm look while continuing to play.\nCUT.\nREACTION:\nKeep the interaction natural and affectionate between two sisters who have not spent much time together recently.\nDo not make the moment overly emotional.\nNo hugging or exaggerated reactions.\nThe heartwarming payoff is Chloe and Élodie quietly playing the familiar song together.\nDo not generate subtitles."
+},
+
+{
+  id: "childhood_emma_hannah",
+  status: "published",
+  priority: "51",
+  videoSrc: "assets/video/childhood_emma_hannah.mp4",
+  title: "Emma and Hannah remember their childhood tree house.",
+  transcript: "Emma : Do you /remember/ this place? Hannah : Of course, this was our hideaway when we were /little children/. Emma : Yes, we /used to play/ with our toys in there.",
+  answerOptions: [
+    { id: "a", text: "Emma : Burayı /hatırlıyor musun/? Hannah : Tabii, biz /küçük çocukken/ burası bizim gizli yerimizdi. Emma : Evet, orada oyuncaklarımızla /oynardık/." },
+    { id: "b", text: "Emma : Burası tanıdık geliyor mu? Hannah : Tabii, burada küçük çocuklar oyunlar oynuyorlar. Emma : Evet, aynen öyle " }
+  ],
+  easyDistractor: "Emma : Burası neresi? Hannah : Bilmiyorum, buraya daha önce hiç gelmedim. Emma : Hadi eve dönelim.",
+  correctOptionId: "a",
+  characterIds: ["emma", "hannah"],
+  grades: [5, 6, 7, 8],
+  functions: ["simple_past_tense_was_were", "use_of_simple_present_tense_for_habbits"],
+  theme: "childhood",
+  unit: "",
+
+evidenceStart: "0:02.537",
+evidenceEnd: "0:10.982",
+
+  evidenceSentence: "Emma : Do you /remember/ this place? Hannah : Of course, this was our hideaway when we were /little children/. Emma : Yes, we /used to play/ with our toys in there.",
+
+  prompt: "Use <<<Image1>>>  as 12-year-old Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Hannah's canonical voice.\nUse <<<Image2>>>  as 12-year-old Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Emma's canonical voice.\nUse <<<Image3>>>  as 6-year-old Hannah's canonical identity and appearance reference.\nUse <<<Image4>>>  as 6-year-old Emma's canonical identity and appearance reference.\nAGE / SCALE LOCK:\nPresent-day Hannah and Emma are both 12 years old and approximately the same height.\nNeither girl should appear noticeably older, younger, taller, or smaller than the other.\nIn the flashback, 6-year-old Hannah and 6-year-old Emma are both 6 years old and approximately the same height.\nNeither younger girl should appear noticeably older, younger, taller, or smaller than the other.\nSETTING:\nNear Hannah's house, there is a small old wooden child tree house in a quiet garden area.\nThe tree house is clearly a place children used to play in years ago.\nIt feels personal, familiar, and nostalgic.\nTIME / WEATHER:\nA mild spring afternoon.\nSoft natural daylight.\nCalm weather.\nNo rain.\nCLOTHING:\nPresent-day Hannah wears her existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nPresent-day Emma wears her existing upper clothing from <<<Image2>>>  and beige full-length casual trousers.\nIn the flashback:\n6-year-old Hannah wears the same visible outfit style shown in <<<Image3>>> , including the light blue T-shirt and blue denim overalls.\n6-year-old Emma wears her existing upper clothing style from <<<Image4>>>  and soft lavender full-length children's leggings.\nACCESSORIES:\nPresent-day Hannah wears a small sky-blue bracelet.\nPresent-day Emma wears a small simple purple bracelet.\nIn the flashback:\n6-year-old Hannah wears a tiny pale-blue hair clip.\n6-year-old Emma wears a tiny child-friendly lavender bracelet.\nPRE-ACTION:\nPresent-day Hannah and Emma are already walking slowly toward the small tree house.\nThey stop near it and look at it with quiet nostalgia.\nThey are not joking or running around.\nThe tone is warm, calm, and reflective.\nSCENE:\nEmma looks at the tree house and says:\nEmma:\n\"Do you remember this place?\"\nHannah looks at the tree house fondly and replies:\nHannah:\n\"Of course, this was our hideaway when we were little children.\"\nEmma smiles softly and says:\nEmma:\n\"Yes, we used to play with our toys in there.\"\n\nFLASHBACK TRANSITION: Immediately after Emma's last line, use a brief, gentle flashback transition. The present-day image softly dissolves into the past. The tree house should remain the visual anchor during the transition. Use a warm nostalgic memory feeling: - a soft dissolve - slightly warmer light and tone in the flashback - a subtle dreamy memory quality Do not use extreme visual effects. Do not use fast cuts, spinning transitions, or magical fantasy effects. The transition should feel natural, tender, and easy to read.\n\n\nFLASHBACK:\nAfter Emma's last line, the scene naturally shifts into a warm childhood flashback from six years earlier.\nThe flashback takes place inside the same tree house, but years earlier when it was their regular play spot.\n6-year-old Hannah and 6-year-old Emma are sitting inside the little tree house together.\nThey are quietly playing with a few simple children's toys.\nKeep the toys visually clear and simple:\n- a small stuffed toy\n- a few wooden blocks\n- one small toy animal figure\nThe younger girls are relaxed, happy, and completely comfortable with each other.\n6-year-old Hannah gently shows one toy to 6-year-old Emma.\n6-year-old Emma smiles and moves one of the wooden blocks closer.\nThey continue playing together in a sweet, natural, childhood way.\nREACTION / END BEAT:\nThe flashback should feel tender, nostalgic, and emotionally warm.\nDo not add extra dialogue in the flashback.\nDo not add comedy.\nDo not add exaggerated running, rough movement, or chaotic toy action.\nEnd on the 6-year-old Hannah and 6-year-old Emma sharing a small happy moment inside the tree house while playing together.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "fun_olivia_ella2",
+  status: "published",
+  priority: "51",
+  videoSrc: "assets/video/fun_olivia_ella2.mp4",
+  title: "Olivia takes her photography one level below the sea.",
+  transcript: "Olivia : I'm going to take my /photography/ to the next level. Ella : Well, that's one level /below/ the sea.",
+  answerOptions: [
+    { id: "a", text: "Olivia : /Fotoğrafçılığımı/ bir üst seviyeye taşıyacağım. Ella : Şey, bu denizin bir seviye /altında/ oldu." },
+    { id: "b", text: "Olivia : Drone kullanma kabiliyetimi bir üst seviyeye taşıyacağım. Ella : Şey, göründüğü kadarıyla denizin dibini boyladı." }
+  ],
+  easyDistractor: "Olivia : Artık fotoğraf çekmek istemiyorum. Ella : Harika, drone hâlâ gökyüzünde uçuyor.",
+  correctOptionId: "a",
+  characterIds: ["olivia", "ella"],
+  grades: [5, 6, 7, 8],
+  functions: ["be_going_to_future_tense_for_plans"],
+  theme: "fun",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:12.302",
+
+  evidenceSentence: "Olivia : I'm going to take my /photography/ to the next level. Ella : Well, that's one level /below/ the sea.",
+
+  prompt: " Use <<<Image1>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Olivia's canonical voice.\nUse <<<Image2>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Ella's canonical voice.\nSETTING:\nA quiet seaside promenade beside a calm coastal area on a mild spring afternoon.\nSeveral seagulls are naturally resting on the surface of the sea a short distance from shore.\nOlivia and Ella are standing safely on the promenade near the water.\nPRE-ACTION:\nOlivia is holding a drone controller with both hands.\nA small photography drone is already flying normally over the sea.\nOlivia is confidently controlling the drone and using it to capture aerial footage.\nElla stands beside Olivia, casually watching the flight.\nCLOTHING:\nOlivia wears her existing upper clothing from <<<Image1>>> and lower clothing from <<<Image3>>>  \nACCESSORIES:\nOlivia wears a simple thin bracelet.\nElla wears her existing upper clothing from <<<Image2>>> and dark blue capri.\nElla wears a small necklace with a simple round pendant.\nSCENE:\nOlivia confidently controls the drone and says:\n\"I'm going to take my photography to the next level.\"\nShe guides the drone farther out over the sea.\nThe drone flies above the group of seagulls resting on the water.\nFor a brief moment, everything works normally.\nThen the drone suddenly becomes unstable.\nOlivia immediately notices something is wrong.\nShe looks down at the controller and quickly tries to regain control.\nThe drone wobbles and loses altitude despite Olivia's attempts to control it.\nThe drone falls directly into the sea with a clearly visible small splash.\nAt exactly that moment, the nearby seagulls are startled by the splash and immediately fly away from the water.\nOlivia freezes.\nShe stares at the place where her drone disappeared beneath the water.\nHer confident expression is completely gone.\nElla also looks toward the water.\nThere is a short silent beat.\nWithout smiling or laughing, Ella dryly says:\n\"Well... that's one level below the sea.\"\nOlivia slowly turns her eyes toward Ella with a stunned, deeply unimpressed expression.\nElla remains completely straight-faced.\nCUT.\nACTION CONTINUITY:\nThe drone must begin the scene already flying successfully above the sea.\nOlivia controls the drone using the controller throughout the flight.\nThe drone must NOT fall immediately after Olivia's first line.\nAllow a brief successful flight before control is lost.\nThe drone then becomes visibly unstable, loses altitude, and falls into the sea only once.\nThe drone must clearly enter the WATER, not crash onto the promenade, rocks, beach, or land.\nShow a small visible splash where the drone enters the sea.\nAfter entering the water, the drone stays underwater and does NOT reappear.\nThe seagulls begin the scene resting naturally on the surface of the sea.\nThey fly away only when the drone crashes into the water nearby.\nDo not make the drone physically hit any seagull.\nREACTION / COMEDY DIRECTION:\nOlivia is genuinely confident about improving her photography at the beginning.\nHer confidence should collapse naturally when she realizes she has lost control of the drone.\nElla's final line is the only joke.\nElla must deliver it dryly and matter-of-factly, not like she is performing a punchline.\nDo not make either girl laugh.\nDo not make Olivia smile after losing the drone.\nOlivia's final look toward Ella should communicate:\n\"Seriously? Right now?\"\nCUT immediately after Olivia's final reaction.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
 
   {
     id: "5_school_life_mia_zoe2",
@@ -1297,7 +1480,7 @@ evidenceEnd: "0:07.104",
 
   {
     id: "5_school_life_ella_olivia",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/5_school_life_ella_olivia.mp4",
     title: "Ella and Olivia compare their after-school activity preferences.",
     transcript: "Ella : /Do you like/ drawing after school? Olivia : Yes, but I like taking photos /more/.",
@@ -1649,7 +1832,7 @@ evidenceEnd: "0:07.104",
 
   {
     id: "5_school_life_ella_olivia_2",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/5_school_life_ella_olivia_2.mp4",
     title: "Olivia catches Ella's balloon string.",
     transcript: "Olivia : My balloon is gett/ing/ away, I caught the string!",
@@ -2710,7 +2893,7 @@ evidenceEnd: "0:06.323",
 
   {
     id: "5_personal_life_ava_olivia",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/5_personal_life_ava_olivia.mp4",
     title: "Ava notices yellow paint on Olivia's nose.",
     transcript: "Ava : Do you paint in the evenings? Olivia : I sometimes paint before bed. Ava : There is a yellow paint on your nose.",
@@ -3465,7 +3648,7 @@ evidenceEnd: "0:10.542",
 
   {
     id: "5_family_life_zoe_eleni",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/5_family_life_zoe_eleni.mp4",
     title: "Zoe checks whether Eleni is planting flowers for spring.",
     transcript: "Zoe : /You're/ plant/ing/ flowers for spring, /aren't you/, Mum? Eleni : Yes, I am, I'm planting the last one.",
@@ -5655,7 +5838,7 @@ evidenceEnd: "0:04.079",
 
   {
     id: "5_life_in_the_universe_ava_hannah",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/5_life_in_the_universe_ava_hannah.mp4",
     title: "Hannah plans a cold trip to Norway.",
     transcript: "Ava : Where are you going to go on /vacation/? Hannah : I’m going to Norway, it’s cold there! Hannah : I /need/ a jacket.",
@@ -8312,7 +8495,7 @@ evidenceEnd: "0:08.404",
 
   {
     id: "benjamin_hannah",
-    status: "published",
+    status: "",
     videoSrc: "assets/video/benjamin_hannah.mp4",
     title: "Benjamin talks to Hannah",
     transcript: "Benjamin: /Can I borrow your bike/ please? Hannah: Sorry, I need it.",
@@ -18530,29 +18713,7 @@ evidenceEnd: "0:08.289",
     evidenceSentence: "David : I miss dad so much. Valeria : I miss him , /too/. Valeria : He would be so /proud of you/.",
     prompt: "Use <<<Image1>>> as David's canonical identity, appearance, and upper-clothing reference. Use <<<Audio1>>> as David's canonical voice. Use <<<Image2>>> as Valeria's canonical identity, appearance, and upper-clothing reference. Use <<<Audio2>>> as Valeria's canonical voice. LOCATION / SETTING: A quiet, peaceful cemetery surrounded by mature trees and soft natural greenery. David and his mother Valeria are visiting the grave of David's deceased father. The father's gravestone is simple, dignified, and well maintained. GRAVESTONE TEXT — CRITICAL: Only ONE gravestone in the entire cemetery contains readable text. That is David's father's gravestone directly in front of David and Valeria. It reads exactly: 'ALEJANDRO MESA'. Every other gravestone in the background is distant and visually indistinct. Background gravestones contain NO readable names, NO readable inscriptions, and NO repeated text. Do NOT duplicate 'Alejandro' anywhere else in the cemetery. Do NOT create multiple gravestones with the same name. There is exactly ONE gravestone with readable text. TIME / WEATHER: Late afternoon. Cool, calm weather with soft natural light. No rain. SPATIAL LAYOUT — CRITICAL: David and Valeria are together directly IN FRONT OF the father's gravestone. Both characters face the SAME gravestone. The father's gravestone must remain directly ahead of them throughout the scene. The gravestone must NEVER appear behind David or Valeria. David and Valeria must NEVER turn their backs toward the gravestone. They must NEVER look toward or speak to another grave. Maintain one clear spatial relationship throughout the scene: DAVID + VALERIA → FATHER'S GRAVESTONE directly ahead of them. When Valeria turns toward David during the conversation, she only turns her head and upper body naturally toward her son. She remains beside David and beside the SAME gravestone. Do not relocate the characters or the gravestone during the conversation. PRE-ACTION / OPENING: The scene begins before either character speaks. David and Valeria are already standing quietly together in front of the father's gravestone. Valeria holds a small, simple bouquet of flowers. She gently bends down and places the flowers at the base of the gravestone. Valeria then stands upright again beside David. David remains quietly facing his father's grave. Valeria also looks toward the grave. For a brief moment, mother and son simply stand together in silence. Only then does David speak. CLOTHING: David wears his existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers. Valeria wears her existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers. Do not add playful or distracting accessories. SCENE / ACTION: David continues looking directly at his father's gravestone. His expression is sad and reflective, but restrained. David quietly says: 'I miss Dad so much.' Valeria remains beside him and looks toward the same gravestone. In a soft, sincere voice, Valeria replies: 'I miss him too.' A brief silence follows. Valeria then turns naturally toward David. She looks at her son with warmth and sadness and says: 'He would be so proud of you.' David turns his eyes toward his mother. He does not answer. He is visibly moved by what she has said, but he remains composed. Valeria gently puts her arms around David and pulls him into a warm maternal hug. David naturally returns the hug. The embrace is sincere, protective, and emotionally restrained. After a brief moment, while remaining close together, David and Valeria turn their attention back toward the SAME gravestone directly in front of them. They remain together quietly, looking at the father's grave. CUT. EMOTIONAL DIRECTION: The scene must feel intimate, sincere, restrained, and genuinely sad. David and Valeria are grieving the same person together. David is not making a speech. His simple line: 'I miss Dad so much.' comes from a quiet moment of grief while looking at his father's grave. Valeria's: 'I miss him too.' should feel soft and deeply sincere. There is a short natural silence before Valeria turns toward David and says: 'He would be so proud of you.' That sentence carries the emotional weight of the scene. The emotional progression is: Valeria places the flowers → mother and son quietly face the grave → brief silence → 'I miss Dad so much.' → 'I miss him too.' → brief silence → Valeria turns toward David → 'He would be so proud of you.' → David is quietly moved → Valeria embraces her son → David returns the embrace → together they look toward the SAME grave → CUT. Do not make David or Valeria smile. Do not make either character look toward the viewer. Do not make David sob or collapse. Do not make Valeria cry dramatically. Do not create exaggerated grief. Do not add comedy. Do not add supernatural elements, ghosts, visions, glowing effects, memories, dream sequences, or flashbacks. David's father must NOT physically appear in the cemetery. Keep all background gravestones distant and visually indistinct. Only the father's gravestone directly in front of David and Valeria may contain readable text. Do not generate subtitles. All dialogue must exist as AUDIO ONLY."
   },
-  {
-    id: "heartwarming_ella_charlotte",
-    status: "published",
-    videoSrc: "assets/video/heartwarming_ella_charlotte.mp4",
-    title: "Ella discovers why Charlotte kept her childhood drawing.",
-    transcript: "Ella : Did I really draw that? Charlotte : You did, You were /six/. Ella : Why did you keep it? Charlotte : Because everything you make is /special/ to me.",
-    answerOptions: [
-      { id: "a", text: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Evet, sen çizdin, /Altı/ yaşındaydın. Ella : Neden sakladın? Charlotte : Çünkü yaptığın her şey benim için /özel/." },
-      { id: "b", text: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Evet, sen çizdin, Sekiz yaşındaydın. Ella : Neden sakladın? Charlotte : Çünkü yaptığın hiçbir şey benim için değerli." }
-    ],
-    easyDistractor: "Ella : Bunu gerçekten ben mi çizdim? Charlotte : Hayır ben çizdim, On yaşındaydım. Ella : Neden sakladın? Charlotte : Çünkü yaptığın her şey benim için özel.",
-    correctOptionId: "a",
-    characterIds: ["ella", "charlotte"],
-    grades: [5,6,7,8],
-    functions: ["simple_past_tense"],
-    theme: "heartwarming",
-    unit: "heartwarming",
-   evidenceStart: "0:02.846",
-evidenceEnd: "0:10.604",
-    evidenceSentence: "Ella : Did I really draw that? Charlotte : You did, You were /six/. Ella : Why did you keep it? Charlotte : Because everything you make is /special/ to me.",
-    prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference. Use <<<Audio1>>> as Ella's canonical voice. Use <<<Image2>>> as Charlotte's canonical identity, appearance, and upper-clothing reference. Use <<<Audio2>>> as Charlotte's canonical voice. LOCATION / SETTING: A warm, comfortable family living room. A small storage box containing a few old family keepsakes is open on a table. TIME: Evening. PRE-ACTION / OPENING: The scene begins before either character speaks. Charlotte is standing beside the table, quietly looking through the old keepsake box. She finds a simple childhood drawing made by Ella when she was six years old. The drawing looks clearly handmade by a young child: colorful, imperfect, charming, and simple. Charlotte picks it up naturally and looks at it with a small, nostalgic smile. Ella notices her mother looking at something and walks over beside her. Ella looks down at the drawing in Charlotte's hands. Only then does the conversation begin. CLOTHING: Ella wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers. Charlotte wears her existing upper clothing from <<<Image2>>> and beige full-length casual trousers. DRAWING ORIENTATION — CRITICAL: The childhood drawing is a private object being examined by Ella and Charlotte. Charlotte holds the drawing naturally so that the FRONT of the drawing faces Charlotte and Ella. The drawing must NEVER be turned outward toward the viewer. Charlotte must NEVER hold it like a poster, presentation, sign, or picture being displayed to an audience. Ella and Charlotte look at the FRONT of the drawing together. Whenever the front of the childhood drawing is visible to the viewer, it must be seen naturally from BEHIND or OVER THE SHOULDER of Ella and Charlotte. The viewer sees the drawing because the viewpoint is behind the characters, NOT because either character turns the paper toward the viewer. Maintain this physical relationship: ELLA + CHARLOTTE → FRONT OF DRAWING. The front of the drawing faces the characters. The back of the paper faces away from them. Do not flip, rotate, reverse, or reorient the drawing during the conversation. SCENE / DIALOGUE: Ella looks at the childhood drawing with amused surprise. Ella asks: 'Did I really draw that?' Charlotte looks at the drawing with a warm, nostalgic expression and replies: 'You did. You were six.' Ella studies the drawing for another brief moment. She then looks at her mother and asks: 'Why did you keep it?' Charlotte turns her attention from the drawing to Ella. With quiet warmth, Charlotte replies: 'Because everything you make is special to me.' Ella pauses. Her amused expression softens as she realizes how much the drawing means to her mother. Ella does not say anything else. She spontaneously moves closer and hugs Charlotte. Charlotte is briefly touched by the unexpected gesture and naturally hugs her daughter back. The childhood drawing remains safely in Charlotte's hand during the hug. Do not drop it. Do not turn it toward the viewer. CUT on the warm mother-daughter embrace. EMOTIONAL DIRECTION: The scene is warm, nostalgic, sincere, and understated. The childhood drawing itself is not valuable or impressive. Its emotional value comes entirely from the fact that Ella made it when she was little and Charlotte kept it. Charlotte's final line: 'Because everything you make is special to me.' should be gentle and completely sincere. Ella begins the scene amused by her old drawing. Her emotional progression is: curiosity → amused surprise at her childhood drawing → wonders why her mother kept it → understands its emotional meaning → quietly touched → spontaneous hug → CUT. Do not make Ella cry. Do not make either character look toward the viewer. No exaggerated emotional reactions. No broad theatrical smiles. No comedy after Charlotte's final line. Do not add readable words, letters, names, or numbers to the childhood drawing. Keep the drawing visually simple and clearly child-made. Do not generate subtitles. All dialogue must exist as AUDIO ONLY."
-  },
-  {
+    {
     id: "heartwarming_emma_sophie",
     status: "published",
     videoSrc: "assets/video/heartwarming_emma_sophie.mp4",
@@ -18772,6 +18933,975 @@ evidenceEnd: null,
     evidenceSentence: "Chloe : Ava, look, She must be /freezing/. Ava : We can't leave her here. Chloe : She likes it. Ava : Now she has /somewhere warm/",
     prompt: "Use <<<Image1>>> as Ava's canonical identity and appearance reference. Use <<<Audio1>>> as Ava's canonical voice. Use <<<Image2>>> as Chloe's canonical identity and appearance reference. Use <<<Audio2>>> as Chloe's canonical voice. LOCATION / TIME: A quiet residential street on a cold, dry winter afternoon. A small amount of old snow is visible along the edges of the street. Beside a closed shop entrance is a dry, sheltered corner. CLOTHING: Ava wears a warm dark green winter coat, dark blue full-length winter trousers, and a burgundy knitted beanie. Chloe wears a warm navy blue winter coat, dark grey full-length winter trousers, and a light pink winter scarf. PRE-ACTION: Ava and Chloe are walking together along the street. A small stray cat is curled up in the sheltered corner beside the closed shop entrance, trying to keep warm. The cat is not injured or sick. It is simply cold. Chloe notices the cat and stops. She looks toward it with concern and says: 'Ava, look. She must be freezing.' Ava looks at the cat and replies: 'We can't leave her here.' ACTION: Ava and Chloe prepare a very simple temporary shelter for the cat. They place one soft piece of fabric inside a clean open cardboard box. They put the box on the dry ground in the sheltered corner, close to the cat, with the opening facing toward it. Ava and Chloe step back and give the cat space. Neither girl touches or carries the cat. The cat gets up, walks the short distance to the box, enters it by itself, and curls up comfortably on the soft fabric. Chloe watches the cat settle inside and says with a relieved smile: 'She likes it.' Ava looks at the cat and replies warmly: 'Now she has somewhere warm.' The girls quietly watch the cat resting comfortably inside the box. CUT. EMOTIONAL DIRECTION: Keep the scene gentle and natural. Ava and Chloe are concerned when they first notice the cold cat. Their expressions become warm and relieved once the cat settles inside the shelter. The heartwarming moment comes from the girls noticing an animal that needs help, doing something simple for it, and seeing that it worked. Keep the cat's movement simple and natural. Keep the dialogue EXACTLY: Chloe: 'Ava, look. She must be freezing.' Ava: 'We can't leave her here.' Chloe: 'She likes it.' Ava: 'Now she has somewhere warm.' Do not generate subtitles. All dialogue must exist as AUDIO ONLY. Visual style: Preserve the exact stylized 3D animated-character appearance shown in each canonical reference image. Premium stylized 3D animated-film quality."
   },
+
+ 
+{
+  id: "heart_warming_benjamin_jack",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_benjamin_jack.mp4",
+  title: "Benjamin and Jack help an elderly man with his groceries.",
+  transcript: "Benjamin : Uncle, let us help you. Old man : Thank you, boys, it's /hard/ for me to bend down. Jack : We can /carry/ these home for you.",
+  answerOptions: [
+    { id: "a", text: "Benjamin : Amca, size yardım edelim. Yaşlı adam : Teşekkür ederim çocuklar, eğilmek benim için /zor/. Jack : Bunları /sizin için eve taşıyabiliriz/." },
+    { id: "b", text: "Benjamin : Amca, size yardım edelim. Yaşlı adam : Teşekkür ederim çocuklar, bunları kendim de taşıyabilirim. Jack : Bunları sizin için toplayabiliriz." }
+  ],
+  easyDistractor: "Benjamin : Amca, bize yardım eder misiniz? Yaşlı adam : Tabii çocuklar. Jack : Bunları eve kendiniz taşıyabilirsiniz.",
+  correctOptionId: "a",
+  characterIds: ["benjamin", "jack"],
+  grades: [6,7,8],
+  functions: ["offeringhelp"],
+  theme: "heart_warming",
+  unit: "",
+  evidenceStart: "0:02.725",
+evidenceEnd: "0:08.749",
+  evidenceSentence: "Benjamin : Uncle, let us help you. Old man : Thank you, boys, it's /hard/ for me to bend down. Jack : We can /carry/ these home for you.",
+prompt: "Use <<<Image1>>>  as Benjamin's canonical identity and appearance reference.\nUse <<<Audio1>>>  as Benjamin's canonical voice.\nUse <<<Image2>>>  as Jack's canonical identity and appearance reference.\nUse <<<Audio2>>>  as Jack's canonical voice.\nLOCATION / TIME:\nA quiet neighborhood street during a mild afternoon.\nPRE-ACTION:\nBenjamin and Jack are walking together along the sidewalk.\nA few meters ahead of them, an elderly man is standing beside a torn paper grocery bag.\nThe bag has already torn before the scene begins.\nSeveral simple grocery items, including a few oranges, are scattered on the pavement near his feet.\nThe elderly man slowly tries to bend down to pick them up, but bending down is physically difficult for him.\nBenjamin and Jack notice him and immediately walk over.\nCLOTHING:\nBenjamin wears his existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nJack wears his existing upper clothing from <<<Image2>>>  and dark grey full-length casual trousers.\nThe elderly man wears simple, modest everyday clothing.\nSCENE / DIALOGUE:\nBenjamin approaches the elderly man and says:\n\"Uncle, let us help you.\"\nBenjamin and Jack begin picking up the groceries from the pavement.\nThe elderly man watches them gratefully and says:\n\"Thank you, boys. It's hard for me to bend down.\"\nBenjamin and Jack finish collecting the fallen groceries.\nJack notices the man's grocery bags and says:\n\"We can carry these home for you.\"\nThe elderly man looks at both boys with a warm, genuinely grateful smile.\nBenjamin and Jack each take a grocery bag.\nThe elderly man begins walking home with Benjamin and Jack beside him, carrying the bags for him.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the moment simple, sincere, and heartwarming.\nBenjamin and Jack help naturally without making a big deal about it.\nThe elderly man's final grateful smile is the emotional payoff. He does not need to say anything after Jack offers to carry the groceries.\nKeep the grocery action simple. Only a few items are on the ground, and the bag is already torn when the scene begins.\nKeep the dialogue EXACTLY:\nBenjamin:\n\"Uncle, let us help you.\"\nOld man:\n\"Thank you, boys. It's hard for me to bend down.\"\nJack:\n\"We can carry these home for you.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+
+  },
+{
+  id: "heart_warming_daniel_lucas",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_daniel_lucas.mp4",
+  title: "Daniel and Lucas help a young boy get his kite back.",
+  transcript: "Daniel : /What's wrong/? Young boy : My kite is /stuck/ in the tree. Lucas : /Don't worry/, we can get it.",
+  answerOptions: [
+    { id: "b", text: "Daniel : /Sorun ne/? Küçük çocuk : Uçurtmam ağaca /takıldı/. Lucas : Endişelenme, onu alabiliriz." },
+    { id: "a", text: "Daniel : Ne arıyorsun? Küçük çocuk : Uçurtmamı kaybettim. Lucas : Sorun yok, biz onu kurtarırız." }
+  ],
+  easyDistractor: "Daniel : İyi misin? Küçük çocuk : Topum ağaca takıldı. Lucas : Endişelenme, eve gidebiliriz.",
+  correctOptionId: "b",
+  characterIds: ["daniel", "lucas"],
+  grades: [5,6],
+  functions: ["asking_about_condition", "offeringhelp"],
+  theme: "heart_warming",
+  unit: "",
+
+evidenceStart: "0:01.434",
+evidenceEnd: "0:06.352",
+
+  evidenceSentence: "Daniel : /What's wrong/? Young boy : My kite is /stuck/ in the tree. Lucas : /Don't worry/, we can get it.",
+  prompt: "Use <<<Image1>>>  as Daniel's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Daniel's canonical voice.\nUse <<<Image2>>>  as Lucas's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Lucas's canonical voice.\nLOCATION / TIME:\nA neighborhood park on a pleasant afternoon.\nPRE-ACTION:\nDaniel and Lucas are walking together through the park.\nNearby, a young boy about 6–7 years old is standing under a small tree, looking sadly up at his kite.\nThe kite is caught on ONE low, easily reachable branch.\nThe kite is clearly visible and close enough for Daniel to reach it safely from the ground.\nDaniel and Lucas notice the boy and walk over to him.\nCLOTHING:\nDaniel wears his existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nLucas wears his existing upper clothing from <<<Image2>>>  and dark grey full-length casual trousers.\nThe young boy wears simple casual clothes.\nSCENE / DIALOGUE:\nDaniel looks at the young boy and asks:\n\"What's wrong?\"\nThe boy points toward the kite caught on the low branch and says:\n\"My kite is stuck in the tree.\"\nLucas looks at the kite and reassures him:\n\"Don't worry. We can get it.\"\nDaniel walks to the tree.\nWithout climbing or jumping, Daniel reaches up from the ground and carefully frees the kite from the low branch.\nHe brings the kite back and gives it to the young boy.\nThe boy takes his kite with a happy, relieved expression and says:\n\"Thank you!\"\nThe young boy happily walks away carrying his kite.\nDaniel and Lucas watch him leave and smile, pleased that they were able to help.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the scene simple, natural, and heartwarming.\nThe young boy is disappointed when Daniel and Lucas first notice him, but he is not crying.\nDaniel and Lucas help him naturally and without making a big event out of it.\nThe emotional payoff is the boy's happiness when he gets his kite back.\nKeep the kite retrieval physically simple:\nthe kite is caught on a LOW branch,\nDaniel remains standing on the ground,\nand he frees it with one simple reaching action.\nKeep the dialogue EXACTLY:\nDaniel:\n\"What's wrong?\"\nYoung boy:\n\"My kite is stuck in the tree.\"\nLucas:\n\"Don't worry. We can get it.\"\nYoung boy:\n\"Thank you!\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_david_ethan",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_david_ethan.mp4",
+  title: "David and Ethan choose to feed hungry birds.",
+  transcript: "Ethan : Let's buy some /ice cream/. David : Why don't we buy bird feed /instead/? Ethan : You're right, these birds look hungry.",
+  answerOptions: [
+    { id: "a", text: "Ethan : Biraz /dondurma/ alalım. David : Onun yerine /neden kuş yemi almıyoruz/? Ethan : Haklısın, bu kuşlar aç görünüyor." },
+    { id: "b", text: "Ethan : Biraz dondurma alalım. David : Dondurmanın yanında kuş yemi de alalım mı? Ethan : Haklısın, bu kuşlar aç görünüyor." }
+  ],
+  easyDistractor: "Ethan : Biraz kuş yemi alalım. David : Onun yerine dondurma alalım. Ethan : Haklısın, bu kuşlar tok görünüyor.",
+  correctOptionId: "a",
+  characterIds: ["ethan", "david"],
+  grades: [5,6,7,8],
+  functions: ["makingasuggestion", "suggesting", "agree_disagree"],
+  theme: "heart_warming",
+  unit: "",
+
+ evidenceStart: "0:00.756",
+evidenceEnd: "0:06.527",
+
+  evidenceSentence: "Ethan : Let's buy some /ice cream/. David : Why don't we buy bird feed /instead/? Ethan : You're right, these birds look hungry.",
+
+  prompt: "Use <<<Image1>>> as Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ethan's canonical voice.\nUse <<<Image2>>> as David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as David's canonical voice.\nLOCATION / TIME:\nA pleasant public park on a mild afternoon.\nThere are two small stands near the walking path:\n- an ice cream stand on the LEFT\n- a bird-feed stand on the RIGHT\nSeveral small park birds are already visible on the ground nearby, searching for food.\nCLOTHING:\nEthan wears his existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nDavid wears his existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers.\nPRE-ACTION:\nEthan and David are walking along the park path.\nAs they approach the two stands, Ethan notices the ice cream stand on the left.\nEthan says:\n\"Let's buy some ice cream.\"\nDavid notices the birds searching for food nearby.\nHe looks toward the bird-feed stand on the right and says:\n\"Why don't we buy bird feed instead?\"\nEthan looks at the birds on the ground.\nHe agrees and says:\n\"You're right. These birds look hungry.\"\nACTION:\nEthan and David go to the bird-feed stand on the RIGHT and buy one small bag of bird feed.\nThey move a short distance toward the birds.\nThe boys scatter small handfuls of bird feed onto the ground.\nThe nearby birds approach naturally and begin eating the food.\nEthan and David quietly watch the birds eating and smile with warm satisfaction.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the moment simple, natural, and heartwarming.\nDavid's suggestion comes directly from noticing the hungry-looking birds nearby.\nEthan willingly gives up the idea of buying ice cream when he notices them too.\nThe final warm moment comes from the boys watching the birds eat the food they chose to buy for them.\nKeep the dialogue EXACTLY:\nEthan:\n\"Let's buy some ice cream.\"\nDavid:\n\"Why don't we buy bird feed instead?\"\nEthan:\n\"You're right. These birds look hungry.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_noah_victoria",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_noah_victoria.mp4",
+  title: "Noah and Victoria return a girl's lost teddy bear.",
+  transcript: "Victoria : I think she's /looking for/ something. Noah : Maybe she's /looking for/ this. Noah : Is this /yours/?",
+  answerOptions: [
+    { id: "b", text: "Victoria : Bence bir şey /arıyor/. Noah : Belki /bunu/ arıyordur. Noah : Bu /senin mi/? " },
+    { id: "a", text: "Victoria : Çok endişeli görünüyor. Noah : Belki bunu düşürmüştür, Noah : Bu senin mi?" }
+  ],
+  easyDistractor: "Victoria : Bence oyun oynuyor. Noah : Belki bu oyuncak benimdir, bunu eve götürelim mi?",
+  correctOptionId: "b",
+  characterIds: ["noah", "victoria"],
+  grades: [5,6,7,8],
+  functions: ["present_progressive", "possessive_pronouns"],
+  theme: "heart_warming",
+  unit: "",
+
+ evidenceStart: "0:00.620",
+evidenceEnd: "0:05.536",
+
+  evidenceSentence: "Victoria : I think she's /looking for/ something. Noah : Maybe she's looking for /this/. Noah : Is this /yours/?",
+
+  prompt: "Use <<<Image1>>>  as Noah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Noah's canonical voice.\nUse <<<Image2>>>  as Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Victoria's canonical voice.\nThe young girl is a generic 6-year-old child with a natural child voice.\nLOCATION / TIME:\nA public park shortly after light rain.\nThe ground is still slightly wet.\nA small teddy bear is lying on the ground beside an empty park bench.\nCLOTHING:\nNoah wears his existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nVictoria wears her existing upper clothing from <<<Image2>>>  and dark grey full-length casual trousers.\nPRE-ACTION:\nNoah and Victoria are walking together through the park.\nA short distance ahead, a young girl is walking with her mother.\nThe girl looks worried and keeps looking around as if she has lost something.\nVictoria notices her and says:\n\"I think she's looking for something.\"\nNoah then notices the teddy bear beside the bench.\nHe picks it up and says:\n\"Maybe she's looking for this.\"\nACTION:\nNoah and Victoria approach the girl.\nNoah holds the teddy bear toward her and asks:\n\"Is this yours?\"\nThe girl immediately recognizes the teddy bear.\nHer worried expression changes to delight.\nShe says excitedly:\n\"Teddy!\"\nShe takes the teddy bear from Noah and hugs it tightly against her chest.\nPAYOFF:\nNoah and Victoria watch the girl hugging her teddy bear.\nThey smile warmly at her happiness.\nCUT.\nKeep the dialogue EXACTLY:\nVictoria:\n\"I think she's looking for something.\"\nNoah:\n\"Maybe she's looking for this.\"\nNoah:\n\"Is this yours?\"\nYoung girl:\n\"Teddy!\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_ava_emma",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_ava_emma.mp4",
+  title: "Ava and Emma spend time with a lonely elderly woman.",
+  transcript: "Ava : She looks /lonely/. Emma : Let's sit with her for a while. Emma : /Good morning/, Aunt, do you /need/ anything?",
+  answerOptions: [
+    { id: "a", text: "Ava : /Yalnız/ görünüyor. Emma : Bir süre /onunla oturalım/. Emma : Günaydın teyze, bir şeye /ihtiyacınız/ var mı?" },
+    { id: "b", text: "Ava : Üzgün görünüyor. Emma : Bir süre onunla ilgilenelim. Emma : İyi öğlenler, teyze, birini mi bekliyorsunuz?." }
+  ],
+  easyDistractor: "Ava : Çok mutlu görünüyor. Emma : Hadi eve gidelim, günaydın teyze, bizi yalnız bırakır mısınız?",
+  correctOptionId: "a",
+  characterIds: ["ava", "emma"],
+  grades: [5,6,7,8],
+  functions: ["expressing_feelings", "makingasuggestion", "asking_about_condition"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:06.496",
+
+  evidenceSentence: "Ava : She looks /lonely/. Emma : Let's /sit with her/ for a while, good morning, Aunt, do you /need/ anything? Elderly woman : You are very /kind/, thank you, you look just like my granddaughter.",
+
+  prompt: "Use <<<Image1>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ava's canonical voice.\nUse <<<Image2>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Emma's canonical voice.\nThe elderly woman is a generic elderly woman with a natural, gentle voice.\nLOCATION / TIME:\nA quiet public park in the morning.\nAn elderly woman is sitting alone on a park bench.\nThere is enough empty space beside her for Ava and Emma to sit.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nEmma wears her existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers.\nThe elderly woman wears simple, modest casual clothing.\nPRE-ACTION:\nAva and Emma are walking together through the park.\nThey notice the elderly woman sitting alone on the bench.\nAva looks at her and quietly says:\n\"She looks lonely.\"\nEmma replies:\n\"Let's sit with her for a while.\"\nSCENE / DIALOGUE:\nAva and Emma walk over and sit beside the elderly woman.\nEmma turns toward her and says warmly:\n\"Good morning, Aunt. Do you need anything?\"\nThe elderly woman looks at Emma with a touched smile and replies:\n\"You are very kind, thank you. You look just like my granddaughter.\"\nPAYOFF:\nThe elderly woman gently strokes Emma's hair once.\nEmma closes her eyes briefly and smiles sweetly, touched by the affectionate gesture.\nAva watches the warm moment with a gentle smile.\nCUT.\nKeep the dialogue EXACTLY:\nAva:\n\"She looks lonely.\"\nEmma:\n\"Let's sit with her for a while.\"\nEmma:\n\"Good morning, Aunt. Do you need anything?\"\nElderly woman:\n\"You are very kind, thank you. You look just like my granddaughter.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+{
+  id: "heart_warming_chloe_zoe",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_chloe_zoe.mp4",
+  title: "Chloe and Zoe help a child recover a drawing.",
+  transcript: "Young child : My picture! Chloe : I'll get it, /here you are/. Young child : Thank you! Zoe : That's a /beautiful/ picture.",
+  answerOptions: [
+    { id: "b", text: "Küçük çocuk : Resmim! Chloe : Ben alırım, /işte al/. Küçük çocuk : Teşekkür ederim! Zoe : Bu /güzel/ bir resim." },
+    { id: "a", text: "Küçük çocuk : Resmim! Chloe : Ben alırım bekle, işte. Küçük çocuk : Teşekkür ederim! Zoe : Bu ilginç bir resim." }
+  ],
+  easyDistractor: "Küçük çocuk : Oyuncağım! Chloe : Onu orada bırakalım, hoşça kal. Küçük çocuk : Teşekkür ederim! Zoe : Bu çok kötü bir resim.",
+  correctOptionId: "b",
+  characterIds: ["chloe", "zoe"],
+  grades: [5,6],
+  functions: ["future_response_ill", "target_social_language"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:02.596",
+evidenceEnd: "0:08.750",
+
+  evidenceSentence: "Young child : My /picture/! Chloe : I'll /get/ it, here you are. Young child : Thank you! Zoe : That's a /beautiful/ picture.",
+
+  prompt: "Use <<<Image1>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Chloe's canonical voice.\nUse <<<Image2>>>  as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Zoe's canonical voice.\nThe young child is a generic 6-year-old child with a natural child voice.\nLOCATION / TIME:\nA peaceful public park on a pleasant afternoon with a light breeze.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>>  and long shorts.\nZoe wears her existing upper clothing from <<<Image2>>>  and red joggers.\nPRE-ACTION:\nA young child is sitting on a park bench with a simple drawing on a sheet of paper.\nChloe and Zoe are walking nearby.\nThe child stands up while holding the drawing.\nA light gust of wind blows the sheet from the child's hand.\nThe paper travels only a short distance and lands clearly on the grass nearby.\nThe child looks toward the drawing and says sadly:\n\"My picture!\"\nSCENE / DIALOGUE:\nChloe and Zoe notice what happened.\nChloe says:\n\"I'll get it.\"\nChloe walks the short distance to the paper and picks it up from the grass.\nShe returns to the child and gently hands the drawing back.\nChloe says:\n\"Here you are.\"\nThe child takes the drawing with both hands and says:\n\"Thank you!\"\nZoe looks at the drawing and says warmly:\n\"That's a beautiful picture.\"\nPAYOFF:\nThe child looks at the drawing and then at Zoe.\nThe child gives a shy, proud smile and holds the drawing close to their chest.\nChloe and Zoe smile warmly at the child's reaction.\nCUT.\nKeep the dialogue EXACTLY:\nYoung child:\n\"My picture!\"\nChloe:\n\"I'll get it.\"\nChloe:\n\"Here you are.\"\nYoung child:\n\"Thank you!\"\nZoe:\n\"That's a beautiful picture.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_benjamin_lucas",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_benjamin_lucas.mp4",
+  title: "Benjamin and Lucas wait with a lost dog.",
+  transcript: "Benjamin : Lucas, I think this dog is /lost/. Lucas : Maybe his /owner/ is looking for him. Dog's owner : There you are!",
+  answerOptions: [
+    { id: "a", text: "Benjamin : Lucas, bence bu köpek /kaybolmuş/. Lucas : Belki /sahibi/ onu arıyordur. Köpeğin sahibi : İşte buradasın!" },
+    { id: "b", text: "Benjamin : Lucas, bence bu köpek yalnız. Lucas : Belki sahibi onu terk etmiştir. Köpeğin sahibi : İşte buradasın!" }
+  ],
+  easyDistractor: "Benjamin : Lucas, bence bu köpek aç. Lucas : Belki sahibi onu istemiyordur. Köpeğin sahibi : Buradan git!",
+  correctOptionId: "a",
+  characterIds: ["benjamin", "lucas"],
+  grades: [5,6,7,8],
+  functions: ["givinginformation", "present_progressive"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:00.407",
+evidenceEnd: "0:05.924",
+
+  evidenceSentence: "Benjamin : Lucas, I think this dog is /lost/. Lucas : Maybe his /owner/ is looking for him. Dog's owner : There you are!",
+
+  prompt: "Use <<<Image1>>> as Benjamin's 12-year-old canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Benjamin's canonical voice.\nUse <<<Image2>>> as Lucas's 12-year-old canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Lucas's canonical voice.\nBoth Benjamin and Lucas are approximately the same height, with natural body proportions for their age.\nThe dog and its owner are generic characters with no reference images.\nThe dog's owner has a natural adult male voice.\nLOCATION / TIME:\nA quiet public park on a pleasant afternoon.\nCLOTHING:\nBenjamin wears his existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nLucas wears his existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers.\nThe dog's owner wears simple casual clothing.\nPRE-ACTION:\nBenjamin and Lucas are walking together through the park.\nThey notice a friendly dog standing alone near the path.\nThe dog looks around uncertainly as if searching for someone.\nIt is wearing a collar, clearly showing that it belongs to someone.\nBenjamin looks at the dog and says:\n\"Lucas, I think this dog is lost.\"\nLucas looks around the park and replies:\n\"Maybe his owner is looking for him.\"\nACTION:\nBenjamin and Lucas stay near the dog.\nA moment later, the dog's worried owner appears a short distance away.\nHe sees the dog and calls out:\n\"There you are!\"\nThe dog immediately recognizes him and happily runs toward him.\nPAYOFF:\nThe owner kneels down as the dog reaches him.\nHe warmly hugs the dog and strokes its head, visibly relieved to have found it.\nBenjamin and Lucas watch the reunion from nearby.\nTheir concerned expressions turn into warm, relieved smiles.\nCUT.\nKeep the dialogue EXACTLY:\nBenjamin:\n\"Lucas, I think this dog is lost.\"\nLucas:\n\"Maybe his owner is looking for him.\"\nDog's owner:\n\"There you are!\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+{
+  id: "heart_warming_chloe_julien",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_chloe_julien.mp4",
+  title: "Julien tells Chloe that every song she plays is special.",
+  transcript: "Chloe : Dad, is there anything /special/ you want me to play? Julien : Every song you play is /special/ to me, sweetie.",
+  answerOptions: [
+    { id: "b", text: "Chloe : Baba, çalmamı istediğin /özel/ bir şey var mı? Julien : Çaldığın her şarkı benim için /özel/, tatlım." },
+    { id: "a", text: "Chloe : Baba, çalmamı istediğin yeni bir şarkı var mı? Julien : En sevdiğim şarkıyı çalmanı istiyorum, tatlım." }
+  ],
+  easyDistractor: "Chloe : Baba, piyano çalmayı bırakmamı ister misin? Julien : Evet, bu akşam hiç müzik dinlemek istemiyorum, tatlım.",
+  correctOptionId: "b",
+  characterIds: ["chloe","julien"],
+  grades: [5,6,7,8],
+  functions: ["asking_about_preference", "expressing_feelings"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:02.271",
+evidenceEnd: "0:07.717",
+
+  evidenceSentence: "Chloe : Dad, is there anything /special/ you want me to play? Julien : Every song you play is /special/ to me, sweetie.",
+
+  prompt: " Use <<<Image1>>> as Chloe's 12-year-old canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Chloe's canonical voice.\nUse <<<Image2>>> as Julien's canonical identity and appearance reference.\nUse <<<Audio2>>> as Julien's canonical voice.\nLOCATION / TIME:\nA warm, comfortable family living room on a quiet winter evening.\nA piano stands directly beside a large living-room window.\nThe piano and the window are very close together, making them part of the same area of the room.\nOutside the window, the winter sky is cold and overcast.\nIt is not snowing at the beginning of the scene.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nJulien wears simple solid-color casual home clothing and full-length trousers.\nACCESSORIES:\nChloe wears a small silver heart-shaped necklace and a simple pastel hair clip.\nPRE-ACTION:\nChloe is sitting at the piano beside the large window, quietly playing a gentle melody.\nJulien enters the living room and approaches her.\nChloe notices her father, stops playing, and turns toward him.\nDIALOGUE:\nChloe looks at Julien and asks warmly:\n\"Dad, is there anything special you want me to play?\"\nJulien looks at Chloe affectionately and replies:\n\"Every song you play is special to me, sweetie.\"\nREACTION:\nChloe is genuinely touched by his answer.\nShe gives her father a warm, emotional smile.\nAfter a brief beat, Chloe turns back toward the piano and begins playing a gentle melody again.\nPAYOFF / ENDING:\nAs Chloe begins playing again, the camera slowly moves backward from Chloe and the piano toward the large window immediately beside them.\nThe camera smoothly passes through the window and continues moving backward outside the house.\nThe warm living room and Chloe at the piano remain visible through the window as the house gradually becomes more distant.\nOnly after the camera has moved outside, the first soft snowflakes begin to fall.\nThe snowfall gradually becomes visible around the warmly lit house while Chloe's gentle piano melody continues faintly from inside.\nCUT.\nKeep the dialogue EXACTLY:\nChloe:\n\"Dad, is there anything special you want me to play?\"\nJulien:\n\"Every song you play is special to me, sweetie.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_mia_zoe",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_mia_zoe.mp4",
+  title: "Mia and Zoe give water to a thirsty dog.",
+  transcript: "Mia : Zoe, look, he looks /thirsty/. Zoe : We can /give/ him some water. Mia : He was really /thirsty/.",
+  answerOptions: [
+    { id: "a", text: "Mia : Zoe, bak, /susamış/ görünüyor. Zoe : Ona biraz su /verebiliriz/. Mia : Gerçekten /susamıştı/." },
+    { id: "b", text: "Mia : Zoe, bak, çok aç görünüyor. Zoe : Ona biraz yiyecek verebiliriz. Mia : Gerçekten açmış." }
+  ],
+  easyDistractor: "Mia : Zoe, bak, çok mutlu görünüyor. Zoe : Onu burada yalnız bırakabiliriz. Mia : Gerçekten çok enerjikti.",
+  correctOptionId: "a",
+  characterIds: ["mia", "zoe"],
+  grades: [5,6,7,8],
+  functions: ["expressing_needs", "use_of_modal_can_for_capability_and_ability"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:00.724",
+evidenceEnd: "0:11.252",
+
+  evidenceSentence: "Mia : Zoe, look, he looks /thirsty/. Zoe : We can /give/ him some water. Mia : He was really /thirsty/.",
+
+  prompt: "Use <<<Image1>>> as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Mia's canonical voice.\nUse <<<Image2>>> as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Zoe's canonical voice.\nLOCATION / TIME:\nA quiet public park on a warm afternoon.\nA friendly stray dog is resting in the shade of a tree.\nThe dog looks thirsty but healthy.\nMia already has a partially filled water bottle with her.\nA small clean empty disposable bowl is on the ground nearby.\nCLOTHING:\nMia wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nZoe wears her existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers.\nPRE-ACTION:\nMia and Zoe are walking together through the park.\nMia notices the dog resting under the tree.\nShe slows down and says:\n\"Zoe, look. He looks thirsty.\"\nZoe notices the dog and looks at Mia's water bottle.\nShe says:\n\"We can give him some water.\"\nACTION:\nThe girls approach calmly.\nMia pours some water from her bottle into the empty bowl on the ground.\nMia and Zoe step back slightly.\nThe dog walks to the bowl and drinks the water.\nAfter the dog finishes drinking, Mia and Zoe kneel down near him.\nMia looks at the dog and says warmly:\n\"He was really thirsty.\"\nPAYOFF:\nThe dog looks up at Mia and Zoe with a gentle, grateful expression.\nMia softly strokes the dog's head.\nZoe watches the dog with a warm smile.\nThe dog remains calm and comfortable beside them.\nCUT.\nKeep the dialogue EXACTLY:\nMia:\n\"Zoe, look. He looks thirsty.\"\nZoe:\n\"We can give him some water.\"\nMia:\n\"He was really thirsty.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_emma",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_emma.mp4",
+  title: "Emma gives her seat to an elderly woman.",
+  transcript: "Emma : You can /sit/ here. Elderly woman : Thank you, that's very /kind/ of you.",
+  answerOptions: [
+    { id: "b", text: "Emma : Buraya /oturabilirsiniz/. Yaşlı kadın : Teşekkür ederim, çok /naziksin/." },
+    { id: "a", text: "Emma : Burada bekleyebilirsiniz. Yaşlı kadın : Teşekkür ederim, çok yardımseversin." }
+  ],
+  easyDistractor: "Emma : Buraya oturamazsınız. Yaşlı kadın : Teşekkür ederim, çok komiksin.",
+  correctOptionId: "b",
+  characterIds: ["emma"],
+  grades: [5,6,7,8],
+  functions: ["offeringhelp", "target_social_language"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:03.981",
+evidenceEnd: "0:09.110",
+
+  evidenceSentence: "Emma : You can /sit/ here. Elderly woman : Thank you, that's very /kind/ of you.",
+
+  prompt: "Use <<<Image1>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Emma's canonical voice.\nThe elderly woman is a generic adult character with no reference image or reference audio.\nLOCATION / SETTING:\nInside a city bus during the daytime.\nThe bus is already travelling normally through the city when the video begins.\nThe bus is moderately busy.\nIMPORTANT SEATING CONDITION:\nEvery passenger seat on the bus is occupied.\nThere are NO empty passenger seats anywhere in the visible bus interior.\nEmma is seated in one passenger seat.\nSeveral other passengers are seated in the surrounding seats.\nA few passengers are standing naturally in the aisle.\nDo not show any empty passenger seats.\nDo not show passengers entering or leaving the bus.\nThe bus doors remain closed throughout the entire video.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nThe elderly woman wears simple, modest casual clothing suitable for the weather.\nShe carries one ordinary walking cane.\nPRE-ACTION:\nThe elderly woman is already inside the moving bus when the scene begins.\nShe is standing near Emma's seat and holding her walking cane securely.\nShe also uses a nearby support rail for stability.\nShe is clearly elderly and moves carefully, but she is not injured or in medical distress.\nEmma is sitting in her seat.\nEmma notices the elderly woman standing nearby with her walking cane.\nEmma briefly looks around at the surrounding seats.\nEvery seat she can see is occupied.\nEmma realizes that the elderly woman has nowhere to sit.\nEmma looks back at the elderly woman with a thoughtful expression.\nEmma remains seated throughout this pre-action.\nSCENE / DIALOGUE:\nEmma now stands up from her seat.\nHer seat becomes clearly empty.\nEmma stays immediately beside the newly empty seat.\nShe looks at the elderly woman and says warmly:\n\"You can sit here.\"\nThe elderly woman clearly understands that Emma is offering the seat that Emma has just vacated.\nShe gives Emma a grateful smile and replies:\n\"Thank you. That's very kind of you.\"\nThe elderly woman carefully moves to Emma's former seat and sits down.\nShe keeps her walking cane with her.\nEmma remains standing beside the same seat and holds a support rail securely.\nThe elderly woman looks up at Emma with a warm, grateful expression.\nEmma gives her a small, friendly smile in return.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the moment simple, natural, and heartwarming.\nThe reason Emma gives up her seat must be visually obvious:\nEvery other passenger seat is already occupied.\nThe elderly woman is standing with a walking cane and has no available seat.\nEmma notices this and voluntarily gives her own seat to the elderly woman.\nEmma is kind and considerate, not exaggeratedly cheerful or proud of herself.\nThe elderly woman is genuinely touched by Emma's small act of kindness.\nKeep their reactions subtle and natural.\nACTION CONTINUITY:\nThe elderly woman is already inside the bus before the scene begins.\nDo NOT show the elderly woman boarding the bus.\nDo NOT open the bus doors at any point.\nDo NOT show anyone entering or exiting the moving bus.\nEmma's seat is occupied by Emma at the beginning.\nEmma stands up only once.\nOnly after Emma stands does her seat become empty.\nThe elderly woman sits specifically in the exact seat that Emma has just vacated.\nEmma does not sit down again.\nDo not create another empty seat elsewhere in the bus.\nKeep the walking cane consistently with the elderly woman throughout the scene.\nThe elderly woman must not drop or lose the cane.\nKeep the dialogue EXACTLY:\nEmma:\n\"You can sit here.\"\nElderly woman:\n\"Thank you. That's very kind of you.\"\nNo additional dialogue.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in Emma's canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_hannah2",
+  status: "published",
+  videoSrc: "assets/video/canonical_hannah2.mp4",
+  title: "Emma reassures Hannah during a rainy camping day.",
+  transcript: "Emma : I thought you enjoyed camping? Hannah : Well, I'm not very /fond of closed spaces/. Emma : Don't worry, the rain /could stop/ any minute now.",
+  answerOptions: [
+    { id: "a", text: "Emma : Kamp yapmaktan hoşlandığını sanıyordum? Hannah : Şey, /kapalı alanlardan pek hoşlanmıyorum/. Emma : Endişelenme, yağmur her an /durabilir/." },
+    { id: "b", text: "Emma : Kamp yapmaktan hoşlandığını sanıyordum? Hannah : Şey, yağmurlu havalardan pek hoşlanmıyorum. Emma : Endişelenme, yakında çadırdan çıkabiliriz." }
+  ],
+  easyDistractor: "Emma : Kamp yapmaktan nefret ettiğini sanıyordum? Hannah : Ben küçük kapalı alanları çok seviyorum. Emma : Merak etme, yağmur bütün gün devam edecek.",
+  correctOptionId: "a",
+  characterIds: ["hannah", "emma"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "expressing_feelings"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:03.291",
+evidenceEnd: "0:11.385",
+
+  evidenceSentence: "Emma : I thought you enjoyed camping? Hannah : Well, I'm not very /fond of closed spaces/. Emma : Don't worry, the rain /could stop/ any minute now.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Hannah's canonical voice.\nUse <<<Image2>>> as 12-year-old Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Emma's canonical voice.\nBoth Hannah and Emma are 12 years old and approximately the same height.\nNeither girl should appear noticeably older, younger, taller, or smaller than the other.\nSETTING:\nA small outdoor campsite surrounded by nature.\nSeveral camping tents are pitched around the campsite.\nThe opening moment shows the campsite from outside during extremely heavy rain.\nRain pours down intensely over the tents and surrounding ground.\nThe campsite is wet, gloomy, and almost deserted because everyone is sheltering from the rain.\nThe scene then continues inside Hannah and Emma's small camping tent.\nThe tent interior is realistically compact and enclosed.\nHeavy rain remains clearly audible hitting the fabric of the tent throughout the entire interior scene.\nTIME / WEATHER:\nDaytime during a cool, heavily overcast camping day.\nThere is intense continuous rainfall outside.\nThe rain does not stop during the video.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nEmma wears her existing upper clothing from <<<Image2>>> and beige full-length casual trousers.\nACCESSORIES:\nHannah wears a small sky-blue bracelet.\nEmma wears a small simple necklace.\nPRE-ACTION:\nBegin briefly outside the tent.\nHeavy rain is already pouring over the campsite.\nSeveral tents are visibly being hit by the strong rainfall.\nThen continue inside Hannah and Emma's tent.\nEmma is sitting normally and comfortably inside the tent.\nHannah is sitting upright beside her, but her body language is completely different.\nHannah has pulled both knees tightly toward her chest and wrapped her arms around her legs.\nShe looks genuinely nervous and uncomfortable because of the small enclosed space.\nHer expression is tense and uneasy.\nShe occasionally glances toward the closed tent entrance as if she would much rather be outside.\nDo not make Hannah smile or behave cheerfully.\nSCENE:\nEmma notices how uncomfortable Hannah looks.\nEmma asks:\nEmma:\n\"I thought you enjoyed camping?\"\nHannah answers uneasily while still holding her knees close to her chest:\nHannah:\n\"Well, I'm not very fond of closed spaces.\"\nEmma understands and calmly reassures her:\nEmma:\n\"Don't worry. The rain could stop any minute now.\"\nREACTION:\nHannah looks toward the tent entrance with a small trace of hope, listening to the heavy rain still pounding against the tent.\nThe rain is still falling heavily outside.\nEmma remains calm beside her.\nDo not make either girl laugh.\nDo not turn Hannah's fear into a comedic reaction.\nDo not add any additional dialogue.\nCUT while Hannah is still looking toward the tent entrance.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+{
+  id: "canonical_ava",
+  status: "published",
+  videoSrc: "assets/video/canonical_ava.mp4",
+  title: "Ava patiently earns a nervous shelter dog's trust.",
+  transcript: "Shelter worker : He doesn't /trust/ people yet. Shelter worker : Well, I think he /trusts/ you. Ava : Maybe he just needed a little /kindness/.",
+  answerOptions: [
+    { id: "b", text: "Barınak çalışanı : Henüz insanlara /güvenmiyor/. Barınak çalışanı : Sanırım sana /güveniyor/. Ava : Belki de sadece biraz /iyiliğe/ ihtiyacı vardı." },
+    { id: "a", text: "Barınak çalışanı : Henüz insanlardan hoşlanmıyor. Barınak çalışanı : Sanırım seni sevdi. Ava : Belki de sadece biraz yemeğe ihtiyacı vardı." }
+  ],
+  easyDistractor: "Barınak çalışanı : İnsanlara çok güveniyor. Barınak çalışanı : Sanırım senden hiç hoşlanmadı. Ava : Belki de yalnız kalmak istiyordu.",
+  correctOptionId: "b",
+  characterIds: ["ava"],
+  grades: [7,8],
+  functions: ["givinginformation", "expressing_needs"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.677",
+evidenceEnd: "0:14.539",
+
+  evidenceSentence: "Shelter worker : He doesn't /trust/ people yet. Shelter worker : Well, I think he /trusts/ you. Ava : Maybe he just needed a little /kindness/.",
+
+  prompt: " Use <<<Image1>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ava's canonical voice.\nSETTING:\nA clean, well-maintained animal shelter during a mild spring afternoon.\nAva is inside the dog area with a female animal shelter worker.\nOne medium-sized mixed-breed shelter dog is inside a spacious kennel.\nThe dog is nervous and defensive rather than genuinely dangerous.\nAt the beginning, it repeatedly barks at Ava and the shelter worker and keeps some distance from the front of the kennel.\nPRE-ACTION:\nAva and the shelter worker approach the kennel together.\nThe dog immediately becomes uneasy and barks loudly at them several times.\nAva stops instead of moving closer.\nThe shelter worker watches the dog and says calmly:\n\"He doesn't trust people yet.\"\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>>  and dark green full-length casual trousers.\nShe carries a small simple crossbody bag.\nThe shelter worker wears a simple solid-color polo shirt and full-length practical trousers.\nSCENE:\nAva remains calm and gentle.\nShe does NOT immediately try to touch the dog.\nShe slowly crouches down several feet away from it, keeping her movements relaxed and non-threatening.\nAva gently places a small bowl of dog food on the ground in front of her and slides it slightly closer to the dog.\nShe waits quietly.\nThe dog's behavior changes gradually and visibly:\nfirst it stops barking,\nthen it cautiously approaches,\nsniffs toward Ava and the food,\nand begins wagging its tail gently.\nThe dog finally lowers its head and starts eating from the bowl.\nAfter a few bites, it briefly lifts its head and looks calmly at Ava.\nAva gives the dog a warm, gentle smile.\nThe shelter worker notices the complete change in the dog's behavior and says with pleasantly surprised warmth:\n\"Well... I think he trusts you.\"\nAva keeps her attention on the dog and replies softly:\n\"Maybe he just needed a little kindness.\"\nThe dog continues eating calmly, its body now visibly relaxed and its tail giving another gentle wag.\nAva's smile becomes slightly warmer.\nCUT.\nEMOTIONAL DIRECTION:\nKeep Ava calm, patient, thoughtful, and naturally caring throughout the scene.\nShe should never appear afraid of the dog.\nDo not make Ava behave like a magical animal tamer; the dog's trust develops gradually because she gives it space, food, and a calm presence.\nThe shelter worker should be genuinely surprised by the dog's change, but her reaction must remain subtle and believable.\nDo not turn the ending into a celebration.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+
+
+{
+  id: "canonical_ethan",
+  status: "published",
+  videoSrc: "assets/video/canonical_ethan.mp4",
+  title: "Ethan arrives at school far too early.",
+  transcript: "Vice Principal : Ethan, did you /sleep/ here last night? Ethan : I'm very /punctual/, I always come to school /on time/. Vice Principal : Well, this is absolutely /not on time/.",
+  answerOptions: [
+    { id: "a", text: "Müdür Yardımcısı : Ethan, dün gece burada mı /uyudun/? Ethan : Ben çok /dakik/ biriyim, okula her zaman /zamanında/ gelirim. Müdür Yardımcısı : Pekâlâ, bu kesinlikle /zamanında gelmek değil/." },
+    { id: "b", text: "Müdür Yardımcısı : Ethan, neden bu kadar erken geldin? Ethan : Ben çok düzenli biriyim, okula her zaman erken gelirim. Müdür Yardımcısı : Pekâlâ, bugün tam zamanında geldin." }
+  ],
+  easyDistractor: "Müdür Yardımcısı : Ethan, neden okula geç kaldın? Ethan : Ben asla zamanında gelmem. Müdür Yardımcısı : Bugün yine çok geç kaldın.",
+  correctOptionId: "a",
+  characterIds: ["ethan"],
+  grades: [7,8],
+  functions: ["frequency_adverbs", "expressingtime"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:03.910",
+evidenceEnd: "0:12.349",
+
+  evidenceSentence: "Vice Principal : Ethan, did you /sleep/ here last night? Ethan : I'm very /punctual/, I always come to school /on time/. Vice Principal : Well, this is absolutely /not on time/.",
+
+  prompt: " Use <<<Image1>>> as 12-year-old Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ethan's canonical voice.\nSETTING:\nOutside the main entrance of Ethan's school.\nThe school is clearly still closed at the beginning of the video.\nThe main entrance doors are locked.\nThe area is extremely quiet and empty because students and staff have not arrived yet.\nTIME / WEATHER:\nVery early on a cool autumn morning.\nSoft early-morning daylight.\nCalm, dry weather.\nCHARACTERS:\nEthan is 12 years old.\nThe vice principal is a generic adult male school administrator in his mid-40s.\nHe has a professional but approachable appearance.\nHe speaks with a natural adult male voice.\nCLOTHING:\nEthan wears his existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nThe vice principal wears a simple solid-color shirt, dark full-length trousers, and a casual jacket.\nACCESSORIES:\nEthan wears a simple dark blue wristwatch and carries a school backpack.\nThe vice principal wears a simple wristwatch and carries a small key ring with the school entrance key.\nPRE-ACTION:\nEthan is already standing alone outside the locked main entrance of the school with his backpack.\nThere are no other students waiting outside.\nThe vice principal has just arrived to open the school for the morning.\nHe walks directly to the locked entrance, takes the school key from his key ring, inserts it into the door lock, and begins unlocking the main entrance.\nThe physical action of unlocking the previously locked school door with the key must be clearly visible and understandable.\nSCENE:\nWhile using the key to unlock the school entrance, the vice principal notices Ethan already standing there.\nSurprised to see him so early, he looks at Ethan and asks:\nVice Principal:\n\"Ethan, did you sleep here last night?\"\nEthan answers seriously:\nEthan:\n\"I'm very punctual. I always come to school on time.\"\nThe vice principal finishes unlocking the door.\nHe looks at the newly unlocked school entrance and then back at Ethan.\nWith dry disbelief, he replies:\nVice Principal:\n\"Well, this is absolutely not on time.\"\nREACTION:\nEthan pauses and looks at the vice principal, realizing what he means.\nThe vice principal keeps a dry, mildly amused expression.\nDo not add other students or staff.\nThe school must still be closed when the video begins.\nThe vice principal must physically unlock the main entrance with a key during the scene.\nDo not begin with the school door already open.\nDo not add any additional dialogue.\nCUT immediately after the final reaction.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve Ethan's exact stylized 3D animated-character appearance shown in his canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_ava_chloe3",
+  status: "published",
+  videoSrc: "assets/video/canonical_ava_chloe3.mp4",
+  title: "Ava and Chloe encounter a hedgehog on a peaceful nature walk.",
+  transcript: "Chloe : It's so /peaceful/ here. Ava : /That's why/ I love nature walks so much. Chloe : Wait, did you hear that?",
+  answerOptions: [
+    { id: "b", text: "Chloe : Burası çok /huzurlu/. Ava : /İşte bu yüzden/ doğa yürüyüşlerini çok seviyorum. Chloe : Bekle, bunu duydun mu?" },
+    { id: "a", text: "Chloe : Burası çok sessiz. Ava : Buna alışığım, doğa yürüyüşlerine sık çıkarım. Chloe : Bekle, bunu duydun mu?" }
+  ],
+  easyDistractor: "Chloe : Burası çok kalabalık. Ava : Bu yüzden doğa yürüyüşlerinden nefret ediyorum. Chloe : Bekle, eve gidelim mi?",
+  correctOptionId: "b",
+  characterIds: ["ava", "chloe"],
+  grades: [7,8],
+  functions: ["expressing_feelings", "expressing_likes_and_dislikes", "confirming_information"],
+  theme: "canonical",
+  unit: "",
+
+ evidenceStart: "0:00.000",
+evidenceEnd: "0:05.560",
+
+  evidenceSentence: "Chloe : It's so /peaceful/ here. Ava : /That's why/ I love nature walks so much. Chloe : Wait, did you hear that?",
+
+  prompt: " Use <<<Image1>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ava's canonical voice.\nUse <<<Image2>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Chloe's canonical voice.\nUse <<<Image3>>>  as Ava's bottom-clothing reference.\nSETTING:\nA quiet nature trail surrounded by green trees, bushes, grass, and natural woodland vegetation.\nTIME / WEATHER:\nA pleasant mild spring afternoon.\nSoft natural daylight and calm weather.\nPRE-ACTION:\nAva and Chloe are already walking together along the quiet nature trail at a relaxed pace.\nThey casually look around at the trees and surrounding nature as they walk.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>>  and the exact bottom clothing shown in <<<Image3>>> .\nPreserve the existing color, length, cut, and fit of Ava's bottom clothing.\nChloe wears her existing upper clothing from <<<Image2>>>  and dark blue capri pants.\nSCENE:\nWhile they continue walking, Chloe looks around at the peaceful surroundings and says naturally:\nChloe:\n\"It's so peaceful here.\"\nAva looks around at the nature surrounding them and replies warmly:\nAva:\n\"That's why I love nature walks so much.\"\nThey continue walking.\nSuddenly, a soft rustling sound comes from a nearby bush.\nChloe becomes slightly startled and immediately looks toward the bush.\nChloe:\n\"Wait, did you hear that?\"\nAva also turns her attention toward the bush.\nThere is a brief quiet beat.\nA small hedgehog naturally emerges from underneath the bush and becomes clearly visible beside the trail.\nChloe's initial nervousness immediately disappears.\nAva and Chloe briefly look at each other with small, warm smiles, then turn back and watch the hedgehog affectionately.\nThey do not touch, pick up, feed, or approach the hedgehog.\nThe hedgehog remains a normal small wild animal calmly moving near the vegetation.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_ella_olivia",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_ella_olivia.mp4",
+  title: "Ella and Olivia inspire a child to put rubbish in the bin.",
+  transcript: "Olivia : Why do people leave their rubbish here? Ella : I don't know, let's /collect/ them. Olivia : That's /better/.",
+  answerOptions: [
+    { id: "a", text: "Olivia : İnsanlar neden çöplerini buraya bırakıyor? Ella : Bilmiyorum, hadi onları /toplayalım/. Olivia : Böyle daha /iyi/" },
+    { id: "b", text: "Olivia : İnsanlar neden çöplerini buraya bırakıyor? Ella : Bilmiyorum, hadi onları çöpe atalım. Olivia : Çok iyi oldu." }
+  ],
+  easyDistractor: "Olivia : İnsanlar neden çöplerini eve götürüyor? Ella : Bilmiyorum, hadi onları burada bırakalım. Olivia : Böyle daha kötü. Ella : Çok daha kötü.",
+  correctOptionId: "a",
+  characterIds: ["ella", "olivia"],
+  grades: [5,6,7,8],
+  functions: ["askingforreason", "makingasuggestion"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:02.655",
+evidenceEnd: "0:08.151",
+
+  evidenceSentence: "Olivia : Why do people leave their rubbish here? Ella : I don't know, let's /collect/ them. Olivia : That's /better/.",
+
+  prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ella's canonical voice.\nUse <<<Image2>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Olivia's canonical voice.\nLOCATION / TIME:\nA public park on a pleasant afternoon.\nThere is a rubbish bin beside the walking path.\nCLOTHING:\nElla wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nOlivia wears her existing upper clothing from <<<Image2>>> and dark grey full-length casual trousers.\nPRE-ACTION:\nElla and Olivia are walking together through the park.\nThey notice a few simple pieces of litter on the ground near the path.\nOlivia stops and looks at the litter.\nShe says:\n\"Why do people leave their rubbish here?\"\nElla looks at the litter and replies:\n\"I don't know. Let's collect them.\"\nACTION:\nElla and Olivia pick up the few pieces of litter and put them into the nearby rubbish bin.\nAfter they finish, Olivia looks at the clean area and says:\n\"That's better.\"\nElla looks at it and replies:\n\"Much better.\"\nPAYOFF:\nA young child nearby has quietly noticed what Ella and Olivia did.\nThe child is holding an empty juice carton.\nAfter watching the girls put the litter in the bin, the child looks at the empty carton in his hand.\nHe walks to the same rubbish bin and puts his empty carton inside.\nElla and Olivia notice him doing this.\nThey watch the child with warm, pleased smiles.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the scene natural and understated.\nThe heartwarming payoff is the young child quietly following Ella and Olivia's example without being told to do so.\nKeep the litter simple and limited to only a few easy-to-handle pieces.\nKeep the dialogue EXACTLY:\nOlivia:\n\"Why do people leave their rubbish here?\"\nElla:\n\"I don't know. Let's collect them.\"\nOlivia:\n\"That's better.\"\nElla:\n\"Much better.\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+{
+  id: "canonical_lucas",
+  status: "published",
+  videoSrc: "assets/video/canonical_lucas.mp4",
+  title: "Lucas dreams of becoming a professional football player.",
+  transcript: "Lucas : I'm very /good at/ playing Football and I /love/ it, I want to be a professional football player when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Lucas : Futbol oynamakta çok /iyiyim/ ve onu /seviyorum/, büyüdüğümde profesyonel futbolcu /olmak istiyorum/." },
+    { id: "a", text: "Lucas : Hergün futbol oynuyorum ve futbolu aşırı seviyorum, büyüdüğümde profesyonel futbolcu olmak istiyorum." }
+  ],
+  easyDistractor: "Lucas : Futbol oynamakta pek iyi değilim ve futbolu sevmiyorum, büyüdüğümde başka bir spor yapmak istiyorum.",
+  correctOptionId: "b",
+  characterIds: ["lucas"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "expressing_hopes"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:02.481",
+evidenceEnd: "0:07.751",
+
+  evidenceSentence: "Lucas : I'm very /good at/ playing Football and I /love/ it, I want to be a professional football player when I grow up.",
+
+  prompt: " Use <<<Image1>>> as 12-year-old Lucas's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Lucas's canonical voice.\nUse <<<Image2>>> as adult Lucas's future identity and appearance reference.\nLOCATION / SETTING:\nA well-maintained outdoor football training field.\nTIME AND WEATHER:\nSummer afternoon.\nBright, pleasant weather with clear visibility.\nPRE-ACTION:\nThe video begins with 12-year-old Lucas already practicing football on the field.\nA football is at his feet.\nLucas dribbles the ball forward several meters and takes a controlled shot into the goal.\nCLOTHING:\n12-year-old Lucas wears his existing upper clothing from <<<Image1>>> and black full-length athletic trousers.\nAdult Lucas wears a professional red football jersey and black full-length football trousers.\nACCESSORIES:\n12-year-old Lucas wears a simple black sports wristband.\nAdult Lucas wears a matching professional football captain's armband on one upper arm.\nSCENE / ACTION:\nAfter scoring during practice, Lucas briefly watches the ball enter the goal.\nHe then turns his attention directly toward the camera and establishes clear eye contact.\nLucas keeps direct eye contact with the camera throughout the entire first line:\nLucas:\n\"I'm very good at playing Football and I love it.\"\nLucas briefly glances back toward the football field with a determined smile.\nHe then looks directly at the camera again and maintains clear eye contact throughout the entire second line:\nLucas:\n\"I want to be a professional football player when I grow up.\"\nFUTURE TRANSITION:\nA brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Lucas physically aging or morphing during the transition.\nAs the light clears, reveal adult Lucas from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Lucas is now playing in a professional football match inside a large stadium.\nHe is actively controlling the football while running toward the opposing goal.\nOne opposing player approaches him.\nLucas keeps control of the ball, moves past the opponent, and immediately takes a powerful shot toward the goal.\nThe goalkeeper reacts and dives toward the ball.\nThe ball reaches the goal and hits the net.\nLucas sees that he has scored and shows a brief natural burst of excitement while continuing his movement.\nCUT immediately.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+{
+  id: "canonical_ethan_elizabeth",
+  status: "published",
+  videoSrc: "assets/video/canonical_ethan_elizabeth.mp4",
+  title: "Ethan asks his mother to repeat what she said.",
+  transcript: "Elizabeth : Ethan, dinner is ready. Elizabeth : Ethan! Ethan : Sorry, Mum, /can you repeat/? Elizabeth : I said dinner is ready.",
+  answerOptions: [
+    { id: "a", text: "Elizabeth : Ethan, akşam yemeği hazır. Elizabeth : Ethan! Ethan : Üzgünüm anne, /tekrar eder misin/? Elizabeth : Akşam yemeğinin /hazır/ olduğunu söyledim." },
+    { id: "b", text: "Elizabeth : Ethan, akşam yemeği hazır. Elizabeth : Ethan! Ethan : Üzgünüm anne, biraz bekler misin? Elizabeth : Bekleyemem, yiyeceksen gel." }
+  ],
+  easyDistractor: "Elizabeth : Ethan, odanı temizle. Elizabeth : Ethan! Ethan : Seni duydum anne, tekrar söylemene gerek yok. Elizabeth : Yatmaya hazırlanmanı söyledim.",
+  correctOptionId: "a",
+  characterIds: ["ethan","elizabeth"],
+  grades: [5,6,7,8],
+  functions: ["asking_for_repetition"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:07.305",
+evidenceEnd: "0:12.080",
+
+  evidenceSentence: "Elizabeth : Ethan, dinner is ready. Elizabeth : Ethan! Ethan : Sorry, Mum, /can you repeat/? Elizabeth : I said dinner is ready.",
+
+  prompt: "Use <<<Image1>>>  as Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ethan's canonical voice.\nUse <<<Image2>>>  as Elizabeth's canonical identity and appearance reference.\n\nSETTING:\nEthan's comfortable bedroom at home.\nHis bed is the main resting area, with a casual everyday bedroom atmosphere.\nTIME / WEATHER:\nA cool autumn evening.\nThe weather outside is calm and dry.\nWarm indoor lighting fills the bedroom.\nCLOTHING:\nEthan wears his existing upper clothing from <<<Image1>>>  and dark blue full-length casual trousers.\nElizabeth wears a simple solid-color long-sleeved top and beige full-length casual trousers.\nACCESSORIES:\nEthan wears over-ear headphones.\nElizabeth wears small simple earrings.\nPRE-ACTION:\nAt the beginning of the video, Ethan is alone in his bedroom.\nHe is already half-reclining comfortably on his bed, wearing his headphones and listening to energetic rock music.\nThe rock music is clearly audible through the scene's audio while Ethan is wearing the headphones.\nEthan is casually looking through a magazine while listening to the music.\nHe is relaxed and absorbed in what he is doing.\nSCENE:\nElizabeth comes to Ethan's bedroom doorway and looks toward him.\nShe says in a normal speaking voice:\nElizabeth:\n\"Ethan, dinner is ready.\"\nEthan does not react at all.\nHe does not hear Elizabeth because he is absorbed in the rock music playing through his headphones.\nHe continues looking through the magazine.\nElizabeth realizes that Ethan has not heard her.\nShe calls his name much louder:\nElizabeth:\n\"Ethan!\"\nEthan finally notices his mother.\nHe looks up, removes his headphones, and asks:\nEthan:\n\"Sorry, Mum. Can you repeat?\"\nElizabeth replies:\nElizabeth:\n\"I said dinner is ready.\"\nEthan immediately responds:\nEthan:\n\"OK, I'm coming.\"\nREACTION:\nEthan quickly puts the magazine aside and gets up from the bed, ready to leave the room.\nElizabeth remains naturally at the doorway.\nDo not add any additional dialogue.\nCUT as Ethan gets up from the bed.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve Ethan's exact stylized 3D animated-character appearance shown in his canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+{
+  id: "canonical_benjamin_jack",
+  status: "published",
+  videoSrc: "assets/video/canonical_benjamin_jack.mp4",
+  title: "Benjamin stays remarkably calm about a science project deadline.",
+  transcript: "Jack : Oh my God, today is the /deadline/ for our science project! Jack : Do you ever /get worried/ about anything in life? Benjamin : I'm worried about you blocking my sun right now.",
+  answerOptions: [
+    { id: "b", text: "Jack : Aman Tanrım, bugün fen projemizin son /teslim tarihi/! Jack : Hayatta herhangi bir şey için hiç /endişelenir misin/? Benjamin : Şu anda güneşimi engelliyor olman konusunda endişeliyim." },
+    { id: "a", text: "Jack : Aman Tanrım, fen projemizden sıfır almışız! Jack : Hayatta herhangi bir şeyi ciddiye alır mısın? Benjamin : Şu anda güneşimi engelliyor olmanı ciddiye alıyorum." }
+  ],
+  easyDistractor: "Jack : Harika, fen projemizi bitirmek için daha çok zamanımız var! Jack : Hiçbir şey için endişelenmiyorsun, değil mi? Benjamin : Şu anda güneşten kaçmak istiyorum.",
+  correctOptionId: "b",
+  characterIds: ["benjamin", "jack"],
+  grades: [8],
+  functions: ["expressing_feelings", "asking_about_condition"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.445",
+evidenceEnd: "0:10.515",
+
+  evidenceSentence: "Jack : Oh my God, today is the /deadline/ for our science project! Jack : Do you ever /get worried/ about anything in life? Benjamin : I'm worried about you blocking my sun right now.",
+
+  prompt: "Use <<<Image1>>>  as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Benjamin's canonical voice.\nUse <<<Image2>>>  as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Jack's canonical voice.\nSETTING:\nA quiet grassy garden on a warm, relaxing summer afternoon.\nA hammock is stretched securely between two trees.\nThe atmosphere is peaceful and lazy.\nTIME / WEATHER:\nSummer afternoon.\nWarm, sunny, calm weather.\nPRE-ACTION:\nBenjamin is already lying comfortably in the hammock, completely relaxed.\nHe holds a glass of orange juice in one hand.\nBenjamin has a pair of sunglasses resting on top of his head, above his eyes.\nJack is standing beside the hammock, casually looking at his phone.\nCLOTHING:\nBenjamin wears his existing upper clothing from <<<Image1>>>  and light beige shorts.\nHe has sunglasses resting on top of his head at the beginning of the scene.\nJack wears his existing upper clothing from <<<Image2>>>  and dark blue shorts.\nSCENE:\nA very loud notification sound suddenly comes from Jack's phone.\nJack looks at the phone screen.\nHis relaxed expression immediately changes to alarm and panic.\nJack:\n\"Oh my God! Today is the deadline for our science project!\"\nBenjamin does not panic or change his relaxed position in the hammock.\nWithout sitting up and without showing any concern, Benjamin calmly lowers the sunglasses from the top of his head onto his eyes.\nHe remains comfortably lying in the hammock.\nJack stares at Benjamin, amazed by how completely relaxed he is.\nJack:\n\"Do you ever get worried about anything in life?\"\nBenjamin looks toward Jack from behind his sunglasses and replies in a completely calm, dry tone:\nBenjamin:\n\"I'm worried about you blocking my sun right now.\"\nREACTION / PAYOFF:\nJack gives Benjamin a brief incredulous \"Are you serious?\" expression.\nThen Jack silently takes a small step to the side, moving out of Benjamin's sunlight.\nBenjamin immediately relaxes again in the hammock and casually takes another sip of his orange juice.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_chloe_emma",
+  status: "published",
+  videoSrc: "assets/video/canonical_chloe_emma.mp4",
+  title: "Emma discovers how nervous Chloe was during her piano performance.",
+  transcript: "Emma : You were amazing! Chloe : My hands were /shaking/ the whole time. Emma : Seriously, I /couldn't tell/.",
+  answerOptions: [
+    { id: "a", text: "Emma : Harikaydın! Chloe : Ellerim sürekli /titriyordu/. Emma : Cidden mi, /fark edemedim/." },
+    { id: "b", text: "Emma : Harikaydın! Chloe : Ellerim sürekli terliyordu. Emma : Cidden mi, bunu beklemiyordum." }
+  ],
+  easyDistractor: "Emma : Berbattın! Chloe : Ellerim hiç titremiyordu. Emma : Evet, bunu hemen fark ettim.",
+  correctOptionId: "a",
+  characterIds: ["chloe", "emma"],
+  grades: [7,8],
+  functions: ["simple_past_tense_was_were", "simple_past_tense", "expressing_feelings"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:04.737",
+evidenceEnd: null,
+
+  evidenceSentence: "Emma : You were amazing! Chloe : My hands were /shaking/ the whole time. Emma : Seriously, I /couldn't tell/.",
+
+  prompt: "Use <<<Image1>>>  as 12-year-old Chloe's canonical identity  reference.\nUse <<<Audio1>>>  as Chloe's canonical voice.\nUse <<<Image2>>>  as 12-year-old Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Emma's canonical voice.\nChloe and Emma are both 12 years old and approximately the same height.\nNeither girl should appear noticeably older, younger, taller, or smaller than the other.\nSETTING:\nA school talent show taking place in a small school auditorium.\nThe performance area has a piano and simple tasteful talent-show decorations.\nA seated student and parent audience is present.\nAfter the performance, the conversation takes place just off the performance area in a quieter backstage or side-hall area of the same school auditorium.\nTIME:\nDaytime.\nCLOTHING:\nChloe wears a smart but youthful school talent-show outfit:\na soft pastel pink long-sleeved blouse and dark navy high-waisted wide-leg trousers.\nShe wears one small simple pink hair clip.\nNo other accessories.\nEmma wears her existing upper clothing from <<<Image2>>>  and dark blue full-length casual trousers.\nPRE-ACTION / PERFORMANCE ENDING:\nThe video begins during the final moments of Chloe's piano performance.\nChloe is seated naturally at the piano and confidently plays the final few notes of her piece.\nShe finishes the piece cleanly and removes her hands from the piano keys.\nThe audience immediately begins applauding.\nChloe shows a small, relieved smile.\nShe calmly stands up from the piano, turns toward the audience, and gives them a graceful, modest bow.\nShe is pleased but not overly theatrical or celebratory.\nCUT TO:\nA quieter area just off the performance space shortly afterward.\nEmma is waiting for Chloe.\nEmma is genuinely impressed and says warmly:\nEmma:\n\"You were amazing!\"\nChloe is happy, but still visibly coming down from the nervous excitement of performing in front of the audience.\nChloe:\n\"My hands were shaking the whole time.\"\nEmma looks surprised:\nEmma:\n\"Seriously? I couldn't tell.\"\nChloe looks briefly at her own hands, then gives a small relieved smile.\nChloe:\n\"Good.\"\nREACTION:\nEmma smiles warmly at Chloe.\nChloe remains modest and slightly relieved rather than acting triumphant.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "heart_warming_chloe_olivia",
+  status: "published",
+  videoSrc: "assets/video/heart_warming_chloe_olivia.mp4",
+  title: "Chloe quietly supports Olivia when she is feeling sad.",
+  transcript: "Chloe : You /don't have to/ tell me what's wrong, but I'm here /if you want to/.",
+  answerOptions: [
+    { id: "b", text: "Chloe : Bana sorunun ne olduğunu anlatmak /zorunda değilsin/, ama /eğer istersen/ ben buradayım." },
+    { id: "a", text: "Chloe : Bana sorunun ne olduğunu anlatırsan yardımcı olabilirim." }
+  ],
+  easyDistractor: "Chloe : Bana hemen ne olduğunu anlatmalısın, yoksa burada beklemeyeceğim.",
+  correctOptionId: "b",
+  characterIds: ["chloe", "olivia"],
+  grades: [5],
+  functions: ["expressing_obligations_or_rules", "offeringhelp"],
+  theme: "heart_warming",
+  unit: "",
+
+  evidenceStart: "0:04.309",
+evidenceEnd: "0:09.623",
+
+  evidenceSentence: "Chloe : You /don't have to/ tell me what's wrong, but I'm here /if you want to/.",
+
+  prompt: "Use <<<Image1>>>  as 12-year-old Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Chloe's canonical voice.\nUse <<<Image2>>>  as 12-year-old Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Image3>>>  as Patrick's exact identity and appearance reference for the photograph Olivia is holding.\nChloe and Olivia are both 12 years old and approximately the same height.\nNeither girl should appear noticeably older, younger, taller, or smaller than the other.\nSETTING:\nA quiet public park with a simple bench surrounded by trees and soft greenery.\nTIME / WEATHER:\nA mild spring afternoon.\nSoft natural daylight and calm weather.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>>  and dark blue jeans.\nOlivia wears her existing upper clothing from <<<Image2>>>  and beige full-length casual trousers.\nChloe wears a small silver heart-shaped necklace and a simple pastel hair clip.\nOlivia wears a small scene-specific bracelet.\nPRE-ACTION:\nOlivia is sitting alone on the bench.\nShe is unusually quiet and slightly sad.\nOlivia is holding a small physical printed photograph of her late father, Patrick, and looking down at it.\nThe photograph contains the exact portrait of Patrick shown in <<<Image3>>> .\nPreserve Patrick's identity and appearance from <<<Image3>>>  inside the photograph.\nIMPORTANT PHOTO ORIENTATION:\nAt the beginning, show the photograph naturally from over Olivia's shoulder while Olivia is looking at it.\nThe FRONT of the photograph, containing Patrick's portrait, must be facing Olivia.\nPatrick's portrait should be visible to the viewer from this over-the-shoulder view.\nDo not make Olivia hold the photograph with Patrick's portrait facing outward toward the viewer.\nDo not reverse or mirror the photograph.\nSCENE:\nChloe notices Olivia sitting alone and quietly approaches.\nChloe sits beside Olivia on the bench.\nChloe notices the photograph and makes a small, natural movement to look more closely at what Olivia is holding.\nOlivia immediately pulls the photograph closer to herself, preventing Chloe from seeing it clearly.\nChloe understands the boundary immediately.\nShe gently pulls back and does not make another attempt to look at the photograph.\nChloe looks at Olivia and says softly:\nChloe:\n\"You don't have to tell me what's wrong.\"\nOlivia looks at Chloe but remains silent.\nChloe:\n\"But I'm here if you want to.\"\nREACTION:\nOlivia's sad, guarded expression softens slightly.\nShe gives Chloe a small, genuine, grateful smile.\nChloe does not ask about the photograph and does not try to touch it.\nThere is no hug or exaggerated emotional reaction.\nChloe simply remains sitting beside Olivia.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+
+{
+  id: "canonical_ava2",
+  status: "published",
+  videoSrc: "assets/video/canonical_ava2.mp4",
+  title: "Ava imagines her future as a veterinarian.",
+  transcript: "Ava : I love /taking care of/ animals, maybe I'll be a /vet/ when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Ava : Hayvanlarla /ilgilenmeyi/ seviyorum, belki büyüdüğümde /veteriner/ olacağım." },
+    { id: "a", text: "Ava : Hayvanları beslemeyi seviyorum, belki büyüdüğümde hayvan barınağında çalışacağım." }
+  ],
+  easyDistractor: "Ava : Hayvanlardan korkuyorum, büyüdüğümde onlardan uzak duracağım.",
+  correctOptionId: "b",
+  characterIds: ["ava"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:02.179",
+evidenceEnd: "0:07.771",
+
+  evidenceSentence: "Ava : I love /taking care of/ animals, maybe I'll be a /vet/ when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Ava's canonical voice.\nUse <<<Image2>>> as 25-year-old adult Ava's future identity and appearance reference.\nLOCATION / SETTING:\nThe first part takes place outdoors in the garden area of a well-kept animal shelter.\nTIME AND WEATHER:\nSpring afternoon, mild and pleasant weather with soft natural daylight.\nPRE-ACTION:\nThe video begins with 12-year-old Ava already crouching beside a friendly medium-sized shelter dog.\nAva is finishing pouring dry dog food into the dog's bowl.\nThe dog begins eating naturally from the bowl.\nCLOTHING:\n12-year-old Ava wears her existing upper clothing from <<<Image1>>> and olive-green full-length casual trousers.\nAdult Ava wears a clean white veterinarian's coat over simple professional clothing and full-length dark trousers.\nACCESSORIES:\n12-year-old Ava wears a small simple bracelet.\nAdult Ava wears a simple wristwatch.\nSCENE / ACTION:\nWhile the dog eats, Ava gently strokes the dog's head and says warmly:\nAva:\n\"I love taking care of animals.\"\nAfter finishing the first line, Ava naturally stands up.\nBefore speaking again, Ava turns her attention directly toward the camera and establishes clear eye contact.\nShe keeps direct eye contact with the camera throughout the entire second line:\nAva:\n\"Maybe I'll be a vet when I grow up.\"\nImmediately after Ava finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Ava physically aging or morphing during the transition.\nAs the light clears, reveal adult Ava from <<<Image2>>> approximately ten years later.\nThe setting is now a clean, modern veterinary examination room.\nAdult Ava is working as a veterinarian, wearing her white coat.\nA dog with a visibly bandaged front leg is resting calmly on the examination table.\nAdult Ava gently examines the injured leg and carefully checks the bandage.\nShe remains focused on the dog, calm and caring.\nAfter checking the injury, adult Ava gently strokes the dog's head.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_david_valeria2",
+  status: "published",
+  videoSrc: "assets/video/canonical_david_valeria2.mp4",
+  title: "David's peaceful camping night takes an unexpected turn.",
+  transcript: "David : Mom, it's so /peaceful/, thanks for taking me here. Valeria : I know /how much you love/ camping.",
+  answerOptions: [
+    { id: "a", text: "David : Anne, burası çok /huzurlu/, beni buraya getirdiğin için teşekkürler. Valeria : Kamp yapmayı /ne kadar sevdiğini/ biliyorum." },
+    { id: "b", text: "David : Anne, burası çok güzel, beni buraya getirdiğin için teşekkürler. Valeria : Kamp yapmak her zaman çok huzurludur." }
+  ],
+  easyDistractor: "David : Anne, burada kamp yapmaktan nefret ediyorum. Valeria : Eve gitmek istediğini biliyorum. David : Burası harika!",
+  correctOptionId: "a",
+  characterIds: ["david"],
+  grades: [5,6,7,8],
+  functions: ["expressing_feelings", "expressing_likes_and_dislikes"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:00.438",
+evidenceEnd: "0:06.416",
+
+  evidenceSentence: "David : Mom, it's so /peaceful/, thanks for taking me here. Valeria : I know /how much you love/ camping.",
+
+  prompt: "Use <<<Image1>>>  as David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as David's canonical voice.\nUse <<<Image2>>>  as Valeria's canonical identity and appearance reference.\nUse <<<Audio2>>>  as Valeria's canonical voice.\nSETTING:\nA quiet campsite surrounded by trees and nature.\nDavid and Valeria are beside their camping tent, sitting near a small campfire.\nThe campfire has a simple roasting area where they are toasting marshmallows.\nTIME / WEATHER:\nA cool early-autumn night.\nThe weather is calm and dry.\nThe campsite is softly illuminated by the warm campfire glow and gentle natural nighttime light.\nCLOTHING:\nDavid wears his existing upper clothing from <<<Image1>>>  and dark navy blue full-length casual trousers.\nValeria wears a simple solid-color long-sleeved casual top and dark beige full-length trousers.\nACCESSORIES:\nDavid wears a simple navy blue wristwatch.\nValeria wears small silver earrings.\nPRE-ACTION:\nDavid and Valeria are already sitting comfortably beside their tent and campfire.\nEach of them is calmly roasting a marshmallow on a long roasting stick over the fire.\nThe campsite is peaceful and quiet.\nDavid looks relaxed and happy to be camping with his mother.\nSCENE:\nWhile continuing to roast his marshmallow, David looks around at the peaceful campsite and says warmly:\nDavid:\n\"Mom, it's so peaceful. Thanks for taking me here.\"\nValeria looks at David and replies:\nValeria:\n\"I know how much you love camping.\"\nImmediately after Valeria finishes speaking, a cobra suddenly slithers into view near David.\nThe cobra stops directly in front of David, raises the front of its body upright and opens its hood.\nThe cobra gives a clear hiss.\nDavid instantly freezes and recoils slightly in fear when he sees the cobra directly in front of him.\nDavid says:\nDavid:\n\"Not so peaceful!\"\nREACTION:\nDavid remains visibly frightened, staring at the upright hissing cobra.\nValeria turns toward the cobra in startled surprise.\nDo not add any additional dialogue.\nDo not make David or Valeria laugh.\nThe cobra does not attack or strike.\nDo not add any additional people or intervention.\nCUT immediately after David says, \"Not so peaceful!\"\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve David's exact stylized 3D animated-character appearance shown in his canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_chloe",
+  status: "published",
+  videoSrc: "assets/video/canonical_chloe.mp4",
+  title: "Chloe imagines her future as a piano teacher.",
+  transcript: "Chloe : I /enjoy/ playing piano, maybe I'll be a piano teacher when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Chloe : Piyano çalmaktan /hoşlanıyorum/, belki büyüdüğümde piyano öğretmeni olacağım." },
+    { id: "a", text: "Chloe : Piyano çalmakta çok iyiyim, belki büyüdüğümde piyano öğretmeni olacağım." }
+  ],
+  easyDistractor: "Chloe : Piyano çalmaktan nefret ediyorum, büyüdüğümde müzikle ilgilenmeyeceğim.",
+  correctOptionId: "b",
+  characterIds: ["chloe"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.829",
+evidenceEnd: "0:08.502",
+
+  evidenceSentence: "Chloe : I /enjoy/ playing piano, maybe I'll be a piano teacher when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Chloe's canonical voice.\nUse <<<Image2>>> as 25-year-old adult Chloe's future identity and appearance reference.\nUse <<<Image3>>>  as Luna's canonical appearance reference.\nLOCATION / SETTING:\nThe first part takes place in a comfortable family living room with an upright piano.\nLuna is resting comfortably on top of the piano.\nTIME AND WEATHER:\nSpring afternoon, mild and pleasant weather with soft natural daylight coming through the windows.\nPRE-ACTION:\nThe video begins with 12-year-old Chloe already sitting at the piano and playing a short, pleasant piano melody.\nShe continues playing naturally for about 2–3 seconds while Luna rests calmly on top of the piano.\nCLOTHING:\n12-year-old Chloe wears her existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nAdult Chloe wears a simple elegant blouse and dark full-length trousers.\nThe young piano student wears a simple casual T-shirt and full-length trousers.\nACCESSORIES:\n12-year-old Chloe wears a small silver bracelet.\nAdult Chloe wears a delicate small pendant necklace.\nThe young piano student wears a simple wristwatch.\nSCENE / ACTION:\nAfter playing the short melody, Chloe naturally finishes the musical phrase and takes her hands away from the keys.\nChloe turns her attention directly toward the camera and establishes clear eye contact.\nShe keeps direct eye contact while saying:\nChloe:\n\"I enjoy playing piano.\"\nAfter finishing the line, Chloe turns toward Luna and gently strokes Luna's head for a brief affectionate moment.\nChloe then turns back toward the camera and clearly re-establishes direct eye contact.\nShe keeps direct eye contact throughout the entire second line:\nChloe:\n\"Maybe I'll be a piano teacher when I grow up.\"\nImmediately after Chloe finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Chloe physically aging or morphing during the transition.\nAs the light clears, reveal adult Chloe from <<<Image2>>> approximately ten years later.\nThe setting is now a pleasant piano teaching room.\nAdult Chloe is working as a piano teacher.\nA young boy, approximately 8 years old, sits at the piano and plays a few simple notes.\nAdult Chloe sits beside him, listening attentively.\nAfter the boy finishes the short phrase, adult Chloe gently points to a specific group of piano keys, guiding him toward the correct notes.\nThe boy looks at the indicated keys and prepares to try again while Chloe watches him with a warm, encouraging expression.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_emma",
+  status: "published",
+  videoSrc: "assets/video/canonical_emma.mp4",
+  title: "Emma imagines her future as a doctor.",
+  transcript: "Emma : I really enjoy /science/ and /helping people/, maybe I'll be a doctor when I grow up.",
+  answerOptions: [
+    { id: "a", text: "Emma : /Bilimden/ ve /insanlara yardım etmekten/ gerçekten /hoşlanıyorum/, belki büyüdüğümde doktor olacağım." },
+    { id: "b", text: "Emma : Bilimden ve deney yapmaktan çok hoşlanıyorum, annem de bir doktor." }
+  ],
+  easyDistractor: "Emma : Bilimden hiç hoşlanmıyorum ve insanlara yardım etmek istemiyorum, büyüdüğümde doktor olmayacağım.",
+  correctOptionId: "a",
+  characterIds: ["emma"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:02.622",
+evidenceEnd: "0:07.747",
+
+  evidenceSentence: "Emma : I really enjoy /science/ and /helping people/, maybe I'll be a doctor when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Emma's canonical voice.\nUse <<<Image2>>> as adult Emma's future identity and appearance reference.\nLOCATION / SETTING:\nThe first part takes place at home at a clean table prepared for a simple science experiment.\nTIME AND WEATHER:\nSpring afternoon, mild and pleasant weather with soft natural daylight.\nPRE-ACTION:\nThe video begins with 12-year-old Emma already doing a simple science experiment.\nA clear glass sits on the table in front of her.\nEmma carefully adds a small amount of baking soda into colored liquid in the glass.\nThe mixture immediately begins to fizz and bubble gently.\nEmma watches the reaction with genuine curiosity and interest for about 2 seconds.\nCLOTHING:\n12-year-old Emma wears her existing upper clothing from <<<Image1>>> and dark purple full-length casual trousers.\nAdult Emma wears a clean white doctor's coat over a simple light-colored blouse and dark full-length professional trousers.\nThe young patient wears a simple long-sleeved casual top and full-length trousers.\nHer clothing remains fully on and unchanged throughout the entire scene.\nACCESSORIES:\n12-year-old Emma wears a small purple bracelet.\nAdult Emma wears a stethoscope around her neck and a simple wristwatch.\nThe young patient wears a small hair clip.\nSCENE / ACTION:\nAfter watching the bubbling reaction, Emma looks pleased with the result.\nShe turns her attention directly toward the camera and establishes clear eye contact.\nEmma keeps direct eye contact throughout the entire first line:\nEmma:\n\"I really enjoy science and helping people.\"\nAfter finishing the line, Emma briefly glances back at the gently bubbling experiment.\nShe then turns back toward the camera and clearly re-establishes direct eye contact.\nEmma keeps direct eye contact throughout the entire second line:\nEmma:\n\"Maybe I'll be a doctor when I grow up.\"\nImmediately after Emma finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Emma physically aging or morphing during the transition.\nAs the light clears, reveal adult Emma from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Emma is now working as a doctor in a clean, modern medical examination room.\nA young girl, approximately 8 years old, is sitting on the examination bed.\nShe looks slightly nervous but remains calm.\nAdult Emma stands beside the girl and gently places the stethoscope over the front of the girl's long-sleeved shirt to listen to her heartbeat.\nThe examination is performed entirely over the girl's clothing.\nThe girl's shirt remains fully covering her upper body throughout the entire scene.\nEmma listens attentively for a brief moment.\nShe then lifts the stethoscope away from the girl's shirt and gives her a warm, reassuring smile.\nThe young girl's nervous expression gradually relaxes as she looks at Emma.\nAdult Emma remains calm, friendly and reassuring beside her patient.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_olivia",
+  status: "published",
+  videoSrc: "assets/video/canonical_olivia.mp4",
+  title: "Olivia imagines her future as an artist.",
+  transcript: "Olivia : I love painting and /creating new things/, maybe I'll be an /artist/ when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Olivia : Resim yapmayı ve /yeni şeyler yaratmayı/ seviyorum, belki büyüdüğümde /ressam/ olacağım." },
+    { id: "a", text: "Olivia : Resim yapmayı ve yeni şeyler öğrenmeyi seviyorum, belki büyüdüğümde resim öğretmeni olurum." }
+  ],
+  easyDistractor: "Olivia : Resim yapmaktan hiç hoşlanmıyorum, büyüdüğümde sanatla ilgilenmeyeceğim.",
+  correctOptionId: "b",
+  characterIds: ["olivia"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.891",
+evidenceEnd: "0:07.234",
+
+  evidenceSentence: "Olivia : I love painting and /creating new things/, maybe I'll be an /artist/ when I grow up.",
+
+  prompt: " Use <<<Image1>>> as  Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Olivia's canonical voice.\nUse <<<Image2>>> as adult Olivia's future identity and appearance reference.\nLOCATION / SETTING:\nA bright art room with natural daylight.\nTIME:\nSpring afternoon.\nPRE-ACTION:\nThe video begins with 12-year-old Olivia already painting at an easel.\nA small canvas is positioned on the easel in front of her.\nOlivia is carefully adding a few brushstrokes to a colorful landscape painting.\nCLOTHING:\n12-year-old Olivia wears her existing upper clothing from <<<Image1>>> and turquoise full-length casual trousers.\nAdult Olivia wears a simple cream blouse and dark green full-length trousers.\nACCESSORIES:\n12-year-old Olivia wears a small turquoise bracelet.\nAdult Olivia wears a delicate silver pendant necklace.\nSCENE / ACTION:\nOlivia adds one final brushstroke to the painting.\nShe pauses briefly and looks at her work with quiet satisfaction.\nOlivia then turns her attention directly toward the camera and establishes clear eye contact.\nShe maintains direct eye contact throughout the entire first line:\nOlivia:\n\"I love painting and creating new things.\"\nOlivia briefly glances at her painting.\nShe then looks directly at the camera again and maintains clear eye contact throughout the entire second line:\nOlivia:\n\"Maybe I'll be an artist when I grow up.\"\nFUTURE TRANSITION:\nA brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Olivia physically aging or morphing during the transition.\nAs the light clears, reveal adult Olivia from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Olivia is now working as a professional painter in a spacious art studio.\nA large canvas stands on an easel in front of her.\nThe painting is already partly completed, with a detailed colorful landscape taking shape across the canvas.\nAdult Olivia studies the painting for a moment.\nShe mixes two colors on her palette, chooses the result with her brush, and carefully adds several new brushstrokes to the large canvas.\nShe steps back slightly to examine the result.\nCUT immediately.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_victoria",
+  status: "published",
+  videoSrc: "assets/video/canonical_victoria.mp4",
+  title: "Victoria imagines her future as a computer programmer.",
+  transcript: "Victoria : I love /coding/ and /solving problems/, maybe I'll be a computer programmer when I grow up.",
+  answerOptions: [
+    { id: "a", text: "Victoria : Kodlama yapmayı ve problem çözmeyi /seviyorum/, belki büyüdüğümde bilgisayar programcısı olacağım." },
+    { id: "b", text: "Victoria : Bilgisayar kullanmayı ve yeni şeyler öğrenmeyi seviyorum, hayalim büyüdüğümde bilgisayar programcısı olmak." }
+  ],
+  easyDistractor: "Victoria : Kodlama yapmaktan hiç hoşlanmıyorum, büyüdüğümde bilgisayarlarla çalışmayacağım.",
+  correctOptionId: "a",
+  characterIds: ["victoria"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.787",
+evidenceEnd: "0:07.303",
+
+  evidenceSentence: "Victoria : I /love/ coding and solving problems, maybe I'll be a computer /programmer/ when I grow up.",
+
+  prompt: " Use <<<Image1>>> as 12-year-old Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Victoria's canonical voice.\nUse <<<Image2>>> as adult Victoria's future identity and appearance reference.\nLOCATION / SETTING:\nA quiet computer room at school.\nTIME:\nDaytime.\nPRE-ACTION:\nThe video begins with 12-year-old Victoria already working at a desktop computer.\nShe is focused on a simple coding project on the screen.\nVictoria types a short final command on the keyboard and watches the program respond successfully.\nCLOTHING:\n12-year-old Victoria wears her existing upper clothing from <<<Image1>>> and dark violet full-length trousers.\nAdult Victoria wears a simple smart-casual blouse and black full-length trousers.\nACCESSORIES:\n12-year-old Victoria wears her canonical round eyeglasses and a small silver bracelet.\nAdult Victoria wears a simple wristwatch.\nAdult Victoria does not wear glasses. Preserve her appearance exactly as shown in <<<Image2>>>.\nSCENE / ACTION:\nVictoria finishes typing and watches her program run successfully on the computer.\nShe gives a small satisfied reaction.\nVictoria then turns her attention directly toward the camera and establishes clear eye contact.\nShe maintains direct eye contact throughout the entire first line:\nVictoria:\n\"I love coding and solving problems.\"\nVictoria briefly looks back at the computer screen.\nShe then turns directly toward the camera again and maintains clear eye contact throughout the entire second line:\nVictoria:\n\"Maybe I'll be a computer programmer when I grow up.\"\nFUTURE TRANSITION:\nA brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Victoria physically aging or morphing during the transition.\nAs the light clears, reveal adult Victoria from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Victoria is working as a professional computer programmer in a modern office.\nShe does not wear glasses.\nVictoria sits at her workstation with a large computer monitor displaying lines of programming code.\nShe studies the code carefully, notices something that needs changing, and types a short correction on the keyboard.\nShe runs the program again.\nThe program now works successfully.\nVictoria looks at the result on the screen with a small, satisfied smile.\nCUT immediately.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_benjamin",
+  status: "published",
+  videoSrc: "assets/video/canonical_benjamin.mp4",
+  title: "Benjamin imagines his future as a lifeguard.",
+  transcript: "Benjamin : Swimming is my /favorite/ sport and I'm really /good at/ it, maybe I'll be a /lifeguard/ when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Benjamin : Yüzme benim /en sevdiğim/ spor ve bu konuda gerçekten /iyiyim/, belki büyüdüğümde /cankurtaran/ olacağım." },
+    { id: "a", text: "Benjamin : Yüzme en sevdiğim sporlardan biri ve bunu sık sık yapıyorum, belki büyüdüğümde yüzme antrenörü olacağım." }
+  ],
+  easyDistractor: "Benjamin : Yüzmeyi hiç sevmiyorum ve bu konuda çok kötüyüm, büyüdüğümde denizden uzak duracağım.",
+  correctOptionId: "b",
+  characterIds: ["benjamin"],
+  grades: [5,6,7,8],
+  functions: ["expressing_a_favorite_activity", "use_of_modal_can_for_capability_and_ability", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+ evidenceStart: "0:01.114",
+evidenceEnd: "0:07.196",
+
+  evidenceSentence: "Benjamin : Swimming is my /favorite/ sport and I'm really /good at/ it, maybe I'll be a /lifeguard/ when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Benjamin's canonical identity and appearance and clothing reference.\nUse <<<Audio1>>> as 12-year-old Benjamin's canonical voice.\nUse <<<Image2>>> as adult Benjamin's future identity and appearance reference.\nUse <<<Image3>>> as adult Benjamin's clothing reference.\nLOCATION / SETTING:\nThe first part takes place on a clean, open sandy beach beside the sea.\nTIME AND WEATHER:\nSummer afternoon, warm and sunny with clear weather and calm sea conditions.\nPRE-ACTION:\nThe video begins with 12-year-old Benjamin already finishing a swim in the sea.\nHe comes out of the shallow water and walks a few steps onto the wet sand near the shoreline.\nA few distant swimmers may be visible in the sea.\nThere are no other people anywhere on the beach or on the shore.\nCLOTHING:\n12-year-old Benjamin wears the exact swimming top from <<<Image1>>> and dark blue knee-length swim shorts.\nAdult Benjamin wears professional beach lifeguard clothing as in <<<Image3>>> .\nACCESSORIES:\n12-year-old Benjamin wears the waterproof sports watch shown in <<<Image3>>> .\nAdult Benjamin carries a professional rescue tube across his body.\nSCENE / ACTION:\nAfter coming out of the sea, Benjamin briefly looks back toward the water with a relaxed, satisfied expression.\nHe then turns his attention directly toward the camera and establishes clear eye contact.\nBenjamin keeps direct eye contact throughout the entire first line:\nBenjamin:\n\"Swimming is my favorite sport and I'm really good at it.\"\nBenjamin remains facing the camera and keeps clear direct eye contact throughout the second line:\nBenjamin:\n\"Maybe I'll be a lifeguard when I grow up.\"\nImmediately after Benjamin finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Benjamin physically aging or morphing during the transition.\nAs the light clears, reveal adult Benjamin from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Benjamin is now working as a professional lifeguard on a wide sandy beach beside the sea.\nBenjamin is the only person visible anywhere on the beach or shoreline.\nAn empty elevated lifeguard chair stands nearby, clearly establishing Benjamin's lifeguard station.\nNo other lifeguards or beach visitors are present on the sand.\nAdult Benjamin stands beside the lifeguard station with his rescue tube and attentively watches the sea.\nOnly a few distant swimmers are visible in the water.\nAdult Benjamin suddenly notices one swimmer farther out in the sea beginning to struggle.\nHis expression immediately changes to focused concern.\nBenjamin firmly grabs his rescue tube and quickly moves across the sand toward the water to respond.\nCUT before he enters the sea.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_zoe",
+  status: "published",
+  videoSrc: "assets/video/canonical_zoe.mp4",
+  title: "Zoe imagines her future as an astronaut.",
+  transcript: "Zoe : I love /looking at the stars/ and learning about space, /maybe/ I'll be an astronaut when I grow up.",
+  answerOptions: [
+    { id: "a", text: "Zoe : /Yıldızlara bakmayı/ ve uzay hakkında bilgi edinmeyi seviyorum, belki büyüdüğümde astronot olurum." },
+    { id: "b", text: "Zoe : Yıldızları izlemeyi ve gezegenler hakkında okumayı seviyorum, hayalim astronot olmak." }
+  ],
+  easyDistractor: "Zoe : Gece gökyüzüne bakmayı hiç sevmiyorum, büyüdüğümde uzayla ilgilenmeyeceğim.",
+  correctOptionId: "a",
+  characterIds: ["zoe"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+ evidenceStart: "0:00.000",
+evidenceEnd: "0:07.112",
+
+  evidenceSentence: "Zoe : I love /looking at the stars/ and learning about space, /maybe/ I'll be an astronaut when I grow up.",
+
+  prompt: "Use <<<Image1>>> as 12-year-old Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Zoe's canonical voice.\nUse <<<Image2>>> as adult Zoe's future identity and appearance reference.\nLOCATION / SETTING:\nA quiet garden at night with a clear view of the sky.\nTIME AND WEATHER:\nA clear, calm night.\nThe sky is dark and filled with visible stars.\nPRE-ACTION:\nThe video begins with 12-year-old Zoe already observing the night sky through a small telescope.\nThe telescope is pointed naturally upward toward the distant night sky.\nZoe looks through the telescope for a moment, carefully observing the stars.\nCLOTHING:\n12-year-old Zoe wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nAdult Zoe wears a professional astronaut flight suit suitable for working inside a space station.\nACCESSORIES:\n12-year-old Zoe wears a small silver star-shaped necklace.\nAdult Zoe wears a simple astronaut wrist device.\nSCENE / ACTION:\nZoe finishes looking through the telescope and lifts her head.\nShe turns her attention directly toward the camera and establishes clear eye contact.\nZoe maintains direct eye contact throughout the entire first line:\nZoe:\n\"I love looking at the stars and learning about space.\"\nZoe briefly looks upward toward the night sky.\nShe then turns directly toward the camera again and maintains clear eye contact throughout the entire second line:\nZoe:\n\"Maybe I'll be an astronaut when I grow up.\"\nFUTURE TRANSITION:\nA brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Zoe physically aging or morphing during the transition.\nAs the light clears, reveal adult Zoe from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Zoe is now an astronaut working inside a space station in orbit around Earth.\nShe is floating gently in microgravity inside the station.\nA large observation window nearby clearly reveals Earth outside in space.\nAdult Zoe uses one hand to steady herself on a fixed handrail while slowly floating toward the observation window.\nShe reaches the window and looks out at Earth for a quiet moment.\nHer expression shows genuine wonder and satisfaction.\nCUT immediately.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_david_valeria",
+  status: "published",
+  videoSrc: "assets/video/canonical_david_valeria.mp4",
+  title: "David realizes his luggage has passed him at the airport.",
+  transcript: "Valeria : Did you enjoy our holiday? David : Yes, the /ancient sites/ we visited were really fantastic.",
+  answerOptions: [
+    { id: "b", text: "Valeria : Tatilimizden keyif aldın mı? David : Evet, ziyaret ettiğimiz /antik yerler/ gerçekten harikaydı." },
+    { id: "a", text: "Valeria : Tatilimizden keyif aldın mı? David : Evet, ziyaret ettiğimiz modern şehirler gerçekten harikaydı." }
+  ],
+  easyDistractor: "Valeria : Tatilimiz sıkıcı mıydı? David : Evet, hiçbir yeri ziyaret etmedik.",
+  correctOptionId: "b",
+  characterIds: ["david"],
+  grades: [5,6,7,8],
+  functions: ["asking_about_opinions", "simple_past_tense"],
+  theme: "canonical",
+  unit: "",
+
+evidenceStart: "0:02.467",
+evidenceEnd: "0:06.396",
+
+  evidenceSentence: "Valeria : Did you enjoy our holiday? David : Yes, the /ancient sites/ we visited were really fantastic.",
+
+  prompt: "Use <<<Image1>>>  as  David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as David's canonical voice.\nUse <<<Image2>>>  as Valeria's canonical identity and appearance reference.\nUse <<<Audio2>>>  as Valeria's canonical voice.\nSETTING:\nAn airport baggage-claim area after David and Valeria have returned from a family holiday.\nA large airport luggage conveyor belt is directly beside them.\nSeveral ordinary suitcases are slowly moving along the conveyor belt.\nTIME / WEATHER:\nA mild summer afternoon.\nBright natural daylight enters through the airport windows.\nCLOTHING:\nDavid wears his existing upper clothing from <<<Image1>>>  and dark navy blue shorts.\nValeria wears a simple solid-color casual blouse and beige full-length trousers.\nACCESSORIES:\nDavid wears a simple dark blue wristwatch.\nValeria wears small silver earrings and carries a small crossbody travel bag.\nPRE-ACTION:\nDavid and Valeria are already standing beside the moving baggage conveyor belt, waiting for their luggage.\nThey have just returned from a family holiday.\nSeveral suitcases are already travelling steadily along the conveyor belt.\nDavid and Valeria are relaxed and talking to each other instead of carefully watching the luggage.\nSCENE:\nWhile they wait, Valeria looks at David and asks naturally:\nValeria:\n\"Did you enjoy our holiday?\"\nDavid answers enthusiastically:\nDavid:\n\"Yes. The ancient sites we visited were really fantastic.\"\nWhile David and Valeria are looking at each other and talking, David's suitcase quietly travels along the moving conveyor belt directly past them.\nNeither of them notices it at first.\nA moment later, David casually looks back toward the conveyor belt and suddenly recognizes his suitcase already moving away from him.\nDavid turns his head and watches the suitcase continue travelling away along the conveyor belt.\nDavid says with sudden realization:\nDavid:\n\"Hey! That's my luggage!\"\nREACTION:\nDavid stares after his departing suitcase with surprised frustration.\nValeria immediately turns toward the conveyor belt and realizes what happened.\nDo not make David chase the suitcase.\nDo not stop or reverse the conveyor belt.\nThe suitcase continues naturally in the same direction.\nCUT immediately on David and Valeria watching his suitcase move away.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve David's exact stylized 3D animated-character appearance shown in his canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "canonical_david2",
+  status: "published",
+  videoSrc: "assets/video/canonical_david2.mp4",
+  title: "David imagines his future as a tour guide.",
+  transcript: "David : I love /travelling/ and learning about new places, maybe I'll be a /tour guide/ when I grow up.",
+  answerOptions: [
+    { id: "a", text: "David : /Seyahat etmeyi/ ve yeni yerler hakkında bilgi edinmeyi seviyorum, belki büyüdüğümde /tur rehberi/ olacağım." },
+    { id: "b", text: "David : Tarihi yerleri ziyaret etmeyi seviyorum, belki büyüdüğümde arkeolog olacağım." }
+  ],
+  easyDistractor: "David : Seyahat etmekten hiç hoşlanmıyorum, büyüdüğümde yeni yerleri ziyaret etmeyeceğim.",
+  correctOptionId: "a",
+  characterIds: ["david"],
+  grades: [5,6,7,8],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+  evidenceStart: "0:01.828",
+evidenceEnd: "0:07.420",
+
+  evidenceSentence: "David : I love /travelling/ and learning about new places, maybe I'll be a /tour guide/ when I grow up.",
+
+  prompt: " Use <<<Image1>>> as 12-year-old David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old David's canonical voice.\nUse <<<Image2>>> as adult David's future identity and appearance reference.\nLOCATION / SETTING:\nThe first part takes place at Chichén Itzá in Mexico.\nThe Pyramid of Kukulcán is clearly visible in the background and should be immediately recognizable.\nThe setting feels like a real visit to the archaeological site.\nTIME AND WEATHER:\nSummer morning, warm and sunny with clear weather.\nPRE-ACTION:\nThe video begins with 12-year-old David already exploring the archaeological site.\nHe is holding a small folded visitor map and briefly compares the map with the Pyramid of Kukulcán in front of him.\nCLOTHING:\n12-year-old David wears his existing upper clothing from <<<Image1>>> and beige full-length casual trousers.\nAdult David wears a simple navy blue short-sleeved polo shirt and beige full-length trousers.\nACCESSORIES:\n12-year-old David carries a small crossbody travel bag.\nAdult David wears a simple wristwatch and carries a small professional tour-guide shoulder bag.\nSCENE / ACTION:\nAfter looking between the visitor map and the pyramid, David lowers the map slightly.\nHe turns his attention directly toward the camera and establishes clear eye contact.\nDavid keeps direct eye contact throughout the entire first line:\nDavid:\n\"I love travelling and learning about new places.\"\nDavid briefly looks toward the Pyramid of Kukulcán with genuine interest.\nHe then turns back toward the camera and clearly re-establishes direct eye contact.\nDavid keeps direct eye contact throughout the entire second line:\nDavid:\n\"Maybe I'll be a tour guide when I grow up.\"\nImmediately after David finishes speaking, create a brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show David physically aging or morphing during the transition.\nAs the light clears, reveal adult David from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult David is now working as a professional tour guide at Chichén Itzá.\nThe Pyramid of Kukulcán remains clearly recognizable nearby.\nAdult David stands with a small group of four tourists.\nThe tourists are gathered naturally around David and are clearly listening to him rather than posing for the camera.\nDavid confidently gestures toward a specific architectural feature of the Pyramid of Kukulcán while explaining it to the group.\nThe tourists follow his gesture and turn their attention toward the pyramid.\nAdult David continues guiding the group with a calm, knowledgeable and friendly presence.\nCUT.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+{
+  id: "canonical_noah",
+  status: "published",
+  videoSrc: "assets/video/canonical_noah.mp4",
+  title: "Noah dreams of becoming a scientist.",
+  transcript: "Noah : I love /finding out how things work/, maybe I'll be a /scientist/ when I grow up.",
+  answerOptions: [
+    { id: "b", text: "Noah : Şeylerin /nasıl çalıştığını keşfetmeyi/ seviyorum, belki büyüdüğümde /bilim insanı/ olacağım." },
+    { id: "a", text: "Noah : Yeni şeyler icat etmeyi seviyorum, belki büyüdüğümde fen bilgisi öğretmeni olacağım." }
+  ],
+  easyDistractor: "Noah : Bilimin nasıl çalıştığını öğrenmekten hiç hoşlanmıyorum, büyüdüğümde laboratuvarda çalışmak istemiyorum.",
+  correctOptionId: "b",
+  characterIds: ["noah"],
+  grades: [5],
+  functions: ["expressing_likes_and_dislikes", "simple_future_will_prediction"],
+  theme: "canonical",
+  unit: "",
+
+evidenceStart: "0:02.414",
+evidenceEnd: "0:08.009",
+
+  evidenceSentence: "Noah : I love /finding out how things work/, maybe I'll be a /scientist/ when I grow up.",
+
+  prompt: " Use <<<Image1>>> as 12-year-old Noah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as 12-year-old Noah's canonical voice.\nUse <<<Image2>>> as adult Noah's future identity and appearance reference.\nLOCATION / SETTING:\nA school science laboratory.\nTIME:\nDaytime.\nPRE-ACTION:\nThe video begins with 12-year-old Noah already working on a simple electric circuit at a laboratory bench.\nOn the bench are a small battery holder, insulated wires, a switch, and a small light bulb mounted in a holder.\nNoah carefully checks one final wire connection.\nCLOTHING:\n12-year-old Noah wears his existing upper clothing from <<<Image1>>> and dark grey full-length trousers.\nAdult Noah wears a white laboratory coat over a simple dark green shirt and dark full-length professional trousers.\nACCESSORIES:\n12-year-old Noah wears his canonical rectangular eyeglasses and a simple dark wristwatch.\nAdult Noah wears rectangular eyeglasses and a simple wristwatch.\nSCENE / ACTION:\nNoah connects the final wire and closes the switch.\nThe small light bulb immediately turns on.\nNoah looks at the glowing bulb with quiet satisfaction.\nHe then turns his attention directly toward the camera and establishes clear eye contact.\nNoah maintains direct eye contact throughout the entire first line:\nNoah:\n\"I love finding out how things work.\"\nAfter the line, Noah briefly looks back at the working circuit.\nHe then turns directly toward the camera again and maintains clear eye contact throughout the entire second line:\nNoah:\n\"Maybe I'll be a scientist when I grow up.\"\nFUTURE TRANSITION:\nA brief 0.5-second flash-forward transition.\nA soft bright pulse quickly sweeps across the scene and briefly fills the frame with light.\nDo not show Noah physically aging or morphing during the transition.\nAs the light clears, reveal adult Noah from <<<Image2>>> approximately ten years later.\nFUTURE SCENE:\nAdult Noah is working as a scientist in a modern research laboratory.\nA professional laboratory microscope and a computer are on his workstation.\nAdult Noah is already examining a prepared sample through the microscope.\nHe carefully adjusts the microscope focus.\nHe then lifts his head from the microscope and checks the scientific results displayed on the nearby computer screen.\nNoah studies the result attentively and writes a short observation in a laboratory notebook.\nCUT immediately.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
+
+
+
+{
+  id: "fun_chloe_camille_julien",
+  status: "published",
+  videoSrc: "assets/video/fun_chloe_camille_julien.mp4",
+  title: "Chloe tells her mother that both she and her father are hungry.",
+  transcript: "Chloe : Mom, come home soon, I'm /hungry/. Camille : But your dad's /at home/. Chloe : Yeah, he's /hungry/ too.",
+  answerOptions: [
+    { id: "b", text: "Chloe : Anne, çabuk eve gel, ben /açım/. Camille : Ama baban /evde/. Chloe : Evet, o da /aç/." },
+    { id: "a", text: "Chloe : Anne, çabuk eve gel, ben hastayım. Camille : Baban nerde? Chloe : Burda ama o da hasta." }
+  ],
+  easyDistractor: "Chloe : Anne, eve gelmene gerek yok, ben tokum. Camille : Ama baban dışarıda. Chloe : Evet, o da yemek yedi.",
+  correctOptionId: "b",
+  characterIds: ["chloe","camille"],
+  grades: [5, 6, 7, 8],
+  functions: ["expressing_needs", "givinglocationinformation"],
+  theme: "fun",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+evidenceEnd: "0:09.579",
+
+  evidenceSentence: "Chloe : Mom, come home soon, I'm /hungry/. Camille : But your dad's /at home/. Chloe : Yeah, he's /hungry/ too.",
+
+  prompt: "Use <<<Image1>>> as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Chloe's canonical voice.\nUse <<<Image2>>> as Julien's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Camille's canonical voice.\nSETTING:\nA comfortable family living room at home during a mild spring afternoon.\nCamille is NOT physically present in the house or visible anywhere in the video.\nHer voice is heard only through Chloe's phone call.\nPRE-ACTION:\nChloe is standing in the living room holding her smartphone.\nSeveral feet behind Chloe, her father Julien is sitting comfortably on the sofa reading a newspaper.\nJulien is relaxed and completely absorbed in the newspaper.\nChloe is already on a phone call with her mother Camille.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>> and dark blue slim tapered capri.\nJulien wears his existing upper clothing from <<<Image2>>> and simple dark full-length casual trousers.\nSCENE:\nChloe speaks naturally into the phone:\n\"Mom, come home soon. I'm hungry.\"\nCamille's voice comes naturally through the phone:\n\"But your dad's at home.\"\nChloe pauses.\nShe turns her eyes toward Julien.\nJulien is still sitting on the sofa behind her with the newspaper in his hands.\nChloe looks back toward her phone and replies matter-of-factly:\n\"Yeah... he's hungry too.\"\nImmediately after Chloe says this, Julien slowly lowers the top of his newspaper just enough to look directly at Chloe.\nHe gives Chloe a silent, mildly offended and embarrassed expression, as if he cannot believe she just included him in her complaint.\nChloe notices his reaction.\nShe gives him a tiny innocent expression, as though she has simply told the truth.\nJulien continues staring at her over the newspaper.\nCUT.\nREACTION / COMEDY DIRECTION:\nKeep the humor dry and natural.\nChloe is genuinely hungry and does not deliver the final line like a joke.\nHer matter-of-fact honesty is what makes the moment funny.\nJulien must NOT speak.\nHis final reaction is the payoff:\nhe lowers the newspaper and gives Chloe a clear silent \"Why did you have to tell her that?\" look.\nDo not make Chloe or Julien laugh.\nDo not make them celebrate or exaggerate their expressions.\nCamille must remain completely offscreen throughout the video.\nOnly her voice is heard through the phone.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "sad_ava",
+  status: "published",
+  videoSrc: "assets/video/sad_ava.mp4",
+  title: "Ava learns that the shelter dog has been adopted.",
+  transcript: "Ava : Where is he? Shelter worker : A family /adopted/ him this morning. Ava : That's good, I just wish I could've /said goodbye/.",
+  answerOptions: [
+    { id: "a", text: "Ava : O nerede? Barınak çalışanı : Bir aile onu bu sabah /sahiplendi/. Ava : Bu iyi, keşke sadece /veda edebilseydim/." },
+    { id: "b", text: "Ava : O nerede? Barınak çalışanı : Başka bir barınağa götürüldü. Ava : Bu çok kötü, onu ben sahiplenecektim." }
+  ],
+  easyDistractor: "Ava : Köpek nerede? Barınak çalışanı : Hâlâ burada, başka bir kulübede uyuyor. Ava : Harika, gidip onunla oynayacağım.",
+  correctOptionId: "a",
+  characterIds: ["ava"],
+  grades: [5, 6, 7, 8],
+  functions: ["askingaboutlocation", "givinginformation", "expressing_feelings"],
+  theme: "sad",
+  unit: "",
+
+ evidenceStart: "0:03.153",
+evidenceEnd: "0:10.467",
+
+  evidenceSentence: "Ava : Where is he? Shelter worker : A family /adopted/ him this morning. Ava : That's good, I just wish I could've /said goodbye/.",
+
+  prompt: "Use <<<Image1>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ava's canonical voice.\nSETTING:\nA clean, well-maintained animal shelter on a mild spring afternoon.\nThis is the same type of shelter environment Ava has visited before.\nOne dog kennel near Ava is empty.\nInside the empty kennel, there is still a small worn dog toy near the front.\nThere is no dog inside this kennel.\nA friendly adult female shelter worker is nearby.\nPRE-ACTION:\nAva walks naturally through the shelter, clearly expecting to see a particular dog she has visited before.\nShe approaches the familiar kennel.\nWhen Ava realizes the kennel is empty, she stops.\nHer expression immediately changes.\nShe looks carefully inside the kennel, then around the nearby shelter area, searching for the dog.\nShe becomes quietly worried.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>> and lower clothing from <<<Image2>>> She carries a small simple crossbody bag.\nThe female shelter worker wears a simple solid-color polo shirt and practical full-length trousers.\nSCENE:\nAva looks at the empty kennel and quietly asks the shelter worker:\n\"Where is he?\"\nThe shelter worker immediately understands which dog Ava means.\nSeeing Ava's worried expression, she answers gently:\n\"A family adopted him this morning.\"\nAva's worried expression softens immediately.\nShe is visibly relieved.\nFor a brief moment, she almost smiles because she understands that something good has happened to him.\nThen Ava looks back into the empty kennel.\nThe reality that she will probably not see him again begins to sink in.\nAfter a quiet pause, Ava says softly:\n\"That's good... I just wish I could've said goodbye.\"\nThe shelter worker watches Ava with understanding but does not reply.\nAva notices the small dog toy still lying inside the empty kennel.\nShe slowly crouches beside the kennel.\nShe reaches through carefully and gently touches the little toy with her fingertips.\nAva remains there for a quiet moment, looking at the empty space where the dog used to be.\nHer expression is bittersweet:\nhappy that the dog finally has a family, but genuinely sad that she missed her chance to say goodbye.\nCUT.\nEMOTIONAL DIRECTION:\nKeep the emotion restrained, natural, and bittersweet.\nAt first, Ava should genuinely fear that something bad may have happened when she sees the empty kennel.\nThe worker's answer creates clear relief.\nOnly after that relief should Ava realize that adoption also means their time together has ended.\nAva must NOT sob or dramatically cry.\nIf her eyes become slightly watery near the end, keep it extremely subtle.\nDo not make the shelter worker excessively comforting.\nShe should simply understand Ava's feelings and give her the quiet moment she needs.\nThe dog must NOT appear anywhere in the video.\nThe empty kennel is important to the emotional meaning of the scene.\nThe small dog toy remains inside the kennel throughout the scene.\nAva gently touches it but does not take it away.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY. \nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "fun_ava_chloe3",
+  status: "published",
+  videoSrc: "assets/video/fun_ava_chloe3.mp4",
+  title: "Buddy decides to help Ava with her gardening.",
+  transcript: "Chloe : Hi, Ava, what are you /doing/? Ava : I've /planted/ some flowers, I'm going to /water/ them now, Buddy, don't! Chloe : He likes /gardening/ too.",
+  answerOptions: [
+    { id: "b", text: "Chloe : Selam Ava, ne /yapıyorsun/? Ava : Birkaç çiçek /diktim/, şimdi onları /sulayacağım/, Buddy, yapma! Chloe : O da /bahçeyle uğraşmayı/ seviyor." },
+    { id: "a", text: "Chloe : Selam Ava, nasılsın? Ava : Birkaç çiçek dikeceğim, sen de onları sular mısın, Buddy, yapma! Chloe : O da bahçede oynamayı seviyor." }
+  ],
+  easyDistractor: "Chloe : Selam Ava, ne yapıyorsun? Ava : Çiçekleri söküyorum, artık onları istemiyorum. Chloe : Buddy bahçeden hiç hoşlanmıyor.",
+  correctOptionId: "b",
+  characterIds: ["ava", "chloe"],
+  grades: [5, 6, 7, 8],
+  functions: ["present_progressive", "present_perfect", "be_going_to_future_tense_for_plans", "expressing_likes_and_dislikes"],
+  theme: "fun",
+  unit: "",
+
+ evidenceStart: "0:00.000",
+evidenceEnd: "0:04.685",
+
+  evidenceSentence: "Chloe : Hi, Ava, what are you /doing/? Ava : I've /planted/ some flowers, I'm going to /water/ them now, Buddy, don't! Chloe : He likes /gardening/ too.",
+
+  prompt: "Use <<<Image1>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ava's canonical voice.\nUse <<<Image2>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Chloe's canonical voice.\nUse <<<Image3>>>  as Buddy's canonical appearance reference.\nSETTING:\nA pleasant home garden on a mild spring afternoon.\nThere is a small freshly planted flower bed with several young flower seedlings arranged neatly in the soil.\nA small watering can is beside Ava.\nOne small gardening glove is lying clearly visible on the ground beside the flower bed.\nPRE-ACTION:\nAva is crouching beside the freshly planted flower bed, gently checking the soil around the young plants.\nShe has just finished planting the flowers.\nBuddy is elsewhere in the garden at the beginning and is NOT yet interacting with the flower bed.\nChloe walks into the garden and approaches Ava.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>>  and dark green full-length casual trousers.\nAva wears a simple thin bracelet.\nChloe wears her existing upper clothing from <<<Image2>>>  and lower clothing from <<<Image3>>>  \nChloe wears a pink hair clip.\nAva wears a leaf shaped necklace.\nSCENE:\nChloe approaches Ava and cheerfully says:\n\"Hi, Ava! What are you doing?\"\nAva looks up at Chloe and replies:\n\"I've planted some flowers. I'm going to water them now.\"\nAva looks proudly at the newly planted flowers.\nShe reaches toward the watering can.\nBefore Ava can begin watering, Buddy suddenly approaches the flower bed.\nBuddy crouches beside ONE of the young plants and enthusiastically starts digging at the loose soil with his front paws.\nSmall amounts of loose soil scatter naturally around his paws.\nAva immediately notices him.\nHer proud expression changes to alarm.\nAva quickly says:\n\"Buddy... don't!\"\nBuddy stops digging.\nBefore Ava can reach him, Buddy notices the small gardening glove that has been lying beside the flower bed from the beginning.\nBuddy grabs the gardening glove gently in his mouth.\nHe turns and trots away through the garden carrying the glove.\nAva remains beside the flower bed, staring after Buddy in disbelief.\nChloe watches Buddy leave.\nShe then looks at Ava with an amused expression and says:\n\"He likes gardening too.\"\nAva slowly turns her eyes toward Chloe.\nShe gives Chloe a silent, deeply unimpressed look.\nCUT.\nACTION CONTINUITY:\nThe flower seedlings are already planted before the dialogue begins.\nAva does NOT plant additional flowers during the scene.\nThe watering can is already beside Ava.\nAva intends to water the flowers but Buddy interrupts BEFORE she begins watering them.\nThe gardening glove must already be clearly present on the ground beside the flower bed before Buddy arrives.\nBuddy approaches only after Ava says:\n\"I'm going to water them now.\"\nBuddy digs only briefly in the loose soil beside ONE plant.\nDo not make Buddy destroy, eat, uproot, or carry away any flower or plant.\nBuddy stops digging after Ava says:\n\"Buddy... don't!\"\nOnly then does Buddy pick up the existing gardening glove.\nBuddy carries the glove away in his mouth.\nDo not make the gardening glove appear suddenly.\nDo not make Buddy carry gardening tools, the watering can, or a flower.\nREACTION / COMEDY DIRECTION:\nAva is genuinely proud of the flowers she has planted at the beginning.\nHer \"Buddy... don't!\" should sound alarmed and frustrated, not angry or aggressive.\nBuddy is playful and curious.\nHe is not intentionally trying to ruin Ava's garden.\nChloe's final line is playful and dry.\nShe should NOT laugh loudly or tease Ava excessively.\nAva does not smile at the final line.\nHer silent unimpressed look toward Chloe is the final payoff.\nCUT immediately after Ava's final reaction.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "fun_mia_zoe5",
+  status: "published",
+  videoSrc: "assets/video/fun_mia_zoe5.mp4",
+  title: "Zoe accidentally gets hold of one of Mia's secret diary pages.",
+  transcript: "Zoe : What are you /writing/? Mia : I can't /tell/ you, it's a /secret/. Zoe : Now I have your /secrets/.",
+  answerOptions: [
+    { id: "a", text: "Zoe : Ne yazıyorsun? Mia : Sana /söyleyemem/, bu bir /sır/. Zoe : Artık /sırların/ bende." },
+    { id: "b", text: "Zoe : Ne yazıyorsun? Mia : Sana anlatamam, bu benim günlüğüm. Zoe : Artık günlüğünün bir sayfası bende." }
+  ],
+  easyDistractor: "Zoe : Ne okuyorsun? Mia : Bu benim ödevim, sana gösterebilirim. Zoe : Harika, birlikte okuyabiliriz.",
+  correctOptionId: "a",
+  characterIds: ["mia", "zoe"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about", "expressing_prohibition"],
+  theme: "fun",
+  unit: "",
+
+ evidenceStart: "0:02.861",
+evidenceEnd: "0:10.389",
+
+  evidenceSentence: "Zoe : What are you /writing/? Mia : I can't /tell/ you, it's a /secret/. Zoe : Now I have your /secrets/.",
+
+  prompt: "Use <<<Image1>>>  as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Mia's canonical voice.\nUse <<<Image2>>>  as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Zoe's canonical voice.\nSETTING:\nA peaceful public park on a mild spring afternoon.\nThere are trees, grass, a walking path, and a simple park bench nearby.\nPRE-ACTION:\nMia is sitting on the park bench writing privately in her personal diary.\nSeveral loose handwritten diary pages are tucked naturally between the pages of the diary.\nZoe is sitting beside Mia.\nZoe notices Mia writing and becomes curious about what she is putting in the diary.\nCLOTHING:\nMia wears her existing upper clothing from <<<Image1>>>  and dark blue slim tapered trousers ending slightly above her ankles.\nZoe wears her existing upper clothing from <<<Image2>>>  and beige full-length casual trousers.\nSCENE:\nZoe looks curiously at Mia's diary and asks:\n\"What are you writing?\"\nMia immediately closes the diary against her body so Zoe cannot see inside.\nMia replies seriously:\n\"I can't tell you. It's a secret.\"\nAt that exact moment, a sudden strong gust of wind blows through the park.\nSeveral loose pages that were tucked inside Mia's diary are pulled out by the wind.\nThe pages flutter away through the air in different directions.\nMia's eyes widen in horror as she realizes her private pages are escaping.\nBefore Mia can react, one loose page blows directly toward Zoe.\nZoe quickly gets up and catches that ONE page with her hand before it can fly farther away.\nMia stares at Zoe in alarm.\nZoe looks at the page she has caught, then slowly looks back at Mia.\nWith a playful, slightly teasing expression, Zoe says:\n\"Now I have your secrets.\"\nMia's expression becomes even more horrified.\nShe stares at Zoe and the captured page, completely speechless.\nCUT.\nACTION CONTINUITY:\nMia begins the scene actively writing inside her diary.\nThe loose pages must already be physically tucked inside Mia's diary before the wind begins.\nMia closes the diary only after Zoe asks what she is writing.\nOnly AFTER Mia says \"It's a secret\" does the gust of wind occur.\nSeveral loose pages are blown out of the diary by the wind.\nZoe catches only ONE loose page.\nDo not make Zoe take the diary directly from Mia.\nDo not make Mia voluntarily give Zoe a page.\nZoe must catch the page naturally while it is being carried by the wind.\nThe remaining loose pages may continue blowing away in the background.\nThe writing on the loose pages does NOT need to be readable.\nDo not reveal what Mia's secret actually is.\nREACTION / COMEDY DIRECTION:\nMia takes the privacy of her diary genuinely seriously.\nHer reaction should progress naturally:\nprivate and guarded -> startled by the wind -> horrified when Zoe catches one of the pages.\nZoe is curious at first.\nHer final teasing expression should appear only after she successfully catches Mia's page.\nZoe delivers \"Now I have your secrets.\" playfully and teasingly, not cruelly or aggressively.\nMia does not laugh at the end.\nShe remains genuinely horrified and speechless.\nDo not turn the scene into exaggerated slapstick.\nCUT immediately on Mia's final horrified expression.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+{
+  id: "fun_emma_hannah",
+  status: "published",
+  videoSrc: "assets/video/fun_emma_hannah.mp4",
+  title: "Emma discovers that even watching heights can make her uneasy.",
+  transcript: "Hannah : How high will it go? Emma : Very high, I /hope/. Hannah : You /hate/ heights. Emma : I'm not /going with/ it.",
+  answerOptions: [
+    { id: "b", text: "Hannah : Sence ne kadar yükseğe çıkacak? Emma : Çok yükseğe, /umarım/. Hannah : Ama sen yükseklikten /nefret edersin/. Emma : Sonuçta onunla /gitmiyorum/ ki." },
+    { id: "a", text: "Hannah : Sence ne kadar yükseğe çıkacak? Emma : Çok yükseğe, eminim. Hannah : Yüksekliği seviyorsun. Emma : Her zaman çok severim." }
+  ],
+  easyDistractor: "Hannah : Roket ne zaman inecek? Emma : Umarım hemen iner. Hannah : Roketlerden korkuyorsun. Emma : Ben de onunla uçacağım.",
+  correctOptionId: "b",
+  characterIds: ["emma", "hannah"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about", "expressing_hopes", "expressing_likes_and_dislikes"],
+  theme: "fun",
+  unit: "",
+
+  evidenceStart: "0:01.300",
+evidenceEnd: "0:05.745",
+
+  evidenceSentence: "Hannah : How high will it go? Emma : Very high, I /hope/. Hannah : You /hate/ heights. Emma : I'm not /going with/ it.",
+
+  prompt: "Use <<<Image1>>>  as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Emma's canonical voice.\nUse <<<Image2>>>  as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Hannah's canonical voice.\nSETTING:\nA clear spring afternoon in an open park.\nA small model rocket stands upright on a launch pad on the grass.\nPRE-ACTION:\nEmma stands beside Hannah, holding a small launch controller.\nThey are both looking at the model rocket.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>>  and lower clothing from <<<Image3>>>  She wears a simple bracelet.\nHannah wears her existing upper clothing from <<<Image2>>>  and beige slim tapered trousers ending slightly above her ankles. She wears a pair of star earrings.\nSCENE:\nHannah looks at the model rocket and asks:\n\"How high will it go?\"\nEmma replies confidently:\n\"Very high, I hope.\"\nHannah looks at Emma and says:\n\"You hate heights.\"\nEmma replies matter-of-factly:\n\"I'm not going with it.\"\nHannah pauses for a moment.\n\"Good point.\"\nEmma presses the button on the launch controller.\nThe model rocket launches from the pad and flies upward into the sky.\nEmma and Hannah look up and follow it with their eyes.\nThe rocket continues rising higher into the sky and remains visible above them.\nEmma is excited at first.\nAs the rocket gets higher, Emma becomes slightly uneasy while watching it.\nShe takes a small step backward and says:\n\"That's high enough.\"\nHannah turns toward Emma with an amused, slightly puzzled expression.\nEmma keeps staring up at the rocket.\nCUT.\nThe rocket launches only once.\nKeep the rocket visible in the sky during Emma's final line.\nDo not make the rocket explode or crash.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality. <<<Image3>>>  "
+},
+
+{
+  id: "fun_daniel_elena",
+  status: "published",
+  videoSrc: "assets/video/fun_daniel_elena.mp4",
+  title: "Daniel mistakes his mother's acting rehearsal for an emergency.",
+  transcript: "Daniel : Mom, are you okay? Elena : Relax, I'm /practising/ a scene for tomorrow's play. Daniel : Could you practise a /happier/ one?",
+  answerOptions: [
+    { id: "a", text: "Daniel : Anne, iyi misin? Elena : Sakin ol, yarınki oyun için bir sahne /çalışıyorum/. Daniel : /Daha mutlu/ bir sahne çalışabilir misin?" },
+    { id: "b", text: "Daniel : Anne, iyi misin? Elena : Sakin ol, birazcık başım döndü. Daniel : Ciddi birşeyin olmamasına mutlu oldum." }
+  ],
+  easyDistractor: "Daniel : Anne, ne yapıyorsun? Elena : Televizyon izliyorum. Daniel : Ben de seninle izleyebilir miyim?",
+  correctOptionId: "a",
+  characterIds: ["daniel","elena"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about_condition", "present_progressive", "makingrequests"],
+  theme: "fun",
+  unit: "",
+
+  evidenceStart: "0:05.524",
+evidenceEnd: "0:10.932",
+
+  evidenceSentence: "Daniel : Mom, are you okay? Elena : Relax, I'm /practising/ a scene for tomorrow's play. Daniel : Could you practise a /happier/ one?",
+
+  prompt: "Use <<<Image1>>> as Daniel's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Daniel's canonical voice.\nUse <<<Image2>>> as Elena's canonical identity and appearance reference.\nUse <<<Audio2>>> as Elena's canonical voice.\nSETTING:\nA cozy family living room on a cool autumn evening.\nPRE-ACTION:\nElena is lying completely still on the sofa, rehearsing a dramatic scene by herself.\nDaniel enters the living room and notices her.\nCLOTHING:\nDaniel wears his existing upper clothing from <<<Image1>>> and dark blue full-length casual trousers.\nElena wears a simple solid burgundy long-sleeved top and dark full-length trousers.\nSCENE:\nDaniel sees Elena lying motionless on the sofa and immediately becomes worried.\nHe quickly approaches her and says:\n\"Mom?! Are you okay?\"\nElena suddenly opens her eyes and sits up normally.\nShe calmly explains:\n\"Relax. I'm practising a scene for tomorrow's play.\"\nDaniel pauses, still recovering from the scare.\nHe looks at her and says:\n\"Could you practise a happier one?\"\nElena gives Daniel a small amused look.\nDaniel remains slightly unsettled.\nCUT.\nREACTION:\nDaniel's first reaction should show genuine concern, not exaggerated panic.\nElena is completely calm because she knows she was only acting.\nDaniel's final line should sound sincere and slightly annoyed after being frightened.\nDo not make them laugh loudly or exaggerate the comedy.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY.\n\nVisual style:\nPreserve the exact stylized 3D animated-character appearance shown in each canonical reference image.\nPremium stylized 3D animated-film quality."
+},
+
+
+
 
 ];
 

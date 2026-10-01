@@ -1670,9 +1670,9 @@
     });
     const redeem = el("button", "tc-action primary", "REDEEM 10 PTS → ⭐");
     redeem.type = "button";
-    redeem.disabled = student.points < 10;
+    redeem.disabled = true;
     redeem.addEventListener("click", () => {
-      if (student.points < 10) return;
+      if (redeem.disabled || student.points < 10) return;
       student.points -= 10;
       student.stars = (student.stars || 0) + 1;
       save();

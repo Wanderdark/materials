@@ -45,6 +45,7 @@
   }
 
   function showScreen(name) {
+    closeTeamScores();
     els.setup.hidden = name !== "setup"; els.selection.hidden = name !== "selection"; els.game.hidden = name !== "game"; els.round.hidden = name !== "round";
     if (name !== "game") clearPortraitAmbient();
   }
@@ -66,6 +67,7 @@
   }
 
   function renderGame(state) {
+    $(".game-header").dataset.teamCount = String(state.groups.length);
     const active = TC.activeTurn(state);
     els.scoreboard.replaceChildren();
     state.groups.forEach((group) => { const card = document.createElement("div"); card.className = `score-card${group.id === active.group.id ? " is-active" : ""}`; card.dataset.groupId = group.id; card.style.setProperty("--team-color", `var(--${group.color})`); const name = document.createElement("span"); name.textContent = group.name; const score = document.createElement("strong"); score.textContent = group.score; card.append(name, score); els.scoreboard.appendChild(card); });
@@ -93,11 +95,11 @@
 
   function resetAnswerTimerView() {
     els.answerTimer.hidden = true; els.answerTimer.className = "header-answer-timer"; els.answerTimerValue.textContent = String(TC.CONFIG.answerTimerSeconds);
-    els.startTimer.disabled = false; els.startTimer.textContent = "⌛ START TIMER";
+    els.startTimer.hidden = false; els.startTimer.disabled = false; els.startTimer.textContent = "TIMER";
   }
 
   function startAnswerTimerView() {
-    els.startTimer.disabled = true; els.startTimer.textContent = "⏳ TIMER RUNNING";
+    els.startTimer.hidden = false; els.startTimer.disabled = false; els.startTimer.textContent = "TIMER ON";
   }
 
   function updateAnswerTimerView(seconds) {
@@ -105,6 +107,7 @@
   }
 
   function showWheel() {
+    $("#header-points-group").hidden = true; $("#question-difficulty-badge").hidden = true;
     els.wheelZone.hidden = false; els.questionZone.hidden = true; els.questionControls.hidden = true; els.questionPointsBadge.hidden = true; els.spinResultActions.hidden = true; els.spinResultValue.textContent = ""; els.nextTurn.hidden = true; resetAnswerTimerView();
   }
 
@@ -113,10 +116,33 @@
     els.spinResultActions.hidden = false;
   }
 
-  function showQuestion(question, points, onAnswer) {
+  function renderQuestionStem(question) {
+    const highlights = question.questionHighlights || [];
+    els.questionText.replaceChildren();
+    els.questionText.style.color = "";
+    const escaped = highlights.filter(Boolean).map((text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    if (!escaped.length) { els.questionText.textContent = question.question; return; }
+    const pattern = new RegExp("\\b(" + escaped.join("|") + ")\\b", "gi");
+    question.question.split(pattern).forEach((part, index) => {
+      if (index % 2 === 0) { els.questionText.append(document.createTextNode(part)); return; }
+      const emphasis = document.createElement("span");
+      emphasis.style.color = "#facc15"; emphasis.style.textDecoration = "underline"; emphasis.style.textUnderlineOffset = "0.12em"; emphasis.textContent = part; els.questionText.append(emphasis);
+    });
+  }
+
+  function showQuestion(question, points, onAnswer, gameMode = "classic") {
+    closeTeamScores();
+    $("#header-points-group").hidden = false;
+    $("#question-difficulty-badge").hidden = gameMode !== "difficulty";
+    $("#question-difficulty-name").textContent = question.difficulty === 2 ? "MEDIUM" : "EASY";
+    $("#question-difficulty-stars").textContent = question.difficulty === 2 ? "★★" : "★";
     els.wheelZone.hidden = true; els.questionZone.hidden = false; els.questionControls.hidden = false; els.questionPointsBadge.hidden = false; els.spinResultActions.hidden = true; els.nextTurn.hidden = true; resetAnswerTimerView();
-    els.questionPoints.textContent = points; TC.renderQuestionTemplate(els.questionContext, question); els.questionText.textContent = question.question; els.answers.replaceChildren();
-    question.options.forEach((optionText, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "answer-button"; button.dataset.answerIndex = index; const letter = document.createElement("span"); letter.className = "answer-option-label"; letter.textContent = String.fromCharCode(65 + index); letter.style.cssText = "display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:10px;background:linear-gradient(145deg,#7c3aed,#db2777);color:#fff;font:800 17px/1 'Barlow Condensed',sans-serif"; const portraitName = question.optionPortraits?.[index]; if (portraitName) { const portrait = document.createElement("img"); portrait.className = "answer-option-portrait"; TC.attachPortrait(portrait, portraitName); button.classList.add("has-option-portrait"); button.append(letter, portrait); } else button.append(letter); const text = document.createElement("span"); text.textContent = optionText; button.append(text); button.addEventListener("click", () => onAnswer(index)); els.answers.appendChild(button); });
+    els.questionZone.dataset.template = question.template; els.questionPoints.textContent = points; TC.renderQuestionTemplate(els.questionContext, question); renderQuestionStem(question); els.answers.replaceChildren();
+question.options.forEach((optionText, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "answer-button"; button.dataset.answerIndex = index; const letter = document.createElement("span"); letter.className = "answer-option-label"; letter.textContent = String.fromCharCode(65 + index); letter.style.cssText = "display:grid;place-items:center;flex:0 0 36px;height:36px;border-radius:10px;background:linear-gradient(145deg,#7c3aed,#db2777);color:#fff;font:800 17px/1 'Barlow Condensed',sans-serif"; const portraitName = question.optionPortraits?.[index]; if (portraitName) { const portrait = document.createElement("img"); portrait.className = "answer-option-portrait"; if (question.optionPortraitScale) portrait.style.zoom = String(question.optionPortraitScale); TC.attachPortrait(portrait, portraitName); button.classList.add("has-option-portrait"); button.append(letter, portrait); } else button.append(letter); const text = document.createElement("span"); text.textContent = optionText; button.append(text); button.addEventListener("click", () => onAnswer(index)); els.answers.appendChild(button); });
+    TC.renderTicketOptions(els.answers, question);
+    const inlineAnswers = TC.renderInlineFriendOptions(els.answers, question);
+    els.questionZone.dataset.inlineAnswers = String(inlineAnswers);
+    if (inlineAnswers) els.questionContext.replaceChildren();
   }
 
   function eliminateAnswers(indices) {
@@ -129,8 +155,8 @@
 
   function showFeedback(result, selectedIndex, correctIndex, timedOut = false) {
     [...els.answers.children].forEach((button, index) => { button.disabled = true; if (result.correct && index === correctIndex) button.classList.add("is-correct"); else if (!result.correct && index === selectedIndex) button.classList.add("is-wrong"); });
-    els.startTimer.disabled = true; els.startTimer.textContent = timedOut ? "⌛ TIME'S UP" : "ANSWERED"; els.answerTimer.hidden = true;
-    els.nextTurn.hidden = false; els.nextTurn.disabled = false; els.nextTurn.dataset.action = result.correct ? "next" : "reveal"; els.nextTurn.textContent = result.correct ? "NEXT CHALLENGER →" : "REVEAL ANSWER";
+    els.startTimer.hidden = !timedOut; els.startTimer.disabled = true; els.startTimer.textContent = timedOut ? "⌛ TIME'S UP" : "ANSWERED"; els.answerTimer.hidden = true;
+    els.nextTurn.hidden = false; els.nextTurn.disabled = false; els.nextTurn.dataset.action = result.correct ? "next" : "reveal"; els.nextTurn.textContent = result.correct ? "NEXT" : "REVEAL ANSWER";
   }
 
   function revealAnswer(correctIndex) {
@@ -138,7 +164,7 @@
     if (correctButton) correctButton.classList.add("is-correct");
     els.nextTurn.disabled = true; els.nextTurn.textContent = "ANSWER REVEALED";
     clearTimeout(revealAnswer.timer);
-    revealAnswer.timer = setTimeout(() => { els.nextTurn.disabled = false; els.nextTurn.dataset.action = "next"; els.nextTurn.textContent = "NEXT CHALLENGER →"; }, 1000);
+    revealAnswer.timer = setTimeout(() => { els.nextTurn.disabled = false; els.nextTurn.dataset.action = "next"; els.nextTurn.textContent = "NEXT"; }, 1000);
   }
 
   function animateScoreFlight(points, answerIndex, groupId) {
@@ -196,6 +222,39 @@
     state.groups.forEach((group) => { const card = document.createElement("div"); card.className = "round-score"; const name = document.createElement("span"); name.textContent = group.name; const score = document.createElement("strong"); score.textContent = group.score; card.append(name, score); els.roundScores.appendChild(card); });
   }
 
+  function closeTeamScores() {
+    $("#team-scores-overlay").hidden = true;
+    $("#scores-button").setAttribute("aria-expanded", "false");
+  }
+
+  function showTeamScores(state) {
+    const container = $("#team-scores-groups"); container.replaceChildren();
+    container.style.setProperty("--score-group-count", state.groups.length);
+    const topScore = Math.max(0, ...state.groups.flatMap((group) => group.students.map((student) => student.score)));
+    const topTeamScore = Math.max(0, ...state.groups.map((group) => group.score));
+    state.groups.forEach((group) => {
+      const section = document.createElement("section"); section.className = "team-scores-group";
+      const heading = document.createElement("h3");
+      const teamName = document.createElement("span"); teamName.className = "team-scores-team-name"; teamName.textContent = group.name;
+      if (topTeamScore > 0 && group.score === topTeamScore) teamName.classList.add("is-leading-team");
+      const teamPoints = document.createElement("strong"); teamPoints.className = "team-scores-team-points"; teamPoints.textContent = `${group.score} Pts`;
+      heading.append(teamName, teamPoints);
+      const list = document.createElement("ol"); list.className = "team-scores-list";
+      group.students.forEach((student) => {
+        const row = document.createElement("li"); row.className = "team-scores-row";
+        const name = document.createElement("span"); name.className = "team-scores-name"; name.textContent = student.name;
+        if (topScore > 0 && student.score === topScore) name.classList.add("is-leader");
+        const points = document.createElement("strong"); points.className = "team-scores-points"; points.textContent = student.score;
+        row.append(name, points); list.appendChild(row);
+      });
+      section.append(heading, list); container.appendChild(section);
+    });
+    $("#team-scores-overlay").hidden = false;
+    $("#scores-button").setAttribute("aria-expanded", "true");
+    $("#team-scores-close").focus();
+  }
+
+  Object.assign(TC, { showTeamScores, closeTeamScores });
   function showToast(message) { els.toast.textContent = message; els.toast.classList.add("show"); clearTimeout(showToast.timer); showToast.timer = setTimeout(() => els.toast.classList.remove("show"), 2600); }
 
   Object.assign(TC, { activateDoublePoints, animateScoreFlight, celebrateActivePortrait, eliminateAnswers, els, launchJackpotConfetti, refreshPortraitEffects, renderGame, renderRound, renderSetup, resetAnswerTimerView, revealAnswer, showFeedback, showQuestion, showScreen, showSpinResult, showToast, showWheel, startAnswerTimerView, stopPortraitEffects: clearPortraitAmbient, updateAnswerTimerView });

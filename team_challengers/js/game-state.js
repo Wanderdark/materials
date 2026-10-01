@@ -22,7 +22,7 @@
     group.jokers.spinAgainUsed = false;
   }
 
-  function createGameState(rawGroups, groupNames) {
+  function createGameState(rawGroups, groupNames, gameMode = "difficulty") {
     const groups = rawGroups.map((students, groupIndex) => ({
       id: groupIndex,
       name: groupNames[groupIndex] || TC.CONFIG.groupDefaults[groupIndex],
@@ -31,7 +31,7 @@
       students: students.map((student, studentIndex) => ({ id: student.id || `${groupIndex}-${studentIndex}`, name: student.name, avatarPath: student.avatarPath || "", level: Math.max(1, Number(student.level) || 1), score: 0 })),
       jokers: { capacity: jokerCapacity(students.length), remaining: jokerCapacity(students.length), spinAgainUsed: false }
     }));
-    return { groups, round: 1, turnIndex: 0, turnOrder: createTurnOrder(groups), phase: "spin", wheelValue: 0, question: null, answered: false, turnJokers: { fiftyFifty: false, doublePoints: false } };
+    return { groups, gameMode, round: 1, turnIndex: 0, turnOrder: createTurnOrder(groups), phase: "spin", wheelValue: 0, question: null, answered: false, turnJokers: { fiftyFifty: false, doublePoints: false } };
   }
 
   function activeTurn(state) {
@@ -41,7 +41,7 @@
   }
 
   function setWheelValue(state, value, question) {
-    if (state.phase !== "spin") return false;
+    if (state.phase !== "spin" && state.phase !== "difficulty") return false;
     state.wheelValue = value;
     state.question = question;
     state.phase = "answer";
@@ -53,7 +53,7 @@
     state.answered = true;
     state.phase = "score";
     const correct = answerIndex === state.question.answer;
-    const points = correct ? state.wheelValue * (state.turnJokers.doublePoints ? 2 : 1) : 0;
+    const points = correct ? questionPoints(state) * (state.turnJokers.doublePoints ? 2 : 1) : 0;
     if (correct) {
       const { group, student } = activeTurn(state);
       group.score += points;
@@ -62,9 +62,13 @@
     return { correct, points, correctAnswer: state.question.options[state.question.answer] };
   }
 
+  function questionPoints(state) {
+    return state.wheelValue * (state.gameMode === "difficulty" && state.question?.difficulty === 2 ? 1.5 : 1);
+  }
+
   function canUseJoker(state, type) {
     const { group } = activeTurn(state);
-    if (!group.jokers.remaining) return false;
+    if (!group.jokers.remaining || Object.values(state.turnJokers).some(Boolean)) return false;
     if (type === "spinAgain") return state.phase === "spin" && !group.jokers.spinAgainUsed;
     if (type === "fiftyFifty") return state.phase === "answer" && !state.turnJokers.fiftyFifty;
     if (type === "doublePoints") return state.phase === "answer" && !state.turnJokers.doublePoints;
@@ -76,7 +80,7 @@
     const { group } = activeTurn(state);
     group.jokers.remaining -= 1;
     if (type === "spinAgain") group.jokers.spinAgainUsed = true;
-    else state.turnJokers[type] = true;
+    state.turnJokers[type] = true;
     return true;
   }
 
@@ -106,5 +110,5 @@
     state.groups.forEach(resetGroupJokers);
   }
 
-  Object.assign(TC, { activeTurn, advanceTurn, answerCurrentQuestion, canUseJoker, continueRound, createGameState, jokerCapacity, setWheelValue, useJoker });
+  Object.assign(TC, { activeTurn, advanceTurn, answerCurrentQuestion, canUseJoker, continueRound, createGameState, jokerCapacity, questionPoints, setWheelValue, useJoker });
 })();
