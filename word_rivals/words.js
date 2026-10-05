@@ -17,6 +17,27 @@ const CATEGORIES = {
 
 const QUESTIONS = [
 
+  // GRADE 5 REVISION 2 (UNIT 9)
+  ["TEACHER",5,9,"../images/5/9/1.webp"],
+  ["FARMER",5,9,"../images/6/4/71.webp"],
+  ["DOCTOR",5,9,"../images/5/9/2.webp"],
+  ["SINGER",5,9,"../images/5/9/3.webp"],
+  ["POLICE OFFICER",5,9,"../images/6/4/70.webp"],
+  ["DENTIST",5,9,"../images/5/9/4.webp"],
+  ["LAWYER",5,9,"../images/6/4/64.webp"],
+  ["GREENGROCER",5,9,"../images/7/8/3.webp"],
+  ["CHEMIST",5,9,"../images/7/3/36.webp"],
+  ["BAKER",5,9,"../images/5/9/5.webp"],
+  ["ZOO",5,9,"../images/5/8/21.webp"],
+  ["MUSEUM",5,9,"../images/5/9/6.webp"],
+  ["CINEMA",5,9,"../images/5/9/7.webp"],
+  ["SEASIDE",5,9,"../images/5/8/25.webp"],
+  ["LAGOON",5,9,"../images/5/9/9.webp"],
+  ["DOLPHIN",5,9,"../images/5/9/8.webp"],
+  ["CRAB",5,9,"../images/5/9/10.webp"],
+  ["SEA TURTLE",5,9,"../images/5/9/11.webp"],
+  ["JELLYFISH",5,9,"../images/5/9/12.png"],
+
   // ─── GRADE 5 REVISION 1 ─────────────────────────────────────────────────────
   ["ART",5,0,"../images/5/2/53.webp"],
   ["DRAMA",5,0,"../images/5/2/15.webp"],

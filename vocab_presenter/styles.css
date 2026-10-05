@@ -477,7 +477,7 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
 .category-intro-count { width: fit-content; margin: 0; padding: 10px 16px; border: 1px solid rgba(101, 230, 184, .35); border-radius: 999px; color: #8af1cb; background: rgba(39, 181, 139, .10); font-size: clamp(14px, 1.6vw, 20px); font-weight: 900; letter-spacing: .13em; }
 .category-continue { width: fit-content; margin-top: 8px; }
 
-.visual-panel { display: grid; place-items: center; padding: 24px; }
+.visual-panel { display: grid; place-items: center; align-content: center; gap: 12px; padding: 24px; }
 .image-frame {
   display: grid;
   width: min(500px, 100%);
@@ -489,6 +489,8 @@ kbd { padding: 2px 6px; border: 1px solid #344363; border-radius: 5px; backgroun
 }
 
 .image-frame img { width: 100%; height: 100%; object-fit: contain; }
+.image-frame video { width: 100%; height: 100%; aspect-ratio: 1; object-fit: contain; }
+.teacher-example-video-button { display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid rgba(143, 166, 255, .3); border-radius: 13px; background: #173267; cursor: pointer; font-size: 26px; }
 .image-fallback { color: var(--muted); font-size: 14px; }
 
 .word-card {

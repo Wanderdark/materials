@@ -100,6 +100,7 @@
     categoryIntroCount: $("categoryIntroCount"),
     categoryContinue: $("categoryContinueButton"),
     wordImage: $("wordImage"),
+    teacherExampleVideo: $("teacherExampleVideo"),
     imageFallback: $("imageFallback"),
     wordGuessPanel: $("wordGuessPanel"),
     wordGuessOptions: $("wordGuessOptions"),
@@ -116,6 +117,7 @@
     teacherExampleBlock: $("teacherExampleBlock"),
     teacherExampleSentence: $("teacherExampleSentence"),
     teacherExampleImage: $("teacherExampleImageButton"),
+    teacherExampleVideoButton: $("teacherExampleVideoButton"),
     teacherExampleSpeak: $("teacherExampleSpeakButton"),
     imageOverlay: $("vocabImageOverlay"),
     imageOverlayImage: $("vocabImageOverlayImage"),
@@ -258,6 +260,9 @@
     luckyAudioContext: null
   };
   let teacherExampleImageUrl = "";
+  let teacherExampleVideoUrl = "";
+  let teacherExampleVideoProbe = null;
+  let teacherExampleVideoChecked = false;
   let teacherShowingExampleImage = false;
   let hasTeacherExample = false;
 
@@ -272,6 +277,17 @@
   }
 
   function prepareTeacherExample(record) {
+    stopTeacherExampleVideo();
+    teacherExampleVideoUrl = "";
+    teacherExampleVideoChecked = false;
+    els.teacherExampleVideoButton.classList.add("hidden");
+    if (teacherExampleVideoProbe) {
+      teacherExampleVideoProbe.onloadedmetadata = null;
+      teacherExampleVideoProbe.onerror = null;
+      teacherExampleVideoProbe.removeAttribute("src");
+      teacherExampleVideoProbe.load();
+      teacherExampleVideoProbe = null;
+    }
     const sentence = record[9];
     hasTeacherExample = sentence && sentence !== "placeholder";
     teacherShowingExampleImage = false;
@@ -1720,6 +1736,7 @@
 
   function showTeacherExampleImage() {
     const record = state.pool[state.index];
+    stopTeacherExampleVideo();
     if (!record || els.teacherExampleImage.disabled || teacherShowingExampleImage) return;
     teacherShowingExampleImage = true;
     els.imageFallback.classList.add("hidden");
@@ -1728,11 +1745,14 @@
     els.wordImage.alt = `Example image for ${record[2]}`;
     els.teacherExampleImage.classList.add("is-active");
     els.teacherExampleImage.title = "Show word image";
+    prepareTeacherExampleVideo(record);
+    updateTeacherExampleVideoButton();
   }
 
   function toggleTeacherExampleImage() {
     const record = state.pool[state.index];
     if (!record || els.teacherExampleImage.disabled) return;
+    stopTeacherExampleVideo();
     if (teacherShowingExampleImage) {
       teacherShowingExampleImage = false;
       els.imageFallback.classList.add("hidden");
@@ -1744,6 +1764,7 @@
     }
     els.teacherExampleImage.classList.toggle("is-active", teacherShowingExampleImage);
     els.teacherExampleImage.title = teacherShowingExampleImage ? "Show word image" : "Show example image";
+    updateTeacherExampleVideoButton();
   }
 
   function openPresentationImageOverlay() {
@@ -1755,6 +1776,94 @@
     els.imageOverlaySentence.parentElement.hidden = !teacherExampleImageUrl || els.wordImage.currentSrc !== new URL(teacherExampleImageUrl, window.location.href).href;
     els.imageOverlay.classList.remove("hidden");
   }
+
+  function prepareTeacherExampleVideo(record) {
+    if (teacherExampleVideoChecked || !teacherShowingExampleImage) return;
+    teacherExampleVideoChecked = true;
+    const stem = exampleImageStem(record[2]);
+    const videoUrl = `https://media.adilhoca.com/words/${record[3]}_${stem}.mp4`;
+    const videoProbe = document.createElement("video");
+    teacherExampleVideoProbe = videoProbe;
+    videoProbe.preload = "metadata";
+    const releaseProbe = () => {
+      videoProbe.onloadedmetadata = null;
+      videoProbe.onerror = null;
+      videoProbe.removeAttribute("src");
+      videoProbe.load();
+      if (teacherExampleVideoProbe === videoProbe) teacherExampleVideoProbe = null;
+    };
+    videoProbe.onloadedmetadata = () => {
+      if (teacherExampleVideoProbe === videoProbe && state.pool[state.index] === record) {
+        teacherExampleVideoUrl = videoUrl;
+        updateTeacherExampleVideoButton();
+      }
+      releaseProbe();
+    };
+    videoProbe.onerror = releaseProbe;
+    videoProbe.src = videoUrl;
+  }
+
+  function updateTeacherExampleVideoButton() {
+    els.teacherExampleVideoButton.classList.toggle("hidden",
+      !teacherExampleVideoUrl || !teacherShowingExampleImage ||
+      !els.teacherExampleVideo.classList.contains("hidden") ||
+      els.wordImage.classList.contains("hidden"));
+  }
+
+  function stopTeacherExampleVideo() {
+    const video = els.teacherExampleVideo;
+    const wasVisible = !video.classList.contains("hidden");
+    video.pause();
+    video.onerror = null;
+    video.classList.add("hidden");
+    if (video.hasAttribute("src")) {
+      video.removeAttribute("src");
+      video.load();
+    }
+    els.teacherExampleVideoButton.classList.remove("is-active");
+    els.teacherExampleVideoButton.title = "Play example video";
+    els.teacherExampleVideoButton.setAttribute("aria-label", "Play example video");
+    if (wasVisible) {
+      els.wordImage.classList.toggle("hidden", !els.wordImage.naturalWidth);
+      els.imageFallback.classList.toggle("hidden", Boolean(els.wordImage.naturalWidth));
+    }
+    updateTeacherExampleVideoButton();
+  }
+
+  function finishTeacherExampleVideo() {
+    stopTeacherExampleVideo();
+    if (teacherExampleImageUrl) {
+      showTeacherExampleImage();
+    } else {
+      els.wordImage.classList.add("hidden");
+      els.imageFallback.classList.remove("hidden");
+    }
+  }
+
+  function toggleTeacherExampleVideo() {
+    if (!els.teacherExampleVideo.classList.contains("hidden")) {
+      finishTeacherExampleVideo();
+      return;
+    }
+    if (!teacherExampleVideoUrl || !teacherShowingExampleImage || state.mode !== "word") return;
+    window.speechSynthesis?.cancel();
+    els.wordImage.classList.add("hidden");
+    els.imageFallback.classList.add("hidden");
+    const video = els.teacherExampleVideo;
+    video.classList.remove("hidden");
+    updateTeacherExampleVideoButton();
+    video.onerror = () => {
+      finishTeacherExampleVideo();
+      teacherExampleVideoUrl = "";
+      els.teacherExampleVideoButton.classList.add("hidden");
+    };
+    video.src = teacherExampleVideoUrl;
+    els.teacherExampleVideoButton.classList.add("is-active");
+    els.teacherExampleVideoButton.title = "Show image";
+    els.teacherExampleVideoButton.setAttribute("aria-label", "Show image");
+    video.play().catch(() => {});
+  }
+
 
   function speakImageOverlaySentence() {
     const sentence = els.imageOverlaySentence.textContent.trim();
@@ -1861,6 +1970,7 @@
   }
 
   function updateChrome() {
+    if (state.mode !== "word") stopTeacherExampleVideo();
     const atEnd = state.index === state.pool.length - 1;
     const category = state.categorySequence[state.categoryIndex];
     els.sessionLabel.textContent = `GRADE ${state.grade} · UNIT ${state.unit}`;
@@ -2397,6 +2507,7 @@
   }
 
   function returnToSetup() {
+    stopTeacherExampleVideo();
     clearTimeout(state.revealTimer);
     clearTimeout(state.categoryIntroTimer);
     clearTimeout(state.speechTimer);
@@ -2492,6 +2603,8 @@
   els.teacherExampleSpeak.addEventListener("click", speakTeacherExample);
   els.skipWordGuess.addEventListener("click", skipWordGuess);
   els.teacherExampleImage.addEventListener("click", toggleTeacherExampleImage);
+  els.teacherExampleVideoButton.addEventListener("click", toggleTeacherExampleVideo);
+  els.teacherExampleVideo.addEventListener("ended", finishTeacherExampleVideo);
   els.wordImage.addEventListener("click", openPresentationImageOverlay);
   if (!isStudentVocabularyMode) els.imageOverlaySpeak.addEventListener("click", speakImageOverlaySentence);
   els.imageOverlayClose.addEventListener("click", () => els.imageOverlay.classList.add("hidden"));

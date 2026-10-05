@@ -162,9 +162,9 @@ function buildStdGroupCol(gi){
     cur.className='std-cursor';
     const rnd=document.createElement('button');
     rnd.className='std-rand';
-    rnd.title='Rastgele isim';
-    rnd.textContent='🎲';
-    rnd.onclick=(e)=>{ e.stopPropagation(); assignStdRandom(gi,si); };
+    rnd.title=window.__studentSlotRemove ? 'Oyundan çıkar' : 'Rastgele isim';
+    rnd.textContent=window.__studentSlotRemove ? '×' : '🎲';
+    rnd.onclick=(e)=>{ e.stopPropagation(); window.__studentSlotRemove ? clearStdSlot(gi,si) : assignStdRandom(gi,si); };
     slot.appendChild(txt);
     slot.appendChild(cur);
     slot.appendChild(rnd);
@@ -227,12 +227,12 @@ function showStudentOverlay(){
     cur.className='std-cursor';
     slot.appendChild(txt);
     slot.appendChild(cur);
-    if(typeof _teacherMode === 'undefined' || _teacherMode) {
+    if(window.__studentSlotRemove || typeof _teacherMode === 'undefined' || _teacherMode) {
       const rnd=document.createElement('button');
       rnd.className='std-rand';
-      rnd.title='Rastgele isim';
-      rnd.textContent='🎲';
-      rnd.onclick=(e)=>{ e.stopPropagation(); assignStdRandom(gi,si); };
+      rnd.title=window.__studentSlotRemove ? 'Oyundan çıkar' : 'Rastgele isim';
+      rnd.textContent=window.__studentSlotRemove ? '×' : '🎲';
+      rnd.onclick=(e)=>{ e.stopPropagation(); window.__studentSlotRemove ? clearStdSlot(gi,si) : assignStdRandom(gi,si); };
       slot.appendChild(rnd);
     }
     return slot;

@@ -998,6 +998,19 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
   letter-spacing: .04em; margin-bottom: 18px;
 }
 .ws-sep { color: rgba(251,191,36,.4); margin: 0 14px; }
+#win-name,.win-sub { display:none; }
+.win-players { display:flex; margin:0 0 20px; gap:20px; justify-content:center; }
+.win-player { display:flex; flex:1; min-width:0; flex-direction:column; align-items:center; gap:10px; color:#fde68a; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:22px; overflow-wrap:anywhere; }
+.win-result-portrait { width:104px; height:104px; object-fit:cover; border:2px solid var(--gold); border-radius:18px; }
+.win-result-visual { position:relative; }
+.win-result-winner .win-result-visual { filter:drop-shadow(0 0 14px #fbbf24) drop-shadow(0 0 24px rgba(251,191,36,.65)); }
+.win-result-star { position:absolute; z-index:2; color:#fff3a1; font-size:22px; line-height:1; text-shadow:0 0 6px #fff,0 0 14px #fbbf24; animation:winStarTwinkle 1.4s ease-in-out infinite alternate; pointer-events:none; }
+.win-result-star:nth-of-type(1) { top:-10px; left:-10px; }
+.win-result-star:nth-of-type(2) { top:12%; right:-14px; animation-delay:-.5s; }
+.win-result-star:nth-of-type(3) { bottom:-8px; left:12%; animation-delay:-.9s; }
+.win-result-star:nth-of-type(4) { bottom:12%; right:-10px; animation-delay:-.3s; }
+@keyframes winStarTwinkle { from { opacity:.45; transform:scale(.7) rotate(-12deg); } to { opacity:1; transform:scale(1.2) rotate(12deg); } }
+@media (prefers-reduced-motion:reduce) { .win-result-star { animation:none; } }
 .win-hud-transfer {
   margin: 0 0 24px; padding: 14px 16px;
   border: 1px solid rgba(59,130,246,.32); border-radius: 14px;
@@ -1588,6 +1601,7 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
     <div id="win-name"></div>
     <div class="win-sub">WINS!</div>
     <div id="win-scores"></div>
+    <div class="win-players" id="win-players"></div>
     <div class="win-hud-transfer hidden" id="win-hud-transfer">
       <div class="win-hud-title">HUD PUAN AKTARIMI</div>
       <div class="win-hud-detail" id="win-hud-detail"></div>
@@ -2866,13 +2880,24 @@ function _showRevealImg(path, cb) {
   const imgEl  = document.getElementById('card-img');
   const wordEl = document.getElementById('card-word');
   let _done = false;
-  const _finish = () => { if (_done) return; _done = true; imgEl.onerror = null; cb(); };
+  let timer;
+  const _finish = () => {
+    if (_done) return;
+    _done = true;
+    clearTimeout(timer);
+    imgEl.onclick = null;
+    imgEl.style.cursor = '';
+    imgEl.onerror = null;
+    cb();
+  };
   wrap.classList.remove('img-reveal-mode');
   wrap.classList.add('img-mode');
   wordEl.textContent = '';
   imgEl.onerror = () => { wrap.classList.remove('img-mode'); imgEl.src = ''; _finish(); };
   imgEl.src = path;
-  setTimeout(_finish, 2000);
+  imgEl.onclick = _finish;
+  imgEl.style.cursor = 'pointer';
+  timer = setTimeout(_finish, 2000);
 }
 
 function handleReveal() {
@@ -3106,8 +3131,45 @@ function showWin(winner) {
   document.getElementById('win-name').textContent = playerNames[winner];
   document.getElementById('win-scores').innerHTML =
     scores[0] + '<span class="ws-sep">—</span>' + scores[1];
+  renderWinPlayers(winner);
   updateWinHudTransfer();
   document.getElementById('win-overlay').classList.add('open');
+}
+
+function renderWinPlayers(winner) {
+  const box = document.getElementById('win-players');
+  box.replaceChildren();
+  [0, 1].forEach(pl => {
+    const card = document.createElement('div');
+    card.className = 'win-player' + (pl === winner ? ' win-result-winner' : '');
+    const name = document.createElement('div');
+    name.textContent = playerNames[pl] + (pl === winner ? ' WINS!' : ' LOSES');
+    const visual = document.createElement('div');
+    visual.className = 'win-result-visual';
+    const portrait = document.createElement('img');
+    portrait.className = 'win-result-portrait';
+    portrait.alt = playerNames[pl];
+    visual.append(portrait);
+    if (playerProfiles[pl]?.avatarPath) portrait.src = playerProfiles[pl].avatarPath;
+    else {
+      const fallback = document.createElement('div');
+      fallback.textContent = playerNames[pl];
+      fallback.style.display = 'none';
+      visual.append(fallback);
+      _applyTournamentAvatar(portrait, fallback, playerNames[pl]);
+    }
+    if (pl === winner) {
+      for (let i = 0; i < 4; i++) {
+        const star = document.createElement('span');
+        star.className = 'win-result-star';
+        star.textContent = '✦';
+        star.setAttribute('aria-hidden', 'true');
+        visual.append(star);
+      }
+    }
+    card.append(name, visual);
+    box.append(card);
+  });
 }
 
 function _loserHudPoints(score) {
@@ -3676,6 +3738,13 @@ function _tournamentAvatarSlug(name) {
 }
 
 function _tournamentAvatarPaths(name) {
+  const profile = _resolveDuelStudentProfile(name);
+  if (profile?.avatarPath) {
+    const fileName = String(profile.avatarPath).replace(/\\/g, '/').split('/').pop().split(/[?#]/)[0];
+    if (/^[a-z0-9_-]+\.webp$/i.test(fileName)) {
+      return ['../func_presenter/images/avatars/v2/' + fileName];
+    }
+  }
   const slug = _tournamentAvatarSlug(name);
   return slug ? ['../func_presenter/images/avatars/v2/' + slug + '.webp', '../images/avatars/' + slug + '.webp'] : [];
 }

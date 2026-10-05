@@ -29,6 +29,7 @@
   --a:#4A8AF4;--b:#ff5577;
 }
 html,body{height:100%;overflow:hidden;font-family:'Barlow',sans-serif;background:var(--bg);color:var(--white);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+#wo-toast-stack{z-index:11010!important}
 #bg-layer{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .8s ease;opacity:0;pointer-events:none}
 
 
@@ -1352,8 +1353,10 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <script src="avatars.js"></script>
 <script>window.__forceTeacherControl = true;</script>
 <script src="../func_presenter/teacher-cloud.js"></script>
+<script src="../func_presenter/toast.js" data-global="false"></script>
 <script src="../func_presenter/teacher-control.js"></script>
 <script src="../modules/teamnames.js"></script>
+<script>window.__studentSlotRemove = true;</script>
 <script src="../modules/studentselection.js"></script>
 <script src="../modules/avatarselection.js"></script>
 <script src="../modules/scoreboard.js"></script>
@@ -1708,7 +1711,7 @@ function openRvrRosterClassPicker() {
     ? teacher.getActiveClassroomId?.()
     : '';
   if (!classroomId) {
-    alert('Lock a classroom from the Teacher HUD roster first.');
+    window.ToastManager.show('Lock a classroom from the Teacher HUD roster first.', 'warn', 5000);
     return;
   }
   importRvrRosterClass(classroomId);
@@ -1718,7 +1721,7 @@ function importRvrRosterClass(classroomId) {
   const classrooms = window.TeacherControl?.getClassrooms?.() || [];
   const classroom = classrooms.find((item) => item.id === classroomId);
   if (!classroom || !Array.isArray(classroom.roster)) {
-    alert('The locked Teacher HUD classroom could not be found.');
+    window.ToastManager.show('The locked Teacher HUD classroom could not be found.', 'warn', 5000);
     return;
   }
 
@@ -1731,15 +1734,15 @@ function importRvrRosterClass(classroomId) {
       || a.name.localeCompare(b.name, 'tr'));
 
   if (students.length < 2) {
-    alert('At least two present students are needed.');
+    window.ToastManager.show('At least two present students are needed.', 'warn', 5000);
     return;
   }
   if (students.length > STD_SLOTS * 2) {
-    alert(`This game supports up to ${STD_SLOTS * 2} students.`);
+    window.ToastManager.show(`This game supports up to ${STD_SLOTS * 2} students.`, 'warn', 5000);
     return;
   }
   if (students.length % 2) {
-    alert('Mark attendance so both teams can have the same number of students.');
+    window.ToastManager.show('Mark attendance so both teams can have the same number of students.', 'warn', 5000);
     return;
   }
 
@@ -3647,7 +3650,7 @@ function _buildUnitButtons() {
     const cnt = QUESTIONS.filter(q => q[q.length - 1] && !_isCatUnit(q[2]) && selectedGrades.has(q[1]) && q[2] === u).length;
     const btn = document.createElement('button');
     btn.className = 'sc-unit-btn' + (selectedUnits.has(u) ? ' active' : '');
-    const unitLabel = u === 0 ? 'Revision 1' : `Ünite ${u}`;
+    const unitLabel = u === 0 ? 'Revision 1' : (u === 9 && selectedGrades.has(5) ? 'Revision 2' : `Ünite ${u}`);
     btn.innerHTML = `${unitLabel}<small>${cnt}</small>`;
     btn.onclick = () => {
       if (selectedUnits.has(u) && selectedUnits.size === 1 && selectedCategories.size === 0) {
