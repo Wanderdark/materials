@@ -611,7 +611,7 @@
     if (!whistleProgressOverlay) {
       whistleProgressOverlay = el("div", "tc-whistle-progress-overlay");
       const panel = el("div", "tc-whistle-progress-panel");
-      whistleProgressLabel = el("div", "tc-whistle-progress-label", "5");
+      whistleProgressLabel = el("div", "tc-whistle-progress-label", "3");
       whistleProgressBar = el("div", "tc-whistle-progress-bar");
       panel.append(whistleProgressLabel, whistleProgressBar);
       whistleProgressOverlay.append(panel);
@@ -620,9 +620,9 @@
     whistleProgressOverlay.classList.add("is-visible");
     const update = (timestamp) => {
       if (!whistleProgressOverlay?.classList.contains("is-visible")) return;
-      const progress = Math.min(1, Math.max(0, (timestamp - startedAt) / 5000));
+      const progress = Math.min(1, Math.max(0, (timestamp - startedAt) / 3000));
       whistleProgressBar.style.width = `${progress * 100}%`;
-      whistleProgressLabel.textContent = progress >= 1 ? "0" : String(Math.ceil(5 - progress * 5));
+      whistleProgressLabel.textContent = progress >= 1 ? "0" : String(Math.ceil(3 - progress * 3));
       whistleProgressBar.style.background = progress < .5
         ? "linear-gradient(90deg, #31d158, #ffd60a)"
         : "linear-gradient(90deg, #ffd60a, #ff453a)";

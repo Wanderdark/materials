@@ -1790,10 +1790,11 @@ function updateRvrFinalStarsTransferButton() {
 function transferRvrFinalStarsToRoster() {
   if (rvrFinalStarsTransferred || !importedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
   const starMap = typeof calcStarMap === 'function' ? calcStarMap() : {};
+  const pointsPerStar = (_gameMode === 'turnbased' ? _tbRound : _matchRound) >= 2 ? 2 : 1;
   const awards = [0, 1].flatMap((groupIndex) =>
     groupStudents[groupIndex].map((name, studentIndex) => ({
       name,
-      points: (Number(starMap[`${groupIndex}-${studentIndex}`]) || 0) * 2
+      points: (Number(starMap[`${groupIndex}-${studentIndex}`]) || 0) * pointsPerStar
     }))
   ).filter((award) => award.name && award.points > 0);
 

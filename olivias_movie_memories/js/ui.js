@@ -24,7 +24,75 @@ function renderGame(state, player) { const total = state.groups.reduce((sum, gro
 function renderJokers(state) { const group = state?.groups?.[state.groupIndex]; const jokers = group?.jokers; if (!jokers) return; els.jokerRemaining.textContent = `${jokers.remaining} LEFT`; els.jokerButtons.forEach((button) => { const type = button.dataset.joker; const phaseAllowed = type === "echo" ? state.videoPlays > 0 && els.video.paused && ["video", "answer"].includes(state.phase) : type === "timeFreeze" ? state.phase === "answer" && Boolean(state.timerId) : type === "slowTime" ? state.phase === "video" && els.video.paused : state.phase === "answer" && !state.doubleOrNothing; button.disabled = jokers.remaining <= 0 || !phaseAllowed || state.answered; button.classList.remove("is-used"); button.classList.toggle("is-active", (type === "doubleOrNothing" && state.doubleOrNothing) || (type === "slowTime" && state.slowTime)); }); }
 function animateScoreAward(source, groupId, points, score) { const target = els.scoreboard.querySelector(`[data-group-id="${groupId}"]`); if (!source || !target || points <= 0) return; const sourceRect = source.getBoundingClientRect(); const targetRect = target.getBoundingClientRect(); const token = document.createElement("div"); let completed = false; const complete = () => { if (completed) return; completed = true; target.querySelector("strong").textContent = score; target.classList.add("score-pulse"); setTimeout(() => { target.classList.remove("score-pulse"); token.remove(); }, 420); }; token.className = "score-fly"; token.textContent = `+${points}`; token.style.left = `${sourceRect.left + sourceRect.width / 2}px`; token.style.top = `${sourceRect.top + sourceRect.height / 2}px`; token.addEventListener("transitionend", (event) => { if (event.propertyName === "left") complete(); }); document.body.append(token); requestAnimationFrame(() => { token.style.left = `${targetRect.left + targetRect.width / 2}px`; token.style.top = `${targetRect.top + targetRect.height / 2}px`; }); setTimeout(complete, 1000); }
 function resetQuestionView() { els.decisionOverlay.hidden = true; els.answerOverlay.hidden = true; els.evidence.hidden = true; els.transcript.hidden = true; els.answers.hidden = true; els.answers.querySelectorAll("button").forEach((button) => { button.textContent = ""; button.disabled = true; button.className = "answer-card"; }); els.feedback.hidden = true; els.evidenceReplay.hidden = true; els.next.hidden = true; els.timer.hidden = true; els.replay.hidden = true; els.replay.disabled = true; els.answerNow.hidden = true; els.answerNow.disabled = true; els.overrideReplay.disabled = true; els.playVideo.hidden = true; els.fallback.hidden = false; els.video.hidden = false; els.video.playbackRate = 1; els.videoWrap.classList.remove("is-black-stage", "is-dark-stage"); els.video.removeAttribute("src"); els.video.load(); }
-function loadQuestion(item) { resetQuestionView(); els.video.dataset.remoteFallbackSrc = item.remoteVideoSrc || resolveVideoSrc(item.videoSrc); delete els.video.dataset.remoteFallbackUsed; els.video.src = location.protocol === "file:" ? (item.localVideoSrc || resolveLocalVideoSrc(item.videoSrc)) : els.video.dataset.remoteFallbackSrc; els.video.hidden = true; els.fallback.hidden = true; els.videoWrap.classList.add("is-black-stage"); els.difficultySelector.hidden = false; els.playVideo.hidden = true; els.playVideo.disabled = true; els.videoStatus.textContent = "Choose a difficulty to start."; }
+let characterIntroTimer = 0;
+function showCharacterIntro(item) {
+  clearTimeout(characterIntroTimer);
+  document.querySelectorAll(".character-intro-flight").forEach((image) => image.remove());
+  els.dialogueCharacters.closest(".turn-panel")?.classList.remove("character-intro-active");
+  els.videoWrap.append(els.difficultySelector);
+  els.videoWrap.querySelector(".video-character-intro")?.remove();
+  if (window.__oliviasMovieMemoriesStudentMode) return;
+  const ids = [...new Set(item.characterIds || [])].filter((id) => !["buddy", "luna", "sunny", "storm"].includes(id)).slice(0, 2);
+  if (!ids.length) return;
+  els.dialogueCharacters.closest(".turn-panel")?.classList.add("character-intro-active");
+  const intro = document.createElement("div");
+  intro.className = "video-character-intro";
+  const heading = document.createElement("p");
+  heading.className = "video-character-intro-heading";
+  heading.textContent = "APPEARING IN THIS VIDEO:";
+  intro.append(heading);
+  ids.forEach((id) => {
+    const card = document.createElement("div");
+    const image = document.createElement("img");
+    const name = document.createElement("strong");
+    image.alt = id;
+    image.src = `assets/portraits/v2/${encodeURIComponent(id)}.webp`;
+    image.addEventListener("error", () => { image.src = `assets/portraits/${encodeURIComponent(id)}.webp`; }, { once: true });
+    name.textContent = id.replace(/_/g, " ").toUpperCase();
+    card.append(image, name);
+    intro.append(card);
+  });
+  els.difficultySelector.hidden = false;
+  intro.append(els.difficultySelector);
+  els.videoWrap.append(intro);
+  els.videoStatus.textContent = "Choose a difficulty to start.";
+}
+window.LeagueListening.dismissCharacterIntro = (onComplete) => {
+  const intro = els.videoWrap.querySelector(".video-character-intro");
+  if (!intro) { onComplete(); return; }
+  if (intro.classList.contains("is-leaving")) return;
+  const reduceMotion = document.body.classList.contains("lite-mode") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const flights = [];
+  if (!reduceMotion) intro.querySelectorAll("img").forEach((image) => {
+    const target = [...els.dialogueCharacters.querySelectorAll("img")].find((portrait) => portrait.alt === `${image.alt} portrait`);
+    if (!target) return;
+    const from = image.getBoundingClientRect();
+    const to = target.getBoundingClientRect();
+    if (!to.width || !to.height) return;
+    const flight = image.cloneNode();
+    flight.className = "character-intro-flight";
+    Object.assign(flight.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px` });
+    document.body.append(flight);
+    flights.push(flight);
+    flight.animate([
+      { transform: "translate(0, 0) scale(1)", borderRadius: "24px" },
+      { transform: `translate(${to.left - from.left}px, ${to.top - from.top}px) scale(${to.width / from.width}, ${to.height / from.height})`, borderRadius: "50%" }
+    ], { duration: 750, easing: "cubic-bezier(.25,.65,.25,1)", fill: "forwards" });
+  });
+  intro.classList.add("is-leaving");
+  els.difficultyButtons.forEach((button) => { button.disabled = true; });
+  characterIntroTimer = setTimeout(() => {
+    if (!intro.isConnected) return;
+    flights.forEach((image) => image.remove());
+    els.dialogueCharacters.closest(".turn-panel")?.classList.remove("character-intro-active");
+    els.videoWrap.append(els.difficultySelector);
+    intro.remove();
+    els.difficultyButtons.forEach((button) => { button.disabled = false; });
+    characterIntroTimer = 0;
+    onComplete();
+  }, reduceMotion ? 0 : 750);
+};
+function loadQuestion(item) { resetQuestionView(); els.video.dataset.remoteFallbackSrc = item.remoteVideoSrc || resolveVideoSrc(item.videoSrc); delete els.video.dataset.remoteFallbackUsed; els.video.src = location.protocol === "file:" ? (item.localVideoSrc || resolveLocalVideoSrc(item.videoSrc)) : els.video.dataset.remoteFallbackSrc; els.video.hidden = true; els.fallback.hidden = true; els.videoWrap.classList.add("is-black-stage"); els.difficultySelector.hidden = false; els.playVideo.hidden = true; els.playVideo.disabled = true; els.videoStatus.textContent = "Choose a difficulty to start."; showCharacterIntro(item); }
 function setDifficultySelection(difficulty) { els.difficultyButtons.forEach((button) => button.classList.toggle("is-selected", button.dataset.difficulty === difficulty)); els.difficultySelector.hidden = Boolean(difficulty); els.playVideo.disabled = !difficulty; }
 function showVideoPlayback() { els.video.hidden = false; els.videoWrap.classList.remove("is-black-stage", "is-dark-stage"); }
 function concealVideo() { els.video.hidden = false; els.fallback.hidden = true; els.videoWrap.classList.remove("is-black-stage"); els.videoWrap.classList.add("is-dark-stage"); }

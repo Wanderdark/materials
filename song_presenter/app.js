@@ -553,13 +553,15 @@
     els.duelFinalTransferButton.hidden = !canTransfer;
     els.duelFinalTransferButton.disabled = duelFinalScoresTransferred;
     els.duelFinalTransferButton.textContent = duelFinalScoresTransferred ? "✓ PUANLAR AKTARILDI" : "⭐ YILDIZLARI PUANA AKTAR";
-    els.duelFinalTransferNote.textContent = canTransfer ? "Each star transfers as 2 HUD points." : "Roster transfer is available when the class is imported from the roster.";
+    const pointsPerStar = duelRoundNumber > 2 ? 2 : 1;
+    els.duelFinalTransferNote.textContent = canTransfer ? `Each star transfers as ${pointsPerStar} HUD point${pointsPerStar === 1 ? "" : "s"}.` : "Roster transfer is available when the class is imported from the roster.";
     els.duelFinalScores.classList.remove("hidden");
   }
 
   function transferDuelFinalScores() {
     if (duelFinalScoresTransferred || !duelRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== "function") return;
-    const awards = getDuelFinalAwards().filter((award) => award.name && award.stars > 0).map((award) => ({ name: award.name, points: award.stars * 2 }));
+    const pointsPerStar = duelRoundNumber > 2 ? 2 : 1;
+    const awards = getDuelFinalAwards().filter((award) => award.name && award.stars > 0).map((award) => ({ name: award.name, points: award.stars * pointsPerStar }));
     const result = window.TeacherControl.awardFinalPoints(awards, duelRosterClassroomId);
     if (!result?.awarded?.length) { ToastManager.show("NO MATCHING ROSTER STUDENTS FOUND", "warn", 3000); return; }
     duelFinalScoresTransferred = true;

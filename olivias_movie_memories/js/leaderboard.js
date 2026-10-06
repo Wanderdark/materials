@@ -10,14 +10,23 @@
       .sort((a, b) => b.points - a.points || a.key.localeCompare(b.key)).slice(0, 5);
   }
 
-  function showLeaderboard(state) {
+  function showLeaderboard(state, onComplete) {
     const overlay = document.querySelector("#auto-lb");
     const container = document.querySelector("#auto-lb-list");
-    if (!overlay || !container) return;
+    if (!overlay || !container) { onComplete?.(); return; }
+    clearTimeout(hideTimer);
+    let completed = false;
+    const dismiss = () => {
+      if (completed) return;
+      completed = true;
+      clearTimeout(hideTimer);
+      overlay.classList.remove("show");
+      overlay.onclick = null;
+      onComplete?.();
+    };
     const entries = getEntries(state);
     if (!entries.length) {
-      overlay.classList.remove("show");
-      clearTimeout(hideTimer);
+      dismiss();
       return;
     }
     const keys = new Set(entries.map((entry) => entry.key));
@@ -43,7 +52,8 @@
     container.style.height = `${entries.length * SLOT_HEIGHT}px`;
     overlay.classList.add("show");
     clearTimeout(hideTimer);
-    hideTimer = setTimeout(() => overlay.classList.remove("show"), 3000);
+    overlay.onclick = dismiss;
+    hideTimer = setTimeout(dismiss, onComplete ? 3100 : 3000);
   }
 
   window.LeagueListening.showLeaderboard = showLeaderboard;

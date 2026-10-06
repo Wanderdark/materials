@@ -1689,9 +1689,10 @@ function updateWrFinalStarsTransferButton() {
   const button = document.getElementById('wr-transfer-stars');
   if (!button) return;
   const canTransfer = !!wrTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
+  const pointsPerStar = roundNumber > 2 ? 2 : 1;
   button.hidden = false;
   button.disabled = wrFinalStarsTransferred;
-  button.title = canTransfer ? '1 yıldız = 2 HUD puanı' : 'Teacher HUD rosterında sınıfı kilitleyin.';
+  button.title = canTransfer ? '1 yıldız = ' + pointsPerStar + ' HUD puanı' : 'Teacher HUD rosterında sınıfı kilitleyin.';
   button.textContent = wrFinalStarsTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
 }
 
@@ -1708,9 +1709,10 @@ function transferWrFinalStarsToRoster() {
     showToast('Önce Teacher HUD rosterında doğru sınıfı kilitleyin.', 'warn', 4500);
     return;
   }
+  const pointsPerStar = roundNumber > 2 ? 2 : 1;
   const awards = wrFinalStarAwards()
     .filter((award) => award.name && award.stars > 0)
-    .map((award) => ({ name: award.name, points: award.stars * 2 }));
+    .map((award) => ({ name: award.name, points: award.stars * pointsPerStar }));
   if (!awards.length) {
     showToast('Aktarılacak yıldız yok.', 'warn', 3500);
     return;
@@ -1726,7 +1728,7 @@ function transferWrFinalStarsToRoster() {
   if (result?.awarded?.length) {
     wrFinalStarsTransferred = true;
     updateWrFinalStarsTransferButton();
-    showToast('✓ Yıldızlar HUD puanlarına aktarıldı (1 yıldız = 2 puan).', 'success', 4500);
+    showToast('✓ Yıldızlar HUD puanlarına aktarıldı (1 yıldız = ' + pointsPerStar + ' puan).', 'success', 4500);
   } else {
     showToast('Puanlar aktarılamadı. Roster sınıfını kontrol edin.', 'warn', 4500);
   }

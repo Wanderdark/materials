@@ -712,6 +712,7 @@ body.lite .kb-key{animation:none!important}
 .go-play-again-btn{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:.16em;padding:13px;background:linear-gradient(135deg,#CC5500,#FF8C00);border:none;border-radius:12px;color:#fff;cursor:pointer;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 20px rgba(204,85,0,.4);flex-shrink:0}
 .go-play-again-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(204,85,0,.6)}
 .go-play-again-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(204,85,0,.6)}
+.go-transfer-note{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-align:center;margin-top:-4px}
 
 /* ═══════════════════════════════
    ROW RESULTS OVERLAY
@@ -1023,8 +1024,10 @@ body.lite .kb-key{animation:none!important}
     <div class="go-title">🏆 FINAL RESULTS</div>
     <div class="go-subtitle" id="go-subtitle">— — —</div>
     <div class="go-grid" id="go-grid"></div>
+    <div class="go-transfer-note" id="go-transfer-note">—</div>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:4px;flex-wrap:wrap">
       <button class="sugg-trigger" id="sugg-trigger" onclick="showSuggestions()">📋 ÖNERİLER<span class="sugg-dot" id="sugg-dot"></span></button>
+      <button class="go-play-again-btn" id="go-transfer-stars" style="background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 6px 28px rgba(245,158,11,.35)" onclick="transferFinalStarsToRoster()">⭐ YILDIZLARI PUANA AKTAR</button>
       <button class="go-play-again-btn" onclick="restartGame()">▶ YENİ OYUN</button>
       <button class="go-play-again-btn" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);box-shadow:0 6px 28px rgba(37,99,235,.4)" onclick="goToMainMenu()">🏠 ANA SAYFA</button>
     </div>
@@ -1353,6 +1356,7 @@ const BONUS_CATEGORIES = [
 // ── GAME STATE ───────────────────────────────────────────
 let selectedClass  = null;
 let importedRosterStudents = [];
+let importedRosterClassroomId = '';
 let selectedPlayers = [];    // [{name,level}]
 let pairs = [];              // [[studentObj, studentObj], ...] — çiftler
 let _pairingMode      = false;  // pair seçimi aktif mi
@@ -1387,6 +1391,7 @@ let timerAudio     = null;
 let _resultLocked  = false;
 let _autoDismissTimer = null;
 let _checkTimerInterval = null;
+let finalStarsTransferred = false;
 let _checkTimeLeft = 30;
 const _gameFlowTimeouts = new Set();
 
@@ -1671,6 +1676,7 @@ function openSettings(){
 function selectClass(cls){
   selectedClass=cls;
   importedRosterStudents=[];
+  importedRosterClassroomId='';
   const sub=document.getElementById('ss-sub');
   if(sub) sub.innerHTML=`Öğrencilere tıkla — min 3, her sıraya en az 1 · Sınıf: <strong style="color:var(--gold)">${cls.label}</strong>`;
   buildStudentPool();
@@ -1682,6 +1688,7 @@ function openWebStudentSelect(){
   playMenuMusic();
   selectedClass=null;
   importedRosterStudents=[];
+  importedRosterClassroomId='';
   const sub=document.getElementById('ss-sub');
   if(sub) sub.innerHTML='Oynamasını istediğiniz sayıda öğrenciyi aktifleştirin · Seçtikten sonra <span style="color:var(--gold)">RENAME</span> ile isim yazabilirsiniz';
   buildStudentPool();
@@ -1824,6 +1831,7 @@ function importWordHuntRoster(){
     .map(student=>({...student,name:String(student.name).trim()}));
   if(!students.length){ alert('Kilitli sınıfta bugün mevcut öğrenci yok.'); return; }
   importedRosterStudents=students;
+  importedRosterClassroomId=classroom.id||classroomId;
   selectedClass=null;
   buildStudentPool();
 }
@@ -3136,7 +3144,61 @@ function showGameOver(){
 
   const {stars,scoreWinners,uniqueWinners,wordWinners,byScore}=calculateStars();
   buildScoreGrid(document.getElementById('go-grid'),{stars,scoreWinners,uniqueWinners,wordWinners,byScore});
+  updateFinalStarsTransferButton();
   show('overlay-game-over');
+}
+
+function finalTransferClassroomId(){
+  const teacher=window.TeacherControl;
+  return importedRosterClassroomId||(teacher?.isActiveClassroomLocked?.()?teacher.getActiveClassroomId?.():'')||'';
+}
+
+function updateFinalStarsTransferButton(){
+  const button=document.getElementById('go-transfer-stars');
+  const note=document.getElementById('go-transfer-note');
+  if(!button||!note) return;
+  const canTransfer=!!finalTransferClassroomId()&&typeof window.TeacherControl?.awardFinalPoints==='function';
+  button.disabled=finalStarsTransferred||!canTransfer;
+  button.textContent=finalStarsTransferred?'✓ PUANLAR AKTARILDI':'⭐ YILDIZLARI PUANA AKTAR';
+  note.textContent=canTransfer?'1 yıldız = 2 HUD puanı':'Teacher HUD rosterında sınıfı kilitleyin.';
+}
+
+function transferFinalStarsToRoster(){
+  if(finalStarsTransferred) return;
+  const teacher=window.TeacherControl;
+  if(typeof teacher?.awardFinalPoints!=='function'){
+    alert('Teacher HUD hazır değil. Sayfayı yenileyip tekrar deneyin.');
+    return;
+  }
+  const classroomId=finalTransferClassroomId();
+  const classroom=teacher.getClassrooms?.().find(item=>item.id===classroomId);
+  if(!classroom){
+    alert('Önce Teacher HUD rosterında doğru sınıfı kilitleyin.');
+    return;
+  }
+  const {stars}=calculateStars();
+  const awards=Object.entries(stars)
+    .filter(([,starCount])=>starCount>0)
+    .map(([name,starCount])=>({name,points:starCount*2}));
+  if(!awards.length){
+    alert('Aktarılacak yıldız yok.');
+    return;
+  }
+  const normalizeName=name=>String(name||'').trim().replace(/\s+/g,' ').toLocaleUpperCase('tr-TR');
+  const rosterNames=new Set((classroom.roster||[]).map(student=>normalizeName(student.name)));
+  const missing=awards.filter(award=>!rosterNames.has(normalizeName(award.name)));
+  if(missing.length){
+    alert('Rosterda bulunamayan öğrenciler: '+missing.map(award=>award.name).join(', '));
+    return;
+  }
+  const result=teacher.awardFinalPoints(awards,classroomId);
+  if(result?.awarded?.length){
+    finalStarsTransferred=true;
+    updateFinalStarsTransferButton();
+    alert('Yıldızlar HUD puanlarına aktarıldı. 1 yıldız = 2 puan.');
+  } else {
+    alert('Puanlar aktarılamadı. Roster sınıfını kontrol edin.');
+  }
 }
 
 function buildScoreGrid(grid, {stars,scoreWinners,uniqueWinners,wordWinners,byScore}){
@@ -3197,8 +3259,9 @@ function restartGame(){
   stopMainGameMusic(); stopMenuMusic();
   playMenuMusic();
   if(!_liteMode) startMenuEffects(); else stopMenuEffects();
-  selectedClass=null; selectedPlayers=[]; pairs=[]; _pairingMode=false; _pairingSource=null; _lastSelected=null; _lastSelectedObj=null; _guestSlotCounter=100; seats=[[],[],[]]; _selectedFromPool=null;
+  selectedClass=null; importedRosterStudents=[]; importedRosterClassroomId=''; selectedPlayers=[]; pairs=[]; _pairingMode=false; _pairingSource=null; _lastSelected=null; _lastSelectedObj=null; _guestSlotCounter=100; seats=[[],[],[]]; _selectedFromPool=null;
   roundNumber=0; wordHistory=new Set(); playerScores={}; playerWordCount={}; playerUniqueCount={}; playerBonusCount={}; playerStreak={}; categoryHistory=[]; bonusHistory=[];
+  finalStarsTransferred=false;
   document.getElementById('end-game-btn').classList.remove('visible');
 }
 

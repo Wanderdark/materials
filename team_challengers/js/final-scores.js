@@ -6,6 +6,9 @@
   }
 
   function getFinalStarAwards(state) {
+    const currentRoundComplete = state.phase === "roundComplete" || (state.answered && state.turnIndex === state.turnOrder.length - 1);
+    const completedRounds = state.round - (currentRoundComplete ? 0 : 1);
+    const pointsPerStar = completedRounds >= 2 ? TC.CONFIG.rosterPointsPerStar : 1;
     const ranks = getGroupRanks(state.groups);
     const overallTop = Math.max(0, ...state.groups.flatMap((group) => group.students.map((student) => student.score)));
     return state.groups.flatMap((group, groupIndex) => {
@@ -18,7 +21,7 @@
         if (student.score > 0) breakdown.push(`Takım sıralaması #${rank}: +${stars} yıldız`);
         if (student.score > 0 && student.score === topPoints) { stars += 1; breakdown.push("Takımın en yüksek puanı: +1 yıldız"); }
         if (student.score > 0 && student.score === overallTop && rank !== 1) { stars += 1; breakdown.push("En yüksek bireysel puan bonusu: +1 yıldız"); }
-        return { key: `${groupIndex}-${studentIndex}`, name: student.name, stars, points: stars * TC.CONFIG.rosterPointsPerStar, breakdown };
+        return { key: `${groupIndex}-${studentIndex}`, name: student.name, stars, pointsPerStar, points: stars * pointsPerStar, breakdown };
       });
     });
   }
@@ -32,7 +35,7 @@
     title.textContent = `${award.name.toLocaleUpperCase("tr-TR")} ÖDÜLÜ`;
     list.replaceChildren();
     (award.breakdown.length ? award.breakdown : ["Bu tur için yıldız ödülü yok."]).forEach((reason) => { const item = document.createElement("p"); item.textContent = reason; list.appendChild(item); });
-    total.textContent = `${award.stars} yıldız × ${TC.CONFIG.rosterPointsPerStar} HUD puanı = +${award.points} Pts`;
+    total.textContent = `${award.stars} yıldız × ${award.pointsPerStar} HUD puanı = +${award.points} Pts`;
     overlay.classList.add("open"); overlay.setAttribute("aria-hidden", "false");
   }
 

@@ -3740,9 +3740,10 @@ function updateWcFinalStarsTransferButton() {
 
 function transferWcFinalStarsToRoster() {
   if (wcFinalStarsTransferred || !wcImportedRosterClassroomId || typeof window.TeacherControl?.awardFinalPoints !== 'function') return;
+  const pointsPerStar = currentRound > 2 ? 2 : 1;
   const awards = wcFinalStarAwards()
     .filter((award) => award.name && award.stars > 0)
-    .map((award) => ({ name: award.name, points: award.stars * 2 }));
+    .map((award) => ({ name: award.name, points: award.stars * pointsPerStar }));
   const result = window.TeacherControl.awardFinalPoints(awards, wcImportedRosterClassroomId);
   if (result?.awarded?.length) {
     wcFinalStarsTransferred = true;

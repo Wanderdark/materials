@@ -232,6 +232,7 @@
     .fc-score{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,1.8vw,18px);color:rgba(255,255,255,.5);letter-spacing:.06em}
     .go-play-again-btn{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:.16em;padding:13px 28px;background:linear-gradient(135deg,#CC5500,#FF8C00);border:none;border-radius:12px;color:#fff;cursor:pointer;transition:transform .12s,box-shadow .15s;box-shadow:0 4px 20px rgba(204,85,0,.4);flex-shrink:0}
     .go-play-again-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(204,85,0,.6)}
+    .go-transfer-note{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-align:center;margin-top:-4px}
     /* SCHOOL NAME — sınıf row'unun sağında */
     .ss-grade-school-row{display:flex;align-items:center;gap:16px;flex-shrink:0}
     .ss-school-inline{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
@@ -909,7 +910,9 @@
         <div class="go-title">🏆 FINAL RESULTS</div>
         <div class="go-subtitle" id="go-subtitle">— — —</div>
         <div class="go-grid" id="go-grid"></div>
-        <div style="display:flex;justify-content:center;margin-top:4px">
+        <div class="go-transfer-note" id="go-transfer-note">—</div>
+        <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:4px">
+          <button class="go-play-again-btn" id="go-transfer-stars" style="background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 6px 28px rgba(245,158,11,.35)" onclick="transferSCFinalStarsToRoster()">⭐ YILDIZLARI PUANA AKTAR</button>
           <button class="go-play-again-btn" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);box-shadow:0 6px 28px rgba(37,99,235,.4)" onclick="goToHubFromFinal()">↩ RETURN TO HUB</button>
         </div>
       </div>
@@ -1023,6 +1026,7 @@
   const _teacherMode = false;
   let selectedClass     = null;
   let importedRosterStudents = [];
+  let importedRosterClassroomId = '';
   let selectedPlayers   = [];
   let pairs             = [];   // stores [studentObj, studentObj]
   let _pairingMode      = false;
@@ -1174,6 +1178,7 @@
   function openStudentSelect(){
     selectedClass = null;
     importedRosterStudents = [];
+    importedRosterClassroomId = '';
     _spGrades = _loadSpGrades();
     buildStudentPool();
     _buildGradeButtons();
@@ -1316,6 +1321,7 @@
       .map((student) => ({...student, name: String(student.name).trim()}));
     if(!students.length){ showToast('Kilitli sınıfta bugün mevcut öğrenci yok.', 'warn', 4000); return; }
     importedRosterStudents = students;
+    importedRosterClassroomId = classroom.id || classroomId;
     buildStudentPool();
     showToast(`${classroom.name || 'Sınıf'}: ${students.length} öğrenci rosterden aktarıldı.`, null, 3000);
   }
@@ -1821,6 +1827,7 @@
   let _scQueue   = [];
   let _scIdx     = 0;
   let _scResults = [];
+  let _scFinalTransferred = false;
 
   function startSPQueue(){
     if(selectedPlayers.length === 0) return;
@@ -1833,6 +1840,7 @@
     _scQueue   = selectedPlayers.slice().sort(() => Math.random() - 0.5);
     _scIdx     = 0;
     _scResults = [];
+    _scFinalTransferred = false;
     _showCurrentStudent();
   }
 
@@ -1932,7 +1940,71 @@
     const wLabel = _spWordCount === 'endless' ? '∞ KELİME' : `${_spWordCount} KELİME`;
     const tLabel = _spTimeLimit === 'endless' ? '∞ SÜRE'   : _spFormatTime(_spTimeLimit);
     document.getElementById('go-subtitle').textContent = `${sorted.length} Öğrenci · ${wLabel} · ${tLabel}`;
+    updateSCFinalTransferButton();
     show('overlay-final-scores');
+  }
+
+  function _scTransferClassroomId(){
+    const teacher = window.TeacherControl;
+    return importedRosterClassroomId || (teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '') || '';
+  }
+
+  function _scFinalStarAwards(){
+    const sorted = [..._scResults].sort((a,b) => b.score - a.score);
+    const hasBonus = sorted.length > 10;
+    let rank = 1;
+    const awards = [];
+    sorted.forEach((result, index) => {
+      if(index > 0 && result.score < sorted[index - 1].score) rank = index + 1;
+      const stars = (hasBonus && rank === 1) ? result.stars + 1 : result.stars;
+      if(result.name && stars > 0) awards.push({ name: result.name, stars });
+    });
+    return awards;
+  }
+
+  function updateSCFinalTransferButton(){
+    const button = document.getElementById('go-transfer-stars');
+    const note = document.getElementById('go-transfer-note');
+    if(!button || !note) return;
+    const canTransfer = !!_scTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
+    button.disabled = _scFinalTransferred || !canTransfer;
+    button.textContent = _scFinalTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
+    note.textContent = canTransfer ? '1 yıldız = 1 HUD puanı' : 'Teacher HUD rosterında sınıfı kilitleyin.';
+  }
+
+  function transferSCFinalStarsToRoster(){
+    if(_scFinalTransferred) return;
+    const teacher = window.TeacherControl;
+    if(typeof teacher?.awardFinalPoints !== 'function'){
+      showToast('Teacher HUD hazır değil. Sayfayı yenileyip tekrar deneyin.', 'warn', 4500);
+      return;
+    }
+    const classroomId = _scTransferClassroomId();
+    const classroom = teacher.getClassrooms?.().find(item => item.id === classroomId);
+    if(!classroom){
+      showToast('Önce Teacher HUD rosterında doğru sınıfı kilitleyin.', 'warn', 4500);
+      return;
+    }
+    const awards = _scFinalStarAwards().map(award => ({ name: award.name, points: award.stars }));
+    if(!awards.length){
+      showToast('Aktarılacak yıldız yok.', 'warn', 3500);
+      return;
+    }
+    const normalizeName = name => String(name || '').trim().replace(/\s+/g, ' ').toLocaleUpperCase('tr-TR');
+    const rosterNames = new Set((classroom.roster || []).map(student => normalizeName(student.name)));
+    const missing = awards.filter(award => !rosterNames.has(normalizeName(award.name)));
+    if(missing.length){
+      showToast('Rosterda bulunamayan öğrenciler: ' + missing.map(award => award.name).join(', '), 'warn', 6000);
+      return;
+    }
+    const result = teacher.awardFinalPoints(awards, classroomId);
+    if(result?.awarded?.length){
+      _scFinalTransferred = true;
+      updateSCFinalTransferButton();
+      showToast('✓ Yıldızlar HUD puanlarına aktarıldı (1 yıldız = 1 puan).', 'success', 4500);
+    } else {
+      showToast('Puanlar aktarılamadı. Roster sınıfını kontrol edin.', 'warn', 4500);
+    }
   }
 
   function goToHubFromFinal(){

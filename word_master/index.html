@@ -5780,9 +5780,10 @@ function transferFinalStarsToRoster() {
     return;
   }
 
+  const pointsPerStar = roundNumber > 2 ? 2 : 1;
   const awards = getFinalStudentStarAwards()
     .filter(award => award.name && award.stars > 0)
-    .map(award => ({ name: award.name, points: award.stars * 2 }));
+    .map(award => ({ name: award.name, points: award.stars * pointsPerStar }));
   const result = awardFinalPoints(awards, importedRosterClassroomId);
   if(!result?.awarded?.length) {
     showToast('No matching roster students were found.');
