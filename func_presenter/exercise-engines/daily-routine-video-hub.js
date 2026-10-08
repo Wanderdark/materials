@@ -34,6 +34,37 @@ function renderDailyRoutineVideoPractice(character, onComplete) {
   const practice = document.createElement("section");
   practice.id = "dailyRoutineVideoPractice";
   practice.className = "daily-routine-video-practice hidden";
+  if (character.orderedActivities) {
+    const title = document.createElement("p");
+    title.className = "presence-title daily-routine-video-kicker";
+    const list = document.createElement("div");
+    list.className = "presence-list";
+    character.orderedActivities.forEach((activity, index) => {
+      const row = document.createElement("div");
+      row.className = "presence-row";
+      row.dataset.presenceIndex = String(index);
+      const text = document.createElement("p");
+      text.className = "presence-prompt";
+      text.textContent = activity;
+      row.append(text);
+      list.append(row);
+    });
+    practice.append(title, list);
+    els.presenceView.append(practice);
+    video.addEventListener("ended", () => {
+      els.exampleCard.classList.add("daily-routine-video-practice-open");
+      practice.classList.remove("hidden");
+      activateScrambledDialogue(undefined, () => {
+        setTimeout(() => {
+          if (practice.isConnected) onComplete();
+        }, 550);
+      });
+      if ([...list.children].every((row, index) => Number(row.dataset.presenceIndex) === index)) {
+        list.append(list.firstElementChild);
+      }
+    }, { once: true });
+    return;
+  }
   const title = document.createElement("p");
   title.className = "daily-routine-video-kicker";
   title.textContent = "TRUE OR FALSE?";

@@ -343,7 +343,7 @@
     document.body.classList.add("omm-landing-active");
     setup.classList.add("student-memory-setup");
     setup.insertAdjacentHTML("afterbegin", [
-      '<section class="omm-landing" aria-labelledby="omm-title"><a class="omm-zone-back" href="../student-zone/" aria-label="Back to Student Zone">🔙</a><div class="omm-landing-grid">',
+      '<section class="omm-landing" aria-labelledby="omm-title"><a class="omm-zone-back" href="../student-zone/index.html" aria-label="Back to Student Zone">🔙</a><div class="omm-landing-grid">',
       '<div class="omm-landing-copy"><p class="eyebrow">ADILHOCA · STUDENT ZONE</p><h1 id="omm-title">OLIVIA’S MOVIE MEMORIES</h1>',
        '<div class="omm-actions"><button id="omm-watch-button" class="omm-action omm-action-primary" type="button"><span class="omm-action-icon" aria-hidden="true">▶</span><span><span class="omm-action-title">START A MEMORY JOURNEY</span><span class="omm-action-subtitle">Discover 10 memories in one journey</span></span><span class="omm-action-arrow" aria-hidden="true">→</span></button>',
       '<button id="omm-book-button" class="omm-action" type="button"><span class="omm-action-icon" aria-hidden="true">▤</span><span><span class="omm-action-title">MEMORY BOOK</span><span class="omm-action-subtitle">See the memories you unlocked</span></span><span class="omm-action-arrow" aria-hidden="true">→</span></button></div></div>',
@@ -383,7 +383,7 @@
   document.querySelector("#omm-watch-button")?.addEventListener("click", () => start?.click());
   document.querySelector("#omm-book-button")?.addEventListener("click", openBook);
   document.querySelector("[data-open-book-from-result]")?.addEventListener("click", () => { closeJourneyComplete(); openBook(); });
-  document.querySelector("[data-back-student-zone]")?.addEventListener("click", () => { location.href = "../student-zone/"; });
+  document.querySelector("[data-back-student-zone]")?.addEventListener("click", () => { location.href = "../student-zone/index.html"; });
   document.querySelector("[data-close-book]")?.addEventListener("click", closeBook);
   document.querySelector("[data-close-viewer]")?.addEventListener("click", closeMemoryViewer);
   document.querySelector("[data-book-prev]")?.addEventListener("click", () => turnBook(-1));

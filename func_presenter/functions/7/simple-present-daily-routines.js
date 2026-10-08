@@ -1,4 +1,42 @@
-const dailyRoutineGrade7VideoCharacters = dailyRoutineVideoCharacters;
+const dailyRoutineGrade7VideoCharacters = dailyRoutineVideoCharacters.map((character) =>
+  character.name === "ELLA" ? {
+    ...character,
+    orderedActivities: [
+      "listen to music",
+      "play the guitar",
+      "drawing",
+      "study lessons",
+      "watch tv with family"
+    ]
+  } : character.name === "CHLOE" ? {
+    ...character,
+    orderedActivities: [
+      "have lunch",
+      "do homework",
+      "play the piano",
+      "spend time with family",
+      "go to bed"
+    ]
+  } : character.name === "MIA" ? {
+    ...character,
+    orderedActivities: [
+      "come back home",
+      "do homework",
+      "write in diary",
+      "read book",
+      "sleep"
+    ]
+  } : character.name === "OLIVIA" ? {
+    ...character,
+    orderedActivities: [
+      "leave school",
+      "review lessons",
+      "take photos",
+      "paint",
+      "go to bed"
+    ]
+  } : character
+);
 
 function buildDailyRoutineGrade7VideoHubItems() {
   return dailyRoutineGrade7VideoCharacters.map((character) => ({

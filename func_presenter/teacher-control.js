@@ -2380,6 +2380,21 @@
     window.TeacherCloud?.syncPointsNow?.(state)?.catch?.(() => {});
     updateHud();
 
+    // Track this classroom game only after final points reached the roster.
+    try {
+      const unit = Number(new URLSearchParams(location.search).get("practiceUnit"));
+      const game = location.pathname.split("/").slice(-2).join("/");
+      const trackedGames = ["word_master/index.html", "word_rivals/index.html", "word_crush/gemoria_class.html", "word_contest/index.html", "word_hunt/clash_of_words_v7.HTML", "word_reveal/index.html", "olivias_movie_memories/index.html", "team_challengers/index.html"];
+      if (Number.isInteger(unit) && unit >= 1 && unit <= 10 && trackedGames.includes(game)) {
+        const key = "adilhocaTeacherGameProgressV1";
+        const progress = JSON.parse(localStorage.getItem(key) || "{}") || {};
+        progress.completed ||= {};
+        progress.completed[unit] ||= {};
+        progress.completed[unit][game] = Date.now();
+        localStorage.setItem(key, JSON.stringify(progress));
+      }
+    } catch (_) {}
+
     const awardGroups = new Map();
     awarded.forEach(({ name, points }) => {
       const names = awardGroups.get(points) || [];

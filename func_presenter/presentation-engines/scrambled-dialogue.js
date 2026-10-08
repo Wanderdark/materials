@@ -22,7 +22,7 @@ function shakeScrambledDialogue() {
   els.exampleCard.classList.add("scrambled-dialogue-shake");
 }
 
-function activateScrambledDialogue() {
+function activateScrambledDialogue(example, onComplete) {
   const list = els.presenceView.querySelector(".presence-list");
   if (!list || list.classList.contains("scrambled-dialogue-list")) return;
   const title = els.presenceView.querySelector(".presence-title");
@@ -68,7 +68,10 @@ function activateScrambledDialogue() {
     solvedRows.push(row);
     nextIndex += 1;
     renderRows();
-    if (nextIndex === rows.length) list.classList.add("scrambled-dialogue-complete");
+    if (nextIndex === rows.length) {
+      list.classList.add("scrambled-dialogue-complete");
+      onComplete?.();
+    }
   };
 
   list.classList.add("scrambled-dialogue-list");
