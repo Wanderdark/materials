@@ -21,7 +21,17 @@
     };
   }
 
-  function createQuestionPicker(questions) {
+  function createQuestionPicker(questions, selection = questions[0]) {
+    const historyKey = `teamChallengersSeenQuestionIdsV1:${selection?.grade}:${selection?.unit}`;
+    const seenIds = new Set();
+    const consumedIds = new Set();
+    function readHistory() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(historyKey) || "[]");
+        if (Array.isArray(saved)) saved.filter((id) => typeof id === "string").forEach((id) => seenIds.add(id));
+      } catch {}
+    }
+    readHistory();
     let reviewQueue = [];
     let priorityOneQueue = [];
     let priorityTwoQueue = [];
@@ -35,11 +45,15 @@
     }
 
     function activeQueue() {
+      readHistory();
+      const unseen = (question) => question.reviewFirst === true || !seenIds.has(question.id);
+      priorityOneQueue = priorityOneQueue.filter(unseen); priorityTwoQueue = priorityTwoQueue.filter(unseen); regularQueue = regularQueue.filter(unseen);
       if (!reviewQueue.length && !priorityOneQueue.length && !priorityTwoQueue.length && !regularQueue.length) {
-        reviewQueue = questions.filter((question) => question.reviewFirst === true);
-        priorityOneQueue = shuffleQueue(questions.filter((question) => (question.priority === 1 || question.priority === true) && question.reviewFirst !== true));
-        priorityTwoQueue = shuffleQueue(questions.filter((question) => question.priority === 2 && question.reviewFirst !== true));
-        regularQueue = shuffleQueue(questions.filter((question) => question.priority !== 1 && question.priority !== 2 && question.priority !== true && question.reviewFirst !== true));
+        const remaining = questions.filter((question) => unseen(question) && (question.reviewFirst === true || !consumedIds.has(question.id)));
+        reviewQueue = remaining.filter((question) => question.reviewFirst === true);
+        priorityOneQueue = shuffleQueue(remaining.filter((question) => (question.priority === 1 || question.priority === true) && question.reviewFirst !== true));
+        priorityTwoQueue = shuffleQueue(remaining.filter((question) => question.priority === 2 && question.reviewFirst !== true));
+        regularQueue = shuffleQueue(remaining.filter((question) => question.priority !== 1 && question.priority !== 2 && question.priority !== true && question.reviewFirst !== true));
       }
       return reviewQueue.length ? reviewQueue : priorityOneQueue.length ? priorityOneQueue : priorityTwoQueue.length ? priorityTwoQueue : regularQueue;
     }
@@ -50,6 +64,7 @@
       const index = difficulty === undefined ? 0 : queue.findIndex((question) => question.difficulty === difficulty);
       if (index < 0) return undefined;
       const [question] = queue.splice(index, 1);
+      if (question) consumedIds.add(question.id);
       previousId = question?.id || "";
       return question;
     };
@@ -58,10 +73,26 @@
       return [...new Set([...reviewQueue, ...priorityOneQueue, ...priorityTwoQueue, ...regularQueue].map((question) => question.difficulty))];
     };
     pick.peekReview = () => activeQueue().find((question) => question.reviewFirst === true);
+    pick.recordShown = (question) => {
+      if (question.reviewFirst === true) return true;
+      readHistory(); seenIds.add(question.id);
+      try { localStorage.setItem(historyKey, JSON.stringify([...seenIds])); return true; } catch { return false; }
+    };
+    pick.resetHistory = () => {
+      try { localStorage.removeItem(historyKey); } catch { return false; }
+      seenIds.clear(); consumedIds.clear(); previousId = "";
+      reviewQueue = []; priorityOneQueue = []; priorityTwoQueue = []; regularQueue = [];
+      return true;
+    };
     return pick;
   }
 
   function buildQuestionCatalog(questions) {
+    const ids = new Set();
+    questions.forEach((question) => {
+      if (typeof question.id !== "string" || !question.id.trim() || ids.has(question.id)) throw new Error("Every question must have a unique, non-empty ID.");
+      ids.add(question.id);
+    });
     const grades = new Map();
     questions.forEach((question) => {
       const grade = Number(question.grade);

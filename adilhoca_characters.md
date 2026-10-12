@@ -152,6 +152,10 @@ Favorite Profile:
 - Favorite book type: Animal Stories
 - Favorite TV program type: Nature Documentaries
 
+Viewing Preferences:
+- Primary: Documentary
+- Secondary: Sit-com
+
 Relationships:
 - Best friend: Chloe
 - Relationship reason: Both are gentle, polite, sensitive, and kind-hearted students who prefer calm emotional support and enjoy going shopping together.
@@ -232,6 +236,10 @@ Favorite Profile:
 - Favorite book type: Adventure
 - Favorite TV program type: Travel Shows
 
+Viewing Preferences:
+- Primary: Comedy
+- Secondary: Adventure
+
 Relationships:
 - Best friend: Jack
 - Relationship reason: Fishing, nature, camping, and relaxed personalities.
@@ -308,6 +316,10 @@ Favorite Profile:
 - Favorite music type: Pop
 - Favorite book type: Fairy Tales
 - Favorite TV program type: Talent Shows
+
+Viewing Preferences:
+- Primary: Soap opera
+- Secondary: Musical
 
 Relationships:
 - Best friend: Ava
@@ -387,6 +399,10 @@ Favorite Profile:
 - Favorite book type: Adventure
 - Favorite TV program type: Sports Programs
 
+Viewing Preferences:
+- Primary: Adventure
+- Secondary: Sports
+
 Relationships:
 - Best friend: Lucas
 - Relationship reason: Both are sporty, energetic, competitive, and adventurous.
@@ -462,6 +478,10 @@ Favorite Profile:
 - Favorite music type: Country
 - Favorite book type: Travel Books
 - Favorite TV program type: Travel Programs
+
+Viewing Preferences:
+- Primary: Adventure
+- Secondary: Documentary
 
 Relationships:
 - Best friend: Ethan
@@ -546,6 +566,10 @@ Favorite Profile:
 - Favorite book type: Musicals
 - Favorite TV program type: Music Shows
 
+Viewing Preferences:
+- Primary: Musical
+- Secondary: Drama
+
 Relationships:
 - Best friend: Olivia
 - Relationship reason: Music and art.
@@ -626,6 +650,10 @@ Favorite Profile:
 - Favorite book type: Friendship Stories
 - Favorite TV program type: Cooking Shows
 
+Viewing Preferences:
+- Primary: Science
+- Secondary: Cookery
+
 Relationships:
 - Best friend: Hannah
 - Relationship reason: Emma's supportive leadership balances Hannah's outdoor energy, making them a strong social and active duo.
@@ -703,6 +731,10 @@ Favorite Profile:
 - Favorite music type: Classical
 - Favorite book type: Mystery
 - Favorite TV program type: Chess Tournaments
+
+Viewing Preferences:
+- Primary: Mystery
+- Secondary: Science fiction
 
 Relationships:
 - Best friend: David
@@ -791,6 +823,10 @@ Favorite Profile:
 - Favorite book type: Camping Stories
 - Favorite TV program type: Adventure Programs
 
+Viewing Preferences:
+- Primary: Adventure
+- Secondary: Reality show
+
 Relationships:
 - Best friend: Emma
 - Relationship reason: Outdoor energy with a social personality.
@@ -865,6 +901,10 @@ Favorite Profile:
 - Favorite music type: Rock
 - Favorite book type: Survival
 - Favorite TV program type: Fishing Programs
+
+Viewing Preferences:
+- Primary: Adventure
+- Secondary: Action
 
 Relationships:
 - Best friend: Benjamin
@@ -941,6 +981,10 @@ Favorite Profile:
 - Favorite music type: Hip-Hop
 - Favorite book type: Sports Stories
 - Favorite TV program type: Football Matches
+
+Viewing Preferences:
+- Primary: Sports programmes
+- Secondary: Action
 
 Relationships:
 - Best friend: Daniel
@@ -1027,6 +1071,10 @@ Favorite Profile:
 - Favorite book type: Novels
 - Favorite TV program type: Book Review Programs
 
+Viewing Preferences:
+- Primary: Drama
+- Secondary: Animation
+
 Relationships:
 - Best friend: Zoe
 - Relationship reason: Both are quiet and reflective.
@@ -1107,6 +1155,10 @@ Favorite Profile:
 - Favorite book type: Science Books
 - Favorite TV program type: Science Documentaries
 
+Viewing Preferences:
+- Primary: Science fiction
+- Secondary: Mystery
+
 Relationships:
 - Best friend: Victoria
 - Relationship reason: Canonical chess duo.
@@ -1184,6 +1236,10 @@ Favorite Profile:
 - Favorite music type: Instrumental
 - Favorite book type: Art Books
 - Favorite TV program type: Photography & Travel
+
+Viewing Preferences:
+- Primary: Comedy
+- Secondary: Soap opera
 
 Relationships:
 - Best friend: Ella
@@ -1265,6 +1321,10 @@ Favorite Profile:
 - Favorite book type: Technology Books
 - Favorite TV program type: Science & Technology
 
+Viewing Preferences:
+- Primary: Science fiction
+- Secondary: Mystery
+
 Relationships:
 - Best friend: Noah
 - Relationship reason: Canonical chess duo.
@@ -1341,6 +1401,10 @@ Favorite Profile:
 - Favorite music type: Indie Folk
 - Favorite book type: Mystery
 - Favorite TV program type: Nature Documentaries
+
+Viewing Preferences:
+- Primary: Horror
+- Secondary: Mystery
 
 Relationships:
 - Best friend: Mia

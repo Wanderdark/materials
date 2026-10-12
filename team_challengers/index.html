@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
   <style>
     #text-scale-button{min-width:46px;height:36px;padding:0 8px;border:1px solid rgba(103,232,249,.45);border-radius:10px;background:rgba(34,211,238,.08);color:#a5f3fc;font:800 12px "Barlow Condensed",sans-serif;letter-spacing:.04em;cursor:pointer}#text-scale-button[data-text-scale="150"]{border-color:#fde047;color:#fde047;background:rgba(250,204,21,.13)}#text-scale-button[data-text-scale="200"]{border-color:#86efac;color:#86efac;background:rgba(74,222,128,.14)}.question-zone{--question-scale:1;max-width:100%}.question-zone[data-text-scale="150"]{--question-scale:1.5;width:min(1120px,100%);padding:16px 30px}.question-zone[data-text-scale="200"]{--question-scale:2;width:min(1280px,100%);padding:20px 36px}.question-zone[data-text-scale="150"] h2{font-size:clamp(33px,3.15vw,48px)}.question-zone[data-text-scale="200"] h2{font-size:clamp(44px,4.2vw,64px)}.question-zone[data-text-scale="150"] .dialogue-text,.question-zone[data-text-scale="150"] .friend-opinion-text,.question-zone[data-text-scale="150"] .writing-exercise-speech{font-size:clamp(22px,2vw,28px)}.question-zone[data-text-scale="200"] .dialogue-text,.question-zone[data-text-scale="200"] .friend-opinion-text,.question-zone[data-text-scale="200"] .writing-exercise-speech{font-size:clamp(28px,2.55vw,36px)}.question-zone[data-text-scale="150"] .situation-copy{font-size:25px}.question-zone[data-text-scale="200"] .situation-copy{font-size:32px}.question-zone[data-text-scale="150"] .answer-grid,.question-zone[data-text-scale="200"] .answer-grid{grid-template-columns:1fr}.question-zone[data-text-scale="150"] .answer-button{min-height:102px;padding:19px 23px;font-size:21px}.question-zone[data-text-scale="200"] .answer-button{min-height:132px;padding:25px 30px;font-size:28px}.question-zone[data-text-scale="150"] .answer-option-portrait{width:60px;height:60px;flex-basis:60px}.question-zone[data-text-scale="200"] .answer-option-portrait{width:76px;height:76px;flex-basis:76px}.question-zone[data-text-scale="150"] .answer-option-label{flex-basis:48px!important;height:48px!important;font-size:22px!important}.question-zone[data-text-scale="200"] .answer-option-label{flex-basis:62px!important;height:62px!important;font-size:29px!important}.question-zone[data-text-scale="150"] .dialogue-portrait,.question-zone[data-text-scale="150"] .friend-opinion-portrait,.question-zone[data-text-scale="150"] .writing-exercise-portrait{width:72px;height:72px}.question-zone[data-text-scale="200"] .dialogue-portrait,.question-zone[data-text-scale="200"] .friend-opinion-portrait,.question-zone[data-text-scale="200"] .writing-exercise-portrait{width:92px;height:92px}.question-zone[data-text-scale="150"] .dialogue-line,.question-zone[data-text-scale="150"] .writing-exercise-card,.question-zone[data-text-scale="150"] .friend-opinion-card{padding:18px}.question-zone[data-text-scale="200"] .dialogue-line,.question-zone[data-text-scale="200"] .writing-exercise-card,.question-zone[data-text-scale="200"] .friend-opinion-card{padding:24px}.question-zone[data-text-scale="150"] .friend-opinions-grid,.question-zone[data-text-scale="200"] .friend-opinions-grid,.question-zone[data-text-scale="150"] .friend-messages-grid,.question-zone[data-text-scale="200"] .friend-messages-grid{grid-template-columns:1fr}.question-zone[data-text-scale="150"] .writing-exercise-card,.question-zone[data-text-scale="200"] .writing-exercise-card{grid-template-columns:1fr}.question-zone[data-text-scale="150"] .writing-exercise-speaker,.question-zone[data-text-scale="200"] .writing-exercise-speaker{justify-content:center}.question-zone[data-text-scale="150"] .points-badge strong,.question-zone[data-text-scale="150"] .answer-timer strong{font-size:42px}.question-zone[data-text-scale="200"] .points-badge strong,.question-zone[data-text-scale="200"] .answer-timer strong{font-size:54px}@media(max-width:760px){.question-zone[data-text-scale="150"],.question-zone[data-text-scale="200"]{padding:12px}.question-zone[data-text-scale="150"] h2{font-size:32px}.question-zone[data-text-scale="200"] h2{font-size:40px}.question-zone[data-text-scale="150"] .dialogue-text,.question-zone[data-text-scale="150"] .friend-opinion-text,.question-zone[data-text-scale="150"] .writing-exercise-speech{font-size:21px}.question-zone[data-text-scale="200"] .dialogue-text,.question-zone[data-text-scale="200"] .friend-opinion-text,.question-zone[data-text-scale="200"] .writing-exercise-speech{font-size:26px}}
   </style>
@@ -112,6 +112,7 @@
           </div>
           <div id="group-name-fields" class="group-name-fields"></div>
           <label class="curriculum-field" for="game-mode-select"><span>GAME FORMAT</span><select id="game-mode-select"><option value="classic">CLASSIC</option><option value="difficulty" selected>DIFFICULTY BASED</option></select></label>
+          <div class="wheel-setting"><span id="wheel-setting-label">Wheel of fortune</span><button id="wheel-enabled-switch" class="wheel-enabled-switch" type="button" role="switch" aria-labelledby="wheel-setting-label" aria-checked="true" data-enabled="true"><span class="wheel-off-label">OFF</span><span class="wheel-on-label">ON</span></button></div>
         </article>
         <article class="setup-card accent-cyan">
           <div class="step-number">02</div><p class="eyebrow">Players</p><h2>Choose your challengers</h2>
@@ -171,7 +172,6 @@
             <h2 id="difficulty-title">CHOOSE YOUR CHALLENGE</h2>
             <p id="difficulty-base-points"></p>
             <div class="difficulty-choices"><button id="difficulty-easy" class="secondary-button" type="button" data-difficulty="1">★ EASY · ×1</button><button id="difficulty-medium" class="secondary-button" type="button" data-difficulty="2">★★ MEDIUM · ×1.5</button></div>
-            <p>Choose before seeing the question. Unavailable levels are disabled.</p>
           </div>
           <div id="question-zone" class="question-zone" hidden>
             <div id="question-context" class="question-context"></div>
@@ -213,6 +213,7 @@
   <div id="roster-dialog" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="roster-dialog-title"><div class="modal-backdrop" data-close-roster></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-roster aria-label="Close">×</button><p class="eyebrow">Teacher HUD</p><h2 id="roster-dialog-title">Choose your class</h2><p class="muted">Students marked absent today are excluded and present students are balanced by roster score.</p><div id="classroom-list" class="classroom-list"></div><p id="classroom-message" class="status-note" aria-live="polite"></p></div></div>
   <div id="auto-lb" role="button" tabindex="0" aria-label="Close high scores and continue" aria-hidden="true"><div class="alb-title">🏆 HIGH SCORES</div><div id="auto-lb-list"></div></div>
   <div id="team-scores-overlay" class="team-scores-overlay" hidden><div class="team-scores-backdrop" data-close-team-scores></div><section class="team-scores-card" role="dialog" aria-modal="true" aria-labelledby="team-scores-title"><div class="team-scores-heading"><h2 id="team-scores-title">SCORES</h2><button id="team-scores-close" type="button" data-close-team-scores aria-label="Close scores">×</button></div><div id="team-scores-groups" class="team-scores-groups"></div></section></div>
+  <div id="questions-exhausted-overlay" class="questions-exhausted-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="questions-exhausted-title"><section class="questions-exhausted-card"><h2 id="questions-exhausted-title">NO QUESTIONS LEFT FOR THE SELECTED UNIT</h2><p>Reset this unit's question history to continue. Your scores will be kept.</p><div><button id="reset-questions-button" class="primary-button" type="button">RESET QUESTIONS</button><button id="end-exhausted-game-button" class="finish-button" type="button">END GAME</button></div></section></div>
   <div id="toast" role="status" aria-live="polite"></div>
 
   <script>window.__forceTeacherControl = true;</script>
@@ -224,10 +225,10 @@
   <script src="js/game-state.js"></script>
   <script src="js/audio.js"></script>
   <script src="js/wheel.js"></script>
-  <script src="js/quiz.js"></script>
+  <script src="js/quiz.js?v=2"></script>
   <script src="js/final-scores.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/leaderboard.js"></script>
-  <script src="js/app.js?v=3"></script>
+  <script src="js/app.js?v=4"></script>
 </body>
 </html>

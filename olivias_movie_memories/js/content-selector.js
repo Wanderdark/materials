@@ -47,7 +47,7 @@ function createRandomItemPicker(items) {
   const storageKey = "oliviasMovieMemoriesTeacherHistoryV1";
   const playable = getPlayableItems(items);
   const priorityItems = playable
-    .filter((item) => Number.isInteger(Number(item.priority)) && Number(item.priority) > 0)
+    .filter((item) => item.priority != null && String(item.priority).trim() !== "" && Number.isInteger(Number(item.priority)) && Number(item.priority) >= 0)
     .sort((left, right) => Number(left.priority) - Number(right.priority));
   const regularItems = playable.filter((item) => !priorityItems.includes(item));
   const shuffle = (list) => {

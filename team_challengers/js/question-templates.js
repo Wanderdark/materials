@@ -3,8 +3,16 @@
 
   const TEMPLATE_INDEX = Object.freeze({
     dialogue: Object.freeze({ label: "Dialogue", description: "Portrait-supported conversation with one or more speakers.", requiredFields: ["lines"] }),
+    dialogueSplit: Object.freeze({ label: "Split Dialogue", description: "A conversation on the left with answer choices on the right.", requiredFields: ["lines"] }),
+    portraitSpeech: Object.freeze({ label: "Portrait Speech", description: "A large character portrait beside a speech bubble for a single-speaker passage.", requiredFields: ["lines"] }),
+    interestCards: Object.freeze({ label: "Interest Cards", description: "Compare two characters' activity lists and choose a suitable shared club.", requiredFields: ["interests"] }),
+    blogReviews: Object.freeze({ label: "Blog Reviews", description: "Read a character's band reviews and select a review card as the answer.", requiredFields: ["speaker", "passage", "reviews"] }),
+    blogPost: Object.freeze({ label: "Blog Post", description: "Read one character's blog post and select a matching statement or question.", requiredFields: ["speaker", "passage"] }),
+    venueReviews: Object.freeze({ label: "Venue Reviews", description: "Compare characters' reviews of different venues to identify a shared feature.", requiredFields: ["passage", "reviews"] }),
+    learningWall: Object.freeze({ label: "Learning Wall", description: "Read addressed friendship notes and identify which ones follow the wall's rules.", requiredFields: ["passage", "notes"] }),
     ticketChoice: Object.freeze({ label: "Ticket Choice", description: "Compare two preferences and choose a matching event ticket.", requiredFields: ["opinions", "tickets"] }),
     reading: Object.freeze({ label: "Reading", description: "Read a passage and choose the matching statement.", requiredFields: ["passage"] }),
+    pieChart: Object.freeze({ label: "Pie Chart", description: "Compare labelled percentage slices and interpret the chart.", requiredFields: ["chartTitle", "chartData"] }),
     traitMap: Object.freeze({ label: "Trait Map", description: "A character portrait surrounded by personality traits.", requiredFields: ["speaker", "traits"] }),
     scheduleDialogue: Object.freeze({ label: "Schedule Dialogue", description: "Use a character's schedule to complete a conversation.", requiredFields: ["speaker", "schedule", "lines"] }),
     situation: Object.freeze({ label: "Situation", description: "A real-life communication task presented as a scenario.", requiredFields: ["situation"] }),
@@ -79,6 +87,34 @@
     container.appendChild(dialogue);
   }
 
+  function renderPortraitSpeech(container, question) {
+    const line = question.lines[0];
+    const card = makeElement("article", "portrait-speech-card");
+    const identity = makeElement("div", "portrait-speech-identity");
+    const portrait = makeElement("img", "portrait-speech-image");
+    attachPortrait(portrait, line.speaker);
+    identity.append(portrait, makeElement("strong", "portrait-speech-name", line.speaker));
+    const bubble = makeElement("div", "portrait-speech-bubble");
+    const text = makeElement("p", "portrait-speech-text");
+    appendDialogueText(text, line.text);
+    bubble.appendChild(text); card.append(identity, bubble); container.appendChild(card);
+  }
+
+  function renderInterestCards(container, question) {
+    const grid = makeElement("div", "interest-cards");
+    question.interests.forEach((interest) => {
+      const card = makeElement("article", "interest-card");
+      const portrait = makeElement("img", "interest-card-portrait");
+      attachPortrait(portrait, interest.speaker);
+      const copy = makeElement("div", "interest-card-copy");
+      copy.appendChild(makeElement("h3", "interest-card-title", interest.speaker + "'s interests"));
+      const list = makeElement("ul", "interest-card-list");
+      interest.activities.forEach((activity) => list.appendChild(makeElement("li", "", activity)));
+      copy.appendChild(list); card.append(portrait, copy); grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  }
+
   function renderTicketChoice(container, question) {
     if (question.passage) { container.appendChild(makeElement("p", "ticket-passage", question.passage)); return; }
     const grid = makeElement("div", "ticket-speakers");
@@ -93,7 +129,92 @@
     container.appendChild(grid);
   }
 
+  function renderLearningWall(container, question) {
+    const intro = makeElement("p", "learning-wall-intro");
+    const index = question.passageHighlight ? question.passage.indexOf(question.passageHighlight) : -1;
+    if (index < 0) intro.textContent = question.passage;
+    else intro.append(document.createTextNode(question.passage.slice(0, index)), makeElement("span", "learning-wall-emphasis", question.passageHighlight), document.createTextNode(question.passage.slice(index + question.passageHighlight.length)));
+    const board = makeElement("section", "learning-wall-board");
+    board.appendChild(makeElement("h3", "learning-wall-title", "OUR OPINIONS WALL"));
+    const grid = makeElement("div", "learning-wall-notes");
+    question.notes.forEach((note) => {
+      const card = makeElement("article", "learning-wall-note");
+      card.appendChild(makeElement("p", "learning-wall-message", note.text));
+      const sender = makeElement("div", "learning-wall-sender");
+      const portrait = makeElement("img", "learning-wall-portrait");
+      attachPortrait(portrait, note.sender);
+      sender.append(portrait, makeElement("strong", "", note.sender));
+      card.append(sender, makeElement("p", "learning-wall-recipient", "To " + note.recipient)); grid.appendChild(card);
+    });
+    board.appendChild(grid); container.append(intro, board);
+  }
+
+  function renderVenueReviews(container, question) {
+    container.appendChild(makeElement("p", "venue-review-intro", question.passage));
+    const list = makeElement("div", "venue-review-list");
+    question.reviews.forEach((review) => {
+      const card = makeElement("article", "venue-review-card");
+      const identity = makeElement("div", "venue-review-identity");
+      const portrait = makeElement("img", "venue-review-portrait");
+      attachPortrait(portrait, review.speaker);
+      identity.append(portrait, makeElement("strong", "venue-review-name", review.speaker));
+      const copy = makeElement("div", "venue-review-copy");
+      copy.append(makeElement("h3", "venue-review-title", review.venue), makeElement("p", "venue-review-text", review.text));
+      card.append(identity, copy); list.appendChild(card);
+    });
+    container.appendChild(list);
+  }
+
+  function renderBlogPost(container, question) {
+    const card = makeElement("article", "blog-post-card");
+    card.appendChild(makeElement("div", "blog-review-address", question.speaker.toLowerCase() + ".example/books"));
+    const author = makeElement("div", "blog-review-author");
+    const portrait = makeElement("img", "blog-review-portrait");
+    attachPortrait(portrait, question.speaker);
+    author.append(portrait, makeElement("h3", "blog-review-title", question.speaker + "'s Blog"));
+    const text = makeElement("p", "blog-post-text");
+    appendDialogueText(text, question.passage);
+    card.append(author, text); container.appendChild(card);
+  }
+
+  function renderBlogReviews(container, question) {
+    container.appendChild(makeElement("p", "blog-review-intro", question.passage));
+    const header = makeElement("div", "blog-review-header");
+    header.appendChild(makeElement("div", "blog-review-address", question.speaker.toLowerCase() + ".example/bands"));
+    const author = makeElement("div", "blog-review-author");
+    const portrait = makeElement("img", "blog-review-portrait");
+    attachPortrait(portrait, question.speaker);
+    author.append(portrait, makeElement("h3", "blog-review-title", question.speaker + "'s comments"));
+    header.appendChild(author); container.appendChild(header);
+  }
+
   function renderTicketOptions(container, question) {
+    if (question.template === "blogReviews") {
+      [...container.children].forEach((button, index) => {
+        const review = question.reviews.find((item) => item.band === question.options[index]);
+        if (!review) return;
+        const letter = button.firstElementChild;
+        const heading = makeElement("div", "blog-review-band");
+        heading.append(letter, makeElement("strong", "", review.band));
+        button.classList.add("blog-review-option");
+        button.replaceChildren(heading, makeElement("p", "blog-review-text", review.text));
+      });
+      return;
+    }
+    if (question.pictureChoices) {
+      [...container.children].forEach((button, index) => {
+        const choice = question.pictureChoices.find((item) => item.label === question.options[index]);
+        if (!choice) return;
+        const label = button.firstElementChild;
+        label.removeAttribute("style");
+        button.replaceChildren(label);
+        button.classList.add("picture-answer");
+        button.setAttribute("aria-label", label.textContent + ": " + choice.label);
+        button.style.backgroundImage = 'url("' + choice.image + '")';
+        button.style.backgroundPosition = choice.position;
+      });
+      return;
+    }
     if (question.template !== "ticketChoice") return;
     [...container.children].forEach((button, index) => {
       const ticket = question.tickets.find((item) => item.title === question.options[index]);
@@ -102,6 +223,7 @@
       const copy = button.lastElementChild;
       copy.className = "ticket-copy"; copy.replaceChildren();
       copy.append(makeElement("small", "ticket-genre", ticket.genre), makeElement("strong", "ticket-title", ticket.title));
+      if (Number.isInteger(ticket.minimumAge)) copy.appendChild(makeElement("span", "ticket-details", `Age: ${ticket.minimumAge}+`));
       if (ticket.day || ticket.time) copy.appendChild(makeElement("span", "ticket-details", [ticket.day, ticket.time].filter(Boolean).join(" · ")));
       if (ticket.image) {
         const image = makeElement("img", "ticket-image");
@@ -164,6 +286,7 @@
   }
 
   function renderFriendOpinions(container, question) {
+    if (question.passage) container.appendChild(makeElement("p", "reading-passage", question.passage));
     const grid = makeElement("div", "friend-opinions-grid");
     question.opinions.forEach((opinion) => {
       const card = makeElement("article", "friend-opinion-card");
@@ -212,7 +335,7 @@
     const preview = makeElement("div");
     const isPhone = question.template === "friendMessages";
     if (isPhone) renderFriendMessages(preview, { ...question, messages: ordered });
-    else renderFriendOpinions(preview, { ...question, opinions: ordered });
+    else renderFriendOpinions(preview, { ...question, passage: "", opinions: ordered });
     [...preview.firstElementChild.children].forEach((card, index) => {
       const button = container.children[index];
       const letter = button.firstElementChild;
@@ -263,19 +386,45 @@
     container.appendChild(card);
   }
 
+  function renderPieChart(container, question) {
+    const card = makeElement("figure", "pie-chart-card");
+    card.appendChild(makeElement("figcaption", "pie-chart-title", question.chartTitle));
+    const svgElement = (tag, attributes, text) => {
+      const element = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.entries(attributes).forEach(([name, value]) => element.setAttribute(name, String(value)));
+      if (text !== undefined) element.textContent = text;
+      return element;
+    };
+    const svg = svgElement("svg", { viewBox: "0 0 360 360", class: "pie-chart-svg", role: "img", "aria-label": question.chartTitle + ". " + question.chartData.map((slice) => slice.label + ": " + slice.percentage + "%").join(", ") });
+    const point = (angle, radius) => [180 + radius * Math.cos(angle), 180 + radius * Math.sin(angle)];
+    let angle = -Math.PI / 2;
+    question.chartData.forEach((slice) => {
+      const end = angle + slice.percentage / 100 * Math.PI * 2;
+      const startPoint = point(angle, 164), endPoint = point(end, 164);
+      svg.appendChild(svgElement("path", { d: `M 180 180 L ${startPoint.join(" ")} A 164 164 0 ${slice.percentage > 50 ? 1 : 0} 1 ${endPoint.join(" ")} Z`, fill: slice.color, stroke: "#11153d", "stroke-width": 2 }));
+      const [x, y] = point((angle + end) / 2, 105);
+      svg.appendChild(svgElement("text", { x, y, class: "pie-chart-percentage", "text-anchor": "middle", "aria-hidden": "true" }, slice.percentage + "%"));
+      svg.appendChild(svgElement("text", { x, y: y + 20, class: "pie-chart-genre", "text-anchor": "middle", "aria-hidden": "true" }, slice.label));
+      angle = end;
+    });
+    card.appendChild(svg); container.appendChild(card);
+  }
+
   function renderDataTable(container, question) {
+    if (question.passage) container.appendChild(makeElement("p", "reading-passage", question.passage));
     const wrapper = makeElement("div", "data-table-wrap");
-    const table = makeElement("table", "data-table");
+    const table = makeElement("table", `data-table${question.rows.some((row) => row.values.some((value) => typeof value === "string")) ? " data-table-text" : ""}`);
+    if (question.tableTitle) table.appendChild(makeElement("caption", "data-table-heading", question.tableTitle));
     const head = document.createElement("thead");
     const headRow = document.createElement("tr");
-    headRow.appendChild(makeElement("th", "data-table-corner"));
+    headRow.appendChild(makeElement("th", "data-table-corner", question.rowHeading || ""));
     question.columns.forEach((column) => headRow.appendChild(makeElement("th", "data-table-heading", column)));
     head.appendChild(headRow);
     const body = document.createElement("tbody");
     question.rows.forEach((row) => {
       const tableRow = document.createElement("tr");
       tableRow.appendChild(makeElement("th", "data-table-row-label", row.label));
-      row.values.forEach((value) => tableRow.appendChild(makeElement("td", `data-table-cell${value ? " is-marked" : ""}`, value ? "✓" : "")));
+      row.values.forEach((value) => tableRow.appendChild(makeElement("td", `data-table-cell${typeof value !== "string" && value ? " is-marked" : ""}`, typeof value === "string" ? value : value ? "✓" : "")));
       body.appendChild(tableRow);
     });
     table.append(head, body);
@@ -287,7 +436,13 @@
     container.replaceChildren();
     const template = question.template || "dialogue";
     if (!TEMPLATE_INDEX[template]) return;
-    if (template === "dialogue") renderDialogue(container, question);
+    if (template === "dialogue" || template === "dialogueSplit") renderDialogue(container, question);
+    else if (template === "portraitSpeech") renderPortraitSpeech(container, question);
+    else if (template === "interestCards") renderInterestCards(container, question);
+    else if (template === "blogReviews") renderBlogReviews(container, question);
+    else if (template === "blogPost") renderBlogPost(container, question);
+    else if (template === "venueReviews") renderVenueReviews(container, question);
+    else if (template === "learningWall") renderLearningWall(container, question);
     else if (template === "ticketChoice") renderTicketChoice(container, question);
     else if (template === "reading") container.appendChild(makeElement("p", "reading-passage", question.passage));
     else if (template === "traitMap") renderTraitMap(container, question);
@@ -302,6 +457,7 @@
     else if (template === "chatThread") renderChatThread(container, question);
     else if (template === "invitationCard") renderInvitationCard(container, question);
     else if (template === "dataTable") renderDataTable(container, question);
+    else if (template === "pieChart") renderPieChart(container, question);
   }
 
   function validateQuestionTemplates(questions) {
@@ -309,7 +465,14 @@
       const definition = TEMPLATE_INDEX[question.template];
       if (!definition) return [`${question.id}: unknown template '${question.template}'`];
       const errors = definition.requiredFields.filter((field) => question[field] === undefined).map((field) => `${question.id}: missing '${field}'`);
+      if (question.template === "learningWall" && (!Array.isArray(question.notes) || !question.notes.length || question.notes.some((note) => !note?.sender || !note.recipient || typeof note.text !== "string" || !note.text.trim()))) errors.push(`${question.id}: learning wall notes require senders, recipients and text`);
+      if (question.template === "venueReviews" && (!Array.isArray(question.reviews) || question.reviews.length < 2 || question.reviews.some((review) => !review?.speaker || !review.venue || typeof review.text !== "string" || !review.text.trim()))) errors.push(`${question.id}: venue reviews require speakers, venue names and review text`);
+      if (question.template === "blogReviews" && (!Array.isArray(question.reviews) || question.reviews.length !== question.options.length || new Set(question.options).size !== question.options.length || !question.options.every((band) => question.reviews.some((review) => review?.band === band && typeof review.text === "string" && review.text.trim())))) errors.push(`${question.id}: blog reviews must match all answer options`);
+      if (question.template === "interestCards" && (!Array.isArray(question.interests) || question.interests.length !== 2 || question.interests.some((interest) => !interest?.speaker || !Array.isArray(interest.activities) || !interest.activities.length || interest.activities.some((activity) => typeof activity !== "string" || !activity.trim())))) errors.push(`${question.id}: interest cards require two speakers with non-empty activity lists`);
+      if (question.template === "portraitSpeech" && (!Array.isArray(question.lines) || question.lines.length !== 1 || !question.lines[0]?.speaker || typeof question.lines[0]?.text !== "string")) errors.push(`${question.id}: portrait speech requires exactly one speaker and text`);
+      if (question.template === "pieChart" && (!Array.isArray(question.chartData) || question.chartData.length < 2 || question.chartData.some((slice) => !slice.label || !Number.isFinite(slice.percentage) || slice.percentage <= 0 || !/^#[0-9a-f]{6}$/i.test(slice.color)) || Math.abs(question.chartData.reduce((sum, slice) => sum + slice.percentage, 0) - 100) > 0.001)) errors.push(`${question.id}: pie chart slices must be positive and total 100%`);
       if (question.optionPortraits !== undefined && (!Array.isArray(question.optionPortraits) || question.optionPortraits.length !== question.options.length)) errors.push(`${question.id}: 'optionPortraits' must match the options length`);
+      if (question.pictureChoices !== undefined && (!Array.isArray(question.pictureChoices) || question.pictureChoices.length !== question.options.length || !question.options.every((label) => question.pictureChoices.some((choice) => choice.label === label && choice.image && choice.position)))) errors.push(`${question.id}: 'pictureChoices' must match the options`);
       return errors;
     });
   }

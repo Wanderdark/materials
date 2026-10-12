@@ -353,14 +353,194 @@
       options: ["Emma and Zoe", "Zoe and David", "David and Ethan", "Emma and Ethan"], answer: 3
     }),
     question({
-      id: "g8u1-concert-tickets-01", difficulty: 2, priority: 2, template: "ticketChoice", category: "Common Interests",
+      id: "g8u2-concert-tickets-01", difficulty: 2, unit: 2, priority: 2, template: "ticketChoice", category: "Common Interests",
       opinions: [{ speaker: "Daniel", text: "I am crazy about rap and rock music. I also love pop music. I find classical music unbearable." }, { speaker: "Ella", text: "I usually listen to classical and pop music. I don't like rock music because it is too noisy." }],
       question: "Which concert can Daniel and Ella go to together?", questionHighlights: ["together"],
       options: ["Classical Music Show", "Rhythm Night: Pop Concert", "Rock Storm", "Rap Vibes"],
       tickets: [{ title: "Classical Music Show", genre: "CLASSICAL", theme: "gold" }, { title: "Rhythm Night: Pop Concert", genre: "POP", theme: "purple" }, { title: "Rock Storm", genre: "ROCK", theme: "red" }, { title: "Rap Vibes", genre: "RAP", theme: "green" }], answer: 1
     }),
     question({
-      id: "g8u1-noah-free-time-01", difficulty: 2, priority: 2, template: "dialogue", category: "Likes and Dislikes",
+      id: "g8u2-victoria-noah-cinema-01", difficulty: 2, unit: 2, template: "ticketChoice", category: "Teen Life",
+      opinions: [],
+      passage: "Victoria likes science-fiction and mystery films. Her 14-year-old friend, Noah, is fond of watching mystery films. He also thinks science-fiction films are interesting. Victoria wants to go to the cinema on Saturday morning with Noah. She wants to find a film that is appropriate for both of their preferences.",
+      question: "Which film is appropriate for both Victoria and Noah?", questionHighlights: ["appropriate for both"],
+      options: ["Funny Neighbours", "Beyond the Stars", "The Hidden Clue", "The Final Mission"],
+      tickets: [{ title: "Funny Neighbours", genre: "COMEDY", theme: "purple", minimumAge: 6, time: "3:30 p.m. / 8 p.m." }, { title: "Beyond the Stars", genre: "SCIENCE FICTION", theme: "green", minimumAge: 10, time: "9:30 a.m. / 7 p.m." }, { title: "The Hidden Clue", genre: "MYSTERY", theme: "gold", minimumAge: 15, time: "10:45 a.m. / 9 p.m." }, { title: "The Final Mission", genre: "ACTION", theme: "red", minimumAge: 16, time: "11 a.m. / 8:30 p.m." }], answer: 1
+    }),
+    question({
+      id: "g8u2-ava-picture-interests-01", difficulty: 1, unit: 2, template: "dialogue", category: "Teen Life",
+      lines: [{ speaker: "David", text: "What do you like doing in your spare time?" }, { speaker: "Ava", text: "I like going shopping, watching nature documentaries and going for walks in nature." }],
+      question: "Which picture does NOT show one of Ava's interests?", questionHighlights: ["NOT"],
+      options: ["Shopping", "Watching TV", "Hiking", "Playing football"],
+      pictureChoices: [{ label: "Shopping", image: "assets/images/ava-interests-options.png", position: "0% 0%" }, { label: "Watching TV", image: "assets/images/ava-interests-options.png", position: "100% 0%" }, { label: "Hiking", image: "assets/images/ava-interests-options.png", position: "0% 100%" }, { label: "Playing football", image: "assets/images/ava-interests-options.png", position: "100% 100%" }], answer: 3
+    }),
+    question({
+      id: "g8u2-film-genre-preferences-01", difficulty: 2, unit: 2, template: "friendOpinions", category: "Teen Life",
+      opinions: [{ speaker: "Ella", text: "I am interested in music and dancing. I love films with songs and dance performances." }, { speaker: "Benjamin", text: "I prefer funny movies. I enjoy adventure films, too." }, { speaker: "Zoe", text: "I like scary movies. I think watching ghosts and monsters is exciting." }, { speaker: "Noah", text: "I love movies about space, robots and technology. Especially the ones about the future are my favourite." }],
+      question: "Which of the following is NOT correct according to the information above?", questionHighlights: ["NOT correct"],
+      options: ["Noah loves sci-fi.", "Benjamin is not keen on comedies.", "Ella is fond of musicals.", "Zoe likes horror films."], answer: 1
+    }),
+    question({
+      id: "g8u2-mia-david-music-dialogue-01", difficulty: 2, unit: 2, template: "dialogue", category: "Teen Life",
+      lines: [{ speaker: "Mia", text: "____." }, { speaker: "David", text: "Not really. I prefer relaxing music, especially country music. What about you? I know you are a fan of piano music." }, { speaker: "Mia", text: "Yeah. I go to concerts on Friday and Saturday evenings. On other evenings, I listen to piano music in my bedroom. I'd really like to learn to play the piano. My friend, Chloe, plays well and she's going to teach me one day." }],
+      question: "Which of the following completes the conversation?", questionHighlights: ["completes"],
+      options: ["Are you free this evening? Shall we listen to some music?", "What are you doing at the weekend?", "Are you keen on relaxing music such as country?", "Do you enjoy listening to rock?"], answer: 3
+    }),
+    question({
+      id: "g8u2-spare-time-frequency-table-01", difficulty: 2, unit: 2, template: "dataTable", category: "Teen Life",
+      columns: ["Meet friends", "Play computer games", "Ride a bike", "Go skateboarding"],
+      rows: [{ label: "Noah", values: ["Often", "Usually", "Never", "Never"] }, { label: "Daniel", values: ["Usually", "Seldom", "Sometimes", "Often"] }, { label: "Hannah", values: ["Often", "Seldom", "Always", "Sometimes"] }, { label: "Victoria", values: ["Sometimes", "Often", "Seldom", "Never"] }],
+      question: "According to the chart, which statement is NOT correct?", questionHighlights: ["NOT correct"],
+      options: ["Noah is fond of playing computer games.", "Victoria would rather play computer games than ride a bike.", "Hannah is not keen on cycling.", "Daniel prefers meeting his friends to playing computer games."], answer: 2
+    }),
+    question({
+      id: "g8u2-activity-opinions-table-01", difficulty: 2, unit: 2, template: "dataTable", category: "Teen Life",
+      columns: ["Play online games", "Meet friends", "Watch movies", "Cooking"],
+      rows: [{ label: "Emma", values: ["Ridiculous", "Awesome", "Enjoyable", "Terrific"] }, { label: "Olivia", values: ["Enjoyable", "Terrific", "Awesome", "Terrible"] }, { label: "Victoria", values: ["Awesome", "Enjoyable", "Interesting", "Unbearable"] }, { label: "Chloe", values: ["Boring", "Awesome", "Enjoyable", "Interesting"] }],
+      question: "Which statement is CORRECT according to the table?", questionHighlights: ["CORRECT"],
+      options: ["Emma prefers playing online games to meeting her friends.", "Olivia can't stand watching movies.", "Victoria would rather play online games than cook.", "Chloe isn't keen on meeting her friends."], answer: 2
+    }),
+    question({
+      id: "g8u2-music-preferences-pie-2026-01", difficulty: 2, unit: 2, template: "pieChart", category: "Teen Life",
+      chartTitle: "TEENAGERS' MUSIC PREFERENCES - 2026",
+      chartData: [{ label: "Pop", percentage: 35, color: "#7c3aed" }, { label: "Rap", percentage: 30, color: "#0e7490" }, { label: "Jazz", percentage: 25, color: "#b45309" }, { label: "Classical", percentage: 10, color: "#be185d" }],
+      question: "Which statement is CORRECT according to the chart?", questionHighlights: ["CORRECT"],
+      options: ["Most teenagers would rather listen to jazz than rap music.", "35% of teenagers are fond of pop music.", "All teenagers find rap music unbearable.", "Fewer than 15% of teenagers are keen on jazz."], answer: 1
+    }),
+    question({
+      id: "g8u2-spare-time-preferences-pie-2026-01", difficulty: 2, unit: 2, template: "pieChart", category: "Teen Life",
+      chartTitle: "TEENAGERS' SPARE-TIME PREFERENCES - 2026",
+      chartData: [{ label: "Online games", percentage: 45, color: "#7c3aed" }, { label: "Sports", percentage: 25, color: "#0e7490" }, { label: "Outdoor activities", percentage: 20, color: "#b45309" }, { label: "Reading", percentage: 10, color: "#be185d" }],
+      question: "Which statement is CORRECT according to the chart?", questionHighlights: ["CORRECT"],
+      options: ["Teenagers prefer reading books to playing online games.", "Nearly half of the teenagers are fond of playing online games.", "All teenagers find outdoor activities unbearable.", "Less than 10% of teenagers are keen on reading books."], answer: 1
+    }),
+    question({
+      id: "g8u2-zoe-stargazing-dialogue-01", difficulty: 1, unit: 2, template: "dialogue", category: "Teen Life",
+      lines: [{ speaker: "Chloe", text: "What do you prefer doing in the evenings?" }, { speaker: "Zoe", text: "____. Because I prefer being alone." }, { speaker: "Chloe", text: "What do you do alone?" }, { speaker: "Zoe", text: "I would rather look at the stars from the balcony." }],
+      question: "Which response completes the conversation?", questionHighlights: ["completes"],
+      options: ["I prefer hanging out with my friends.", "I would rather go to parties with my classmates.", "I visit my relatives at weekends.", "I prefer staying at home."], answer: 3
+    }),
+    question({
+      id: "g8u2-england-reading-survey-table-01", difficulty: 2, unit: 2, template: "dataTable", category: "Teen Life",
+      passage: "The table shows the results of a survey about the reading preferences of 100 teenagers in England.",
+      rowHeading: "Book type",
+      columns: ["Number of teenagers"],
+      rows: [{ label: "Detective", values: ["14"] }, { label: "Fantasy", values: ["24"] }, { label: "Adventure", values: ["10"] }, { label: "Science fiction", values: ["52"] }],
+      question: "According to the results, which of the following is NOT correct?", questionHighlights: ["NOT correct"],
+      options: ["Fantasy books are popular among the teens.", "Most of the teens prefer science fiction books.", "Teens don't read adventure books at all.", "Teens prefer detective books to adventure books."], answer: 2
+    }),
+    question({
+      id: "g8u2-emma-victoria-science-club-01", difficulty: 1, unit: 2, template: "interestCards", category: "Teen Life",
+      interests: [{ speaker: "Emma", activities: ["Cooking", "Baking", "Doing science experiments"] }, { speaker: "Victoria", activities: ["Coding", "Robotics", "Solving puzzles", "Playing chess"] }],
+      question: "Which club is suitable for both Emma and Victoria?", questionHighlights: ["suitable for both"],
+      options: ["Art Club", "Science Club", "Cooking Club", "Music Club"], answer: 1
+    }),
+    question({
+      id: "g8u2-teacher-music-opinions-01", difficulty: 2, unit: 2, priority: 2, template: "dialogueSplit", category: "Teen Life",
+      lines: [{ speaker: "Teacher", text: "____?" }, { speaker: "Daniel", text: "In my opinion, it is the best music." }, { speaker: "Mia", text: "I can't say that I enjoy it." }, { speaker: "Ella", text: "It makes me feel great." }, { speaker: "Zoe", text: "I can't stand it. It is unbearable." }],
+      question: "Which of the following CAN NOT be the teacher's question?", questionHighlights: ["CAN NOT"],
+      options: ["What is your favourite type of music?", "What is your opinion about rock music?", "What do you think about jazz music?", "What can you say about pop music?"], answer: 0
+    }),
+    question({
+      id: "g8u2-lucas-band-blog-01", difficulty: 1, unit: 2, priority: 1, template: "blogReviews", category: "Teen Life",
+      speaker: "Lucas",
+      passage: "Daniel wants to buy Lucas a concert ticket for his birthday. He reads Lucas's comments about four bands on his blog.",
+      reviews: [{ band: "Rock Pulse", text: "My best friend likes this band, but I don't think I'll listen to them again." }, { band: "Hip-Hop Crew", text: "I've listened to them several times. I think their music is terrific." }, { band: "Jazz Notes", text: "Their music isn't very good. They need to improve." }, { band: "Pop Wave", text: "The concert was boring. I find their music unbearable." }],
+      question: "Which band's concert ticket should Daniel buy for Lucas?", questionHighlights: ["should"],
+      options: ["Rock Pulse", "Hip-Hop Crew", "Jazz Notes", "Pop Wave"], answer: 1
+    }),
+    question({
+      id: "g8u2-mia-books-blog-post-01", difficulty: 1, unit: 2, priority: 1, template: "blogPost", category: "Teen Life",
+      speaker: "Mia",
+      passage: "Hi, everyone! Today, I'm going to answer your questions. Let's begin with the first one. I enjoy reading stories about fantasy characters and their adventures...",
+      question: "Which question has Mia answered in her blog?", questionHighlights: ["answered"],
+      options: ["Where do you usually buy your books?", "How many books do you finish each month?", "When are you going to write about your own life?", "What type of books do you enjoy reading?"], answer: 3
+    }),
+    question({
+      id: "g8u2-cafe-common-service-01", difficulty: 2, unit: 2, template: "venueReviews", category: "Teen Life",
+      passage: "Emma, Hannah and David visited different cafés with their families last weekend. Here are their comments.",
+      reviews: [{ speaker: "Emma", venue: "Rose Café", text: "The prices were okay. The desserts looked great, but they weren't tasty. Our drinks arrived very late. However, the waiters were polite." }, { speaker: "Hannah", venue: "Forest Garden Café", text: "The drinks and desserts were delicious and beautifully served, but they were expensive. We waited too long for our order. When I asked about it, the waiter answered rudely." }, { speaker: "David", venue: "Blue Harbour Café", text: "The waiters were friendly, and the drinks and desserts were excellent. However, they took a long time to bring our order. My family also paid more than we expected." }],
+      question: "What do all three cafés have in common?", questionHighlights: ["in common"],
+      options: ["High prices", "Friendly waiters", "Slow service", "Delicious desserts"], answer: 2
+    }),
+    question({
+      id: "g8u1-learning-wall-notes-01", difficulty: 2, unit: 1, template: "learningWall", category: "Friendship",
+      passage: "Elena, a drama teacher, and her students create an opinions wall. Students can post only positive comments about their friends. Here are five notes:",
+      passageHighlight: "only positive comments",
+      notes: [{ sender: "Emma", recipient: "Hannah", text: "You are so energetic when trying new activities." }, { sender: "Ella", recipient: "Olivia", text: "What a funny girl you are! You always make us smile." }, { sender: "Lucas", recipient: "Victoria", text: "You are not generous. You don't like sharing your things with others." }, { sender: "Ethan", recipient: "David", text: "You are an honest person. Your friends can always count on you." }, { sender: "Noah", recipient: "Jack", text: "You sometimes think only about yourself and refuse to change your mind." }],
+      question: "Whose notes should NOT be on the opinions wall?", questionHighlights: ["NOT"],
+      options: ["Emma's and Noah's", "Ella's and Lucas's", "Ethan's and Ella's", "Lucas's and Noah's"], answer: 3
+    }),
+    question({
+      id: "g8u2-noah-football-chess-dialogue-01", difficulty: 1, unit: 2, template: "dialogue", category: "Teen Life",
+      lines: [{ speaker: "Lucas", text: "How often do you play football?" }, { speaker: "Noah", text: "____. I don't miss any chess games." }],
+      question: "Which one completes the conversation?", questionHighlights: ["completes"],
+      options: ["I usually play football.", "I am keen on football, so I always play it.", "I don't like football, but I am fond of playing chess.", "I am interested in football."], answer: 2
+    }),
+    question({
+      id: "g8u2-zoe-loud-music-same-meaning-01", difficulty: 1, unit: 2, template: "portraitSpeech", category: "Teen Life",
+      lines: [{ speaker: "Zoe", text: "I never listen to loud music because it is unbearable." }],
+      question: "Which sentence has the same meaning as Zoe's statement?", questionHighlights: ["same meaning"],
+      options: ["I can't stand listening to loud music because it is terrible.", "I am fond of listening to loud music because it is impressive.", "I like listening to loud music because it is terrific.", "I usually listen to loud music because I'm keen on it."], answer: 0
+    }),
+    question({
+      id: "g8u2-victoria-after-school-activities-01", difficulty: 2, unit: 2, template: "dataTable", category: "Teen Life",
+      tableTitle: "AFTER-SCHOOL ACTIVITIES",
+      passage: "Victoria's school offers different after-school activities. She loves coding and is interested in robotics. She doesn't enjoy reading books or cooking. She wants to choose two activities related to technology.",
+      rowHeading: "Day", columns: ["Activity"],
+      rows: [{ label: "Monday", values: ["Cycling"] }, { label: "Tuesday", values: ["Cooking"] }, { label: "Wednesday", values: ["Robotics"] }, { label: "Thursday", values: ["Reading"] }, { label: "Friday", values: ["Swimming"] }, { label: "Saturday", values: ["Coding"] }, { label: "Sunday", values: ["Football"] }],
+      question: "On which days can Victoria attend activities that match her preferences?", questionHighlights: ["match her preferences"],
+      options: ["Tuesday and Sunday", "Wednesday and Saturday", "Friday and Monday", "Thursday and Wednesday"], answer: 1
+    }),
+    question({
+      id: "g8u2-same-opinions-drama-01", difficulty: 2, unit: 2, template: "friendOpinions", category: "Teen Life",
+      passage: "Mia and her friends are talking about drama films.",
+      opinions: [{ speaker: "Mia", text: "I find drama films interesting. What do you think about them?" }, { speaker: "Lucas", text: "I think they are ridiculous and a waste of time." }, { speaker: "Jack", text: "I hardly ever watch them. I prefer action films to dramas." }, { speaker: "Ella", text: "I'm really into these movies. I think they are awesome." }],
+      question: "According to the conversation, ____ have the same opinions about drama films.", questionHighlights: ["same opinions"],
+      options: ["Mia and Lucas", "Jack and Ella", "Lucas and Ella", "Mia and Ella"], answer: 3
+    }),
+    question({
+      id: "g8u2-pop-singer-comments-01", difficulty: 1, unit: 2, template: "friendOpinions", category: "Teen Life",
+      passage: "Mia and her friends are sharing their opinions about a pop singer.",
+      opinions: [{ speaker: "Mia", text: "I never listen to her songs because they aren't interesting." }, { speaker: "Ethan", text: "I don't enjoy her songs because I prefer classical music." }, { speaker: "Ella", text: "She is a terrific singer. I almost never miss any of her concerts." }, { speaker: "Zoe", text: "I find her style terrible. She often wears ridiculous outfits." }],
+      question: "Who makes a positive comment about the singer?", questionHighlights: ["positive comment"],
+      options: ["Mia", "Ethan", "Ella", "Zoe"], answer: 2
+    }),
+    question({
+      id: "g8u2-music-opinions-table-01", difficulty: 2, unit: 2, template: "dataTable", category: "Teen Life",
+      passage: "The table shows Lucas and his friends' opinions about three types of music.",
+      rowHeading: "Character", columns: ["Classical", "Rap", "Pop"],
+      rows: [{ label: "Lucas", values: ["Ridiculous", "Terrific", "Enjoyable"] }, { label: "Emma", values: ["Terrible", "Impressive", "Awesome"] }, { label: "Ethan", values: ["Relaxing", "Unbearable", "Fun"] }, { label: "Ella", values: ["Unbearable", "Enjoyable", "Terrific"] }],
+      question: "Which statement is NOT correct according to the table?", questionHighlights: ["NOT correct"],
+      options: ["Lucas would rather listen to rap music than classical music.", "Ethan prefers listening to classical music to rap music.", "Emma is keen on classical music and finds it terrific.", "Ella can't stand classical music, but she is fond of pop music."], answer: 2
+    }),
+    question({
+      id: "g8u2-teen-lifestyle-comments-01", difficulty: 2, unit: 2, template: "friendOpinions", category: "Teen Life",
+      passage: "Mia, Olivia, Emma and Ethan do research on teenagers' lifestyles for their school newspaper. Here are their comments:",
+      opinions: [{ speaker: "Mia", text: "I think teenagers don't respect older people." }, { speaker: "Olivia", text: "Teenagers are keen on art and sports." }, { speaker: "Emma", text: "In my opinion, teens get on well with their parents." }, { speaker: "Ethan", text: "To me, teens dislike following rules in their daily lives." }],
+      question: "Who makes positive comments about teenagers?", questionHighlights: ["positive comments"],
+      options: ["Mia and Olivia", "Olivia and Emma", "Emma and Ethan", "Ethan and Mia"], answer: 1
+    }),
+    question({
+      id: "g8u2-benjamin-food-preferences-01", difficulty: 2, unit: 2, template: "portraitSpeech", category: "Teen Life",
+      lines: [{ speaker: "Benjamin", text: "Hi! I'm Benjamin. I'm from Denmark. My favourite food is a hamburger because it tastes delicious. When I can't get one, I choose pizza instead. I also enjoy meat, but I prefer it grilled. I think it tastes better that way. I don't like steamed vegetables or seafood. They may be healthy, but I can't stand eating them." }],
+      question: "Which statement is CORRECT according to the text?", questionHighlights: ["CORRECT"],
+      options: ["Benjamin would rather eat a hamburger than pizza.", "Benjamin is fond of roasted meat.", "Benjamin prefers seafood to pizza.", "Benjamin isn't keen on hamburgers or steamed vegetables."], answer: 0
+    }),
+    question({
+      id: "g8u2-olivia-chloe-film-invitation-01", difficulty: 1, unit: 2, template: "dialogue", category: "Likes and Dislikes",
+      lines: [{ speaker: "Olivia", text: "How about seeing the new horror film at the cinema?" }, { speaker: "Chloe", text: "____. I can't stand horror films." }],
+      question: "Which response does NOT complete the conversation?", questionHighlights: ["NOT complete"],
+      options: ["I'd like to, but I already have plans.", "I don't think that's a good idea.", "That sounds fantastic!", "Sorry, I can't."], answer: 2
+    }),
+    question({
+      id: "g8u2-noah-ethan-common-activities-01", difficulty: 2, unit: 2, template: "dialogue", category: "Common Interests",
+      lines: [{ speaker: "Ethan", text: "What do you like doing in your spare time?" }, { speaker: "Noah", text: "Well, I'm keen on reading books and solving math puzzles. I'm also into listening to music and playing chess. However, I don't like doing sports activities. How about you?" }, { speaker: "Ethan", text: "I'm crazy about playing the drums and listening to rock music. I also enjoy playing chess, reading books and playing football." }],
+      question: "Noah and Ethan cannot ____ together.", questionHighlights: ["cannot"],
+      options: ["listen to music", "play chess", "read books", "play football"], answer: 3
+    }),
+    question({
+      id: "g8u2-noah-free-time-01", difficulty: 2, unit: 2, priority: 2, template: "dialogue", category: "Likes and Dislikes",
       lines: [{ speaker: "Chloe", text: "What do you like doing in your free time?" }, { speaker: "Noah", text: "I'm fond of reading books and solving math puzzles. I am also keen on playing chess, but I can't stand doing sports activities." }],
       question: "Which of the following is NOT correct according to the dialogue?", questionHighlights: ["NOT correct"],
       options: ["Playing chess is unbearable for Noah.", "Noah hates doing sports activities.", "Solving math puzzles is one of Noah's free-time activities.", "Noah likes reading books."], answer: 0
@@ -370,6 +550,12 @@
       profiles: [{ speaker: "David", text: "Has a good relationship with his friends. Always backs his friends up. Never tells lies." }, { speaker: "Jack", text: "Doesn't like wasting resources. Is always there when his friends are in trouble. Never changes his mind." }],
       question: "Which of the following describes both of them?", questionHighlights: ["both"],
       options: ["Stubborn", "Generous", "Supportive", "Mean"], answer: 2
+    }),
+    question({
+      id: "g8u2-weekend-activities-01", difficulty: 2, unit: 2, priority: 1, template: "friendOpinions", category: "Teen Life",
+      opinions: [{ speaker: "Chloe", text: "I'm going shopping with my family on Sunday. I really enjoy shopping." }, { speaker: "Emma", text: "I can't join the school trip next weekend because my cousins will visit us." }, { speaker: "Jack", text: "On Saturday, there is a football match. My friends asked me to join them. I can't say I enjoy football, but I'm going with them." }, { speaker: "Victoria", text: "My friends will attend a cooking workshop this weekend. But I will stay at home because I don't want to join an activity that I don't like." }],
+      question: "Who will join an activity that he or she does not like?", questionHighlights: ["does not like"],
+      options: ["Chloe", "Emma", "Jack", "Victoria"], optionPortraits: ["Chloe", "Emma", "Jack", "Victoria"], answer: 2
     }),
     question({
       id: "g8u2-concert-reading-01", difficulty: 1, unit: 2, priority: 2, template: "ticketChoice", category: "Teen Life",

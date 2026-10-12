@@ -241,6 +241,7 @@ relative_height_system:
 students:
   - id: AVA
     name: "Ava"
+    viewing_preferences: {primary: "Documentary", secondary: "Sit-com"}
     surname: "Bloom"
     full_name: "Ava Bloom"
     gender: "girl"
@@ -354,6 +355,7 @@ students:
 
   - id: BENJAMIN
     name: "Benjamin"
+    viewing_preferences: {primary: "Comedy", secondary: "Adventure"}
     surname: "Waters"
     full_name: "Benjamin Waters"
     gender: "boy"
@@ -468,6 +470,7 @@ students:
 
   - id: CHLOE
     name: "Chloe"
+    viewing_preferences: {primary: "Soap opera", secondary: "Musical"}
     surname: "Roses"
     full_name: "Chloe Roses"
     gender: "girl"
@@ -581,6 +584,7 @@ students:
 
   - id: DANIEL
     name: "Daniel"
+    viewing_preferences: {primary: "Adventure", secondary: "Sports"}
     surname: "Sun"
     full_name: "Daniel Sun"
     gender: "boy"
@@ -696,6 +700,7 @@ students:
 
   - id: DAVID
     name: "David"
+    viewing_preferences: {primary: "Adventure", secondary: "Documentary"}
     surname: "Mesa"
     full_name: "David Mesa"
     gender: "boy"
@@ -810,6 +815,7 @@ students:
 
   - id: ELLA
     name: "Ella"
+    viewing_preferences: {primary: "Musical", secondary: "Drama"}
     surname: "Vale"
     full_name: "Ella Vale"
     gender: "girl"
@@ -925,6 +931,7 @@ students:
 
   - id: EMMA
     name: "Emma"
+    viewing_preferences: {primary: "Science", secondary: "Cookery"}
     surname: "Sakurai"
     full_name: "Emma Sakurai"
     gender: "girl"
@@ -1039,6 +1046,7 @@ students:
 
   - id: ETHAN
     name: "Ethan"
+    viewing_preferences: {primary: "Mystery", secondary: "Science fiction"}
     surname: "Hills"
     full_name: "Ethan Hills"
     gender: "boy"
@@ -1152,6 +1160,7 @@ students:
 
   - id: HANNAH
     name: "Hannah"
+    viewing_preferences: {primary: "Adventure", secondary: "Reality show"}
     surname: "Snow"
     full_name: "Hannah Snow"
     gender: "girl"
@@ -1269,6 +1278,7 @@ students:
 
   - id: JACK
     name: "Jack"
+    viewing_preferences: {primary: "Adventure", secondary: "Action"}
     surname: "Storm"
     full_name: "Jack Storm"
     gender: "boy"
@@ -1382,6 +1392,7 @@ students:
 
   - id: LUCAS
     name: "Lucas"
+    viewing_preferences: {primary: "Sports programmes", secondary: "Action"}
     surname: "Rivers"
     full_name: "Lucas Rivers"
     gender: "boy"
@@ -1495,6 +1506,7 @@ students:
 
   - id: MIA
     name: "Mia"
+    viewing_preferences: {primary: "Drama", secondary: "Animation"}
     surname: "?"
     full_name: "Mia ?"
     gender: "girl"
@@ -1615,6 +1627,7 @@ students:
 
   - id: NOAH
     name: "Noah"
+    viewing_preferences: {primary: "Science fiction", secondary: "Mystery"}
     surname: "Pines"
     full_name: "Noah Pines"
     gender: "boy"
@@ -1729,6 +1742,7 @@ students:
 
   - id: OLIVIA
     name: "Olivia"
+    viewing_preferences: {primary: "Comedy", secondary: "Soap opera"}
     surname: "Frost"
     full_name: "Olivia Frost"
     gender: "girl"
@@ -1845,6 +1859,7 @@ students:
 
   - id: VICTORIA
     name: "Victoria"
+    viewing_preferences: {primary: "Science fiction", secondary: "Mystery"}
     surname: "Mist"
     full_name: "Victoria Mist"
     gender: "girl"
@@ -1961,6 +1976,7 @@ students:
 
   - id: ZOE
     name: "Zoe"
+    viewing_preferences: {primary: "Horror", secondary: "Mystery"}
     surname: "Laurel"
     full_name: "Zoe Laurel"
     gender: "girl"

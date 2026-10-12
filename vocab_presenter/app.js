@@ -343,7 +343,7 @@
       const button = document.createElement("button");
       const isAvailable = available.has(grade);
       button.className = `grade-visual-button${isAvailable ? "" : " placeholder"}${state.grade === grade ? " selected" : ""}`;
-      button.innerHTML = `<img src="../func_presenter/images/main/grade${grade}.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
+      button.innerHTML = `<img src="../func_presenter/images/main/grade${grade}b.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
       if (isAvailable) button.addEventListener("click", () => selectGrade(grade));
       els.grades.append(button);
     });

@@ -2235,8 +2235,8 @@ function resumeTimer() {
 
 function openJokerOverlay() {
   jokerAudio.currentTime = 0;
-  jokerAudio.volume = 0.7;
-  jokerAudio.play().catch(() => {});
+  jokerAudio.volume = isMuted ? 0 : VOLS.joker;
+  if(!isMuted) jokerAudio.play().catch(() => {});
   if(diffAudio) diffAudio.pause(); // joker açıkken arka plan müziğini durdur
   pauseTimer();
   const state = jokerState[currentGroup];
@@ -3092,11 +3092,12 @@ function stopAllMusic() {
 
 /* ── MUTE / FULLSCREEN ── */
 let isMuted = false;
-const VOLS = { mainMenu: 0.6, timer: 1.0, answer: 1.0, joker: 0.7, diff: 0.6 };
+const VOLS = { mainMenu: 0.3, timer: 1.0, answer: 1.0, joker: 0.35, diff: 0.3 };
 
 function applyMuteToAll(mute) {
   if(mainMenuAudio) mainMenuAudio.volume = mute ? 0 : VOLS.mainMenu;
   if(diffAudio)     diffAudio.volume     = mute ? 0 : VOLS.diff;
+  jokerAudio.volume = mute ? 0 : VOLS.joker;
 }
 
 /* ── OVERRIDE (Manuel Puan) ── */

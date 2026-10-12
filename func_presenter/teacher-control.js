@@ -87,6 +87,9 @@
     .tc-hud .tc-chosen-banner { position: absolute; bottom: calc(100% + 4px); left: 6px; display: flex; align-items: center; width: var(--tc-controls-width, 220px); height: auto; min-height: 24px; padding: 4px 10px; border: 1px solid rgba(101, 230, 184, .72); border-radius: 10px 10px 4px 4px; background: rgba(11, 69, 60, .96); color: #dfffee; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .07em; opacity: 0; pointer-events: none; transform: translateY(6px); transition: opacity .18s ease, transform .18s ease, border-color .14s ease, background-color .14s ease; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
     .tc-hud .tc-chosen-banner.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
     .tc-hud .tc-chosen-banner.is-resetting { border-color: #ffab9b; background: rgba(102, 41, 38, .96); color: #fff0e9; }
+    .tc-hud .tc-whistle { position: relative; overflow: visible; }
+    .tc-whistle-count { position: absolute; top: -10px; right: -5px; display: grid; place-items: center; min-width: 19px; height: 19px; padding: 0 3px; box-sizing: border-box; border: 1px solid currentColor; border-radius: 10px; background: #081028; color: #a9bce9; font: 900 13px/1 Arial, sans-serif; pointer-events: none; }
+    .tc-whistle-count[hidden] { display: none; }
     .tc-whistle-progress-overlay { position: fixed; inset: 0; z-index: 12000; display: grid; place-items: center; background: rgba(3, 8, 22, .18); opacity: 0; pointer-events: none; transition: opacity .12s ease; }
     .tc-whistle-progress-overlay.is-visible { opacity: 1; }
     .tc-whistle-progress-panel { width: min(620px, calc(100vw - 48px)); padding: 18px 20px 20px; border: 2px solid rgba(255, 255, 255, .82); border-radius: 18px; background: rgba(8, 16, 40, .94); box-shadow: 0 14px 42px rgba(0, 0, 0, .45); }
@@ -127,6 +130,7 @@
     .tc-guided-coach { position: fixed; z-index: 11100; display: grid; box-sizing: border-box; gap: 5px; width: min(300px, calc(100vw - 24px)); padding: 10px 14px; border: 1px solid rgba(255, 216, 77, .94); border-radius: 13px; background: rgba(12, 25, 58, .98); box-shadow: 0 0 0 1px rgba(255, 216, 77, .18), 0 12px 32px rgba(0, 0, 0, .5); color: #f4f7ff; font-family: var(--font-display, sans-serif); text-align: center; pointer-events: none; }
     .tc-guided-coach small { color: var(--u2-gold, #ffd84d); font-size: 10px; font-weight: 900; letter-spacing: .15em; }
     .tc-guided-coach strong { font-size: 14px; font-weight: 900; line-height: 1.35; }
+    .tc-tutorial-exit { position: fixed; top: 14px; right: 14px; z-index: 11110; width: 40px; height: 40px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #d9e4ff; font-size: 24px; cursor: pointer; }
     .tc-guided-coach button { justify-self: center; min-height: 30px; margin-top: 3px; padding: 0 14px; border: 0; border-radius: 9px; background: var(--u2-grad-gold, #ffd84d); color: #14183a; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .08em; cursor: pointer; pointer-events: auto; }
     .tc-tutorial-focus { outline: 3px solid var(--u2-gold, #ffd84d) !important; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255, 216, 77, .2), 0 0 28px 10px rgba(255, 216, 77, .7) !important; animation: tcTutorialPulse .9s ease-in-out infinite alternate; }
     @keyframes tcTutorialPulse { from { filter: brightness(1); } to { filter: brightness(1.2); } }
@@ -766,6 +770,7 @@
   }
 
   function save(options = {}) {
+    if (guidedTutorial?.restoreState) return;
     persistLocal();
     if (options.changeType) {
       localStorage.setItem("fpTeacherSupabaseExplicitChangeV1", JSON.stringify({ type: options.changeType, at: Date.now() }));
@@ -936,11 +941,14 @@
     const restoreState = guidedTutorial?.restoreState;
     clearTutorialFocus();
     document.querySelector(".tc-guided-coach")?.remove();
+    document.querySelector(".tc-tutorial-exit")?.remove();
+    closeOverlays();
     guidedTutorial = null;
     if (restoreState) {
       state.classrooms = restoreState.classrooms;
       state.activeClassroomId = restoreState.activeClassroomId;
-      restoreLockedClassroom();
+      if (restoreState.lockedClassroomId) lockClassroom(restoreState.lockedClassroomId);
+      else clearClassroomLock();
       activateClassroom(state.activeClassroomId, false);
       state.selectedStudentId = restoreState.selectedStudentId;
       randomHistory.drawnIds = [...restoreState.randomDrawnIds];
@@ -958,7 +966,7 @@
       const readyToSave = inputs.length === 2 && inputs.every((input) => input.value.trim());
       return readyToSave ? document.querySelector(".tc-save-roster") : inputs.find((input) => !input.value.trim()) || document.querySelector(".tc-add-student");
     }
-    if (step === 4) return document.querySelector(".tc-overlay .tc-close");
+    if (step === 4) return document.querySelector(".tc-tutorial-next");
     if (step === 5) return bank;
     if (step === 6) return document.querySelector(".tc-student-grid .tc-student") || plusButton;
     if (step === 7) return randomButton;
@@ -966,7 +974,6 @@
     if (step === 9) return document.querySelector(".tc-student-grid .tc-student");
     if (step === 10) return document.querySelector(".tc-profile-avatar");
     if (step === 11) return document.querySelector(".tc-avatar-choice");
-    if (step === 12) return document.querySelector(".tc-card .tc-action.primary");
     return null;
   }
 
@@ -978,7 +985,7 @@
       const readyToSave = inputs.length === 2 && inputs.every((input) => input.value.trim());
       return readyToSave ? "Click on SAVE ROSTER button." : "Write two students' names.";
     }
-    if (step === 4) return "Click here to close roster screen.";
+    if (step === 4) return "Click NEXT to close the roster screen.";
     if (step === 5) return "Correct answers add 1 point to this pool.";
     if (step === 6) return document.querySelector(".tc-student-grid .tc-student") ? "Choose a student to receive the point." : "You can give the points in the pool to a student you choose.";
     if (step === 7) return "Click this button to choose a random student.";
@@ -986,7 +993,6 @@
     if (step === 9) return "Click a student card to open the student profile.";
     if (step === 10) return "Click the avatar box to choose an avatar.";
     if (step === 11) return "Choose an avatar for this student.";
-    if (step === 12) return "You can give 1 star to a student with 10 points.";
     return "That's all! Hope you enjoy the app.";
   }
 
@@ -1006,6 +1012,13 @@
 
   function renderGuidedTutorial() {
     if (!guidedTutorial) return;
+    if (!document.querySelector(".tc-tutorial-exit")) {
+      const exit = el("button", "tc-tutorial-exit", "×");
+      exit.type = "button";
+      exit.setAttribute("aria-label", "Cancel tutorial");
+      exit.addEventListener("click", closeGuidedTutorial);
+      document.body.append(exit);
+    }
     clearTutorialFocus();
     const target = tutorialTargetForStep(guidedTutorial.step);
     target?.classList.add("tc-tutorial-focus");
@@ -1014,12 +1027,13 @@
       coach = el("div", "tc-guided-coach");
       document.body.append(coach);
     }
-    coach.replaceChildren(el("small", "", `STEP ${guidedTutorial.step} / 13`), el("strong", "", tutorialCopyForStep(guidedTutorial.step)));
-    if (guidedTutorial.step === 5 || guidedTutorial.step === 13) {
-      const next = el("button", "tc-tutorial-next", guidedTutorial.step === 13 ? "FINISH" : "NEXT");
+    coach.replaceChildren(el("small", "", `STEP ${guidedTutorial.step} / 12`), el("strong", "", tutorialCopyForStep(guidedTutorial.step)));
+    if (guidedTutorial.step === 4 || guidedTutorial.step === 5 || guidedTutorial.step === 12) {
+      const next = el("button", "tc-tutorial-next", guidedTutorial.step === 12 ? "FINISH" : "NEXT");
       next.type = "button";
       next.addEventListener("click", () => {
-        if (guidedTutorial?.step === 13) closeGuidedTutorial();
+        if (guidedTutorial?.step === 12) closeGuidedTutorial();
+        else if (guidedTutorial?.step === 4) { closeOverlays(); setGuidedTutorialStep(5); }
         else setGuidedTutorialStep(6);
       });
       coach.append(next);
@@ -1039,6 +1053,7 @@
     const restoreState = {
       classrooms: JSON.parse(JSON.stringify(state.classrooms)),
       activeClassroomId: state.activeClassroomId,
+      lockedClassroomId: getLockedClassroomId(),
       selectedStudentId: state.selectedStudentId,
       randomDrawnIds: [...randomHistory.drawnIds]
     };
@@ -1062,12 +1077,18 @@
     if (!guidedTutorial) return;
     const target = event.target instanceof Element ? event.target : null;
     if (!target) return;
+    if (target.closest(".tc-tutorial-exit, .tc-overlay .tc-close")) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      closeGuidedTutorial();
+      return;
+    }
     const step = guidedTutorial.step;
     const allowed =
       (step === 1 && target.closest(".tc-roster")) ||
       (step === 2 && target.closest(".tc-add-student")) ||
       (step === 3 && (target.closest(".tc-editor-row input, .tc-key, .tc-name-suggestion") || (target.closest(".tc-add-student") && document.querySelectorAll(".tc-editor-row").length < 2) || (target.closest(".tc-save-roster") && [...document.querySelectorAll(".tc-editor-row input")].length === 2 && [...document.querySelectorAll(".tc-editor-row input")].every((input) => input.value.trim())))) ||
-      (step === 4 && target.closest(".tc-overlay .tc-close")) ||
+      (step === 4 && target.closest(".tc-tutorial-next")) ||
       (step === 5 && target.closest(".tc-tutorial-next")) ||
       (step === 6 && (target.closest(".tc-plus") || target.closest(".tc-student-grid .tc-student"))) ||
       (step === 7 && target.closest(".tc-random")) ||
@@ -1075,8 +1096,7 @@
       (step === 9 && target.closest(".tc-student-grid .tc-student")) ||
       (step === 10 && target.closest(".tc-profile-avatar")) ||
       (step === 11 && target.closest(".tc-avatar-choice")) ||
-      (step === 12 && target.closest(".tc-card .tc-action.primary")) ||
-      (step === 13 && target.closest(".tc-tutorial-next"));
+      (step === 12 && target.closest(".tc-tutorial-next"));
     if (!allowed) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -1523,11 +1543,6 @@
     card.append(grid, actions);
     if (guidedTutorial?.step === 3) setGuidedTutorialStep(4);
     if (guidedTutorial?.step === 8) window.setTimeout(() => setGuidedTutorialStep(9), 0);
-    if (guidedTutorial?.step === 4) {
-      card.querySelector(".tc-close")?.addEventListener("click", () => {
-        window.setTimeout(() => setGuidedTutorialStep(5), 0);
-      });
-    }
   }
 
   function toggleAttendance(studentId) {
@@ -1680,7 +1695,6 @@
       playTeacherFeedback(true);
       showToast(`${student.name} earned a star!`);
       openStudentProfile(student.id);
-      if (guidedTutorial?.step === 12) window.setTimeout(() => setGuidedTutorialStep(13), 0);
     });
     actions.append(back, redeem, reset);
     card.append(summary, actions);
@@ -2454,6 +2468,10 @@
   hudTimerDisplayButton = el("button", "tc-timer-display", formatHudTimer(hudTimerRemainingSeconds));
   hudTimerPlayButton = el("button", "tc-timer-play", "▶");
   const whistleButton = el("button", "tc-whistle", "📣");
+  let whistleCount = 0;
+  const whistleCountBadge = el("span", "tc-whistle-count");
+  whistleCountBadge.hidden = true;
+  whistleButton.append(whistleCountBadge);
   const bank = el("button", "tc-bank", "ROSTER");
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
@@ -2489,7 +2507,15 @@
     updateHud();
     window.setTimeout(updateHud, Math.max(0, syncShortcutCooldownUntil - Date.now()));
   });
-  whistleButton.addEventListener("pointerdown", (event) => { event.preventDefault(); startWhistle(); });
+  whistleButton.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 || event.isPrimary === false) return;
+    event.preventDefault();
+    whistleCount = (whistleCount + 1) % 10;
+    whistleCountBadge.hidden = false;
+    whistleCountBadge.textContent = String(whistleCount);
+    whistleCountBadge.style.color = whistleCount >= 5 ? "#ff453a" : whistleCount === 4 ? "#ff9f0a" : whistleCount === 3 ? "#ffd60a" : whistleCount > 0 ? "#31d158" : "#a9bce9";
+    startWhistle();
+  });
   whistleButton.addEventListener("pointerup", stopWhistle);
   whistleButton.addEventListener("pointercancel", stopWhistle);
   bank.addEventListener("click", requestPoolReset);

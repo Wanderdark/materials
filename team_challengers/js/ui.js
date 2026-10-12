@@ -142,7 +142,10 @@ question.options.forEach((optionText, index) => { const button = document.create
     TC.renderTicketOptions(els.answers, question);
     const inlineAnswers = TC.renderInlineFriendOptions(els.answers, question);
     els.questionZone.dataset.inlineAnswers = String(inlineAnswers);
-    if (inlineAnswers) els.questionContext.replaceChildren();
+    if (inlineAnswers) {
+      const intro = els.questionContext.querySelector(".reading-passage");
+      els.questionContext.replaceChildren(...(intro ? [intro] : []));
+    }
   }
 
   function eliminateAnswers(indices) {

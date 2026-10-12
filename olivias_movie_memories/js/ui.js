@@ -92,10 +92,27 @@ window.LeagueListening.dismissCharacterIntro = (onComplete) => {
     onComplete();
   }, reduceMotion ? 0 : 750);
 };
-function loadQuestion(item) { resetQuestionView(); els.video.dataset.remoteFallbackSrc = item.remoteVideoSrc || resolveVideoSrc(item.videoSrc); delete els.video.dataset.remoteFallbackUsed; els.video.src = location.protocol === "file:" ? (item.localVideoSrc || resolveLocalVideoSrc(item.videoSrc)) : els.video.dataset.remoteFallbackSrc; els.video.hidden = true; els.fallback.hidden = true; els.videoWrap.classList.add("is-black-stage"); els.difficultySelector.hidden = false; els.playVideo.hidden = true; els.playVideo.disabled = true; els.videoStatus.textContent = "Choose a difficulty to start."; showCharacterIntro(item); }
+let videoTimelineStart = 0;
+let videoTimelineVisible = false;
+function updateVideoTimeline() {
+  const label = els.videoWrap.querySelector(".video-timeline");
+  if (label) label.hidden = !videoTimelineVisible || !label.textContent || els.video.currentTime < videoTimelineStart || els.video.currentTime >= videoTimelineStart + 5;
+}
+els.video.addEventListener("timeupdate", updateVideoTimeline);
+els.video.addEventListener("seeked", updateVideoTimeline);
+function setVideoTimeline(item) {
+  videoTimelineVisible = false;
+  let label = els.videoWrap.querySelector(".video-timeline");
+  const match = String(item.timeline || "").match(/^(past|future)(?:_(\d+(?:\.\d+)?))?$/);
+  videoTimelineStart = match ? Number(match[2] || 0) : 0;
+  const text = match ? (match[1] === "past" ? "6 years ago" : "Many years later") : "";
+  if (!label && text) { label = document.createElement("span"); label.className = "video-timeline"; els.videoWrap.append(label); }
+  if (label) { label.textContent = text; label.hidden = true; }
+}
+function loadQuestion(item) { resetQuestionView(); setVideoTimeline(item); els.video.dataset.remoteFallbackSrc = item.remoteVideoSrc || resolveVideoSrc(item.videoSrc); delete els.video.dataset.remoteFallbackUsed; els.video.src = location.protocol === "file:" ? (item.localVideoSrc || resolveLocalVideoSrc(item.videoSrc)) : els.video.dataset.remoteFallbackSrc; els.video.hidden = true; els.fallback.hidden = true; els.videoWrap.classList.add("is-black-stage"); els.difficultySelector.hidden = false; els.playVideo.hidden = true; els.playVideo.disabled = true; els.videoStatus.textContent = "Choose a difficulty to start."; showCharacterIntro(item); }
 function setDifficultySelection(difficulty) { els.difficultyButtons.forEach((button) => button.classList.toggle("is-selected", button.dataset.difficulty === difficulty)); els.difficultySelector.hidden = Boolean(difficulty); els.playVideo.disabled = !difficulty; }
-function showVideoPlayback() { els.video.hidden = false; els.videoWrap.classList.remove("is-black-stage", "is-dark-stage"); }
-function concealVideo() { els.video.hidden = false; els.fallback.hidden = true; els.videoWrap.classList.remove("is-black-stage"); els.videoWrap.classList.add("is-dark-stage"); }
+function showVideoPlayback() { els.video.hidden = false; videoTimelineVisible = true; updateVideoTimeline(); els.videoWrap.classList.remove("is-black-stage", "is-dark-stage"); }
+function concealVideo() { els.video.hidden = false; videoTimelineVisible = false; updateVideoTimeline(); els.fallback.hidden = true; els.videoWrap.classList.remove("is-black-stage"); els.videoWrap.classList.add("is-dark-stage"); }
 function updateWatchCounter(plays) { const replaysLeft = GAME_CONFIG.maxVideoPlays - plays; els.watchCounter.textContent = plays === 0 ? "REGULAR REPLAY AVAILABLE: 1" : replaysLeft > 0 ? "REGULAR REPLAY LEFT: 1" : "REGULAR REPLAY LIMIT REACHED"; els.replay.disabled = plays === 0 || replaysLeft <= 0; }
 function showDecision() { els.decisionOverlay.hidden = false; els.replay.hidden = false; els.videoStatus.textContent = "Choose how to answer."; }
 function appendMarkedText(container, text, highlightStyle = "none") { String(text || "").split(/(\/[^/]+\/)/g).forEach((part) => { if (!part) return; const marked = part.startsWith("/") && part.endsWith("/"); if (marked && highlightStyle !== "none") { const highlight = document.createElement("span"); highlight.className = highlightStyle === "evidence" ? "evidence-target" : "answer-highlight"; highlight.textContent = part.slice(1, -1); container.append(highlight); return; } container.append(document.createTextNode(marked ? part.slice(1, -1) : part)); }); }

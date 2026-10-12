@@ -12,14 +12,29 @@
   let answerSecondsLeft = TC.CONFIG.answerTimerSeconds;
   let timerSoundMuted = false;
   let pendingWheelValue = null;
+  let exhaustedAtRoundEnd = false;
   let pendingQuestion = null;
-  const allQuestions = window.TEAM_CHALLENGERS_QUESTIONS || [];
+  const allQuestions = (window.TEAM_CHALLENGERS_QUESTIONS || []).filter((question) => Number(question.unit) === 1);
   const questionCatalog = TC.buildQuestionCatalog(allQuestions);
   let curriculumSelection = { grade: null, unit: null };
   let pickQuestion = TC.createQuestionPicker([]);
   const wheel = new TC.PointsWheel($("#points-wheel"), $("#spin-wheel-button"), TC.CONFIG.wheelSegments);
   const liteModeStorageKey = "teamChallengersLiteModeV1";
   const textScaleStorageKey = "teamChallengersQuestionTextScaleV1";
+  const wheelEnabledStorageKey = "teamChallengersWheelEnabledV1";
+  const curriculumStorageKey = "teamChallengersCurriculumV1";
+  let wheelEnabled = true;
+
+  function setWheelEnabled(enabled) {
+    wheelEnabled = enabled;
+    const button = $("#wheel-enabled-switch");
+    button.dataset.enabled = String(enabled); button.setAttribute("aria-checked", String(enabled));
+    try { localStorage.setItem(wheelEnabledStorageKey, enabled ? "1" : "0"); } catch {}
+  }
+
+  function storedWheelEnabled() {
+    try { return localStorage.getItem(wheelEnabledStorageKey) !== "0"; } catch { return true; }
+  }
 
   function currentQuestionPool() { return TC.filterQuestions(allQuestions, curriculumSelection); }
 
@@ -81,20 +96,26 @@
     const count = currentQuestionPool().length;
     TC.els.poolStatus.textContent = count ? `${count} questions ready in this unit.` : "No questions match this selection.";
     TC.els.start.disabled = !count;
+    if (count) { try { localStorage.setItem(curriculumStorageKey, JSON.stringify(curriculumSelection)); } catch {} }
   }
 
-  function refreshUnits() {
+  function refreshUnits(preferredUnit) {
     const grade = questionCatalog.find((item) => item.grade === Number(TC.els.gradeSelect.value));
     fillSelect(TC.els.unitSelect, grade?.units || [], (item) => item.unit, (item) => {
       const name = grade?.grade === 8 ? ({ 1: "FRIENDSHIP", 2: "TEEN LIFE" })[item.unit] : "";
       return `UNIT ${item.unit}${name ? " - " + name : ""}`;
     });
+    if (grade?.units.some((item) => item.unit === preferredUnit)) TC.els.unitSelect.value = String(preferredUnit);
     refreshQuestionPool();
   }
 
   function initializeCurriculumFilters() {
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(curriculumStorageKey)); } catch {}
     fillSelect(TC.els.gradeSelect, questionCatalog, (item) => item.grade, (item) => `GRADE ${item.grade}`);
-    refreshUnits();
+    const savedGrade = questionCatalog.find((item) => item.grade === Number(saved?.grade));
+    if (savedGrade) TC.els.gradeSelect.value = String(savedGrade.grade);
+    refreshUnits(savedGrade ? Number(saved.unit) : undefined);
   }
 
   function addManualStudent() {
@@ -123,7 +144,7 @@
     if (activeGroups.some((group) => !group.length)) { TC.showToast("Add at least one student to every team."); return; }
     const questionPool = currentQuestionPool();
     if (!questionPool.length) { TC.showToast("Choose a grade and unit with available questions."); return; }
-    pickQuestion = TC.createQuestionPicker(questionPool);
+    pickQuestion = TC.createQuestionPicker(questionPool, curriculumSelection);
     state = TC.createGameState(activeGroups, groupNames.slice(0, groupCount), $("#game-mode-select").value); finalTransferred = false; finalAwards = []; TC.showScreen("game"); armAutoFullscreen(TC.els.game); prepareTurn();
   }
 
@@ -133,7 +154,21 @@
     TC.showScreen("selection"); armAutoFullscreen(TC.els.selection);
   }
 
+  function showQuestionsExhausted() {
+    if (!state) return;
+    exhaustedAtRoundEnd = state.phase === "roundComplete";
+    resetAnswerTimer(); wheel.cancelCharge(); TC.stopWheelTicks(); TC.closeTeamScores();
+    pendingWheelValue = null;
+    state.phase = "exhausted";
+    $("#difficulty-zone").hidden = true; TC.els.wheelZone.hidden = true;
+    TC.els.questionZone.hidden = true; TC.els.questionControls.hidden = true; TC.els.nextTurn.hidden = true;
+    TC.els.game.inert = true;
+    $("#questions-exhausted-overlay").hidden = false;
+    $("#reset-questions-button").focus();
+  }
+
   function prepareTurn() {
+    if (!pickQuestion.availableDifficulties().length) { showQuestionsExhausted(); return; }
     resetAnswerTimer(); $("#difficulty-zone").hidden = true;
     pendingQuestion = state.gameMode === "classic" ? pickQuestion() : null;
     if (state.gameMode === "difficulty") {
@@ -141,6 +176,7 @@
       if (review) pendingQuestion = pickQuestion(review.difficulty);
     }
     if (pendingQuestion?.reviewFirst === true) { openQuestionForWheelValue(50); return; }
+    if (!wheelEnabled) { openQuestionForWheelValue(50); return; }
     TC.renderGame(state); TC.showWheel(); wheel.reset();
   }
 
@@ -159,14 +195,16 @@
     if (!state || !value || !["spin", "difficulty"].includes(state.phase)) return;
     if (state.gameMode === "difficulty" && difficulty === undefined && !pendingQuestion?.reviewFirst) { showDifficultyChoice(value); return; }
     const selected = pendingQuestion || pickQuestion(difficulty);
-    if (!selected) return;
+    if (!selected) { if (!pickQuestion.availableDifficulties().length) showQuestionsExhausted(); return; }
     const question = TC.shuffleQuestionOptions(selected);
     if (!TC.setWheelValue(state, value, question)) return;
     pendingQuestion = null; pendingWheelValue = null; $("#difficulty-zone").hidden = true;
     TC.renderGame(state); TC.showQuestion(question, TC.questionPoints(state), answerQuestion, state.gameMode);
+    if (!pickQuestion.recordShown(question)) TC.showToast("Question history could not be saved. Check browser storage settings.");
   }
 
   function showDifficultyChoice(value) {
+    if (!pickQuestion.availableDifficulties().length) { showQuestionsExhausted(); return; }
     pendingWheelValue = value; state.phase = "difficulty";
     TC.showWheel(); TC.els.wheelZone.hidden = true; TC.renderGame(state);
     const available = pickQuestion.availableDifficulties();
@@ -228,7 +266,10 @@
   function nextTurn() {
     pendingWheelValue = null;
     const result = TC.advanceTurn(state);
-    if (result === "roundComplete") { TC.renderRound(state); TC.showScreen("round"); return; }
+    if (result === "roundComplete") {
+      if (!pickQuestion.availableDifficulties().length) { showQuestionsExhausted(); return; }
+      TC.renderRound(state); TC.showScreen("round"); return;
+    }
     prepareTurn();
   }
 
@@ -249,6 +290,9 @@
 
   async function finishGame() {
     if (!state) return;
+    $("#questions-exhausted-overlay").hidden = true; TC.els.game.inert = false;
+    if (exhaustedAtRoundEnd) state.phase = "roundComplete";
+    exhaustedAtRoundEnd = false;
     TC.hideLeaderboard();
     TC.closeTeamScores();
     wheel.cancelCharge();
@@ -322,6 +366,26 @@
   $("#open-roster-button").addEventListener("click", openRosterPicker); document.querySelectorAll("[data-close-roster]").forEach((button) => button.addEventListener("click", () => { TC.els.rosterDialog.hidden = true; })); document.querySelectorAll("[data-close-award-breakdown]").forEach((button) => button.addEventListener("click", closeAwardBreakdown));
 TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addEventListener("click", startGame); $("#back-to-teams-button").addEventListener("click", () => TC.showScreen("setup")); $("#keep-spin-button").addEventListener("click", keepSpinResult); $("#spin-again-button").addEventListener("click", useSpinAgain); $("#use-joker-button").addEventListener("click", openJokerOverlay); $("#tc-joker-fifty-button").addEventListener("click", useFiftyFifty); $("#tc-joker-double-button").addEventListener("click", useDoublePoints); $("#tc-joker-cancel-button").addEventListener("click", closeJokerOverlay); $("#tc-joker-overlay").addEventListener("click", (event) => { if (event.target.id === "tc-joker-overlay") closeJokerOverlay(); }); $("#next-turn-button").addEventListener("click", handleNextTurn); $("#continue-round-button").addEventListener("click", continueRound); $("#end-round-button").addEventListener("click", finishGame);
   $("#finish-game-button").addEventListener("click", finishGame);
+  $("#reset-questions-button").addEventListener("click", () => {
+    if (!state || $("#questions-exhausted-overlay").hidden) return;
+    if (!pickQuestion.resetHistory()) { TC.showToast("Question history could not be reset. Check browser storage settings."); return; }
+    $("#questions-exhausted-overlay").hidden = true; TC.els.game.inert = false;
+    if (exhaustedAtRoundEnd) TC.continueRound(state);
+    else { state.phase = "spin"; state.wheelValue = 0; state.question = null; state.answered = false; }
+    exhaustedAtRoundEnd = false;
+    pendingWheelValue = null;
+    prepareTurn();
+    (state.phase === "answer" ? TC.els.answers.querySelector("button") : state.phase === "difficulty" ? $("#difficulty-zone button:not(:disabled)") : $("#spin-wheel-button"))?.focus();
+  });
+  $("#end-exhausted-game-button").addEventListener("click", finishGame);
+  document.addEventListener("keydown", (event) => {
+    if ($("#questions-exhausted-overlay").hidden) return;
+    if (event.key === "Escape") event.preventDefault();
+    if (event.key !== "Tab") return;
+    event.preventDefault();
+    const reset = $("#reset-questions-button"), end = $("#end-exhausted-game-button");
+    (document.activeElement === reset ? end : reset).focus();
+  });
   $("#scores-button").addEventListener("click", () => {
     if (!state || state.phase !== "spin" || TC.els.wheelZone.hidden || wheel.spinning) return;
     wheel.cancelCharge(); TC.showTeamScores(state);
@@ -348,6 +412,8 @@ TC.els.proceed.addEventListener("click", proceedToCurriculum); TC.els.start.addE
   const templateErrors = TC.validateQuestionTemplates(allQuestions); if (templateErrors.length) console.error("Question template errors:", templateErrors);
   armAutoFullscreen(TC.els.setup);
   setLiteMode(storedLiteMode());
+  $("#wheel-enabled-switch").addEventListener("click", () => setWheelEnabled(!wheelEnabled));
+  setWheelEnabled(storedWheelEnabled());
   setQuestionTextScale(storedQuestionTextScale());
   syncSetup();
   initializeCurriculumFilters();

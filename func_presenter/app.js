@@ -325,7 +325,7 @@ function renderGrades() {
     const isAvailable = available.has(grade);
     button.className = `grade-button grade-visual${isAvailable ? "" : " placeholder"}`;
     button.dataset.value = grade;
-    button.innerHTML = `<img src="images/main/grade${grade}.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
+    button.innerHTML = `<img src="images/main/grade${grade}b.webp" alt="Grade ${grade}"><strong class="opt-number">${grade}</strong>`;
     if (isAvailable) button.addEventListener("click", () => selectGrade(grade));
     return button;
   }));
