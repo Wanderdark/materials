@@ -644,9 +644,8 @@
   function importDuelRoster(classroom, present) {
     if (!present.length) { ToastManager.show("THERE ARE NO PRESENT STUDENTS IN THIS CLASS TODAY", "warn", 3000); return; }
     const sorted = present.slice().sort((a, b) => rosterScore(b) - rosterScore(a) || String(a.name).localeCompare(String(b.name), "tr", { sensitivity: "base" }));
-    const order = [0, 1, 1, 0];
-    duelTeams = [[], []];
-    sorted.forEach((student, index) => duelTeams[order[index % order.length]].push(String(student.name).trim()));
+    duelTeams = window.TeamBalance.distribute(sorted.map(student => ({ ...student, score: rosterScore(student) })), 2,
+      { previousTeams: duelTeams }).map(team => team.map(student => String(student.name).trim()));
     duelPlayerAvatars = new Map(sorted
       .filter((student) => student.avatarPath)
       .map((student) => [String(student.name).trim().toLocaleLowerCase("tr-TR"), resolveDuelAvatarPath(student.avatarPath)]));

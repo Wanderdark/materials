@@ -48,7 +48,8 @@ function answerQuestion(state, optionId) {
   state.answered = true; state.phase = "answered";
   const correct = optionId === state.question.correctOptionId;
   const basePoints = state.subtitlesShown ? GAME_CONFIG.score.withSubtitles : GAME_CONFIG.score.withoutSubtitles;
-  const studentPoints = correct ? basePoints * (GAME_CONFIG.score.difficultyMultiplier[state.difficulty] || 1) : 0;
+  const correctOptionMode = !window.__oliviasMovieMemoriesStudentMode && state.gameMode === "correct-option";
+  const studentPoints = correct ? (correctOptionMode ? (state.videoPlays > 1 ? 50 : 100) : basePoints * (GAME_CONFIG.score.difficultyMultiplier[state.difficulty] || 1)) : 0;
   const points = studentPoints * (state.doubleOrNothing ? 2 : 1);
   if (correct) { const { group, student } = activePlayer(state); group.score += points; student.score += studentPoints; }
   return { correct, points, correctOptionId: state.question.correctOptionId, doubleOrNothing: state.doubleOrNothing };

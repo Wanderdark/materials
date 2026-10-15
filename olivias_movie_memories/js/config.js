@@ -3,6 +3,8 @@ window.LeagueListening = window.LeagueListening || {};
 window.LeagueListening.GAME_CONFIG = Object.freeze({
   maxVideoPlays: 2,
   answerSeconds: 20,
+  characterRatingSelectionEnabled: true,
+  randomEvents: Object.freeze({ enabled: true, normalChance: .15, testMode: false, testChance: 1 }),
   jokersPerRound: 2,
   timeFreezeSeconds: 15,
   defaultRoundLimit: 10,

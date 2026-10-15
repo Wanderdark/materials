@@ -2954,6 +2954,7 @@
 <div id="correct-img-overlay" class="img-flash-overlay"><img id="correct-img" src="" alt=""></div>
 <div id="wrong-img-overlay" class="img-flash-overlay"><img id="wrong-img" src="" alt=""></div>
 
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="modules/toast.js"></script>
 <script src="modules/rgbkeyboard.js"></script>
 <script src="modules/finalscreen.js"></script>
@@ -5496,30 +5497,17 @@ function fillAllStudents() {
 }
 
 function balanceDistribute() {
-  // Aktif öğrenci havuzu
   const rawPool = (typeof CLASSES !== 'undefined' && CLASSES.length > 0)
-    ? CLASSES.filter(c => selectedClasses.has(c.id)).flatMap(c => c.students)
-    : [];
-  if(!rawPool.length) { showToast('Öğrenci listesi boş!', 2000, 'warn'); return; }
-
-  const LEVEL_PTS = { S:6, A:5, B:4, C:3, D:2, F:1 };
-  const gc     = groupCount;
-  const teams  = Array.from({length: gc}, () => []);
-  const scores = new Array(gc).fill(0);
-
-  // Seviyeye göre sırala (level yoksa orta = 3 puan varsay)
-  const sorted = [...rawPool].sort((a, b) => {
-    const d = (LEVEL_PTS[b.level] || 3) - (LEVEL_PTS[a.level] || 3);
-    return d !== 0 ? d : Math.random() - .5;
-  });
-
-  // Greedy dağıtım — her öğrenci en düşük puanlı takıma gider
-  sorted.forEach(s => {
-    const minS = Math.min(...scores);
-    const t    = scores.indexOf(minS);
-    teams[t].push(s.name || s);
-    scores[t] += (LEVEL_PTS[s.level] || 3);
-  });
+    ? CLASSES.filter(c => selectedClasses.has(c.id)).flatMap(c => c.students) : [];
+  const pool = window.TeamBalance.fromRoster(rawPool.filter(student => !absentStudents.has(student.name ?? student)));
+  if (!pool.length) { showToast('Öğrenci listesi boş!', 2000, 'warn'); return; }
+  const gc = groupCount;
+  const pairs = getActivePairs().map(pair => pair.filter(name => pool.some(student => student.name === name))).filter(pair => pair.length > 1);
+  _pairNames = new Set(pairs.flat());
+  const distributed = window.TeamBalance.distribute(pool, gc, { pairs, previousTeams: studentInputs.slice(0, gc) });
+  const teams = distributed.map(team => team.map(student => student.name));
+  const scores = distributed.map(team => team.reduce((sum, student) => sum + student.score, 0));
+  STD_SLOTS = Math.max(STD_SLOTS, ...teams.map(team => team.length));
 
   // studentInputs güncelle + UI'ı aç
   for(let gi = 0; gi < 3; gi++) {

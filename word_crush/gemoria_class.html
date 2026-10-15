@@ -1858,7 +1858,6 @@
   function scStartGame(){
     hide('overlay-student-current');
     const profile = window.WordCrushProfile.getProfile();
-    if(!profile) return;
     const starCount       = _spWordCount === 'endless' ? 30 : _spWordCount;
     const endlessPractice = _spWordCount === 'endless' && _spTimeLimit === 'endless';
     const thresholds      = endlessPractice ? null : _spStarThresholds(starCount);

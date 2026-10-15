@@ -37,7 +37,6 @@
   }
 
   function distributeBalanced(classroom, groupCount) {
-    const groups = Array.from({ length: groupCount }, () => []);
     const students = getPresentStudents(classroom).map((student) => ({
       id: student.id || "",
       name: String(student.name).trim(),
@@ -45,10 +44,7 @@
       level: getStudentLevel(student),
       balanceScore: effectiveScore(student)
     })).sort((a, b) => b.balanceScore - a.balanceScore || a.name.localeCompare(b.name, "tr", { sensitivity: "base" }));
-    const forward = Array.from({ length: groupCount }, (_, index) => index);
-    const snake = forward.concat([...forward].reverse());
-    students.forEach((student, index) => groups[snake[index % snake.length]].push(student));
-    return groups;
+    return window.TeamBalance.distribute(students, groupCount);
   }
 
   function setActiveClassroom(classroomId) {

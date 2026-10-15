@@ -25,6 +25,17 @@ function hasCompleteEvidence(question) {
 }
 
 function getEvidenceLine(question) {
+  const correctOption = question?.correctOptionQuestion;
+  if (typeof correctOption?.sentence === "string" && correctOption.sentence.includes("___")) {
+    const source = correctOption.sentence;
+    const blankAt = source.indexOf("___");
+    const speakers = [...source.matchAll(/([\p{L}][\p{L} '-]*?)\s*:\s*/gu)];
+    const speaker = speakers.filter((match) => match.index < blankAt).pop();
+    const nextSpeaker = speakers.find((match) => match.index > blankAt);
+    const speech = source.slice(speaker ? speaker.index + speaker[0].length : 0, nextSpeaker?.index ?? source.length);
+    const sentence = (speech.match(/[^.!?]+(?:[.!?]+|$)/g) || []).find((line) => line.includes("___")) || speech;
+    return (speaker ? speaker[1].trim() + " : " : "") + sentence.trim().replace("___", () => correctOption.target);
+  }
   if (question?.evidenceSentence != null) return String(question.evidenceSentence);
   return String(question?.transcript || "");
 }

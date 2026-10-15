@@ -2404,6 +2404,7 @@ input[type=range].st-slider::-moz-range-thumb{width:22px;height:22px;border-radi
   </div>
 </div>
 
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="names.js" onerror="void 0"></script>
 <script src="settings.js"></script>
 <script src="taunt.js"></script>
@@ -4672,71 +4673,19 @@ function pickStdRandom(){
 
 /* ── Dengeli Otomatik Dağıtım ── */
 function balanceDistribute(silent=false){
-  const LEVEL_PTS={S:6,A:5,B:4,C:3,D:2,F:1};
-  const LEVEL_ORDER=['S','A','B','C','D','F'];
-  let pool=getActiveStudents();
-  // Fallback: selectedClasses ile eşleşme yoksa tüm CLASSES öğrencilerini kullan
-  if(!pool.length && typeof CLASSES!=='undefined' && CLASSES.length>0)
-    pool=CLASSES.flatMap(c=>c.students).filter(s=>s.name&&s.name.trim()!=='');
-  if(!pool.length) pool=(typeof STUDENTS!=='undefined')?STUDENTS:
-                        (typeof RANDOM_NAMES!=='undefined')?RANDOM_NAMES.map(n=>({name:n,level:'C'})):[];
-  if(!pool.length){ _silentDistributed=false; return; }
-
-  // Seviyeye göre sırala (yüksek → düşük), aynı seviyedekiler karışsın
-  const sorted=[...pool].sort((a,b)=>{
-    const diff=(LEVEL_PTS[b.level]||3)-(LEVEL_PTS[a.level]||3);
-    return diff!==0 ? diff : Math.random()-.5;
-  });
-
-  // ── 1. Pair kısıtı: çiftleri tespit et (her iki üye de present olmalı) ──
-  _pairNames=new Set();
-  const rawPairs=getActivePairs();
-  const pairGroups=[];
-  rawPairs.forEach(pair=>{
-    const activeMembers=pair.filter(name=>pool.some(s=>(s.name||s)===name));
-    if(activeMembers.length<2) return; // biri devamsız → skip
-    const pts=activeMembers.reduce((sum,name)=>{
-      const s=pool.find(st=>(st.name||st)===name);
-      return sum+(LEVEL_PTS[s?.level]||3);
-    },0);
-    pairGroups.push({names:activeMembers,pts});
-    activeMembers.forEach(n=>_pairNames.add(n));
-  });
-  pairGroups.sort((a,b)=>b.pts-a.pts);
-
-  // Tek sayıda öğrenci varsa en düşük seviyeli non-paired öğrenci çıkarılır
-  const nonPairedSorted=sorted.filter(s=>!_pairNames.has(s.name||s));
-  const distNonPaired=nonPairedSorted.length%2!==0 ? nonPairedSorted.slice(0,-1) : nonPairedSorted;
-
-  // Greedy: her öğrenciyi o an en düşük toplam puana sahip takıma ver
-  const teams=[[],[]];
-  const scores=[0,0];
-
-  // ── 2. Önce pair'leri yerleştir ──
-  pairGroups.forEach(pg=>{
-    const t=scores[0]<=scores[1]?0:1;
-    pg.names.forEach(name=>{
-      teams[t].push(name);
-      const s=pool.find(st=>(st.name||st)===name);
-      scores[t]+=(LEVEL_PTS[s?.level]||3);
-    });
-  });
-
-  // ── 3. Kalan öğrencileri greedy ile dağıt ──
-  distNonPaired.forEach(s=>{
-    const t=scores[0]<=scores[1]?0:1;
-    teams[t].push(s.name||s);
-    scores[t]+=(LEVEL_PTS[s.level]||3);
-  });
-
-  // Her takımı S→A→B→C→D→F sırasına göre sırala
-  [0,1].forEach(gi=>{
-    teams[gi].sort((a,b)=>{
-      const ai=LEVEL_ORDER.indexOf(sorted.find(s=>(s.name||s)===a)?.level??'C');
-      const bi=LEVEL_ORDER.indexOf(sorted.find(s=>(s.name||s)===b)?.level??'C');
-      return (ai===-1?99:ai)-(bi===-1?99:bi);
-    });
-  });
+  let rawPool = getActiveStudents();
+  if (!rawPool.length && typeof CLASSES !== 'undefined' && CLASSES.length)
+    rawPool = CLASSES.flatMap(classroom => classroom.students).filter(student => student.name && student.name.trim());
+  if (!rawPool.length) rawPool = typeof STUDENTS !== 'undefined' ? STUDENTS :
+    (typeof RANDOM_NAMES !== 'undefined' ? RANDOM_NAMES : []);
+  const pool = window.TeamBalance.fromRoster(rawPool.filter(student => !absentStudents.has(student.name ?? student)));
+  if (!pool.length) { _silentDistributed = false; return; }
+  const pairs = getActivePairs().map(pair => pair.filter(name => pool.some(student => student.name === name))).filter(pair => pair.length > 1);
+  _pairNames = new Set(pairs.flat());
+  const distributed = window.TeamBalance.distribute(pool, 2, { pairs, previousTeams: studentInputs });
+  const teams = distributed.map(team => team.map(student => student.name));
+  const scores = distributed.map(team => team.reduce((sum, student) => sum + student.score, 0));
+  if (teams.some(team => team.length > STD_SLOTS)) { window.alert('Selected students exceed the available team slots.'); return; }
 
   const maxLen=Math.max(teams[0].length,teams[1].length);
   [0,1].forEach(gi=>{ while(teams[gi].length<maxLen) teams[gi].push(''); });

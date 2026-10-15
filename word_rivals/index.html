@@ -1348,6 +1348,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 </div>
 
 <!-- ── SCRIPTS ── -->
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="words.js"></script>
 <script src="names.js" onerror="void 0"></script>
 <script src="avatars.js"></script>
@@ -1373,7 +1374,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 let   INITIAL_HP    = 100;
 const HP_PER_LOSS   = 10;
 const BETWEEN_DELAY = 2000;   // ms pause after a correct click before next question
-const STD_SLOTS     = 10;
+let STD_SLOTS       = 10;
 
 // ── MODULE-REQUIRED STATE ─────────────────────────────────
 let teamNames          = ['TEAM A', 'TEAM B'];
@@ -1417,7 +1418,7 @@ let _teamCooldown    = [false, false];
 let _streak          = [0, 0];    // her takımın kesintisiz doğru sayısı
 let _duelStreakBonus = [0, 0];    // bu düelloda kazanılan streak bonus puanı (gösterim + skor için)
 let _duelCount       = 0;         // tamamlanan düello sayısı
-let _totalDuels      = 1;         // toplam düello = min(takım A boyutu, takım B boyutu)
+let _totalDuels      = 1;         // toplam düello = max(takım A boyutu, takım B boyutu)
 let _duelLowHpTaunt  = [false, false]; // HP≤30 taunt'u düello başına 1 kere ateşlendi mi
 let _matchRound      = 1;         // aktif round numarası (1, 2, ...)
 let _originalStudentsB = [];      // çapraz eşleştirme için B listesi orijinali
@@ -1684,12 +1685,25 @@ function _loadStudentInputs() {
     if (!raw) return;
     const data = JSON.parse(raw);
     if (!Array.isArray(data) || data.length < 2) return;
+    const storedSlots = Math.max(STD_SLOTS, ...data.slice(0, 2).map(col => Array.isArray(col) ? col.length : 0));
+    const resized = storedSlots > STD_SLOTS;
+    STD_SLOTS = storedSlots;
     [0, 1].forEach(gi => {
       if (!Array.isArray(data[gi])) return;
       for (let si = 0; si < STD_SLOTS; si++)
         studentInputs[gi][si] = typeof data[gi][si] === 'string' ? data[gi][si] : '';
     });
+    if (resized) _rebuildRvrStudentColumns();
   } catch(e) {}
+}
+
+function _rebuildRvrStudentColumns() {
+  const cols = document.getElementById('std-cols');
+  const columns = [buildStdGroupCol(0), buildSwapCol(), buildStdGroupCol(1)]
+    .map(col => Array.from(col.children));
+  cols.replaceChildren();
+  for (let row = 0; row <= STD_SLOTS; row++)
+    columns.forEach(col => cols.appendChild(col[row]));
 }
 
 function rvrRosterTodayKey() {
@@ -1733,25 +1747,16 @@ function importRvrRosterClass(classroomId) {
     .sort((a, b) => rvrRosterEffectiveScore(b) - rvrRosterEffectiveScore(a)
       || a.name.localeCompare(b.name, 'tr'));
 
-  if (students.length < 2) {
-    window.ToastManager.show('At least two present students are needed.', 'warn', 5000);
-    return;
-  }
-  if (students.length > STD_SLOTS * 2) {
-    window.ToastManager.show(`This game supports up to ${STD_SLOTS * 2} students.`, 'warn', 5000);
-    return;
-  }
-  if (students.length % 2) {
-    window.ToastManager.show('Mark attendance so both teams can have the same number of students.', 'warn', 5000);
+  if (!students.length) {
+    window.ToastManager.show('There are no present students in this class today.', 'warn', 5000);
     return;
   }
 
-  const teamNamesFromRoster = [[], []];
-  const balanceOrder = [0, 1, 1, 0];
-  students.forEach((student, index) => {
-    teamNamesFromRoster[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
-  });
+  const teamNamesFromRoster = window.TeamBalance.distribute(students.map(student => ({ ...student, score: window.TeamBalance.score(student) })), 2,
+    { previousTeams: studentInputs.map(team => team.filter(Boolean)) })
+    .map(team => team.map(student => student.name.trim()));
 
+  STD_SLOTS = Math.max(10, ...teamNamesFromRoster.map(team => team.length));
   studentInputs = [Array(STD_SLOTS).fill(''), Array(STD_SLOTS).fill('')];
   teamNamesFromRoster.forEach((team, groupIndex) => {
     team.forEach((name, studentIndex) => {
@@ -1761,15 +1766,8 @@ function importRvrRosterClass(classroomId) {
   _slotRevealed = [Array(STD_SLOTS).fill(true), Array(STD_SLOTS).fill(true)];
   _silentDistributed = false;
 
-  [0, 1].forEach((groupIndex) => {
-    for (let studentIndex = 0; studentIndex < STD_SLOTS; studentIndex++) {
-      const value = studentInputs[groupIndex][studentIndex];
-      const text = document.getElementById(`stdt-${groupIndex}-${studentIndex}`);
-      const slot = document.getElementById(`std-${groupIndex}-${studentIndex}`);
-      if (text) text.textContent = value;
-      if (slot) slot.classList.toggle('is-empty', !value);
-    }
-  });
+  _rebuildRvrStudentColumns();
+  selectStdField(0, 0);
 
   importedRosterClassroomId = classroom.id;
   rvrFinalStarsTransferred = false;
@@ -1813,18 +1811,6 @@ function applyStudentsAndContinue() {
     studentInputs[gi].filter((n, si) => activeFilter(n, gi, si))
   );
 
-  // TB modunda takım sayıları eşit olmalı
-  if (_gameMode === 'turnbased' && preview[0].length !== preview[1].length) {
-    const warn = document.getElementById('std-warning');
-    if (warn) {
-      warn.style.color   = '#f87171';
-      warn.textContent   = `⚠ TURN BASED modda takım boyutları eşit olmalı! (${preview[0].length} vs ${preview[1].length})`;
-      warn.style.display = 'block';
-      setTimeout(() => { warn.style.display = 'none'; }, 3500);
-    }
-    return; // oyuna geçme
-  }
-
   const DEFAULTS = ['EDİ', 'BÜDÜ'];
   [0, 1].forEach(gi => {
     groupStudents[gi]      = preview[gi].length > 0 ? preview[gi] : [...DEFAULTS];
@@ -1852,7 +1838,7 @@ function _startGame() {
   roundCount     = 0;
   _duelCount          = 0;
   _matchRound         = 1;
-  _totalDuels    = Math.max(1, Math.min(
+  _totalDuels    = Math.max(1, Math.max(
     groupStudents[0].length || 1,
     groupStudents[1].length || 1
   ));
@@ -3570,8 +3556,8 @@ function _roundOverNo() {
  * i tek  → B[i-1]
  */
 function _getCrossMatchedB() {
-  const n    = _totalDuels;
   const orig = _originalStudentsB;
+  const n    = orig.length;
   return Array.from({ length: n }, (_, i) => {
     if (i % 2 === 0) return orig[(i + 1 < n) ? i + 1 : i];
     else             return orig[i - 1];
@@ -3837,31 +3823,13 @@ function _loadSettings() {
 // ── BALANCE DISTRIBUTE OVERRIDE ───────────────────────────
 // Seçili sınıflara göre öğrenci havuzunu filtreler
 function balanceDistribute(silent = false) {
-  const LEVEL_PTS   = {S:6, A:5, B:4, C:3, D:2, F:1};
-  const LEVEL_ORDER = ['S','A','B','C','D','F'];
-
   const rawPool = CLASSES.flatMap(c => c.students);
-  const pool = rawPool.filter(s => !absentStudents.has(s.name));
+  const pool = window.TeamBalance.fromRoster(rawPool.filter(s => !absentStudents.has(s.name)));
   if (!pool.length) return;
-
-  const sorted = [...pool].sort((a, b) => {
-    const d = (LEVEL_PTS[b.level]||3) - (LEVEL_PTS[a.level]||3);
-    return d !== 0 ? d : Math.random() - .5;
-  });
-  const distPool = sorted.length % 2 !== 0 ? sorted.slice(0, -1) : sorted;
-  const teams = [[], []], scores = [0, 0];
-  distPool.forEach(s => {
-    const t = scores[0] <= scores[1] ? 0 : 1;
-    teams[t].push(s.name);
-    scores[t] += (LEVEL_PTS[s.level] || 3);
-  });
-  [0, 1].forEach(gi => {
-    teams[gi].sort((a, b) => {
-      const ai = LEVEL_ORDER.indexOf(sorted.find(s => s.name === a)?.level ?? 'C');
-      const bi = LEVEL_ORDER.indexOf(sorted.find(s => s.name === b)?.level ?? 'C');
-      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    });
-  });
+  const distributed = window.TeamBalance.distribute(pool, 2, { previousTeams: studentInputs });
+  const teams = distributed.map(team => team.map(student => student.name));
+  const scores = distributed.map(team => team.reduce((sum, student) => sum + student.score, 0));
+  STD_SLOTS = Math.max(STD_SLOTS, ...teams.map(team => team.length));
   const maxLen = Math.max(teams[0].length, teams[1].length);
   [0, 1].forEach(gi => { while (teams[gi].length < maxLen) teams[gi].push(''); });
   [0, 1].forEach(gi => {
@@ -3869,6 +3837,7 @@ function balanceDistribute(silent = false) {
       studentInputs[gi][si] = si < teams[gi].length ? teams[gi][si] : '';
   });
   if (silent) return;
+  _rebuildRvrStudentColumns();
   [0, 1].forEach(gi => {
     for (let si = 0; si < STD_SLOTS; si++) {
       const t    = document.getElementById(`stdt-${gi}-${si}`);
@@ -4117,11 +4086,11 @@ function _tbHideTurnBar() {
 // ── TB: TURN ORDER ────────────────────────────────────────
 // A0, B0, A1, B1, ..., An, Bn
 function _tbBuildTurnOrder() {
-  const n = Math.min(groupStudents[0].length, groupStudents[1].length);
+  const n = Math.max(groupStudents[0].length, groupStudents[1].length);
   _tbTurnOrder = [];
   for (let i = 0; i < n; i++) {
-    _tbTurnOrder.push({ gi: 0, si: i });
-    _tbTurnOrder.push({ gi: 1, si: i });
+    if (i < groupStudents[0].length) _tbTurnOrder.push({ gi: 0, si: i });
+    if (i < groupStudents[1].length) _tbTurnOrder.push({ gi: 1, si: i });
   }
 }
 

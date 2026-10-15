@@ -3014,6 +3014,7 @@
 <div id="wrong-img-overlay" class="img-flash-overlay"><img id="wrong-img" src="" alt=""></div>
 <div id="toast"></div>
 
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="../modules/rgbkeyboard.js"></script>
 <script src="../modules/finalscreen.js"></script>
 <script src="questions.js"></script>
@@ -5495,6 +5496,11 @@ function openRosterClassPicker() {
   importRosterClass(classroomId);
 }
 
+function buildBalancedRosterTeams(students, count, previousTeams) {
+  return window.TeamBalance.distribute(students, count, { previousTeams })
+    .map(team => team.map(student => student.name));
+}
+
 function importRosterClass(classroomId) {
   const classroom = (window.TeacherControl?.getClassrooms?.() || [])
     .find(item => item.id === classroomId);
@@ -5518,12 +5524,8 @@ function importRosterClass(classroomId) {
     return;
   }
 
-  const teams = Array.from({ length:groupCount }, () => []);
-  const forward = Array.from({ length:groupCount }, (_, index) => index);
-  const snakeOrder = forward.concat([...forward].reverse());
-  students.forEach((student, index) => {
-    teams[snakeOrder[index % snakeOrder.length]].push(student.name);
-  });
+  const previousTeams = studentInputs.slice(0, groupCount).map(team => team.filter(Boolean));
+  const teams = buildBalancedRosterTeams(students, groupCount, previousTeams);
 
   const minimumSlots = groupCount === 2 ? 9 : 6;
   STD_SLOTS = Math.max(minimumSlots, ...teams.map(team => team.length));

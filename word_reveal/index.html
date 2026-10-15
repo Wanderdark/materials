@@ -991,6 +991,7 @@ body.game-active #lite-btn{display:flex!important}
 
 <div id="toast"></div>
 
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="../modules/rgbkeyboard.js"></script>
 <script>window.__forceTeacherControl = true;</script>
 <script src="../func_presenter/teacher-cloud.js"></script>
@@ -1570,7 +1571,7 @@ let STD_SLOTS = 8;
 let activeStdSlot = { gi:0, si:0 };
 
 function showStudentOverlay() {
-  STD_SLOTS = groupCount===2 ? 9 : 6;
+  STD_SLOTS = Math.max(groupCount===2 ? 9 : 6, ...studentInputs.map(col => col.length));
   if(studentInputs[0].length < STD_SLOTS) {
     studentInputs = [new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill('')];
     _slotRevealed  = [new Array(STD_SLOTS).fill(false),new Array(STD_SLOTS).fill(false),new Array(STD_SLOTS).fill(false)];
@@ -1622,21 +1623,16 @@ function importWrRosterClass(classroomId) {
     .sort((a, b) => wrRosterEffectiveScore(b) - wrRosterEffectiveScore(a)
       || a.name.localeCompare(b.name, 'tr'));
 
-  if (students.length < groupCount) {
-    showToast(`En az ${groupCount} mevcut öğrenci gerekli.`, 'warn', 3500);
-    return;
-  }
-  if (students.length > STD_SLOTS * groupCount) {
-    showToast(`Bu oyun en fazla ${STD_SLOTS * groupCount} öğrenciyi destekliyor.`, 'warn', 3500);
+  if (!students.length) {
+    showToast('There are no present students in this class today.', 'warn', 3500);
     return;
   }
 
-  const groups = Array.from({ length: groupCount }, () => []);
-  const balanceOrder = groupCount === 2 ? [0, 1, 1, 0] : [0, 1, 2, 2, 1, 0];
-  students.forEach((student, index) => {
-    groups[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
-  });
+  const groups = window.TeamBalance.distribute(students.map(student => ({ ...student, score: window.TeamBalance.score(student) })), groupCount,
+    { previousTeams: studentInputs.slice(0, groupCount).map(team => team.filter(Boolean)) })
+    .map(team => team.map(student => student.name.trim()));
 
+  STD_SLOTS = Math.max(groupCount === 2 ? 9 : 6, ...groups.map(group => group.length));
   studentInputs = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(''));
   groups.forEach((group, groupIndex) => {
     group.forEach((name, studentIndex) => {
@@ -1881,7 +1877,10 @@ function loadStudentNames() {
     if(!raw) return;
     const inputs = JSON.parse(raw);
     if(!Array.isArray(inputs)) return;
-    inputs.forEach((col,gi) => {
+    STD_SLOTS = Math.max(STD_SLOTS, ...inputs.slice(0, 3).map(col => Array.isArray(col) ? col.length : 0));
+    studentInputs = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
+    _slotRevealed = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
+    inputs.slice(0, 3).forEach((col,gi) => {
       if(!Array.isArray(col)) return;
       col.forEach((name,si) => {
         if(si < STD_SLOTS && typeof name === 'string') {

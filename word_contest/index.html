@@ -1493,7 +1493,7 @@
   .std-modal {
     background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);
     border-radius:18px;padding:22px 20px;width:min(99vw,980px);
-    display:flex;flex-direction:column;gap:10px;
+    display:flex;flex-direction:column;gap:10px;max-height:94vh;overflow-y:auto;
   }
   .std-title {
     font-family:'Barlow Condensed',sans-serif;font-size:clamp(17px,2.8vw,24px);
@@ -2039,6 +2039,7 @@
 <div id="round-popup"><div id="round-popup-text"></div></div>
 <div id="toast"></div>
 
+<script src="../modules/balanced-team-distribution.js"></script>
 <script src="correct-images.js"></script>
 <script src="wrong-images.js"></script>
 <script src="words.js"></script>
@@ -2093,7 +2094,7 @@ function menuSettings() {
 
 function setGroupCount(n) {
   groupCount = n;
-  STD_SLOTS = n === 2 ? 9 : 6;
+  STD_SLOTS = Math.max(n === 2 ? 9 : 6, ...studentInputs.map(col => col.length));
   _refreshGroupCountBtns();
 }
 
@@ -2106,7 +2107,7 @@ function _refreshGroupCountBtns() {
 
 /** Score kartı, isim overlay ve öğrenci overlay'inde 3. grubu göster/gizle */
 function applyGroupCountUI() {
-  STD_SLOTS = groupCount === 2 ? 9 : 6;
+  STD_SLOTS = Math.max(groupCount === 2 ? 9 : 6, ...studentInputs.map(col => col.length));
   const sb = document.getElementById('scoreboard');
   const no = document.getElementById('name-overlay');
   const so = document.getElementById('student-overlay');
@@ -3675,21 +3676,16 @@ function importWcRosterClass(classroomId) {
     .sort((a, b) => wcRosterEffectiveScore(b) - wcRosterEffectiveScore(a)
       || a.name.localeCompare(b.name, 'tr'));
 
-  if (students.length < groupCount) {
-    showToast(`En az ${groupCount} mevcut öğrenci gerekli.`);
-    return;
-  }
-  if (students.length > STD_SLOTS * groupCount) {
-    showToast(`Bu oyun en fazla ${STD_SLOTS * groupCount} öğrenciyi destekliyor.`);
+  if (!students.length) {
+    showToast('There are no present students in this class today.');
     return;
   }
 
-  const groups = Array.from({ length: groupCount }, () => []);
-  const balanceOrder = groupCount === 2 ? [0, 1, 1, 0] : [0, 1, 2, 2, 1, 0];
-  students.forEach((student, index) => {
-    groups[balanceOrder[index % balanceOrder.length]].push(student.name.trim());
-  });
+  const groups = window.TeamBalance.distribute(students.map(student => ({ ...student, score: window.TeamBalance.score(student) })), groupCount,
+    { previousTeams: studentInputs.slice(0, groupCount).map(team => team.filter(Boolean)) })
+    .map(team => team.map(student => student.name.trim()));
 
+  STD_SLOTS = Math.max(groupCount === 2 ? 9 : 6, ...groups.map(group => group.length));
   studentInputs = [0, 1, 2].map(() => new Array(STD_SLOTS).fill(''));
   groups.forEach((group, groupIndex) => {
     group.forEach((name, studentIndex) => {
@@ -3836,7 +3832,10 @@ function showStudentOverlay() {
     try {
       const parsed = JSON.parse(saved);
       if(Array.isArray(parsed)) {
-        parsed.forEach((col, gi) => {
+        STD_SLOTS = Math.max(STD_SLOTS, ...parsed.slice(0, 3).map(col => Array.isArray(col) ? col.length : 0));
+        studentInputs = [0,1,2].map(() => new Array(STD_SLOTS).fill(''));
+        _slotRevealed = [0,1,2].map(() => new Array(STD_SLOTS).fill(false));
+        parsed.slice(0, 3).forEach((col, gi) => {
           if(Array.isArray(col)) col.forEach((name, si) => {
             if(si < STD_SLOTS) {
               studentInputs[gi][si] = name || '';
@@ -3891,68 +3890,15 @@ function swapStudents(gi1, gi2, si) {
 
 
 function balanceDistribute(silent = false) {
-  const LEVEL_PTS   = { S:6, A:5, B:4, C:3, D:2, F:1 };
-  const LEVEL_ORDER = ['S','A','B','C','D','F'];
-
-  const rawPool = getActiveStudentsPool();
-  const pool    = rawPool.filter(s => !absentStudents.has(s.name ?? s));
-  if(!pool.length) { _silentDistributed = false; return; }
-
-  // Seviyeye göre sırala, aynı seviyedekiler karışsın
-  const sorted = [...pool].sort((a, b) => {
-    const d = (LEVEL_PTS[b.level] || 3) - (LEVEL_PTS[a.level] || 3);
-    return d !== 0 ? d : Math.random() - .5;
-  });
-
-  // Greedy algoritma — groupCount takımına dengeli dağıt (pair kısıtı önce)
-  const gc     = groupCount;
-  const teams  = Array.from({length: gc}, () => []);
-  const scores = new Array(gc).fill(0);
-
-  // ── 1. Pair kısıtı: çiftleri tespit et, her iki üye de present olmalı ──
-  _pairNames = new Set();
-  const rawPairs = getActivePairs();
-  const pairGroups = []; // {names:[], pts:number}
-  rawPairs.forEach(pair => {
-    const activeMembers = pair.filter(name => pool.some(s => (s.name || s) === name));
-    if(activeMembers.length < 2) return; // biri devamsız → skip
-    const pts = activeMembers.reduce((sum, name) => {
-      const s = pool.find(st => (st.name || st) === name);
-      return sum + (LEVEL_PTS[s?.level] || 3);
-    }, 0);
-    pairGroups.push({ names: activeMembers, pts });
-    activeMembers.forEach(n => _pairNames.add(n));
-  });
-
-  // Önce yüksek puanlı çiftleri yerleştir (denge için)
-  pairGroups.sort((a, b) => b.pts - a.pts);
-  pairGroups.forEach(pg => {
-    const minS = Math.min(...scores);
-    const t    = scores.indexOf(minS);
-    pg.names.forEach(name => {
-      teams[t].push(name);
-      const s = pool.find(st => (st.name || st) === name);
-      scores[t] += (LEVEL_PTS[s?.level] || 3);
-    });
-  });
-
-  // ── 2. Kalan öğrencileri greedy ile dağıt ──
-  sorted.forEach(s => {
-    if(_pairNames.has(s.name || s)) return; // pair olarak zaten yerleştirildi
-    const minS = Math.min(...scores);
-    const t    = scores.indexOf(minS);
-    teams[t].push(s.name || s);
-    scores[t] += (LEVEL_PTS[s.level] || 3);
-  });
-
-  // Her takımı kendi içinde S→F sırasına diz
-  teams.forEach(team => {
-    team.sort((a, b) => {
-      const ai = LEVEL_ORDER.indexOf(sorted.find(s => (s.name||s) === a)?.level ?? 'C');
-      const bi = LEVEL_ORDER.indexOf(sorted.find(s => (s.name||s) === b)?.level ?? 'C');
-      return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-    });
-  });
+  const pool = window.TeamBalance.fromRoster(getActiveStudentsPool().filter(s => !absentStudents.has(s.name ?? s)));
+  if (!pool.length) { _silentDistributed = false; return; }
+  const gc = groupCount;
+  const pairs = getActivePairs().map(pair => pair.filter(name => pool.some(student => student.name === name))).filter(pair => pair.length > 1);
+  _pairNames = new Set(pairs.flat());
+  const distributed = window.TeamBalance.distribute(pool, gc, { pairs, previousTeams: studentInputs.slice(0, gc) });
+  const teams = distributed.map(team => team.map(student => student.name));
+  const scores = distributed.map(team => team.reduce((sum, student) => sum + student.score, 0));
+  STD_SLOTS = Math.max(STD_SLOTS, ...teams.map(team => team.length));
 
   const maxLen = Math.max(...teams.map(t => t.length));
   teams.forEach(t => { while(t.length < maxLen) t.push(''); });

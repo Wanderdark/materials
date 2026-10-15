@@ -9,7 +9,11 @@ function getPlayableItems(items) {
   );
 }
 
-function createRandomItemPicker(items) {
+function getVideoRating(item) {
+  const rating = Number(item?.rating);
+  return Number.isInteger(rating) && rating >= 1 && rating <= 10 ? rating : 1;
+}
+function createRandomItemPicker(items, options = {}) {
   if (window.__oliviasMovieMemoriesStudentMode) {
     const storageKey = "oliviasMovieMemoriesWatchedV1";
     const playable = getPlayableItems(items);
@@ -30,16 +34,20 @@ function createRandomItemPicker(items) {
     let pool = shuffle(playable.filter((item) => !watched.has(item.id)));
     const pick = () => {
       if (!pool.length) {
-        watched.clear();
-        localStorage.removeItem(storageKey);
-        pool = shuffle(playable);
+        if (playable.length && playable.every((item) => watched.has(item.id))) {
+          watched.clear();
+          localStorage.removeItem(storageKey);
+        }
+        pool = shuffle(playable.filter((item) => !watched.has(item.id)));
       }
       const item = pool.pop() || null;
-      if (item) {
-        watched.add(item.id);
-        localStorage.setItem(storageKey, JSON.stringify([...watched]));
-      }
       return item;
+    };
+    pick.complete = (id) => {
+      if (!playable.some((item) => item.id === id)) return;
+      watched.add(id);
+      pool = pool.filter((item) => item.id !== id);
+      localStorage.setItem(storageKey, JSON.stringify([...watched]));
     };
     pick.remove = (id) => { pool = pool.filter((item) => item.id !== id); };
     return pick;
@@ -73,58 +81,102 @@ function createRandomItemPicker(items) {
     excluded: [...excluded]
   }));
   const availableRegularItems = () => regularItems.filter((item) => !excluded.has(item.id));
-  if (availableRegularItems().length && availableRegularItems().every((item) => shown.has(item.id))) {
-    shown.clear();
+  const correctOptionMode = options.correctOption === true;
+  const ratingSelectionEnabled = window.LeagueListening.GAME_CONFIG.characterRatingSelectionEnabled;
+  let selectedCharacterVideoId = null;
+  const correctOptionScriptOrder = !ratingSelectionEnabled;
+  const trialItems = playable.filter((item) => window.LeagueListening.getCorrectOptionQuestions(item).length);
+  const watched = (item) => shown.has(item.id) || priorityShown.has(item.id);
+  const trialAvailable = () => trialItems.filter((item) => !excluded.has(item.id));
+  const correctOptionPool = () => {
+    const unused = trialAvailable().filter((item) => !watched(item));
+    const regular = unused.filter((item) => !priorityItems.includes(item));
+    return [...priorityItems.filter((item) => unused.includes(item)), ...(correctOptionScriptOrder ? regular : shuffle(regular))];
+  };
+  if (correctOptionMode && trialAvailable().length && trialAvailable().every(watched)) {
+    trialItems.forEach((item) => { shown.delete(item.id); priorityShown.delete(item.id); });
     saveHistory();
   }
-  let priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !priorityShown.has(item.id));
-  let pool = shuffle(availableRegularItems().filter((item) => !shown.has(item.id)));
+  let priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !watched(item));
+  let pool = correctOptionMode ? correctOptionPool() : shuffle(availableRegularItems().filter((item) => !watched(item)));
   const refillRegularPool = () => {
-    if (pool.length) return;
-    shown.clear();
-    saveHistory();
-    pool = shuffle(availableRegularItems());
+    if (pool.length || priorityPool.length || correctOptionMode) return;
+    const available = playable.filter((item) => !excluded.has(item.id));
+    if (available.length && available.every(watched)) {
+      shown.clear();
+      priorityShown.clear();
+      saveHistory();
+    }
+    priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !watched(item));
+    pool = shuffle(availableRegularItems().filter((item) => !watched(item)));
+  };
+  const refillCorrectOptionPool = () => {
+      if (!pool.length) {
+        if (trialAvailable().length && trialAvailable().every(watched)) {
+          trialItems.forEach((item) => { shown.delete(item.id); priorityShown.delete(item.id); });
+          saveHistory();
+        }
+        pool = correctOptionPool();
+      }
   };
   const pick = () => {
+    selectedCharacterVideoId = null;
+    if (correctOptionMode) {
+      refillCorrectOptionPool();
+      const item = pool.shift() || null;
+      return item;
+    }
+    refillRegularPool();
     const priorityItem = priorityPool.shift();
     if (priorityItem) {
-      priorityShown.add(priorityItem.id);
-      saveHistory();
       return priorityItem;
     }
     refillRegularPool();
     const item = pool.pop() || null;
-    if (item) {
-      shown.add(item.id);
-      saveHistory();
-    }
     return item;
   };
 
+  pick.complete = (id) => {
+    const item = playable.find((candidate) => candidate.id === id);
+    if (!item || excluded.has(id)) return;
+    if (selectedCharacterVideoId === id) {
+      selectedCharacterVideoId = null;
+      window.LeagueListening.recordCharacterVideoCompletion();
+    }
+    shown.add(id);
+    if (priorityItems.includes(item)) priorityShown.add(id);
+    pool = pool.filter((candidate) => candidate.id !== id);
+    priorityPool = priorityPool.filter((candidate) => candidate.id !== id);
+    saveHistory();
+  };
   pick.remove = (id) => {
+    if (selectedCharacterVideoId === id) selectedCharacterVideoId = null;
     pool = pool.filter((item) => item.id !== id);
     priorityPool = priorityPool.filter((item) => item.id !== id);
     excluded.add(id);
     saveHistory();
   };
-  pick.hasPendingPriority = () => priorityPool.length > 0;
+  pick.hasPendingPriority = () => { if (correctOptionMode) { if (!ratingSelectionEnabled) return false; refillCorrectOptionPool(); return pool.some((item) => priorityItems.includes(item)); } refillRegularPool(); return priorityPool.length > 0; };
   pick.availableCharacterIds = () => {
-    refillRegularPool();
+    if (correctOptionMode) refillCorrectOptionPool(); else refillRegularPool();
     return new Set(pool.flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
   };
   pick.pickForCharacter = (characterId) => {
-    refillRegularPool();
+    if (ratingSelectionEnabled && pick.hasPendingPriority()) return pick();
+    if (correctOptionMode) refillCorrectOptionPool(); else refillRegularPool();
     const matchingItems = pool.filter((item) => item.characterIds?.includes(characterId));
-    const item = matchingItems[Math.floor(Math.random() * matchingItems.length)] || null;
+    const highestRating = Math.max(...matchingItems.map(getVideoRating));
+    const candidates = ratingSelectionEnabled ? matchingItems.filter((item) => getVideoRating(item) === highestRating) : matchingItems;
+    const item = candidates[Math.floor(Math.random() * candidates.length)] || null;
     if (!item) return null;
+    selectedCharacterVideoId = item.id;
+    window.LeagueListening.recordCharacterSelection(characterId);
     pool = pool.filter((candidate) => candidate.id !== item.id);
-    shown.add(item.id);
-    saveHistory();
     return item;
   };
 
   return pick;
 }
 
-Object.assign(window.LeagueListening, { getPlayableItems, createRandomItemPicker });
+Object.assign(window.LeagueListening, { getPlayableItems, createRandomItemPicker, getVideoRating });
 })();

@@ -329,51 +329,16 @@ function pickStdRandom(){
   return avail.length>0 ? avail[Math.floor(Math.random()*avail.length)] : null;
 }
 
-/* ── Dengeli Otomatik Dağıtım ─────────────────────────────
- * Algoritma: Greedy balancing
- *   - Seviye puanı: S=6 A=5 B=4 C=3 D=2 F=1
- *   - Tek sayıda öğrenci varsa en zayıf (F) çıkarılır → eşit takımlar
- *   - Her öğrenciyi o an düşük puana sahip takıma ver
- *   - Sonuç: toplam puanlar mümkün olduğunca eşit
- *   - Sıralama: S→A→B→C→D→F
- *   - silent=true → sadece studentInputs'u güncelle, UI dokunma
- *   - silent=false → hepsini görünür yap, uyarı göster
- */
+/* ── Roster-score packet distribution; silent mode preserves the existing UI flow. ── */
 function balanceDistribute(silent=false){
-  const LEVEL_PTS={S:6,A:5,B:4,C:3,D:2,F:1};
-  const LEVEL_ORDER=['S','A','B','C','D','F'];
-
-  const rawPool=(typeof STUDENTS!=='undefined')?STUDENTS:
-               (typeof RANDOM_NAMES!=='undefined')?RANDOM_NAMES.map(n=>({name:n,level:'C'})):[];
-  const pool=rawPool.filter(s=>!absentStudents.has(s.name??s));
-  if(!pool.length){ _silentDistributed=false; return; }
-
-  // Seviyeye göre sırala (yüksek→düşük), aynı seviyedekiler karışsın
-  const sorted=[...pool].sort((a,b)=>{
-    const diff=(LEVEL_PTS[b.level]||3)-(LEVEL_PTS[a.level]||3);
-    return diff!==0 ? diff : Math.random()-.5;
-  });
-
-  // Tek sayıda öğrenci varsa en düşük seviyeli (son sıradaki) çıkarılır
-  const distPool=sorted.length%2!==0 ? sorted.slice(0,-1) : sorted;
-
-  // Greedy: her öğrenciyi o an daha düşük toplam puana sahip takıma ver
-  const teams=[[],[]];
-  const scores=[0,0];
-  distPool.forEach(s=>{
-    const t=scores[0]<=scores[1]?0:1;
-    teams[t].push(s.name||s);
-    scores[t]+=(LEVEL_PTS[s.level]||3);
-  });
-
-  // Her takımı S→A→B→C→D→F sırasına göre sırala
-  [0,1].forEach(gi=>{
-    teams[gi].sort((a,b)=>{
-      const ai=LEVEL_ORDER.indexOf(sorted.find(s=>(s.name||s)===a)?.level??'C');
-      const bi=LEVEL_ORDER.indexOf(sorted.find(s=>(s.name||s)===b)?.level??'C');
-      return (ai===-1?99:ai)-(bi===-1?99:bi);
-    });
-  });
+  const rawPool = typeof STUDENTS !== 'undefined' ? STUDENTS :
+    (typeof RANDOM_NAMES !== 'undefined' ? RANDOM_NAMES : []);
+  const pool = window.TeamBalance.fromRoster(rawPool.filter(student => !absentStudents.has(student.name ?? student)));
+  if (!pool.length) { _silentDistributed = false; return; }
+  const distributed = window.TeamBalance.distribute(pool, 2, { previousTeams: studentInputs });
+  const teams = distributed.map(team => team.map(student => student.name));
+  const scores = distributed.map(team => team.reduce((sum, student) => sum + student.score, 0));
+  if (teams.some(team => team.length > STD_SLOTS)) { window.alert('Selected students exceed the available team slots.'); return; }
 
   const maxLen=Math.max(teams[0].length,teams[1].length);
   [0,1].forEach(gi=>{ while(teams[gi].length<maxLen) teams[gi].push(''); });

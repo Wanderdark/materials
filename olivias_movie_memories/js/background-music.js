@@ -2,6 +2,8 @@
 window.LeagueListening = window.LeagueListening || {};
 
 const tracks = window.LeagueListening.backgroundTracks || [];
+const backgroundMusicEnabled = true;
+const musicPreferenceKey = "oliviasMovieMemoriesBackgroundMusicMutedV1";
 const normalVolume = 0.18;
 const duckedVolume = 0.04;
 const audio = new Audio();
@@ -11,6 +13,8 @@ let started = false;
 let currentTrack = "";
 let ducked = false;
 let muted = false;
+try { muted = localStorage.getItem(musicPreferenceKey) === "1"; } catch (_) {}
+audio.muted = muted;
 
 function refillQueue() { queue = [...tracks].sort(() => Math.random() - 0.5); }
 function playTrack(track) {
@@ -27,6 +31,7 @@ function playNext() {
   playTrack(queue.pop());
 }
 function startBackgroundMusic() {
+  if (!backgroundMusicEnabled) return;
   started = true;
   if (audio.src) audio.play().catch(() => {});
   else playNext();
@@ -39,9 +44,10 @@ function previousBackgroundTrack() {
   playTrack(previousTracks.pop());
 }
 function nextBackgroundTrack() { if (!started) { startBackgroundMusic(); return; } playNext(); }
-function toggleBackgroundMusic() { muted = !muted; audio.muted = muted; return muted; }
+function toggleBackgroundMusic() { muted = !muted; audio.muted = muted; try { localStorage.setItem(musicPreferenceKey, muted ? "1" : "0"); } catch (_) {} return muted; }
+function isBackgroundMusicMuted() { return muted; }
 
 audio.addEventListener("ended", playNext);
 audio.addEventListener("error", () => { if (queue.length) playNext(); });
-Object.assign(window.LeagueListening, { duckBackgroundMusic, nextBackgroundTrack, previousBackgroundTrack, restoreBackgroundMusic, startBackgroundMusic, toggleBackgroundMusic });
+Object.assign(window.LeagueListening, { duckBackgroundMusic, nextBackgroundTrack, previousBackgroundTrack, restoreBackgroundMusic, startBackgroundMusic, toggleBackgroundMusic, isBackgroundMusicMuted });
 })();

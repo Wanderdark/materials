@@ -234,6 +234,7 @@
     .tc-name-suggestion { min-height: 30px; padding: 0 11px; border: 1px solid #3a579e; border-radius: 8px; background: #14295a; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 13px; font-weight: 800; letter-spacing: .04em; cursor: pointer; }
     .tc-name-suggestion:hover { border-color: var(--u2-gold, #ffd84d); background: #1c3979; color: var(--u2-gold, #ffd84d); }
     .tc-confirm-overlay { position: fixed; inset: 0; z-index: 11020; display: grid; place-items: center; padding: 18px; background: rgba(2, 7, 23, .64); }
+    .tc-point-hold-counter { position: fixed; z-index: 12020; padding: 8px 16px; border: 2px solid currentColor; border-radius: 16px; background: #101d3d; font: 900 48px/1 var(--font-display, sans-serif); transform: translate(-50%, -120%); pointer-events: none; }
     .tc-confirm-card { width: min(380px, 100%); padding: 24px; border: 1px solid rgba(255, 128, 102, .58); border-radius: 18px; background: #101d3d; box-shadow: 0 24px 64px rgba(0, 0, 0, .56); }
     .tc-confirm-card h3 { margin: 0 0 9px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 24px; letter-spacing: .04em; }
     .tc-confirm-card p { margin: 0; color: #9db2e3; font-weight: 700; line-height: 1.5; }
@@ -439,10 +440,10 @@
     if (!hudTimerDisplayButton || !hudTimerPlayButton) return;
     hudTimerDisplayButton.textContent = formatHudTimer(hudTimerRemainingSeconds);
     hudTimerDisplayButton.classList.toggle("is-alarming", hudTimerAlarmActive);
-    hudTimerDisplayButton.title = hudTimerAlarmActive ? "Stop alarm and reset timer" : "Choose timer duration";
-    hudTimerPlayButton.textContent = hudTimerInterval ? "■" : "▶";
+    hudTimerDisplayButton.title = hudTimerAlarmActive ? "Stop alarm and reset timer" : "Click to open timer; right-click to reset";
+    hudTimerPlayButton.textContent = hudTimerInterval ? "⏸" : "▶";
     hudTimerPlayButton.disabled = hudTimerAlarmActive;
-    hudTimerPlayButton.title = hudTimerInterval ? "Stop and reset timer" : hudTimerAlarmActive ? "Stop the alarm first" : hudTimerPaused ? "Resume timer" : "Start timer";
+    hudTimerPlayButton.title = hudTimerInterval ? "Pause timer" : hudTimerAlarmActive ? "Stop the alarm first" : hudTimerPaused ? "Resume timer" : "Start timer";
     if (hudTimerLiveDisplay && !document.contains(hudTimerLiveDisplay)) {
       hudTimerLiveDisplay = null;
       hudTimerLivePauseButton = null;
@@ -467,6 +468,8 @@
 
   function pauseHudTimer() {
     if (!hudTimerInterval) return;
+    hudTimerRemainingSeconds = Math.max(0, Math.ceil((hudTimerDeadline - Date.now()) / 1000));
+    if (!hudTimerRemainingSeconds) { tickHudTimer(); return; }
     clearInterval(hudTimerInterval);
     hudTimerInterval = 0;
     hudTimerDeadline = 0;
@@ -927,7 +930,12 @@
     window.teacherSelectedStudent = getStudent()?.name || "";
   }
 
+  let cancelStudentPointHold = null;
+  let studentPointHoldAudioContext = null;
+
   function closeOverlays() {
+    cancelStudentPointHold?.();
+    cancelStudentPointHold = null;
     document.querySelectorAll(".tc-overlay").forEach((node) => node.remove());
   }
 
@@ -2141,12 +2149,12 @@
       openRosterEditor(true);
       return;
     }
-    const availableStudents = presentStudents();
+    const isAward = action === "award";
+    const availableStudents = isAward ? presentStudents() : [...state.roster];
     if (!availableStudents.length) {
       showToast("Mark at least one student present first.");
       return;
     }
-    const isAward = action === "award";
     const bankAmount = state.pointBank;
     let awardAmount = Math.max(1, bankAmount);
     const awardTitle = () => `AWARD +${awardAmount} POINT${awardAmount === 1 ? "" : "S"}`;
@@ -2167,9 +2175,14 @@
       });
     }
     const grid = el("div", "tc-student-grid");
-    sortStudentsByScoreAndName(availableStudents).forEach((student) => {
+    sortStudentsByScoreAndName(availableStudents).sort((a, b) => Number(isAbsent(a)) - Number(isAbsent(b))).forEach((student) => {
       const item = studentCard(student, { ranked: true });
+      let suppressClick = false;
+      if (!isAward || !bankAmount) {
+        bindStudentPointHold(item, student, isAward, (suppressed) => { suppressClick = suppressed; });
+      }
       item.addEventListener("click", () => {
+        if (suppressClick) return;
         if (isAward) awardPoints(student.id, !bankAmount ? awardAmount : undefined);
         else removePoint(student.id);
         closeOverlays();
@@ -2178,6 +2191,100 @@
     });
     card.append(grid);
     if (guidedTutorial?.step === 6) window.setTimeout(refreshGuidedTutorial, 0);
+  }
+
+  function bindStudentPointHold(item, student, isAward, suppressClick) {
+    let pending = 0, repeating = 0, limitTimer = 0, amount = 1, pointerId = null, counter = null, tone = null, gain = null;
+    const cleanup = () => {
+      clearTimeout(pending);
+      clearInterval(repeating);
+      clearTimeout(limitTimer);
+      pending = repeating = limitTimer = 0;
+      counter?.remove();
+      counter = null;
+      if (tone) { tone.stop(); tone.disconnect(); gain.disconnect(); tone = gain = null; }
+      const capturedPointer = pointerId;
+      pointerId = null;
+      if (capturedPointer !== null && item.hasPointerCapture(capturedPointer)) item.releasePointerCapture(capturedPointer);
+      if (cancelStudentPointHold === cleanup) cancelStudentPointHold = null;
+    };
+    const renderAmount = () => {
+      counter.textContent = `${isAward ? "+" : "−"}${amount}`;
+      if (tone) tone.frequency.setTargetAtTime(isAward ? 180 * Math.pow(1600 / 180, (amount - 1) / 9) : 1400 * Math.pow(100 / 1400, (amount - 1) / 9), studentPointHoldAudioContext.currentTime, .08);
+    };
+    item.style.touchAction = "none";
+    item.style.userSelect = "none";
+    item.addEventListener("contextmenu", event => event.preventDefault());
+    item.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || event.isPrimary === false || pointerId !== null) return;
+      suppressClick(false);
+      cancelStudentPointHold?.();
+      pointerId = event.pointerId;
+      item.setPointerCapture(pointerId);
+      cancelStudentPointHold = cleanup;
+      amount = 1;
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          studentPointHoldAudioContext ||= new AudioContextClass();
+          studentPointHoldAudioContext.resume().catch(() => {});
+        }
+      } catch { /* holding still works without audio */ }
+      pending = window.setTimeout(() => {
+        counter = el("div", "tc-point-hold-counter");
+        counter.style.left = `${Math.max(65, Math.min(window.innerWidth - 65, event.clientX))}px`;
+        counter.style.top = `${Math.max(100, event.clientY)}px`;
+        counter.style.color = isAward ? "#31d158" : "#ff453a";
+        document.body.append(counter);
+        if (studentPointHoldAudioContext) {
+          tone = studentPointHoldAudioContext.createOscillator();
+          gain = studentPointHoldAudioContext.createGain();
+          gain.gain.value = .06;
+          tone.connect(gain);
+          gain.connect(studentPointHoldAudioContext.destination);
+          renderAmount();
+          tone.start();
+        } else renderAmount();
+        repeating = window.setInterval(() => {
+          amount += 1;
+          renderAmount();
+          if (amount === 10) {
+            clearInterval(repeating);
+            repeating = 0;
+            limitTimer = window.setTimeout(() => {
+              suppressClick(true);
+              cleanup();
+            }, 2000);
+          }
+        }, 250 / (.75 * .75 * .75));
+      }, 450);
+    });
+    item.addEventListener("pointerup", (event) => {
+      if (event.pointerId !== pointerId) return;
+      const held = Boolean(counter), chosenAmount = amount;
+      cleanup();
+      if (!held) return;
+      event.preventDefault();
+      suppressClick(true);
+      const classroomId = state.activeClassroomId;
+      const card = makeOverlay("POINT CONTROL", `${student.name}: ${isAward ? "+" : "−"}${chosenAmount} POINTS`, "Apply these points?");
+      const actions = el("div", "tc-actions");
+      const yes = el("button", "tc-action primary", "CONFIRM");
+      const no = el("button", "tc-action", "CANCEL");
+      yes.type = no.type = "button";
+      yes.addEventListener("click", () => {
+        if (state.activeClassroomId === classroomId && getStudent(student.id) && (!isAward || !isAbsent(getStudent(student.id))) && (!isAward || !state.pointBank)) {
+          if (isAward) awardPoints(student.id, chosenAmount);
+          else removePoint(student.id, chosenAmount);
+        } else showToast("Classroom or point pool changed. Please try again.");
+        closeOverlays();
+      });
+      no.addEventListener("click", () => openStudentPicker(isAward ? "award" : "remove"));
+      actions.append(yes, no);
+      card.append(actions);
+    });
+    item.addEventListener("pointercancel", () => { suppressClick(true); cleanup(); });
+    item.addEventListener("lostpointercapture", () => { if (pointerId !== null) cleanup(); });
   }
 
   function openAwardNumpad(initialAmount, onConfirm) {
@@ -2268,14 +2375,15 @@
     openStudentPicker("award");
   }
 
-  function removePoint(studentId) {
+  function removePoint(studentId, manualAmount = 1) {
     const student = getStudent(studentId);
     if (!student) return;
-    student.points -= 1;
+    const removed = Math.min(99, Math.max(1, Math.floor(Number(manualAmount) || 1)));
+    student.points -= removed;
     save({ deferPoints: true, changeType: "decrement" });
     updateHud();
     playTeacherFeedback(false);
-    showToast(`-1 point from ${student.name}.`, "danger");
+    showToast(`-${removed} point${removed === 1 ? "" : "s"} from ${student.name}.`, "danger");
   }
 
   function onCorrect() {
@@ -2472,6 +2580,11 @@
   const whistleCountBadge = el("span", "tc-whistle-count");
   whistleCountBadge.hidden = true;
   whistleButton.append(whistleCountBadge);
+  function updateWhistleBadge() {
+    whistleCountBadge.hidden = whistleCount === 0;
+    whistleCountBadge.textContent = String(whistleCount);
+    whistleCountBadge.style.color = whistleCount >= 5 ? "#ff453a" : whistleCount === 4 ? "#ff9f0a" : whistleCount === 3 ? "#ffd60a" : whistleCount > 0 ? "#31d158" : "#a9bce9";
+  }
   const bank = el("button", "tc-bank", "ROSTER");
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
@@ -2486,8 +2599,14 @@
   syncButton.title = "Sync now";
   syncButton.setAttribute("aria-label", syncButton.title);
   hudTimerDisplayButton.addEventListener("click", openHudTimerPresets);
+  hudTimerDisplayButton.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    stopHudTimerCountdown(true);
+    if (hudTimerAlarmActive) stopHudTimerAlarm();
+    if ((hudTimerLiveDisplay && document.contains(hudTimerLiveDisplay)) || document.querySelector(".tc-timer-time-up")) closeOverlays();
+  });
   hudTimerPlayButton.addEventListener("click", () => {
-    if (hudTimerInterval) stopHudTimerCountdown(true);
+    if (hudTimerInterval) pauseHudTimer();
     else startHudTimer();
   });
   whistleButton.title = "Whistle — press briefly or hold";
@@ -2518,6 +2637,11 @@
   });
   whistleButton.addEventListener("pointerup", stopWhistle);
   whistleButton.addEventListener("pointercancel", stopWhistle);
+  whistleButton.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    whistleCount = Math.max(0, whistleCount - 1);
+    updateWhistleBadge();
+  });
   bank.addEventListener("click", requestPoolReset);
   chosenBanner.addEventListener("click", requestChosenReset);
   collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
