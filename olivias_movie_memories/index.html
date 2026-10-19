@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=r2-book-live-1">
+  <link rel="stylesheet" href="omni-mode.css">
   <link rel="stylesheet" href="student-landing.css?v=r2-book-mobile-11">
 </head>
 <body>
@@ -18,7 +19,7 @@
       <div class="setup-grid">
         <article class="setup-card"><p class="eyebrow">1 · Groups</p><h2>Build your teams</h2><div class="choice-row" role="group" aria-label="Number of teams"><button class="choice-button is-selected" type="button" data-group-count="2">2 Teams</button><button class="choice-button" type="button" data-group-count="3">3 Teams</button></div><div id="group-name-fields" class="group-name-fields"></div></article>
         <article class="setup-card"><p class="eyebrow">2 · Roster</p><h2>Select players</h2><p class="muted">Import a class from Teacher HUD for balanced teams, or add players manually.</p><button id="open-roster-button" class="primary-button" type="button">👥 IMPORT ROSTER</button><div id="roster-status" class="status-note" aria-live="polite">No class selected yet.</div><div id="team-editor" class="team-editor"></div><div class="manual-student-row"><input id="manual-student-input" type="text" maxlength="36" placeholder="Add player name"><select id="manual-student-team" aria-label="Team for new player"></select><button id="add-student-button" class="secondary-button" type="button">ADD</button></div></article>
-        <article class="setup-card settings-card"><p class="eyebrow">3 · Mode</p><h2>Game settings</h2><label class="field-label" for="game-mode">Game mode</label><select id="game-mode"><option value="character">CLASSIC</option><option value="correct-option" selected>CORRECT OPTION</option></select><p class="muted">Classic starts with priority videos, then character selection. Correct Option: listen and choose the missing word.</p><div class="rules-list"><span>🎬 One regular replay, then teacher override</span><span>🃏 Two team jokers per round</span><span>⏱ Answer time: 20 seconds</span><span>💬 Without subtitles +200 · With subtitles +100</span></div><button id="start-game-button" class="primary-button start-button" type="button" disabled>START GAME <span>→</span></button></article>
+        <article class="setup-card settings-card"><p class="eyebrow">3 · Mode</p><h2>Game settings</h2><label class="field-label" for="game-mode">Game mode</label><select id="game-mode"><option value="character">CLASSIC</option><option value="correct-option">CORRECT OPTION</option><option value="omni" selected>OMNI-MODE</option></select><p class="muted">Classic starts with priority videos, then character selection. Correct Option: listen and choose the missing word.</p><div class="rules-list"><span>🎬 One regular replay, then teacher override</span><span>🃏 Two team jokers per round</span><span>⏱ Answer time: 20 seconds</span><span>💬 Without subtitles +200 · With subtitles +100</span></div><button id="start-game-button" class="primary-button start-button" type="button" disabled>START GAME <span>→</span></button></article>
       </div>
     </section>
 
@@ -51,6 +52,7 @@
   <script src="scripts.js?v=r2-book-data-3"></script>
   <script src="js/config.js?v=r2-video-1"></script>
   <script src="js/correct-option.js"></script>
+  <script src="js/omni-mode.js"></script>
   <script src="js/character-popularity.js"></script>
   <script src="js/content-selector.js"></script>
   <script src="js/roster-adapter.js"></script>

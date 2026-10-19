@@ -46,8 +46,9 @@
       [choices[index], choices[swap]] = [choices[swap], choices[index]];
     }
     const answerOptions = choices.map((text, index) => ({ id: String.fromCharCode(97 + index), text }));
+    const word = typeof bonus.word === "string" && bonus.word.trim() ? bonus.word.trim() : item.correctOptionQuestion.target;
     return { ...item, isBonusQuestion: true,
-      blankTranscript: item.correctOptionQuestion.target.toUpperCase(),
+      blankTranscript: word.toUpperCase(),
       answerOptions, correctOptionId: answerOptions.find((option) => option.text === bonus.target).id };
   }
   Object.assign(window.LeagueListening, { getCorrectOptionQuestions, createCorrectOptionQuestion, createCorrectOptionBonus });

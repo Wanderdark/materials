@@ -5,7 +5,10 @@ const imperativesChoiceExercise = window.exerciseActivityModules.choice({
     return functionModule.id === "imperatives-do-dont";
   },
   buildQuestions(functionModule) {
-    return functionModule.sentences.map((example) => {
+    return functionModule.sentences.filter((example) =>
+      typeof example.focus === "string" && example.focus.trim() &&
+      typeof example.sentence === "string" && example.sentence.trim()
+    ).map((example) => {
       const isNegative = example.focus === "DON'T";
       const incorrectSentence = isNegative
         ? example.sentence.replace(/^Don't\s+/i, "")

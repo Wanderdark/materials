@@ -206,6 +206,7 @@
     @media (max-width:700px){.class-adv-picker{padding:20px}.class-adv-player-list{max-height:38vh}.class-adv-player-btn{min-width:120px}.class-adv-summary-row{font-size:14px;gap:8px}}
     /* FINAL SCORES overlay (birebir word_hunt go-*) */
     #overlay-final-scores{z-index:9900}
+    body #wo-toast-stack{z-index:10000}
     .go-box{background:linear-gradient(145deg,#0a0418,#04020a);border:2px solid var(--gold);border-radius:28px;padding:26px 30px 22px;width:min(98vw,1280px);max-height:96vh;display:flex;flex-direction:column;gap:14px;box-shadow:0 0 120px rgba(255,140,0,.18),0 30px 80px rgba(0,0,0,.85)}
     .go-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,48px);color:var(--gold);letter-spacing:.14em;text-shadow:0 0 40px rgba(255,140,0,.85);text-align:center}
     .go-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:-8px}
@@ -1828,6 +1829,7 @@
   let _scIdx     = 0;
   let _scResults = [];
   let _scFinalTransferred = false;
+  let _scResultHandled = true;
 
   function startSPQueue(){
     if(selectedPlayers.length === 0) return;
@@ -1875,6 +1877,8 @@
       endlessTime:     _spTimeLimit === 'endless',
       disableStars:    endlessPractice
     });
+    _scResultHandled = false;
+    document.getElementById('result-back-btn').disabled = false;
   }
 
   // ── INTERIM LEADERBOARD ───────────────────────────────────
@@ -2276,6 +2280,9 @@
         window.AdvRun.returnToMap(); return;
       }
       if(_scQueue.length > 0){
+        if(_scResultHandled || _scIdx >= _scQueue.length) return;
+        _scResultHandled = true;
+        document.getElementById('result-back-btn').disabled = true;
         // Skoru ve yıldızları kaydet
         const score      = parseInt(document.getElementById('final-score').textContent) || 0;
         const starCount  = _spWordCount === 'endless' ? 30 : _spWordCount;

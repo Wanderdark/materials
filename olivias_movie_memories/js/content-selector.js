@@ -83,22 +83,24 @@ function createRandomItemPicker(items, options = {}) {
   const availableRegularItems = () => regularItems.filter((item) => !excluded.has(item.id));
   const correctOptionMode = options.correctOption === true;
   const ratingSelectionEnabled = window.LeagueListening.GAME_CONFIG.characterRatingSelectionEnabled;
+  const ratingScriptOrderEnabled = window.LeagueListening.GAME_CONFIG.teacherRatingScriptOrderEnabled === true;
+  const orderRegularItems = (list) => ratingScriptOrderEnabled ? [...list].sort((left, right) => getVideoRating(right) - getVideoRating(left)) : shuffle(list);
   let selectedCharacterVideoId = null;
-  const correctOptionScriptOrder = !ratingSelectionEnabled;
+  const correctOptionScriptOrder = !ratingSelectionEnabled && !ratingScriptOrderEnabled;
   const trialItems = playable.filter((item) => window.LeagueListening.getCorrectOptionQuestions(item).length);
   const watched = (item) => shown.has(item.id) || priorityShown.has(item.id);
   const trialAvailable = () => trialItems.filter((item) => !excluded.has(item.id));
   const correctOptionPool = () => {
     const unused = trialAvailable().filter((item) => !watched(item));
     const regular = unused.filter((item) => !priorityItems.includes(item));
-    return [...priorityItems.filter((item) => unused.includes(item)), ...(correctOptionScriptOrder ? regular : shuffle(regular))];
+    return [...priorityItems.filter((item) => unused.includes(item)), ...(correctOptionScriptOrder ? regular : orderRegularItems(regular))];
   };
   if (correctOptionMode && trialAvailable().length && trialAvailable().every(watched)) {
     trialItems.forEach((item) => { shown.delete(item.id); priorityShown.delete(item.id); });
     saveHistory();
   }
   let priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !watched(item));
-  let pool = correctOptionMode ? correctOptionPool() : shuffle(availableRegularItems().filter((item) => !watched(item)));
+  let pool = correctOptionMode ? correctOptionPool() : orderRegularItems(availableRegularItems().filter((item) => !watched(item)));
   const refillRegularPool = () => {
     if (pool.length || priorityPool.length || correctOptionMode) return;
     const available = playable.filter((item) => !excluded.has(item.id));
@@ -108,7 +110,7 @@ function createRandomItemPicker(items, options = {}) {
       saveHistory();
     }
     priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !watched(item));
-    pool = shuffle(availableRegularItems().filter((item) => !watched(item)));
+    pool = orderRegularItems(availableRegularItems().filter((item) => !watched(item)));
   };
   const refillCorrectOptionPool = () => {
       if (!pool.length) {
@@ -132,7 +134,7 @@ function createRandomItemPicker(items, options = {}) {
       return priorityItem;
     }
     refillRegularPool();
-    const item = pool.pop() || null;
+    const item = (ratingScriptOrderEnabled ? pool.shift() : pool.pop()) || null;
     return item;
   };
 
@@ -175,6 +177,38 @@ function createRandomItemPicker(items, options = {}) {
     return item;
   };
 
+  if (options.omni) {
+    const omniCandidates = (type) => {
+      refillRegularPool();
+      return [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type)).sort((left, right) => {
+        const leftPriority = priorityItems.includes(left), rightPriority = priorityItems.includes(right);
+        if (leftPriority || rightPriority) return leftPriority && rightPriority ? Number(left.priority) - Number(right.priority) : leftPriority ? -1 : 1;
+        return getVideoRating(right) - getVideoRating(left) || playable.indexOf(left) - playable.indexOf(right);
+      });
+    };
+    pick.availableQuestionTypes = () => ["translation", "word", "true-false"].filter((type) => omniCandidates(type).length);
+    const takeOmniItem = (item) => {
+      if (item) { pool = pool.filter((candidate) => candidate.id !== item.id); priorityPool = priorityPool.filter((candidate) => candidate.id !== item.id); }
+      return item;
+    };
+    pick.hasPendingPriority = (type) => omniCandidates(type).some((item) => priorityItems.includes(item));
+    pick.availableCharacterIds = (type) => new Set(omniCandidates(type).flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
+    pick.pickForQuestionType = (type) => {
+      selectedCharacterVideoId = null;
+      return takeOmniItem(omniCandidates(type)[0] || null);
+    };
+    pick.pickForCharacter = (characterId, type) => {
+      if (pick.hasPendingPriority(type)) return pick.pickForQuestionType(type);
+      const matching = omniCandidates(type).filter((item) => item.characterIds?.includes(characterId));
+      if (!matching.length) return null;
+      const highestRating = getVideoRating(matching[0]);
+      const candidates = ratingSelectionEnabled ? matching.filter((item) => getVideoRating(item) === highestRating) : matching;
+      const item = candidates[Math.floor(Math.random() * candidates.length)];
+      selectedCharacterVideoId = item.id;
+      window.LeagueListening.recordCharacterSelection(characterId);
+      return takeOmniItem(item);
+    };
+  }
   return pick;
 }
 

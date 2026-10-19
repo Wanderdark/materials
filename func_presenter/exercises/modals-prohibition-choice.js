@@ -5,7 +5,10 @@ const modalsProhibitionChoiceExercise = window.exerciseActivityModules.choice({
     return functionModule.id === "modals-prohibition";
   },
   buildQuestions(functionModule) {
-    return functionModule.sentences.map((example) => {
+    return functionModule.sentences.filter((example) =>
+      typeof example.focus === "string" && example.focus.trim() &&
+      typeof example.sentence === "string" && example.sentence.trim()
+    ).map((example) => {
       const modal = example.focus.toLowerCase();
       const alternative = modal === "can't" ? "must" : "can";
       const incorrectSentence = example.sentence.replace(new RegExp(modal, "i"), alternative);

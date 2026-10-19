@@ -13,10 +13,10 @@
       if (!config.enabled || mode === "student") return null;
       const chance = config.testMode ? config.testChance : config.normalChance;
       if (Math.random() >= chance) return null;
-      const key = mode === "correct-option" ? "correct-option" : "classic";
+      const key = mode === "correct-option" || mode === "omni-word" ? "correct-option" : mode === "omni-translation" ? "omni-translation" : "classic";
       let bag = bags.get(key);
       if (!bag?.length) {
-        bag = EVENTS.filter((event) => key === "correct-option" || event.id !== "hidden-word");
+        bag = EVENTS.filter((event) => (key === "correct-option" || event.id !== "hidden-word") && (key !== "omni-translation" || event.id !== "complete-silence"));
         for (let i = bag.length - 1; i > 0; i -= 1) {
           const swap = Math.floor(Math.random() * (i + 1));
           [bag[i], bag[swap]] = [bag[swap], bag[i]];
