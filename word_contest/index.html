@@ -2644,7 +2644,7 @@ function showQuestion(pts) {
   questionsLeft[pts]--;
   updateUI();
   flashWord(currentQ);
-  if(diffAudio) diffAudio.volume = isMuted ? 0 : 0.12; // müziği kıs
+  if(diffAudio) diffAudio.volume = isMuted ? 0 : 0.1; // müziği kıs
   startTimer(10);
   setTimeout(() => { questionShown = true; updateUI(); }, 2000);
 }
@@ -3093,7 +3093,7 @@ function stopAllMusic() {
 
 /* ── MUTE / FULLSCREEN ── */
 let isMuted = false;
-const VOLS = { mainMenu: 0.3, timer: 1.0, answer: 1.0, joker: 0.35, diff: 0.3 };
+const VOLS = { mainMenu: 0.2, timer: 1.0, answer: 1.0, joker: 0.35, diff: 0.2 };
 
 function applyMuteToAll(mute) {
   if(mainMenuAudio) mainMenuAudio.volume = mute ? 0 : VOLS.mainMenu;

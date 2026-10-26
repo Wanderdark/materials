@@ -1,0 +1,16 @@
+/* Graph exercise prompts paired with the existing three-choice answer layout. */
+.test-question-prompt.graph-practice-prompt { padding: clamp(18px, 2vw, 32px); gap: 18px; }
+.graph-practice-chart { margin: 0; display: grid; gap: 20px; width: 100%; }
+.graph-practice-chart figcaption { color: var(--text); font-size: clamp(22px, 2vw, 32px); font-weight: 800; text-align: center; }
+.graph-practice-bar-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(70px, 1.1fr); align-items: center; gap: 12px; color: var(--text); font-size: clamp(16px, 1.4vw, 24px); }
+.graph-practice-track { height: 28px; border-radius: 6px; background: #293b65; overflow: hidden; }
+.graph-practice-bar { height: 100%; }
+.graph-practice-pie { position: relative; width: min(100%, 31vh, 340px); aspect-ratio: 1; justify-self: center; border: 2px solid #b6f4d9; border-radius: 50%; }
+.graph-practice-pie-value { position: absolute; transform: translate(-50%, -50%); color: #071b16; font-size: clamp(18px, 1.8vw, 30px); font-weight: 900; }
+.graph-practice-pie-legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; color: var(--text); font-size: clamp(16px, 1.3vw, 23px); }
+.graph-practice-pie-legend > span { display: flex; align-items: center; gap: 10px; }
+.graph-practice-pie-legend i { flex: 0 0 18px; height: 18px; border-radius: 4px; }
+.graph-practice-bar-row-with-value { grid-template-columns: minmax(0, 1fr) minmax(70px, 1.1fr) auto; }
+.graph-practice-statement { margin: 0; padding: clamp(20px, 2vw, 32px); border: 2px solid #4563b2; border-radius: 20px; background: #152b60; color: var(--yellow); font-size: clamp(25px, 2.3vw, 38px); font-weight: 800; line-height: 1.35; text-align: center; }
+.graph-practice-sentence { margin: 0; color: var(--yellow); font-size: clamp(22px, 2vw, 34px); font-weight: 800; line-height: 1.35; }
+.graph-practice-question { margin: 0; color: var(--text); font-size: clamp(20px, 1.6vw, 28px); font-weight: 800; line-height: 1.3; }

@@ -67,6 +67,8 @@ function renderTestQuestion(example) {
     const prompt = document.createElement("section");
     prompt.id = "testQuestionPrompt";
     prompt.className = "test-question-prompt";
+    const choiceImages = current.choiceImages || data.choiceImages;
+    if (choiceImages) prompt.classList.add("test-question-picture-prompt");
     const label = document.createElement("p");
     label.className = "test-question-label";
     label.textContent = current.promptLabel || data.promptLabel || "COMPLETE THE DIALOGUE";
@@ -102,10 +104,11 @@ function renderTestQuestion(example) {
         prompt.append(dialogueLine);
       });
     }
+    if (current.graph) renderGraphPracticePrompt(prompt, current.graph);
     els.exampleVisualPanel.append(prompt);
 
     const title = document.createElement("h2");
-    title.textContent = isClassificationQuiz ? "CHOOSE THE CATEGORY" : "CHOOSE THE BEST ANSWER";
+    title.textContent = current.graphStatement && (current.choices || data.choices || []).length === 2 ? "TRUE OR FALSE?" : isClassificationQuiz ? "CHOOSE THE CATEGORY" : "CHOOSE THE BEST ANSWER";
     const options = document.createElement("div");
     options.className = "test-question-options";
     let firstAttempt = true;
@@ -116,6 +119,18 @@ function renderTestQuestion(example) {
       option.type = "button";
       option.className = `test-question-choice ${colorClasses[index]}`;
       option.textContent = choice;
+      if (choiceImages?.[choice]) {
+        option.classList.add("image-choice");
+        const letter = String.fromCharCode(65 + index);
+        const badge = document.createElement("span");
+        badge.className = "test-question-choice-letter";
+        badge.textContent = `${letter})`;
+        const image = document.createElement("img");
+        image.src = choiceImages[choice];
+        image.alt = `Option ${letter}`;
+        option.setAttribute("aria-label", `Option ${letter}`);
+        option.replaceChildren(badge, image);
+      }
       option.addEventListener("click", () => {
         if (option.disabled) return;
         const isCorrect = choice === current.answer;
@@ -124,15 +139,17 @@ function renderTestQuestion(example) {
           firstAttempt = false;
           option.disabled = true;
           option.classList.add("removed");
-          return;
+          if (!data.advanceAfterWrong) return;
         }
-        options.querySelectorAll("button").forEach((button) => {
+        options.querySelectorAll("button").forEach((button, buttonIndex) => {
           button.disabled = true;
-          if (button !== option) button.classList.add("removed");
+          if (choices[buttonIndex] !== current.answer) button.classList.add("removed");
+          else button.classList.add("correct");
         });
-        option.classList.add("correct");
-        if (firstAttempt) window.StudentGame?.onCorrect();
-        window.TeacherControl?.onCorrect();
+        if (isCorrect) {
+          if (firstAttempt) window.StudentGame?.onCorrect();
+          window.TeacherControl?.onCorrect();
+        }
         if (isClassificationQuiz || hasQuestionSequence) {
           const nextButton = document.createElement("button");
           nextButton.type = "button";
@@ -153,6 +170,7 @@ function renderTestQuestion(example) {
     });
     if (current.hideQuestionTitle || data.hideQuestionTitle) question.replaceChildren(options);
     else question.replaceChildren(title, options);
+    if (current.graphStatement) renderGraphPracticeStatement(question, current.graphStatement, options);
   };
   renderCurrentQuestion();
 }

@@ -69,6 +69,8 @@ function renderSuggestionDialogue(example) {
   const root = document.createElement("section");
   const densityClass = dialogue.bubbles.length === 7 ? " seven-bubbles" : dialogue.bubbles.length >= 8 ? " dense" : "";
   root.className = `suggestion-dialogue${densityClass}`;
+  if (dialogue.layoutClass) root.classList.add(...dialogue.layoutClass.split(/\s+/).filter(Boolean));
+  if (dialogue.portraitConversation) root.classList.add("portrait-conversation");
 
   const heading = document.createElement("h2");
   heading.className = "suggestion-dialogue-heading";
@@ -103,7 +105,30 @@ function renderSuggestionDialogue(example) {
     } else {
       bubble.textContent = bubbleData.text;
     }
-    bubbles.append(bubble);
+    if (dialogue.portraitConversation) {
+      const turn = document.createElement("div");
+      turn.className = `suggestion-dialogue-turn ${bubbleData.type}`;
+      const portrait = document.createElement("img");
+      portrait.className = "suggestion-dialogue-portrait";
+      portrait.src = bubbleData.portraitPath;
+      portrait.alt = bubbleData.speaker;
+      const body = document.createElement("div");
+      body.className = "suggestion-dialogue-turn-body";
+      const speaker = document.createElement("p");
+      speaker.className = "suggestion-dialogue-speaker";
+      speaker.textContent = bubbleData.speaker;
+      body.append(speaker, bubble);
+      if (bubbleData.note) {
+        const note = document.createElement("p");
+        note.className = "suggestion-dialogue-note";
+        note.textContent = bubbleData.note;
+        body.append(note);
+      }
+      turn.append(portrait, body);
+      bubbles.append(turn);
+    } else {
+      bubbles.append(bubble);
+    }
     setActiveVideoClip(bubbleData.videoClip);
     visibleCount += 1;
     if (visibleCount === dialogue.bubbles.length) continueButton.classList.add("hidden");

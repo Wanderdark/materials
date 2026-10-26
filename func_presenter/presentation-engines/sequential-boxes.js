@@ -293,6 +293,36 @@ function renderInquiryRevealSequentialBoxes(data) {
   root.append(bubbleList);
   els.presenceView.replaceChildren(root);
 
+  if (data.questionBubbleOnClick) {
+    data.items.forEach((item, index) => {
+      const row = document.createElement("div");
+      row.className = "sequential-boxes-inquiry-row";
+      row.style.setProperty("--inquiry-tone", item.tone);
+      row.style.setProperty("--inquiry-text", item.textColor || "#fff95a");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "sequential-boxes-inquiry-cell inquiry-word is-active";
+      button.style.gridColumn = "1 / -1";
+      button.textContent = item.word;
+      button.setAttribute("aria-expanded", "false");
+      const bubble = document.createElement("button");
+      bubble.type = "button";
+      bubble.className = "sequential-boxes-inquiry-bubble";
+      bubble.textContent = item.example;
+      bubble.style.gridRow = String(index + 1);
+      bubble.style.visibility = "hidden";
+      bubbleList.append(bubble);
+      button.addEventListener("click", () => {
+        bubble.style.visibility = "visible";
+        button.setAttribute("aria-expanded", "true");
+        button.classList.remove("is-active");
+      });
+      row.append(button);
+      rowList.append(row);
+    });
+    return;
+  }
+
   const rows = [];
   let step = 0;
   const makeRevealTrigger = (element) => {

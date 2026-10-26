@@ -13,4 +13,11 @@
 .simple-process-index-item { display: grid; grid-template-columns: clamp(54px, 5vw, 88px) 1fr; align-items: center; min-height: clamp(76px, 9vh, 118px); padding: 0 clamp(18px, 2.5vw, 36px) 0 0; border: 3px solid rgba(255, 213, 65, .78); border-radius: 20px; background: linear-gradient(105deg, #243f7f, #182d65 48%, #122556); color: #fff9d4; cursor: pointer; font-family: "Barlow Condensed", sans-serif; font-size: clamp(28px, 3vw, 48px); font-weight: 800; letter-spacing: .05em; text-align: left; transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease; }
 .simple-process-index-number { display: grid; place-items: center; align-self: stretch; border-radius: 16px 0 0 16px; background: linear-gradient(145deg, #ffdb4e, #f39a2c); color: #10224e; font-size: 1.1em; }
 .simple-process-index-item:hover, .simple-process-index-item:focus-visible { border-color: #fff3ac; background: linear-gradient(105deg, #3359a7, #263e83 48%, #183269); box-shadow: 0 0 26px rgba(255, 215, 78, .42); outline: none; transform: translateX(8px); }
+.simple-process-index-item.completed { grid-template-columns: clamp(54px, 5vw, 88px) 1fr auto; border-color: rgba(155, 167, 190, .45); background: linear-gradient(105deg, #263044, #162139); color: #aab3c8; }
+.simple-process-index-item.completed .simple-process-index-number { filter: grayscale(1); opacity: .6; }
+.simple-process-index-item.completed > span:nth-child(2) { opacity: .7; }
+.simple-process-index-tick { margin-left: 14px; color: var(--mint, #65e6b8); font-size: 1.1em; }
+.simple-process-index-item:disabled { opacity: .45; cursor: default; transform: none; box-shadow: none; }
+.simple-process-index--items-5 .simple-process-index-item { min-height: clamp(64px, 7.5vh, 96px); font-size: clamp(24px, 2.3vw, 38px); letter-spacing: .025em; }
+.simple-process-index--items-5 .simple-process-index-list { gap: clamp(10px, 1.2vh, 18px); }
 @media (max-width: 1000px) { .simple-process-index { grid-template-columns: 1fr; min-height: 0; } .simple-process-index-star-panel { min-height: 170px; } .simple-process-index-star { font-size: 150px; } }

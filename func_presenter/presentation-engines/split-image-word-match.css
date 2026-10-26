@@ -52,6 +52,37 @@
   grid-template-rows: repeat(6, minmax(0, 1fr));
 }
 
+.split-image-word-match--items-10 .split-image-word-match-images {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  align-content: center;
+  gap: clamp(8px, .8vw, 14px);
+}
+
+.split-image-word-match--items-10 .split-image-word-match-labels {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+}
+
+.split-image-word-match--items-10 {
+  padding: clamp(6px, .6vw, 12px);
+  gap: clamp(8px, 1vh, 14px);
+}
+
+.split-image-word-match--items-10 .split-image-word-match-layout {
+  grid-template-columns: minmax(0, 1.4fr) minmax(380px, 1fr);
+  gap: clamp(14px, 1.5vw, 28px);
+}
+
+.split-image-word-match--items-10 .split-image-word-match-label {
+  padding: 6px 8px;
+  font-size: clamp(18px, 1.5vw, 27px);
+  line-height: 1.1;
+}
+
+.example-card:has(.split-image-word-match--items-10) .sentence-panel {
+  padding: clamp(10px, 1vw, 18px);
+}
+
 .split-image-word-match-image,
 .split-image-word-match-label {
   min-width: 0;
@@ -123,5 +154,13 @@
   .split-image-word-match-labels {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(0, 1fr));
+  }
+
+  .split-image-word-match--items-10 .split-image-word-match-labels {
+    grid-template-rows: repeat(5, minmax(0, 1fr));
+  }
+
+  .split-image-word-match--items-10 .split-image-word-match-layout {
+    grid-template-columns: 1fr;
   }
 }

@@ -59,6 +59,74 @@
 
   window.TEAM_CHALLENGERS_QUESTIONS = Object.freeze([
     question({
+      id: "g8u1-jack-classmate-opinions-01", difficulty: 2, unit: 1, priority: 2, template: "friendOpinions", category: "Friendship",
+      passage: "Four friends are talking about one of their classmates, Jack. Read their comments and answer the question.",
+      opinions: [{ speaker: "David", text: "He sometimes thinks only about himself, but I enjoy spending time with him. He always makes me smile." }, { speaker: "Benjamin", text: "I can count on him because he never lies to me. He is also very kind to everyone." }, { speaker: "Noah", text: "He never supports me when I have a problem. He only cares about himself." }, { speaker: "Ethan", text: "I tell my secrets to him because he is reliable, but he's a bit stubborn, he doesn’t change his mind easily." }],
+      question: "According to the comments above, who says only good things about Jack?", questionHighlights: ["only good things"],
+      options: ["David", "Benjamin", "Noah", "Ethan"], answer: 1
+    }),
+    question({
+      id: "g8u1-hannah-jack-refusal-no-excuse-01", difficulty: 1, unit: 1, priority: 2, template: "dialogue", category: "Invitations",
+      lines: [{ speaker: "Hannah", text: "Hi, Jack. I'm arranging a hiking event tomorrow. How about joining us?" }, { speaker: "Jack", text: "____." }],
+      question: "Jack refuses Hannah’s invitation without giving an excuse. Which of the following can be Jack’s response to Hannah's invitation?", questionHighlights: ["without giving an excuse"],
+      options: ["I'm afraid, I can’t. I have to finish my science project.", "I’d be happy to, but I have other plans.", "Sounds exciting, but I must refuse.", "That would be great! I’d really enjoy it."], answer: 2
+    }),
+    question({
+      id: "g8u1-emma-invitation-missing-time-01", difficulty: 2, unit: 1, priority: 2, template: "invitationChoices", category: "Reading an Invitation",
+      passage: "Elena, a drama teacher, asks her students to prepare an invitation card as homework. Emma prepares her card. She writes information about the type, place and date of the event, but she forgets to write the time.",
+      question: "According to the information above, which of the following invitation cards belongs to Emma?", questionHighlights: ["belongs to Emma"],
+      options: ["Dear Hannah,\nWe're going hiking in the forest at 3 p.m. this Sunday. Would you like to join us?", "Dear Chloe,\nHow about attending my dance party on Saturday at 5 p.m.? We're going to have lots of fun.", "Dear Olivia,\nI'm organizing a slumber party on Friday, June 12th, in my house. Do you want to join us?", "Dear Ethan,\nI'm having a board game night at my house at 7 p.m. I hope you can come over."], answer: 2
+    }),
+    question({
+      id: "g8u1-victoria-board-game-group-chat-01", difficulty: 2, unit: 1, priority: 2, template: "chatThread", category: "Invitations",
+      groupTitle: "Weekend Plans",
+      messages: [{ speaker: "Victoria", side: "incoming", text: "Hi, everyone! I’m having a board game party on Sunday. How about joining us?" }, { speaker: "Noah", side: "incoming", text: "Sounds awesome, I have to study for my maths exam." }, { speaker: "Mia", side: "incoming", text: "I’m sorry, but I’m afraid I can’t join you on Sunday." }, { speaker: "Ethan", side: "incoming", text: "I’m very busy on Sunday, but I’ll definitely be there." }, { speaker: "Olivia", side: "incoming", text: "It sounds exciting but I have other plans for Sunday." }],
+      question: "According to the responses above, how many people refuse Victoria's invitation?", questionHighlights: ["how many people refuse"],
+      options: ["1", "2", "3", "4"], answer: 2
+    }),
+    question({
+      id: "g8u1-lakeside-barbecue-acceptance-01", difficulty: 2, unit: 1, priority: 2, template: "situation", category: "Invitations",
+      situation: "Suppose that one of your friends invites you to have a barbecue by the lake this Saturday. You have some other plans, but you enjoy spending time outdoors, so you want to accept your friend's invitation.",
+      question: "According to the information above, what do you say to your friend?", questionHighlights: ["say to your friend"],
+      options: ["That would be great, but I have a plan with my family this Saturday.", "That sounds awesome, but I don’t think I can come.", "Sounds fun, but I'm afraid I can’t come this time.", "I’m very busy this Saturday, but I don't want to miss it."], answer: 3
+    }),
+    question({
+      id: "g8u1-emma-best-friend-dialogue-01", difficulty: 1, unit: 1, priority: 2, template: "dialogue", category: "Friendship",
+      lines: [{ speaker: "Daniel", text: "Is Emma your close friend?" }, { speaker: "Hannah", text: "Sure. She's my best friend." }, { speaker: "Daniel", text: "What makes her your best friend?" }, { speaker: "Hannah", text: "She never ____." }],
+      question: "Which of the following completes the conversation above?", questionHighlights: ["completes"],
+      options: ["shares my secrets with others", "cares about my opinions", "backs me up when I need her support", "understands and cares about my feelings"], answer: 0
+    }),
+    question({
+      id: "g8u1-ella-hannah-email-refusal-01", difficulty: 2, unit: 1, priority: 2, template: "emailMessage", category: "Invitations",
+      sender: "Ella", recipient: "Hannah", subject: "Re: Birthday Party",
+      paragraphs: ["Hello Hannah,", "Thanks for inviting me, but I can't attend your birthday party on Sunday. I made another plan with my mother. We're going to a movie together. I hope I can join you next time.", "Have a wonderful time.", "Love,", "Ella"],
+      question: "We can understand from the e-mail that Ella ____.", questionHighlights: ["understand"],
+      options: ["invites Hannah to her birthday party", "promises Hannah to attend her party on Sunday", "is going to the movie with Hannah on Sunday", "tells her reason for not attending Hannah's party"], answer: 3
+    }),
+    question({
+      id: "g8u1-emma-graduation-invitation-01", difficulty: 2, unit: 1, priority: 2, template: "imageInvitation", category: "Reading an Invitation",
+      passage: "Emma organizes a graduation party and sends her friends an invitation card. After Hannah looks at the invitation, she texts Emma to get some more information about the event.",
+      introPortraits: ["Emma", "Hannah"], image: "assets/images/emma-graduation-invitation-wide.png",
+      imageAlt: "GRADUATION PARTY. Let's celebrate our graduation with a fun party. Join us for great music, dance, delicious food and loads of fun! Friday. At 5.30 p.m. Blue Garden Café, 24 Maple Street. Hope to see you there!",
+      question: "According to the information above, which of the following can be Hannah's message to Emma?", questionHighlights: ["Hannah's message"],
+      options: ["What time is the party going to start?", "Where is the party going to take place?", "When is the party going to be?", "How much do we have to pay?"], answer: 3
+    }),
+    question({
+      id: "g8u1-jack-benjamin-personality-01", difficulty: 2, unit: 1, priority: 2, template: "portraitSpeech", category: "Friendship",
+      lines: [{ speaker: "Jack", text: "Hello, my name's Jack. Let me introduce you to my best friend, Benjamin. I rely on him because he keeps my secrets and never tells lies. He always backs me up when I need his support. He's a relaxed person. He never worries about little things. We always get on well and rarely argue because we have a strong friendship." }],
+      question: "According to the information above, which of the following is NOT one of Benjamin's personality traits?", questionHighlights: ["NOT"],
+      options: ["selfish", "supportive", "laid-back", "reliable"], answer: 0
+    }),
+    question({
+      id: "g8u1-benjamin-pop-concert-plans-01", difficulty: 2, unit: 1, priority: 2, template: "scheduleInvitation", category: "Invitations",
+      speaker: "Benjamin", day: "Friday",
+      passage: "Ethan has two tickets for a pop concert on Friday, and he invites Benjamin to join the event with him.",
+      schedule: [{ time: "9.00–10.30 a.m.", activity: "Swimming in the pool" }, { time: "12–2 p.m.", activity: "Having lunch with his father" }, { time: "4–5 p.m.", activity: "Skating" }, { time: "8–10 p.m.", activity: "Attending Jack's birthday party" }],
+      ticket: { title: "POP CONCERT", venue: "Riverside Hall", day: "Friday", time: "8.30 p.m.", image: "assets/images/benjamin-pop-concert-ticket.png" },
+      question: "According to the information above, how can Benjamin respond to Ethan's invitation?", questionHighlights: ["respond"],
+      options: ["I'd love to, but I'm going to skate.", "That would be great, but I have to meet my father.", "Thanks for inviting me, but I must attend a birthday party.", "I'm sorry, but I can't come. I'm going to swim in the pool."], answer: 2
+    }),
+    question({
       id: "g8u1-friendship-01", difficulty: 2, template: "dialogue", category: "Friendship",
       lines: [{ speaker: "Ethan", text: "David always keeps his promises. I can ____ him." }],
       question: "Which option CANNOT complete Ethan's sentence?",

@@ -2,7 +2,7 @@
 window.LeagueListening = window.LeagueListening || {};
 const { GAME_CONFIG, resolveLocalVideoSrc, resolveVideoSrc } = window.LeagueListening;
 
-function displayCharacterNames(text) { return String(text ?? "").replace(/\bamina\b/gi, "ANNA"); }
+function displayCharacterNames(text) { return String(text ?? "").replace(/\bamina\b/gi, "Amine"); }
 const $ = (selector) => document.querySelector(selector);
 const els = Object.freeze({
   setup: $("#setup-screen"), game: $("#game-screen"), round: $("#round-screen"), final: $("#final-screen"),

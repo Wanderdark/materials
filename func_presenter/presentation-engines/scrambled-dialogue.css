@@ -1,4 +1,17 @@
 /* Scrambled dialogue template: click the lines in their original order. */
+.dialogue-reveal-video-wrap { position: relative; width: 100%; min-width: 0; }
+.dialogue-reveal-video-wrap video { display: block; width: 100%; max-height: 64vh; object-fit: contain; border-radius: 20px; background: #020713; }
+.dialogue-reveal-video-resize { position: absolute; top: 14px; right: 14px; width: 52px; height: 52px; border: 2px solid var(--yellow); border-radius: 14px; background: #10234d; color: var(--yellow); font-size: 30px; cursor: pointer; }
+.example-card.dialogue-reveal-video-wide { grid-template-columns: minmax(0, 1fr); }
+.example-card.dialogue-reveal-video-wide .sentence-panel { display: none; }
+.example-card.dialogue-reveal-video-wide .visual-panel { min-height: 0; }
+.example-card.dialogue-reveal-video-wide .dialogue-image-toggle { display: none; }
+.dialogue-reveal-video-resize:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+.dialogue-image-portraits { display: flex; justify-content: center; align-items: center; gap: clamp(20px, 3vw, 48px); }
+.dialogue-image-portraits figure { display: grid; justify-items: center; gap: 12px; margin: 0; color: var(--yellow); font-weight: 800; font-size: clamp(16px, 1.5vw, 24px); }
+.visual-panel .dialogue-image-portraits img { width: clamp(72px, 8vw, 140px); aspect-ratio: 1; object-fit: cover; border: 3px solid var(--yellow); border-radius: 50%; }
+.dialogue-image-toggle { position: absolute; top: 18px; right: 18px; z-index: 3; width: 54px; height: 54px; padding: 0; border: 2px solid var(--yellow); border-radius: 16px; background: var(--yellow); font-size: 26px; cursor: pointer; }
+.dialogue-image-toggle:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 .scrambled-dialogue-list { gap: 12px; }
 .presence-slide .presence-title.compact.scrambled-dialogue-title { font-size: clamp(12px, .6vw, 20px) !important; letter-spacing: .06em; line-height: 1.15; white-space: nowrap; }
 .scrambled-dialogue-row { cursor: pointer; transition: transform .18s ease, border-color .18s ease, background .18s ease; }

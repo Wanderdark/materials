@@ -256,10 +256,10 @@ const simplePresentDoYouLikeFunction = {
 };
 
 const simplePresentVideoStartIndex = simplePresentDoYouLikeFunction.sentences.findIndex(
-  (item) => item.id === "school-life-chloe-emma-video"
+  (item) => item.videoDialogue
 );
 const simplePresentVideoItems = simplePresentDoYouLikeFunction.sentences
-  .slice(simplePresentVideoStartIndex, simplePresentVideoStartIndex + 13)
+  .slice(simplePresentVideoStartIndex)
   .filter((item) => item.videoDialogue)
   .map((item) => ({
     id: item.id,

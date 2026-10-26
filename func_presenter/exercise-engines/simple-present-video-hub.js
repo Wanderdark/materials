@@ -51,6 +51,7 @@ function renderSimplePresentVideoHub(example) {
     card.type = "button";
     card.className = `simple-present-video-hub-card${completed ? " is-completed" : ""}${portraitSpeakers.length === 1 ? " is-solo" : ""}`;
     card.disabled = completed;
+    card.classList.toggle("is-highlighted", Boolean(item.highlighted));
     card.setAttribute("aria-label", `${portraitSpeakers.join(" and ") || "Video"} video`);
 
     const portraits = document.createElement("span");

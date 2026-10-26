@@ -1224,8 +1224,8 @@ function toggleMusicMute(){
 }
 
 function _applyMuteVolumes(){
-  menuAudio.volume=_musicMuted?0:0.55;
-  if(mainGameAudio) mainGameAudio.volume=_musicMuted?0:0.48;
+  menuAudio.volume=_musicMuted?0:0.3;
+  if(mainGameAudio) mainGameAudio.volume=_musicMuted?0:0.3;
 }
 
 function _updateMuteBtn(){
@@ -3529,7 +3529,7 @@ document.addEventListener('fullscreenchange',()=>{
 // ── MAIN MENU MUSIC ───────────────────────────────────────
 const menuAudio=new Audio('./sounds/mainmenu.mp3');
 menuAudio.loop=true;
-menuAudio.volume=0.55;
+menuAudio.volume=0.3;
 menuAudio.preload='none';
 
 function playMenuMusic(){
@@ -3551,7 +3551,7 @@ function _loadAndPlayMainTrack(){
   if(!mainGameMusicOn) return;
   if(mainGameAudio){mainGameAudio.onended=null;mainGameAudio.pause();mainGameAudio=null;}
   mainGameAudio=new Audio('./'+MAIN_TRACKS[mainTrackIdx]);
-  mainGameAudio.volume=_musicMuted?0:0.48;
+  mainGameAudio.volume=_musicMuted?0:0.3;
   mainGameAudio.onended=()=>{
     mainTrackIdx=(mainTrackIdx+1)%MAIN_TRACKS.length;
     _loadAndPlayMainTrack();

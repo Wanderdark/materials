@@ -67,6 +67,7 @@ function renderExample() {
   clearSplitImageWordMatch();
   clearQuestionAnswerMatch();
   clearSimpleProcessIndex();
+  clearSimpleGraphs();
   clearRecipeIngredientQuiz();
   clearRecipeQuestionInfo();
   clearLikesDislikesIntro();
@@ -205,6 +206,7 @@ function renderExample() {
   if (isSplitImageWordMatch) renderSplitImageWordMatch(example);
   if (isQuestionAnswerMatch) renderQuestionAnswerMatch(example);
   if (isSimpleProcessIndex) renderSimpleProcessIndex(example);
+  if (example.simpleGraph) renderSimpleGraphs(example);
   if (isRecipeIngredientQuiz) renderRecipeIngredientQuiz(example);
   if (isRecipeQuestionInfo) renderRecipeQuestionInfo(example);
   if (isLikesDislikesIntro) renderLikesDislikesIntro(example);
@@ -247,7 +249,7 @@ function renderExample() {
     }
     if (example.staticDialogueVideo) renderStaticDialogueVideo(example);
   }
-  if (example.scrambledDialogue && !example.staticDialogueVideo) activateScrambledDialogue();
+  if (example.scrambledDialogue && !example.staticDialogueVideo) activateScrambledDialogue(example);
   els.previous.disabled = state.index === 0 && !state.module.pronounTable;
   const isLastVisible = visibleSentences[visibleSentences.length - 1] === example;
   els.next.textContent = isRecipeQuestionInfo

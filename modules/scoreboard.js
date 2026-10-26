@@ -563,6 +563,8 @@ function _renderAutoLeaderboard(cb){
       row.style.top = top + 'px';
       row.querySelector('.alb-rk').textContent  = idx+1;
       row.querySelector('.alb-pts').textContent = entry.pts;
+      row.querySelector('.alb-name').textContent = entry.name;
+      row.querySelector('.alb-grp').textContent = entry.group;
     } else {
       row = document.createElement('div');
       row.className  = 'alb-row' + (rClass?' '+rClass:'');

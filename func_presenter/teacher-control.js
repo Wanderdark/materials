@@ -241,6 +241,15 @@
     .tc-award-title-row { display: flex; align-items: center; gap: 10px; margin: 0 0 9px; }
     .tc-award-title-row .tc-title { margin: 0; }
     .tc-award-customize { width: 38px; height: 38px; border: 1px solid rgba(255, 216, 77, .72); border-radius: 10px; background: #172d63; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 18px; font-weight: 900; cursor: pointer; }
+    .tc-multiple-select { min-height: 38px; border: 1px solid #5b7dd2; border-radius: 10px; padding: 6px 10px; background: #172d63; color: #f4f7ff; font: 800 12px var(--font-ui, sans-serif); cursor: pointer; }
+    .tc-multiple-select[aria-pressed="true"] { border-color: #31d158; color: #31d158; }
+    .tc-multiple-select.is-remove[aria-pressed="true"] { border-color: #ff453a; color: #ff453a; }
+    .tc-student.tc-multi-selected { outline: 3px solid #31d158; }
+    .tc-student.tc-multi-remove { outline-color: #ff453a; }
+    .tc-student .tc-multi-mark { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); margin: 0; color: #31d158; font: 900 26px "Segoe UI Symbol", sans-serif; pointer-events: none; }
+    .tc-student .tc-multi-mark[hidden] { display: none; }
+    .tc-student.tc-multi-remove .tc-multi-mark { color: #ff453a; }
+    .tc-award-title-row { flex-wrap: wrap; }
     .tc-numpad-overlay { z-index: 11030; }
     .tc-numpad-card { width: min(330px, 100%); border-color: rgba(255, 216, 77, .62); }
     .tc-numpad-display { min-height: 64px; display: grid; place-items: center; margin: 16px 0 12px; padding: 8px 14px; border: 1px solid #2b4084; border-radius: 12px; background: #09132c; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 38px; font-weight: 900; letter-spacing: .06em; }
@@ -2144,7 +2153,7 @@
     }, 2000);
   }
 
-  function openStudentPicker(action) {
+  function openStudentPicker(action, selectedIds = []) {
     if (!hasRoster()) {
       openRosterEditor(true);
       return;
@@ -2159,14 +2168,19 @@
     let awardAmount = Math.max(1, bankAmount);
     const awardTitle = () => `AWARD +${awardAmount} POINT${awardAmount === 1 ? "" : "S"}`;
     const card = makeOverlay(isAward ? "POINT POOL" : "POINT CONTROL", isAward ? awardTitle() : "REMOVE 1 POINT", isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.");
+    const classroomId = state.activeClassroomId;
+    const selected = new Set(selectedIds);
+    let multiple = selected.size > 0, suppressMultipleClick = false;
+    const title = card.querySelector(".tc-title");
+    const titleRow = el("div", "tc-award-title-row");
+    title.before(titleRow);
+    titleRow.append(title);
+    let customize = null;
     if (isAward && !bankAmount) {
-      const title = card.querySelector(".tc-title");
-      const titleRow = el("div", "tc-award-title-row");
-      const customize = el("button", "tc-award-customize", "+?");
+      customize = el("button", "tc-award-customize", "+?");
       customize.type = "button";
       customize.title = "Choose point amount";
-      title.before(titleRow);
-      titleRow.append(title, customize);
+      titleRow.append(customize);
       customize.addEventListener("click", () => {
         openAwardNumpad(awardAmount, (nextAmount) => {
           awardAmount = nextAmount;
@@ -2174,15 +2188,75 @@
         });
       });
     }
+    const multi = el("button", `tc-multiple-select${isAward ? "" : " is-remove"}`, "👥 SELECT MULTIPLE");
+    multi.type = "button";
+    const refreshMultiple = () => {
+      multi.setAttribute("aria-pressed", String(multiple));
+      multi.textContent = multiple ? "👥 GIVE POINTS" : "👥 SELECT MULTIPLE";
+      multi.title = multiple ? `${selected.size} students selected` : "Select multiple students";
+      title.textContent = multiple ? (isAward ? "AWARD +1 POINT" : "REMOVE 1 POINT") : (isAward ? awardTitle() : "REMOVE 1 POINT");
+      const copy = card.querySelector(".tc-copy");
+      copy.style.display = isAward || multiple ? "none" : "";
+      copy.textContent = multiple
+        ? ""
+        : (isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.");
+      if (customize) customize.disabled = multiple;
+    };
+    const applyMultiple = (amount) => {
+      applyMultipleStudentPoints([...selected], isAward, amount, classroomId);
+      closeOverlays();
+    };
+    const confirmMultiple = (amount) => {
+      const ids = [...selected];
+      const names = ids.map(id => getStudent(id)?.name || "");
+      const recipients = names.length > 1 ? `${names.slice(0, -1).join(", ")} AND ${names[names.length - 1]}` : names[0];
+      const confirmation = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${amount} POINT${amount === 1 ? "" : "S"} TO ${recipients}`);
+      const actions = el("div", "tc-actions");
+      const yes = el("button", "tc-action primary", "CONFIRM");
+      const no = el("button", "tc-action", "CANCEL");
+      yes.type = no.type = "button";
+      yes.addEventListener("click", () => applyMultiple(amount));
+      no.addEventListener("click", () => { if (state.activeClassroomId === classroomId) openStudentPicker(action, ids); else closeOverlays(); });
+      actions.append(yes, no);
+      confirmation.append(actions);
+    };
+    bindStudentPointHold(multi, null, isAward, value => { suppressMultipleClick = value; },
+      { enabled: () => multiple && selected.size > 0, confirm: confirmMultiple });
+    multi.addEventListener("click", () => {
+      if (suppressMultipleClick) return;
+      if (!multiple) { multiple = true; refreshMultiple(); }
+      else if (selected.size) applyMultiple(1);
+      else { multiple = false; refreshMultiple(); }
+    });
+    titleRow.append(multi);
+    refreshMultiple();
     const grid = el("div", "tc-student-grid");
     sortStudentsByScoreAndName(availableStudents).sort((a, b) => Number(isAbsent(a)) - Number(isAbsent(b))).forEach((student) => {
       const item = studentCard(student, { ranked: true });
       let suppressClick = false;
-      if (!isAward || !bankAmount) {
-        bindStudentPointHold(item, student, isAward, (suppressed) => { suppressClick = suppressed; });
-      }
+      bindStudentPointHold(item, student, isAward, (suppressed) => { suppressClick = suppressed; }, {
+        enabled: () => multiple ? selected.size > 0 : (!isAward || !bankAmount),
+        get confirm() { return multiple ? confirmMultiple : undefined; }
+      });
+      const mark = el("span", "tc-multi-mark", isAward ? "✓" : "☠\uFE0E");
+      mark.setAttribute("aria-hidden", "true");
+      const refreshSelection = () => {
+        const checked = selected.has(student.id);
+        mark.hidden = !checked;
+        item.classList.toggle("tc-multi-selected", checked);
+        item.classList.toggle("tc-multi-remove", checked && !isAward);
+        item.setAttribute("aria-pressed", String(checked));
+      };
+      item.append(mark);
+      refreshSelection();
       item.addEventListener("click", () => {
         if (suppressClick) return;
+        if (multiple) {
+          if (selected.has(student.id)) selected.delete(student.id); else selected.add(student.id);
+          refreshSelection();
+          refreshMultiple();
+          return;
+        }
         if (isAward) awardPoints(student.id, !bankAmount ? awardAmount : undefined);
         else removePoint(student.id);
         closeOverlays();
@@ -2193,7 +2267,25 @@
     if (guidedTutorial?.step === 6) window.setTimeout(refreshGuidedTutorial, 0);
   }
 
-  function bindStudentPointHold(item, student, isAward, suppressClick) {
+  function applyMultipleStudentPoints(ids, isAward, amount, classroomId) {
+    const students = ids.map(id => getStudent(id));
+    if (state.activeClassroomId !== classroomId || !students.length || students.some(student => !student || (isAward && isAbsent(student)))) {
+      showToast("Classroom or attendance changed. Please try again.");
+      return;
+    }
+    const points = Math.min(10, Math.max(1, Math.floor(Number(amount) || 1)));
+    const levels = students.map(studentLevel);
+    students.forEach(student => { student.points += isAward ? points : -points; });
+    save({ deferPoints: true, changeType: isAward ? "increment" : "decrement" });
+    updateHud();
+    playTeacherFeedback(isAward);
+    const names = students.map(student => student.name);
+    const recipients = names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0];
+    showToast(`${isAward ? "+" : "−"}${points} to ${recipients}`, isAward ? "success" : "danger");
+    if (isAward) students.forEach((student, index) => notifyLevelUp(student, levels[index]));
+  }
+
+  function bindStudentPointHold(item, student, isAward, suppressClick, options = {}) {
     let pending = 0, repeating = 0, limitTimer = 0, amount = 1, pointerId = null, counter = null, tone = null, gain = null;
     const cleanup = () => {
       clearTimeout(pending);
@@ -2216,7 +2308,7 @@
     item.style.userSelect = "none";
     item.addEventListener("contextmenu", event => event.preventDefault());
     item.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0 || event.isPrimary === false || pointerId !== null) return;
+      if (event.button !== 0 || event.isPrimary === false || pointerId !== null || options.enabled?.() === false) return;
       suppressClick(false);
       cancelStudentPointHold?.();
       pointerId = event.pointerId;
@@ -2266,8 +2358,9 @@
       if (!held) return;
       event.preventDefault();
       suppressClick(true);
+      if (options.confirm) { options.confirm(chosenAmount); return; }
       const classroomId = state.activeClassroomId;
-      const card = makeOverlay("POINT CONTROL", `${student.name}: ${isAward ? "+" : "−"}${chosenAmount} POINTS`, "Apply these points?");
+      const card = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${chosenAmount} POINT${chosenAmount === 1 ? "" : "S"} TO ${student.name}`);
       const actions = el("div", "tc-actions");
       const yes = el("button", "tc-action primary", "CONFIRM");
       const no = el("button", "tc-action", "CANCEL");

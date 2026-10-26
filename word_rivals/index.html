@@ -622,7 +622,8 @@ body.tb-mode .team-joker-row{display:flex}
 .rov-round{font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,2.5vw,28px);color:rgba(255,140,0,.6);letter-spacing:.2em}
 .rov-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,9vw,96px);color:var(--gold);text-shadow:0 0 60px rgba(255,140,0,.7),0 0 120px rgba(255,140,0,.3);letter-spacing:.06em;line-height:1}
 .rov-sub{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.8vw,32px);color:rgba(255,255,255,.7);letter-spacing:.14em;font-weight:600}
-.rov-btns{display:flex;gap:20px;opacity:0;pointer-events:none;transition:opacity .5s ease;margin-top:8px}
+.rov-btns{display:grid;grid-template-columns:auto auto;gap:20px;opacity:0;pointer-events:none;transition:opacity .5s ease;margin-top:8px}
+.rov-short{grid-column:1 / -1;justify-self:center;max-width:92vw;font-size:clamp(18px,2.6vw,30px)}
 .rov-btns.visible{opacity:1;pointer-events:auto}
 .rov-yes{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,3.2vw,38px);letter-spacing:.1em;padding:14px 42px;border-radius:14px;border:2px solid rgba(34,197,94,.7);background:rgba(34,197,94,.15);color:#4ade80;cursor:pointer;transition:background .15s,transform .12s,box-shadow .15s}
 .rov-yes:hover{background:rgba(34,197,94,.28);transform:scale(1.04);box-shadow:0 0 28px rgba(34,197,94,.4)}
@@ -1307,6 +1308,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
     <div class="rov-btns" id="rov-btns">
       <button class="rov-yes" id="rov-yes-btn" onclick="_roundOverYes()">⚔ YES — ROUND 2</button>
       <button class="rov-no"  onclick="_roundOverNo()">🏁 NO — FINISH</button>
+      <button class="rov-yes rov-short" id="rov-short-btn" onclick="_roundOverYes(true)" hidden>YES — TO ROUND 2 (SHORT VERSION)</button>
     </div>
   </div>
 </div>
@@ -1359,6 +1361,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <script src="../modules/teamnames.js"></script>
 <script>window.__studentSlotRemove = true;</script>
 <script src="../modules/studentselection.js"></script>
+<script>window.__requireBothTeamAvatars = true;</script>
 <script src="../modules/avatarselection.js"></script>
 <script src="../modules/scoreboard.js"></script>
 <script src="../modules/finalscreen.js"></script>
@@ -1421,6 +1424,8 @@ let _duelCount       = 0;         // tamamlanan düello sayısı
 let _totalDuels      = 1;         // toplam düello = max(takım A boyutu, takım B boyutu)
 let _duelLowHpTaunt  = [false, false]; // HP≤30 taunt'u düello başına 1 kere ateşlendi mi
 let _matchRound      = 1;         // aktif round numarası (1, 2, ...)
+let _shortRound2 = false;
+function _roundInitialHP() { return _shortRound2 ? Math.max(50, INITIAL_HP / 2) : INITIAL_HP; }
 let _originalStudentsB = [];      // çapraz eşleştirme için B listesi orijinali
 
 // ── TB (Turn Based) STATE ─────────────────────────────────
@@ -1828,6 +1833,7 @@ function applyStudentsAndContinue() {
 
 // ── GAME INIT ─────────────────────────────────────────────
 function _startGame() {
+  _shortRound2 = false;
   // Menü müziğinden oyun müziğine geç (main.mp3 = BG_TRACKS[0])
   _bgTrackIdx = BG_TRACKS.length - 1;  // _switchBgTrack +1%N yapınca 0'a (main.mp3) geçer
   _switchBgTrack();
@@ -1902,7 +1908,7 @@ function _updateTeamNameUI() {
 
 function _updateHP() {
   [0, 1].forEach(gi => {
-    const pct  = Math.max(0, teamHP[gi]) / INITIAL_HP * 100;
+    const pct  = Math.max(0, teamHP[gi]) / _roundInitialHP() * 100;
     const fill = document.getElementById(gi === 0 ? 'hp-fill-a' : 'hp-fill-b');
     const val  = document.getElementById(gi === 0 ? 'hp-val-a'  : 'hp-val-b');
     if (fill) {
@@ -3149,7 +3155,7 @@ function _duelTimerTick() {
 
 function _startDuelTimer() {
   _stopDuelTimer();
-  _duelTimerSec = DUEL_SECONDS;
+  _duelTimerSec = _shortRound2 ? 30 : DUEL_SECONDS;
   const el    = document.getElementById('duel-timer');
   const numEl = document.getElementById('duel-timer-num');
   if (!el || !numEl) return;
@@ -3234,7 +3240,7 @@ function _endDuel(duelWinnerGi) {
   const nextNameA = groupStudents[0][currentSlotIdx[0]] || '?';
   const nextNameB = groupStudents[1][currentSlotIdx[1]] || '?';
 
-  teamHP             = [INITIAL_HP, INITIAL_HP];
+  teamHP             = [_roundInitialHP(), _roundInitialHP()];
   _teamCooldown      = [false, false];
   _streak            = [0, 0];
   _duelStreakBonus   = [0, 0];
@@ -3520,6 +3526,8 @@ function _showRoundOverPrompt() {
   const yesBtn   = document.getElementById('rov-yes-btn');
   const nextRound = _gameMode === 'turnbased' ? _tbRound + 1 : _matchRound + 1;
   if (yesBtn) yesBtn.textContent = `⚔ YES — TO ROUND ${nextRound}`;
+  const shortBtn = document.getElementById('rov-short-btn');
+  if (shortBtn) shortBtn.hidden = _gameMode !== 'realtime' || _matchRound !== 1;
   if (btns) { btns.classList.remove('visible'); }
 
   overlay.classList.add('open');
@@ -3528,7 +3536,8 @@ function _showRoundOverPrompt() {
   setTimeout(() => { if (btns) btns.classList.add('visible'); }, 3000);
 }
 
-function _roundOverYes() {
+function _roundOverYes(shortVersion = false) {
+  _shortRound2 = shortVersion && _gameMode === 'realtime' && _matchRound === 1;
   const overlay = document.getElementById('round-over-overlay');
   if (overlay) overlay.classList.remove('open');
   if (_gameMode === 'turnbased') {
@@ -3572,10 +3581,16 @@ function _startRound2() {
   roundCount      = 0;
 
   // B öğrencilerini çapraz sıraya sok
+  const order = groupStudents[1].map((_, i, students) =>
+    i % 2 === 0 ? (i + 1 < students.length ? i + 1 : i) : i - 1);
+  [studentScoreMap, studentCorrects, hasPlayedThisRound, studentAvatars, studentAvatarShown].forEach(state => {
+    state[1] = order.map(i => state[1][i]);
+  });
   groupStudents[1] = _getCrossMatchedB();
+  resetScoreboardState();
 
   // Duel-level state sıfırla
-  teamHP             = [INITIAL_HP, INITIAL_HP];
+  teamHP             = [_roundInitialHP(), _roundInitialHP()];
   avatarDmgTriggered = [false, false];
   _teamCooldown      = [false, false];
   _streak            = [0, 0];
@@ -3873,7 +3888,8 @@ function applyGameAvatars() {
     const head   = document.getElementById('tc-head-' + s);
     const img    = document.getElementById('game-avatar-img-' + s);
     const avIdx  = teamAvatars[gi];
-    if (!head || !img || avIdx === null || avIdx === undefined) return;
+    if (!head || !img) return;
+    if (avIdx === null || avIdx === undefined) { head.classList.add('hidden'); return; }
     const av     = AVATARS[avIdx];
     if (!av) return;
     const baseSrc = avatarDmgTriggered[gi] ? dmgSrc(av.src) : av.src;
@@ -3908,8 +3924,8 @@ function showSpeechBubble(team, text) {
 
 
 // ── BG MUSIC VOLUME FADE ──────────────────────────────────
-const BG_MUSIC_FULL  = 0.35;
-const BG_MUSIC_DUEL  = 0.12;
+const BG_MUSIC_FULL  = 0.20;
+const BG_MUSIC_DUEL  = 0.10;
 const BG_MENU_TRACK  = 'sounds/mainmenu.mp3';
 const BG_TRACKS      = ['sounds/main.mp3', 'sounds/main2.mp3', 'sounds/main3.mp3'];
 let   _bgTrackIdx    = 0;

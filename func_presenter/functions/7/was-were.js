@@ -524,6 +524,26 @@ const wasWereGrade7VideoHubItems = [
   ["waswere-video-zoe-mia-bus", ["ZOE", "MIA"], "6_life_in_the_city_zoe_mia2", [["ZOE", ["Why ", ["were", ["was", "were"]], " you late? I ", ["wasn't", ["was", "wasn't"]], " on the wrong bus."]], ["MIA", ["I ", ["was", ["am", "was"]], " on the wrong bus."]]]]
 ].map(makeWasWereVideoHubItem);
 
+const wasWereGrade7PriorityVideoIds = [
+  "waswere-video-emma-hannah-charity",
+  "waswere-video-hannah-olivia-exhibition",
+  "waswere-video-noah-victoria-jazz",
+  "waswere-video-olivia-ella-movie",
+  "waswere-video-hannah-emma-weather",
+  "waswere-video-david-daniel-photos",
+  "waswere-video-hannah-emma-laughing"
+];
+wasWereGrade7VideoHubItems.forEach((item) => {
+  item.highlighted = wasWereGrade7PriorityVideoIds.includes(item.id);
+});
+wasWereGrade7VideoHubItems.sort((a, b) => {
+  const rank = (item) => {
+    const index = wasWereGrade7PriorityVideoIds.indexOf(item.id);
+    return index < 0 ? wasWereGrade7PriorityVideoIds.length : index;
+  };
+  return rank(a) - rank(b);
+});
+
 wasWereGrade7Function.sentences.push({
   id: "was-were-grade7-video-hub",
   noVisual: true,

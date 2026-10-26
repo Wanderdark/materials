@@ -12,9 +12,11 @@
     learningWall: Object.freeze({ label: "Learning Wall", description: "Read addressed friendship notes and identify which ones follow the wall's rules.", requiredFields: ["passage", "notes"] }),
     ticketChoice: Object.freeze({ label: "Ticket Choice", description: "Compare two preferences and choose a matching event ticket.", requiredFields: ["opinions", "tickets"] }),
     reading: Object.freeze({ label: "Reading", description: "Read a passage and choose the matching statement.", requiredFields: ["passage"] }),
+    emailMessage: Object.freeze({ label: "E-mail Message", description: "Read an e-mail with sender, recipient and subject fields and interpret its message.", requiredFields: ["sender", "recipient", "subject", "paragraphs"] }),
     pieChart: Object.freeze({ label: "Pie Chart", description: "Compare labelled percentage slices and interpret the chart.", requiredFields: ["chartTitle", "chartData"] }),
     traitMap: Object.freeze({ label: "Trait Map", description: "A character portrait surrounded by personality traits.", requiredFields: ["speaker", "traits"] }),
     scheduleDialogue: Object.freeze({ label: "Schedule Dialogue", description: "Use a character's schedule to complete a conversation.", requiredFields: ["speaker", "schedule", "lines"] }),
+    scheduleInvitation: Object.freeze({ label: "Plans and Event Ticket", description: "Compare a character's plans with an event ticket and choose an appropriate invitation response.", requiredFields: ["speaker", "day", "passage", "schedule", "ticket"] }),
     situation: Object.freeze({ label: "Situation", description: "A real-life communication task presented as a scenario.", requiredFields: ["situation"] }),
     classification: Object.freeze({ label: "Classification", description: "Classify a sentence by its communicative function.", requiredFields: ["statement"] }),
     sequence: Object.freeze({ label: "Conversation Flow", description: "Choose the line that logically completes a conversation sequence.", requiredFields: ["lines"] }),
@@ -24,6 +26,8 @@
     friendMessages: Object.freeze({ label: "Friend Messages", description: "Canon characters send messages that learners compare for meaning.", requiredFields: ["messages"] }),
     chatThread: Object.freeze({ label: "Chat Thread", description: "A canon character conversation displayed as one phone messaging thread.", requiredFields: ["messages"] }),
     invitationCard: Object.freeze({ label: "Invitation Card", description: "A formal invitation card with event details that learners read for information.", requiredFields: ["host", "event", "message", "date", "venue", "time", "fee", "contact", "replyBy"] }),
+    imageInvitation: Object.freeze({ label: "Image Invitation", description: "Read an illustrated invitation and identify the missing event information.", requiredFields: ["passage", "image", "imageAlt"] }),
+    invitationChoices: Object.freeze({ label: "Invitation Card Choices", description: "Compare four clickable invitation cards and identify the one matching the specified information.", requiredFields: ["passage"] }),
     dataTable: Object.freeze({ label: "Data Table", description: "A reusable labelled table for comparing any set of rows and columns.", requiredFields: ["columns", "rows"] })
   });
 
@@ -189,6 +193,16 @@
   }
 
   function renderTicketOptions(container, question) {
+    if (question.template === "invitationChoices") {
+      [...container.children].forEach((button, index) => {
+        const [greeting, ...body] = question.options[index].split("\n");
+        const heading = makeElement("div", "invitation-choice-heading");
+        heading.append(button.firstElementChild, makeElement("strong", "", greeting));
+        button.classList.add("invitation-choice");
+        button.replaceChildren(heading, makeElement("p", "invitation-choice-text", body.join("\n")));
+      });
+      return;
+    }
     if (question.template === "blogReviews") {
       [...container.children].forEach((button, index) => {
         const review = question.reviews.find((item) => item.band === question.options[index]);
@@ -243,6 +257,30 @@
     card.appendChild(identity);
     question.traits.forEach((trait) => card.appendChild(makeElement("span", "trait-map-label", trait)));
     container.appendChild(card);
+  }
+
+  function renderScheduleInvitation(container, question) {
+    container.appendChild(makeElement("p", "reading-passage", question.passage));
+    const context = makeElement("section", "schedule-invitation");
+    context.appendChild(makeElement("h3", "schedule-invitation-heading", question.speaker + "'s Plans for " + question.day));
+    const plans = makeElement("div", "schedule-invitation-plans");
+    question.schedule.forEach((item) => {
+      const card = makeElement("article", "schedule-invitation-plan");
+      card.append(makeElement("strong", "schedule-invitation-time", item.time), makeElement("p", "schedule-invitation-activity", item.activity));
+      plans.appendChild(card);
+    });
+    const ticket = makeElement("article", "schedule-invitation-ticket");
+    if (question.ticket.image) {
+      const image = makeElement("img", "schedule-invitation-ticket-image");
+      image.src = question.ticket.image;
+      image.alt = [question.ticket.title, question.ticket.venue, question.ticket.day, question.ticket.time].join(" · ");
+      ticket.classList.add("has-ticket-image");
+      ticket.appendChild(image);
+    } else {
+      ticket.append(makeElement("strong", "", question.ticket.title), makeElement("span", "", question.ticket.venue), makeElement("span", "", question.ticket.day), makeElement("strong", "", question.ticket.time));
+    }
+    context.append(plans, ticket);
+    container.appendChild(context);
   }
 
   function renderScheduleDialogue(container, question) {
@@ -348,12 +386,12 @@
   }
 
   function renderChatThread(container, question) {
-    const phone = makeElement("article", "chat-thread-phone");
+    const phone = makeElement("article", question.groupTitle ? "chat-thread-phone chat-thread-group" : "chat-thread-phone");
     const top = makeElement("div", "chat-thread-top");
     const participants = [...new Set(question.messages.map((message) => message.speaker))];
     const avatar = makeElement("img", "chat-thread-top-portrait");
     attachPortrait(avatar, participants[0]);
-    top.append(avatar, makeElement("strong", "chat-thread-title", participants.join(" & ")), makeElement("span", "chat-thread-status", "ONLINE"));
+    top.append(avatar, makeElement("strong", "chat-thread-title", question.groupTitle || participants.join(" & ")), makeElement("span", "chat-thread-status", "ONLINE"));
     const messages = makeElement("div", "chat-thread-messages");
     question.messages.forEach((message) => {
       const side = message.side === "outgoing" ? "outgoing" : "incoming";
@@ -373,6 +411,39 @@
     });
     phone.append(top, messages, makeElement("span", "chat-thread-home"));
     container.appendChild(phone);
+  }
+
+  function renderEmailMessage(container, question) {
+    const card = makeElement("article", "email-message");
+    card.appendChild(makeElement("div", "email-message-bar", "New Message"));
+    const fields = makeElement("div", "email-message-fields");
+    [["To", question.recipient], ["From", question.sender], ["Subject", question.subject]].forEach(([label, value]) => {
+      fields.append(makeElement("strong", "email-message-field-label", label + ":"), makeElement("span", "email-message-field-value", value));
+    });
+    const body = makeElement("div", "email-message-body");
+    question.paragraphs.forEach((text) => body.appendChild(makeElement("p", "", text)));
+    card.append(fields, body);
+    container.appendChild(card);
+  }
+
+  function renderImageInvitation(container, question) {
+    const passage = makeElement("p", "reading-passage", question.passage);
+    if (question.introPortraits?.length === 2) {
+      const intro = makeElement("div", "image-invitation-intro");
+      question.introPortraits.forEach((speaker, index) => {
+        if (index === 1) intro.appendChild(passage);
+        const frame = makeElement("div", "image-invitation-portrait-frame");
+        const portrait = makeElement("img", "image-invitation-portrait");
+        attachPortrait(portrait, speaker);
+        frame.appendChild(portrait);
+        intro.appendChild(frame);
+      });
+      container.appendChild(intro);
+    } else container.appendChild(passage);
+    const image = makeElement("img", "image-invitation");
+    image.src = question.image;
+    image.alt = question.imageAlt;
+    container.appendChild(image);
   }
 
   function renderInvitationCard(container, question) {
@@ -444,9 +515,11 @@
     else if (template === "venueReviews") renderVenueReviews(container, question);
     else if (template === "learningWall") renderLearningWall(container, question);
     else if (template === "ticketChoice") renderTicketChoice(container, question);
-    else if (template === "reading") container.appendChild(makeElement("p", "reading-passage", question.passage));
+    else if (template === "reading" || template === "invitationChoices") container.appendChild(makeElement("p", "reading-passage", question.passage));
+    else if (template === "emailMessage") renderEmailMessage(container, question);
     else if (template === "traitMap") renderTraitMap(container, question);
     else if (template === "scheduleDialogue") renderScheduleDialogue(container, question);
+    else if (template === "scheduleInvitation") renderScheduleInvitation(container, question);
     else if (template === "situation") renderSituation(container, question);
     else if (template === "classification") renderClassification(container, question);
     else if (template === "sequence") renderDialogue(container, question, true);
@@ -456,6 +529,7 @@
     else if (template === "friendMessages") renderFriendMessages(container, question);
     else if (template === "chatThread") renderChatThread(container, question);
     else if (template === "invitationCard") renderInvitationCard(container, question);
+    else if (template === "imageInvitation") renderImageInvitation(container, question);
     else if (template === "dataTable") renderDataTable(container, question);
     else if (template === "pieChart") renderPieChart(container, question);
   }

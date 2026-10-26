@@ -23,7 +23,7 @@
   let rumbleAudio = null;
   let musicSuppressed = false;
   let timeWarpMusicActive = false;
-  let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 30));
+  let _musicVol = Math.max(0, Math.min(100, Number(localStorage.getItem(MUSIC_VOL_KEY)) || 20));
 
   function applyMusicVolume() {
     if (bgMusic) bgMusic.volume = muted || musicSuppressed ? 0 : _musicVol / 100;

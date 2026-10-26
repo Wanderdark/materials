@@ -456,6 +456,16 @@ function confirmAvatarSelect(){
   const warn=document.getElementById('avs-warning');
   if(warn) warn.textContent='';
   const team=avsStep;
+  if(window.__requireBothTeamAvatars && !avsStudentMode && teamAvatars[team]==null){
+    teamAvatars=[null,null];
+    ['av-preview-a','av-preview-b'].forEach(id=>{
+      const preview=document.getElementById(id);
+      if(preview) preview.style.opacity='0';
+    });
+    avsStep=1;
+    _doConfirmAvatarSelect();
+    return;
+  }
   if(teamAvatars[team]===null){
     let displayName;
     if(avsStudentMode){

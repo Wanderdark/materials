@@ -214,6 +214,24 @@
   transform: translateY(-2px);
 }
 
+.suggestion-dialogue.phone-expressions { position: relative; inset: auto; padding: 0; width: 100%; }
+.suggestion-dialogue.phone-expressions .suggestion-dialogue-intro { margin: 12px auto 24px; font-size: clamp(18px, 1.5vw, 26px); }
+.suggestion-dialogue.phone-expressions .suggestion-dialogue-bubbles { gap: 14px; }
+.suggestion-dialogue.phone-expressions .suggestion-dialogue-bubble { width: min(100%, 920px); margin-inline: 0; padding: 12px 24px; font-size: clamp(20px, 1.6vw, 28px); line-height: 1.2; }
+.example-card:has(.suggestion-dialogue.portrait-conversation) { width: min(1440px, 100%); }
+.suggestion-dialogue.portrait-conversation { position: relative; inset: auto; padding: 0; width: 100%; }
+.portrait-conversation .suggestion-dialogue-heading { margin-bottom: 24px; }
+.portrait-conversation .suggestion-dialogue-bubbles { gap: 24px; }
+.suggestion-dialogue-turn { display: grid; grid-template-columns: clamp(90px, 9vw, 150px) minmax(0, 1fr); align-items: center; gap: clamp(18px, 2vw, 34px); width: 100%; }
+.suggestion-dialogue-portrait { width: 100%; aspect-ratio: 1; object-fit: cover; border: 4px solid var(--yellow); border-radius: 50%; background: #fff; }
+.suggestion-dialogue-turn-body { min-width: 0; text-align: left; }
+.suggestion-dialogue-speaker { margin: 0 0 8px; color: var(--yellow); font-size: clamp(16px, 1.4vw, 24px); font-weight: 900; letter-spacing: .08em; }
+.portrait-conversation .suggestion-dialogue-bubble { width: 100%; margin: 0; padding: clamp(16px, 1.6vw, 26px); font-size: clamp(24px, 2.3vw, 38px); line-height: 1.22; }
+.suggestion-dialogue-turn.answer { grid-template-columns: minmax(0, 1fr) clamp(90px, 9vw, 150px); }
+.suggestion-dialogue-turn.answer .suggestion-dialogue-portrait { grid-column: 2; grid-row: 1; }
+.suggestion-dialogue-turn.answer .suggestion-dialogue-turn-body { grid-column: 1; grid-row: 1; text-align: right; }
+.suggestion-dialogue-note { margin: 16px 0 0; color: var(--yellow); font-size: clamp(17px, 1.5vw, 25px); font-weight: 850; }
+
 @keyframes suggestionBubbleIn {
   from { opacity: 0; transform: translateY(10px) scale(.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }

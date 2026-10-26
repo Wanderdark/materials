@@ -11,9 +11,15 @@
 .test-question { display:grid; gap:clamp(24px,3vw,42px); width:min(760px,100%); }
 .test-question h2 { margin:0; color:var(--yellow); font-size:clamp(18px,1.7vw,28px); letter-spacing:.1em; text-align:center; }
 .test-question-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(14px,1.8vw,24px); }
+.test-question-options:has(> :nth-child(3):last-child) { grid-template-columns:minmax(0,1fr); }
+.test-question-options:has(> :nth-child(3):last-child) .test-question-choice { width:100%; min-height:clamp(84px,10vh,124px); }
 .test-question-choice { min-height:clamp(104px,11vw,166px); padding:clamp(16px,2vw,28px); border:3px solid transparent; border-radius:24px; cursor:pointer; font-size:clamp(21px,2.1vw,34px); font-weight:950; line-height:1.14; text-align:center; transition:transform .16s ease, opacity .22s ease; }
 .test-question-choice:hover:not(:disabled), .test-question-choice:focus-visible { transform:translateY(-4px); outline:none; }
 .test-question-choice.navy { border-color:#5875ce; color:#f4f7ff; background:#173267; }.test-question-choice.yellow { border-color:#fff0a1; color:#071735; background:#ffd84d; }.test-question-choice.red { border-color:#ff9b86; color:#fff4f1; background:#a63136; }.test-question-choice.orange { border-color:#ffd19a; color:#071735; background:#f0a04b; }
 .test-question-choice.correct { border-color:var(--mint); box-shadow:0 0 24px rgba(101,230,184,.52); }.test-question-choice.removed { opacity:.34; filter:grayscale(1); pointer-events:none; transform:none; }
 .test-question-next { justify-self:center; min-width:180px; margin-top:4px; }.test-question-prompt .test-question-next { align-self:center; }
+.test-question-picture-prompt .test-question-target-expression { text-transform: none; font-size: clamp(23px, 2.3vw, 38px); line-height: 1.3; }
+.test-question-choice.image-choice { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 8px; min-height: 0; padding: 12px; text-align: left; }
+.test-question-choice-letter { font-size: clamp(18px, 1.7vw, 28px); line-height: 1; }
+.test-question-choice.image-choice img { display: block; width: 100%; height: clamp(110px, 20vh, 240px); object-fit: contain; border-radius: 12px; background: #fff; }
 @media (max-width:760px) { .example-card.test-question-slide .visual-panel { min-height:auto; }.test-question-options { grid-template-columns:1fr; }.test-question-choice { min-height:74px; }.test-question-prompt { gap:18px; } }

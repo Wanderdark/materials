@@ -13,11 +13,12 @@ const namingCommonObjectsGrade8Function = {
       noVisual: true,
       simpleProcessIndex: {
         title: "UNIT INDEX",
+        persistProgress: true,
         items: [
-          { label: "KITCHEN TOOLS", targetId: "kitchen-tools-split-image-word-match" },
-          { label: "INGREDIENTS", targetId: "ingredients-split-image-word-match" },
-          { label: "COOKING METHODS", targetId: "cooking-methods-split-image-word-match" },
-          { label: "DESCRIBING SIMPLE PROCESSES", targetId: "process-expression-reveal" }
+          { label: "KITCHEN TOOLS", targetId: "kitchen-tools-split-image-word-match", endId: "kitchen-tools-split-image-word-match" },
+          { label: "INGREDIENTS", targetId: "ingredients-split-image-word-match", endId: "recipe-question-language-guide-continued" },
+          { label: "COOKING METHODS", targetId: "cooking-methods-split-image-word-match", endId: "cooking-methods-dialogue-test" },
+          { label: "DESCRIBING SIMPLE PROCESSES", targetId: "process-expression-reveal", endId: "food-comments-reveal" }
         ]
       }
     },

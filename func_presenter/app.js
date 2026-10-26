@@ -1434,6 +1434,7 @@ function next() {
       return;
     }
   }
+  if (completeSimpleProcessSection(example)) return;
   if (state.index === state.module.sentences.length - 1) showPresentationComplete();
   else {
     state.index += 1;
