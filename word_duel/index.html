@@ -519,6 +519,27 @@ body.lite-mode .player-header .ph-name { animation:none !important; }
 }
 #duel-lite-mode-button { margin-top:5px; min-height:24px; border:1px solid rgba(77,169,255,.6); border-radius:7px; padding:0 7px; color:#b9d9ff; background:rgba(77,169,255,.1); font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:900; letter-spacing:.08em; cursor:pointer; }
 body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; background:rgba(244,169,64,.16); }
+.duel-match-controls { display:flex; align-items:center; justify-content:center; gap:6px; }
+#duel-finish-button { margin-top:5px; min-height:24px; border:1px solid #f87171; border-radius:7px; padding:0 7px; color:#fecaca; background:#7f1d1d; font:900 10px 'Barlow Condensed',sans-serif; cursor:pointer; }
+#duel-finish-button:disabled,#duel-time-finish:disabled { opacity:.35; cursor:not-allowed; }
+#duel-finish-button.confirm { background:#b91c1c; border-color:#fbbf24; color:#fff; }
+#duel-match-clock { color:#fbbf24; font:800 12px 'Barlow Condensed',sans-serif; font-variant-numeric:tabular-nums; }
+#duel-match-clock.expired { animation:duelClockBlink 1s ease-in-out infinite; color:#f87171; }
+@keyframes duelClockBlink { 0%,100% { opacity:1; } 50% { opacity:.15; } }
+#duel-time-up { position:fixed; inset:0; z-index:2000; display:flex; align-items:center; justify-content:center; background:rgba(4,7,20,.96); }
+#duel-time-up[hidden] { display:none; }
+.duel-time-modal { width:min(420px,90vw); padding:30px; border:2px solid #fbbf24; border-radius:22px; background:#111c35; text-align:center; color:#fbbf24; font-family:'Barlow Condensed',sans-serif; }
+.duel-time-modal h2 { margin:0 0 12px; font-size:48px; }
+#duel-time-score { font-size:38px; margin-bottom:24px; color:#fff; }
+.duel-time-players { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; margin-bottom:24px; }
+.duel-time-player { display:flex; flex-direction:column; align-items:center; gap:10px; min-width:0; font-size:22px; font-weight:800; overflow-wrap:anywhere; }
+.duel-time-player:first-child { color:#93c5fd; }
+.duel-time-player:last-child { color:#fdba74; }
+.duel-time-avatar { width:min(104px,100%); aspect-ratio:1; object-fit:cover; border:2px solid currentColor; border-radius:14px; background:#09132c; }
+.duel-time-fallback { align-items:center; justify-content:center; font-size:40px; }
+.duel-time-actions { display:flex; gap:12px; }
+.duel-time-actions button { flex:1; padding:14px 8px; border:0; border-radius:9px; background:#15803d; color:#fff; font:800 20px 'Barlow Condensed',sans-serif; cursor:pointer; }
+#duel-time-finish { background:#b91c1c; }
 #fs-btn {
   position: fixed; bottom: 10px; right: 52px; z-index: 200;
   width: 32px; height: 32px; border-radius: 50%;
@@ -1441,7 +1462,7 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
     <div class="btn-grid" id="unit-grid"></div>
     <div class="sm-sec">ZORLUK SEÇ</div>
     <div class="difficulty-grid" id="difficulty-grid">
-      <button class="difficulty-btn active" id="difficulty-1" disabled>
+      <button class="difficulty-btn active" id="difficulty-1" onclick="toggleDifficulty(1)">
         <span class="difficulty-name">EASY</span>
         <span class="difficulty-count" id="difficulty-count-1"></span>
       </button>
@@ -1481,7 +1502,11 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
     <div class="header-mid">
       <div class="header-mid-logo">WORD TOURNAMENT</div>
       <div class="header-mid-badge" style="color:#fbbf24">Designed by ADİL FIRAT OKTAV</div>
-      <button id="duel-lite-mode-button" type="button" onclick="toggleDuelLiteMode()">LITE</button>
+      <div class="duel-match-controls">
+        <button id="duel-lite-mode-button" type="button" onclick="toggleDuelLiteMode()">LITE</button>
+        <button id="duel-finish-button" type="button" onclick="confirmFinishCurrentDuel()" disabled>FINISH</button>
+        <span id="duel-match-clock">05:00</span>
+      </div>
     </div>
 
     <div class="player-header p2" id="p2-header">
@@ -1598,6 +1623,17 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
 </div>
 
 <!-- Win overlay -->
+<div id="duel-time-up" hidden role="dialog" aria-modal="true" aria-labelledby="duel-time-title">
+  <div class="duel-time-modal">
+    <h2 id="duel-time-title">TIME UP</h2>
+    <div id="duel-time-score"></div>
+    <div class="duel-time-players" id="duel-time-players"></div>
+    <div class="duel-time-actions">
+      <button type="button" onclick="continueTimedDuel()">CONTINUE</button>
+      <button type="button" id="duel-time-finish" onclick="finishCurrentDuel()" disabled>FINISH</button>
+    </div>
+  </div>
+</div>
 <div id="win-overlay">
   <div class="win-modal">
     <div class="win-trophy">🏆</div>
@@ -1699,6 +1735,136 @@ let _easyDeckIdx    = 0;
 let scores     = [0, 0];
 const WIN      = 10;
 let gameActive = false;
+let duelMatchTimer = null;
+let duelMatchDeadline = 0;
+let duelTimeUpPending = false;
+let duelMatchTimerArmed = false;
+let duelFinishConfirm = false;
+
+function stopDuelMatchTimer() {
+  duelFinishConfirm = false;
+  document.getElementById('duel-finish-button').textContent = 'FINISH';
+  document.getElementById('duel-finish-button').classList.remove('confirm');
+  duelMatchTimerArmed = false;
+  document.getElementById('duel-match-clock').classList.remove('expired');
+  duelTimeUpPending = false;
+  clearInterval(duelMatchTimer);
+  duelMatchTimer = null;
+  document.getElementById('duel-time-up').hidden = true;
+}
+
+function updateDuelFinishButtons() {
+  const disabled = !gameActive || scores[0] === scores[1];
+  if (disabled) duelFinishConfirm = false;
+  document.getElementById('duel-finish-button').textContent = duelFinishConfirm ? 'SURE?' : 'FINISH';
+  document.getElementById('duel-finish-button').classList.toggle('confirm', duelFinishConfirm);
+  document.getElementById('duel-time-score').textContent = scores[0] + ' — ' + scores[1];
+  document.getElementById('duel-finish-button').disabled = disabled;
+  document.getElementById('duel-time-finish').disabled = disabled;
+}
+
+function prepareDuelMatchTimer() {
+  stopDuelMatchTimer();
+  duelMatchTimerArmed = true;
+  document.getElementById('duel-match-clock').textContent = '05:00';
+}
+
+function startDuelMatchTimer() {
+  stopDuelMatchTimer();
+  duelMatchDeadline = Date.now() + 5 * 60 * 1000;
+  document.getElementById('duel-match-clock').textContent = '05:00';
+  duelMatchTimer = setInterval(() => {
+    if (!gameActive) { stopDuelMatchTimer(); return; }
+    const seconds = Math.max(0, Math.ceil((duelMatchDeadline - Date.now()) / 1000));
+    document.getElementById('duel-match-clock').textContent =
+      String(Math.floor(seconds / 60)).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0');
+    if (seconds) return;
+    document.getElementById('duel-match-clock').classList.add('expired');
+    clearInterval(duelMatchTimer);
+    duelMatchTimer = null;
+    duelTimeUpPending = true;
+    if (!busy && isSecondPlayerBlocked()) showTimeUpAfterAnswer(null, true);
+  }, 250);
+}
+
+function isSecondPlayerBlocked() {
+  return freezeState?.frozenPl === 1 || stunnedState?.stunnedPl === 1;
+}
+
+function showTimeUpAfterAnswer(answeringPl, secondPlayerBlocked = false) {
+  if (!gameActive || (!duelTimeUpPending && !(duelMatchTimer !== null && Date.now() >= duelMatchDeadline))) return;
+  if (answeringPl !== 1 && !secondPlayerBlocked && !isSecondPlayerBlocked()) return;
+  clearInterval(duelMatchTimer);
+  duelMatchTimer = null;
+  duelTimeUpPending = false;
+  document.getElementById('duel-match-clock').textContent = '00:00';
+  document.getElementById('duel-match-clock').classList.add('expired');
+  updateDuelFinishButtons();
+  renderTimeUpPlayers();
+  document.getElementById('duel-time-up').hidden = false;
+}
+
+function renderTimeUpPlayers() {
+  const box = document.getElementById('duel-time-players');
+  box.replaceChildren();
+  [0, 1].forEach(pl => {
+    const card = document.createElement('div');
+    card.className = 'duel-time-player';
+    const name = document.createElement('div');
+    name.textContent = playerNames[pl];
+    const portrait = document.createElement('img');
+    portrait.className = 'duel-time-avatar';
+    portrait.alt = playerNames[pl];
+    const fallback = document.createElement('div');
+    fallback.className = 'duel-time-avatar duel-time-fallback';
+    fallback.textContent = playerNames[pl].trim()[0] || '?';
+    fallback.style.display = 'none';
+    _applyTournamentAvatar(portrait, fallback, playerNames[pl]);
+    card.append(name, portrait, fallback);
+    box.append(card);
+  });
+}
+
+function continueTimedDuel() {
+  stopDuelMatchTimer();
+  document.getElementById('duel-match-clock').classList.add('expired');
+  document.getElementById('duel-match-clock').textContent = '∞';
+}
+
+function confirmFinishCurrentDuel() {
+  if (!gameActive || scores[0] === scores[1]) return;
+  if (!duelFinishConfirm) {
+    duelFinishConfirm = true;
+    updateDuelFinishButtons();
+    return;
+  }
+  finishCurrentDuel();
+}
+
+function finishCurrentDuel() {
+  if (!gameActive || scores[0] === scores[1]) return;
+  const winner = scores[0] > scores[1] ? 0 : 1;
+  gameActive = false;
+  busy = true;
+  stopDuelMatchTimer();
+  _pendingRevealCb = null;
+  _puDoneCallback = null;
+  p1PuPending = false;
+  simMode = null;
+  combo = null;
+  djState = null;
+  freezeState = null;
+  stunnedState = null;
+  stunnedPending = false;
+  _ttsTimers.forEach(timer => clearTimeout(timer));
+  _ttsTimers = [];
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  document.getElementById('card-img').onclick = null;
+  document.getElementById('pu-overlay').style.display = 'none';
+  document.getElementById('sim-choice-overlay').style.display = 'none';
+  setBtns(false);
+  showWin(winner);
+}
 let busy       = false;
 let resignConfirmPl = null;
 
@@ -1857,7 +2023,10 @@ function buildDifficulties() {
   [1,2,3].forEach(d => {
     const btn = document.getElementById('difficulty-' + d);
     const count = document.getElementById('difficulty-count-' + d);
-    if (btn) btn.classList.toggle('active', selectedDifficulties.has(d));
+    if (btn) {
+      btn.classList.toggle('active', selectedDifficulties.has(d));
+      btn.disabled = selectedDifficulties.has(d) && selectedDifficulties.size === 1;
+    }
     if (count) {
       const total = QUESTIONS.filter(q => q && q[3] !== 0 && q[4] === d).length;
       count.textContent = total + ' KELİME';
@@ -1866,10 +2035,9 @@ function buildDifficulties() {
 }
 
 function toggleDifficulty(d) {
-  if (d === 1) return;
+  if (selectedDifficulties.has(d) && selectedDifficulties.size === 1) return;
   if (selectedDifficulties.has(d)) selectedDifficulties.delete(d);
   else selectedDifficulties.add(d);
-  selectedDifficulties.add(1);
   buildDifficulties();
   updateCount();
   save();
@@ -1912,7 +2080,7 @@ function load() {
     if (Array.isArray(d.g)&&d.g.length) selectedGrades = new Set(d.g.map(Number));
     if (Array.isArray(d.u)&&d.u.length) selectedUnits  = new Set(d.u.map(Number));
     if (Array.isArray(d.d)) selectedDifficulties = new Set(d.d.map(Number).filter(n=>n>=1&&n<=3));
-    selectedDifficulties.add(1);
+    if (!selectedDifficulties.size) selectedDifficulties.add(1);
   } catch(e){}
 }
 
@@ -2044,7 +2212,18 @@ function buzzPressed() {
 }
 
 function simultaneousChoice(who) {
+  if (!gameActive) return;
+  applySimultaneousChoice(who);
+  showTimeUpAfterAnswer(1);
+}
+
+function applySimultaneousChoice(who) {
   document.getElementById('sim-choice-overlay').style.display = 'none';
+  [0, 1].forEach(pl => {
+    const correct = who === 'both' || who === (pl === 0 ? 'p1' : 'p2');
+    duelWrongCounts[pl] = Math.max(0, duelWrongCounts[pl] + (correct ? -1 : 1));
+  });
+  updateDuelWrongCounters();
 
   if (who === 'p1' || who === 'both') { changeScore(0, 1); celebrateDuelPortrait(0); }
   if (who === 'p2' || who === 'both') { changeScore(1, 1); celebrateDuelPortrait(1); }
@@ -2113,6 +2292,7 @@ function djChoose(accepted) {
 }
 
 function checkAndTriggerPu(onDone) {
+  if (!gameActive) return;
   if (_puDisabled) { onDone(); return; }
   if (combo || djState || minus1IfWrong || simMode || freezeState || stunnedPending || stunnedState || teleportPending) { onDone(); return; }
 
@@ -2242,6 +2422,7 @@ function shuffle(a) {
 function freshDeck() { return shuffle([...filteredPool()]); }
 
 function resetDuelState() {
+  stopDuelMatchTimer();
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   _ttsTimers.forEach(t => clearTimeout(t)); _ttsTimers = [];
   clearDuelPortraitEffects();
@@ -2305,6 +2486,7 @@ function startGame() {
   document.getElementById('p1-pu-history').innerHTML = '';
   document.getElementById('p2-pu-history').innerHTML = '';
   gameActive = true; busy = false;
+  prepareDuelMatchTimer();
   combo = null; djState = null; minus1IfWrong = false; plus2IfCorrect = false; knockbackHit = false;
   simMode = null; freezeState = null; stunnedPending = false; stunnedState = null;
   teleportPending = false; teleportUsed = false; _puDoneCallback = null; fairFinishState = null; resignConfirmPl = null;
@@ -2331,6 +2513,7 @@ function startGame() {
 }
 
 function setCard(animate, silent) {
+  if (!gameActive) return;
   // Freeze aktifken kart hiçbir koşulda dondurulmuş oyuncuya verilmemeli.
   if (freezeState && activePl === freezeState.frozenPl) activePl = 1 - freezeState.frozenPl;
   if (currentIdx >= deck.length) { deck = freshDeck(); currentIdx = 0; }
@@ -2425,6 +2608,7 @@ function setCard(animate, silent) {
 }
 
 function renderHeader() {
+  updateDuelFinishButtons();
   document.getElementById('p1-header').classList.toggle('active-player', activePl===0);
   document.getElementById('p2-header').classList.toggle('active-player', activePl===1);
   document.getElementById('score-0').textContent = scores[0];
@@ -2593,6 +2777,7 @@ function setBtns(enabled) {
 }
 
 function changeScore(pl, delta) {
+  if (!gameActive) return;
   scores[pl] += delta;
   const se = document.getElementById('score-'+pl);
   se.classList.remove('bump'); void se.offsetWidth; se.classList.add('bump');
@@ -2689,6 +2874,7 @@ function _finishFairMatch(winner) {
 }
 
 function checkWin() {
+  if (!gameActive) return false;
   if (fairFinishState) return false;
   if (activePl === 0 && scores[1] === 9 && scores[0] >= 10) {
     _startFairFinish();
@@ -2749,6 +2935,7 @@ function emergencyOverride() {
 // ───────────────────────────────────────────────────────────────────────────
 
 function endTurn(switchPlayer) {
+  if (!gameActive) return;
   setTimeout(() => {
     if (switchPlayer) activePl = 1 - activePl;
     currentIdx++;
@@ -2790,6 +2977,7 @@ function handleAnswer(correct) {
     return;
   }
   if (_spamLocked[activePl]) return;
+  if (activePl === 0 && duelMatchTimerArmed) startDuelMatchTimer();
 
   duelWrongCounts[activePl] = Math.max(0, duelWrongCounts[activePl] + (correct ? -1 : 1));
   updateDuelWrongCounters();
@@ -2854,6 +3042,14 @@ function handleAnswer(correct) {
 }
 
 function _scoreAndContinue(correct) {
+  if (!gameActive) return;
+  const answeringPl = activePl;
+  const secondPlayerBlocked = isSecondPlayerBlocked();
+  _applyDuelAnswer(correct);
+  showTimeUpAfterAnswer(answeringPl, secondPlayerBlocked);
+}
+
+function _applyDuelAnswer(correct) {
   if (fairFinishState)                 { handleFairFinishAnswer(correct);   return; }
   if (combo)                          { handleComboAnswer(correct);         return; }
   if (djState)                        { handleDjAnswer(correct);            return; }
@@ -3107,6 +3303,7 @@ function showFlash(correct) {
 }
 
 function playAgain() {
+  prepareDuelMatchTimer();
   // deck + currentIdx korunur — oynanan kelimeler geri gelmez
   activePl = 0; scores = [0,0]; _imgCardCounter = [0,0]; _easyImgIdx = 0; _easyDeckIdx = 0;
   duelWrongCounts = [0,0];
@@ -3138,6 +3335,9 @@ function playAgain() {
 }
 
 function showWin(winner) {
+  stopDuelMatchTimer();
+  gameActive = false;
+  updateDuelFinishButtons();
   fairFinishState = null;
   resignConfirmPl = null;
   _addWin(playerNames[winner]);

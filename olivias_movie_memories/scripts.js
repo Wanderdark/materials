@@ -13008,29 +13008,34 @@ evidenceEnd: "0:07.085",
     evidenceSentence: "Chloe : I'm /not/ scared of bugs, Hannah : Not scared?",
   },
   {
-    id: "6_life_in_the_city_emma_hannah",
-    correctOptionQuestions: [{"sentence":"Hannah : The ___ was rainy yesterday.","target":"weather","choices":["weather","whether","season","climate"],"bonus":{"target":"hava durumu","choices":["hava durumu","mevsim","iklim","sıcaklık"]}}],
-    status: "published",
-    rating: 6,
-    videoSrc: "assets/video/6_life_in_the_city_emma_hannah.mp4",
-    title: "Hannah and Emma talk about the weather.",
-    transcript: "Hannah : The weather /was/ rainy yesterday. Emma : Yes, But it /is/ sunny today.",
-    answerOptions: [
-      { id: "a", text: "Hannah : Dün hava güneşliydi. Emma : Evet, Ama bugün yağmurlu." },
-      { id: "b", text: "Hannah : Dün hava yağmurlu/ydu/. Emma : Evet, Ama bugün güneşli." }
-    ],
-    easyDistractor: "Hannah : Dün hava yağmurluydu. Emma : Evet, Ama bugün de yağmurlu.",
-    correctOptionId: "b",
-    explanation: "",
-    characterIds: ["emma", "hannah"],
-    grades: [6],
-    functions: ["simple_past_tense"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-   evidenceStart: "0:00.000",
-evidenceEnd: "0:05.103",
-    evidenceSentence: "Hannah : The weather /was/ rainy yesterday. Emma : Yes, But it /is/ sunny today.",
-  },
+  id: "6_life_in_the_city_emma_hannah",
+  correctOptionQuestions: [{"sentence":"Hannah : The weather was ___ yesterday.","target":"rainy","choices":["rainy","rainbow","windy","cloudy"],"bonus":{"target":"yağmurlu","choices":["yağmurlu","gökkuşağı","rüzgârlı","bulutlu"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/6_life_in_the_city_emma_hannah.mp4",
+  title: "A Sudden Change in the Weather",
+  transcript: "Hannah : The weather was /rainy yesterday/. Emma : Yes, but it is /sunny today/.",
+  answerOptions: [
+    { id: "b", text: "Hannah : Dün hava yağmurluydu. Emma : Evet, Ama bugün güneşli." },
+    { id: "a", text: "Hannah : Dün hava güneşliydi. Emma : Evet, Ama bugün yağmurlu." }
+  ],
+  easyDistractor: "Hannah : Okuldan sonra ne yapacaksın? Emma : Eve gidip ödevimi yapacağım.",
+  correctOptionId: "b",
+  characterIds: ["hannah", "emma"],
+  grades: [6,7,8],
+  functions: ["simple_past_tense_was_were", "use_of_to_be_present", "givinginformation"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:04.401",
+
+  evidenceSentence: "Hannah : The weather was /rainy yesterday/. Emma : Yes, but it is /sunny today/.",
+  truefalsequestion: "The weather was sunny yesterday.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Hannah's canonical voice reference.\nUse <<<Image2>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Emma's canonical voice reference.\nUse <<<Image3>>> as Hannah's lower-clothing reference.\nSCENE:\nHannah and Emma are walking home from school together along a quiet residential street.\nIt is a sunny afternoon.\nThey walk side by side at a natural, relaxed pace while having a short conversation.\nSETTING:\nA peaceful residential street lined with leafy green trees, brick houses, sidewalks, and black streetlamps.\nThe road, sidewalks, houses, trees, streetlamps, and distant buildings form one continuous, consistent environment.\nA few distant pedestrians are visible along the street.\nThe entire scene takes place on this same street.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>> and the exact lower clothing shown in <<<Image3>>> .\nPreserve the lower clothing's original design, color, shape, and length. It must reach Hannah's knees.\nEmma wears her existing upper clothing from <<<Image2>>> and dark blue full-length jeans.\nBoth girls keep the same clothing throughout the video.\nOPENING ACTION:\nHannah and Emma are already walking together along the sunlit sidewalk.\nWarm afternoon sunlight illuminates the same trees, buildings, and pavement around them.\nDIALOGUE:\nHannah (<<<Audio1>>> ):\n\"The weather was rainy yesterday.\"\nEmma (<<<Audio2>>> ):\n\"Yes, but it is sunny today.\"\nREACTION AND PAYOFF:\nImmediately after Emma finishes speaking, thick dark rain clouds rapidly cover the sun.\nThe daylight becomes noticeably dimmer across the existing street.\nHeavy rain suddenly begins falling in the exact same location.\nThe rain falls onto the same houses, trees, streetlamps, sidewalks, and road already visible before the weather changes.\nHannah reacts first, briefly looking upward in surprise.\nEmma notices the sudden downpour a moment later and looks toward Hannah with a puzzled expression.\nHannah turns toward Emma, and they exchange a brief, surprised glance.\nTheir reactions are subtle, natural, and slightly asynchronous.\nRaindrops begin collecting on their hair and clothing.\nCUT IMMEDIATELY.\nENVIRONMENTAL CONTINUITY:\nThe weather transformation occurs within one uninterrupted physical environment.\nThe street layout remains identical before and after the rain begins.\nThe same buildings retain their positions, architectural details, and colors.\nThe same trees and streetlamps remain in their original locations.\nThe sidewalk, road, and background perspective remain spatially consistent.\nThe environment becomes darker and wetter as the storm begins, rather than changing into a different location.\nRain gradually darkens the existing pavement and creates small reflective wet patches.\nCHARACTER CONTINUITY:\nHannah and Emma remain side by side throughout the scene.\nTheir clothing, hairstyles, facial features, and body proportions remain consistent.\nTheir walking movement is natural and continuous.\nTheir reactions to the rain are distinct rather than synchronized.\nPACING:\nBegin with the girls already walking.\nDeliver the two dialogue lines naturally without unnecessary pauses.\nThe weather changes immediately after Emma's line.\nKeep the rain reaction brief and end on their surprised glance.\nAUDIO:\nHannah speaks exclusively with <<<Audio1>>> .\nEmma speaks exclusively with <<<Audio2>>> .\nOnly the specified English dialogue is spoken.\nNo additional dialogue.\nNo Turkish speech.\nNo narration.\nNo background conversations.\nNo background music.\nNatural outdoor ambience, followed by the sound of sudden heavy rainfall.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nNatural facial animation, subtle blinking, realistic rain interaction, and consistent environmental lighting."
+},
 
   {
     id: "6_life_in_the_city_hannah_olivia",
@@ -15801,30 +15806,34 @@ evidenceEnd: "0:09.079",
   prompt: "Use <<<Image1>>>  as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Hannah's voice reference.\nUse <<<Image2>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Chloe's voice reference.\nSEASON / WEATHER / TIME:\nEarly autumn, mild sunny weather, afternoon.\nSETTING:\nA school courtyard one day before the festival.\nHannah and Chloe are decorating a small outdoor festival booth.\nThe booth is already heavily decorated with colorful paper garlands, ribbons, and paper flowers.\nIts decorations are clearly visible from the beginning.\nBoth characters have natural, comparable 14-year-old body proportions.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>>  and dark blue full-length jeans.\nChloe wears her existing upper clothing from <<<Image2>>>  and beige full-length trousers.\nACCESSORIES:\nHannah wears a small sky-blue fabric bracelet.\nChloe wears a delicate lavender wristwatch.\nPRE-ACTION:\nHannah stands beside the booth holding one additional colorful paper garland.\nChloe stands next to her, looking at the already crowded decorations.\nDIALOGUE:\nSPEAKER 1 — HANNAH (<<<Audio1>>> ):\n\"We need more decorations!\"\nSPEAKER 2 — CHLOE (<<<Audio2>>> ):\n\"I think we have enough.\"\n\nSILENT PAYOFF:\nHannah turns and finally notices how heavily decorated the booth already is.\nShe pauses, realizing Chloe is right.\nHannah slowly lowers the extra garland and places it on the nearby table.\nChloe gives a small, satisfied smile.\nCUT.\nAUDIO AND ACTION CONTROL:\nUse <<<Audio1>>>  exclusively for Hannah.\nUse <<<Audio2>>>  exclusively for Chloe.\nOnly the four specified dialogue lines are spoken.\nNo additional speech or improvised words.\nThe booth must already be heavily decorated at the start.\nDo not generate decorations appearing suddenly.\nKeep the garland in Hannah's hand until she places it on the table.\nNo exaggerated reactions.\nNo forced laughter.\nNo additional characters.\nNo readable text or logos.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
 },
   {
-    id: "5_school_life_victoria_noah",
-    correctOptionQuestions: [{"sentence":"Noah : Can I use my USB ___?","target":"drive","choices":["drive","dive","card","folder"],"bonus":{"target":"bellek","choices":["bellek","klavye","ekran","fare"]}}],
-    status: "published",
-rating : 5,
-    videoSrc: "assets/video/5_school_life_victoria_noah.mp4",
-    title: "Noah asks to use a USB drive at school.",
-    transcript: "Noah : /Can I/ use my USB drive? Victoria : /No/, /we can't use/ them here.",
-    answerOptions: [
-      { id: "a", text: "Noah : USB belleğimi kullanabilir miyim? Victoria : /Hayır/, Burada onları /kullanamayız/." },
-      { id: "b", text: "Noah : USB belleğin var mı? Victoria : Evet, Burada kullanabilirsin." }
-    ],
-    easyDistractor: "Noah : USB belleğimi görebilir miyim? Victoria : Evet, Görebilirsin.",
-    correctOptionId: "a",
-    characterIds: ["victoria","noah"],
-    grades: [5],
-    functions: ["asking_permission","use_of_modals_mustnt_and_cant_prohibition","refusing"],
-    theme: "School_life",
-    unit: "school_life",
-    evidenceStart: null,
-    evidenceEnd: "0:04",
-    evidenceSentence: "Noah : /Can I/ use my USB drive? Victoria : /No/, /we can't use/ them here.",
-truefalsequestion: "Noah can't use his USB drive in the computer lab.",
-truefalseanswer: true,
-  },
+  id: "5_school_life_victoria_noah",
+  correctOptionQuestions: [{"sentence":"Victoria : No, we can't ___ them here.","target":"use","choices":["use","lose","choose","refuse"],"bonus":{"target":"kullanmak","choices":["kullanmak","kaybetmek","seçmek","reddetmek"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_school_life_victoria_noah.mp4",
+  title: "No USB Drives Allowed",
+  transcript: "Noah : /Can I use/ my USB drive? Victoria : No, /we can't use/ them here, see, it agrees!",
+  answerOptions: [
+    { id: "a", text: "Noah : USB belleğimi /kullanabilir miyim/? Victoria : Hayır, burada onları /kullanamayız/, gördün mü, o da aynı fikirde!" },
+    { id: "b", text: "Noah : USB belleğin var mı? Victoria : Evet, burada kullanabilirsin." }
+  ],
+  easyDistractor: "Noah : Bilgisayarın açık mı? Victoria : Evet, bilgisayarda oyun oynuyorum.",
+  correctOptionId: "a",
+  characterIds: ["noah", "victoria"],
+  grades: [5],
+  functions: ["use_of_modal_can_for_permission", "expressing_prohibition", "responding_appropriately"],
+  theme: "school_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:03.901",
+
+  evidenceSentence: "Noah : /Can I use/ my USB drive? Victoria : No, /we can't use/ them here, see, it agrees!",
+  truefalsequestion: "Student mustn't use their USB Drives in the computer lab.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>>  as Noah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Noah's voice reference.\nUse <<<Image2>>>  as Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Victoria's voice reference.\nSCENE:\nNoah and Victoria are sitting beside each other in their school's computer laboratory.\nNoah asks whether he can use his USB drive.\nVictoria explains that USB drives are not allowed.\nImmediately afterward, Victoria's computer unexpectedly displays a large USB prohibition symbol, creating a humorous coincidence.\nSETTING:\nA bright, modern school computer laboratory during daytime.\nNeat rows of desks with desktop computers, monitors, keyboards, and mice.\nLarge windows allow natural daylight into the room.\nNoah and Victoria sit at two adjacent computers.\nNoah sits on the left and Victoria sits on the right.\nTheir computer monitors are positioned so both students can easily see Victoria's screen.\nA few additional computers are visible in the background.\nNo other students are necessary.\nCLOTHING:\nNoah wears his existing upper clothing from <<<Image1>>>  and dark blue full-length trousers.\nVictoria wears her existing upper clothing from <<<Image2>>>  and charcoal-gray full-length trousers.\nPreserve their exact referenced upper clothing.\nACCESSORIES:\nNoah wears his canonical rectangular glasses.\nVictoria wears her canonical glasses as shown in <<<Image2>>> .\nNoah has a small USB flash drive in his hand.\nPRE-ACTION:\nNoah and Victoria are already seated at their computers.\nBoth computers are switched on.\nTheir monitors initially display simple, neutral desktop backgrounds without readable text.\nNoah is holding his USB drive but has not connected it to either computer.\nThe conversation begins immediately.\nDIALOGUE:\nNoah (<<<Audio1>>> ):\n\"Can I use my USB drive?\"\nVictoria (<<<Audio2>>> ):\n\"No, we can't use them here.\"\nFINAL PAYOFF:\nImmediately after Victoria finishes her line, a huge USB flash drive icon suddenly appears in the center of VICTORIA'S computer screen.\nA large, bold red X is superimposed directly over the USB icon.\nThe symbol clearly communicates that USB drives are prohibited.\nThe symbol is graphical only, with absolutely no words or letters.\nThe icon appears instantly, without loading animations or intermediate screens.\nVictoria notices the unexpected symbol on her own monitor.\nShe smiles and says:\nVictoria (<<<Audio2>>> ):\n\"See, it agrees!\"\nNoah looks at Victoria's monitor with a surprised expression.\nCUT IMMEDIATELY.\nIMPORTANT SCREEN CONTINUITY:\nThe USB prohibition symbol appears ONLY on Victoria's computer monitor.\nNoah's computer screen remains unchanged.\nThe symbol must be large, simple, and immediately recognizable.\nShow one USB flash drive icon with one prominent red X over it.\nDo not use a USB cable icon.\nDo not show error messages, notification boxes, warning text, or operating system logos.\nThe prohibition symbol appears ONLY after Victoria finishes saying:\n\"No, we can't use them here.\"\nIt remains visible through Victoria's final line and Noah's reaction.\nDo not show Noah inserting his USB drive into any computer.\nDIALOGUE AND REACTION CONTINUITY:\nThe initial two dialogue lines are delivered without prescribed facial expressions or gestures.\nVictoria's smile occurs only during the final payoff.\nNoah's surprised reaction occurs only after the prohibition symbol appears.\nVictoria speaks the final line only after noticing the symbol.\nNoah looks at Victoria's monitor, not his own monitor, during his final reaction.\nNo additional reactions or actions are required.\nPACING:\nBegin directly with Noah's question.\nKeep the dialogue natural and continuous, without unnecessary pauses.\nThe USB symbol appears immediately after Victoria's first line.\nVictoria delivers the final line promptly.\nNoah's reaction is brief.\nEnd immediately after Noah's surprised look.\nDo not add introductory sequences, prolonged pauses, or extra activities.\nAUDIO:\nNoah speaks only with <<<Audio1>>> .\nVictoria speaks only with <<<Audio2>>> .\nExact dialogue order:\nNoah: \"Can I use my USB drive?\"\nVictoria: \"No, we can't use them here.\"\nVictoria: \"See, it agrees!\"\nNo additional dialogue.\nNo narration.\nNo overlapping speech.\nNo background conversations.\nNo background music.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
 
   {
   id: "5_school_life_ella_olivia",
@@ -15857,28 +15866,32 @@ truefalseanswer: true,
 },
 
   {
-    id: "5_school_life_emma",
-    correctOptionQuestions: [{"sentence":"Teacher : Please keep your ___ tidy.","target":"classroom","choices":["classroom","bathroom","office","kitchen"],"bonus":{"target":"sınıf","choices":["sınıf","banyo","ofis","mutfak"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_school_life_emma.mp4",
-    title: "The teacher asks Emma to keep the classroom tidy.",
-    transcript: "Teacher : Please /keep your classroom tidy/. Emma : Of course, I'll put these books away.",
-    answerOptions: [
-      { id: "a", text: "Öğretmen : Lütfen /sınıfını düzenli tut/. Emma : Tabii, Bu kitapları rafa koyacağım." },
-      { id: "b", text: "Öğretmen : Lütfen sıranı düzenli tut. Emma : Tabii, Bu defterleri rafa koyacağım." }
-    ],
-    easyDistractor: "Öğretmen : Lütfen sınıfını düzenli tut. Emma : Hayır, Kitapları yere atacağım.",
-    correctOptionId: "a",
-    characterIds: ["emma"],
-    grades: [5],
-    functions: ["imperatives"],
-    theme: "School_life",
-    unit: "school_life",
-    evidenceStart: "0:00.000",
-    evidenceEnd: "0:02.207",
-    evidenceSentence: "Teacher : Please /keep your classroom tidy/",
-  },
+  id: "5_school_life_emma",
+  correctOptionQuestions: [{"sentence":"Teacher : Please keep your classroom ___.","target":"tidy","choices":["tidy","tiny","dirty","tired"],"bonus":{"target":"düzenli","choices":["düzenli","küçük","kirli","yorgun"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_school_life_emma.mp4",
+  title: "Keep Your Classroom Tidy",
+  transcript: "Teacher : Please keep your /classroom/ tidy. Emma : Of course, I'll put these /books/ away.",
+  answerOptions: [
+    { id: "a", text: "Öğretmen : Lütfen /sınıfını/ düzenli tut. Emma : Tabii, bu /kitapları/ rafa koyacağım." },
+    { id: "b", text: "Öğretmen : Lütfen sıranı düzenli tut. Emma : Tabii, bu defterleri rafa koyacağım." }
+  ],
+  easyDistractor: "Öğretmen : Lütfen pencereyi aç. Emma : Tabii, sınıf çok sıcak.",
+  correctOptionId: "a",
+  characterIds: ["emma"],
+  grades: [5],
+  functions: ["giving_commands", "imperatives", "expressing_a_school_rule", "responding_appropriately"],
+  theme: "school_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:05.900",
+
+  evidenceSentence: "Teacher : Please keep your /classroom/ tidy. Emma : Of course, I'll put these /books/ away.",
+
+  prompt: "Use <<<Image1>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Emma's voice reference.\nCHARACTERS:\nEMMA:\nPreserve Emma's canonical appearance, hairstyle, facial features, and exact upper clothing from <<<Image1>>> .\nTEACHER:\nA generic adult female middle-school teacher, approximately 40 years old.\nShe has shoulder-length dark brown hair and natural adult body proportions.\nShe wears a plain light blue blouse and dark gray full-length trousers.\nShe is noticeably taller than Emma.\nThe teacher has no image or audio reference.\nUse a natural adult female voice for the teacher.\nSCENE:\nA teacher asks Emma to keep the classroom tidy.\nEmma agrees and puts some books away.\nAfter Emma finishes putting the books on a shelf, the teacher reveals that a few crumpled paper balls are still lying on the classroom floor.\nThe scene ends with Emma's funny, embarrassed reaction.\nTIME AND SETTING:\nDaytime.\nA bright, ordinary middle-school classroom with natural daylight entering through the windows.\nThe classroom is completely empty except for Emma and the female teacher.\nABSOLUTELY NO OTHER STUDENTS OR PEOPLE.\nThere are no students sitting at desks, studying, writing, or walking in the background.\nThe classroom contains ordinary student desks, chairs, a whiteboard, and a bookshelf.\nThe classroom is generally clean and orderly.\nOnly a few crumpled paper balls are scattered on a small section of the floor.\nCHARACTER AND FURNITURE ARRANGEMENT:\nEmma is STANDING beside a student desk.\nThree ordinary schoolbooks are stacked on the desk.\nA bookshelf stands directly behind Emma, within easy reach.\nEmma can turn around and place the books on the shelf without walking across the classroom.\nThe teacher stands beside Emma, with a clear view of both Emma and the classroom floor.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>> and dark blue full-length jeans.\nThe teacher wears a plain light blue blouse and dark gray full-length trousers.\nPreserve Emma's referenced upper clothing exactly.\nACCESSORIES:\nEmma wears a small bracelet.\nThe teacher wears a simple wristwatch.\nPRE-ACTION:\nEmma is already standing beside the desk.\nThe three books are already stacked on the desk.\nThe bookshelf is directly behind Emma.\nThe teacher is standing nearby.\nThe conversation begins immediately.\nDIALOGUE:\nTeacher (natural adult female voice):\n\"Please keep your classroom tidy.\"\nEmma (<<<Audio1>>> ):\n\"Of course, I'll put these books away.\"\nBOOKSHELF ACTION:\nImmediately after finishing her line, Emma picks up the three books from the desk.\nShe turns toward the bookshelf directly behind her.\nShe places the books neatly on an available shelf.\nThe action is simple, direct, and continuous.\nEmma finishes placing ALL THREE books on the shelf before the final payoff begins.\nThe books remain on the shelf.\nFINAL PAYOFF:\nONLY AFTER Emma has finished putting away the books, the view shifts to reveal a small section of the classroom floor.\nExactly five or six crumpled white paper balls are scattered loosely on the floor near a few desks.\nThe rest of the classroom floor is clean.\nThe teacher points toward these crumpled paper balls with one hand.\nEmma notices the teacher's gesture and looks at the papers.\nEmma makes a funny, embarrassed facial expression.\nHer eyes widen slightly, and her lips part as she realizes she has overlooked the remaining mess.\nHer reaction is subtle, natural, and humorous.\nCUT IMMEDIATELY.\nCRITICAL CLASSROOM RULES:\nONLY Emma and the female teacher are present.\nNo other students.\nNo background characters.\nNo crowded classroom.\nEmma must remain STANDING throughout the scene.\nShe must not sit down.\nThe bookshelf must be directly behind Emma.\nEmma must actually pick up the books and place them on the shelf.\nDo not skip the bookshelf action.\nDo not begin the final payoff before Emma finishes putting away the books.\nCRITICAL PAPER RULES:\nThere are ONLY FIVE OR SIX crumpled paper balls.\nThey are scattered within a small area of the classroom floor.\nThe rest of the floor is clean and empty.\nDo not cover the classroom floor with paper.\nDo not fill the aisles between desks with paper.\nDo not create dozens of paper balls.\nDo not create piles of rubbish.\nThe paper balls are already on the floor but remain outside the initial view.\nThey are revealed only during the final payoff.\nNo paper falls from above.\nNo additional paper appears.\nREACTION CONTINUITY:\nDo not prescribe facial expressions or gestures during the dialogue.\nEmma's embarrassed expression occurs only after she has put away the books and noticed the paper balls.\nThe teacher points toward the paper balls only during the final payoff.\nEmma does not speak again.\nThe teacher does not speak again.\nPACING:\nBegin immediately with the teacher's line.\nEmma answers promptly.\nEmma immediately picks up the books, turns around, and places them on the shelf.\nKeep this action efficient and natural.\nImmediately reveal the few crumpled paper balls.\nThe teacher points toward them.\nEmma gives one brief embarrassed reaction.\nCUT.\nNo unnecessary pauses.\nNo extra movements.\nNo additional cleaning actions.\nNo prolonged ending.\nAUDIO:\nThe teacher speaks with a natural adult female voice.\nEmma speaks only with <<<Audio1>>> .\nExact dialogue:\nTeacher: \"Please keep your classroom tidy.\"\nEmma: \"Of course, I'll put these books away.\"\nNo additional speech.\nNo narration.\nNo background conversations.\nNo background music.\nSubtle classroom ambience is acceptable.\nDo not generate subtitles.\nAll dialogue must exist as AUDIO ONLY."
+},
 
   {
   id: "5_school_life_jack",
@@ -22191,29 +22204,34 @@ evidenceEnd: "0:06.072",
 },
 
   {
-    id: "8_invite_david_benjamin_lucas_jack",
-    correctOptionQuestions: [{"sentence":"Jack : I'm going to visit my ___.","target":"grandparents","choices":["grandparents","grand plans","parents","cousins"],"bonus":{"target":"büyükanne ve büyükbaba","choices":["büyükanne ve büyükbaba","anne ve baba","kuzenler","kardeşler"]}}],
-    status: "published",
-    rating: 4,
-    videoSrc: "assets/video/8_invite_david_benjamin_lucas_jack.mp4",
-    title: "David invites Benjamin, Lucas, and Jack to hang out.",
-    transcript: "David : Do you want to hang out? Benjamin : I'm busy, But /I can't refuse/. Lucas : I'd like to, But I can't. Jack : I'm going to /visit my grandparents./",
-    answerOptions: [
-      { id: "a", text: "David : Takılmak ister misiniz? Benjamin : Meşgulüm, /Ama reddedemem/. Lucas : İsterdim, Ama gelemem. Jack : /Büyükannemle büyükbabamı ziyarete gideceğim./" },
-      { id: "b", text: "David : Takılmak ister misiniz? Benjamin : Meşgulüm, reddetmek zorundayım. Lucas : İsterdim, Ama gelemem. Jack : Ben de boşum." }
-    ],
-    easyDistractor: "David : Takılmak ister misiniz? Benjamin : Meşgulüm, Ama reddedemem. Lucas : Belki sonra gelirim. Jack : Ben de gelebilirim.",
-    correctOptionId: "a",
-    explanation: "",
-    characterIds: ["david", "benjamin", "lucas", "jack"],
-    grades: [8],
-    functions: ["makingasuggestion", "accepting", "refusing"],
-    theme: "personal_life",
-    unit: "",
-    evidenceStart: "0:01.493",
-evidenceEnd: null,
-    evidenceSentence: "David : Do you want to hang out? Benjamin : I'm busy, But /I can't refuse/. Lucas : I'd like to, But I can't. Jack : I'm going to /visit my grandparents./",
-  },
+  id: "8_invite_david_benjamin_lucas_jack",
+  correctOptionQuestions: [{"sentence":"Benjamin : I'm busy, but I can't ___.","target":"refuse","choices":["refuse","confuse","reuse","reduce"],"bonus":{"target":"reddetmek","choices":["reddetmek","kafasını karıştırmak","yeniden kullanmak","azaltmak"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/8_invite_david_benjamin_lucas_jack.mp4",
+  title: "A Group Call Invitation",
+  transcript: "David : Do you want to hang out? Benjamin : I'm busy, but /I can't refuse/. Lucas : I'd like to, but I can't. Jack : I'm going to visit my grandparents.",
+  answerOptions: [
+    { id: "b", text: "David : Dışarıda takılmak ister misiniz? Benjamin : Meşgulüm ama /reddedemem/. Lucas : İsterdim ama yapamam. Jack : Büyükanne ve büyükbabamı ziyaret edeceğim." },
+    { id: "a", text: "David : Dışarıda takılmak ister misiniz? Benjamin : Üzgünüm ama reddetmek zorundayım. Lucas : İsterdim ama yapamam. Jack : Büyükanne ve büyükbabamı ziyaret edeceğim." }
+  ],
+  easyDistractor: "David : Yarın hava nasıl olacak? Benjamin : Güneşli olacak. Lucas : Ben futbol oynayacağım. Jack : Ben de yüzmeye gideceğim.",
+  correctOptionId: "b",
+  characterIds: ["david", "benjamin", "lucas", "jack"],
+  grades: [7,8],
+  functions: ["asking_about", "accepting", "refusing", "be_going_to_future_tense_for_plans", "responding_appropriately"],
+  theme: "invite",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:09.801",
+
+  evidenceSentence: "David : Do you want to hang out? Benjamin : I'm busy, but /I can't refuse/. Lucas : I'd like to, but I can't. Jack : I'm going to visit my grandparents.",
+  truefalsequestion: "Two people refuses the invitation.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>>  as David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as David's voice reference.\nUse <<<Image2>>>  as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Benjamin's voice reference.\nUse <<<Image3>>>  as Lucas's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio3>>>  as Lucas's voice reference.\nUse <<<Image4>>>  as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio4>>>  as Jack's voice reference.\nCHARACTER PROPORTIONS:\nPreserve the natural body proportions and canonical appearances of all four characters.\nSCENE:\nFour friends are participating in the same group voice call using their smartphones.\nDavid invites his friends to hang out.\nBenjamin is busy but accepts the invitation.\nLucas would like to join but cannot.\nJack explains that he is going to visit his grandparents.\nEach boy is in his own bedroom at home.\nSEASON, WEATHER, AND TIME:\nSummer.\nA bright, sunny daytime.\nWarm natural daylight enters each bedroom through its window.\nGreen summer foliage is visible outside.\nAll four scenes take place during the same afternoon.\nSETTING AND SPATIAL ARRANGEMENT:\nDAVID'S BEDROOM:\nA comfortable bedroom with light-colored walls, a wooden desk, bookshelves, and a neatly made bed.\nSummer daylight enters through the window.\nDavid is sitting at his desk, holding his smartphone.\nBENJAMIN'S BEDROOM:\nA tidy bedroom with a bed, a study desk, and a sports bag near the wardrobe.\nSunlight enters through the window.\nBenjamin is sitting on the edge of his bed, holding his smartphone.\nLUCAS'S BEDROOM:\nA cozy bedroom with a wooden desk, shelves, and a window overlooking green summer trees.\nLucas is sitting in his desk chair, holding his smartphone.\nJACK'S BEDROOM:\nA simple, comfortable bedroom with warm natural colors.\nA neatly made bed stands near a window overlooking a sunny summer garden.\nA small travel bag rests on the bed beside Jack.\nJack is sitting beside the travel bag, holding his smartphone.\nIMPORTANT LOCATION RULE:\nEach character appears ONLY in his own bedroom.\nThe four boys are physically separated and connected through the same group voice call.\nDo not place multiple boys in the same room.\nDo not show the other boys physically present in any bedroom.\nCLOTHING:\nDavid wears his existing upper clothing from <<<Image1>>>  and dark blue full-length jeans.\nBenjamin wears his existing upper clothing from <<<Image2>>>  and charcoal-gray full-length jeans.\nLucas wears his existing upper clothing from <<<Image3>>>  and beige full-length trousers.\nJack wears his existing upper clothing from <<<Image4>>>  and dark gray full-length trousers.\nPreserve all four characters' referenced upper clothing exactly.\n\nPROPS:\nEach boy has exactly one smartphone.\nAll four smartphones are connected to the same ongoing group voice call.\nThe boys are using their phones for an audio call, not a video call.\nNo faces, messages, or readable text appear on the phone screens.\nJack has one small travel bag on his bed.\nPRE-ACTION:\nThe group voice call is already connected when the scene begins.\nDavid, Benjamin, Lucas, and Jack are already in their respective bedrooms with their smartphones.\nDavid begins speaking immediately.\nDIALOGUE AND SCENE TRANSITIONS:\nDAVID — IN HIS BEDROOM\nDavid (<<<Audio1>>> ):\n\"Do you want to hang out?\"\nImmediately transition to Benjamin's bedroom.\nBENJAMIN — IN HIS BEDROOM\nBenjamin (<<<Audio2>>> ):\n\"I'm busy, but I can't refuse.\"\nImmediately transition to Lucas's bedroom.\nLUCAS — IN HIS BEDROOM\nLucas (<<<Audio3>>> ):\n\"I'd like to, but I can't.\"\nImmediately transition to Jack's bedroom.\nJACK — IN HIS BEDROOM\nJack (<<<Audio4>>> ):\n\"I'm going to visit my grandparents.\"\nFINAL PAYOFF:\nImmediately after Jack finishes his final line, he closes the zipper of the small travel bag resting on his bed.\nThe bag remains on the bed.\nCUT IMMEDIATELY.\nPHONE CALL CONTINUITY:\nAll four characters are participating in one continuous group audio call.\nEach character speaks only during his assigned turn.\nOnly the character currently speaking is shown.\nThe scene transitions directly between bedrooms in dialogue order.\nDo not return to previous bedrooms after their characters have finished speaking.\nDo not create a split-screen layout.\nDo not show video-call interfaces or floating images of other participants.\nEach boy retains his own smartphone throughout his scene.\nNo character speaks before David's opening line.\nNo additional greetings, introductions, or farewells.\nTRAVEL BAG CONTINUITY:\nJack's small travel bag is already resting on his bed when his scene begins.\nThe bag is partially open.\nJack does not interact with the bag while delivering his dialogue.\nOnly after finishing his line does he close its zipper.\nThe bag does not disappear, duplicate, or change size.\nNo additional packing actions are required.\nPACING:\nThe conversation begins immediately with David's first line.\nUse natural conversational pacing with minimal pauses.\nTransitions between the four bedrooms are direct and brief.\nDo not insert establishing sequences, prolonged silences, or unrelated activities.\nThe final travel bag action is brief.\nEnd immediately after the final payoff.\nAUDIO:\nDavid speaks only with <<<Audio1>>> .\nBenjamin speaks only with <<<Audio2>>> .\nLucas speaks only with <<<Audio3>>> .\nJack speaks only with <<<Audio4>>> .\nClear, natural English pronunciation.\nThe exact dialogue must be:\nDavid: \"Do you want to hang out?\"\nBenjamin: \"I'm busy, but I can't refuse.\"\nLucas: \"I'd like to, but I can't.\"\nJack: \"I'm going to visit my grandparents.\"\nDo not invent, paraphrase, replace, or improvise spoken lines.\nNo overlapping dialogue.\nNo additional speech.\nNo narration.\nNo background conversations.\nNo telephone ringing or call connection sounds.\nSubtle indoor room ambience is acceptable.\nNo background music.\nDo not generate subtitles."
+},
 
   
   
@@ -23341,6 +23359,91 @@ evidenceEnd: "0:04.736",
   truefalseanswer: false,
 
   prompt: "Use <<<Image1>>> as David's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as David's voice reference.\nUse <<<Image2>>>  as Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Ethan's voice reference.\nUse <<<Image3>>>  as Elizabeth's canonical identity, appearance, and upper-clothing reference.\nSCENE:\nA winter daytime telephone conversation between David and Ethan, who are in separate homes.\nEthan is calling David because his mother, Elizabeth, wants to speak with David's mother, Valeria.\nSEASON AND WEATHER:\nWinter, daytime.\nBeautiful snow-covered gardens, rooftops, and evergreen trees are visible through the windows of both homes. Light snow falls outside.\nDAVID'S HOME:\nA comfortable, tidy living room with a sofa, coffee table, bookshelf, and large window overlooking a beautiful snowy landscape.\nSoft winter daylight enters through the window.\nDavid is seated on the sofa with his smartphone beside him.\nETHAN'S HOME:\nA warm, cozy family living room with a comfortable sofa, cushions, a coffee table, and a traditional fireplace.\nA natural wood fire burns steadily in the fireplace, producing warm orange flames and a soft golden glow.\nA large window reveals a beautiful snow-covered garden with evergreen trees and gently falling snow.\nThe warm fireplace light contrasts with the cool winter daylight outside.\nEthan sits on the sofa beside his mother, Elizabeth.\nElizabeth remains beside Ethan throughout both of his dialogue turns.\nCLOTHING:\nDavid wears his existing upper clothing from <<<Image1>>> and dark gray full-length trousers.\nEthan wears his existing upper clothing from <<<Image2>>>  and dark blue full-length jeans.\nElizabeth wears her existing upper clothing from <<<Image3>>>  and beige full-length trousers.\nACCESSORIES:\nDavid wears a simple wristwatch.\nEthan wears a small fabric wristband.\nElizabeth wears a delicate bracelet.\nOPENING ACTION:\nDavid's smartphone rings briefly in his living room.\nDavid picks it up, brings it to his ear, and answers.\nDIALOGUE:\nDavid (<<<Audio1>>> ):\n\"Hello, David speaking.\"\nIn Ethan's living room, Ethan holds his smartphone against his ear while Elizabeth sits beside him. The fireplace burns nearby.\nEthan (<<<Audio2>>> ):\n\"Hello, David. This is Ethan. My mother wants to speak to your mother. Can you put her through?\"\nBack in David's living room.\nDavid (<<<Audio1>>> ):\n\"Can you hold on a moment, please?\"\nBack in Ethan's living room, with Elizabeth still seated beside him and the fireplace burning.\nEthan (<<<Audio2>>> ):\n\"Okay.\"\nFINAL PAYOFF:\nImmediately after saying \"Okay,\" Ethan briefly looks toward his mother Elizabeth.\nElizabeth remains silent.\nCUT IMMEDIATELY.\nCONTINUITY:\nDavid and Ethan remain in their separate homes throughout the conversation.\nDavid holds his smartphone against his ear while speaking.\nEthan holds his smartphone against his ear throughout the conversation and final moment.\nElizabeth remains seated beside Ethan, wearing the same referenced clothing.\nThe fireplace remains lit throughout Ethan's scenes.\nThe snowy winter landscape remains consistent outside both homes.\nValeria does not appear.\nPACING:\nNatural, fluent telephone dialogue with brief transitions between speakers.\nThe opening phone ring and answering action are very short.\nNo extended pauses or unnecessary actions.\nEnd immediately after Ethan's brief look toward Elizabeth.\nAUDIO:\nDavid speaks exclusively with <<<Audio1>>> .\nEthan speaks exclusively with <<<Audio2>>> .\nElizabeth does not speak.\nOnly the four specified dialogue lines are spoken, in their exact order.\nA brief smartphone ringing sound at the beginning.\nSubtle indoor ambience and gentle fireplace crackling.\nNo narration.\nNo background conversations.\nNo background music.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
+  {
+  id: "8_phone_conversation_benjamin_callum",
+  correctOptionQuestions: [{"sentence":"Benjamin : ___  a minute, please, I'll get him.","target":"Hang on","choices":["Hang on","Hand on","Hang up","Hang out"],"bonus":{"target":"beklemek","choices":["beklemek","el","özel isim","asmak"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/8_phone_conversation_benjamin_callum.mp4",
+  title: "Is Your Father In?",
+  transcript: "Benjamin : Hello, Benjamin speaking. Callum : Hi, Benjamin, this is Callum, is your father in? Benjamin : Hang on a /minute/, please, /I'll get him/.",
+  answerOptions: [
+    { id: "a", text: "Benjamin : Alo, ben Benjamin. Callum : Merhaba Benjamin, ben Callum, baban evde mi? Benjamin : Bir /dakika/ bekleyin lütfen, /onu çağıracağım/. " },
+    { id: "b", text: "Benjamin : Alo, ben Benjamin. Callum : Merhaba Benjamin, ben Callum, baban evde mi? Benjamin : Bir saniye bekleyin lütfen, müsait mi bakıyım." }
+  ],
+  easyDistractor: "Benjamin : Bugün hava çok güzel. Callum : Evet, parkta yürüyüş yapıyorum. Benjamin : İyi eğlenceler. Callum : Teşekkürler. Benjamin : Hoşça kal!",
+  correctOptionId: "a",
+  characterIds: ["benjamin", "callum"],
+  grades: [8],
+  functions: ["introductions", "asking_about_availability", "makingrequests", "responding_appropriately", "target_social_language"],
+  theme: "phone_conversation",
+  unit: "",
+
+  evidenceStart: "0:01.151",
+  evidenceEnd: "0:09.651",
+
+  evidenceSentence: "Benjamin : Hello, Benjamin speaking. Callum : Hi, Benjamin, this is Callum, is your father in? Benjamin : Hang on a /minute/, please, /I'll get him/.",
+  truefalsequestion: "Benjamin's father is available.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Benjamin's voice reference.\nUse <<<Image2>>>  as Callum's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Callum's voice reference.\nSCENE:\nCallum, Jack's father, is calling Benjamin's home to speak with Benjamin's father, Oliver.\nBenjamin answers the home telephone.\nCallum is walking along a quiet neighborhood sidewalk while speaking on his smartphone.\nSEASON, WEATHER, AND TIME:\nSpring, sunny afternoon.\nFresh green leaves, flowering trees, and soft natural sunlight.\nSETTING:\nBENJAMIN'S HOME:\nA bright, comfortable family living room.\nA traditional corded landline telephone rests on a small side table near the sofa.\nThe handset is connected to the telephone base by a coiled cord.\nBenjamin stands beside the side table.\nA doorway leading toward the other rooms is visible nearby.\nOliver is elsewhere in the house and does not appear.\nCALLUM'S LOCATION:\nA peaceful residential sidewalk lined with green trees, garden fences, and flowering bushes.\nCallum walks slowly along the sidewalk while holding his smartphone to his ear.\nCLOTHING:\nBenjamin wears his existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nCallum wears his existing upper clothing from <<<Image2>>>  and charcoal-gray full-length trousers.\nPreserve their exact referenced upper clothing.\nACCESSORIES:\nBenjamin wears a simple fabric wristband.\nCallum wears a plain wristwatch.\nOPENING ACTION:\nThe scene begins inside Benjamin's living room.\nThe landline telephone rings briefly.\nBenjamin picks up the handset, brings it to his ear, and answers.\nDIALOGUE:\nBenjamin (<<<Audio1>>> ):\n\"Hello, Benjamin speaking.\"\nTransition directly to Callum walking along the sidewalk.\nCallum (<<<Audio2>>> ):\n\"Hi, Benjamin. This is Callum. Is your father in?\"\nTransition directly to Benjamin's living room.\nBenjamin (<<<Audio1>>> ):\n\"Hang on a minute, please. I'll get him.\"\nTransition directly to Callum on the sidewalk.\nCallum (<<<Audio2>>> ):\n\"Thank you.\"\nFINAL ACTION:\nReturn immediately to Benjamin in the living room.\nBenjamin turns toward the doorway leading to the other rooms.\nHe moves the landline handset slightly away from his ear while keeping it in his hand.\nBenjamin calls out loudly toward the inside of the house:\nBenjamin (<<<Audio1>>> ):\n\"Dad!\"\nCUT IMMEDIATELY.\nPHONE CONTINUITY:\nBenjamin uses the same corded landline handset throughout the conversation.\nThe coiled cord remains connected to the telephone base.\nHe keeps the handset against his ear during the phone conversation.\nHe moves it slightly away from his ear only when calling out to his father at the end.\nCallum keeps his smartphone against his ear while speaking and walking.\nCallum continues walking naturally along the sidewalk.\nPACING:\nBegin immediately with the brief telephone ring and Benjamin answering.\nKeep all dialogue transitions direct and natural.\nAfter Callum says \"Thank you,\" return immediately to Benjamin.\nBenjamin turns and calls \"Dad!\" without a prolonged pause.\nEnd immediately after the call.\nAUDIO:\nBenjamin speaks only with <<<Audio1>>> .\nCallum speaks only with <<<Audio2>>> .\nExact dialogue order:\nBenjamin: \"Hello, Benjamin speaking.\"\nCallum: \"Hi, Benjamin. This is Callum. Is your father in?\"\nBenjamin: \"Hang on a minute, please. I'll get him.\"\nCallum: \"Thank you.\"\nBenjamin: \"Dad!\"\nThe final \"Dad!\" is called out loudly toward another room, not spoken into the telephone.\nNo additional dialogue.\nNo response from Oliver.\nNo narration.\nNo background conversations.\nNo background music.\nA brief natural landline ringing sound at the beginning.\nSubtle indoor and outdoor ambience.\nDo not generate subtitles."
+},
+  {
+  id: "8_phone_conversation_ava_elodie",
+  correctOptionQuestions: [{"sentence":"Élodie : She isn't available at the moment, would you like to ___ ?","target":"leave a message","choices":["leave a message","leave a massage","leave the house","sweep the leaves"],"bonus":{"target":"müsait","choices":["müsait","meşgul","rahat","kaçınılabilir"],"word":"available"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/8_phone_conversation_ava_elodie.mp4",
+  title: "I'll Call Back Later",
+  transcript: "Élodie : Hello, Élodie speaking. Ava : Hi, Élodie, this is Ava, /could I speak/ to Chloe, please? Élodie : I'm sorry, she isn't /available/ at the moment, would you like to leave a message? Ava : No, thanks, /I'll call back later/.",
+  answerOptions: [
+    { id: "b", text: "Élodie : Alo, ben Élodie. Ava : Merhaba Élodie, ben Ava, Chloe ile /konuşabilir/ miyim lütfen? Élodie : Üzgünüm, şu anda /müsait/ değil, mesaj bırakmak ister misin? Ava : Hayır, teşekkürler, /daha sonra tekrar arayacağım/." },
+    { id: "a", text: "Élodie : Alo, ben Élodie. Ava : Merhaba Élodie, ben Ava, Chloe orada mı acaba? Élodie : Üzgünüm, şu anda evde değil, mesaj bırakmak ister misin? Ava : Beni aramasını söyleyebilir misin, teşekkürler." }
+  ],
+  easyDistractor: "Élodie : Bugün hava çok güzel. Ava : Evet, bahçede oturuyorum. Élodie : Çiçekler açmış. Ava : Kuşlar da şarkı söylüyor.",
+  correctOptionId: "b",
+  characterIds: ["elodie", "ava"],
+  grades: [8],
+  functions: ["introductions", "makingrequests", "asking_about_availability", "refusing", "responding_appropriately", "target_social_language"],
+  theme: "phone_conversation",
+  unit: "",
+
+  evidenceStart: null,
+  evidenceEnd: null,
+
+  evidenceSentence: "Élodie : Hello, Élodie speaking. Ava : Hi, Élodie, this is Ava, /could I speak/ to Chloe, please? Élodie : I'm sorry, she isn't /available/ at the moment, would you like to leave a message? Ava : No, thanks, /I'll call back later/.",
+  truefalsequestion: "Ava leaves a message for Chloe.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Élodie's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Élodie's voice reference.\nUse <<<Image2>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Ava's voice reference.\nCHARACTERS:\nÉlodie is Chloe's 18-year-old older sister, visiting her family during a university break.\nAva is Chloe's close friend.\nPreserve both characters' canonical appearances and natural body proportions.\nSCENE:\nAva calls Chloe's home to speak with Chloe.\nChloe's older sister Élodie answers the telephone.\nChloe is currently unavailable, and Ava decides to call back later.\nSEASON, WEATHER, AND TIME:\nSpring, daytime.\nA pleasant sunny afternoon.\nFresh green leaves, flowering trees, and colorful spring flowers.\nSETTING:\nÉLODIE'S LOCATION:\nA bright, comfortable family living room.\nA sofa, a small wooden side table, a bookshelf, and a window overlooking a flowering garden.\nA traditional corded landline telephone sits on the side table.\nThe handset is connected to its base by a coiled cord.\nÉlodie is seated beside the telephone.\nAVA'S LOCATION:\nA peaceful residential garden filled with green plants and spring flowers.\nAva is seated on a garden chair beside a low wooden fence.\nThe fence is close enough for Ava to clearly see a small bird landing on it.\nAva holds her smartphone against her ear.\nThe garden is quiet and naturally illuminated by soft afternoon sunlight.\nCLOTHING:\nÉlodie wears her existing upper clothing from <<<Image1>>> and beige full-length trousers.\nAva wears her existing upper clothing from <<<Image2>>>  and the exact lower clothing shown in <<<Image3>>>   . Preserve the lower clothing's original design, color, shape, and length. The lower clothing must reach Chloe's knees. Do not shorten it or turn it into mini-shorts.\nPreserve the exact referenced upper clothing of both characters.\nACCESSORIES:\nÉlodie wears a simple wristwatch.\nAva wears a small floral hair clip.\nOPENING ACTION:\nThe scene begins in Élodie's living room.\nThe landline telephone rings briefly.\nÉlodie picks up the handset and brings it to her ear.\nShe answers immediately.\nDIALOGUE:\nÉlodie (<<<Audio1>>> ):\n\"Hello, Élodie speaking.\"\nTransition directly to Ava in the garden.\nAva (<<<Audio2>>> ):\n\"Hi, Élodie. This is Ava. Could I speak to Chloe, please?\"\nTransition directly to Élodie in the living room.\nÉlodie (<<<Audio1>>> ):\n\"I'm sorry. She isn't available at the moment. Would you like to leave a message?\"\nTransition directly to Ava in the garden.\nAva (<<<Audio2>>> ):\n\"No, thanks. I'll call back later.\"\nFINAL PAYOFF:\nImmediately after Ava finishes her final sentence, a small wild songbird flies into the garden.\nThe bird gently lands on the top of the wooden fence right beside Ava.\nIt settles naturally on the fence.\nAva notices the bird and turns her gaze toward it.\nShe gives the little bird a gentle, warm smile.\nThe bird remains perched on the fence.\nCUT IMMEDIATELY.\nPHONE CONTINUITY:\nÉlodie uses the same corded landline handset throughout the telephone conversation.\nShe keeps the handset against her ear while speaking.\nAva keeps her smartphone against her ear throughout her dialogue and the final bird moment.\nThe phone remains in Ava's hand during the entire payoff.\nBoth characters stay in their respective locations.\nChloe does not appear.\nPACING:\nBegin immediately with the brief telephone ring and Élodie answering.\nKeep the dialogue natural and continuous.\nUse direct transitions between speakers.\nAfter Ava's final line, the bird flies in and lands on the nearby fence.\nAva looks at the bird.\nCUT.\nNo extended pauses or additional actions.\nAUDIO:\nÉlodie speaks only with <<<Audio1>>> .\nAva speaks only with <<<Audio2>>> .\nExact dialogue order:\nÉlodie: \"Hello, Élodie speaking.\"\nAva: \"Hi, Élodie. This is Ava. Could I speak to Chloe, please?\"\nÉlodie: \"I'm sorry. She isn't available at the moment. Would you like to leave a message?\"\nAva: \"No, thanks. I'll call back later.\"\nNo additional dialogue.\nNo narration.\nNo background conversations.\nNo background music.\nA brief natural landline ringing sound at the beginning.\nSubtle spring garden ambience and a soft bird chirp during the final payoff.\nDo not generate subtitles."
+},
+  {
+  id: "winter_times_ava_chloe2",
+  correctOptionQuestions: [{"sentence":"Chloe : Ava, do you think this ___ suits me?","target":"hair style","choices":["hair style","hear still","hear style","head style"],"bonus":{"target":"gülmek","choices":["gülmek","bağırmak","gülümsemek","ağlamak"],"word":"laugh"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/winter_times_ava_chloe2.mp4",
+  title: "The Honest Friend",
+  transcript: "Chloe : Ava, do you think this hairstyle suits me? Ava : Definitely, /you look amazing/. Chloe : Then why are you /trying not to laugh/?",
+  answerOptions: [
+    { id: "a", text: "Chloe : Ava, sence bu saç modeli bana yakışıyor mu? Ava : Kesinlikle, /harika görünüyorsun/. Chloe : O zaman neden /gülmemeye çalışıyorsun/?" },
+    { id: "b", text: "Chloe : Ava, sence bu saç modeli bana yakışıyor mu? Ava : Oldukça güzel görünüyorsun. Chloe : O zaman neden beğenmemiş gibi bakıyorsun?" }
+  ],
+  easyDistractor: "Chloe : Dışarıda kar yağıyor mu? Ava : Evet, hava çok soğuk. Chloe : Sıcak çikolata ister misin?",
+  correctOptionId: "a",
+  characterIds: ["chloe", "ava"],
+  grades: [7,8],
+  functions: ["asking_about_opinions", "givinginformation", "askingforreason"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:06.752",
+
+  evidenceSentence: "Chloe : Ava, do you think this hairstyle suits me? Ava : Definitely, /you look amazing/. Chloe : Then why are you /trying not to laugh/?",
+
+  prompt: "Use <<<Image1>>> as Chloe's canonical identity, appearance, upper-clothing reference and the visual reference for Chloe's hairstyle and the single large pink hair roller.\nUse <<<Audio1>>> as Chloe's voice reference.\nUse <<<Image2>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Ava's voice reference.\n\nSCENE:\nThe Honest Friend.\nA short, humorous conversation between Chloe and Ava in a cozy living room.\nChloe is pleased with her hairstyle and asks Ava for an opinion.\nAva tries to compliment her without laughing because Chloe has accidentally left a large pink hair roller in her hair.\nChloe eventually notices the forgotten roller in a mirror.\nSEASON, WEATHER, AND TIME:\nMidwinter, early evening.\nSnow falls steadily outside.\nThe sky is a cold, overcast blue-gray.\nSnow covers the garden, neighboring rooftops, fences, and trees.\nSETTING:\nA beautiful, warm, comfortable living room.\nA large window provides a clear view of the snowy garden and nearby houses.\nSnowflakes are visibly falling outside throughout the scene.\nA traditional fireplace contains a gently burning wood fire.\nNatural orange flames flicker around the logs.\nThe fireplace casts a soft, warm glow across the room.\nA comfortable sofa, a wooden coffee table, a soft rug, a bookshelf, and a few indoor plants complete the setting.\nA large wall mirror stands near Chloe, allowing her to see her hairstyle when she turns toward it.\nThe mirror is positioned so that Chloe can look into it naturally without walking across the room.\nThe living room feels cozy and peaceful.\nNo Christmas decorations, Christmas trees, wreaths, stockings, festive lights, or holiday ornaments.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>> and dark blue full-length jeans.\nAva wears her existing upper clothing from <<<Image2>>> and charcoal gray full-length trousers.\nCHLOE'S HAIRSTYLE — CRITICAL:\nPreserve Chloe's recognizable face, blue eyes, freckles, and curly blonde hair from <<<Image1>>> .\nHer hair is styled in the same high, voluminous curly ponytail shown in <<<Image3>>> .\nONE large pink cylindrical hair roller remains accidentally attached near the front/top of her hairstyle.\nThe roller must match the pink hair roller shown in <<<Image3>>> .\nThe roller is clearly visible and securely held in place by a small section of hair.\nThere is exactly ONE hair roller.\nDo not add additional rollers.\nDo not replace the roller with a hair clip, bow, ribbon, or other accessory.\nThe roller stays in Chloe's hair throughout the entire scene.\nChloe does not remove it.\nAVA'S HOT CHOCOLATE:\nAva holds ONE ceramic mug filled with hot chocolate.\nThin, delicate wisps of steam rise visibly from the hot drink.\nThe steam is subtle and realistic, indicating that the chocolate is freshly prepared and warm.\nAva holds the mug naturally and securely.\nShe does not spill the drink.\nShe does not need to take a sip during the dialogue.\nThe mug remains in Ava's hand throughout the scene.\nCHARACTER ARRANGEMENT:\nChloe stands near the wall mirror, facing Ava.\nAva sits comfortably on the sofa, holding her steaming hot chocolate.\nThe fireplace is visible nearby, with a gentle fire burning inside.\nThe large window reveals the falling snow outside.\nChloe and Ava can see each other naturally while speaking.\nPRE-ACTION:\nChloe has just finished arranging her curly ponytail.\nShe briefly checks a loose curl with her fingers.\nShe is unaware that the large pink hair roller is still attached near the top of her hair.\nAva sits on the sofa with her steaming hot chocolate.\nShe notices the forgotten roller but tries to remain polite.\nChloe turns toward Ava and asks for her opinion.\nDIALOGUE AND PERFORMANCE:\nChloe (<<<Audio1>>> ):\n\"Ava, do you think this hairstyle suits me?\"\nChloe asks naturally, pleased with her appearance.\nShe has no idea that the pink roller is still in her hair.\nAva (<<<Audio2>>> ):\n\"Definitely! You look amazing.\"\nAva answers warmly.\nShe briefly notices the large pink roller.\nShe tries to maintain a straight face and avoid laughing.\nChloe (<<<Audio1>>> ):\n\"Then why are you trying not to laugh?\"\nChloe notices Ava's restrained expression.\nShe sounds curious and slightly suspicious, not angry.\nREACTION / PAYOFF:\nAva presses her lips together briefly, trying to keep a straight face.\nShe remains seated, holding her steaming hot chocolate.\nChloe turns naturally toward the nearby mirror.\nShe sees the large pink roller still attached to her hairstyle.\nShe freezes for a brief moment.\nHer expression changes from confidence to surprised embarrassment.\nAva continues trying not to laugh.\nNeither character speaks again.\nChloe does not touch or remove the roller.\nNo exaggerated expressions.\nNo loud laughter.\nNo additional actions.\nCUT immediately on Chloe's realization in the mirror.\nCRITICAL MIRROR CONTINUITY:\nThe mirror must accurately reflect Chloe's hairstyle.\nThe single large pink roller must be visible in the reflection.\nThe reflection must match the actual position of the roller in Chloe's hair.\nDo not create a second physical roller.\nDo not show a different hairstyle in the mirror.\nChloe discovers the roller by looking at her reflection.\nShe does not discover it by touching her hair.\nFIREPLACE AND WINTER ATMOSPHERE:\nThe fireplace fire burns gently throughout the scene.\nThe flames remain inside the fireplace.\nThe fire does not flare up dramatically.\nSnow continues falling outside the closed window.\nThe snowy garden and neighboring houses remain visible.\nThe warm fireplace glow contrasts with the cold blue-gray winter scenery.\nThin steam continues rising from Ava's hot chocolate.\nThe winter atmosphere remains visual background context and does not become part of the dialogue.\nPROP CONTINUITY:\nThere is exactly ONE hot chocolate mug.\nAva holds the mug throughout the scene.\nNo spilled liquid.\nThere is exactly ONE pink hair roller.\nThe roller remains in Chloe's hair throughout the scene.\nThe mirror stays in the same position.\nThe fireplace remains safely contained.\nCHARACTER PERFORMANCE:\nChloe is confident and pleased with her hairstyle at first.\nShe becomes suspicious when Ava appears to be suppressing laughter.\nHer final embarrassment is subtle and natural.\nAva is friendly and does not intend to hurt Chloe's feelings.\nShe finds the forgotten roller funny but tries to remain polite.\nAvoid exaggerated facial expressions, theatrical gestures, or unnecessary physical interaction.\nAUDIO:\nChloe speaks only with <<<Audio1>>> .\nAva speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Chloe: \"Ava, do you think this hairstyle suits me?\"\n2. Ava: \"Definitely! You look amazing.\"\n3. Chloe: \"Then why are you trying not to laugh?\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background music.\nOnly subtle indoor ambience, including gentle fireplace crackling.\nNo laughter sound effects.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nChloe turns toward the mirror.\nShe notices the single large pink roller still attached to her curly ponytail.\nHer confident expression changes to embarrassed surprise.\nAva silently tries to maintain a straight face while holding her steaming hot chocolate.\nCUT."
 },
   {
   id: "5_classroom_life_mia_noah",
