@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles/base.css?v=custom-overlay-flow-1">
-  <link rel="stylesheet" href="styles/game.css?v=custom-endless-1">
+  <link rel="stylesheet" href="styles/game.css?v=surprise-queue-1">
   <style>
     /* ── CSS vars used by student-select overlay CSS ── */
     :root {
@@ -913,7 +913,7 @@
         <div class="go-grid" id="go-grid"></div>
         <div class="go-transfer-note" id="go-transfer-note">—</div>
         <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:4px">
-          <button class="go-play-again-btn" id="go-transfer-stars" style="background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 6px 28px rgba(245,158,11,.35)" onclick="transferSCFinalStarsToRoster()">⭐ YILDIZLARI PUANA AKTAR</button>
+          <button class="go-play-again-btn" id="go-transfer-stars" style="background:linear-gradient(135deg,#b45309,#f59e0b);box-shadow:0 6px 28px rgba(245,158,11,.35)" onclick="transferSCFinalStarsToRoster()">HUD PUANLARINI AKTAR</button>
           <button class="go-play-again-btn" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);box-shadow:0 6px 28px rgba(37,99,235,.4)" onclick="goToHubFromFinal()">↩ RETURN TO HUB</button>
         </div>
       </div>
@@ -953,6 +953,7 @@
         <div class="sc-now-name" id="sc-student-name">—</div>
         <div class="sc-now-pos" id="sc-student-pos"></div>
         <button class="sc-now-start-btn" onclick="scStartGame()">OYUNU BAŞLAT ▶</button>
+        <button id="sc-finish-btn" class="wo-btn ghost" type="button" onclick="scFinishEarly()" hidden>FINISH</button>
       </div>
     </div>
 
@@ -987,7 +988,7 @@
   <script src="core/campaign.js?v=score-economy-1"></script>
   <script src="core/daily-board.js?v=custom-endless-1"></script>
   <script src="ui/setup-screen.js?v=campaign-select-1"></script>
-  <script src="core/quick-bonuses.js?v=score-economy-1"></script>
+  <script src="core/quick-bonuses.js?v=bonus-time-1"></script>
   <script src="core/game-loop.js?v=custom-endless-1"></script>
   <script src="ui/quick-mode.js?v=custom-overlay-flow-1"></script>
   <script src="core/achievements.js?v=hub-attention-1"></script>
@@ -1854,7 +1855,21 @@
     const p = _scQueue[_scIdx];
     document.getElementById('sc-student-name').textContent = p.name;
     document.getElementById('sc-student-pos').textContent  = `${_scIdx + 1} / ${_scQueue.length}`;
+    const finishButton = document.getElementById('sc-finish-btn');
+    finishButton.textContent = 'FINISH';
+    finishButton.hidden = _scResults.length === 0;
     show('overlay-student-current');
+  }
+
+  function scFinishEarly(){
+    if(!_scResults.length || document.getElementById('overlay-student-current').classList.contains('hidden')) return;
+    const button = document.getElementById('sc-finish-btn');
+    if(button.textContent !== 'SURE?'){
+      button.textContent = 'SURE?';
+      return;
+    }
+    hide('overlay-student-current');
+    _showFinalScores();
   }
 
   function scStartGame(){
@@ -1914,30 +1929,23 @@
 
   // ── FINAL SCORES ───────────────────────────────────────────
   function _showFinalScores(){
-    const sorted  = [..._scResults].sort((a,b) => b.score - a.score);
-    const hasBonus = sorted.length > 10;
+    const sorted = _scFinalPointAwards();
     const cups    = {1:'🥇',2:'🥈',3:'🥉'};
     const mClass  = {1:'fc-1st',2:'fc-2nd',3:'fc-3rd'};
     const grid    = document.getElementById('go-grid');
     grid.innerHTML = '';
-    let rank = 1;
     sorted.forEach((r, i) => {
-      if(i > 0 && r.score < sorted[i-1].score) rank = i + 1;
-      const displayStars = (hasBonus && rank === 1) ? r.stars + 1 : r.stars;
-      const maxSlots     = displayStars > 3 ? 4 : 3;
+      const rank = r.rank;
       const card = document.createElement('div');
       card.className = `go-card ${mClass[rank]||''}`;
       card.style.animationDelay = (i * 55) + 'ms';
       const cupHtml = cups[rank]
         ? `<div class="fc-cup">${cups[rank]}</div>`
         : `<div class="fc-rank-num">${rank}</div>`;
-      const starsHtml = Array.from({length: maxSlots}, (_,si) =>
-        `<span class="${si < displayStars ? 'fc-star-filled' : 'fc-star-empty'}">${si < displayStars ? '★' : '☆'}</span>`
-      ).join('');
-      const bonusBadge = (hasBonus && rank === 1)
-        ? '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;color:#facc15;margin-top:-4px">+1 BONUS ★</div>'
+      const bonusBadge = r.bonus > 0
+        ? `<div class="fc-score">${r.basePoints} + ${r.bonus} RANK BONUS</div>`
         : '';
-      card.innerHTML = `${cupHtml}<div class="fc-name">${r.name}</div><div class="fc-stars">${starsHtml}</div>${bonusBadge}<div class="fc-score">${r.score} PTS</div>`;
+      card.innerHTML = `${cupHtml}<div class="fc-name">${r.name}</div><div class="fc-stars">${r.points} HUD POINTS</div>${bonusBadge}<div class="fc-score">${r.score} PTS</div>`;
       grid.appendChild(card);
     });
     const wLabel = _spWordCount === 'endless' ? '∞ KELİME' : `${_spWordCount} KELİME`;
@@ -1952,27 +1960,30 @@
     return importedRosterClassroomId || (teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '') || '';
   }
 
-  function _scFinalStarAwards(){
+  function _scFinalPointAwards(){
     const sorted = [..._scResults].sort((a,b) => b.score - a.score);
-    const hasBonus = sorted.length > 10;
+    const seconds = Number(_spTimeLimit);
+    const timed = Number.isFinite(seconds) && seconds > 0;
     let rank = 1;
-    const awards = [];
-    sorted.forEach((result, index) => {
+    return sorted.map((result, index) => {
       if(index > 0 && result.score < sorted[index - 1].score) rank = index + 1;
-      const stars = (hasBonus && rank === 1) ? result.stars + 1 : result.stars;
-      if(result.name && stars > 0) awards.push({ name: result.name, stars });
+      const basePoints = timed ? Math.max(0, Math.floor(Number(result.score) * 90 / seconds / 100)) : 0;
+      const bonus = timed ? ({1:3, 2:2, 3:1}[rank] || 0) : 0;
+      return { ...result, rank, basePoints, bonus, points: basePoints + bonus };
     });
-    return awards;
   }
 
   function updateSCFinalTransferButton(){
     const button = document.getElementById('go-transfer-stars');
     const note = document.getElementById('go-transfer-note');
     if(!button || !note) return;
-    const canTransfer = !!_scTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
+    const timed = Number.isFinite(Number(_spTimeLimit)) && Number(_spTimeLimit) > 0;
+    const canTransfer = timed && !!_scTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
     button.disabled = _scFinalTransferred || !canTransfer;
-    button.textContent = _scFinalTransferred ? '✓ PUANLAR AKTARILDI' : '⭐ YILDIZLARI PUANA AKTAR';
-    note.textContent = canTransfer ? '1 yıldız = 1 HUD puanı' : 'Teacher HUD rosterında sınıfı kilitleyin.';
+    button.textContent = _scFinalTransferred ? '✓ PUANLAR AKTARILDI' : 'HUD PUANLARINI AKTAR';
+    note.textContent = !timed ? 'ENDLESS sürede HUD puanı aktarılmaz.' : canTransfer
+      ? 'Her 100 puan / 90 saniye = 1 HUD puanı · İlk üç: +3 / +2 / +1'
+      : 'Teacher HUD rosterında sınıfı kilitleyin.';
   }
 
   function transferSCFinalStarsToRoster(){
@@ -1988,9 +1999,10 @@
       showToast('Önce Teacher HUD rosterında doğru sınıfı kilitleyin.', 'warn', 4500);
       return;
     }
-    const awards = _scFinalStarAwards().map(award => ({ name: award.name, points: award.stars }));
+    const awards = _scFinalPointAwards().filter(award => award.name && award.points > 0)
+      .map(award => ({ name: award.name, points: award.points }));
     if(!awards.length){
-      showToast('Aktarılacak yıldız yok.', 'warn', 3500);
+      showToast('Aktarılacak HUD puanı yok.', 'warn', 3500);
       return;
     }
     const normalizeName = name => String(name || '').trim().replace(/\s+/g, ' ').toLocaleUpperCase('tr-TR');
@@ -2004,7 +2016,7 @@
     if(result?.awarded?.length){
       _scFinalTransferred = true;
       updateSCFinalTransferButton();
-      showToast('✓ Yıldızlar HUD puanlarına aktarıldı (1 yıldız = 1 puan).', 'success', 4500);
+      showToast('✓ HUD puanları aktarıldı.', 'success', 4500);
     } else {
       showToast('Puanlar aktarılamadı. Roster sınıfını kontrol edin.', 'warn', 4500);
     }

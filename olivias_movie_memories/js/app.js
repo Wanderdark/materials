@@ -22,15 +22,22 @@ const liteModeStorageKey = "oliviasMovieMemoriesLiteModeV1";
 const finalAudio = new Audio("assets/sounds/final.mp3");
 const characterChoices = ["ava", "benjamin", "chloe", "daniel", "david", "ella", "emma", "ethan", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"];
 
+function selectedVideoGrades() { return [...document.querySelectorAll("[data-video-grade]:checked")].map((box) => Number(box.value)); }
 function activeSetupGroups() { return setupGroups.slice(0, groupCount); }
 function isDirectAnswerMode() { return !studentMode && (state?.gameMode === "correct-option" || (state?.gameMode === "omni" && state.omniType !== "translation")); }
-function syncSetup() { renderSetup(activeSetupGroups(), groupNames.slice(0, groupCount)); els.start.disabled = activeSetupGroups().some((group) => !group.length); }
-function playableItemsOrWarn() { if (getPlayableItems(window.LEAGUE_OF_LISTENING_ITEMS).length) return true; alert("There are no playable listening items yet. Complete the transcript, options and correct answer in scripts.js."); return false; }
+function syncSetup() { renderSetup(activeSetupGroups(), groupNames.slice(0, groupCount)); els.start.disabled = activeSetupGroups().some((group) => !group.length) || (!studentMode && !selectedVideoGrades().length); }
+function playableItemsOrWarn() {
+  const grades = selectedVideoGrades();
+  if (!studentMode && !grades.length) { alert("Choose at least one grade."); return false; }
+  const items = getPlayableItems(window.LEAGUE_OF_LISTENING_ITEMS).filter((item) => studentMode || (Array.isArray(item.grades) && item.grades.some((grade) => grades.includes(Number(grade)))));
+  if (items.some((item) => studentMode || els.gameMode.value !== "correct-option" || window.LeagueListening.getCorrectOptionQuestions(item).length)) return true;
+  alert(studentMode ? "There are no playable listening items yet. Complete the transcript, options and correct answer in scripts.js." : "No playable videos match the selected grades and game mode.");
+  return false;
+}
 function syncOmniSettings() {
   if (studentMode) return;
   const omni = els.gameMode.value === "omni";
-  $(".settings-card > .muted").textContent = omni ? "Stop the selector to choose translation, missing word or true / false. After priority videos, choose a character; videos follow rating order." : "Classic starts with priority videos, then character selection. Correct Option: listen and choose the missing word.";
-  $(".settings-card .rules-list span:last-child").textContent = omni ? "Translation: subtitles +100 / no subtitles +125 · Word / True-False +75 (+50 after replay) · No bonus questions" : "💬 Without subtitles +200 · With subtitles +100";
+  $(".settings-card > .muted").textContent = omni ? "Translation, True/False and correct option modes mixed." : els.gameMode.value === "correct-option" ? "Watch video and choose the correct option." : "Watch video and choose the correct translation option.";
 }
 function requestGameFullscreen() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); }
 function setLiteMode(enabled) { document.body.classList.toggle("lite-mode", enabled); $("#lite-mode-button").textContent = enabled ? "LITE ✓" : "LITE"; $("#lite-mode-button").setAttribute("aria-pressed", String(enabled)); localStorage.setItem(liteModeStorageKey, enabled ? "1" : "0"); }
@@ -59,13 +66,15 @@ function prepareStudentMode() {
     settingsCard.querySelector(".muted").textContent = "Watch a memory, listen closely, then choose your answer.";
     settingsCard.querySelector('[for="game-mode"]').hidden = true;
     els.gameMode.hidden = true;
+    $("#grade-selection").hidden = true;
+    settingsCard.querySelector(".rules-list").hidden = false;
   }
 }
 
 function openRosterPicker() { const room = getLockedClassroom(); if (!room) { els.rosterStatus.textContent = "Lock a classroom from the Teacher HUD roster first."; return; } const present = getPresentStudents(room).length; if (!present) { els.rosterStatus.textContent = `${room.name || "CLASS"} has no present students today.`; return; } setupGroups = distributeBalanced(room, groupCount).concat([[]]).slice(0, 3); classroomId = room.id; els.rosterStatus.textContent = `${room.name}: ${present} present students balanced across teams.`; syncSetup(); }
 
 function isCharacterBasedMode() { return !studentMode && !GAME_CONFIG.teacherRatingScriptOrderEnabled && (state?.gameMode === "character" || ((state?.gameMode === "correct-option" || state?.gameMode === "omni") && GAME_CONFIG.characterRatingSelectionEnabled)); }
-function beginGame() { if (studentMode && !window.OliviaMemoryJourney?.begin?.()) return; if (!playableItemsOrWarn()) return; requestGameFullscreen(); const correctOptionMode = !studentMode && els.gameMode.value === "correct-option"; const picker = createRandomItemPicker(window.LEAGUE_OF_LISTENING_ITEMS, { correctOption: correctOptionMode, omni: !studentMode && els.gameMode.value === "omni" }); state = createGameState({ groups: activeSetupGroups(), groupNames: groupNames.slice(0, groupCount), itemPicker: picker, roundLimit: Infinity }); state.gameMode = studentMode ? "classic" : els.gameMode.value; randomEvents.resetGame(); showScreen("game"); showAnnouncement(); startBackgroundMusic(); }
+function beginGame() { if (studentMode && !window.OliviaMemoryJourney?.begin?.()) return; if (!playableItemsOrWarn()) return; requestGameFullscreen(); const correctOptionMode = !studentMode && els.gameMode.value === "correct-option"; const picker = createRandomItemPicker(window.LEAGUE_OF_LISTENING_ITEMS, { correctOption: correctOptionMode, omni: !studentMode && els.gameMode.value === "omni", grades: studentMode ? undefined : selectedVideoGrades() }); state = createGameState({ groups: activeSetupGroups(), groupNames: groupNames.slice(0, groupCount), itemPicker: picker, roundLimit: Infinity }); state.gameMode = studentMode ? "classic" : els.gameMode.value; randomEvents.resetGame(); showScreen("game"); showAnnouncement(); startBackgroundMusic(); }
 function showCharacterSelection(statusMessage = "") { $("#video-rating").hidden = true; const availableCharacters = state.itemPicker.availableCharacterIds?.(state.gameMode === "omni" ? state.omniType : undefined) || new Set(); const player = activePlayer(state).student; els.characterMessage.textContent = statusMessage || `${player.name}, choose a character for this video.`; els.characterGrid.innerHTML = characterChoices.map((id) => `<button class="character-choice" type="button" data-character-id="${id}" ${availableCharacters.has(id) ? "" : 'disabled title="No unused videos remaining"'}><span class="character-avatar-ring"><img src="assets/avatars/v2/${id}.webp" alt="${id}">${window.LeagueListening.renderCharacterPopularityStars(id)}</span><strong>${id.toUpperCase()}</strong></button>`).join(""); els.characterDialog.hidden = false; }
 function showAnnouncement(statusMessage = "", eventReady = false) {
   if (!studentMode && state.gameMode === "omni" && !state.omniType) {
@@ -87,7 +96,7 @@ function showAnnouncement(statusMessage = "", eventReady = false) {
   if (isCharacterBasedMode() && !state.itemPicker.hasPendingPriority?.()) return showCharacterSelection(statusMessage);
   loadCurrentQuestion(startQuestion(state), statusMessage);
 }
-function loadCurrentQuestion(item, statusMessage = "") { cancelPendingVideoStart(); if (!studentMode && state.gameMode === "omni" && item) item = startQuestion(state, window.LeagueListening.createOmniQuestion(item, state.omniType)); if (!studentMode && state.gameMode === "correct-option" && item) item = startQuestion(state, window.LeagueListening.createCorrectOptionQuestion(item)); clearTimeout(answerRevealTimer); answerRevealTimer = 0; evidencePlayed = false; evidenceAdvancePending = false; evidenceSkipRequested = false; if (!item) { els.videoStatus.textContent = "No playable videos are available."; $("#video-rating").hidden = true; els.fallback.hidden = false; els.fallback.querySelector("strong").textContent = "No playable videos are available."; els.playVideo.hidden = true; return; } if (!studentMode) { item = { ...item, randomEventId: randomEvents.getEventId() }; state.question = item; } renderGame(state, activePlayer(state)); els.instruction.textContent = "Listen carefully."; loadQuestion(item); if (studentMode) { setDifficulty(state, "medium"); setDifficultySelection("medium"); els.playVideo.hidden = false; els.playVideo.disabled = false; els.videoStatus.textContent = "Start the first listen."; } updateWatchCounter(0); if (statusMessage) els.videoStatus.textContent = statusMessage; }
+function loadCurrentQuestion(item, statusMessage = "") { cancelPendingVideoStart(); if (!studentMode && state.gameMode === "omni" && item) item = startQuestion(state, window.LeagueListening.createOmniQuestion(item, state.omniType)); if (!studentMode && state.gameMode === "correct-option" && item) item = startQuestion(state, window.LeagueListening.createCorrectOptionQuestion(item)); clearTimeout(answerRevealTimer); answerRevealTimer = 0; evidencePlayed = false; evidenceAdvancePending = false; evidenceSkipRequested = false; if (!item) { els.videoStatus.textContent = "No playable videos are available."; $("#video-rating").hidden = true; els.fallback.hidden = false; els.fallback.querySelector("strong").textContent = "No playable videos are available."; els.playVideo.hidden = true; return; } if (!studentMode) { item = { ...item, randomEventId: randomEvents.getEventId() }; state.question = item; } $("#video-grade").hidden = studentMode; if (!studentMode) $("#video-grade").textContent = `GRADE: ${(Array.isArray(item.grades) ? item.grades : []).join(", ") || "—"}`; renderGame(state, activePlayer(state)); els.instruction.textContent = "Listen carefully."; loadQuestion(item); if (studentMode) { setDifficulty(state, "medium"); setDifficultySelection("medium"); els.playVideo.hidden = false; els.playVideo.disabled = false; els.videoStatus.textContent = "Start the first listen."; } updateWatchCounter(0); if (statusMessage) els.videoStatus.textContent = statusMessage; }
 function replaceMissingVideo() { const failedId = state?.question?.id; if (!failedId || state.phase !== "video") return; state.itemPicker.remove?.(failedId); showAnnouncement("Video unavailable. Choose another character."); }
 function retryVideoFromR2() { const remoteSrc = els.video.dataset.remoteFallbackSrc; if (location.protocol !== "file:" || !remoteSrc || els.video.dataset.remoteFallbackUsed) return false; els.video.dataset.remoteFallbackUsed = "true"; els.video.src = remoteSrc; els.video.load(); els.videoStatus.textContent = "Local video unavailable. Loading from R2…"; return true; }
 function closeVideoHistoryResetDialog() { $("#reset-video-history-dialog").hidden = true; }
@@ -219,6 +228,7 @@ els.evidence.addEventListener("click", (event) => { if (event.button !== 0 || el
 $("#continue-round-button").addEventListener("click", () => { if (continueRound(state)) { showScreen("game"); showAnnouncement(); } else finishGame(); }); $("#finish-game-button").addEventListener("click", finishGame); $("#transfer-points-button").addEventListener("click", (event) => { const result = transferRosterPoints(state.groups, classroomId, finalRosterPointRatio()); event.currentTarget.disabled = true; event.currentTarget.textContent = result.awarded?.length ? "✓ POINTS TRANSFERRED" : "NO POINTS TO TRANSFER"; }); $("#new-game-button").addEventListener("click", () => location.reload()); $("#exit-game-button").addEventListener("click", () => { if (confirm("Exit the game and return to setup?")) { clearInterval(state?.timerId); clearTimeout(answerRevealTimer); cancelPendingVideoStart(); els.video.pause(); omniSelector?.cancel(); randomEvents.resetTurn(); showScreen("setup"); } });
 
 prepareStudentMode();
+document.querySelectorAll("[data-video-grade]").forEach((box) => box.addEventListener("change", syncSetup));
 els.gameMode.addEventListener("change", syncOmniSettings);
 syncOmniSettings();
 renderMusicControl(window.LeagueListening.isBackgroundMusicMuted());

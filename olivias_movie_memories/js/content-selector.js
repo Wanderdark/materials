@@ -53,7 +53,8 @@ function createRandomItemPicker(items, options = {}) {
     return pick;
   }
   const storageKey = "oliviasMovieMemoriesTeacherHistoryV1";
-  const playable = getPlayableItems(items);
+  const selectedGrades = Array.isArray(options.grades) ? new Set(options.grades.map(Number)) : null;
+  const playable = getPlayableItems(items).filter((item) => !selectedGrades || (Array.isArray(item.grades) && item.grades.some((grade) => selectedGrades.has(Number(grade)))));
   const priorityItems = playable
     .filter((item) => item.priority != null && String(item.priority).trim() !== "" && Number.isInteger(Number(item.priority)) && Number(item.priority) >= 0)
     .sort((left, right) => Number(left.priority) - Number(right.priority));
@@ -84,9 +85,9 @@ function createRandomItemPicker(items, options = {}) {
   const correctOptionMode = options.correctOption === true;
   const ratingSelectionEnabled = window.LeagueListening.GAME_CONFIG.characterRatingSelectionEnabled;
   const ratingScriptOrderEnabled = window.LeagueListening.GAME_CONFIG.teacherRatingScriptOrderEnabled === true;
-  const orderRegularItems = (list) => ratingScriptOrderEnabled ? [...list].sort((left, right) => getVideoRating(right) - getVideoRating(left)) : shuffle(list);
+  const orderRegularItems = (list) => ratingScriptOrderEnabled ? [...list].sort((left, right) => getVideoRating(right) - getVideoRating(left)) : selectedGrades ? shuffle(list).sort((left, right) => getVideoRating(right) - getVideoRating(left)) : shuffle(list);
   let selectedCharacterVideoId = null;
-  const correctOptionScriptOrder = !ratingSelectionEnabled && !ratingScriptOrderEnabled;
+  const correctOptionScriptOrder = !selectedGrades && !ratingSelectionEnabled && !ratingScriptOrderEnabled;
   const trialItems = playable.filter((item) => window.LeagueListening.getCorrectOptionQuestions(item).length);
   const watched = (item) => shown.has(item.id) || priorityShown.has(item.id);
   const trialAvailable = () => trialItems.filter((item) => !excluded.has(item.id));
@@ -105,8 +106,7 @@ function createRandomItemPicker(items, options = {}) {
     if (pool.length || priorityPool.length || correctOptionMode) return;
     const available = playable.filter((item) => !excluded.has(item.id));
     if (available.length && available.every(watched)) {
-      shown.clear();
-      priorityShown.clear();
+      playable.forEach((item) => { shown.delete(item.id); priorityShown.delete(item.id); });
       saveHistory();
     }
     priorityPool = priorityItems.filter((item) => !excluded.has(item.id) && !watched(item));
@@ -134,7 +134,7 @@ function createRandomItemPicker(items, options = {}) {
       return priorityItem;
     }
     refillRegularPool();
-    const item = (ratingScriptOrderEnabled ? pool.shift() : pool.pop()) || null;
+    const item = (ratingScriptOrderEnabled || selectedGrades ? pool.shift() : pool.pop()) || null;
     return item;
   };
 

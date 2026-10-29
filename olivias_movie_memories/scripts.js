@@ -815,7 +815,7 @@ evidenceEnd: "0:02.718",
 
 {
     id: "5_classroom_life_social_2",
-    correctOptionQuestions: [{"sentence":"Teacher : Chloe, why didn't you come to school yesterday? Chloe : I was at my cousin's friend's uncle's daughter's ___. Teacher : Don't skip the lesson next time!","target":"wedding","choices":["wedding","weeding","birthday","meeting"],"bonus":{"target":"düğün","choices":["düğün","doğum günü","toplantı","konser"]}},{"sentence":"Teacher : Chloe, why didn't you come to ___ yesterday? Chloe : I was at my cousin's friend's uncle's daughter's wedding. Teacher : Don't skip the lesson next time!","target":"school","choices":["school","pool","park","hospital"],"bonus":{"target":"okul","choices":["okul","havuz","ev","park"]}}],
+    correctOptionQuestions: [{"sentence":"Chloe : I was at my cousin's friend's uncle's daughter's ___.","target":"wedding","choices":["wedding","weeding","birthday","meeting"],"bonus":{"target":"düğün","choices":["düğün","doğum günü","toplantı","konser"]}},{"sentence":"Teacher : Chloe, why didn't you come to ___ yesterday?","target":"school","choices":["school","pool","park","hospital"],"bonus":{"target":"okul","choices":["okul","havuz","ev","park"]}}],
     status: "published",
     priority: "31",
     videoSrc: "assets/video/5_classroom_life_social_2.mp4",
@@ -829,7 +829,7 @@ evidenceEnd: "0:02.718",
     correctOptionId: "b",
     explanation: "",
     characterIds: ["chloe"],
-    grades: [5],
+    grades: [5,6,7,8],
     functions: ["target_social_language"],
     theme: "Classroom_life",
     unit: "classroom_life",
@@ -15978,52 +15978,64 @@ evidenceEnd: "0:09.079",
 },
 
   {
-    id: "5_school_life_mia",
-    correctOptionQuestions: [{"sentence":"Librarian : It's about ___ and space.","target":"planets","choices":["planets","plants","stars","clouds"],"bonus":{"target":"gezegenler","choices":["gezegenler","bitkiler","yıldızlar","bulutlar"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_school_life_mia.mp4",
-    title: "Mia asks the librarian what a book is about.",
-    transcript: "Mia : /What/ is this book /about/? Librarian : It's about planets and space.",
-    answerOptions: [
-      { id: "a", text: "Mia : Bu kitap /ne hakkında/? Kütüphaneci : Gezegenler ve uzay hakkında." },
-      { id: "b", text: "Mia : Bu kitabın yazarı kim? Kütüphaneci : Ünlü bir uzay profesörü." }
-    ],
-    easyDistractor: "Mia : Bu kitap ne hakkında? Kütüphaneci : Hayvanlar ve vahşi yaşam.",
-    correctOptionId: "a",
-    characterIds: ["mia"],
-    grades: [5],
-    functions: ["asking_about"],
-    theme: "School_life",
-    unit: "school_life",
-    evidenceStart: "0:00.251",
-    evidenceEnd: "0:01.927",
-    evidenceSentence: "Mia : /What/ is this book /about/?",
-  },
+  id: "5_school_life_mia",
+  correctOptionQuestions: [{"sentence":"Librarian : It's about a girl who ___ to another planet.","target":"travels","choices":["travels","troubles","trains","trails"],"bonus":{"target":"seyahat eder","choices":["seyahat eder","sorunlar","trenler","patikalar"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_school_life_mia.mp4",
+  title: "The Science Fiction Book",
+  transcript: "Mia : What is this book about, it looks /interesting/. Librarian : It's about a girl who /travels/ to another planet.",
+  answerOptions: [
+    { id: "a", text: "Mia : Bu kitap ne hakkında, ilginç görünüyor. Kütüphaneci : Başka bir gezegene seyahat eden bir kız hakkında." },
+    { id: "b", text: "Mia : Bu kitap ne hakkında, komik görünüyor. Kütüphaneci : Başka bir gezegende yaşayan bir kız hakkında." }
+  ],
+  easyDistractor: "Mia : Bu kitabı ödünç alabilir miyim? Kütüphaneci : Tabii, ama gelecek hafta geri getirmelisin.",
+  correctOptionId: "a",
+  characterIds: ["mia"],
+  grades: [5],
+  functions: ["asking_about", "givinginformation", "use_of_wh_questions_what_time"],
+  theme: "school_life",
+  unit: "",
+
+  evidenceStart: "0:00.651",
+  evidenceEnd: "0:06.651",
+
+  evidenceSentence: "Mia : What is this book about, it looks /interesting/. Librarian : It's about a girl who /travels/ to another planet.",
+  truefalsequestion: "The book is a horror novel.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Mia's canonical voice reference.\nSCENE:\nA quiet, welcoming school library on a pleasant autumn afternoon.\nSoft sunlight enters through the windows, with golden autumn leaves visible outside.\nMia is browsing a bookshelf while an experienced female librarian helps her choose a book.\nCHARACTERS:\nMia:\nPreserve Mia's canonical identity, facial features, hairstyle, eye color, skin tone, and natural body proportions from <<<Image1>>> .\nLibrarian:\nA generic female school librarian, approximately 55 years old.\nShe has short, softly layered silver-brown hair, gentle facial features, subtle age lines, and thin oval reading glasses.\nHer appearance is mature, approachable, and distinctly different from a young classroom teacher.\nShe has a calm, warm speaking voice and the relaxed, professional manner of an experienced librarian.\nShe is an ordinary adult librarian, not a canonical character.\nCLOTHING:\nMia wears her existing upper clothing from <<<Image1>>>  and a dark blue full-length trousers.\nThe Librarian wears a burgundy knitted cardigan over a cream blouse, with charcoal-gray full-length trousers.\nAll upper garments must remain naturally untucked, with their bottom hems hanging outside and over the lower garments. No tucking, including partial or front tucking.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nMia stands beside a wooden bookshelf in the school library.\nShe takes a colorful science-fiction book from the shelf.\nIts cover features an illustrated outer-space scene with stars and planets.\nThe Librarian stands nearby, ready to help.\nMia briefly examines the book's cover.\nSTAGE 2 — DIALOGUE:\nMia (<<<Audio1>>> ):\n\"What is this book about? It looks interesting.\"\nLibrarian:\n\"It's about a girl who travels to another planet.\"\nBoth characters remain near the same bookshelf.\nMia speaks exclusively with <<<Audio1>>> .\nThe Librarian speaks with a natural, mature female voice, warm and clear, with a gentle conversational tone.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after the Librarian finishes speaking, Mia opens the book.\nA small, flat, green alien-shaped paper bookmark is tucked between the first pages.\nMia notices the bookmark and gently removes it with one hand while supporting the open book with her other hand.\nThe bookmark has a simple, cute alien silhouette with a rounded head and two large black eyes.\nMia examines it with a brief expression of delighted surprise.\nThe Librarian notices Mia's reaction and gives her a small, warm smile.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nMia holds the same science-fiction book throughout the scene.\nThe book retains its original cover design, size, and colors.\nThe green alien bookmark remains a small, flat paper object.\nIt is initially tucked between the pages and becomes visible when Mia opens the book.\nMia's hands naturally support the book and bookmark during the discovery.\nBoth characters remain beside the same bookshelf.\nThe surrounding books, furniture, and library environment remain consistent.\nPERFORMANCE:\nNatural, restrained character animation.\nSubtle eye movements and occasional blinking.\nMia's surprise is genuine but understated.\nThe Librarian's reaction is gentle and spontaneous.\nAvoid exaggerated gestures or synchronized reactions.\nPACING:\nKeep the opening book selection brief.\nDeliver both dialogue lines naturally without unnecessary pauses.\nBegin the bookmark discovery immediately after the Librarian's final line.\nKeep the discovery and final reactions short.\nAUDIO:\nMia speaks exclusively with <<<Audio1>>> .\nThe Librarian uses a natural, mature female voice without an audio reference.\nOnly the specified English dialogue is spoken.\nNo additional dialogue.\n\nSubtle, quiet library ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nPremium stylized 3D animated-film quality.\nWarm natural afternoon lighting, detailed wooden bookshelves, and a welcoming school library atmosphere."
+},
 
   {
-    id: "5_classroom_life_ella_olivia",
-    correctOptionQuestions: [{"sentence":"Ella : Is there a ___ in your bag?","target":"dictionary","choices":["dictionary","stationery","notebook","magazine"],"bonus":{"target":"sözlük","choices":["sözlük","kırtasiye","defter","dergi"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_ella_olivia.mp4",
-    title: "Ella asks Olivia about a dictionary in her bag.",
-    transcript: "Ella : /Is there/ a dictionary in your bag? Olivia : Yes, there is, You can borrow it.",
-    answerOptions: [
-      { id: "a", text: "Ella : Çantanda bir sözlük /var mı/? Olivia : Evet, Var, Ödünç alabilirsin." },
-      { id: "b", text: "Ella : Sözlüğünü getirdin mi? Olivia : Evet getirdim, Ödünç alabilirsin." }
-    ],
-    easyDistractor: "Ella : Çantanda cetvel var mı? Olivia : Evet, Var, Ödünç alabilirsin.",
-    correctOptionId: "a",
-    characterIds: ["ella","olivia"],
-    grades: [5],
-    functions: ["use_of_there_is_there_are"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:00.331",
-    evidenceEnd: "0:02.592",
-    evidenceSentence: "Ella : /Is there/ a dictionary in your bag?",
-  },
+  id: "5_classroom_life_ella_olivia",
+  correctOptionQuestions: [{"sentence":"Olivia : Yes, there is, you can ___ it.","target":"borrow","choices":["borrow","burrow","barrow","arrow"],"bonus":{"target":"sözlük","choices":["sözlük","kitap","roman","ansiklopedi"],"word":"dictionary"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_classroom_life_ella_olivia.mp4",
+  title: "The Giant Dictionary",
+  transcript: "Ella : /Is there/ a dictionary in your bag? Olivia : Yes, there is, you can /borrow/ it.",
+  answerOptions: [
+    { id: "a", text: "Ella : Çantanda bir sözlük /var mı/? Olivia : Evet, var, /ödünç alabilirsin/." },
+    { id: "b", text: "Ella : Sözlüğünü getirdin mi? Olivia : Evet getirdim, ödünç verebilirim." }
+  ],
+  easyDistractor: "Ella : Çantanda bir kalem var mı? Olivia : Hayır, yok, kalemimi evde unuttum.",
+  correctOptionId: "a",
+  characterIds: ["ella", "olivia"],
+  grades: [5],
+  functions: ["use_of_there_is_there_are", "use_of_modal_can_for_permission", "responding_appropriately"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:00.901",
+  evidenceEnd: "0:04.901",
+
+  evidenceSentence: "Ella : /Is there/ a dictionary in your bag? Olivia : Yes, there is, you can /borrow/ it.",
+  truefalsequestion: "Olivia has got a dictionary in her bag.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ella's canonical voice reference.\nUse <<<Image2>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Olivia's canonical voice reference.\nSCENE:\nA bright school classroom on a pleasant spring morning.\nSoft sunlight enters through the windows.\nElla and Olivia sit beside each other at a shared classroom desk.\nOther students are quietly occupied with their schoolwork in the background.\nCHARACTERS AND CLOTHING:\nElla wears her existing upper clothing from <<<Image1>>> and full-length dark blue trousers.\nOlivia wears her existing upper clothing from <<<Image2>>> and full-length dark blue trousers.\nAll upper garments must remain naturally untucked, with their bottom hems visibly hanging outside and over the lower garments, fully covering the waistband. The entire bottom hem must remain visible as a continuous, loose outer edge. No tucking, including partial or front tucking.\nPROPS AND OBJECT SCALE:\nA large, open-top school tote bag sits upright on the desk beside Olivia.\nInside the bag is an unusually enormous, thick hardcover English dictionary.\nThe dictionary measures approximately 40 cm tall, 30 cm wide, and 12 cm thick.\nIts dimensions are substantially larger than those of an ordinary school textbook.\nIts thick block of pages is clearly visible along one side.\nThe tote bag is large enough to accommodate the dictionary, with the dictionary's upper edge extending above the bag's opening.\nThe dictionary remains physically the same size throughout the scene.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nElla and Olivia sit together at their classroom desk.\nOlivia's large tote bag rests upright on the desk beside her, with its opening facing Olivia.\nThe enormous dictionary is already inside the bag.\nFrom Ella's seated position, the dictionary is mostly concealed by the bag's front panel.\nSTAGE 2 — DIALOGUE:\nElla (<<<Audio1>>>):\n\"Is there a dictionary in your bag?\"\nOlivia (<<<Audio2>>>):\n\"Yes, there is. You can borrow it.\"\nOnly the current speaker moves her mouth.\nThe other girl listens naturally with her mouth closed.\nBoth girls remain seated throughout the conversation.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Olivia finishes speaking, she gently pulls the front edge of her open tote bag outward.\nThis simple movement reveals the enormous dictionary standing upright inside.\nThe dictionary is exceptionally thick, with a massive block of pages and a large hardcover body.\nIts upper edge rises visibly above the tote bag.\nIts width and thickness make it look dramatically oversized compared with Olivia's hands and the ordinary school supplies on the desk.\nOlivia leaves the dictionary inside the bag.\nElla notices its unexpected size.\nHer eyes widen slightly as she looks at the enormous book.\nShe then looks toward Olivia with a brief expression of amused disbelief.\nOlivia responds with a small, perfectly casual smile, as though lending such an enormous dictionary were completely normal.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nThe dictionary maintains its original 40 × 30 × 12 cm dimensions throughout.\nIt remains upright inside the same tote bag.\nThe bag stays on the desk and does not change size or shape.\nOlivia only moves the flexible front edge of the bag to reveal the dictionary.\nNeither girl lifts or removes the heavy book.\nThe dictionary's apparent size remains consistent relative to the girls' hands, the desk, and nearby school supplies.\nBoth girls remain in their original seated positions.\nThe classroom layout, furniture, and background students remain consistent.\nPERFORMANCE:\nNatural conversational timing.\nSubtle eye movements and occasional blinking.\nElla's surprise is brief, genuine, and understated.\nOlivia's casual smile creates the humorous contrast.\nNo exaggerated physical reactions.\nAUDIO:\nElla speaks exclusively with <<<Audio1>>>.\nOlivia speaks exclusively with <<<Audio2>>>.\nOnly the specified English dialogue is spoken.\nNo additional dialogue.\nSubtle classroom ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
     {
     id: "5_classroom_life_ava",
@@ -16051,76 +16063,92 @@ evidenceEnd: "0:09.079",
   },
 
   {
-    id: "5_classroom_life_emma",
-    correctOptionQuestions: [{"sentence":"Science Teacher : Emma, give these ___ to the class, please.","target":"sheets","choices":["sheets","seats","books","cards"],"bonus":{"target":"kâğıtlar","choices":["kâğıtlar","koltuklar","kitaplar","kartlar"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_emma.mp4",
-    title: "Emma agrees to hand worksheets out to the class.",
-    transcript: "Science Teacher : Emma, give these sheets to the class, please. Emma : Sure, I'll hand /them/ out. Science Teacher : Thank you.",
-    answerOptions: [
-      { id: "a", text: "Fen Öğretmeni : Emma, Bu kağıdı arkadaşına ver, lütfen. Emma : Tabii, bunu vereceğim. Fen Öğretmeni : Teşekkür ederim." },
-      { id: "b", text: "Fen Öğretmeni : Emma, Bu kağıtları sınıfa dağıt, lütfen. Emma : Tabii, /Onları/ dağıtacağım. Fen Öğretmeni : Teşekkür ederim." }
-    ],
-    easyDistractor: "Fen Öğretmeni : Emma, Bu kitapları sınıfa dağıt, lütfen. Emma : Tabii, Onları dağıtacağım. Fen Öğretmeni : Teşekkür ederim.",
-    correctOptionId: "b",
-    characterIds: ["emma"],
-    grades: [5],
-    functions: ["use_of_object_pronouns"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:02.586",
-    evidenceEnd: "0:04.785",
-    evidenceSentence: "Emma : Sure, I'll hand /them/ out.",
-  },
+  id: "5_classroom_life_emma",
+  correctOptionQuestions: [{"sentence":"Science Teacher : Emma, give these ___ to the class, please.","target":"worksheets","choices":["worksheets","exam papers","work seats","workshops"],"bonus":{"target":"dağıtmak","choices":["dağıtmak","asmak","tutmak","saklamak"],"word":"hand out"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_classroom_life_emma.mp4",
+  title: "The Worksheet Disaster",
+  transcript: "Science Teacher : Emma, give these /worksheets/ to the class, please. Emma : Sure, /I'll hand them out/. Science Teacher : /Thank you/.",
+  answerOptions: [
+    { id: "b", text: "Öğretmen : Emma, lütfen bu /çalışma kâğıtlarını/ sınıfa dağıt. Emma : Tabii, onları /dağıtacağım/. Öğretmen : /Teşekkür ederim/." },
+    { id: "a", text: "Öğretmen : Emma, lütfen bu sınav kâğıtlarını sınıfa dağıt. Emma : Tabii, neden olmasın? Öğretmen : Aferin." }
+  ],
+  easyDistractor: "Öğretmen : Emma, lütfen tahtayı temizle. Emma : Tabii, hemen temizleyeceğim. Öğretmen : Çok teşekkür ederim.",
+  correctOptionId: "b",
+  characterIds: ["emma"],
+  grades: [5, 6, 7, 8],
+  functions: ["makingrequests", "giving_commands", "future_response_ill", "responding_appropriately"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:00.401",
+  evidenceEnd: "0:05.901",
+
+  evidenceSentence: "Science Teacher : Emma, give these /worksheets/ to the class, please. Emma : Sure, /I'll hand them out/. Science Teacher : /Thank you/.",
+  truefalsequestion: "The teacher asks Emma to hand out the exam papers.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Emma's canonical voice reference.\nSCENE:\nA bright middle-school science classroom on a pleasant, sunny spring afternoon.\nWarm daylight enters through the classroom windows. Fresh green trees and flowering plants are visible outside.\nThe classroom contains student desks, chairs, a teacher's desk, science posters, shelves with simple scientific models, and a whiteboard.\nSeveral students are present, sitting at their desks throughout the scene. Some quietly open their notebooks, others organize their pencils or prepare their materials for the lesson.\nEmma stands near the science teacher at the front of the classroom.\nCHARACTERS:\nEmma:\nUse her canonical identity and appearance from <<<Image1>>>.\nScience Teacher:\nA female science teacher in her early forties, with shoulder-length chestnut-brown hair and a professional, approachable appearance.\nShe wears a sage-green cardigan over a cream blouse and charcoal-gray full-length trousers.\nShe speaks with a clear, natural adult female voice.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nThe science teacher wears her sage-green cardigan, cream blouse, and charcoal-gray full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nThe female science teacher stands beside her desk at the front of the classroom, holding a neatly stacked pile of loose worksheets.\nEmma approaches the teacher and stops beside her.\nThe other students remain seated, quietly preparing for the science lesson.\nTheir movements are subtle and varied, creating a natural, active classroom atmosphere rather than a static background.\nSTAGE 2 — DIALOGUE:\nScience Teacher:\n\"Emma, give these worksheets to the class, please.\"\nThe teacher hands the entire stack of worksheets directly to Emma.\nEmma receives the stack securely with both hands.\nEmma (<<<Audio1>>>):\n\"Sure, I'll hand them out.\"\nScience Teacher:\n\"Thank you.\"\nThe teacher finishes her final line before Emma begins distributing the worksheets.\nOnly the current speaker moves her mouth.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after the teacher says \"Thank you,\" Emma turns toward the students' desks and takes a step forward.\nAs she prepares to distribute the worksheets, the entire stack accidentally slips from her hands.\nThe loose sheets flutter downward and scatter across the classroom floor around Emma's feet.\nEmma stops abruptly and looks down at the scattered worksheets.\nShe slowly turns her head toward the female science teacher with an embarrassed, apologetic expression.\nThe teacher looks at the papers scattered across the floor.\nShe then looks directly at Emma with an unmistakably disappointed, unimpressed expression.\nWithout speaking, the teacher slowly shakes her head from side to side, expressing silent disbelief that Emma could not manage such a simple task.\nEmma remains standing beside the scattered papers, looking deeply embarrassed.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nThere is exactly one stack of worksheets.\nThe female teacher initially holds the stack and transfers it directly into Emma's hands.\nEmma holds the same stack until she accidentally drops it.\nThe worksheets are ordinary, individual loose sheets of paper.\nAll the worksheets fall from Emma's hands in one accidental drop.\nThe sheets flutter naturally and settle across the floor.\nOnce they land, they remain on the floor without disappearing, multiplying, or moving unnaturally.\nNo worksheets reappear in Emma's hands.\nEmma does not attempt to pick up the papers before the final cut.\nThe teacher remains near her desk throughout the scene.\nSeveral classmates remain visible at their desks throughout the scene.\nBackground students continue subtle, independent classroom activities such as adjusting notebooks, holding pencils, or turning pages.\nThey do not react in unison, laugh collectively, or leave their seats.\nThe sunny spring weather and classroom layout remain consistent.\nPERFORMANCE:\nNatural, believable classroom interaction.\nEmma initially responds confidently and cooperatively.\nHer accidental mistake is sudden and unintentional.\nEmma's embarrassment is conveyed through her pause, lowered gaze, and apologetic expression.\nThe female teacher's final reaction is restrained but unmistakably disappointed.\nHer slow side-to-side head shake communicates silent disapproval without exaggerated anger.\nNo additional gestures or reactions after the teacher shakes her head.\nAUDIO:\nEmma speaks exclusively with <<<Audio1>>>.\nThe female science teacher speaks with a consistent, natural adult female voice.\nOnly the three specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle classroom ambience and the natural rustling and fluttering of falling paper.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_classroom_life_lucas",
-    correctOptionQuestions: [{"sentence":"Coach : Lucas, bring me the ___, please.","target":"balls","choices":["balls","bells","rackets","bats"],"bonus":{"target":"toplar","choices":["toplar","ziller","raketler","sopalar"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_lucas.mp4",
-    title: "Lucas agrees to bring the balls to his coach.",
-    transcript: "Coach : Lucas, bring me the balls, please. Lucas : Okay, I'll get /them/. Coach : Thanks.",
-    answerOptions: [
-      { id: "a", text: "Antrenör : Lucas, Topları bana getir, lütfen. Lucas : Tamam, Onları getireceğim. Antrenör : Teşekkürler." },
-      { id: "b", text: "Antrenör : Lucas, Topları bana getir, lütfen. Lucas : Tamam, Onu getireceğim. Antrenör : Teşekkürler." }
-    ],
-    easyDistractor: "Antrenör : Lucas, Raketleri bana getir, lütfen. Lucas : Tamam, Onları getireceğim. Antrenör : Teşekkürler.",
-    correctOptionId: "a",
-    characterIds: ["lucas"],
-    grades: [5],
-    functions: ["use_of_object_pronouns"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:01.945",
-    evidenceEnd: "0:04.048",
-    evidenceSentence: "Lucas : Okay, I'll get /them/",
-  },
+  id: "5_classroom_life_lucas",
+  correctOptionQuestions: [{"sentence":"Coach : Lucas, ___ me the ball, please.","target":"bring","choices":["bring","brink","brick","brave"],"bonus":{"target":"getir","choices":["getir","kenar","tuğla","cesur"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_classroom_life_lucas.mp4",
+  title: "Basketball Practice",
+  transcript: "Coach : Lucas, /bring/ me the ball, please. Lucas : Okay, I'll /get/ it. Coach : /Thanks/.",
+  answerOptions: [
+    { id: "a", text: "Antrenör : Lucas, lütfen topu bana /getir/. Lucas : Tamam, /getireceğim/. Antrenör : /Teşekkürler/." },
+    { id: "b", text: "Antrenör : Lucas, lütfen topu bana at. Lucas : Tamam, atacağım. Antrenör : Aferin." }
+  ],
+  easyDistractor: "Antrenör : Lucas, bugün basketbol oynamak ister misin? Lucas : Evet, basketbol oynamayı çok seviyorum. Antrenör : Harika!",
+  correctOptionId: "a",
+  characterIds: ["lucas"],
+  grades: [5],
+  functions: ["makingrequests", "giving_commands", "responding_appropriately", "future_response_ill"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:02.151",
+  evidenceEnd: "0:08.400",
+
+  evidenceSentence: "Coach : Lucas, /bring/ me the ball, please. Lucas : Okay, I'll /get/ it. Coach : /Thanks/.",
+
+  prompt: "Use <<<Image1>>>  as Lucas's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Lucas's canonical voice reference.\nSCENE:\nA spacious indoor school gymnasium on a cool, sunny autumn afternoon.\nNatural daylight enters through the high windows.\nThe gym has a polished wooden basketball court, clearly marked court lines, basketball hoops, wall padding, and wooden bleachers.\nLucas is practicing basketball shots near one hoop.\nA male basketball coach stands several meters away on the same court.\nCHARACTERS:\nLucas:\nUse his canonical appearance and voice from the supplied references.\nCoach:\nA generic male physical education coach, approximately 40 years old, with short brown hair, an athletic build, and a friendly but authoritative manner.\nHe has a clear, energetic adult male voice.\nThe Coach has no image or audio reference.\nCLOTHING:\nLucas wears his existing upper clothing from <<<Image1>>>  and dark blue long sports shorts reaching just below his knees.\nThe Coach wears a navy blue athletic polo shirt and charcoal-gray full-length sports trousers.\nBoth upper garments retain their natural fit and are worn casually untucked.\nPROPS:\nOne standard orange basketball is used throughout the scene.\nThe basketball maintains the same size, color, and appearance during every action.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nLucas is practicing basketball near the hoop.\nHe makes a shot toward the basket.\nThe basketball comes back down onto the court, and Lucas retrieves it.\nThe Coach stands several meters away, watching Lucas practice.\nSTAGE 2 — DIALOGUE AND ACTION:\nCoach:\n\"Lucas, bring me the ball, please.\"\nThe Coach calls out clearly from his position across the court.\nLucas turns toward the Coach while holding the basketball.\nLucas (<<<Audio1>>> ):\n\"Okay, I'll get it.\"\nLucas starts walking toward the Coach with the basketball held securely in both hands.\nSTAGE 3 — PASS AND PAYOFF:\nWhen Lucas is a short distance from the Coach, he makes a gentle two-handed chest pass toward him.\nThe basketball travels directly from Lucas's hands to the Coach.\nThe Coach catches the ball securely with both hands.\nOnly after successfully catching the ball, the Coach looks at Lucas and says:\nCoach:\n\"Thanks.\"\nLucas gives a small, satisfied smile.\nCUT IMMEDIATELY.\nPHYSICAL CONTINUITY:\nOnly one basketball is involved in the scene.\nThe same basketball is used for the opening shot, carried by Lucas, passed to the Coach, and caught by the Coach.\nThe Coach remains in his original position while Lucas approaches.\nLucas releases the basketball only when making the chest pass.\nThe Coach catches the basketball before speaking his final line.\nThe basketball does not duplicate, disappear, or change size.\nPERFORMANCE:\nNatural, energetic basketball movements.\nThe Coach's initial request is audible across the court without exaggerated shouting.\nLucas responds casually and cooperatively.\nThe pass is gentle, controlled, and physically believable.\nThe Coach's catch is smooth and confident.\nAUDIO:\nLucas speaks exclusively with <<<Audio1>>> .\nThe Coach speaks with a natural adult male voice.\nNo additional dialogue.\nSubtle indoor gym ambience, basketball bouncing, and natural footsteps.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_classroom_life_daniel",
-    correctOptionQuestions: [{"sentence":"Daniel : May I go to the ___?","target":"restroom","choices":["restroom","restaurant","classroom","office"],"bonus":{"target":"tuvalet","choices":["tuvalet","restoran","sınıf","ofis"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_daniel.mp4",
-    title: "Daniel politely asks for permission to go to the restroom.",
-    transcript: "Daniel : /May I/ go to the restroom? Teacher : Yes, but come back quickly. Daniel : Thank you, I will.",
-    answerOptions: [
-      { id: "a", text: "Daniel : Lavaboya gideceğim. Öğretmen : Evet, Ama çabuk geri gel. Daniel : Teşekkür ederim, Geleceğim." },
-      { id: "b", text: "Daniel : Lavaboya /gidebilir miyim/? Öğretmen : Evet, Ama çabuk geri gel. Daniel : Teşekkür ederim, Geleceğim." }
-    ],
-    easyDistractor: "Daniel : Tuvalete gidebilir miyim? Öğretmen : Evet, Ama sessiz ol. Daniel : Teşekkür ederim, Olacağım.",
-    correctOptionId: "b",
-    characterIds: ["daniel"],
-    grades: [5],
-    functions: ["asking_permission"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:00.365",
-    evidenceEnd: "0:02.257",
-    evidenceSentence: "Daniel : /May I/ go to the restroom?",
-  },
+  id: "5_classroom_life_daniel",
+  correctOptionQuestions: [{"sentence":"Daniel : May I go to the ___?","target":"restroom","choices":["restroom","restaurant","classroom","bedroom"],"bonus":{"target":"tuvalet","choices":["tuvalet","restoran","sınıf","yatak odası"]}}],
+  status: "published",
+  rating: 6,
+  videoSrc: "assets/video/5_classroom_life_daniel.mp4",
+  title: "May I Go to the Restroom?",
+  transcript: "Daniel : May I go to the /restroom/? Teacher : Yes, but /come back quickly/. Daniel : Thank you, I will.",
+  answerOptions: [
+    { id: "a", text: "Daniel : /Tuvalete/ gidebilir miyim? Öğretmen : Evet, ama /çabuk geri dön/. Daniel : Teşekkür ederim, döneceğim." },
+    { id: "b", text: "Daniel : Dışarı çıkabilir miyim? Öğretmen : Evet, gelirken bana bir bardak çay getir. Daniel : Tabi ki, getiririm." }
+  ],
+  easyDistractor: "Daniel : Ödevimi bitirdim öğretmenim. Öğretmen : Çok güzel, şimdi kitabını okuyabilirsin. Daniel : Teşekkür ederim.",
+  correctOptionId: "a",
+  characterIds: ["daniel"],
+  grades: [5],
+  functions: ["asking_permission", "responding_appropriately", "imperatives", "target_social_language"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:01.901",
+  evidenceEnd: "0:06.901",
+
+  evidenceSentence: "Daniel : May I go to the /restroom/? Teacher : Yes, but /come back quickly/. Daniel : Thank you, I will.",
+  truefalsequestion: "Daniel asks for permission to go to the restroom.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Daniel's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Daniel's canonical voice reference.\nSCENE:\nA bright, naturally active middle-school classroom on a pleasant spring morning.\nSoft sunlight enters through the windows.\nThe classroom contains several rows of wooden student desks, a large whiteboard, bookshelves, educational posters, and ordinary school supplies.\nApproximately ten other students are present, seated at their desks.\nSome students are writing in their notebooks, others are reading or quietly checking their schoolwork.\nTheir movements are subtle and independent, including occasional page turning, writing, and natural changes in posture.\nThe background students remain occupied with their own activities rather than watching Daniel and the Teacher.\nCHARACTERS:\nDaniel:\nUse his canonical appearance and voice references.\nTeacher:\nA generic male middle-school teacher, approximately 40 years old.\nHe has short dark brown hair, a neat appearance, and a friendly but professional manner.\nHe speaks with a natural, clear adult male voice.\nThe Teacher is not a canonical character and has no image or audio reference.\nCLOTHING:\nDaniel wears his existing upper clothing from <<<Image1>>> and full-length dark blue trousers.\nThe Teacher wears a light blue long-sleeved button-up shirt, charcoal-gray full-length trousers, and a simple wristwatch.\nThe background students wear ordinary school-appropriate casual clothing.\nAll upper garments must remain naturally untucked, with their bottom hems visibly hanging outside and over the lower garments, fully covering the waistband. The entire bottom hem must remain visible as a continuous, loose outer edge. No tucking, including partial or front tucking.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nDaniel is seated at his classroom desk with an open notebook in front of him.\nThe Teacher stands nearby, checking students' work.\nDaniel raises one hand to get the Teacher's attention.\nThe Teacher turns toward Daniel and listens.\nSTAGE 2 — DIALOGUE:\nDaniel (<<<Audio1>>>):\n\"May I go to the restroom?\"\nTeacher:\n\"Yes, but come back quickly.\"\nDaniel (<<<Audio1>>>):\n\"Thank you, I will.\"\nThe Teacher speaks with a natural adult male voice.\nOnly the current speaker moves his mouth.\nThe other character listens naturally with his mouth closed.\nThe background students continue their quiet classroom activities.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Daniel finishes speaking, the Teacher briefly points to the wristwatch on his own wrist, reminding Daniel to return quickly.\nDaniel notices the gesture.\nHe gives the Teacher a small, slightly embarrassed smile, showing that he understands the reminder.\nDaniel turns and begins walking toward the classroom door.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nDaniel begins seated at his desk and stands only when preparing to leave.\nThe Teacher remains beside Daniel's desk throughout their exchange.\nThe Teacher's wristwatch stays on the same wrist.\nThe Teacher points to his watch with his opposite hand.\nDaniel's notebook remains on his desk.\nThe classroom furniture, student positions, and background environment remain consistent.\nBackground students continue their activities naturally without synchronized movements or exaggerated reactions.\nPERFORMANCE:\nNatural, restrained character animation.\nSubtle eye movements and occasional blinking.\nDaniel's request is polite and sincere.\nThe Teacher's response is friendly but firm.\nThe wristwatch gesture is brief and understated.\nDaniel's final smile conveys mild embarrassment without exaggerated comedy.\nAUDIO:\nDaniel speaks exclusively with <<<Audio1>>>.\nThe Teacher uses a natural, clear adult male voice.\nOnly the three specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle classroom ambience, including gentle page turning and quiet writing sounds.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
     id: "5_classroom_life_benjamin_jack",
@@ -16148,58 +16176,70 @@ evidenceEnd: "0:09.079",
   },
 
   {
-    id: "5_classroom_life_noah",
-    correctOptionQuestions: [{"sentence":"School Secretary : It's ___ past one.","target":"quarter","choices":["quarter","water","half","hour"],"bonus":{"target":"çeyrek","choices":["çeyrek","su","yarım","saat"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_noah.mp4",
-    title: "Noah asks the school secretary for the time.",
-    transcript: "Noah : Excuse me, What time is it? School Secretary : It's /quarter past one/. Noah : Thank you.",
-    answerOptions: [
-      { id: "a", text: "Noah : Affedersiniz, Saat kaç? Okul Sekreteri : Saat bir buçuk. Noah : Teşekkür ederim." },
-      { id: "b", text: "Noah : Affedersiniz, Saat kaç? Okul Sekreteri : Saat /biri çeyrek geçiyor/. Noah : Teşekkür ederim." }
-    ],
-    easyDistractor: "Noah : Affedersiniz, Saat kaç? Okul Sekreteri : Saat bir. Noah : Teşekkür ederim.",
-    correctOptionId: "b",
-    characterIds: ["noah"],
-    grades: [5],
-    functions: ["telling_time"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:03.331",
-    evidenceEnd: "0:04.859",
-    evidenceSentence: "Secretary : It's /quarter past one/",
-  },
+  id: "5_classroom_life_noah",
+  correctOptionQuestions: [{"sentence":"School Secretary : It's ___ past one.","target":"quarter","choices":["quarter","quieter","quite","question"],"bonus":{"target":"çeyrek","choices":["çeyrek","daha sessiz","oldukça","soru"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_classroom_life_noah.mp4",
+  title: "Late for Chess Club",
+  transcript: "Noah : Excuse me, what time is it? School Secretary : It's /quarter past one/. Noah : Oh, I'm late for /chess club/! School Secretary : Wait, the chess club is this way!",
+  answerOptions: [
+    { id: "a", text: "Noah : Affedersiniz, saat kaç? Sekreter : Biri /çeyrek geçiyor/. Noah : Eyvah, /satranç kulübüne/ geç kaldım! Sekreter : Bekle, satranç kulübü bu tarafta!" },
+    { id: "b", text: "Noah : Affedersiniz, saat kaç? Sekreter : Bir buçuk. Noah : Eyvah, satranç turnuvasına geç kaldım! Sekreter : Bekle, satranç kulübü bu tarafta!" }
+  ],
+  easyDistractor: "Noah : Affedersiniz, kütüphane nerede? Sekreter : İkinci katta. Noah : Teşekkür ederim! Sekreter : Rica ederim.",
+  correctOptionId: "a",
+  characterIds: ["noah"],
+  grades: [5,6,7],
+  functions: ["askinginformationabouttime", "telling_time", "givingdirections", "giving_a_warning"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:01.900",
+  evidenceEnd: "0:07.401",
+
+  evidenceSentence: "Noah : Excuse me, what time is it? School Secretary : It's /quarter past one/. Noah : Oh, I'm late for /chess club/! School Secretary : Wait, the chess club is this way!",
+  truefalsequestion: "Noah asks the secretary about where chess club is.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Noah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Noah's canonical voice reference.\nSCENE:\nA spacious middle-school corridor on a cold winter afternoon.\nSnow is falling outside the corridor windows.\nThe corridor extends in two opposite directions, with classroom doors, noticeboards, and ordinary school decorations along the walls.\nNoah encounters the school secretary standing in the corridor.\nThere is no visible wall clock.\nCHARACTERS:\nNoah:\nUse his canonical identity and appearance from <<<Image1>>>.\nSchool Secretary:\nA female school secretary in her mid-forties, with shoulder-length dark brown hair and a friendly, professional appearance.\nShe wears a forest-green cardigan, a cream blouse, charcoal-gray full-length trousers, and a wristwatch.\nShe speaks with a natural adult female voice.\nCLOTHING:\nNoah wears his existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nHis upper garment retains its original design, length, and natural fit.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nNoah is walking through the school corridor when he encounters the secretary coming from the opposite direction.\nHe stops beside her to ask a question.\nSTAGE 2 — DIALOGUE:\nNoah (<<<Audio1>>>):\n\"Excuse me, what time is it?\"\nThe secretary briefly checks her wristwatch.\nSchool Secretary:\n\"It's quarter past one.\"\nNoah suddenly looks alarmed.\nNoah (<<<Audio1>>>):\n\"Oh! I'm late for chess club!\"\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after his final line, Noah turns and runs quickly down the corridor in one direction.\nThe secretary realizes that he is heading the wrong way.\nShe turns toward the departing Noah, points emphatically down the corridor in the exact opposite direction, and calls out:\nSchool Secretary:\n\"Wait! The chess club is this way!\"\nBut Noah has already run far down the wrong side of the corridor and does not hear her.\nHe continues running away without turning back.\nThe secretary remains standing in the corridor, still pointing toward the correct direction, looking briefly bewildered.\nCUT IMMEDIATELY.\nSPATIAL CONTINUITY:\nBoth characters remain in the same school corridor throughout the scene.\nNoah runs away in one direction, while the secretary points in the exact opposite direction.\nThe secretary does not follow Noah.\nNoah never changes direction or returns.\nThe corridor's spatial layout remains consistent.\nPERFORMANCE:\nNatural, age-appropriate dialogue and reactions.\nNoah's sudden panic feels spontaneous and believable.\nHis running is hurried but physically natural.\nThe secretary's final shout sounds urgent and slightly exasperated.\nOnly the current speaker moves their mouth.\nAUDIO:\nNoah speaks exclusively with <<<Audio1>>>.\nThe secretary speaks with a consistent natural adult female voice.\nOnly the four specified English dialogue lines are spoken.\nNo additional dialogue.\nNatural school corridor ambience and Noah's running footsteps.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_classroom_life_victoria_ethan",
-    correctOptionQuestions: [{"sentence":"Ethan : What time does information ___ start?","target":"technology","choices":["technology","ecology","history","science"],"bonus":{"target":"teknoloji","choices":["teknoloji","ekoloji","tarih","fen bilimi"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_classroom_life_victoria_ethan.mp4",
-    title: "Ethan asks Victoria when information technology begins.",
-    transcript: "Ethan : What time does information technology start? Victoria : It starts at /nine/ o'clock.",
-    answerOptions: [
-      { id: "a", text: "Ethan : Bilişim teknolojisi saat kaçta başlıyor? Victoria : Saat sekizde başlıyor." },
-      { id: "b", text: "Ethan : Bilişim teknolojisi saat kaçta başlıyor? Victoria : Saat /dokuzda/ başlıyor." }
-    ],
-    easyDistractor: "Ethan : Bilişim teknolojisi kaçta başlıyor? Victoria : Saat onda başlıyor.",
-    correctOptionId: "b",
-    characterIds: ["victoria","ethan"],
-    grades: [5],
-    functions: ["use_of_wh_questions_what_time","telling_time"],
-    theme: "Classroom_life",
-    unit: "classroom_life",
-    evidenceStart: "0:02.765",
-    evidenceEnd: "0:04.541",
-    evidenceSentence: "Victoria : It starts at /nine/ o'clock.",
-  },
+  id: "5_classroom_life_victoria_ethan",
+  correctOptionQuestions: [{"sentence":"Ethan : What time does ___ start?","target":"information technology","choices":["information technology","physical eduation","social studies","science experiments"],"bonus":{"target":"bilişim teknolojileri","choices":["bilişim teknolojileri","fen bilimleri","beden eğitimi","görsel sanatlar"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_classroom_life_victoria_ethan.mp4",
+  title: "Information Technology Class",
+  transcript: "Ethan : What time does /information technology/ start? Victoria : It starts at /nine/ o'clock.",
+  answerOptions: [
+    { id: "a", text: "Ethan : /Bilişim teknolojileri/ dersi saat kaçta başlıyor? Victoria : Saat /dokuzda/ başlıyor." },
+    { id: "b", text: "Ethan : Beden eğitimi dersi saat kaçta başlıyor? Victoria : Saat onda başlıyor." }
+  ],
+  easyDistractor: "Ethan : Bugün hangi dersimiz var? Victoria : Matematik dersimiz var.",
+  correctOptionId: "a",
+  characterIds: ["ethan", "victoria"],
+  grades: [5],
+  functions: ["askinginformationabouttime", "telling_time", "use_of_wh_questions_what_time", "use_of_simple_present_tense"],
+  theme: "classroom_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:04.650",
+
+  evidenceSentence: "Ethan : What time does /information technology/ start? Victoria : It starts at /nine/ o'clock.",
+  truefalsequestion: "The I.T. lesson starts at half past nine.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ethan's canonical voice reference.\nUse <<<Image2>>> as Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Victoria's canonical voice reference.\nSCENE:\nA bright middle-school corridor on a pleasant autumn morning.\nSoft natural daylight enters through the corridor windows.\nClassroom doors, noticeboards, lockers, and ordinary school decorations create a realistic, welcoming school environment.\nA few other students walk naturally through the corridor or enter their classrooms in the background.\nA large digital wall clock is mounted above a classroom doorway, clearly displaying 09:00.\nCHARACTERS AND CLOTHING:\nEthan wears his existing upper clothing from <<<Image1>>> and full-length dark blue trousers.\nVictoria wears her existing upper clothing from <<<Image2>>> and full-length dark blue trousers.\nAll upper garments must remain naturally untucked, with their bottom hems visibly hanging outside and over the lower garments, fully covering the waistband. The entire bottom hem must remain visible as a continuous, loose outer edge. No tucking, including partial or front tucking.\nPROPS:\nEthan holds a single printed school timetable in his hands.\nThe timetable is an ordinary sheet of paper showing his school subjects and lesson times.\nThe digital wall clock displays 09:00 throughout the scene.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nEthan and Victoria stand together near their classroom doorway.\nEthan examines the school timetable in his hands.\nVictoria stands beside him, waiting while he checks the schedule.\nThe digital wall clock is visible farther along the corridor, above the classroom entrance.\nSTAGE 2 — DIALOGUE:\nEthan (<<<Audio1>>>):\n\"What time does information technology start?\"\nVictoria (<<<Audio2>>>):\n\"It starts at nine o'clock.\"\nEach character speaks exclusively with their assigned voice.\nOnly the current speaker moves their mouth.\nThe other character listens naturally with their mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Victoria finishes speaking, Ethan looks up from his timetable toward the digital wall clock.\nThe clock clearly displays 09:00.\nEthan suddenly realizes that their Information Technology lesson is starting right now.\nVictoria follows his gaze and notices the clock.\nThey exchange a brief, startled glance.\nBoth quickly turn toward their classroom and start running down the corridor together.\nCUT IMMEDIATELY as they begin running.\nPHYSICAL AND VISUAL CONTINUITY:\nEthan holds the same timetable throughout the conversation.\nThe timetable remains in Ethan's hand when he starts running.\nThe digital wall clock stays mounted above the same classroom doorway and consistently displays 09:00.\nEthan and Victoria remain in the same corridor.\nTheir classroom is located in the direction they turn and run.\nThe corridor layout, classroom doors, lockers, and background students remain consistent.\nThe background students continue their own natural activities without reacting in unison.\nPERFORMANCE:\nNatural conversational timing and restrained character animation.\nSubtle eye movements and occasional blinking.\nEthan's realization is immediate but believable.\nVictoria notices the clock slightly after Ethan.\nTheir startled glance is brief and spontaneous.\nThey begin running with natural, energetic movements rather than exaggerated panic.\nAUDIO:\nEthan speaks exclusively with <<<Audio1>>>.\nVictoria speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle school corridor ambience and natural footsteps.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT, EXCEPT THE DIGITAL CLOCK DISPLAYING 09:00."
+},
 
   {
     id: "5_personal_life_hannah_storm",
     correctOptionQuestions: [{"sentence":"Hannah : Storm always ___ to me, Storm, come here, Well, usually.","target":"listens","choices":["listens","glistens","watches","runs"],"bonus":{"target":"dinler","choices":["dinler","parıldar","izler","koşar"]}}],
     status: "published",
-    rating: 5,
+    rating: 6,
     videoSrc: "assets/video/5_personal_life_hannah_storm.mp4",
     title: "Hannah calls Storm with confidence.",
     transcript: "Hannah : Storm /always/ listens to me, Storm, come here, Well, /usually/.",
@@ -16220,149 +16260,185 @@ evidenceEnd: "0:09.079",
   },
 
   {
-    id: "5_personal_life_emma_mia",
-    correctOptionQuestions: [{"sentence":"Mia : How often do you bake ___?","target":"cookies","choices":["cookies","cookers","cakes","muffins"],"bonus":{"target":"kurabiyeler","choices":["kurabiyeler","ocaklar","kekler","ekmekler"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_emma_mia.mp4",
-    title: "Mia asks Emma about baking cookies.",
-    transcript: "Mia : How often do you bake cookies? Emma : I usually bake on Sundays. Mia : What's that smell? Emma : Oh my god it is burning!",
-    answerOptions: [
-      { id: "a", text: "Mia : Ne sıklıkla kurabiye yaparsın? Emma : Genellikle /pazar/ günleri yaparım. Mia : Bu koku ne? Emma : Aman Tanrım, yanıyor!" },
-      { id: "b", text: "Mia : Ne sıklıkla kurabiye yaparsın? Emma : Genellikle pazartesi günleri yaparım. Mia : Bu koku ne? Emma : Aman Tanrım, yanıyor!" }
-    ],
-    easyDistractor: "Mia : Ne sıklıkla kurabiye yaparsın? Emma : Genellikle pazar günleri yaparım. Mia : Bu koku ne? Emma : Aman Tanrım, fırın kapalı!",
-    correctOptionId: "a",
-    characterIds: ["emma","mia"],
-    grades: [5],
-    functions: ["frequency_adverbs"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:02.243",
-    evidenceEnd: "0:04.299",
-    evidenceSentence: "Emma : I usually bake on /Sundays/.",
-  },
+  id: "5_personal_life_emma_mia",
+  correctOptionQuestions: [{"sentence":"Emma : I ___ bake on Sundays.","target":"usually","choices":["usually","unusually","casually","visually"],"bonus":{"target":"genellikle","choices":["genellikle","alışılmadık","faydalı","işe yaramaz"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_personal_life_emma_mia.mp4",
+  title: "The Burning Cookies",
+  transcript: "Mia : How often do you bake cookies? Emma : I /usually/ bake on /Sundays/. Mia : What's that smell? Emma : Oh my God, they're burning!",
+  answerOptions: [
+    { id: "b", text: "Mia : Ne sıklıkla kurabiye pişirirsin? Emma : /Genellikle pazar/ günleri pişiririm. Mia : Bu koku da ne? Emma : Aman Tanrım, yanıyorlar!" },
+    { id: "a", text: "Mia : Ne sıklıkla kurabiye pişirirsin? Emma : Her zaman cumartesi günleri pişiririm. Mia : Bu koku da ne? Emma : Aman Tanrım, yanıyorlar!" }
+  ],
+  easyDistractor: "Mia : Kurabiye yapmayı sever misin? Emma : Evet, özellikle çikolatalı kurabiyeleri severim. Mia : Bana da tarifini öğretir misin? Emma : Tabii, birlikte yapabiliriz!",
+  correctOptionId: "b",
+  characterIds: ["emma", "mia"],
+  grades: [5, 6, 7, 8],
+  functions: ["frequency_adverbs", "describing_a_regular_habit", "present_progressive", "expressingsurprise"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:00.651",
+  evidenceEnd: "0:04.151",
+
+  evidenceSentence: "Mia : How often do you bake cookies? Emma : I /usually/ bake on /Sundays/. Mia : What's that smell? Emma : Oh my God, they're burning!",
+  truefalsequestion: "Emma usually bakes cookies at the weekends.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>>  as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Emma's canonical voice reference.\nUse <<<Image2>>>  as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Mia's canonical voice reference.\nSCENE:\nA cozy family kitchen on a snowy winter afternoon.\nSoft daylight enters through the kitchen window. Snow falls gently outside, covering the garden and nearby trees.\nThe kitchen feels warm and lived-in, with wooden cabinets, a spacious countertop, baking utensils, and a built-in electric oven.\nEmma and Mia stand beside each other at the kitchen counter.\nThe first batch of cookies is already baking inside the closed oven.\nEmma is preparing a second batch of cookies on a separate baking tray placed on the countertop.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>>  and comfortable full-length trousers.\nMia wears her existing upper clothing from <<<Image2>>>  and comfortable full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nEmma carefully arranges small pieces of raw cookie dough onto the second baking tray on the countertop.\nSeveral evenly spaced pieces of cookie dough are already arranged on the tray.\nMia stands beside Emma, watching her prepare the cookies.\nThe oven remains closed in the background.\nSTAGE 2 — DIALOGUE:\nMia (<<<Audio2>>> ):\n\"How often do you bake cookies?\"\nEmma continues arranging the cookie dough while answering naturally.\nEmma (<<<Audio1>>> ):\n\"I usually bake on Sundays.\"\nA few thin wisps of dark gray smoke begin to escape gently from the edges of the closed oven door.\nMia notices an unusual smell and slightly wrinkles her nose.\nMia (<<<Audio2>>> ):\n\"What's that smell?\"\nEmma stops arranging the cookie dough and suddenly turns her attention toward the oven.\nShe notices the faint smoke escaping from the closed oven door.\nEmma (<<<Audio1>>> , suddenly alarmed):\n\"Oh my God, they're burning!\"\nSTAGE 3 — REACTION AND PAYOFF:\nEmma stares at the oven with a genuinely panicked expression.\nMia follows Emma's gaze and looks at the oven in surprise.\nA few thin, dark gray wisps of smoke continue curling upward from the edges of the closed oven door.\nThe smoke remains light and localized.\nEmma and Mia remain beside the kitchen counter, looking toward the oven.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nThere are exactly two separate batches of cookies.\nThe first batch remains inside the closed oven throughout the scene.\nThe second batch consists of raw cookie dough arranged on a baking tray on the countertop.\nThe second baking tray remains on the countertop throughout the scene.\nEmma does not put the second tray into the oven.\nThe oven door remains completely closed.\nOnly a small amount of thin, dark gray smoke escapes from the edges of the oven door.\nNO FLAMES.\nNO FIRE.\nNO EXPLOSIONS.\nNO THICK SMOKE CLOUDS.\nNO ROOM-FILLING SMOKE.\nNO FIRE ALARM OR SPRINKLER ACTIVATION.\nThe kitchen remains completely intact.\nThe snowy winter scenery outside the window remains consistent.\nPERFORMANCE:\nNatural, relaxed interaction between two friends.\nEmma initially concentrates on preparing the second batch of cookies.\nMia's reaction to the smell is subtle and believable.\nEmma's sudden realization creates a clear contrast with her earlier calm behavior.\nHer final expression conveys genuine alarm without exaggerated cartoon-like movements.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nAUDIO:\nEmma speaks exclusively with <<<Audio1>>> .\nMia speaks exclusively with <<<Audio2>>> .\nUse the exact four English dialogue lines provided.\nNo additional dialogue.\nSubtle indoor kitchen ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_personal_life_ella_ethan",
-    correctOptionQuestions: [{"sentence":"Ella : Usually, but I forgot my ___ again!","target":"notebook","choices":["notebook","network","textbook","dictionary"],"bonus":{"target":"defter","choices":["defter","ders kitabı","sözlük","dergi"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_ella_ethan.mp4",
-    title: "Ethan asks Ella about her evening bag routine.",
-    transcript: "Ethan : Do you pack your bag at night? Ella : /Usually/, but I forgot my notebook again!",
-    answerOptions: [
-      { id: "a", text: "Ethan : Çantanı gece hazırlar mısın? Ella : /Genellikle/, Ama defterimi yine unuttum!" },
-      { id: "b", text: "Ethan : Çantanı gece hazırlar mısın? Ella : Bazen, Ama defterimi yine unuttum!" }
-    ],
-    easyDistractor: "Ethan : Çantanı gece mi hazırlarsın? Ella : Genellikle, Ama kalemimi yine unuttum!",
-    correctOptionId: "a",
-    characterIds: ["ella","ethan"],
-    grades: [5],
-    functions: ["use_of_simple_present_tense_for_habbits","frequency_adverbs"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:04.066",
-    evidenceEnd: "0:06.934",
-    evidenceSentence: "Ella : /Usually/, but I forgot my notebook again!",
-  },
+  id: "5_personal_life_ella_ethan",
+  correctOptionQuestions: [{"sentence":"Ella : ___ but I forgot my notebook again!","target":"usually","choices":["usually","unusually","casually","visually"],"bonus":{"target":"genellikle","choices":["genellikle","her zaman","bazen","nadiren"],"word":"usually"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_personal_life_ella_ethan.mp4",
+  title: "The Missing Notebook",
+  transcript: "Ethan : Do you pack your bag /at night/? Ella : /Usually/, but I forgot my notebook again!",
+  answerOptions: [
+    { id: "a", text: "Ethan : Çantanı geceleri mi hazırlarsın? Ella : Genellikle, ama defterimi yine unuttum!" },
+    { id: "b", text: "Ethan : Çantanı aceleyle mi hazırlarsın? Ella : Bazen ve defterimi yine unuttum!" }
+  ],
+  easyDistractor: "Ethan : Bugün ödevini yaptın mı? Ella : Evet, dün akşam bütün ödevlerimi bitirdim!",
+  correctOptionId: "a",
+  characterIds: ["ella", "ethan"],
+  grades: [5,6,7],
+  functions: ["describing_a_regular_habit", "frequency_adverbs", "simple_past_tense", "use_of_simple_present_tense"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:02.150",
+  evidenceEnd: "0:05.901",
+
+  evidenceSentence: "Ethan : Do you pack your bag /at night/? Ella : /Usually/, but I forgot my notebook again!",
+  truefalsequestion: "Ella usually prepares her school bag at the morning.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ella's canonical voice reference.\nUse <<<Image2>>> as Ethan's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Ethan's canonical voice reference.\nSCENE:\nA bright middle-school corridor on a pleasant spring morning.\nWarm sunlight enters through the large corridor windows. Fresh green trees are visible outside under clear, sunny spring weather.\nA row of blue school lockers lines one side of the corridor.\nA wooden bench stands beside the lockers.\nElla stands beside the bench, searching through her open navy-blue school backpack.\nEthan stands nearby, casually leaning against the blue lockers and watching Ella.\nA few students move naturally through the distant background without interacting with the main characters.\nCLOTHING:\nElla wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nEthan wears his existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nElla is searching urgently for her school notebook inside her open backpack.\nSeveral school supplies, including a textbook and a pencil case, are already lying on the wooden bench beside the backpack.\nElla opens the main compartment wider and searches through the remaining contents.\nEthan watches her with a relaxed, mildly curious expression.\nSTAGE 2 — DIALOGUE:\nEthan (<<<Audio2>>>):\n\"Do you pack your bag at night?\"\nElla continues searching through her backpack.\nElla (<<<Audio1>>>):\n\"Usually, but I forgot my notebook again!\"\nShe sounds mildly frustrated and embarrassed.\nOnly the current speaker moves their mouth.\nSTAGE 3 — REACTION AND PAYOFF:\nAfter finishing her sentence, Ella continues emptying her backpack.\nShe pulls out another schoolbook and places it on the bench.\nShe then removes a small pouch and places it beside the other supplies.\nThe bench now holds a noticeably larger collection of school materials.\nElla checks the almost-empty main compartment one final time.\nHer notebook is nowhere to be found.\nShe pauses, staring helplessly into the nearly empty backpack.\nEthan looks at the pile of school supplies on the bench, then raises his eyebrows slightly.\nElla slowly looks toward Ethan with a sheepish, defeated expression.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nThe backpack remains on the wooden bench throughout the scene.\nThe backpack's main compartment stays open.\nElla removes objects from the backpack and places them on the bench, one at a time.\nPreviously removed objects remain on the bench without disappearing, multiplying, or changing appearance.\nThe collection of school supplies gradually increases.\nThe missing notebook is never found or shown.\nElla does not turn the backpack upside down or shake it violently.\nEthan remains beside the lockers throughout the scene.\nBackground students continue their ordinary corridor activities without drawing attention away from Ella and Ethan.\nPERFORMANCE:\nNatural school-day interaction between two classmates.\nElla's search is increasingly frustrated but believable.\nEthan remains relaxed and slightly amused.\nHand movements are deliberate and physically natural.\nElla's final expression communicates embarrassment and disappointment without exaggerated comedy.\nOnly the current speaker moves their mouth.\nAUDIO:\nElla speaks exclusively with <<<Audio1>>>.\nEthan speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle school corridor ambience, soft footsteps, and gentle sounds of school supplies being placed on the bench.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_personal_life_chloe_ava2",
-    correctOptionQuestions: [{"sentence":"Chloe : You walk Buddy every ___, don't you?","target":"morning","choices":["morning","mourning","evening","night"],"bonus":{"target":"sabah","choices":["sabah","yas","akşam","gece"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_chloe_ava2.mp4",
-    title: "Chloe and Ava talk about Buddy's morning walk.",
-    transcript: "Chloe : You walk Buddy every morning, /don't you/? Ava : Yes, I do, He likes walking very much.",
-    answerOptions: [
-      { id: "a", text: "Chloe : Buddy'yi her sabah gezdiriyor musun? Ava : Evet, gezdiriyorum, O yürümeyi çok seviyor." },
-      { id: "b", text: "Chloe : Buddy'yi her sabah gezdiriyorsun, /öyle değil mi/? Ava : Evet, gezdiriyorum, O yürümeyi çok seviyor." }
-    ],
-    easyDistractor: "Chloe : Buddy'yi her sabah gezdiriyorsun, öyle değil mi? Ava : Evet, gezdiriyorum, O koşmayı çok seviyor.",
-    correctOptionId: "b",
-    characterIds: ["chloe","ava","buddy"],
-    grades: [5],
-    functions: ["use_of_simple_present_tense_for_habbits","tag_questions"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:01.014",
-    evidenceEnd: "0:03.258",
-    evidenceSentence: "Chloe : You walk Buddy every morning, /don't you/?",
-  },
+  id: "5_personal_life_chloe_ava2",
+  correctOptionQuestions: [{"sentence":"Ava : Yes, I do, he likes ___ very much.","target":"walking","choices":["walking","working","watching","waking"],"bonus":{"target":"yürümek","choices":["yürümek","çalışmak","izlemek","uyanmak"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_personal_life_chloe_ava2.mp4",
+  title: "Buddy's Morning Walk",
+  transcript: "Chloe : You walk Buddy /every morning/, don't you? Ava : Yes, I do, he likes walking very much.",
+  answerOptions: [
+    { id: "a", text: "Chloe : Buddy'yi /her sabah/ yürüyüşe çıkarıyorsun, değil mi? Ava : Evet, çıkarıyorum, yürüyüş yapmayı çok seviyor." },
+    { id: "b", text: "Chloe : Buddy'yi her akşam yürüyüşe çıkarıyorsun, değil mi? Ava : Evet, çıkarıyorum, yürüyüş yapmayı çok seviyor." }
+  ],
+  easyDistractor: "Chloe : Buddy kaç yaşında? Ava : Üç yaşında, onunla oyun oynamayı çok seviyorum.",
+  correctOptionId: "a",
+  characterIds: ["chloe", "ava", "buddy"],
+  grades: [5,6],
+  functions: ["tag_questions", "describing_daily_routines", "use_of_simple_present_tense", "expressing_likes_and_dislikes"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:01.401",
+  evidenceEnd: "0:07.651",
+
+  evidenceSentence: "Chloe : You walk Buddy /every morning/, don't you? Ava : Yes, I do, he likes walking very much.",
+  truefalsequestion: "Ava takes the dog out for a walk every evening.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ava's canonical voice reference.\nUse <<<Image2>>> as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Chloe's canonical voice reference.\nUse <<<Image3>>> as Buddy's canonical appearance reference.\nSCENE:\nA pleasant spring morning outside Ava's family home.\nThe weather is sunny and mild, with warm morning sunlight illuminating the front garden.\nFresh green grass, flowering shrubs, a wooden garden fence, and a pathway leading toward the garden gate create a welcoming residential setting.\nThe house's front door is behind the girls.\nAva and Chloe stand together near the entrance, preparing to take Buddy for his morning walk.\nBuddy, a friendly golden retriever, sits calmly beside Ava.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>> and comfortable dark blue full-length trousers.\nChloe wears her existing upper clothing from <<<Image2>>> and comfortable dark blue full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nBuddy wears a simple dog collar attached to a black leash held securely by Ava.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nAva stands beside Buddy, holding his leash comfortably in one hand.\nBuddy sits on the garden pathway, looking toward the garden gate with quiet anticipation.\nChloe stands beside Ava, observing Buddy.\nThe two girls are approximately the same height.\nSTAGE 2 — DIALOGUE:\nChloe (<<<Audio2>>>):\n\"You walk Buddy every morning, don't you?\"\nAva (<<<Audio1>>>):\n\"Yes, I do. He likes walking very much.\"\nAva briefly looks affectionately toward Buddy while answering.\nBuddy remains seated during the dialogue.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Ava finishes speaking, Buddy eagerly rises from his sitting position.\nHe starts walking toward the garden gate, clearly excited about his morning walk.\nThe leash becomes gently taut as Buddy moves forward.\nAva feels the gentle pull and takes a small step forward to follow him.\nChloe notices Buddy's impatience and smiles with amusement.\nAva smiles too and begins walking naturally in Buddy's direction.\nBuddy continues leading the way toward the garden gate at a normal walking pace.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nBuddy remains the same golden retriever throughout the scene.\nHis collar and leash remain correctly connected.\nAva holds the same leash throughout the entire sequence.\nBuddy remains seated until Ava finishes her final dialogue line.\nBuddy then stands up naturally and begins walking toward the garden gate.\nThe leash becomes gently taut without stretching unnaturally or clipping through either character.\nBuddy does not sprint, jump, or drag Ava forcefully.\nAva follows with a natural walking movement.\nChloe remains beside Ava until the final movement begins.\nThe garden gate remains in the same direction throughout the scene.\nPERFORMANCE:\nNatural, relaxed interaction between two friends.\nBuddy behaves like a friendly, well-trained dog who is excited for his daily walk.\nHis movements are physically believable and appropriately energetic.\nAva's reaction to the gentle leash pull is subtle and spontaneous.\nChloe's smile is a natural response to Buddy's impatience.\nAvoid exaggerated facial expressions or unnecessary gestures.\nAUDIO:\nAva speaks exclusively with <<<Audio1>>>.\nChloe speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle spring morning ambience, gentle birdsong, and natural footsteps.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_personal_life_mia_zoe",
-    correctOptionQuestions: [{"sentence":"Zoe : Do you watch ___ in the afternoon?","target":"television","choices":["television","telephone","radio","computer"],"bonus":{"target":"televizyon","choices":["televizyon","telefon","radyo","bilgisayar"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_mia_zoe.mp4",
-    title: "Zoe asks Mia about watching television in the afternoon.",
-    transcript: "Zoe : Do you watch television in the afternoon? Mia : I /seldom/ watch it, I /usually/ read.",
-    answerOptions: [
-      { id: "a", text: "Zoe : Öğleden sonra televizyon izler misin? Mia : /Nadiren/ izlerim, /genellikle/ kitap okurum." },
-      { id: "b", text: "Zoe : Öğleden sonra televizyon izler misin? Mia : Her gün izlerim, bazen de kitap okurum." }
-    ],
-    easyDistractor: "Zoe : Öğleden sonra televizyon izler misin? Mia : Bazen televizyon izlerim, hiç kitap okumam.",
-    correctOptionId: "a",
-    characterIds: ["mia","zoe"],
-    grades: [5],
-    functions: ["frequency_adverbs"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:02.658",
-    evidenceEnd: "0:06.207",
-    evidenceSentence: "Mia : I /seldom/ watch it, I /usually/ read.",
-  },
+  id: "5_personal_life_mia_zoe",
+  correctOptionQuestions: [{"sentence":"Mia : I ___ watch it, I usually read.","target":"seldom","choices":["seldom","sudden","silent","sometimes"],"bonus":{"target":"nadiren","choices":["nadiren","aniden","sessiz","bazen"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/5_personal_life_mia_zoe.mp4",
+  title: "Just One More Book",
+  transcript: "Zoe : /Do you ever/ watch television? Mia : I /seldom/ watch it, I /usually/ read.",
+  answerOptions: [
+    { id: "a", text: "Zoe : /Hiç/ televizyon izler misin? Mia : /Nadiren/ izlerim, /genellikle/ kitap okurum." },
+    { id: "b", text: "Zoe : Biraz televizyon izlesen diyorum. Mia : Sık sık izlerim, ama şu an kitap okuyacağım." }
+  ],
+  easyDistractor: "Zoe : En sevdiğin televizyon programı hangisi? Mia : Belgeselleri severim, özellikle hayvanlarla ilgili olanları.",
+  correctOptionId: "a",
+  characterIds: ["zoe", "mia"],
+  grades: [5,6,7],
+  functions: ["frequency_adverbs", "describing_a_regular_habit", "use_of_simple_present_tense"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:02.401",
+  evidenceEnd: "0:07.400",
+
+  evidenceSentence: "Zoe : /Do you ever/ watch television? Mia : I /seldom/ watch it, I /usually/ read.",
+  truefalsequestion: "Mia usually watches television.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Zoe's canonical voice reference.\nUse <<<Image2>>>  as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Mia's canonical voice reference.\nSCENE:\nA cozy family living room on a freezing winter evening.\nOutside the large living room windows, snow falls steadily through the dark evening sky. Snow-covered trees, garden bushes, and neighboring rooftops are visible in the softly illuminated winter landscape.\nInside, a beautiful stone fireplace burns with a gentle, natural fire, casting a warm orange glow across the room.\nThe living room has a comfortable sofa, soft cushions, a low wooden coffee table, a television directly facing the sofa, and a small bookshelf positioned immediately beside Mia's end of the sofa, within easy arm's reach.\nTwo ceramic mugs filled with hot chocolate rest securely on the coffee table.\nThin, delicate wisps of steam rise continuously from both mugs, clearly indicating that the hot chocolate is freshly prepared and still warm.\nZoe and Mia sit side by side on the sofa, approximately the same height.\nZoe lounges comfortably with her feet resting on the low coffee table, watching television.\nMia sits beside her, completely absorbed in reading an open book.\nCLOTHING:\nZoe wears her existing upper clothing from <<<Image1>>>  and comfortable full-length trousers. Zoe wears white socks.\nMia wears her existing upper clothing from <<<Image2>>>  and comfortable full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nTheir clothing remains appropriate for the comfortably heated indoor environment.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nZoe relaxes on the sofa with her feet resting on a clear section of the low coffee table, watching a television program.\nMia sits beside her, quietly reading an open book.\nThe fireplace burns gently nearby.\nOutside the windows, snow continues falling through the dark winter evening.\nThe two mugs of hot chocolate remain on the coffee table, with delicate steam rising naturally from their surfaces.\nZoe begins to feel bored watching television alone.\nShe turns toward Mia, who remains completely absorbed in her book.\nSTAGE 2 — DIALOGUE:\nZoe (<<<Audio1>>> , sounding slightly bored):\n\"Do you ever watch television?\"\nMia briefly looks up from her book.\nMia (<<<Audio2>>> , speaking casually):\n\"I seldom watch it. I usually read.\"\nMia returns her attention to her book.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after finishing her sentence, Mia closes the book she has been reading.\nZoe notices Mia closing her book.\nHer bored expression suddenly changes into a hopeful smile.\nShe believes Mia is finally going to join her in watching television.\nZoe looks toward Mia with growing anticipation.\nHowever, Mia calmly places her finished book beside her on the sofa.\nWithout standing up, Mia reaches toward the small bookshelf immediately beside her.\nShe takes another book from an easily accessible shelf and opens it.\nMia immediately becomes absorbed in reading the new book.\nZoe's hopeful smile fades into visible disappointment.\nShe looks at Mia with a slightly exasperated expression.\nRealizing Mia has no intention of watching television, Zoe slowly turns her head back toward the television.\nShe resumes watching with a resigned, bored expression.\nMia continues reading peacefully beside her.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nZoe and Mia remain seated side by side on the same sofa throughout the scene.\nZoe's feet remain on a clear section of the coffee table, away from the hot chocolate mugs.\nThe two mugs remain upright and stationary on the opposite side of the table.\nNo feet or other objects touch the mugs.\nThe hot chocolate does not spill.\nThin, subtle steam continues rising from both mugs throughout the scene.\nThe steam remains delicate and translucent, never resembling smoke.\nThe fireplace remains lit with a gentle, contained fire.\nNo sparks or flames escape from the fireplace.\nThe snowy nighttime scenery outside the windows remains consistent.\nThe television remains switched on and positioned directly in front of the sofa.\nMia begins with exactly one open book in her hands.\nShe closes the first book and places it beside her on the sofa.\nThe first book remains there.\nThe bookshelf is close enough for Mia to retrieve another book while seated.\nMia takes exactly one additional book from the bookshelf.\nShe opens the second book and begins reading.\nBoth books remain visually consistent and separate.\nZoe does not touch either book.\nZoe's emotional progression is clearly visible:\nBOREDOM → HOPEFUL EXCITEMENT → DISAPPOINTMENT → RESIGNATION.\nPERFORMANCE:\nNatural, relaxed interaction between two friends.\nZoe's question sounds bored but friendly.\nMia answers casually and sincerely.\nZoe's brief excitement is expressed through her eyes and a hopeful smile.\nHer disappointment is subtle but unmistakable.\nMia remains completely comfortable and absorbed in reading.\nNo exaggerated gestures or unnecessary movements.\nOnly the current speaker moves her mouth.\nAUDIO:\nZoe speaks exclusively with <<<Audio1>>> .\nMia speaks exclusively with <<<Audio2>>> .\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle indoor living room ambience, gentle fireplace crackling, and faint, indistinct television audio.\nNo intelligible dialogue from the television.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_personal_life_chloe_ava",
-    correctOptionQuestions: [{"sentence":"Ava : I feed Buddy and fill his ___.","target":"bowl","choices":["bowl","ball","plate","cup"],"bonus":{"target":"kâse","choices":["kâse","top","tabak","fincan"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_chloe_ava.mp4",
-    title: "Chloe asks Ava about her morning routine before school.",
-    transcript: "Chloe : What do you do before school? Ava : I /feed/ Buddy and /fill his bowl/.",
-    answerOptions: [
-      { id: "a", text: "Chloe : Okuldan önce ne yaparsın? Ava : Buddy'yi /beslerim/ ve onun kabını doldururum." },
-      { id: "b", text: "Chloe : Okuldan önce ne yaparsın? Ava : Buddy'yi gezdiririm ve onun tasmasını hazırlarım." }
-    ],
-    easyDistractor: "Chloe : Okuldan önce ne yaparsın? Ava : Buddy'yi beslerim ve onun oyuncağını doldururum.",
-    correctOptionId: "a",
-    characterIds: ["chloe","ava","buddy"],
-    grades: [5],
-    functions: ["use_of_simple_present_tense_for_habbits"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:02.288",
-    evidenceEnd: "0:04.744",
-    evidenceSentence: "Ava : I /feed/ Buddy and /fill his bowl/.",
-  },
+  id: "5_personal_life_chloe_ava",
+  correctOptionQuestions: [{"sentence":"Ava : I ___ Buddy and fill his water bowl.","target":"feed","choices":["feed","feel","feet","field"],"bonus":{"target":"beslemek","choices":["beslemek","hissetmek","ayaklar","alan"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_personal_life_chloe_ava.mp4",
+  title: "Buddy's Breakfast",
+  transcript: "Chloe : What do you do /before/ school? Ava : I feed Buddy and fill his /water bowl/.",
+  answerOptions: [
+    { id: "a", text: "Chloe : Okuldan /önce/ ne yaparsın? Ava : Buddy'yi beslerim ve /su kabını/ doldururum." },
+    { id: "b", text: "Chloe : Okuldan sonra ne yaparsın? Ava : Buddy'yi beslerim ve mama kabını doldururum." }
+  ],
+  easyDistractor: "Chloe : Buddy'yi ne sıklıkla gezdirirsin? Ava : Her akşam parkta gezdiririm.",
+  correctOptionId: "a",
+  characterIds: ["chloe", "ava", "buddy"],
+  grades: [5,6],
+  functions: ["describing_daily_routines", "use_of_simple_present_tense", "use_of_wh_questions_who_what"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:01.401",
+  evidenceEnd: "0:07.651",
+
+  evidenceSentence: "Chloe : What do you do /before/ school? Ava : I feed Buddy and fill his /water bowl/.",
+  truefalsequestion: "Ava feeds Buddy and fill his water bowl after school.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ava's canonical voice reference.\nUse <<<Image2>>> as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Chloe's canonical voice reference.\nUse <<<Image3>>> as Buddy's canonical identity and appearance reference.\nSCENE:\nA bright, welcoming family kitchen on a sunny spring morning, shortly before school.\nWarm morning sunlight enters through the kitchen windows. Fresh green trees and flowering plants are visible outside.\nThe kitchen has wooden cabinets, a spacious countertop, a sink, and a clean tiled floor.\nAva and Chloe stand side by side near the kitchen sink.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nBuddy, a friendly golden retriever, is nearby, enjoying his breakfast.\nBOWL ARRANGEMENT:\nThere are exactly TWO separate dog bowls.\nFOOD BOWL:\nA RED ceramic bowl containing dry brown dog kibble.\nIt is positioned on the kitchen floor near Buddy.\nWATER BOWL:\nA BLUE stainless-steel bowl intended exclusively for clean drinking water.\nIt is initially empty and positioned inside the kitchen sink.\nThe two bowls remain visually distinct and physically separate throughout the scene.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>> and comfortable dark blue full-length trousers.\nChloe wears her existing upper clothing from <<<Image2>>> and comfortable dark blue full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nBuddy stands beside his red food bowl on the kitchen floor.\nThe red bowl already contains dry dog kibble.\nBuddy lowers his head and begins eating.\nAva stands beside the kitchen sink, preparing to fill Buddy's separate blue water bowl.\nChloe stands close beside Ava, watching her morning routine.\nBoth girls remain standing naturally at approximately the same height, with matching overall body scale and age-appropriate proportions.\nSTAGE 2 — DIALOGUE:\nChloe (<<<Audio2>>>):\n\"What do you do before school?\"\nAva (<<<Audio1>>>):\n\"I feed Buddy and fill his water bowl.\"\nAs Ava answers, she turns on the kitchen faucet.\nA gentle stream of clear water flows directly from the faucet into the empty BLUE water bowl positioned inside the sink.\nThe blue water bowl gradually fills with clean drinking water.\nBuddy continues eating dry kibble from his separate RED food bowl on the floor.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nAva turns off the faucet after filling the blue water bowl.\nShe carefully lifts the filled blue water bowl from the sink.\nShe places it upright on the kitchen floor, a short distance beside Buddy's red food bowl.\nThe two bowls remain separate and clearly distinguishable.\nBuddy finishes chewing his current mouthful of food.\nHe turns his head toward the freshly filled blue water bowl and begins drinking.\nChloe watches Buddy with a warm, amused smile.\nAva looks at Buddy with a satisfied, affectionate expression.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nAva and Chloe maintain their canonical facial identities, hairstyles, and natural body proportions.\nNeither girl appears noticeably taller, shorter, larger, or smaller than the other.\nBuddy retains his canonical golden retriever appearance throughout.\nThe red food bowl contains only dry brown dog kibble.\nThe blue water bowl contains only clean drinking water.\nThe red food bowl remains on the kitchen floor throughout the scene.\nThe blue water bowl begins empty inside the kitchen sink.\nWater flows exclusively from the faucet into the blue water bowl.\nNO WATER IS POURED INTO THE RED FOOD BOWL.\nNO WATER IS POURED ONTO DOG FOOD.\nThe dog kibble remains completely dry.\nAva never moves the red food bowl.\nAva moves only the blue water bowl after filling it.\nThe blue water bowl remains upright without spilling.\nBuddy eats from the red bowl and drinks from the blue bowl.\nBuddy does not begin drinking until Ava places the blue water bowl on the floor.\nThe kitchen layout, lighting, and spring morning scenery remain consistent.\nPERFORMANCE:\nNatural, relaxed interaction between two friends.\nAva performs her daily pet-care routine confidently and casually.\nChloe observes with genuine interest.\nBuddy behaves like a friendly, well-trained dog enjoying his breakfast.\nAll hand movements, water flow, and bowl interactions are physically believable.\nAvoid exaggerated gestures or unnecessary reactions.\nOnly the current speaker moves her mouth.\nAUDIO:\nAva speaks exclusively with <<<Audio1>>>.\nChloe speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle morning kitchen ambience, gentle running water, and natural sounds of Buddy eating and drinking.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
 
   {
-    id: "5_personal_life_olivia_victoria",
-    correctOptionQuestions: [{"sentence":"Victoria : How often do you take ___?","target":"photos","choices":["photos","potatoes","videos","paintings"],"bonus":{"target":"fotoğraflar","choices":["fotoğraflar","videolar","resimler","patatesler"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_personal_life_olivia_victoria.mp4",
-    title: "Victoria asks Olivia how often she takes photos.",
-    transcript: "Victoria : /How often/ do you take photos? Olivia : I take photos everytime!",
-    answerOptions: [
-      { id: "a", text: "Victoria : Ne zaman fotoğraf çekersin? Olivia : Sürekli fotoğraf çekerim!" },
-      { id: "b", text: "Victoria : /Ne sıklıkla/ fotoğraf çekersin? Olivia : Sürekli fotoğraf çekerim!" }
-    ],
-    easyDistractor: "Victoria : Ne sıklıkla fotoğraf çekersin? Olivia : Hiç fotoğraf çekmem!",
-    correctOptionId: "b",
-    characterIds: ["olivia","victoria"],
-    grades: [5],
-    functions: ["frequency_adverbs"],
-    theme: "personal_life",
-    unit: "personal_life",
-    evidenceStart: "0:00.403",
-    evidenceEnd: "0:02.228",
-    evidenceSentence: "Victoria : /How often/ do you take photos?",
-  },
+  id: "5_personal_life_olivia_victoria",
+  correctOptionQuestions: [{"sentence":"Victoria : ___ do you take photos?","target":"How often","choices":["How often","When","Why","Where"],"bonus":{"target":"ne sıklıkla","choices":["ne sıklıkla","açık","teklif etmek","ofis"]}}],
+  status: "published",
+  rating: 6,
+  videoSrc: "assets/video/5_personal_life_olivia_victoria.mp4",
+  title: "The Perfect Photo",
+  transcript: "Victoria : How often do you take photos? Olivia : I take photos /all the time/!",
+  answerOptions: [
+    { id: "a", text: "Victoria : Ne sıklıkla fotoğraf çekersin? Olivia : /Her zaman/ fotoğraf çekerim!" },
+    { id: "b", text: "Victoria : Ne sıklıkla fotoğraf çekersin? Olivia : Ara sıra fotoğraf çekerim!" }
+  ],
+  easyDistractor: "Victoria : Fotoğraf makinen yeni mi? Olivia : Evet, geçen hafta aldım!",
+  correctOptionId: "a",
+  characterIds: ["victoria", "olivia"],
+  grades: [5],
+  functions: ["frequency_adverbs", "describing_a_regular_habit", "use_of_simple_present_tense"],
+  theme: "personal_life",
+  unit: "",
+
+  evidenceStart: "0:01.401",
+  evidenceEnd: "0:05.401",
+
+  evidenceSentence: "Victoria : How often do you take photos? Olivia : I take photos /all the time/!",
+  truefalsequestion: "Olivia rarely takes photographs.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Victoria's canonical voice reference.\nUse <<<Image2>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Olivia's canonical voice reference.\nSCENE:\nA beautiful lakeside park on a cold, clear winter afternoon.\nSoft winter sunlight illuminates the park.\nThe trees are mostly bare, with a light covering of snow on the surrounding grass, bushes, and pathways.\nThe lake remains unfrozen, with calm, dark water reflecting the pale winter sky.\nVictoria and Olivia stand together on a dry stone pathway beside the lake.\nA single mallard duck stands on the stone edge of the pathway, immediately beside the water.\nCHARACTERS AND CLOTHING:\nVictoria wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nOlivia wears her existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nBoth girls wear their referenced upper garments with their original design and natural fit, casually untucked.\nTheir clothing is suitable for the cold winter weather.\nPROPS:\nOlivia holds a compact digital camera with both hands.\nThe camera remains the same size, shape, and color throughout the scene.\nA single mallard duck with a green head, yellow bill, and brown-and-gray body stands near the water's edge.\nThe duck is close enough for Olivia to photograph clearly.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nVictoria and Olivia stand beside the lakeside pathway.\nOlivia holds her camera at chest height while watching the duck near the water.\nVictoria stands beside her, noticing Olivia's interest in photographing the duck.\nThe duck remains calmly on the stone edge beside the unfrozen lake.\nSTAGE 2 — DIALOGUE:\nVictoria (<<<Audio1>>>):\n\"How often do you take photos?\"\nOlivia (<<<Audio2>>>):\n\"I take photos all the time!\"\nBoth girls remain beside the lake.\nOlivia keeps the camera in her hands during the conversation.\nOnly the current speaker moves her mouth.\nThe other girl listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Olivia finishes speaking, she raises her camera to eye level and aims directly at the duck.\nJust as Olivia is about to press the shutter button, the duck suddenly jumps forward from the stone edge into the lake.\nThe duck lands in the water with a small, natural splash.\nThe same duck immediately begins swimming away from the shore, leaving gentle ripples behind it.\nOlivia lowers her camera slightly, realizing that she missed the perfect photo.\nVictoria watches the duck swimming away and gives Olivia a small, amused smile.\nOlivia briefly looks toward Victoria with a disappointed but slightly amused expression.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nOnly one duck appears in the scene.\nThe duck begins standing on the stone pathway immediately beside the water.\nIt jumps directly from the stone edge into the lake.\nAfter landing, the same duck remains visible on the water and swims away naturally.\nThe duck does not fly or disappear.\nOlivia keeps the same camera in her hands throughout the scene.\nThe camera remains pointed toward the duck until Olivia lowers it after the missed photograph.\nVictoria and Olivia remain on the same lakeside pathway.\nThe winter landscape, snow coverage, shoreline, and unfrozen lake remain consistent.\nPERFORMANCE:\nNatural conversational timing and restrained character animation.\nSubtle eye movements and occasional blinking.\nOlivia's camera movement is simple and deliberate.\nThe duck's jump is quick and physically believable.\nVictoria's amusement and Olivia's disappointment are subtle and spontaneous.\nAUDIO:\nVictoria speaks exclusively with <<<Audio1>>>.\nOlivia speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle winter park ambience, gentle water sounds, and a small splash as the duck enters the lake.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
     id: "5_personal_life_noah_victoria",
@@ -16462,52 +16538,64 @@ evidenceEnd: "0:09.079",
   },
 
   {
-    id: "5_family_life_victoria_monica",
-    correctOptionQuestions: [{"sentence":"Monica : Yes, I'm finishing an important ___.","target":"task","choices":["task","mask","game","story"],"bonus":{"target":"görev","choices":["görev","maske","oyun","hikâye"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_family_life_victoria_monica.mp4",
-    title: "Victoria checks whether Monica is working at home.",
-    transcript: "Victoria : You/'re/ work/ing/ at home today, /aren't you/, Mum? Monica : Yes, I/'m/ finish/ing/ an important task. Victoria : Do you need any help?",
-    answerOptions: [
-      { id: "a", text: "Victoria : Anne, bugün evde dinleniyorsun, değil mi? Monica : Evet, önemli bir kitabı okuyorum. Victoria : Yardıma ihtiyacın var mı?" },
-      { id: "b", text: "Victoria : Anne, bugün evde çalışı/yor/sun, /değil mi/? Monica : Evet, önemli bir işi bitiriyorum. Victoria : Yardıma ihtiyacın var mı?" }
-    ],
-    easyDistractor: "Victoria : Anne, bugün evde çalışıyorsun, değil mi? Monica : Hayır, dışarıda alışveriş yapıyorum. Victoria : Yardıma ihtiyacın var mı?",
-    correctOptionId: "b",
-    characterIds: ["victoria","monica"],
-    grades: [5],
-    functions: ["present_progressive","tag_questions"],
-    theme: "family_life",
-    unit: "family_life",
-    evidenceStart: "0:00.000",
-    evidenceEnd: "0:02.735",
-    evidenceSentence: "Victoria : You/'re/ work/ing/ at home today, /aren't you/, Mum?",
-  },
+  id: "5_family_life_victoria_monica",
+  correctOptionQuestions: [{"sentence":"Victoria : Do you need any ___ ?","target":"help","choices":["help","health","hungry","held"],"bonus":{"target":"bitirmek","choices":["bitirmek","balık tutmak","bulmak","tamir etmek"],"word":"finish"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_family_life_victoria_monica.mp4",
+  title: "A Helping Hand",
+  transcript: "Victoria : You're working at home today, aren't you, Mum? Monica : Yes, I'm /finishing/ an important task. Victoria : /Do you need any help/?",
+  answerOptions: [
+    { id: "b", text: "Victoria : Bugün evde çalışıyorsun, değil mi anne? Monica : Evet, önemli bir işi /bitiriyorum/. Victoria : /Yardıma ihtiyacın var mı/?" },
+    { id: "a", text: "Victoria : Bugün evde çalışıyorsun, değil mi anne? Monica : Evet, önemli bir işe başlıyorum. Victoria : Biraz karnım acıktı da." }
+  ],
+  easyDistractor: "Victoria : Anne, bugün işe gitmeyecek misin? Monica : Hayır, bugün izinliyim. Victoria : O zaman birlikte dışarı çıkabilir miyiz?",
+  correctOptionId: "b",
+  characterIds: ["victoria", "monica"],
+  grades: [5],
+  functions: ["tag_questions", "present_progressive", "offeringhelp", "expressing_needs"],
+  theme: "family_life",
+  unit: "",
+
+  evidenceStart: "0:02.150",
+  evidenceEnd: "0:07.900",
+
+  evidenceSentence: "Victoria : You're working at home today, aren't you, Mum? Monica : Yes, I'm /finishing/ an important task. Victoria : /Do you need any help/?",
+  truefalsequestion: "Victoria wants to help her mother.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>>  as Victoria's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Victoria's canonical voice reference.\nUse <<<Image2>>>  as Monica's canonical identity, appearance, and upper-clothing reference.\n\nSCENE:\nA cozy family home on a cold winter afternoon.\nOutside the living room windows, the garden, trees, and neighboring rooftops are covered with snow. Light snowfall continues outside.\nInside, warm natural lighting creates a comfortable contrast with the cold winter landscape.\nMonica is working from home at a wooden desk near the window.\nHer open laptop, a notebook, and a remarkably thick stack of paperwork are arranged on the desk.\nVictoria stands close beside her mother, watching her work.\nCLOTHING:\nVictoria wears her existing upper clothing from <<<Image1>>>  and full-length dark blue trousers.\nMonica wears her existing upper clothing from <<<Image2>>>  and comfortable charcoal-gray full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nMonica sits at her desk, concentrating on a task on her laptop.\nA substantial stack of paperwork rests beside the laptop, clearly visible throughout the scene.\nVictoria approaches and stands beside her mother, noticing how busy she is.\nSTAGE 2 — DIALOGUE:\nVictoria (<<<Audio1>>> ):\n\"You're working at home today, aren't you, Mum?\"\nMonica (<<<Audio2>>> ):\n\"Yes, I'm finishing an important task.\"\nVictoria (<<<Audio1>>> ):\n\"Do you need any help?\"\nMonica remains seated while Victoria stands close beside her.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Victoria asks, \"Do you need any help?\", Monica briefly points toward the remarkably thick stack of paperwork beside her laptop.\nVictoria follows her mother's gesture and notices the unexpectedly large amount of work.\nShe hesitates for a moment, then looks back at Monica with a small, sheepish smile, realizing that the task is more demanding than she expected.\nMonica notices Victoria's reaction and smiles warmly.\nStill seated beside her daughter, Monica gently reaches up and gives Victoria's cheek one brief, affectionate squeeze.\nVictoria instinctively squints her eyes and makes a cute, slightly scrunched-up facial expression in response to her mother's touch.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nMonica remains seated at the same desk throughout the scene.\nVictoria remains standing close enough for Monica to reach her cheek comfortably.\nThe laptop stays open on the desk.\nThe thick stack of paperwork is already present from the beginning and remains in the same position.\nMonica points toward the paperwork without picking it up or moving it.\nMonica uses one hand for the brief cheek squeeze.\nVictoria's facial reaction occurs only when Monica gently squeezes her cheek.\nThe winter scenery outside the windows remains consistent, with snow-covered surroundings and light snowfall.\nPERFORMANCE:\nNatural, relaxed mother-daughter interaction.\nSubtle eye movements and occasional blinking.\nVictoria's question is sincere and helpful.\nHer sheepish reaction is brief and understated.\nMonica's affectionate gesture feels spontaneous and gentle.\nVictoria's final expression is playful and endearing without exaggerated facial distortion.\nAUDIO:\nVictoria speaks exclusively with <<<Audio1>>> .\nMonica speaks exclusively with <<<Audio2>>> .\nOnly the three specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle indoor home ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
-    id: "5_family_life_olivia_fiona",
-    correctOptionQuestions: [{"sentence":"Olivia : Are we visiting the ___ tomorrow?","target":"museum","choices":["museum","musician","library","theatre"],"bonus":{"target":"müze","choices":["müze","müzisyen","kütüphane","tiyatro"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/5_family_life_olivia_fiona.mp4",
-    title: "Olivia asks Fiona about their museum plans.",
-    transcript: "Olivia : /Are/ we visit/ing/ the museum /tomorrow/? Fiona : Yes, we/'re seeing/ the photography exhibition.",
-    answerOptions: [
-      { id: "a", text: "Olivia : /Yarın/ müzeye gidiyor muyuz? Fiona : Evet, fotoğraf sergisini gezi/yor/uz." },
-      { id: "b", text: "Olivia : Bugün müzeye gidecek miyiz? Fiona : Hayır, akvaryuma gidiyoruz." }
-    ],
-    easyDistractor: "Olivia : Yarın müzeyi ziyaret ediyor muyuz? Fiona : Evet, hayvanat bahçesini geziyoruz.",
-    correctOptionId: "a",
-    characterIds: ["olivia","fiona"],
-    grades: [5],
-    functions: ["present_progressive_for_planned_future"],
-    theme: "family_life",
-    unit: "family_life",
-    evidenceStart: "0:00.000",
-    evidenceEnd: "0:04.550",
-    evidenceSentence: "Olivia : /Are/ we visit/ing/ the museum /tomorrow/? Fiona : Yes, we/'re seeing/ the photography exhibition.",
-  },
+  id: "5_family_life_olivia_fiona",
+  correctOptionQuestions: [{"sentence":"Fiona : Yes, we're seeing the photography ___.","target":"exhibition","choices":["exhibition","expedition","experiment","explanation"],"bonus":{"target":"sergi","choices":["sergi","keşif gezisi","deney","açıklama"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/5_family_life_olivia_fiona.mp4",
+  title: "The Photography Exhibition",
+  transcript: "Olivia : Are we visiting the museum /tomorrow/? Fiona : Yes, we're seeing the /photography exhibition/.",
+  answerOptions: [
+    { id: "a", text: "Olivia : /Yarın/ müzeye gidiyor muyuz? Fiona : Evet, /fotoğraf sergisini/ geziyoruz." },
+    { id: "b", text: "Olivia : Bugün müzeye gidecek miyiz? Fiona : Hayır, akvaryuma gidiyoruz." }
+  ],
+  easyDistractor: "Olivia : Anne, yarın evde kalacak mıyız? Fiona : Evet, birlikte film izleyeceğiz.",
+  correctOptionId: "a",
+  characterIds: ["olivia", "fiona"],
+  grades: [5],
+  functions: ["present_progressive_for_planned_future", "confirming_information", "givinginformation"],
+  theme: "family_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:05.151",
+
+  evidenceSentence: "Olivia : Are we visiting the museum /tomorrow/? Fiona : Yes, we're seeing the /photography exhibition/.",
+  truefalsequestion: "They are visiting photography exhibition today.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Olivia's canonical voice reference.\nUse <<<Image2>>> as Fiona's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Fiona's canonical voice reference.\nSCENE:\nA cozy family living room on a cold winter night.\nSnow falls steadily outside the large living room windows. Snow-covered trees, rooftops, and softly illuminated neighboring houses are visible in the darkness.\nA beautiful fireplace burns warmly beside the sofa, casting a gentle orange glow across the room.\nOlivia and her mother Fiona sit comfortably together on the sofa.\nFiona holds a tablet showing information about a photography exhibition at a museum.\nCLOTHING:\nOlivia wears her existing upper clothing from <<<Image1>>> and comfortable dark blue full-length trousers.\nFiona wears her existing upper clothing from <<<Image2>>> and charcoal-gray full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nFiona sits on the sofa, browsing photographs from an upcoming museum exhibition on her tablet.\nOlivia sits beside her, interested in their plans for the following day.\nThe fireplace burns gently nearby while snow continues falling outside the windows.\nSTAGE 2 — DIALOGUE:\nOlivia (<<<Audio1>>>):\n\"Are we visiting the museum tomorrow?\"\nFiona (<<<Audio2>>>):\n\"Yes, we're seeing the photography exhibition.\"\nBoth characters remain seated together.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Fiona finishes speaking, she gently turns the tablet screen toward Olivia.\nThe tablet displays a beautiful wildlife photograph of a single emperor penguin standing in a snowy Antarctic landscape.\nThe photograph fills most of the tablet screen and remains clearly visible.\nOlivia notices the penguin photograph and leans slightly closer to examine it.\nHer expression brightens with genuine excitement.\nShe looks toward Fiona with a delighted smile.\nFiona notices her daughter's enthusiasm and smiles affectionately.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nFiona holds the same tablet throughout the scene.\nThe tablet remains securely in Fiona's hands as she turns its screen toward Olivia.\nThe penguin appears only as a still photograph on the tablet screen.\nThe photograph remains unchanged during the final reaction.\nOlivia and Fiona remain seated beside each other on the same sofa.\nThe fireplace continues burning naturally.\nThe snowy nighttime scenery outside the windows remains consistent.\nPERFORMANCE:\nNatural, relaxed mother-daughter interaction.\nSubtle eye movements and occasional blinking.\nFiona's tablet movement is gentle and simple.\nOlivia's excitement is spontaneous and restrained.\nTheir final smiles are warm and natural.\nAUDIO:\nOlivia speaks exclusively with <<<Audio1>>>.\nFiona speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
     id: "5_family_life_ava_david",
@@ -18033,29 +18121,34 @@ evidenceEnd: null,
     evidenceSentence: "Chloe : It's probably /cool/ now, Nope, still /too hot/.",
   },
 {
-    id: "6_life_in_the_city_ella_olivia",
-    correctOptionQuestions: [{"sentence":"Olivia : How was the local music ___ yesterday?","target":"festival","choices":["festival","vegetable","concert","party"],"bonus":{"target":"festival","choices":["festival","konser","düğün","toplantı"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/6_life_in_the_city_ella_olivia.mp4",
-    title: "Olivia asks Ella about the local music festival.",
-    transcript: "Olivia : How /was/ the local music festival yesterday? Ella : It /was/ amazing, The musicians /were/ great.",
-    answerOptions: [
-      { id: "a", text: "Olivia : Yerel müzik festivaline gidecek miyiz? Ella : Evet müzisyenler harika diyorlar. Gideriz." },
-      { id: "b", text: "Olivia : Dünkü yerel müzik festivali /nasıldı/? Ella : Harikay/dı/, Müzisyenler çok iyiy/di/." }
-    ],
-    easyDistractor: "Olivia : Yerel müzik festivali dün nasıldı? Ella : Harikaydı, Müzisyenler kötüydü.",
-    correctOptionId: "b",
-    explanation: "",
-    characterIds: ["ella", "olivia"],
-    grades: [6],
-    functions: ["simple_past_tense_was_were"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: "0:00.000",
-evidenceEnd: null,
-    evidenceSentence: "Olivia : How /was/ the local music festival yesterday? Ella : It /was/ amazing, The musicians /were/ great.",
-  },
+  id: "6_life_in_the_city_ella_olivia",
+  correctOptionQuestions: [{"sentence":"Ella : It was amazing, the musicians ___ great.","target":"were","choices":["were","was","are","is"],"bonus":{"target":"yerel","choices":["yerel","ulusal","uluslararası","kıtalararası"],"word":"local"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/6_life_in_the_city_ella_olivia.mp4",
+  title: "The Local Music Festival",
+  transcript: "Olivia : How was the /local music festival/ yesterday? Ella : It was amazing, the /musicians/ were great.",
+  answerOptions: [
+    { id: "a", text: "Olivia : Dünkü /yerel müzik festivali/ nasıldı? Ella : Harikaydı, /müzisyenler/ çok iyiydi." },
+    { id: "b", text: "Olivia : Dünkü konser nasıldı? Ella : Harikaydı, dansçılar çok iyiydi." }
+  ],
+  easyDistractor: "Olivia : Hafta sonu konsere gidecek misin? Ella : Evet, arkadaşlarımla birlikte gitmeyi planlıyorum.",
+  correctOptionId: "a",
+  characterIds: ["olivia", "ella"],
+  grades: [6,7],
+  functions: ["simple_past_tense_was_were", "asking_about", "expressing_feelings"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:01.651",
+  evidenceEnd: "0:07.401",
+
+  evidenceSentence: "Olivia : How was the /local music festival/ yesterday? Ella : It was amazing, the /musicians/ were great.",
+  truefalsequestion: "Ella went to a local music festival yesterday.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>>  as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Olivia's canonical voice reference.\nUse <<<Image2>>>  as Ella's canonical identity, appearance, and upper-clothing reference for the PRESENT-DAY scene.\nUse <<<Audio2>>>  as Ella's canonical voice reference.\nUse <<<Image3>>>  as Ella's alternative upper-clothing reference for the FLASHBACK scene.\nPreserve Ella's exact canonical facial identity, hairstyle, hair color, eye color, skin tone, and body proportions from <<<Image2>>> .\nOnly her clothing changes between the two scenes.\nSCENE:\nA short two-part sequence consisting of a present-day conversation followed by a flashback to yesterday's local music festival.\nPART ONE — PRESENT DAY:\nA pleasant, sunny autumn afternoon in a middle-school courtyard.\nGolden and orange autumn leaves decorate the surrounding trees.\nOlivia and Ella walk together along a quiet paved pathway through the school courtyard.\nA few students move naturally in the distant background.\nElla wears a colorful festival admission wristband from yesterday's event.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nPART TWO — FLASHBACK:\nYesterday, during a pleasant autumn evening.\nA small local outdoor music festival takes place in a public park.\nA modest raised wooden stage is decorated with warm stage lights.\nA small, enthusiastic audience stands in front of the stage, enjoying the live performance.\nThe audience moves naturally and independently, with occasional clapping and gentle rhythmic movement.\nThe performers are a three-member band consisting of a guitarist, a bassist, and a drummer.\nElla is among the audience, enjoying the concert.\nCLOTHING:\nPRESENT DAY:\nOlivia wears her existing upper clothing from <<<Image1>>>  and dark blue full-length jeans.\nElla wears her existing upper clothing from <<<Image2>>>  and dark blue full-length jeans.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nACCESSORIES:\nElla wears a star shaped necklace.\n\nFLASHBACK:\nElla wears her alternative upper clothing from <<<Image3>>>  and light blue full-length jeans.\nElla's upper garment retains its original design, length, and natural fit, worn casually untucked.\nElla wears the same colorful festival admission wristband in both scenes.\nThe musicians wear natural, casual clothing appropriate for a small outdoor music festival.\nEVENT SEQUENCE:\nSTAGE 1 — PRESENT-DAY PRE-ACTION:\nOlivia and Ella walk together through the sunny school courtyard.\nElla casually adjusts the colorful festival wristband on her wrist.\nOlivia notices the wristband and remembers that Ella attended yesterday's local music festival.\nOlivia turns toward Ella with genuine curiosity.\nSTAGE 2 — PRESENT-DAY DIALOGUE:\nOlivia (<<<Audio1>>> , speaking naturally):\n\"How was the local music festival yesterday?\"\nElla (<<<Audio2>>> , speaking enthusiastically):\n\"It was amazing! The musicians were great.\"\nElla's expression becomes animated as she remembers the concert.\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — FLASHBACK TRANSITION:\nImmediately after Ella finishes her sentence, transition directly into a visual flashback of yesterday's outdoor music festival.\nThe flashback clearly takes place on the previous evening, at a different location.\nElla now wears her alternative upper clothing from <<<Image3>>>  and black below-the-knee shorts.\nHer canonical face, hairstyle, and body proportions remain unchanged.\nSTAGE 4 — FLASHBACK CONCERT PERFORMANCE:\nA small three-member band performs energetically on the outdoor stage.\nThe guitarist plays an enthusiastic melodic passage.\nThe bassist maintains a steady rhythm.\nThe drummer performs confidently behind a conventional drum kit.\nThe musicians are clearly skilled and genuinely entertaining.\nElla watches from the audience with an excited, appreciative expression.\nThe audience enjoys the music, moving naturally to the rhythm.\nThe performance remains the main visual focus.\nSTAGE 5 — DRUMMER PAYOFF:\nWhile playing an energetic drum rhythm, the drummer accidentally loses his grip on ONE drumstick.\nThe loose drumstick slips directly downward from his hand and lands on the surface of a nearby drum within his drum kit.\nThe drumstick stays resting on the drum surface.\nIt does not bounce into the air or return to his hand.\nThe drummer briefly notices the fallen drumstick and looks surprised.\nWithout attempting to retrieve it, he continues playing a simple rhythm with the remaining drumstick in his other hand.\nThe guitarist and bassist continue performing naturally.\nThe drummer gives a brief, slightly embarrassed smile while keeping the music going.\nA few audience members respond with gentle, amused applause.\nElla smiles broadly, clearly enjoying the musicians' playful energy.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nPRESENT-DAY CHARACTER SCALE:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nNeither Olivia nor Ella appears noticeably taller, shorter, larger, or smaller than the other.\nELLA'S IDENTITY AND CLOTHING:\nElla is the same recognizable person in both the present-day scene and the flashback.\nHer face, hairstyle, hair color, eye color, and natural body proportions remain consistent.\nPresent-day Ella wears the upper garment from <<<Image2>>>  with dark blue full-length trousers.\nFlashback Ella wears the upper garment from <<<Image3>>>  with black below-the-knee shorts.\nThe clothing changes only at the flashback transition.\nDo not combine the two upper garments.\nThe colorful festival wristband remains on the same wrist in both scenes.\nFLASHBACK CONTINUITY:\nThe concert takes place yesterday, during the evening.\nThe present-day school courtyard does not appear in the flashback.\nOlivia does not appear at the festival.\nOnly Ella is shown attending the festival.\nThe band consists of exactly three musicians: one guitarist, one bassist, and one drummer.\nThe drummer begins with exactly two drumsticks, one in each hand.\nOnly one drumstick slips from his hand.\nThe dropped drumstick falls a short distance onto a nearby drum surface.\nThe dropped drumstick remains there.\nThe drummer does not throw, catch, retrieve, or magically regain the dropped drumstick.\nHe continues playing with the single drumstick remaining in his other hand.\nThe drum kit remains stable.\nThe guitarist and bassist continue their performance without interruption.\nThe audience behaves naturally rather than moving in perfect synchronization.\nPERFORMANCE:\nNatural, friendly conversation between Olivia and Ella.\nOlivia sounds genuinely curious about the festival.\nElla speaks with warm enthusiasm and clearly enjoyed the event.\nThe flashback illustrates the musicians' talent and the enjoyable festival atmosphere.\nThe drummer's accident is a small, believable moment of physical comedy.\nHis reaction is brief and understated.\nThe musicians remain competent throughout the performance.\nElla's enjoyment is sincere and natural.\nAvoid exaggerated gestures, cartoon-like reactions, or unnecessary movements.\nOnly the current speaker moves her mouth during the present-day dialogue.\nAUDIO:\nOlivia speaks exclusively with <<<Audio1>>> .\nElla speaks exclusively with <<<Audio2>>> .\nOnly the two specified English dialogue lines are spoken.\nNo additional spoken dialogue.\nPRESENT DAY:\nSubtle school courtyard ambience, distant footsteps, and gentle autumn wind.\nFLASHBACK:\nEnergetic live instrumental music from the guitarist, bassist, and drummer.\nNatural outdoor festival ambience and restrained audience applause.\nNo intelligible singing, announcements, or audience dialogue.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
     id: "6_life_in_the_city_ava_chloe",
@@ -18108,29 +18201,34 @@ evidenceEnd: null,
   },
   
   {
-    id: "6_life_in_the_city_ava_chloe3",
-    correctOptionQuestions: [{"sentence":"Chloe : There was a drone show in the city ___!","target":"square","choices":["square","scare","street","park"],"bonus":{"target":"meydan","choices":["meydan","korku","sokak","park"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/6_life_in_the_city_ava_chloe3.mp4",
-    title: "Ava asks Chloe about the drone show.",
-    transcript: "Ava : /Why/ was everyone looking up? Chloe : There was a drone show in the city square!",
-    answerOptions: [
-      { id: "a", text: "Ava : Herkes nereye bakıyordu? Chloe : Havada uçan dronlara bakıyorlardı." },
-      { id: "b", text: "Ava : Herkes /neden/ yukarı bakıyordu? Chloe : Şehir meydanında bir drone gösterisi vardı!" }
-    ],
-    easyDistractor: "Ava : Herkes neden yukarı bakıyordu? Chloe : Gökyüzünde havai fişekler vardı.",
-    correctOptionId: "b",
-    explanation: "",
-    characterIds: ["ava", "chloe"],
-    grades: [6],
-    functions: ["use_of_wh_questions_why_when"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: null,
-    evidenceEnd: null,
-    evidenceSentence: "Ava : /Why/ was everyone looking up? Chloe : There was a drone show in the city square!",
-  },
+  id: "6_life_in_the_city_ava_chloe3",
+  correctOptionQuestions: [{"sentence":"Ava : Why was the city square so ___ yesterday?","target":"crowded","choices":["crowded","clouded","colored","covered"],"bonus":{"target":"kalabalık","choices":["kalabalık","bulutlu","renkli","kapalı"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/6_life_in_the_city_ava_chloe3.mp4",
+  title: "The Spectacular Drone Show",
+  transcript: "Ava : Why was the /city square/ so crowded yesterday? Chloe : There was a /drone show/ in the /city square/!",
+  answerOptions: [
+    { id: "a", text: "Ava : Dün /şehir meydanı/ neden o kadar kalabalıktı? Chloe : /Şehir meydanında/ bir /drone gösterisi/ vardı!" },
+    { id: "b", text: "Ava : Dün şehir stadyumu neden o kadar kalabalıktı? Chloe : Şehir stadyumunda bir havai fişek gösterisi vardı!" }
+  ],
+  easyDistractor: "Ava : Dün şehir merkezine gittin mi? Chloe : Evet, arkadaşlarımla alışveriş yaptım.",
+  correctOptionId: "a",
+  characterIds: ["ava", "chloe"],
+  grades: [6,7],
+  functions: ["askingforreason", "simple_past_tense_was_were", "use_of_there_is_there_are"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:05.151",
+
+  evidenceSentence: "Ava : Why was the /city square/ so crowded yesterday? Chloe : There was a /drone show/ in the /city square/!",
+  truefalsequestion: "There was a concert in the city square yesterday.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ava's canonical voice reference.\nUse <<<Image2>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Chloe's canonical voice reference.\nSCENE:\nA two-part sequence consisting of a present-day conversation followed by a spectacular visual flashback of yesterday's drone light show.\nPART ONE — PRESENT DAY:\nA pleasant, sunny autumn afternoon in a peaceful city park near the central square.\nAva and Chloe are sitting together on a wooden park bench.\nAutumn trees with golden and orange leaves surround the park. A few pedestrians walk naturally in the distant background.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nPART TWO — FLASHBACK:\nYesterday evening, after sunset.\nA large public city square filled with spectators watching a coordinated aerial drone light show.\nThe flashback is shown exclusively from a distant, elevated aerial viewpoint, as though filmed by a separate professional camera drone hovering high above the square.\nThe composition resembles a spectacular wide aerial photograph of a nighttime drone show.\nThe illuminated drone formations dominate the upper portion of the frame, while the city square, surrounding buildings, and the crowd remain visible far below.\nNo close-ups of individual spectators.\nNeither Ava nor Chloe appears in the flashback.\nCLOTHING:\nAva wears her existing upper clothing from <<<Image1>>>  and dark blue full-length jeans.\nChloe wears her existing upper clothing from <<<Image2>>>  and the exact lower clothing shown in <<<Image3>>>  \nPreserve the lower clothing's original design, color, shape, and length. It must reach Chloe's knees.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nTheir clothing remains unchanged throughout the present-day conversation.\nACCESSORIES\nChloe wears a butterfly-shaped necklace and simple earrings.\nAva wears a friendship bracelet and small leaf-shaped earrings.\nEVENT SEQUENCE:\nSTAGE 1 — PRESENT-DAY PRE-ACTION:\nAva and Chloe sit comfortably on the park bench.\nAva looks toward the nearby city square, remembering the unusually large crowd she noticed there yesterday.\nShe turns toward Chloe with a curious expression.\nSTAGE 2 — PRESENT-DAY DIALOGUE:\nAva (<<<Audio1>>> , naturally curious):\n\"Why was the city square so crowded yesterday?\"\nChloe (<<<Audio2>>> , enthusiastically):\n\"There was a drone show in the city square!\"\nOnly the current speaker moves her mouth.\nThe other student listens naturally without speaking.\nSTAGE 3 — FLASHBACK TRANSITION:\nImmediately after Chloe finishes speaking, transition directly to yesterday evening.\nThe bright autumn afternoon gives way to a dark evening sky illuminated by hundreds of synchronized drones.\nThe entire flashback remains a distant aerial view.\nSTAGE 4 — DRONE SHOW:\nA breathtaking nighttime panorama reveals the city square crowded with spectators.\nHundreds of small illuminated drones hover high above the square in a precise, coordinated formation.\nThe drones initially form a magnificent, enormous five-pointed star made of bright golden lights.\nThe star remains clearly recognizable for a moment.\nThe drones then gradually rearrange into a gigantic, colorful butterfly formation.\nThe butterfly is symmetrical, with vivid blue, purple, pink, and golden lights defining its wings and body.\nThe transformation is smooth, coordinated, and visually coherent.\nThe butterfly formation remains stable and clearly recognizable against the dark sky.\nThe illuminated butterfly performs one subtle, synchronized wing movement, creating the illusion of a living butterfly floating above the city.\nFar below, the crowd watches the extraordinary spectacle.\nThe square is alive with natural spectator movement, gentle applause, and excitement.\nSTAGE 5 — VISUAL PAYOFF:\nThe gigantic illuminated butterfly holds its final, fully expanded wing formation above the city square.\nThe wide aerial composition captures the complete butterfly, the enormous crowd below, and the surrounding illuminated buildings in one spectacular view.\nThe colorful drone lights glow brilliantly against the night sky.\nCUT IMMEDIATELY ON THE COMPLETE BUTTERFLY FORMATION.\nPHYSICAL AND VISUAL CONTINUITY:\nPRESENT-DAY CHARACTER SCALE:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nAva and Chloe retain their canonical appearances and referenced upper clothing.\nFLASHBACK:\nThe flashback takes place yesterday evening, not during the present-day conversation.\nNeither Ava nor Chloe appears anywhere in the flashback.\nNo identifiable individual spectators are shown.\nThe flashback uses exclusively a distant, high-altitude aerial perspective.\nThe city square and surrounding buildings remain geographically stable throughout the shot.\nAll illuminated formations are made entirely of separate, individually glowing drones.\nThe drones are small, distinct points of light, not solid glowing surfaces or projected holograms.\nThe star and butterfly are formations of the same coordinated drone swarm.\nAvoid random drone movements, chaotic formations, duplicated objects, or inconsistent drone scale.\nThe butterfly remains recognizable, symmetrical, and visually coherent.\nThe camera remains far enough away to capture the entire aerial formation and the city square below.\nPERFORMANCE:\nAva's question is natural and genuinely curious.\nChloe answers with excitement, recalling yesterday's spectacular event.\nThe conversation feels relaxed and spontaneous.\nThe flashback provides a visually impressive explanation for the unusually large crowd.\nThe drone show itself is the emotional and visual payoff.\nNo additional character reactions or dialogue are needed after the flashback begins.\nAUDIO:\nAva speaks exclusively with <<<Audio1>>> .\nChloe speaks exclusively with <<<Audio2>>> .\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue, narration, or announcements.\nPRESENT DAY:\nSoft city park ambience, distant pedestrians, and gentle autumn wind.\nFLASHBACK:\nSubtle cinematic instrumental music accompanying the drone light show.\nNatural distant crowd ambience and applause.\nNo intelligible background speech.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT. <<<Image3>>>"
+},
   {
     id: "6_life_in_the_city_ella_olivia2",
     correctOptionQuestions: [{"sentence":"Ella : Do you like watching scary ___?","target":"movies","choices":["movies","moving","songs","books"],"bonus":{"target":"filmler","choices":["filmler","kitaplar","şarkılar","dersler"]}}],
@@ -18156,29 +18254,34 @@ evidenceEnd: "0:05.659",
     evidenceSentence: "Ella : Do you like watching scary movies? Olivia : I /love/ watching them, But I /hate/ watching them at night!",
   },
     {
-    id: "6_life_in_the_city_emma_hannah4",
-    correctOptionQuestions: [{"sentence":"Hannah : I was at a ___ with my family until late.","target":"concert","choices":["concert","convert","lesson","meeting"],"bonus":{"target":"konser","choices":["konser","ders","toplantı","sınav"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/6_life_in_the_city_emma_hannah4.mp4",
-    title: "Emma asks Hannah why she is tired.",
-    transcript: "Emma : Hannah, why are you so tired? Hannah : I /was/ at a concert with my family until late.",
-    answerOptions: [
-      { id: "a", text: "Emma : Hannah, Neden çok yorgunsun? Hannah : Ailemle gece geç saate kadar /konserdeydim/." },
-      { id: "b", text: "Emma : Hannah, Neden çok yorgunsun? Hannah : Ailemle sinemaya gittim, Gece geç saate döndük." }
-    ],
-    easyDistractor: "Emma : Hannah, Neden çok yorgunsun? Hannah : Ailemle konsere gittim, Ama erken döndüm.",
-    correctOptionId: "a",
-    explanation: "",
-    characterIds: ["emma", "hannah"],
-    grades: [6],
-    functions: ["simple_past_tense_was_were"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: "0:02.937",
-evidenceEnd: null,
-    evidenceSentence: "Emma : Hannah, why are you so tired? Hannah : I /was/ at a concert with my family until late.",
-  },
+  id: "6_life_in_the_city_emma_hannah4",
+  correctOptionQuestions: [{"sentence":"Hannah : I was at a ___ with my family until late.","target":"concert","choices":["concert","contest","contact","concept"],"bonus":{"target":"geç","choices":["geç","erken","gece","latte"],"word":"late"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/6_life_in_the_city_emma_hannah4.mp4",
+  title: "The Morning After the Concert",
+  transcript: "Emma : Hannah, why are you so tired? Hannah : I was at a /concert with my family/ until late.",
+  answerOptions: [
+    { id: "b", text: "Emma : Hannah, neden bu kadar yorgunsun? Hannah : Geç saatlere kadar /ailemle bir konserdeydim/." },
+    { id: "a", text: "Emma : Hannah, neden bu kadar yorgunsun? Hannah : Geç saatlere kadar kitap okudum." }
+  ],
+  easyDistractor: "Emma : Hannah, hafta sonu ne yapacaksın? Hannah : Ailemle sinemaya gideceğim.",
+  correctOptionId: "b",
+  characterIds: ["emma", "hannah"],
+  grades: [6,7,8],
+  functions: ["askingforreason", "simple_past_tense_was_were", "expressing_feelings"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:04.652",
+
+  evidenceSentence: "Emma : Hannah, why are you so tired? Hannah : I was at a /concert with my family/ until late.",
+  truefalsequestion: "Hannah looks sleepy.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Emma's canonical voice reference.\nUse <<<Image2>>> as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Hannah's canonical voice reference.\nSCENE:\nA middle-school corridor on a pleasant, sunny autumn morning.\nSoft morning sunlight enters through the large corridor windows. Trees with yellow and orange autumn leaves are visible outside under a clear sky.\nThe corridor contains rows of school lockers, classroom doors, noticeboards, and a wooden bench near the windows.\nEmma and Hannah sit side by side on the bench.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nHannah looks visibly exhausted after attending a concert with her family the previous night.\nA simple, colorful concert admission wristband is visible on Hannah's wrist.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nHannah wears her existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nHannah sits on the bench with an open school textbook resting on her lap.\nShe tries to concentrate on the pages, but her eyelids look heavy and she struggles to stay alert.\nEmma sits beside her, holding her own school notebook.\nEmma notices Hannah's unusually tired appearance and turns toward her with genuine concern.\nSTAGE 2 — DIALOGUE:\nEmma (<<<Audio1>>>, sounding concerned):\n\"Hannah, why are you so tired?\"\nHannah (<<<Audio2>>>, speaking with a tired, slightly sleepy voice):\n\"I was at a concert with my family until late.\"\nOnly the current speaker moves her mouth.\nThe other character listens naturally with her mouth closed.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after finishing her sentence, Hannah lets out a long, sleepy yawn, politely covering her mouth with one hand.\nShe lowers her hand and tries to focus on the open textbook again.\nHer eyelids gradually become heavier.\nShe briefly closes her eyes.\nHer head slowly droops forward as she begins falling asleep while sitting upright.\nEmma notices Hannah nodding off and watches her with surprised curiosity.\nSuddenly, Hannah gives a small involuntary start and quickly lifts her head, waking herself up.\nShe blinks several times and tries to sit upright as though nothing happened.\nEmma looks at Hannah with a gently amused smile.\nHannah remains visibly sleepy but tries to appear alert.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nNeither student appears noticeably taller, shorter, larger, or smaller than the other.\nEmma and Hannah remain seated beside each other on the same bench throughout the scene.\nHannah's textbook remains open on her lap.\nThe textbook does not fall, close, or change position unexpectedly.\nEmma keeps her notebook with her throughout the scene.\nHannah's concert wristband remains on the same wrist.\nHannah's head droops forward gently rather than collapsing sideways.\nShe wakes herself with a small natural start, without falling off the bench or striking anything.\nEmma does not touch or shake Hannah.\nThe corridor layout and sunny autumn scenery remain consistent.\nPERFORMANCE:\nNatural interaction between two close friends.\nEmma's concern is sincere and understated.\nHannah's tired voice and heavy eyelids communicate genuine sleepiness.\nHer yawn is natural and appropriately restrained.\nThe gradual head droop and sudden small awakening are physically believable.\nEmma's final smile is affectionate and mildly amused, never mocking.\nAvoid exaggerated cartoon-like sleep movements.\nOnly the current speaker moves her mouth.\nAUDIO:\nEmma speaks exclusively with <<<Audio1>>>.\nHannah speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nSubtle school corridor ambience, distant footsteps, and a natural sleepy yawn.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
   {
     id: "6_life_in_the_city_benjamin_noah",
     correctOptionQuestions: [{"sentence":"Noah : Where was your ___?","target":"backpack","choices":["backpack","backtrack","suitcase","handbag"],"bonus":{"target":"sırt çantası","choices":["sırt çantası","bavul","el çantası","sepet"]}}],
@@ -18205,29 +18308,34 @@ evidenceEnd: null,
   },
 
   {
-    id: "6_life_in_the_city_jack_benjamin",
-    correctOptionQuestions: [{"sentence":"Jack : Why were you wearing ___?","target":"earplugs","choices":["earplugs","earphones","headphones","earrings"],"bonus":{"target":"kulak tıkaçları","choices":["kulak tıkaçları","kulak içi kulaklık","baş üstü kulaklık","işitme cihazı"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/6_life_in_the_city_jack_benjamin.mp4",
-    title: "Jack asks Benjamin about his earplugs.",
-    transcript: "Jack : Why /were/ you wearing earplugs? Benjamin : The rock concert /was/ really loud!",
-    answerOptions: [
-      { id: "a", text: "Jack : Neden kulak tıkacı takıyordun? Benjamin : Konser çok sessizdi." },
-      { id: "b", text: "Jack : Neden kulak tıkacı takıyordun? Benjamin : Rock konseri gerçekten çok sesliydi!" }
-    ],
-    easyDistractor: "Jack : Neden kulak tıkacı takıyordun? Benjamin : Çünkü uyumak istiyordum.",
-    correctOptionId: "b",
-    explanation: "",
-    characterIds: ["benjamin", "jack"],
-    grades: [6],
-    functions: ["use_of_wh_questions_why_when"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: null,
-    evidenceEnd: null,
-    evidenceSentence: "Jack : Why /were/ you wearing earplugs? Benjamin : The rock concert /was/ really loud!",
-  },
+  id: "6_life_in_the_city_jack_benjamin",
+  correctOptionQuestions: [{"sentence":"Jack : Why were you wearing ___?","target":"earplugs","choices":["earplugs","earphones","earrings","earbuds"],"bonus":{"target":"kulaklık","choices":["kulaklık","gözlük","küpeler","kafa üstü kulaklık"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/6_life_in_the_city_jack_benjamin.mp4",
+  title: "The Loud Concert",
+  transcript: "Jack : Why were you wearing earplugs? Benjamin : The rock concert was really /loud/.",
+  answerOptions: [
+    { id: "b", text: "Jack : Neden kulak tıkacı takıyordun? Benjamin : Rock konseri gerçekten çok /gürültülüydü/." },
+    { id: "a", text: "Jack : Neden kulak tıkacı takıyordun? Benjamin : Rock konseri gerçekten çok kalabalıktı." }
+  ],
+  easyDistractor: "Jack : Rock konserinde en sevdiğin şarkı hangisiydi? Benjamin : Son şarkıyı çok beğendim, harikaydı.",
+  correctOptionId: "b",
+  characterIds: ["jack", "benjamin"],
+  grades: [6,7],
+  functions: ["askingforreason", "simple_past_tense_was_were", "present_progressive"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:03.151",
+  evidenceEnd: "0:06.902",
+
+  evidenceSentence: "Jack : Why were you wearing earplugs? Benjamin : The rock concert was really /loud/.",
+  truefalsequestion: "Benjamin went to a rock concert.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Jack's canonical voice reference.\nUse <<<Image2>>> as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Benjamin's canonical voice reference.\nSCENE:\nA cool, clear autumn evening in a pedestrian area near a small outdoor concert venue.\nThe rock concert has recently ended.\nWarm streetlights illuminate the pavement, and a few pedestrians walk naturally in the distant background.\nBenjamin stands beside a low stone wall, away from the concert entrance.\nJack approaches Benjamin from farther down the pedestrian walkway.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nCLOTHING:\nJack wears his existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nBenjamin wears his existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nBenjamin stands beside the low stone wall with a pair of small, discreet earplugs in his ears.\nHe carefully removes both earplugs and holds them in one hand.\nAt that moment, Jack approaches from a short distance away.\nJack has clearly noticed Benjamin removing the earplugs.\nJack stops beside Benjamin and looks at him curiously.\nSTAGE 2 — DIALOGUE:\nJack (<<<Audio1>>>, speaking at a normal conversational volume):\n\"Why were you wearing earplugs?\"\nBenjamin (<<<Audio2>>>, unintentionally speaking MUCH TOO LOUDLY):\n\"The rock concert was really loud.\"\nBenjamin delivers his entire sentence at an exaggeratedly high speaking volume, without realizing how loudly he is talking.\nHis voice is noticeably louder than Jack's.\nHe is not angry, excited, or deliberately shouting at Jack.\nHe simply fails to regulate his speaking volume after the loud concert.\nSTAGE 3 — REACTION AND PAYOFF:\nAs Benjamin speaks much too loudly, Jack instinctively flinches and leans his upper body slightly backward.\nJack's reaction is immediate but physically natural, as though Benjamin's unexpected volume has startled him.\nBenjamin notices Jack's startled reaction.\nHe suddenly realizes that he has been speaking far too loudly.\nBenjamin pauses, looks slightly embarrassed, and gives Jack a small, sheepish smile.\nJack looks back at Benjamin with a surprised, mildly amused expression.\nCUT IMMEDIATELY ON BENJAMIN'S EMBARRASSED SMILE.\nPHYSICAL AND VISUAL CONTINUITY:\nBoth students remain approximately the same height, with consistent body proportions and matching overall body scale.\nBenjamin begins with exactly two earplugs, one in each ear.\nHe removes both earplugs before Jack asks his question.\nBenjamin keeps the removed earplugs in one hand throughout the conversation.\nHe does not put them back into his ears.\nJack approaches from a distance and is not standing beside Benjamin at the beginning of the scene.\nJack did not attend the concert.\nThere is no flashback, concert performance, or scene transition.\nThe entire sequence takes place in the same pedestrian area after the concert.\nPERFORMANCE:\nNatural, believable student behavior.\nJack is genuinely curious about Benjamin's earplugs.\nJack speaks in a relaxed, normal voice.\nBenjamin's unusually loud reply is the central comedic element.\nThe contrast between their speaking volumes must be immediately obvious.\nBenjamin does not intentionally shout or exaggerate his facial expression.\nJack's startled reaction is brief, instinctive, and believable.\nBenjamin's embarrassed smile is subtle and genuine.\nAvoid forced laughter, cartoon-like movements, or exaggerated physical comedy.\nAUDIO:\nJack speaks exclusively with <<<Audio1>>>.\nBenjamin speaks exclusively with <<<Audio2>>>.\nPreserve the recognizable vocal identity of both characters.\nBenjamin's dialogue must be substantially louder than Jack's while retaining his natural voice.\nOnly the current speaker moves his mouth.\nNo additional dialogue, narration, or intelligible background speech.\nSubtle evening city ambience and distant pedestrian sounds.\nThe rock concert has already ended, so there is no loud concert music during the conversation.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
   {
     id: "5_fun_jack",
     correctOptionQuestions: [{"sentence":"Jack : I am so bad at playing ___.","target":"football","choices":["football","footfall","basketball","volleyball"],"bonus":{"target":"futbol","choices":["futbol","ayak sesi","basketbol","voleybol"]}}],
@@ -18615,32 +18723,34 @@ evidenceEnd: "0:02.161",
     prompt: "Use <<<Image1>>> as Hannah's canonical identity and appearance reference. Use <<<Image2>>> as Storm's canonical appearance reference. Use <<<Audio1>>> as Hannah's canonical voice. CLOTHING AND ACCESSORIES: Hannah: light blue short-sleeved T-shirt, dark blue full-length riding trousers, brown riding boots, properly fitted black riding helmet. SCENE: Daytime on a quiet woodland riding trail. Hannah is riding Storm at a calm walking pace along the trail. Ahead of them, a small wooden bridge crosses a narrow stream. Near the bridge, the trail provides a clear opportunity to turn left instead of continuing straight across the bridge. Keep the environment natural and visually simple. A light natural breeze gently moves Hannah's long blonde hair where visible below the riding helmet, her clothing, Storm's mane and tail, and nearby leaves and grass. ACTION AND DIALOGUE: Hannah and Storm calmly approach the wooden bridge. While riding, Hannah looks ahead toward the bridge and naturally tells Storm: 'Turn left when you see the bridge.' Storm continues walking toward the bridge. When they reach the point where Storm could turn left, Storm completely ignores Hannah's instruction. Instead of turning left, Storm calmly and confidently continues straight ahead onto the wooden bridge. The movement should be simple and unmistakable: Storm does not turn left. Storm continues straight across the bridge. Hannah realizes that Storm has ignored her. She looks down toward Storm with a familiar, mildly unimpressed expression and says: 'Of course. Never listen to me.' AFTER THE DIALOGUE: Storm shows absolutely no concern and continues calmly walking across the bridge as if this was always the plan. Hannah gives Storm a small resigned look, then allows herself a subtle amused smile. The humor should come from Storm's calm stubbornness and Hannah clearly being familiar with it. Hannah is never angry or rough with Storm. Do not add any additional dialogue. Keep the riding calm, controlled, and safe. Avoid complicated horse movements or sudden changes of speed. Visual style: Expressive character animation, soft stylized realism, believable teenage anatomy, Stable identities., cinematic lighting, Natural eye contact and reaction timing, sophisticated materials and hair rendering, slightly exaggerated facial expressions, strong visual storytelling, High temporal consistency.",
   },
   {
-    id: "fun_hannah_emma2",
-    correctOptionQuestions: [{"sentence":"Emma : You said that ten ___ ago.","target":"minutes","choices":["minutes","minuets","hours","seconds"],"bonus":{"target":"dakikalar","choices":["dakikalar","menuetler","saatler","saniyeler"]}}],
-    status: "published",
-    rating: 5,
-    videoSrc: "assets/video/fun_hannah_emma2.mp4",
-    title: "Hannah says they are ten minutes closer.",
-    transcript: "Hannah : We're almost there. Emma : You /said/ that /ten minutes ago/. Hannah : And we're ten minutes closer.",
-    answerOptions: [
-      { id: "a", text: "Hannah : Neredeyse vardık. Emma : Bunu on dakikadır söylüyorsun. Hannah : Ve on dakika daha yürüyeceğiz." },
-      { id: "b", text: "Hannah : Neredeyse vardık. Emma : Bunu /on dakika önce söyledin/. Hannah : Ve on dakika daha yakınız." }
-    ],
-    easyDistractor: "Hannah : Neredeyse vardık. Emma : Bunu az önce söyledin. Hannah : Beş dakika daha yakınız.",
-    correctOptionId: "b",
-    explanation: "",
-    characterIds: ["hannah", "emma"],
-    grades: [5],
-    functions: ["simple_past_tense"],
-    theme: "fun",
-    unit: "",
+  id: "fun_hannah_emma2",
+  correctOptionQuestions: [{"sentence":"Emma : You said that ___ .","target":"ten minutes ago","choices":["ten minutes ago","five minutes ago","ten seconds ago","five seconds ago"],"bonus":{"target":"daha yakın","choices":["daha yakın","kapalı","kıyafetler","kapanış"],"word":"closer"}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/fun_hannah_emma2.mp4",
+  title: "Ten Minutes Closer",
+  transcript: "Hannah : We're almost there. Emma : You said that /ten minutes ago/. Hannah : And we're /ten minutes closer/.",
+  answerOptions: [
+    { id: "b", text: "Hannah : Neredeyse vardık. Emma : Bunu on dakika önce de /söyledin/. Hannah : Ve şimdi on dakika /daha yakınız/." },
+    { id: "a", text: "Hannah : Neredeyse vardık. Emma : Bunu on dakikadır söylüyorsun. Hannah : Ve on dakika daha yürüyeceğiz." }
+  ],
+  easyDistractor: "Hannah : Biraz dinlenmek ister misin? Emma : Evet, çok yoruldum. Hannah : Şu ağacın altında mola verebiliriz.",
+  correctOptionId: "b",
+  characterIds: ["hannah", "emma"],
+  grades: [6,7],
+  functions: ["fun", "comparatives_of_adjectives", "simple_past_tense", "expressingtime"],
+  theme: "fun",
+  unit: "",
 
-evidenceStart: "0:01.589",
-evidenceEnd: "0:05.224",
-    evidenceSentence: "Hannah : We're almost there. Emma : You /said/ that /ten minutes ago/. Hannah : And we're ten minutes closer.",
+  evidenceStart: "0:01.651",
+  evidenceEnd: "0:08.150",
 
-    prompt: "",
-  },
+  evidenceSentence: "Hannah : We're almost there. Emma : You said that /ten minutes ago/. Hannah : And we're /ten minutes closer/.",
+  truefalsequestion: "They started hiking ten minutes ago.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Hannah's canonical voice reference.\nUse <<<Image2>>> as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Emma's canonical voice reference.\nSCENE:\nA pleasant, cool, sunny autumn afternoon on a peaceful woodland hiking trail.\nGolden, orange, and reddish autumn leaves cover the surrounding trees.\nA narrow but well-maintained dirt pathway winds gently through the forest, continuing toward a distant wooded hill.\nHannah and Emma are hiking together along the trail.\nHannah walks slightly ahead, while Emma follows a few steps behind.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nThe weather is clear and dry, with soft sunlight filtering through the trees.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>> , the exact lower clothing shown in <<<Image3>>> and a small lightweight hiking backpack. \nPreserve the lower clothing's original design, color, shape, and length. It must reach below Hannah's knees. \nEmma wears her existing upper clothing from <<<Image2>>> , dark blue full-length outdoor trousers, and a small lightweight hiking backpack.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nBoth students wear comfortable hiking shoes appropriate for the woodland trail.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nHannah and Emma have clearly been walking for some time.\nHannah walks confidently along the forest pathway, maintaining a steady, energetic pace.\nEmma follows a few steps behind, looking increasingly tired of the long walk.\nEmma adjusts one shoulder strap of her backpack while continuing forward.\nHannah glances back toward Emma, completely optimistic about their progress.\nSTAGE 2 — DIALOGUE:\nHannah (<<<Audio1>>> , cheerful and confidently reassuring):\n\"We're almost there.\"\nEmma (<<<Audio2>>> , slightly breathless and visibly frustrated):\n\"You said that ten minutes ago.\"\nHannah (<<<Audio1>>> , completely serious and calmly optimistic):\n\"And we're ten minutes closer.\"\nHannah delivers her final line as though she has made an entirely reasonable and helpful observation.\nShe does not sound sarcastic or deliberately funny.\nOnly the current speaker moves her mouth.\nThe other character listens naturally without speaking.\nSTAGE 3 — REACTION AND PAYOFF:\nAfter delivering her final line, Hannah turns forward and casually continues walking along the trail.\nEmma slows down and comes to a stop.\nShe looks ahead at the winding pathway.\nThe trail stretches farther into the forest and curves around a distant wooded hill.\nThere is still no visible destination, building, campsite, or endpoint anywhere ahead.\nEmma slowly turns her head toward Hannah.\nShe narrows her eyes slightly, giving Hannah a silent, deeply unimpressed look.\nHannah continues walking confidently, completely unaware of Emma's expression.\nEmma remains standing on the trail for a brief moment, staring after Hannah in disbelief.\nCUT IMMEDIATELY ON EMMA'S UNIMPRESSED EXPRESSION.\nPHYSICAL AND VISUAL CONTINUITY:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nPreserve Hannah's and Emma's canonical facial identities, hairstyles, and natural body proportions.\nHannah begins slightly ahead of Emma and maintains that position throughout the scene.\nEmma remains behind Hannah.\nBoth students stay on the same continuous woodland pathway.\nHannah briefly turns toward Emma for the conversation, then faces forward again before continuing her walk.\nEmma stops only after the dialogue has finished.\nHannah continues walking away along the existing trail.\nThe distant wooded hill and winding pathway remain geographically consistent.\nNo destination becomes visible during the scene.\nBoth backpacks remain securely on their respective characters.\nNo sudden changes in clothing, accessories, character positions, or environmental layout.\nPERFORMANCE:\nNatural, believable student behavior.\nHannah is genuinely optimistic, energetic, and completely confident that they are making progress.\nHer final line is delivered with absolute sincerity and understated dry humor.\nEmma is physically tired and increasingly impatient, but not dramatically exhausted.\nEmma's frustration is expressed through her voice, posture, and final silent reaction.\nThe comedy comes from the contrast between Hannah's cheerful logic and Emma's growing disbelief.\nAvoid exaggerated gestures, forced laughter, cartoon-like reactions, or unnecessary movements.\nThe final payoff is Emma's silent, unimpressed expression while Hannah continues walking confidently.\nAUDIO:\nHannah speaks exclusively with <<<Audio1>>> .\nEmma speaks exclusively with <<<Audio2>>> .\nUse exactly these three English dialogue lines:\nHannah: \"We're almost there.\"\nEmma: \"You said that ten minutes ago.\"\nHannah: \"And we're ten minutes closer.\"\nNo additional dialogue, narration, or intelligible background speech.\nOnly the current speaker moves her mouth.\nNatural woodland ambience, gentle autumn wind, occasional distant birds, and soft footsteps on the dirt pathway.\nNo music or exaggerated comedic sound effects.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
   {
     id: "fun_hannah_emma4",
     correctOptionQuestions: [{"sentence":"Emma : I need a ___.","target":"break","choices":["break","brake","rest","stop"],"bonus":{"target":"mola","choices":["mola","fren","iş","ders"]}}],
@@ -22002,29 +22112,34 @@ evidenceEnd: null,
   },
 
   {
-    id: "6_life_in_the_city_benjamin_jack",
-    correctOptionQuestions: [{"sentence":"Jack : Was it crowded at the basketball ___ yesterday?","target":"match","choices":["match","much","race","game"],"bonus":{"target":"maç","choices":["maç","yarış","oyun","ders"]}}],
-    status: "published",
-    rating: 6,
-    videoSrc: "assets/video/6_life_in_the_city_benjamin_jack.mp4",
-    title: "Jack asks Benjamin about yesterday's basketball match.",
-    transcript: "Jack : Was it /crowded/ at the basketball match yesterday? Benjamin : Yes, The audience was really /excited/.",
-    answerOptions: [
-      { id: "a", text: "Jack : Dün basketbol maçı kalabalık /mıydı/? Benjamin : Evet, Seyirciler gerçekten heyecanlı/ydı/." },
-      { id: "b", text: "Jack : Dün basketbol maçı sakin miydi? Benjamin : Hayır, seyirciler oldukça kalabalıktı." }
-    ],
-    easyDistractor: "Jack : Dün basketbol maçı kalabalık mıydı? Benjamin : Evet, Seyirciler sakindi.",
-    correctOptionId: "a",
-    explanation: "",
-    characterIds: ["benjamin", "jack"],
-    grades: [6],
-    functions: ["simple_past_tense_was_were"],
-    theme: "life_in_the_city",
-    unit: "life_in_the_city",
-    evidenceStart: "0:00.000",
-evidenceEnd: "0:06.072",
-    evidenceSentence: "Jack : Was it /crowded/ at the basketball match yesterday? Benjamin : Yes, The audience was really /excited/.",
-  },
+  id: "6_life_in_the_city_benjamin_jack",
+  correctOptionQuestions: [{"sentence":"Benjamin : Yes, the ___ was really excited.","target":"audience","choices":["audience","ambulance","adventure","attendance"],"bonus":{"target":"seyirci topluluğu","choices":["seyirci topluluğu","ambulans","macera","katılım"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/6_life_in_the_city_benjamin_jack.mp4",
+  title: "The Basketball Match",
+  transcript: "Jack : Was it /crowded/ at the basketball match yesterday? Benjamin : Yes, the audience was really /excited/.",
+  answerOptions: [
+    { id: "b", text: "Jack : Dün basketbol maçı /kalabalık/ mıydı? Benjamin : Evet, seyirciler gerçekten çok /heyecanlıydı/." },
+    { id: "a", text: "Jack : Dün basketbol maçı güzel miydi? Benjamin : Evet, oyuncular gerçekten çok yetenekliydi." }
+  ],
+  easyDistractor: "Jack : Dün basketbol maçını kim kazandı? Benjamin : Bizim okul takımı kazandı, harika bir maçtı.",
+  correctOptionId: "b",
+  characterIds: ["jack", "benjamin"],
+  grades: [6,7],
+  functions: ["simple_past_tense_was_were", "asking_about", "expressing_feelings"],
+  theme: "life_in_the_city",
+  unit: "",
+
+  evidenceStart: "0:00.900",
+  evidenceEnd: "0:06.901",
+
+  evidenceSentence: "Jack : Was it /crowded/ at the basketball match yesterday? Benjamin : Yes, the audience was really /excited/.",
+  truefalsequestion: "Benjamin was at a basketball match yesterday.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Jack's canonical voice reference.\nUse <<<Image2>>> as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Benjamin's canonical voice reference.\nSCENE:\nA school basketball court on a pleasant, sunny autumn afternoon.\nThe outdoor court has a clearly visible basketball hoop, painted court markings, and a school building in the background.\nGolden autumn leaves cover some of the surrounding trees.\nJack and Benjamin are playing basketball together.\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nThey are positioned within a comfortable passing distance of each other, with Benjamin closer to the basketball hoop.\nCLOTHING:\nJack wears his existing upper clothing from <<<Image1>>> and comfortable dark blue athletic shorts reaching just below the knees.\nBenjamin wears his existing upper clothing from <<<Image2>>> and comfortable dark blue athletic shorts reaching just below the knees.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nBoth boys wear appropriate athletic shoes.\nEVENT SEQUENCE:\nSTAGE 1 — PRE-ACTION:\nJack holds a basketball with both hands while standing on the court.\nBenjamin stands a short distance away, facing Jack and ready to receive a pass.\nBoth boys appear relaxed and engaged in their basketball practice.\nSTAGE 2 — DIALOGUE AND PASS:\nJack (<<<Audio1>>>, speaking naturally):\n\"Was it crowded at the basketball match yesterday?\"\nImmediately after finishing his question, Jack makes a controlled chest pass directly toward Benjamin.\nThe basketball travels naturally through the air.\nBenjamin catches the ball securely with both hands at chest height.\nBenjamin (<<<Audio2>>>, speaking enthusiastically):\n\"Yes, the audience was really excited.\"\nBenjamin holds the basketball securely while delivering his entire sentence.\nOnly the current speaker moves his mouth.\nThe other character listens naturally with his mouth closed.\nSTAGE 3 — BASKET AND REACTION:\nImmediately after finishing his sentence, Benjamin turns his attention toward the basketball hoop.\nHe raises the basketball with both hands and performs a natural basketball shot.\nThe ball travels in a smooth, believable arc toward the hoop.\nThe basketball enters the hoop cleanly from above and passes completely through the net.\nThe net moves naturally as the ball passes through.\nJack watches the successful shot.\nHe smiles approvingly and gives Benjamin two or three gentle, understated claps.\nBenjamin looks pleased with his successful basket.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nBoth students are approximately the same height, with consistent age-appropriate body proportions and matching overall body scale.\nNeither student appears noticeably taller, shorter, larger, or smaller than the other.\nJack and Benjamin retain their canonical facial identities, hairstyles, and natural body proportions.\nThere is exactly ONE basketball throughout the scene.\nThe basketball begins in Jack's hands.\nJack passes the ball directly to Benjamin.\nBenjamin catches the same ball with both hands.\nBenjamin holds the ball throughout his spoken response.\nBenjamin shoots only after finishing his dialogue.\nThe ball follows one continuous, physically believable trajectory from Benjamin's hands to the hoop.\nThe basketball passes through the hoop and net to score.\nJack does not touch the ball again after passing it.\nJack claps only after the basket is scored.\nThe hoop, court markings, and background remain spatially consistent.\nPERFORMANCE:\nNatural, friendly interaction between two boys practicing basketball.\nJack asks his question casually while holding the ball.\nBenjamin answers with genuine enthusiasm about yesterday's match.\nThe chest pass, catch, and shot are smooth and physically realistic.\nJack's applause is brief, gentle, and restrained.\nNo exaggerated celebrations or unnecessary gestures.\nOnly the current speaker moves his mouth.\nAUDIO:\nJack speaks exclusively with <<<Audio1>>>.\nBenjamin speaks exclusively with <<<Audio2>>>.\nOnly the two specified English dialogue lines are spoken.\nNo additional dialogue.\nNatural outdoor basketball court ambience, realistic basketball movement sounds, the ball passing through the net, and gentle handclaps.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT."
+},
 
   {
   id: "6_life_in_the_city_emma_hannah2",
@@ -22752,6 +22867,151 @@ evidenceEnd: "0:04.736",
   prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ella's voice reference.\nUse <<<Image2>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Olivia's voice reference.\nUse <<<Image3>>> as the EXACT visual reference for Ella's finished canvas painting.\nSCENE:\nThe Honest Opinion.\nA short, humorous interaction between two teenage friends, Ella and Olivia.\nElla proudly shows Olivia a painting she has just finished.\nThe colors and background are beautiful, but the animal in the painting has such strange proportions that Olivia cannot immediately recognize it as a cat.\nSEASON, WEATHER, AND TIME:\nMidwinter, late afternoon.\nA cold, overcast winter day.\nSnow falls gently outside.\nSnow covers the neighboring rooftops, garden fences, trees, and residential streets.\nSETTING:\nA cozy home art corner in a comfortable living room.\nA wooden painting easel stands beside a small table holding paintbrushes, a painter's palette, and a folded cleaning cloth.\nA large window reveals a snowy residential neighborhood.\nWarm indoor lighting contrasts naturally with the cold gray-blue winter scenery outside.\nA sofa, a bookshelf, a floor lamp, and a few indoor plants complete the room.\nThere are absolutely NO Christmas decorations or holiday ornaments.\nCANVAS PAINTING — CRITICAL VISUAL REFERENCE:\nThe finished painting on the easel must match <<<Image3>>>.\nIt is a colorful, textured, amateur acrylic painting.\nThe background contains a beautiful blue and lavender sky, soft clouds, and a colorful meadow filled with flowers.\nThe animal has an enormous, round, orange, potato-shaped body.\nIts head is unusually tiny compared with its body.\nIt has two pointed triangular ears, small mismatched eyes, a few long whiskers, four thin stick-like legs, and a thin curled tail.\nThe animal's anatomy is awkward, disproportionate, and unintentionally funny.\nThe painting's colors are attractive, but the animal itself is difficult to recognize immediately.\nPRESERVE THE EXACT PAINTING FROM <<<Image3>>>.\nDo not replace the animal with a realistic cat.\nDo not correct its anatomy.\nDo not enlarge its head or give it natural feline proportions.\nDo not redraw, redesign, or improve the painting.\nThe canvas painting remains completely unchanged throughout the video.\nThe painting is FINISHED before the scene begins.\nNo one paints or adds anything to the canvas during the scene.\nCLOTHING:\nElla wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nOlivia wears her existing upper clothing from <<<Image2>>> and charcoal gray full-length trousers.\nCHARACTER ARRANGEMENT:\nElla stands beside the wooden easel, proudly presenting her finished painting.\nOlivia stands next to her, looking at the canvas.\nBoth characters are approximately the same height, with natural body proportions.\nThe canvas faces Olivia and is clearly visible.\nElla and Olivia can look naturally between each other and the painting.\nPRE-ACTION:\nElla has just finished her painting.\nShe steps slightly aside to let Olivia examine it.\nElla looks pleased with her work.\nOlivia studies the colorful canvas with genuine interest.\nDIALOGUE AND PERFORMANCE:\nElla (<<<Audio1>>>):\n\"Olivia, what do you think of my painting?\"\nElla asks eagerly, smiling with quiet pride.\nShe looks at Olivia, waiting for her opinion.\nOlivia (<<<Audio2>>>):\n\"Well... the colors are really beautiful.\"\nOlivia hesitates slightly on \"Well...\"\nShe looks at the colorful background and flowers.\nHer compliment is sincere, but she is carefully avoiding commenting on the strange animal.\nElla (<<<Audio1>>>):\n\"And what about the cat?\"\nElla asks naturally, still proud of her painting.\nShe makes one small gesture toward the orange animal on the canvas.\nOlivia (<<<Audio2>>>):\n\"Wait, is that a cat?\"\nOlivia reacts with genuine surprise.\nShe looks directly at the strangely proportioned animal.\nHer delivery is spontaneous and slightly incredulous, not cruel or mocking.\nREACTION / PAYOFF:\nAfter Olivia's final line, Ella's proud smile slowly disappears.\nElla looks at Olivia for a brief moment.\nThen Ella turns toward her own painting and studies the animal again.\nFor the first time, she seems to notice how strange its proportions are.\nHer expression changes to quiet, slightly embarrassed realization.\nOlivia continues looking at the painting.\nNeither character laughs.\nNeither character speaks again.\nNo additional gestures or dialogue.\nCUT on Ella's realization as she examines her painting.\nCRITICAL PROP CONTINUITY:\nThere is exactly ONE canvas painting.\nThe painting remains mounted on the wooden easel throughout the entire video.\nElla does NOT pick up, turn, move, or rotate the canvas.\nThe easel remains stationary.\nThe animal in the painting must remain identical to <<<Image3>>>.\nDo not animate the painted animal.\nDo not change the painting between dialogue lines.\nNo new brushstrokes appear.\nNeither character holds a paintbrush.\nCHARACTER PERFORMANCE:\nElla is enthusiastic, creative, and genuinely proud of her painting.\nOlivia is friendly and sincere.\nOlivia does not intentionally insult Ella.\nThe humor comes from Olivia's unexpected realization that the strange animal is supposed to be a cat.\nExpressions remain natural and restrained.\nNo exaggerated laughter.\nNo theatrical gestures.\nNo unnecessary physical contact.\nAUDIO:\nElla speaks only with <<<Audio1>>>.\nOlivia speaks only with <<<Audio2>>>.\nPreserve the exact dialogue wording and order:\n1. Ella: \"Olivia, what do you think of my painting?\"\n2. Olivia: \"Well... the colors are really beautiful.\"\n3. Ella: \"And what about the cat?\"\n4. Olivia: \"Wait, is that a cat?\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background music.\nOnly subtle indoor ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nOlivia has just realized the strange animal is supposed to be a cat.\nElla's proud smile disappears.\nElla looks back at her own painting, examining the bizarre orange animal.\nCUT."
 },
   {
+  id: "winter_times_ella_olivia3",
+  correctOptionQuestions: [{"sentence":"Ella : Olivia, I think I've finally found my hidden ___!","target":"talent","choices":["talent","taller","tablet","silent"],"bonus":{"target":"yetenek","choices":["yetenek","daha uzun","tablet","sessiz"]}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/winter_times_ella_olivia3.mp4",
+  title: "The Secret Talent",
+  transcript: "Ella : Olivia, I think I've finally found /my hidden talent/! Olivia : Really, what is it? Ella : I can /tell/ you the name of any song in just two seconds! Sunny : It's Sunshine in New York!",
+  answerOptions: [
+    { id: "a", text: "Ella : Olivia, sanırım sonunda /gizli yeteneğimi/ keşfettim! Olivia : Gerçekten mi, neymiş? Ella : Herhangi bir şarkının adını sadece iki saniyede /söyleyebilirim/! Sunny : Adı Sunshine in New York!" },
+    { id: "b", text: "Ella : Olivia, sanırım çok önemli bir şey keşfettim! Olivia : Gerçekten mi, neymiş? Ella : Herhangi bir şarkının adı ilk iki saniyede belli oluyor. Sunny : Adı Sunshine in New York!" }
+  ],
+  easyDistractor: "Ella : Olivia, dışarıda kar yağıyor! Olivia : Gerçekten mi, çok güzel! Ella : Birlikte kardan adam yapabiliriz! Sunny : Ben de gelmek istiyorum!",
+  correctOptionId: "a",
+  characterIds: ["ella", "olivia", "sunny"],
+  grades: [7,8],
+  functions: ["expressing_feelings", "givinginformation", "use_of_modal_can_for_capability_and_ability", "expressingsurprise"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:07.400",
+
+  evidenceSentence: "Ella : Olivia, I think I've finally found /my hidden talent/! Olivia : Really, what is it? Ella : I can /tell/ you the name of any song in just two seconds! Sunny : It's Sunshine in New York!",
+  truefalsequestion: "Ella talks about her favorite song.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Ella's voice reference.\nUse <<<Image2>>>  as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Olivia's voice reference.\nUse <<<Image3>>>  as Sunny the parrot's canonical appearance reference.\nUse <<<Audio3>>>  as Sunny's exact voice reference.\nSCENE:\nThe Secret Talent.\nA playful winter evening between best friends Ella and Olivia, with an unexpected surprise from Ella's pet parrot, Sunny.\nSEASON, WEATHER, AND TIME:\nWinter, evening.\nA cold, snowy evening with gentle snowfall outside.\nSETTING:\nA cozy, warmly illuminated living room in Ella's family home.\nElla and Olivia sit beside each other on a comfortable sofa, turned slightly toward each other.\nA large window reveals a peaceful snow-covered neighborhood. Snowflakes fall visibly against the dark blue evening sky, illuminated by warm streetlamps.\nA traditional fireplace burns gently nearby.\nThe room contains a wooden coffee table, bookshelves, soft cushions, a comfortable rug, and tasteful indoor plants.\nSunny rests on a sturdy bird perch positioned near the sofa, clearly visible to both girls.\nNo Christmas decorations or holiday ornaments.\nCLOTHING:\nElla wears her existing upper clothing from <<<Image1>>>  and dark blue full-length trousers.\nOlivia wears her existing upper clothing from <<<Image2>>>  and charcoal gray full-length trousers.\nElla and Olivia are approximately the same height.\nCHARACTER AND PROP CONTINUITY:\nElla and Olivia remain seated throughout the scene.\nOlivia holds ONE smartphone, with its screen facing her.\nSunny remains on the same perch throughout the video.\nSunny retains the exact species, feather colors, appearance, and proportions shown in <<<Image3>>> .\nSunny does not fly, hop between objects, or leave the perch.\nPRE-ACTION:\nElla and Olivia are relaxing together on the sofa.\nOlivia is holding her smartphone.\nSunny rests calmly on the nearby perch.\nSnow falls outside the window while the fireplace burns gently.\nDIALOGUE AND ACTION:\n1. ELLA (<<<Audio1>>> ):\n\"Olivia, I think I've finally found my hidden talent!\"\nElla speaks with cheerful confidence, eager to share her discovery.\nOlivia turns her attention toward Ella.\n2. OLIVIA (<<<Audio2>>> ):\n\"Really? What is it?\"\nOlivia sounds genuinely curious.\n3. ELLA (<<<Audio1>>> ):\n\"I can tell you the name of any song in just two seconds!\"\nElla delivers the claim confidently, pleased with her supposed ability.\nMUSIC TEST:\nOlivia briefly operates her smartphone and plays a very short, clear excerpt of an unfamiliar upbeat pop song.\nThe song excerpt is approximately TWO seconds long.\nThe music is an original, generic instrumental melody with no singing or lyrics.\nOlivia stops the playback.\nElla listens carefully but cannot identify the song.\nHer confident expression fades into disappointment.\nElla slowly shakes her head from side to side, looking genuinely sad that she cannot name the song.\nShe does not speak.\nSUNNY'S SURPRISE:\nImmediately after Ella shakes her head, Sunny suddenly speaks from the nearby perch.\n4. SUNNY (<<<Audio3>>> ):\n\"It's Sunshine in New York!\"\nSunny speaks the entire sentence clearly and intelligibly, using the exact parrot voice identity from <<<Audio3>>> .\nSunny's beak movements synchronize precisely with the spoken words.\nSunny remains perched and does not flap its wings or move away.\nFINAL REACTIONS:\nOlivia turns toward Sunny with a bright, delighted expression.\nShe looks genuinely pleased and impressed by the parrot's unexpected answer.\nOlivia does NOT laugh, giggle, or open her mouth in laughter.\nAt the same moment, Ella turns toward Sunny with wide eyes and an astonished expression.\nElla looks completely stunned that her own parrot knew the song when she did not.\nNeither girl says anything.\nCUT immediately on their contrasting reactions.\nPERFORMANCE:\nElla's confidence at the beginning must contrast clearly with her disappointment during the music test and her astonishment at the end.\nOlivia is curious at first and delighted by Sunny's surprise.\nSunny's unexpected spoken answer is the central comedic payoff.\nKeep all expressions natural and believable.\nNo exaggerated gestures, theatrical reactions, or unnecessary movements.\nLIP-SYNC AND VOICE RULES:\nOnly the current speaker moves their mouth.\nElla speaks only with <<<Audio1>>> .\nOlivia speaks only with <<<Audio2>>> .\nSunny speaks only with <<<Audio3>>> .\nWhen Sunny speaks, only Sunny's beak moves in synchronization with the dialogue.\nElla and Olivia remain silent with their mouths closed during Sunny's line.\nSunny must pronounce the full sentence:\n\"It's Sunshine in New York!\"\nDo not replace Sunny's voice with a human voice or a generic synthesized parrot voice.\nAUDIO:\nPreserve the exact dialogue wording and order:\n1. Ella: \"Olivia, I think I've finally found my hidden talent!\"\n2. Olivia: \"Really? What is it?\"\n3. Ella: \"I can tell you the name of any song in just two seconds!\"\n4. Sunny: \"It's Sunshine in New York!\"\nThe short instrumental song excerpt plays ONLY after Ella's third line and stops BEFORE Sunny speaks.\nNo additional dialogue.\nNo narration.\nNo background conversations.\nNo laughter.\nOnly subtle indoor ambience, gentle fireplace crackling, and the brief instrumental song excerpt.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nWarm, inviting interior lighting contrasts with the cool blue snowy evening outside.\nENDING:\nElla cannot identify the song and shakes her head sadly.\nSunny confidently announces:\n\"It's Sunshine in New York!\"\nOlivia looks delighted without laughing.\nElla stares at Sunny in complete astonishment.\nCUT."
+},
+  {
+  id: "christmas_chloe_elodie",
+  correctOptionQuestions: [{"sentence":"Élodie : My friends and I had a snowball fight, and I ___ hit our professor!","target":"accidentally","choices":["accidentally","actually","eventually","especially"],"bonus":{"target":"yanlışlıkla","choices":["yanlışlıkla","aslında","sonunda","özellikle"]}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/christmas_chloe_elodie.mp4",
+  title: "A Story from France",
+  transcript: "Élodie : You won't believe what happened in /school/ last week! Chloe : What happened? Élodie : My friends and I had a snowball fight, and I /accidentally/ hit our professor!",
+  answerOptions: [
+    { id: "b", text: "Élodie : Geçen hafta /okulda/ ne olduğuna inanamayacaksın! Chloe : Ne oldu? Élodie : Arkadaşlarımla kartopu savaşı yaptık ve /yanlışlıkla/ profesörümüzü vurdum!" },
+    { id: "a", text: "Élodie : Geçen hafta çarşıda ne olduğuna inanamayacaksın! Chloe : Ne oldu? Élodie : Arkadaşlarımla kartopu savaşı yaptık ve bilerek profesörümüzü vurdum!" }
+  ],
+  easyDistractor: "Élodie : Üniversitede yeni arkadaşlar edindim! Chloe : Gerçekten mi, onları seviyor musun? Élodie : Evet, birlikte çok eğleniyoruz!",
+  correctOptionId: "b",
+  characterIds: ["elodie", "chloe", "camille", "julien"],
+  grades: [6,7,8],
+  functions: ["simple_past_tense", "asking_about", "givinginformation", "expressingsurprise"],
+  theme: "christmas",
+  unit: "",
+
+  evidenceStart: "0:04.901",
+  evidenceEnd: "0:09.368",
+
+  evidenceSentence: "Élodie : You won't believe what happened in /school/ last week! Chloe : What happened? Élodie : My friends and I had a snowball fight, and I /accidentally/ hit our professor!",
+  truefalsequestion: "Elodie accidentally threw a snowball at the professor.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Élodie's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Élodie's voice reference.\nUse <<<Image2>>> as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Chloe's voice reference.\nUse <<<Image3>>> as Camille's canonical identity, appearance, and upper-clothing reference.\nUse <<<Image4>>> as Julien's canonical identity, appearance, and upper-clothing reference.\nSCENE:\nChristmas Dinner — A Story from France.\nÉlodie has returned home from university in France for Christmas.\nShe is enjoying a warm family Christmas dinner with her younger sister Chloe and their parents, Camille and Julien.\nÉlodie tells Chloe about an embarrassing incident that happened at university last week.\nThis is a natural family conversation at the dinner table, NOT a presentation, interview, or direct-to-camera monologue.\nOnly Élodie and Chloe speak.\nSEASON, WEATHER, AND TIME:\nWinter, Christmas night.\nIt is completely dark outside, with steady, gentle snowfall.\nSETTING AND CHRISTMAS ATMOSPHERE:\nA spacious, elegant family dining room connected to a warmly decorated Christmas living room.\nA magnificent Christmas tree stands beside a large window, decorated with warm white fairy lights, red and gold ornaments, red velvet ribbons, golden bells, and an illuminated golden star.\nBeautifully wrapped Christmas presents rest beneath the tree.\nA fireplace burns gently nearby.\nEvergreen garlands, Christmas stockings, a wreath, and tasteful warm decorative lights complete the room.\nA large window reveals a peaceful, snow-covered neighborhood at night.\nSnowflakes fall steadily outside.\nWarm golden streetlamps illuminate the snow-covered road, sidewalks, trees, fences, and rooftops.\nNeighboring houses display beautiful Christmas lights.\nThe warm golden interior contrasts naturally with the cold blue winter night outside.\nCHRISTMAS DINNER TABLE:\nA large wooden dining table is beautifully prepared for four people.\nA golden-brown roasted turkey sits in the center, surrounded by roasted potatoes and vegetables.\nAdditional dishes include fresh bread rolls, salad, and traditional side dishes.\nFour complete place settings, drinking glasses, folded napkins, and elegant cutlery.\nA tasteful evergreen centerpiece with pinecones, red berries, and warm candles.\nThe meal looks abundant and appetizing without overcrowding the table.\nNo one eats or drinks during the conversation.\nCLOTHING:\nÉlodie wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nChloe wears her existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nCamille wears her existing upper clothing from <<<Image3>>> and dark brown full-length trousers.\nJulien wears his existing upper clothing from <<<Image4>>> and charcoal gray full-length trousers.\nSEATING AND SPATIAL CONTINUITY:\nAll four family members are already seated around the same Christmas dinner table.\nÉlodie and Chloe sit beside each other on one side of the table.\nCamille and Julien sit opposite them.\nAll four remain seated in their exact positions throughout the video.\nThe characters maintain natural conversational eye lines across and along the table.\nÉlodie is speaking directly to Chloe, her younger sister.\nDuring both of her lines, Élodie turns her head and eyes toward Chloe.\nChloe looks toward Élodie when listening and responding.\nCamille and Julien remain naturally engaged in the family conversation without speaking.\nIMPORTANT CONVERSATIONAL FRAMING:\nThe scene must feel like an intimate family dinner conversation observed naturally.\nÉlodie NEVER addresses the camera or the viewer.\nÉlodie NEVER turns toward the camera to deliver her dialogue.\nDo not isolate Élodie in the foreground while the other family members appear behind her.\nDo not place Élodie in a presenter-like position facing forward.\nDo not transform the family conversation into a direct-to-camera monologue.\nAll characters remain physically connected to the same dining-table interaction.\nMaintain consistent seating positions and conversational eye lines throughout.\nPRE-ACTION:\nThe family is already seated together, enjoying a peaceful Christmas dinner.\nÉlodie turns slightly toward Chloe, remembering an amusing incident from university.\nChloe notices her sister is about to tell a story and gives her attention.\nCamille and Julien sit comfortably opposite them, quietly following the conversation.\nDIALOGUE AND PERFORMANCE:\n1. ÉLODIE (<<<Audio1>>> ):\n\"You won't believe what happened in school last week!\"\nÉlodie speaks with amused excitement.\nShe looks directly at Chloe while sharing the story.\nHer voice is lively and conversational, as though telling her younger sister something surprising.\nShe does not look toward the camera.\n2. CHLOE (<<<Audio2>>> ):\n\"What happened?\"\nChloe turns her attention fully toward Élodie.\nShe responds with genuine curiosity.\nHer expression is attentive and interested.\n3. ÉLODIE (<<<Audio1>>> ):\n\"My friends and I had a snowball fight, and I accidentally hit our professor!\"\nÉlodie continues speaking directly to Chloe.\nShe maintains natural eye contact with her sister throughout the line.\nHer expression becomes slightly sheepish as she mentions accidentally hitting the professor.\nShe is sharing an embarrassing memory with her family, not narrating a story to the audience.\nREACTION / PAYOFF:\nChloe looks at Élodie with surprised disbelief.\nCamille and Julien briefly direct their attention toward Élodie, reacting naturally to the unexpected incident.\nÉlodie gives Chloe a small, sheepish smile.\nThe reactions are subtle, warm, and believable.\nNo exaggerated laughter or theatrical gestures.\nCUT immediately after the brief family reaction.\nPERFORMANCE AND LIP-SYNC:\nNatural, understated family interaction.\nÉlodie is animated and expressive but remains fully engaged with Chloe.\nChloe listens attentively and responds naturally.\nCamille and Julien are silent participants in the family gathering.\nOnly the current speaker moves their mouth.\nCamille and Julien never speak or move their mouths as though talking.\nNo additional dialogue.\nCONTINUITY:\nExactly FOUR family members remain seated around the dining table.\nNo character stands up, changes seats, or leaves the table.\nÉlodie remains beside Chloe throughout the conversation.\nCamille and Julien remain opposite them.\nThe turkey, plates, glasses, cutlery, candles, and Christmas decorations remain in their original positions.\nNo one eats, drinks, or handles objects during the dialogue.\nThe fireplace burns gently.\nSnow continues falling outside the closed window.\nThe seating arrangement and spatial relationships remain unchanged throughout the video.\nAUDIO:\nÉlodie speaks only with <<<Audio1>>> .\nChloe speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Élodie: \"You won't believe what happened in school last week!\"\n2. Chloe: \"What happened?\"\n3. Élodie: \"My friends and I had a snowball fight, and I accidentally hit our professor!\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background conversations.\nNo background music.\nOnly subtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nWarm, elegant Christmas lighting with natural skin tones and soft cinematic depth.\nThe scene should feel like a genuine family gathering, with all four characters belonging naturally to the same physical space.\nENDING:\nChloe reacts with surprised disbelief while looking at Élodie.\nCamille and Julien remain quietly attentive.\nÉlodie gives her sister a small, embarrassed smile.\nAll four remain seated together at the Christmas dinner table.\nCUT."
+},
+  {
+  id: "winter_times_benjamin_jack",
+  correctOptionQuestions: [{"sentence":"Benjamin : Well, I think he's having a ___ day!","target":"terrible","choices":["terrible","terrific","terrified","tolerable"],"bonus":{"target":"berbat","choices":["berbat","harika","korkmuş","katlanılabilir"]}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/winter_times_benjamin_jack.mp4",
+  title: "The Snowman Problem",
+  transcript: "Benjamin : Jack, why does our snowman look so /angry/? Jack : I don't know, I was trying to make him look /cool/! Benjamin : Well, I think he's having a /terrible/ day!",
+  answerOptions: [
+    { id: "a", text: "Benjamin : Jack, kardan adamımız neden bu kadar /kızgın/ görünüyor? Jack : Bilmiyorum, onu /havalı/ göstermeye çalışıyordum! Benjamin : Bence /berbat/ bir gün geçiriyor!" },
+    { id: "b", text: "Benjamin : Jack, kardan adamımız neden bu kadar sinirli görünüyor? Jack : Bilmiyorum, onu mutlu göstermeye çalışıyordum! Benjamin : Bence kötü bir gün geçiriyor!" }
+  ],
+  easyDistractor: "Benjamin : Jack, dışarıda çok kar yağıyor! Jack : Evet, yarın kayak yapabiliriz. Benjamin : Harika bir fikir!",
+  correctOptionId: "a",
+  characterIds: ["benjamin", "jack"],
+  grades: [6,7,8],
+  functions: ["askingforreason", "expressing_feelings", "givinginformation", "simple_past_tense"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:08.401",
+
+  evidenceSentence: "Benjamin : Jack, why does our snowman look so /angry/? Jack : I don't know, I was trying to make him look /cool/! Benjamin : Well, I think he's having a /terrible/ day!",
+  truefalsequestion: "The snowman looks happy and smiling.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Benjamin's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Benjamin's voice reference.\nUse <<<Image2>>>  as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Jack's voice reference.\nUse <<<Image3>>>  as the snowman's exact visual reference.\nOnly reference the snowman from <<<Image3>>> . Do not reproduce any people appearing in that image.\nSCENE:\nThe Snowman Problem.\nBenjamin and Jack have finished building a snowman together. Jack tried to make it look cool, but its face looks unexpectedly angry.\nSEASON, WEATHER, AND TIME:\nWinter, late afternoon approaching dusk.\nA cold, peaceful winter evening with gentle snowfall.\nSETTING:\nA beautiful, snow-covered backyard.\nFresh snow covers the ground, wooden fence, garden bushes, and bare tree branches.\nA cozy family house stands nearby, with warm golden light glowing through its windows.\nThe cold blue winter atmosphere contrasts naturally with the warm house lights.\nNo Christmas decorations or holiday ornaments.\nCHARACTERS AND CLOTHING:\nBenjamin wears his existing upper clothing from <<<Image1>>>  beneath a warm winter jacket, with dark blue full-length trousers and winter gloves.\nJack wears his existing upper clothing from <<<Image2>>>  beneath a warm winter jacket, with charcoal gray full-length trousers and winter gloves.\nBenjamin and Jack are approximately the same height.\nBoth boys retain their exact canonical facial features, hairstyles, hair colors, and body proportions.\nSNOWMAN:\nPreserve the exact snowman's appearance from <<<Image3>>> .\nThe snowman has three rounded sections of packed snow, a carrot nose, small dark eyes, sharply angled eyebrows, and a downward-curved mouth made from dark pebbles.\nIts eyebrows and mouth create a distinctly angry expression.\nPreserve its hat, scarf, buttons, twig arms, proportions, and facial arrangement from the reference.\nThe snowman's angry expression is clearly visible from the beginning.\nThe snowman remains completely stationary throughout the scene.\nCHARACTER ARRANGEMENT:\nBenjamin stands on the left side of the snowman.\nJack stands on the right side.\nBoth boys are close enough to examine the snowman's face.\nThe snowman remains clearly visible between them.\nPRE-ACTION:\nBenjamin and Jack are already standing beside their finished snowman.\nBenjamin studies its unusually angry face.\nJack looks at the snowman, slightly puzzled by the result.\nGentle snow falls around them.\nDIALOGUE AND ACTION:\n1. BENJAMIN (<<<Audio1>>> ):\n\"Jack, why does our snowman look so angry?\"\nBenjamin looks at the snowman's face with genuine curiosity and mild amusement.\n2. JACK (<<<Audio2>>> ):\n\"I don't know! I was trying to make him look cool!\"\nJack responds with mild confusion and disappointment.\nHe looks at the snowman as though wondering how his attempt went wrong.\n3. BENJAMIN (<<<Audio1>>> ):\n\"Well, I think he's having a terrible day!\"\nBenjamin delivers the line with playful, understated humor.\nREACTION / PAYOFF:\nJack looks carefully at the snowman's angry face.\nHe deliberately imitates the snowman's expression by furrowing his eyebrows and making the same downward-curved frown.\nJack's imitation closely resembles the snowman's distinctive angry face.\nBenjamin notices the funny resemblance.\nHe looks from the snowman to Jack and smiles with genuine amusement.\nJack maintains the angry expression for a brief moment.\nNeither boy speaks or laughs.\nCUT immediately on Jack's imitation and Benjamin's amused reaction.\nPERFORMANCE:\nNatural, believable friendship.\nBenjamin is curious and playfully amused.\nJack is initially puzzled by the snowman's appearance, then makes a spontaneous, playful imitation.\nThe visual resemblance between Jack and the snowman is the central comedic payoff.\nNo exaggerated body movements, unnecessary gestures, falling, slipping, or physical comedy.\nOnly the current speaker moves his mouth during dialogue.\nPHYSICAL CONTINUITY:\nExactly ONE snowman.\nThe snowman's facial features remain unchanged throughout the scene.\nNo pebbles, buttons, or accessories move.\nNeither boy touches, repairs, or rebuilds the snowman.\nJack imitates the existing expression without changing the snowman's face.\nThe snowman remains completely stationary.\nThe snowfall remains gentle and consistent.\nAUDIO:\nBenjamin speaks only with <<<Audio1>>> .\nJack speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Benjamin: \"Jack, why does our snowman look so angry?\"\n2. Jack: \"I don't know! I was trying to make him look cool!\"\n3. Benjamin: \"Well, I think he's having a terrible day!\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background conversations.\nNo laughter.\n\nOnly subtle outdoor winter ambience.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nJack imitates the snowman's angry expression.\nBenjamin notices the resemblance and smiles.\nCUT."
+},
+  {
+  id: "winter_times_chloe_emma_hannah",
+  correctOptionQuestions: [{"sentence":"Hannah : Really, what's the secret ___?","target":"ingredient","choices":["ingredient","instrument","instruction","invention"],"bonus":{"target":"tarif","choices":["tarif","malzeme","pişirme","unutmak"],"word":"recipe"}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/winter_times_chloe_emma_hannah.mp4",
+  title: "The Secret Ingredient",
+  transcript: "Emma : Hannah, I tried a new cookie recipe yesterday! Hannah : Really, what's the /secret ingredient/? Emma : I forgot to /add the sugar/! Chloe : What's this thing?",
+  answerOptions: [
+    { id: "a", text: "Emma : Hannah, dün yeni bir kurabiye tarifi denedim! Hannah : Gerçekten mi, /gizli malzeme/ ne? Emma : /Şeker eklemeyi unuttum/! Chloe : Bu şey de ne böyle?" },
+    { id: "b", text: "Emma : Hannah, dün yeni bir kurabiye tarifi denedim! Hannah : Gerçekten mi, nasıl bir tarif? Emma : Bilmek istemezsin! Chloe : Bu şey de ne böyle?" }
+  ],
+  easyDistractor: "Emma : Hannah, kurabiyeleri beğendin mi? Hannah : Evet, çok lezzetliler! Emma : Chloe için de biraz hazırlayalım.",
+  correctOptionId: "a",
+  characterIds: ["emma", "hannah", "chloe"],
+  grades: [6,7,8],
+  functions: ["simple_past_tense", "asking_about", "givinginformation", "expressingsurprise"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:07.367",
+
+  evidenceSentence: "Emma : Hannah, I tried a new cookie recipe yesterday! Hannah : Really, what's the /secret ingredient/? Emma : I forgot to /add the sugar/! Chloe : What's this thing?",
+  truefalsequestion: "The cookie tastes sweet.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Emma's voice reference.\nUse <<<Image2>>>  as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Hannah's voice reference.\nUse <<<Image3>>>  as Chloe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio3>>>  as Chloe's voice reference.\nSCENE:\nThe Secret Ingredient.\nEmma has baked some cookies using a new recipe, but she accidentally forgot to add the sugar.\nHannah discovers the mistake just before eating one.\nMoments later, Chloe enters the room, unaware of the problem.\nSEASON, WEATHER, AND TIME:\nWinter, early evening.\nIt is cold and dark outside, with gentle, continuous snowfall.\nSETTING:\nA beautiful, cozy living room in Emma's family home.\nA traditional fireplace burns gently, casting a warm golden glow across the room.\nA large window clearly reveals a peaceful, snow-covered residential neighborhood.\nSnowflakes fall steadily outside, illuminated by warm streetlamps against the dark blue evening sky.\nSnow covers the rooftops, garden fences, bushes, and bare tree branches.\nThe living room contains a comfortable sofa, soft cushions, a wooden coffee table, bookshelves, a soft rug, and tasteful indoor plants.\nThe warm fireplace and softly illuminated interior contrast with the cold blue winter night outside.\nNo Christmas decorations or holiday ornaments.\nCLOTHING:\nEmma wears her exact existing upper garment from <<<Image1>>>  and full-length dark blue trousers.\nHannah wears her exact existing upper garment from <<<Image2>>>  and full-length dark blue trousers.\nChloe wears her exact existing upper garment from <<<Image3>>>  and full-length dark blue trousers.\nAll upper garments retain their original design, length, and natural fit, worn casually untucked.\nCHARACTER ARRANGEMENT:\nEmma and Hannah are sitting beside each other on the living room sofa.\nA small plate rests on the coffee table in front of them.\nChloe is initially outside the room and enters through the living room doorway later in the scene.\nAll three girls are approximately the same height.\nCOOKIE CONTINUITY:\nThere is exactly ONE visible cookie.\nIt is an ordinary, attractive homemade cookie with a golden-brown surface.\nHannah initially holds this cookie in her hand.\nThe plate on the coffee table is initially empty.\nHannah places the cookie onto the plate after learning that Emma forgot the sugar.\nChloe later picks up the SAME cookie from the plate.\nNo additional cookies appear.\nPRE-ACTION:\nEmma and Hannah are relaxing together on the sofa.\nHannah is holding the homemade cookie near her mouth, about to take her first bite.\nEmma looks pleased to share her baking experiment.\nThe fireplace burns gently nearby.\nSnow falls steadily outside the large window.\nDIALOGUE AND ACTION:\n1. EMMA (<<<Audio1>>> ):\n\"Hannah, I tried a new cookie recipe yesterday!\"\nEmma speaks with cheerful enthusiasm, pleased with her baking experiment.\nHannah looks toward Emma while holding the cookie.\n2. HANNAH (<<<Audio2>>> ):\n\"Really? What's the secret ingredient?\"\nHannah asks with genuine curiosity.\nShe still holds the cookie without eating it.\n3. EMMA (<<<Audio1>>> ):\n\"I forgot to add the sugar!\"\nEmma admits her mistake with a slightly embarrassed expression.\nHANNAH'S REACTION:\nHannah pauses just before taking a bite.\nShe looks at the cookie in her hand.\nWithout tasting it, she slowly lowers the cookie and places it onto the empty plate on the coffee table.\nShe gives Emma a mildly disbelieving look.\nCHLOE'S ENTRANCE:\nImmediately after Hannah places the cookie on the plate, Chloe enters the living room through the doorway.\nChloe notices the cookie resting on the coffee table.\nHer eyes brighten with excitement.\nWithout knowing anything about Emma's baking mistake, Chloe approaches the table.\nShe eagerly picks up the cookie from the plate and takes ONE clear bite.\nEmma and Hannah watch silently.\nCHLOE'S REACTION:\nChloe immediately realizes that the cookie tastes unpleasant.\nHer eager expression changes into visible disappointment and confusion.\nShe stops chewing, holding the partially eaten cookie in her hand.\nChloe turns toward Emma and Hannah with a bewildered expression.\n4. CHLOE (<<<Audio3>>> ):\n\"What's this... thing?\"\nChloe delivers the line with genuine disbelief and mild disgust.\nShe emphasizes the word \"thing\" as though she can hardly believe the object is supposed to be a cookie.\nFINAL PAYOFF:\nEmma looks sheepishly embarrassed.\nHannah looks at Chloe with quiet amusement.\nChloe continues staring at them in disbelief, still holding the bitten cookie.\nNo one laughs.\nCUT immediately after Chloe's reaction.\nPERFORMANCE:\nThe humor comes from the contrast between Hannah's cautious decision and Chloe's impulsive enthusiasm.\nEmma is enthusiastic about baking but embarrassed by her mistake.\nHannah is curious, observant, and mildly amused.\nChloe is initially delighted by the unexpected treat, then genuinely confused by its taste.\nKeep expressions natural and believable.\nNo exaggerated laughter, theatrical gestures, or unnecessary physical movements.\nOnly the current speaker moves her mouth.\nPHYSICAL CONTINUITY:\nExactly ONE cookie is visible throughout the scene.\nHannah does not bite the cookie.\nHannah places the cookie onto the plate before Chloe enters.\nChloe picks up that same cookie and takes exactly ONE bite.\nThe cookie remains in Chloe's hand after the bite.\nNo duplicate cookies, disappearing objects, or sudden changes in the cookie's appearance.\nEmma and Hannah remain seated throughout the scene.\nChloe enters only after Hannah has placed the cookie down.\nChloe remains standing near the coffee table for her final line.\nThe fireplace burns gently and safely.\nSnow continues falling outside the closed window.\nNo snow enters the room.\nAUDIO:\nEmma speaks only with <<<Audio1>>> .\nHannah speaks only with <<<Audio2>>> .\nChloe speaks only with <<<Audio3>>> .\nPreserve the exact dialogue wording and order:\n1. Emma: \"Hannah, I tried a new cookie recipe yesterday!\"\n2. Hannah: \"Really? What's the secret ingredient?\"\n3. Emma: \"I forgot to add the sugar!\"\n4. Chloe: \"What's this... thing?\"\nChloe's final line occurs ONLY after she has bitten the cookie and reacted to its unpleasant taste.\nSubtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nChloe stares at Emma and Hannah in disbelief, holding the bitten cookie.\nEmma looks embarrassed.\nHannah is quietly amused.\nThe fireplace glows warmly while snow continues falling outside.\nCUT."
+},
+  {
+  id: "winter_times_ella_olivia4",
+  correctOptionQuestions: [{"sentence":"Ella : Olivia, did you ___ this picture on my window?","target":"draw","choices":["draw","drew","drain","dream"],"bonus":{"target":"çizmek","choices":["çizmek","çizdi","boşaltmak","rüya görmek"]}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/winter_times_ella_olivia4.mp4",
+  title: "The Mysterious Artist",
+  transcript: "Ella : Olivia, did you draw this picture on my window? Olivia : /No/, I thought you drew it! Ella : Then /who did/?",
+  answerOptions: [
+    { id: "a", text: "Ella : Olivia, pencereme bu resmi sen mi çizdin? Olivia : /Hayır/, ben senin çizdiğini sanmıştım! Ella : O zaman /kim çizdi/?" },
+    { id: "b", text: "Ella : Olivia, pencereme bu resmi sen mi çizdin? Olivia : Evet, ben çizdim! Ella : Ne ki bu şimdi?" }
+  ],
+  easyDistractor: "Ella : Olivia, pencereden dışarı bakar mısın? Olivia : Bahçe tamamen karla kaplanmış! Ella : Gerçekten çok güzel görünüyor.",
+  correctOptionId: "a",
+  characterIds: ["ella", "olivia", "sunny"],
+  grades: [6,7,8],
+  functions: ["simple_past_tense", "asking_about", "asking_about_opinions", "use_of_wh_questions_who_what"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:06.401",
+
+  evidenceSentence: "Ella : Olivia, did you draw this picture on my window? Olivia : /No/, I thought you drew it! Ella : Then /who did/?",
+  truefalsequestion: "Olivia drew the picture on the window.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Ella's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Ella's voice reference.\nUse <<<Image2>>> as Olivia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Olivia's voice reference.\nUse <<<Image3>>> as Sunny's canonical appearance reference.\nSCENE:\nThe Mysterious Artist.\nSEASON, WEATHER, AND TIME:\nA cold winter evening with steady snowfall outside.\nSETTING:\nElla's cozy family living room.\nA warm fireplace burns gently, illuminating the room with soft golden light.\nA large window overlooks a beautiful snow-covered garden. Snowflakes fall continuously outside against the dark blue evening sky.\nThe inside surface of the window is slightly fogged from the contrast between the warm room and the freezing weather.\nA simple, funny face has been drawn with a finger on the fogged window: two round eyes, a crooked nose, and a wide, uneven smile.\nThe drawing is already present when the scene begins.\nSUNNY'S PERCH POSITION:\nSunny's freestanding bird perch is positioned DIRECTLY BESIDE the window, immediately adjacent to the section of glass containing the mysterious drawing.\nThe perch is so close to the window that Sunny can easily look at the drawing simply by turning his head.\nSunny is perched at approximately the same height as the drawing.\nThe drawing and Sunny's perch must remain clearly associated within the same area of the room.\nThere is no furniture, curtain, or other object separating Sunny's perch from the window.\nSunny remains on this exact perch throughout the scene.\nCLOTHING:\nElla wears her exact existing upper garment from <<<Image1>>> and full-length dark blue trousers.\nOlivia wears her exact existing upper garment from <<<Image2>>> and full-length dark blue trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nPRE-ACTION:\nElla and Olivia are standing together near the large window, examining the mysterious drawing on the fogged glass.\nThey are approximately the same height.\nSunny is quietly perched immediately beside the window, close to the drawing.\nThe girls initially focus on the drawing rather than Sunny.\nDIALOGUE AND ACTION:\n1. ELLA (<<<Audio1>>>):\n\"Olivia, did you draw this picture on my window?\"\nElla looks at the drawing with curiosity, then turns toward Olivia.\n2. OLIVIA (<<<Audio2>>>):\n\"No! I thought you drew it!\"\nOlivia responds with genuine surprise, looking between Ella and the drawing.\n3. ELLA (<<<Audio1>>>):\n\"Then who did?\"\nElla looks puzzled.\nREACTION / PAYOFF:\nImmediately after Ella's final question, both girls gradually turn their attention toward Sunny.\nSunny is sitting on his perch directly beside the mysterious drawing.\nElla and Olivia stare at Sunny with suspicious, disbelieving expressions.\nNeither girl says anything.\nSunny notices that both girls are staring at him.\nHe first looks at the girls.\nThen he turns his head and looks at the funny face drawn on the window immediately beside him.\nFinally, Sunny turns his head back toward Ella and Olivia.\nHe remains completely silent.\nElla and Olivia continue staring at Sunny, visibly wondering whether he might somehow be responsible.\nCUT on Sunny's final innocent-looking glance toward the girls.\nIMPORTANT STORY AMBIGUITY:\nNever reveal who created the drawing.\nSunny's proximity to the window is the only circumstantial clue.\nDo not show Sunny drawing, touching, scratching, or marking the glass.\nDo not imply that Sunny definitely created the drawing.\nThe humor comes entirely from the girls' suspicion and Sunny's silent, ambiguous reaction.\nPERFORMANCE:\nElla is curious and increasingly suspicious.\nOlivia is surprised and equally suspicious.\nSunny behaves naturally as a pet parrot, using small, believable head turns and attentive eye movements.\nNo exaggerated bird gestures.\nNo laughter.\nNo additional reactions after Sunny's final glance.\nPHYSICAL CONTINUITY:\nThe mysterious face remains unchanged throughout the scene.\nThe drawing is on the INSIDE surface of the window.\nSunny's perch remains directly beside the window and the drawing throughout the scene.\nSunny never leaves his perch.\nThe girls remain inside the living room.\nThe fireplace burns continuously.\nSnow falls outside the closed window.\nAUDIO:\nElla speaks only with <<<Audio1>>>.\nOlivia speaks only with <<<Audio2>>>.\nExact dialogue order:\n1. Ella: \"Olivia, did you draw this picture on my window?\"\n2. Olivia: \"No! I thought you drew it!\"\n3. Ella: \"Then who did?\"\nSunny does not speak.\nNo additional dialogue.\nOnly subtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nElla and Olivia silently stare at Sunny with suspicious expressions.\nSunny looks at the drawing, then back at the girls.\nThe mystery remains unsolved.\nCUT."
+},
+  {
   id: "6_personal_life_daniel_lucas",
   correctOptionQuestions: [{"sentence":"Daniel : You're ___ than me.","target":"braver","choices":["braver","bravery","bravest","scared"],"bonus":{"target":"daha cesur","choices":["daha cesur","cesaret","en cesur","korkmuş"]}}],
   status: "published",
@@ -23446,6 +23706,64 @@ evidenceEnd: "0:04.736",
   prompt: "Use <<<Image1>>> as Chloe's canonical identity, appearance, upper-clothing reference and the visual reference for Chloe's hairstyle and the single large pink hair roller.\nUse <<<Audio1>>> as Chloe's voice reference.\nUse <<<Image2>>> as Ava's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Ava's voice reference.\n\nSCENE:\nThe Honest Friend.\nA short, humorous conversation between Chloe and Ava in a cozy living room.\nChloe is pleased with her hairstyle and asks Ava for an opinion.\nAva tries to compliment her without laughing because Chloe has accidentally left a large pink hair roller in her hair.\nChloe eventually notices the forgotten roller in a mirror.\nSEASON, WEATHER, AND TIME:\nMidwinter, early evening.\nSnow falls steadily outside.\nThe sky is a cold, overcast blue-gray.\nSnow covers the garden, neighboring rooftops, fences, and trees.\nSETTING:\nA beautiful, warm, comfortable living room.\nA large window provides a clear view of the snowy garden and nearby houses.\nSnowflakes are visibly falling outside throughout the scene.\nA traditional fireplace contains a gently burning wood fire.\nNatural orange flames flicker around the logs.\nThe fireplace casts a soft, warm glow across the room.\nA comfortable sofa, a wooden coffee table, a soft rug, a bookshelf, and a few indoor plants complete the setting.\nA large wall mirror stands near Chloe, allowing her to see her hairstyle when she turns toward it.\nThe mirror is positioned so that Chloe can look into it naturally without walking across the room.\nThe living room feels cozy and peaceful.\nNo Christmas decorations, Christmas trees, wreaths, stockings, festive lights, or holiday ornaments.\nCLOTHING:\nChloe wears her existing upper clothing from <<<Image1>>> and dark blue full-length jeans.\nAva wears her existing upper clothing from <<<Image2>>> and charcoal gray full-length trousers.\nCHLOE'S HAIRSTYLE — CRITICAL:\nPreserve Chloe's recognizable face, blue eyes, freckles, and curly blonde hair from <<<Image1>>> .\nHer hair is styled in the same high, voluminous curly ponytail shown in <<<Image3>>> .\nONE large pink cylindrical hair roller remains accidentally attached near the front/top of her hairstyle.\nThe roller must match the pink hair roller shown in <<<Image3>>> .\nThe roller is clearly visible and securely held in place by a small section of hair.\nThere is exactly ONE hair roller.\nDo not add additional rollers.\nDo not replace the roller with a hair clip, bow, ribbon, or other accessory.\nThe roller stays in Chloe's hair throughout the entire scene.\nChloe does not remove it.\nAVA'S HOT CHOCOLATE:\nAva holds ONE ceramic mug filled with hot chocolate.\nThin, delicate wisps of steam rise visibly from the hot drink.\nThe steam is subtle and realistic, indicating that the chocolate is freshly prepared and warm.\nAva holds the mug naturally and securely.\nShe does not spill the drink.\nShe does not need to take a sip during the dialogue.\nThe mug remains in Ava's hand throughout the scene.\nCHARACTER ARRANGEMENT:\nChloe stands near the wall mirror, facing Ava.\nAva sits comfortably on the sofa, holding her steaming hot chocolate.\nThe fireplace is visible nearby, with a gentle fire burning inside.\nThe large window reveals the falling snow outside.\nChloe and Ava can see each other naturally while speaking.\nPRE-ACTION:\nChloe has just finished arranging her curly ponytail.\nShe briefly checks a loose curl with her fingers.\nShe is unaware that the large pink hair roller is still attached near the top of her hair.\nAva sits on the sofa with her steaming hot chocolate.\nShe notices the forgotten roller but tries to remain polite.\nChloe turns toward Ava and asks for her opinion.\nDIALOGUE AND PERFORMANCE:\nChloe (<<<Audio1>>> ):\n\"Ava, do you think this hairstyle suits me?\"\nChloe asks naturally, pleased with her appearance.\nShe has no idea that the pink roller is still in her hair.\nAva (<<<Audio2>>> ):\n\"Definitely! You look amazing.\"\nAva answers warmly.\nShe briefly notices the large pink roller.\nShe tries to maintain a straight face and avoid laughing.\nChloe (<<<Audio1>>> ):\n\"Then why are you trying not to laugh?\"\nChloe notices Ava's restrained expression.\nShe sounds curious and slightly suspicious, not angry.\nREACTION / PAYOFF:\nAva presses her lips together briefly, trying to keep a straight face.\nShe remains seated, holding her steaming hot chocolate.\nChloe turns naturally toward the nearby mirror.\nShe sees the large pink roller still attached to her hairstyle.\nShe freezes for a brief moment.\nHer expression changes from confidence to surprised embarrassment.\nAva continues trying not to laugh.\nNeither character speaks again.\nChloe does not touch or remove the roller.\nNo exaggerated expressions.\nNo loud laughter.\nNo additional actions.\nCUT immediately on Chloe's realization in the mirror.\nCRITICAL MIRROR CONTINUITY:\nThe mirror must accurately reflect Chloe's hairstyle.\nThe single large pink roller must be visible in the reflection.\nThe reflection must match the actual position of the roller in Chloe's hair.\nDo not create a second physical roller.\nDo not show a different hairstyle in the mirror.\nChloe discovers the roller by looking at her reflection.\nShe does not discover it by touching her hair.\nFIREPLACE AND WINTER ATMOSPHERE:\nThe fireplace fire burns gently throughout the scene.\nThe flames remain inside the fireplace.\nThe fire does not flare up dramatically.\nSnow continues falling outside the closed window.\nThe snowy garden and neighboring houses remain visible.\nThe warm fireplace glow contrasts with the cold blue-gray winter scenery.\nThin steam continues rising from Ava's hot chocolate.\nThe winter atmosphere remains visual background context and does not become part of the dialogue.\nPROP CONTINUITY:\nThere is exactly ONE hot chocolate mug.\nAva holds the mug throughout the scene.\nNo spilled liquid.\nThere is exactly ONE pink hair roller.\nThe roller remains in Chloe's hair throughout the scene.\nThe mirror stays in the same position.\nThe fireplace remains safely contained.\nCHARACTER PERFORMANCE:\nChloe is confident and pleased with her hairstyle at first.\nShe becomes suspicious when Ava appears to be suppressing laughter.\nHer final embarrassment is subtle and natural.\nAva is friendly and does not intend to hurt Chloe's feelings.\nShe finds the forgotten roller funny but tries to remain polite.\nAvoid exaggerated facial expressions, theatrical gestures, or unnecessary physical interaction.\nAUDIO:\nChloe speaks only with <<<Audio1>>> .\nAva speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Chloe: \"Ava, do you think this hairstyle suits me?\"\n2. Ava: \"Definitely! You look amazing.\"\n3. Chloe: \"Then why are you trying not to laugh?\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background music.\nOnly subtle indoor ambience, including gentle fireplace crackling.\nNo laughter sound effects.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nChloe turns toward the mirror.\nShe notices the single large pink roller still attached to her curly ponytail.\nHer confident expression changes to embarrassed surprise.\nAva silently tries to maintain a straight face while holding her steaming hot chocolate.\nCUT."
 },
   {
+  id: "8_phone_conversation_jack_emily",
+  correctOptionQuestions: [{"sentence":"Emily : May I ask who is ___ ?","target":"calling","choices":["calling","falling","there","speaking"],"bonus":{"target":"arıyor","choices":["arıyor","konuşuyor","orada","müsait"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/8_phone_conversation_jack_emily.mp4",
+  title: "Who's Calling?",
+  transcript: "Emily : Hello, Emily speaking. Jack : Hello, Mrs. Waters, /is Benjamin there/? Emily : /May I ask who is calling/? Jack : I'm sorry, this is his friend, Jack.",
+  answerOptions: [
+    { id: "a", text: "Emily : Alo, ben Emily. Jack : Merhaba Bayan Waters, /Benjamin orada mı/? Emily : /Kimin aradığını sorabilir miyim/? Jack : Özür dilerim, ben onun arkadaşı Jack." },
+    { id: "b", text: "Emily : Alo, ben Emily. Jack : Merhaba Bayan Waters, Benjamin müsait mi? Emily : Sen kimsin? Jack : Ben Jack, Benjamin'in arkadaşıyım." }
+  ],
+  easyDistractor: "Emily : Bugün okul nasıldı? Jack : Çok güzeldi, arkadaşlarımla oyun oynadım. Emily : Ödevlerini bitirdin mi? Jack : Evet, hepsini bitirdim.",
+  correctOptionId: "a",
+  characterIds: ["emily", "jack"],
+  grades: [8],
+  functions: ["introductions", "asking_about_availability", "use_of_wh_questions_who_what", "responding_appropriately", "target_social_language"],
+  theme: "phone_conversation",
+  unit: "",
+
+  evidenceStart: "0:00.400",
+  evidenceEnd: "0:07.753",
+
+  evidenceSentence: "Emily : Hello, Emily speaking. Jack : Hello, Mrs. Waters, /is Benjamin there/? Emily : /May I ask who is calling/? Jack : I'm sorry, this is his friend, Jack.",
+  truefalsequestion: "Jack asks if Benjamin is available.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>> as Emily's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Emily's canonical voice reference.\nUse <<<Image2>>> as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Jack's canonical voice reference.\nSCENE:\nA pleasant autumn afternoon with mild, partly sunny weather.\nEmily is at home in her bright, comfortable kitchen, with autumn-colored trees visible through the window.\nJack is outside his house on a quiet residential street, with fallen autumn leaves along the sidewalk.\nThey are speaking on their mobile phones from two separate locations.\nCHARACTERS AND CLOTHING:\nEmily wears her existing upper clothing from <<<Image1>>> and comfortable beige full-length trousers.\nJack wears his existing upper clothing from <<<Image2>>> and dark blue full-length trousers.\nPreserve their canonical appearances and referenced upper clothing.\nEVENT SEQUENCE:\nSTAGE 1 — OPENING:\nBegin with Emily in her kitchen.\nHer mobile phone rings briefly.\nShe picks it up, holds it to her ear, and answers.\nSTAGE 2 — DIALOGUE:\nShow Emily and Jack in a clean split-screen composition, with Jack on the left and Emily on the right.\nBoth characters remain in their respective locations throughout the conversation.\nEmily (<<<Audio1>>> ):\n\"Hello, Emily speaking.\"\nJack (<<<Audio2>>> ):\n\"Hello, Mrs. Waters. Is Benjamin there?\"\nEmily (<<<Audio1>>> ):\n\"May I ask who is calling?\"\nJack (<<<Audio2>>> ):\n\"I'm sorry. This is his friend, Jack.\"\nEach character speaks exclusively with their assigned voice.\nOnly the current speaker moves their mouth. The other character listens naturally with their mouth closed.\nBoth characters keep their phones against their ears throughout the conversation.\nSTAGE 3 — REACTION AND PAYOFF:\nImmediately after Jack finishes speaking, he realizes that he forgot to introduce himself at the beginning of the call.\nHe briefly lowers his gaze with a small, embarrassed smile, still holding his phone to his ear.\nEmily responds with a gentle, understanding smile.\nThe moment is quiet, natural, and understated.\nCUT IMMEDIATELY.\nPHYSICAL AND VISUAL CONTINUITY:\nEmily remains inside her kitchen and Jack remains outside his house.\nTheir locations, clothing, and phone positions remain consistent.\nThe split-screen maintains the same character placement throughout the conversation.\nBoth phones remain held naturally against their respective speakers' ears.\nPERFORMANCE:\nNatural conversational timing and restrained facial animation.\nSubtle eye movements and occasional blinking.\nJack's embarrassment is brief and believable, without exaggerated gestures.\nEmily's reaction is warm but subtle.\nPACING:\nTarget approximately 11–12 seconds overall.\nKeep the opening phone ring and answering action brief.\nDeliver all four dialogue lines naturally without unnecessary pauses.\nKeep the final reaction under one second.\nAUDIO:\nEmily speaks exclusively with <<<Audio1>>> .\nJack speaks exclusively with <<<Audio2>>> .\nOnly the specified English dialogue is spoken.\nNo additional dialogue.\nNo Turkish speech.\nNo narration.\nNo background conversations.\nNo background music.\nSubtle residential ambience and a brief phone ringtone at the beginning.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nSoft autumn afternoon lighting, warm natural colors, and detailed residential environments.\nPreserve the canonical identity and appearance of both characters."
+},
+  {
+  id: "winter_times_emma_hannah3",
+  correctOptionQuestions: [{"sentence":"Emma : Hannah, the weather ___ said it wouldn't snow today!","target":"forecast","choices":["forecast","forest","foremost","broadcast"],"bonus":{"target":"hava tahmini","choices":["hava tahmini","orman","en önde gelen","yayın"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/winter_times_emma_hannah3.mp4",
+  title: "The Wrong Forecast",
+  transcript: "Emma : Hannah, the weather forecast said /it wouldn't snow today/! Hannah : Well, I think the weather forgot to check the forecast! Emma : It still says sunny!",
+  answerOptions: [
+    { id: "b", text: "Emma : Hannah, hava tahmini /bugün kar yağmayacağını/ söylüyordu! Hannah : Sanırım hava, hava durumu tahminine bakmayı unutmuş! Emma : Hâlâ güneşli olacağını söylüyor!" },
+    { id: "a", text: "Emma : Hannah, hava tahmini bugün bütün gün kar yağacağını söylüyor. Hannah : Sanırım kardanadam yapabileceğiz! Emma : Evet, hadi paltomuzu giyip çıkalım!" }
+  ],
+  easyDistractor: "Emma : Hannah, dışarı çıkmak ister misin? Hannah : Hayır, hava çok soğuk. Emma : O zaman evde film izleyelim.",
+  correctOptionId: "b",
+  characterIds: ["emma", "hannah"],
+  grades: [7,8],
+  functions: ["simple_past_tense", "simple_future_will_prediction", "givinginformation", "expressingsurprise"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:09.151",
+
+  evidenceSentence: "Emma : Hannah, the weather forecast said /it wouldn't snow today/! Hannah : Well, I think the weather forgot to check the forecast! Emma : It still says sunny!",
+  truefalsequestion: "The weather forecast is correct.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Emma's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Emma's voice reference.\nUse <<<Image2>>>  as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>>  as Hannah's voice reference.\nSCENE:\nThe Wrong Forecast.\nA lighthearted winter conversation between best friends Emma and Hannah about a completely inaccurate weather forecast.\nSEASON, WEATHER, AND TIME:\nWinter, late afternoon.\nHeavy snow is falling outside, despite the weather forecast predicting sunshine.\nThe sky is overcast, with a cold blue-gray winter atmosphere.\nSETTING:\nA warm, comfortable living room with a large window overlooking a residential neighborhood.\nOutside, thick snowflakes fall steadily, covering rooftops, gardens, parked cars, and tree branches.\nThe heavy snowfall is clearly visible through the window throughout the scene.\nInside, warm ambient lighting contrasts with the cold snowy weather outside.\nA fireplace burns gently in the background.\nThe room contains a sofa, a wooden coffee table, bookshelves, soft cushions, and a comfortable rug.\nNo Christmas decorations or holiday ornaments.\nCLOTHING:\nEmma wears her existing upper clothing from <<<Image1>>>  and dark blue full-length trousers.\nHannah wears her existing upper clothing from <<<Image2>>>  and charcoal gray full-length trousers.\nEmma and Hannah are approximately the same height.\nCHARACTER ARRANGEMENT:\nEmma and Hannah stand beside each other near the large window, facing the snowy view.\nEmma holds ONE smartphone.\nBoth girls remain near the window throughout the scene.\nPRE-ACTION:\nEmma and Hannah are already looking outside at the unexpectedly heavy snowfall.\nEmma holds her smartphone naturally at waist level.\nSnow continues falling heavily beyond the closed window.\nDIALOGUE AND ACTION:\n1. EMMA (<<<Audio1>>> ):\n\"Hannah, the weather forecast said it wouldn't snow today!\"\nEmma speaks with genuine disbelief while looking at the heavy snow outside.\nShe makes a small, natural gesture toward the window.\n2. HANNAH (<<<Audio2>>> ):\n\"Well, I think the weather forgot to check the forecast!\"\nHannah responds with playful, dry humor.\nShe glances at Emma with a mildly amused expression.\nPHONE NOTIFICATION:\nImmediately after Hannah finishes speaking, Emma's smartphone produces ONE short, ordinary notification sound.\nEmma briefly looks down at her phone.\nThe phone screen is angled toward Emma and is not readable to the viewer.\nEmma reacts with renewed disbelief.\n3. EMMA (<<<Audio1>>> ):\n\"It still says sunny!\"\nEmma delivers the line with incredulous amusement, looking at her phone.\nREACTION / PAYOFF:\nHannah looks out at the heavy snowfall, then turns toward Emma's phone.\nShe gives Emma a surprised, amused look.\nEmma looks up from her phone and returns a small, disbelieving smile.\nNeither girl laughs.\nCUT immediately after their brief reaction.\nPERFORMANCE:\nThe conversation is casual, natural, and age-appropriate.\nEmma is genuinely puzzled by the inaccurate forecast.\nHannah's humor is playful but understated.\nNo exaggerated gestures, theatrical reactions, or unnecessary physical movements.\nOnly the current speaker moves her mouth.\nPHONE CONTINUITY:\nExactly ONE smartphone is present.\nEmma holds the same smartphone throughout the entire video.\nThe phone produces exactly ONE notification sound after Hannah's line.\nEmma does not unlock the phone, swipe repeatedly, or show the screen to Hannah.\nNo readable text, numbers, weather icons, or interface graphics are shown on the phone screen.\nENVIRONMENT CONTINUITY:\nThe heavy snowfall continues consistently outside the window.\nThe window remains closed.\nEmma and Hannah remain indoors.\nThe fireplace burns gently and safely.\nNo snow enters the room.\nAUDIO:\nEmma speaks only with <<<Audio1>>> .\nHannah speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Emma: \"Hannah, the weather forecast said it wouldn't snow today!\"\n2. Hannah: \"Well, I think the weather forgot to check the forecast!\"\n3. Emma: \"It still says sunny!\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background conversations.\nNo laughter.\nNo background music.\nOne short smartphone notification sound after Hannah's line.\nOnly subtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nVISUAL STYLE:\nWarm interior lighting contrasts naturally with the cold blue-gray snowy environment outside.\nENDING:\nEmma looks at her smartphone in disbelief.\nHannah looks between the heavy snowfall and Emma's phone, clearly amused by the absurd forecast.\nThe girls exchange small, disbelieving smiles.\nCUT."
+},
+  {
   id: "5_classroom_life_mia_noah",
   correctOptionQuestions: [{"sentence":"Noah : Yes, I ___ my notes after school.","target":"review","choices":["review","renew","remove","reward"],"bonus":{"target":"gözden geçirmek","choices":["gözden geçirmek","yenilemek","kaldırmak","ödüllendirmek"]}}],
   status: "published",
@@ -23880,6 +24198,122 @@ evidenceEnd: "0:04.736",
   truefalseanswer: false,
 
   prompt: "Use <<<Image1>>> as Hannah's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Hannah's voice reference.\nUse <<<Image2>>> as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Zoe's voice reference.\nCHARACTER PROPORTIONS:\nHannah and Zoe are approximately the same height, with natural body proportions.\nSCENE:\nHannah invites Zoe to her slumber party on Sunday.\nZoe politely declines because she is busy that day.\nThe conversation takes place in a peaceful school courtyard during spring.\nSEASON, WEATHER, AND TIME:\nSpring.\nA mild, sunny afternoon shortly after school.\nThe weather is pleasant, with a light spring breeze.\nTrees are covered with fresh green leaves and spring blossoms.\nPink flowers are blooming in the surrounding garden.\nSETTING AND SPATIAL ARRANGEMENT:\nA quiet corner of the school courtyard.\nA wooden bench stands beside a blossoming tree with delicate pink flowers.\nA small flower bed is located near the bench.\nThe school building and a paved walkway are visible in the background.\nHannah and Zoe sit next to each other on the bench.\nThere is enough open space in front of the bench for a small cat to approach naturally.\nCLOTHING:\nHannah wears her existing upper clothing from <<<Image1>>> and dark blue full-length jeans.\nZoe wears her existing upper clothing from <<<Image2>>> and charcoal-gray full-length trousers.\nPreserve their referenced upper clothing exactly.\nACCESSORIES:\nHannah wears a small bracelet.\nZoe wears a simple wristwatch.\nPRE-ACTION:\nHannah and Zoe are sitting together on a wooden bench in the school courtyard.\nA blossoming tree stands beside the bench.\nPink flowers and fresh green leaves surround the area.\nThe girls are having a conversation after school.\nDIALOGUE:\nHannah (<<<Audio1>>> ):\n\"How about joining my slumber party?\"\nZoe (<<<Audio2>>> ):\n\"When is it?\"\nHannah (<<<Audio1>>> ):\n\"It's on Sunday!\"\nZoe (<<<Audio2>>> ):\n\"I'm a bit busy on Sunday. Thanks anyway.\"\nFINAL PAYOFF:\nAfter Zoe finishes her final line, a gentle spring breeze moves through the nearby blossoming tree.\nA few pink flower petals detach from the branches and drift slowly downward in front of Hannah and Zoe.\nAs the petals settle, a small, friendly domestic cat walks toward the bench.\nThe cat approaches the girls and stops very close to their feet.\nBoth Hannah and Zoe look down at the cat with gentle, affectionate expressions.\nCUT IMMEDIATELY.\nCAT APPEARANCE AND BEHAVIOR:\nOne small domestic cat with short, soft orange-and-white fur.\nThe cat has natural feline proportions.\nThe cat enters only during the final payoff.\nIt approaches the bench calmly and stops beside the girls' feet.\nThe cat does not jump onto the bench.\nIt does not climb onto either character.\nIt does not perform tricks or exaggerated movements.\nENVIRONMENTAL CONTINUITY:\nThe blossoming tree remains beside the bench throughout the scene.\nThe spring weather stays mild and sunny.\nThe gentle breeze and falling petals become noticeable during the final payoff.\nOnly a few petals fall.\nThere is no sudden strong wind or dramatic weather change.\nThe cat does not appear before Zoe finishes speaking.\nThe cat must be clearly visible beside the girls' feet during the final payoff.\nCHARACTER AND PROP CONTINUITY:\nHannah remains seated in her original position.\nZoe remains seated beside Hannah.\nBoth characters retain their exact referenced upper clothing.\nTheir lower clothing and accessories remain unchanged.\nNeither character stands up or leaves the bench.\nNo additional people or animals appear.\nAUDIO:\nHannah speaks only with <<<Audio1>>> .\nZoe speaks only with <<<Audio2>>> .\nClear, natural English pronunciation.\nDialogue order must be exactly:\nHannah: \"How about joining my slumber party?\"\nZoe: \"When is it?\"\nHannah: \"It's on Sunday!\"\nZoe: \"I'm a bit busy on Sunday. Thanks anyway.\"\nNo overlapping dialogue.\nNo additional speech.\nNo narration.\nNo background conversations.\nSubtle outdoor spring ambience is acceptable.\nNo background music.\nDo not generate subtitles."
+},
+  {
+  id: "winter_times_mia_zoe3",
+  correctOptionQuestions: [{"sentence":"Zoe : Really, did you guess who the ___ was?","target":"thief","choices":["thief","chief","teeth","leaf"],"bonus":{"target":"şüphelendi","choices":["şüphelendi","saygı duydu","bekledi","inceledi"],"word":"suspected"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/winter_times_mia_zoe3.mp4",
+  title: "The Mystery Novel",
+  transcript: "Mia : Zoe, I finally finished that /mystery/ novel! Zoe : Really, did you guess who the /thief/ was? Mia : No, but I suspected everyone except the real /thief/!",
+  answerOptions: [
+    { id: "a", text: "Mia : Zoe, sonunda o /gizem/ romanını bitirdim! Zoe : Gerçekten mi, /hırsızın/ kim olduğunu tahmin ettin mi? Mia : Hayır, ama gerçek /hırsız/ dışında herkesten şüphelendim!" },
+    { id: "b", text: "Mia : Zoe, sonunda o dedektif romanını bitirdim! Zoe : Gerçekten mi, katilin kim olduğunu tahmin ettin mi? Mia : Hayır, gerçek katilden hiç şüphelenmedim!" }
+  ],
+  easyDistractor: "Mia : Zoe, yeni bir kitap aldım! Zoe : Gerçekten mi, ne hakkında? Mia : Hayvanlar ve doğa hakkında!",
+  correctOptionId: "a",
+  characterIds: ["mia", "zoe", "coco"],
+  grades: [6,7,8],
+  functions: ["simple_past_tense", "asking_about", "givinginformation", "responding_appropriately"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:09.901",
+
+  evidenceSentence: "Mia : Zoe, I finally finished that /mystery/ novel! Zoe : Really, did you guess who the /thief/ was? Mia : No, but I suspected everyone except the real /thief/!",
+  truefalsequestion: "Mia didn't guess who the thief was correctly.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Mia's voice reference.\nUse <<<Image2>>> as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Zoe's voice reference.\nSCENE:\nThe Mystery Novel.\nA warm, natural conversation between Mia and Zoe about a mystery novel Mia has just finished reading.\nMia's pet rabbit Coco is also present.\nSEASON, WEATHER, AND TIME:\nWinter, early evening.\nIt is dark outside, and gentle snow falls steadily.\nSETTING:\nA beautiful, cozy living room in Mia's family home.\nMia and Zoe sit comfortably beside each other on a sofa, turned slightly toward one another.\nA traditional fireplace burns gently nearby, casting a warm golden glow across the room.\nA large window reveals a peaceful, snow-covered residential neighborhood.\nSoftly illuminated streetlamps make the falling snowflakes clearly visible against the dark blue evening sky.\nThe room contains a soft rug, comfortable cushions, a wooden coffee table, bookshelves, and tasteful indoor plants.\nThe atmosphere is warm, peaceful, and inviting.\nNo Christmas decorations or holiday ornaments.\nCLOTHING:\nMia wears her existing upper clothing from <<<Image1>>> and dark blue full-length trousers.\nZoe wears her existing upper clothing from <<<Image2>>> and charcoal gray full-length trousers.\nMia and Zoe are approximately the same height.\nPROPS:\nMia holds ONE mystery novel in her lap.\nThe book has an attractive illustrated cover without readable text.\nTwo ceramic mugs of hot chocolate rest securely on the coffee table, one belonging to Mia and the other to Zoe.\nThin, delicate wisps of steam rise continuously from both mugs.\nThe steam is subtle and realistic, showing that the drinks are freshly prepared and warm.\nNeither girl needs to pick up or drink from the mugs during the conversation.\nCOCO — MIA'S PET RABBIT:\nCoco is a small, adorable domestic rabbit with natural rabbit anatomy, soft fur, upright ears, and realistic proportions.\nCoco rests comfortably on the soft rug beside the coffee table, clearly visible near the girls.\nThe rabbit occasionally makes a tiny natural ear movement.\nCoco remains calm and relaxed throughout the scene.\nCoco does not jump onto the furniture, approach the fireplace, touch the mugs, or interrupt the conversation.\nPRE-ACTION:\nMia has just finished reading her mystery novel.\nShe closes the book gently and keeps it resting in her lap.\nZoe notices that Mia has finished reading.\nThe fireplace burns softly.\nSteam rises from both hot chocolates.\nCoco rests peacefully on the rug.\nSnow falls outside the large window.\nDIALOGUE AND PERFORMANCE:\nMia (<<<Audio1>>> ):\n\"Zoe, I finally finished that mystery novel!\"\nMia speaks with quiet excitement, pleased to have finished the book.\nShe looks toward Zoe while keeping the novel in her lap.\nZoe (<<<Audio2>>> ):\n\"Really? Did you guess who the thief was?\"\nZoe responds with genuine curiosity and interest.\nMia (<<<Audio1>>> ):\n\"No, but I suspected everyone except the real thief!\"\nMia delivers the line with mild amusement at how completely wrong her guesses were.\nREACTION / PAYOFF:\nZoe glances briefly at the mystery novel in Mia's lap, then looks back at Mia with an amused smile.\nMia gives a small, self-aware smile and gently shakes her head once.\nCoco remains peacefully resting on the rug.\nCUT immediately after their brief, natural reaction.\nPERFORMANCE:\nThe interaction is relaxed, friendly, and believable.\nMia is thoughtful and slightly shy but comfortable talking with her best friend.\nZoe is quiet, attentive, and genuinely interested in Mia's story.\nTheir expressions remain subtle and age-appropriate.\nNo exaggerated laughter, dramatic gestures, or unnecessary physical actions.\nOnly the current speaker moves her mouth.\nPROP AND ENVIRONMENT CONTINUITY:\nThe mystery novel remains in Mia's lap after she closes it.\nThere are exactly TWO hot chocolate mugs on the coffee table.\nBoth mugs remain stationary throughout the scene.\nThin steam continues rising naturally from both drinks.\nNo spilled liquid.\nCoco remains on the rug throughout the conversation.\nThe fireplace fire remains safely contained and burns gently.\nSnow continues falling outside the closed window.\nNo snow enters the room.\nAUDIO:\nMia speaks only with <<<Audio1>>> .\nZoe speaks only with <<<Audio2>>> .\nPreserve the exact dialogue wording and order:\n1. Mia: \"Zoe, I finally finished that mystery novel!\"\n2. Zoe: \"Really? Did you guess who the thief was?\"\n3. Mia: \"No, but I suspected everyone except the real thief!\"\nNo overlapping dialogue.\nNo additional speech or narration.\nNo background conversations.\nOnly subtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nZoe smiles at Mia's amusing confession.\nMia gently shakes her head with a small smile.\nCoco rests quietly nearby.\nThe fireplace glows, steam rises from the hot chocolate, and snow falls outside.\nCUT."
+},
+  {
+  id: "winter_times_daniel_elena",
+  correctOptionQuestions: [{"sentence":"Elena : Are you sure, it's ___ out there!","target":"freezing","choices":["freezing","sneezing","breezing","pleasing"],"bonus":{"target":"kardanadam","choices":["kardanadam","kartopu","dondurucu","kar küresi"],"word":"snowman"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/winter_times_daniel_elena.mp4",
+  title: "The Brave Explorer",
+  transcript: "Daniel : Mum, I'm going outside to /build a snowman/! Elena : Are you sure, it's freezing out there! Daniel : Don't worry, /I can handle/ the cold!",
+  answerOptions: [
+    { id: "b", text: "Daniel : Anne, /kardan adam yapmak/ için dışarı çıkıyorum! Elena : Emin misin, dışarısı buz gibi! Daniel : Endişelenme, soğukla /başa çıkabilirim/!" },
+    { id: "a", text: "Daniel : Anne, kartopu oynamak için dışarı çıkıyorum! Elena : Emin misin, dışarısı buz gibi! Daniel : Endişelenme, sıkı giyindim." }
+  ],
+  easyDistractor: "Daniel : Anne, bugün dışarıda çok kar yağdı! Elena : Evet, bahçe tamamen karla kaplandı. Daniel : Pencereden izlemek çok güzel!",
+  correctOptionId: "b",
+  characterIds: ["daniel", "elena"],
+  grades: [5, 6, 7, 8],
+  functions: ["be_going_to_future_tense_for_plans", "use_of_modal_can_for_capability_and_ability", "expressing_feelings", "responding_appropriately"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:06.401",
+
+  evidenceSentence: "Daniel : Mum, I'm going outside to /build a snowman/! Elena : Are you sure, it's freezing out there! Daniel : Don't worry, /I can handle/ the cold!",
+  truefalsequestion: "The weather is very cold outside.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Daniel's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Daniel's voice reference.\nUse <<<Image2>>> as Elena's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Elena's voice reference.\nSCENE:\nThe Brave Explorer.\nSEASON, WEATHER, AND TIME:\nA freezing winter evening with heavy snowfall and strong, icy wind outside.\nSETTING:\nA cozy family living room connected directly to the front entrance.\nA beautiful fireplace burns warmly inside the room.\nA large window reveals a snow-covered garden, with thick snow on the ground, trees, and garden fence.\nSnowflakes swirl through the cold blue evening air outside.\nThe warm golden fireplace light contrasts with the icy blue winter atmosphere beyond the windows.\nThe front door opens directly toward the snowy garden.\nCLOTHING:\nDaniel wears his exact existing upper garment from <<<Image1>>> and full-length dark blue trousers.\nElena wears her exact existing upper garment from <<<Image2>>> and full-length dark blue trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nPRE-ACTION:\nDaniel is preparing to go outside.\nHe stands near the front door, looking eagerly toward the snow-covered garden through the nearby window.\nElena is sitting comfortably on the sofa near the fireplace.\nDaniel turns toward his mother to announce his plan.\nDIALOGUE AND ACTION:\n1. DANIEL (<<<Audio1>>>):\n\"Mum, I'm going outside to build a snowman!\"\nDaniel speaks enthusiastically, clearly excited about his plan.\n2. ELENA (<<<Audio2>>>):\n\"Are you sure? It's freezing out there!\"\nElena looks toward Daniel with genuine concern.\n3. DANIEL (<<<Audio1>>>):\n\"Don't worry! I can handle the cold!\"\nWhile delivering this line, Daniel performs his signature canonical KING POSE.\nHe stands proudly with his chest lifted, shoulders back, chin slightly raised, and both hands firmly resting on his hips.\nHis expression is supremely confident, as though nothing could possibly intimidate him.\nHold this proud king pose briefly after he finishes speaking.\nREACTION / PAYOFF:\nDaniel confidently turns toward the front door.\nHe opens the door.\nAn immediate gust of freezing winter wind blows directly toward him.\nHis hair and upper garment flutter naturally in the icy gust.\nDaniel's proud confidence instantly disappears.\nHe freezes in place for a brief moment, staring at the snowy garden outside.\nWithout saying a word, Daniel quickly closes the door.\nHe turns around and walks straight toward the fireplace.\nHe stands close to the warm fire and holds both hands toward its warmth, trying to get comfortable again.\nElena watches her son's sudden change of plans with a small, knowing smile.\nDaniel avoids making eye contact with his mother, pretending that nothing unusual happened.\nCUT on Daniel warming his hands beside the fireplace.\nPERFORMANCE:\nThe humor depends on the sharp contrast between Daniel's exaggerated confidence in his canonical king pose and his immediate surrender to the cold.\nDaniel's king pose must be clearly recognizable and held long enough to establish his confidence.\nHis reaction to the cold should be immediate, natural, and funny without becoming cartoonishly exaggerated.\nElena remains calm and observant.\nNo laughter.\nPHYSICAL CONTINUITY:\nDaniel remains indoors during the entire scene.\nHe opens the front door but never steps outside.\nThe icy wind briefly enters through the open doorway.\nThe front door closes completely before Daniel approaches the fireplace.\nDaniel does not change clothing.\nElena remains seated on the sofa.\nThe fireplace continues burning throughout the scene.\nSnow remains outside, visible through the windows and briefly through the open doorway.\nAUDIO:\nDaniel speaks only with <<<Audio1>>>.\nElena speaks only with <<<Audio2>>>.\nExact dialogue order:\n1. Daniel: \"Mum, I'm going outside to build a snowman!\"\n2. Elena: \"Are you sure? It's freezing out there!\"\n3. Daniel: \"Don't worry! I can handle the cold!\"\nNo additional dialogue.\nNatural fireplace crackling and a brief gust of winter wind when the door opens.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nDaniel silently warms his hands by the fireplace, his earlier confidence completely gone.\nElena gives him a knowing smile.\nCUT."
+},
+  {
+  id: "winter_times_mia_zoe4",
+  correctOptionQuestions: [{"sentence":"Zoe : Could someone be reading your ___?","target":"diary","choices":["diary","dairy","daily","dictionary"],"bonus":{"target":"gizemli","choices":["gizemli","tuhaf","komik","heyecanlı"],"word":"mysterious"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/winter_times_mia_zoe4.mp4",
+  title: "The Secret Message",
+  transcript: "Mia : Zoe, someone left a /mysterious/ note on my desk! Zoe : Really, what does it say? Mia : It says, I know what you did /yesterday/! Zoe : Could someone be reading your /diary/?",
+  answerOptions: [
+    { id: "a", text: "Mia : Zoe, biri masama /gizemli/ bir not bırakmış! Zoe : Gerçekten mi, ne yazıyor? Mia : /Dün/ ne yaptığını biliyorum, yazıyor! Zoe : Birisi /günlüğünü/ okuyor olabilir mi?" },
+    { id: "b", text: "Mia : Zoe, biri masama tuhaf bir not bırakmış! Zoe : Gerçekten mi, ne yazıyor? Mia : Geçen hafta ne yaptığını biliyorum, yazıyor! Zoe : Birisi kitabını okuyor olabilir mi?" }
+  ],
+  easyDistractor: "Mia : Zoe, dün yeni bir kitap aldım! Zoe : Gerçekten mi, konusu ne? Mia : Gizemli bir macerayı anlatıyor! Zoe : Birlikte okuyabilir miyiz?",
+  correctOptionId: "a",
+  characterIds: ["mia", "zoe"],
+  grades: [7,8],
+  functions: ["asking_about", "present_progressive", "simple_past_tense", "expressing_feelings"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:07.151",
+
+  evidenceSentence: "Mia : Zoe, someone left a /mysterious/ note on my desk! Zoe : Really, what does it say? Mia : It says, I know what you did /yesterday/! Zoe : Could someone be reading your /diary/?",
+  truefalsequestion: "Mia found a mysterious note on her desk.",
+  truefalseanswer: true,
+
+  prompt: "Use <<<Image1>>> as Mia's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>> as Mia's voice reference.\nUse <<<Image2>>> as Zoe's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio2>>> as Zoe's voice reference.\nSCENE:\nThe Secret Message.\nSEASON, WEATHER, AND TIME:\nA cold winter evening with steady snowfall outside.\nSETTING:\nMia's cozy bedroom at home.\nA warm fireplace burns gently in the room, casting a soft golden glow across the furniture.\nA large window reveals a peaceful, snow-covered garden. Snowflakes fall continuously against the dark blue evening sky.\nThe bedroom contains a comfortable bed, bookshelves, a study desk, a desk lamp, and personal belongings arranged naturally.\nThe warm interior contrasts with the cold, snowy winter evening outside.\nIMPORTANT OBJECT PLACEMENT:\nMia's personal diary is resting CLOSED on top of her study desk from the very beginning of the scene.\nThe diary is clearly recognizable as a personal journal, with a distinctive decorative cover.\nIt remains in the same visible position on the desk throughout the entire scene.\nA separate small handwritten note is in Mia's hand.\nThe note and the diary are two different objects.\nNo readable writing is shown on the note or the diary.\nCLOTHING:\nMia wears her exact existing upper garment from <<<Image1>>> and full-length dark blue trousers.\nZoe wears her exact existing upper garment from <<<Image2>>> and full-length dark blue trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nPRE-ACTION:\nMia and Zoe are standing together beside Mia's study desk.\nThey are approximately the same height.\nMia is holding a mysterious handwritten note that she recently discovered on her desk.\nShe appears puzzled and slightly uneasy.\nZoe is standing beside her, curious about the note.\nMia's closed diary is already visible on the desk, close enough for both girls to notice and point toward it.\nDIALOGUE AND ACTION:\n1. MIA (<<<Audio1>>>):\n\"Zoe, someone left a mysterious note on my desk!\"\nMia speaks with concern while showing Zoe the small note in her hand.\n2. ZOE (<<<Audio2>>>):\n\"Really? What does it say?\"\nZoe looks at the note with genuine curiosity.\n3. MIA (<<<Audio1>>>):\n\"It says, 'I know what you did yesterday!'\"\nMia reads the mysterious message aloud.\nHer expression becomes more uneasy as she repeats the unsettling words.\n4. ZOE (<<<Audio2>>>):\n\"Could someone be reading your diary?\"\nAs Zoe asks this question, she turns her attention toward Mia's CLOSED diary resting on the study desk.\nZoe clearly points at the diary with one hand while speaking.\nHer tone is thoughtful and concerned, not playful or teasing.\nREACTION / PAYOFF:\nImmediately after Zoe finishes her question, Mia follows Zoe's pointing gesture.\nMia looks directly at her closed diary on the desk.\nFor a brief moment, she silently stares at it as the implication sinks in.\nONLY AFTER LOOKING AT THE DIARY, Mia's eyes widen with sudden fear.\nHer expression changes from confusion to genuine alarm.\nShe slowly turns back toward Zoe, visibly frightened by the possibility that someone has been secretly reading her private diary.\nMia instinctively holds the mysterious note closer to herself.\nZoe notices Mia's frightened reaction and becomes concerned as well.\nNeither girl speaks again.\nCUT on Mia's frightened expression.\nSTORY AMBIGUITY:\nNever reveal who wrote the mysterious note.\nNever reveal whether anyone has actually read Mia's diary.\nThe diary remains closed throughout the scene.\nNo mysterious person appears.\nNo supernatural activity occurs.\nThe suspense comes entirely from Zoe's suggestion and Mia's realization that her private thoughts might have been exposed.\nPERFORMANCE:\nMia begins puzzled and uneasy, but her strongest fear must appear ONLY AFTER she looks at her diary following Zoe's question.\nZoe asks her final question sincerely, without trying to frighten Mia.\nKeep the emotional progression natural and clearly readable.\nThe final reaction should feel unsettling rather than comedic.\nNo exaggerated screaming, jumping, or theatrical gestures.\nPHYSICAL CONTINUITY:\nMia holds the same mysterious note throughout the scene.\nThe diary stays closed and visible on the study desk from beginning to end.\nZoe points specifically toward the diary during her final question.\nMia looks at the diary BEFORE reacting with fear.\nNeither girl opens or touches the diary.\nThe fireplace continues burning gently.\nSnow continues falling outside the closed window.\nAUDIO:\nMia speaks only with <<<Audio1>>>.\nZoe speaks only with <<<Audio2>>>.\nExact dialogue order:\n1. Mia: \"Zoe, someone left a mysterious note on my desk!\"\n2. Zoe: \"Really? What does it say?\"\n3. Mia: \"It says, 'I know what you did yesterday!'\"\n4. Zoe: \"Could someone be reading your diary?\"\nNo additional dialogue.\nOnly subtle indoor ambience and gentle fireplace crackling.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nMia looks toward Zoe with wide, frightened eyes after glancing at her diary.\nZoe watches her with growing concern.\nThe mysterious note remains in Mia's hand, and the closed diary rests untouched on the desk.\nThe mystery remains unresolved.\nCUT."
+},
+  {
+  id: "winter_times_jack_isla",
+  correctOptionQuestions: [{"sentence":"Jack : Look, the birds are already building their ___!","target":"nests","choices":["nests","nets","next","necks"],"bonus":{"target":"yuvalar","choices":["yuvalar","ağlar","sonraki","boyunlar"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/winter_times_jack_isla.mp4",
+  title: "The Early Bird",
+  transcript: "Jack : Mum, I think spring is coming /early/ this year! Isla : What makes you think that? Jack : Look, the birds are already /building/ their nests!",
+  answerOptions: [
+    { id: "b", text: "Jack : Anne, sanırım bu yıl bahar /erken/ gelecek! Isla : Neden böyle düşünüyorsun? Jack : Bak, kuşlar şimdiden /yuvalarını yapıyor/!" },
+    { id: "a", text: "Jack : Anne, sanırım bu yıl kış erken geldi. Isla : Neden böyle düşünüyorsun? Jack : Bak, kuşlar yuvalarını yapmakta çok geç kaldı!" }
+  ],
+  easyDistractor: "Jack : Anne, bahçedeki kuşlara yem verebilir miyiz? Isla : Tabii, mutfaktan biraz kuş yemi getirebilirsin.",
+  correctOptionId: "b",
+  characterIds: ["jack", "isla"],
+  grades: [5, 6, 7, 8],
+  functions: ["simple_future_will_prediction", "askingforreason", "present_progressive", "expressing_hopes"],
+  theme: "winter_times",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:08.400",
+
+  evidenceSentence: "Jack : Mum, I think spring is coming /early/ this year! Isla : What makes you think that? Jack : Look, the birds are already /building/ their nests!",
+  truefalsequestion: "Jack thinks spring is coming late this year.",
+  truefalseanswer: false,
+
+  prompt: "Use <<<Image1>>>  as Jack's canonical identity, appearance, and upper-clothing reference.\nUse <<<Audio1>>>  as Jack's voice reference.\nUse <<<Image2>>>  as Isla's canonical identity, appearance, and upper-clothing reference.\n\nSCENE:\nThe Early Bird.\nSEASON, WEATHER, AND TIME:\nA cold winter afternoon with gentle, continuous snowfall.\nThe sky is pale gray, and the garden is covered in thick snow.\nSETTING:\nJack's cozy family living room.\nA traditional fireplace burns gently, filling the room with warm golden light.\nA large window overlooks the family's snow-covered garden.\nDirectly outside the window stands a leafless tree with snow-covered branches.\nOne of the tree's sturdy branches supports a small, partially built bird's nest.\nThe nest is clearly visible from inside the living room.\nA small wild bird is actively gathering twigs and bringing them to the nest.\nThe garden fence, bushes, and surrounding rooftops are covered in snow.\nThe warm interior contrasts with the cold winter landscape outside.\nCLOTHING:\nJack wears his exact existing upper garment from <<<Image1>>>  and full-length dark blue trousers.\nIsla wears her exact existing upper garment from <<<Image2>>>  and full-length dark blue trousers.\nBoth upper garments retain their original design, length, and natural fit, worn casually untucked.\nPRE-ACTION:\nJack is standing near the living room window, watching the snowy garden with growing excitement.\nIsla is nearby, enjoying the warmth of the fireplace.\nOutside, a small bird is perched beside its partially built nest, holding a thin twig in its beak.\nJack notices the bird's nesting activity and turns toward his mother.\nDIALOGUE AND ACTION:\n1. JACK (<<<Audio1>>> ):\n\"Mum, I think spring is coming early this year!\"\nJack speaks with cheerful excitement.\n2. ISLA (<<<Audio2>>> ):\n\"What makes you think that?\"\nIsla looks toward Jack with genuine curiosity.\n3. JACK (<<<Audio1>>> ):\n\"Look! The birds are already building their nests!\"\nJack enthusiastically points toward the tree outside the window.\nIsla follows his gesture and looks at the small bird beside its nest.\nREACTION / PAYOFF:\nImmediately after Jack finishes his final line, both characters watch the bird through the window.\nThe bird stands on the branch beside its partially built nest, still holding a twig in its beak.\nA heavy clump of accumulated snow suddenly slips from a higher branch of the same tree.\nThe snow falls onto a lower section of the tree immediately BESIDE the nest, without striking the bird or damaging the nest.\nThe falling snow breaks apart and scatters naturally across the branch.\nThe bird pauses, startled by the sudden movement.\nIt looks around at the snowy garden.\nAfter a brief hesitation, the bird releases the twig from its beak.\nThe twig falls naturally to the snowy ground below.\nThe bird then takes flight and disappears into the winter garden.\nINSIDE THE LIVING ROOM:\nJack watches the bird fly away.\nHis earlier excitement gradually fades into quiet disappointment.\nHe lowers his pointing hand.\nIsla turns toward Jack with a small, knowing smile.\nJack looks back at his mother, realizing that winter clearly isn't finished yet.\nNeither character speaks.\nCUT.\nPERFORMANCE:\nJack begins optimistic and enthusiastic, convinced that spring is arriving early.\nIsla is curious and affectionate, allowing Jack to make his own discovery.\nThe bird behaves naturally, with subtle head movements and realistic wing motion.\nThe payoff should feel gently humorous rather than dramatic.\nJack's disappointed expression is restrained and believable.\nIsla does not laugh.\nPHYSICAL CONTINUITY:\nJack and Isla remain indoors throughout the scene.\nThe window stays closed.\nThe bird's nest remains attached to the same tree branch throughout.\nThe bird begins beside its nest with a twig in its beak.\nThe falling snow comes from a higher branch of the same tree.\nThe snow lands beside the nest, not directly on the bird.\nThe bird is never injured or buried in snow.\nThe bird drops its twig before flying away.\nThe nest remains intact.\nSnow continues falling gently throughout the scene.\nThe fireplace continues burning inside the living room.\nAUDIO:\nJack speaks only with <<<Audio1>>> .\nIsla speaks only with <<<Audio2>>> .\nExact dialogue order:\n1. Jack: \"Mum, I think spring is coming early this year!\"\n2. Isla: \"What makes you think that?\"\n3. Jack: \"Look! The birds are already building their nests!\"\nNo additional dialogue.\nSubtle fireplace crackling, gentle winter ambience, a soft sound of snow falling from the branch, and natural bird wing sounds.\nNo laughter.\nABSOLUTELY NO SUBTITLES OR ON-SCREEN TEXT.\nENDING:\nJack watches the empty branch with a disappointed expression.\nIsla gives him a knowing smile.\nOutside, the intact nest remains on the snow-covered tree as gentle snowfall continues.\nCUT."
 },
   {
     id: "5_life_in_the_city_olivia_ella",

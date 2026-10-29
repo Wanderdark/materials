@@ -479,6 +479,7 @@ const followingPhoneConversationsGrade8Function = {
       disablePresenceSpeech: true,
       imagePath: "images/following-phone-conversations/jack-emily-speaking.webp",
       dialogueImageReveal: true,
+      dialogueVideoUrl: "https://media.adilhoca.com/video/8_phone_conversation_jack_emily.mp4",
       imageAspect: "1 / 1",
       imageFit: "cover",
       visualBrief: "Phone conversation thumbnail; space reserved for the dialogue visual or video.",

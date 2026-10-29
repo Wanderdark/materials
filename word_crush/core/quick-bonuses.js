@@ -3,11 +3,12 @@
   const FIRST_DROP_DELAY_MAX = 24000;
   const BONUS_LIFETIME = 6000;
   const EFFECT_DURATION = 30000;
-  const EARTHQUAKE_DURATION = 10000;
+  const EARTHQUAKE_DURATION = 20000;
   const FADE_TO_BLACK_DURATION = 20000;
+  const FLIP_DURATION = 30000;
   const TUTORIAL_KEY = "wc_surprise_tutorial_seen";
   // Each effect is drawn once per shuffled pool before the next pool is created.
-  const EFFECTS = ["wordFog", "fadeToBlack", "displace", "timeWarp", "picturePanic", "earthquake", "colorLink"];
+  const EFFECTS = ["wordFog", "fadeToBlack", "displace", "timeWarp", "picturePanic", "earthquake", "colorLink", "flip", "bonusTime"];
   const LITE_EXCLUDED_EFFECTS = new Set(["earthquake", "wordFog"]);
 
   let spawnTimer = null;
@@ -20,6 +21,8 @@
   let effectPool = [];
   let runEffects = [];
   let tutorialBubble = null;
+  let announcement = null;
+  let announcementTimer = null;
 
   function start(state, renderBoard, handlers = {}) {
     stop();
@@ -31,10 +34,15 @@
     runEffects = state.liteModeAtStart
       ? EFFECTS.filter((effect) => !LITE_EXCLUDED_EFFECTS.has(effect))
       : [...EFFECTS];
+    if (state.endlessTime) runEffects = runEffects.filter(effect => effect !== "bonusTime");
     scheduleSpawn(randomFirstDropDelay());
   }
 
   function stop() {
+    if (announcementTimer) window.clearTimeout(announcementTimer);
+    announcementTimer = null;
+    announcement?.remove();
+    announcement = null;
     const wasEarthquake = activeState?.quickBonusEffect === "earthquake";
     if (spawnTimer) window.clearTimeout(spawnTimer);
     if (expiryTimer) window.clearTimeout(expiryTimer);
@@ -99,13 +107,27 @@
   }
 
   async function collectSurprise() {
-    if (!activeDrop || activeState?.quickBonusEffect || !activeState?.isRunning || activeState.isPaused || activeState.isResolving) return;
+    if (!activeDrop || activeState?.quickBonusEffect || !activeState?.isRunning || activeState.isPaused) return;
 
     if (expiryTimer) window.clearTimeout(expiryTimer);
     expiryTimer = null;
     activeDrop?.remove();
     activeDrop = null;
     const effect = pickEffect();
+    function activateWhenReady() {
+      effectTimer = null;
+      if (!activeState?.isRunning) return;
+      if (activeState.isResolving || activeState.isPaused) {
+        effectTimer = window.setTimeout(activateWhenReady, 50);
+        return;
+      }
+      activateEffect(effect);
+    }
+    activateWhenReady();
+  }
+
+  async function activateEffect(effect) {
+    if (effect === "bonusTime" && !activeState.endlessTime) activeState.secondsLeft += 20;
     activeState.quickBonusEffect = effect;
     activeState.quickColorHintActive = effect === "colorLink";
     activeState.quickEnglishBlurActive = effect === "wordFog";
@@ -115,11 +137,17 @@
     activeState.quickEffectKind = scoreEffectKind(effect);
     document.body.classList.toggle("time-warp-active", effect === "timeWarp");
     document.body.classList.toggle("earthquake-active", effect === "earthquake");
+    document.body.classList.toggle("flip-active", effect === "flip");
     window.WordCrushAudio?.setTimeWarpMusic(effect === "timeWarp");
     if (effect === "earthquake") window.WordCrushAudio?.playRumble?.();
     else window.WordCrushAudio?.play("star");
     announceEffect(effect);
     onStateChange?.();
+
+    if (effect === "bonusTime") {
+      finishEffect(effect);
+      return;
+    }
 
     if (effect === "displace") {
       await onDisplace?.();
@@ -151,7 +179,9 @@
 
   function announceEffect(effect) {
     const seconds = Math.round(durationFor(effect) / 1000);
-    const message = effect === "displace"
+    const message = effect === "bonusTime"
+      ? (activeState.endlessTime ? "BONUS TIME: UNLIMITED TIME ALREADY ACTIVE" : "BONUS TIME! +20 SECONDS")
+      : effect === "displace"
       ? "DISPLACE ACTIVE!"
       : `${effectLabel(effect)} ACTIVE! ${seconds} SECONDS`;
     const label = {
@@ -161,14 +191,27 @@
       colorLink: "COLOR LINK",
       wordFog: "BLURRED VISION",
       timeWarp: "TIME WARP",
-      earthquake: "EARTHQUARE"
+      earthquake: "EARTHQUARE",
+      flip: "FLIP",
+      bonusTime: "BONUS TIME"
     }[effect];
     window.WordCrushScreens?.setMessage(message);
-    window.ToastManager?.show(label);
+    if (announcementTimer) window.clearTimeout(announcementTimer);
+    announcement?.remove();
+    announcement = document.createElement("div");
+    announcement.className = "quick-effect-announcement";
+    announcement.textContent = label;
+    document.body.appendChild(announcement);
+    announcementTimer = window.setTimeout(() => {
+      announcement?.remove();
+      announcement = null;
+      announcementTimer = null;
+    }, 1000);
   }
 
   function durationFor(effect) {
-    if (effect === "displace") return 0;
+    if (effect === "displace" || effect === "bonusTime") return 0;
+    if (effect === "flip") return scaleCustomDuration(FLIP_DURATION);
     const baseDuration = effect === "earthquake"
       ? EARTHQUAKE_DURATION
       : effect === "fadeToBlack"
@@ -184,7 +227,8 @@
       colorLink: "COLOR LINK",
       wordFog: "BLURRED VISION",
       timeWarp: "TIME WARP",
-      earthquake: "EARTHQUARE"
+      earthquake: "EARTHQUARE",
+      flip: "FLIP"
     }[effect] || "SURPRISE";
   }
 
@@ -205,11 +249,11 @@
   }
 
   function isCurse(effect) {
-    return ["picturePanic", "earthquake", "wordFog"].includes(effect);
+    return ["picturePanic", "earthquake", "wordFog", "flip"].includes(effect);
   }
 
   function scoreEffectKind(effect) {
-    if (["displace", "timeWarp", "colorLink"].includes(effect)) return null;
+    if (["displace", "timeWarp", "colorLink", "bonusTime"].includes(effect)) return null;
     return isCurse(effect) ? "curse" : "bonus";
   }
 
@@ -248,7 +292,7 @@
   }
 
   function clearVisualEffects() {
-    document.body.classList.remove("time-warp-active", "earthquake-active");
+    document.body.classList.remove("time-warp-active", "earthquake-active", "flip-active");
     window.WordCrushAudio?.setTimeWarpMusic(false);
   }
 
