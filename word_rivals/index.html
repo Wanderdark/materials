@@ -1354,10 +1354,18 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <script src="words.js"></script>
 <script src="names.js" onerror="void 0"></script>
 <script src="avatars.js"></script>
-<script>window.__forceTeacherControl = true;</script>
-<script src="../func_presenter/teacher-cloud.js"></script>
+<script>
+window.rvrFriendMode = new URLSearchParams(location.search).get('mode') === 'student'
+  && new URLSearchParams(location.search).get('play') === 'friend';
+window.__forceTeacherControl = !window.rvrFriendMode;
+if (window.rvrFriendMode) {
+  document.write('<script src="../func_presenter/student.js"><\/script>');
+} else {
+  document.write('<script src="../func_presenter/teacher-cloud.js"><\/script>');
+}
+</script>
 <script src="../func_presenter/toast.js" data-global="false"></script>
-<script src="../func_presenter/teacher-control.js"></script>
+<script>if (!window.rvrFriendMode) document.write('<script src="../func_presenter/teacher-control.js"><\/script>');</script>
 <script src="../modules/teamnames.js"></script>
 <script>window.__studentSlotRemove = true;</script>
 <script src="../modules/studentselection.js"></script>
@@ -1430,7 +1438,7 @@ let _originalStudentsB = [];      // çapraz eşleştirme için B listesi orijin
 
 // ── TB (Turn Based) STATE ─────────────────────────────────
 let _listeningMode = true;        // true=blur+TTS açık, false=kelime direkt görünür
-let _gameMode     = 'realtime';   // 'realtime' | 'turnbased'
+let _gameMode     = window.rvrFriendMode ? 'turnbased' : 'realtime';
 let _musicEnabled = true;         // true=bgm açık, false=sessiz
 let _tbActiveTeam = 0;            // sırası gelen takım (0=A, 1=B)
 let _tbTimer      = null;         // 10s sayaç interval
@@ -1564,7 +1572,7 @@ function _stopConfetti() {
 }
 function _goToMainMenu() {
   if (typeof FinalScreen !== 'undefined') FinalScreen.stop();
-  location.href = '../index.html';
+  location.href = window.rvrFriendMode ? '../student-zone/index.html' : '../index.html';
 }
 
 // ── LITE MODE ─────────────────────────────────────────────
@@ -1679,6 +1687,7 @@ function resetStudentState() {
 const _STD_LS_KEY = 'tc_students_v1';
 
 function _saveStudentInputs() {
+  if (window.rvrFriendMode) return;
   try {
     localStorage.setItem(_STD_LS_KEY, JSON.stringify(studentInputs));
   } catch(e) {}
@@ -2787,6 +2796,7 @@ let _jokerDoubleActive  = false;   // double puan jokeri aktif mi
 let _jokerSureUzatUsed  = false;   // süre uzat jokeri kullanıldı mı (time bonus /2)
 
 function calcJokerQuota(gi) {
+  if (window.rvrFriendMode) return 1;
   const n = (groupStudents[gi] || []).length;
   // 1-2 → 0, 3-4 → 1, 5+ → 2 (max 2)
   return n <= 2 ? 0 : n <= 4 ? 1 : 2;
@@ -3023,6 +3033,7 @@ function _playJokerCoinSound() {
 
 // Round sonunda kullanılmamış jokerler düşer
 function _jokerRoundExpire() {
+  if (window.rvrFriendMode) return;
   let anyExpired = false;
   [0, 1].forEach(gi => {
     const n = jokerCount[gi] || 0;
@@ -3086,7 +3097,10 @@ function _jokerRoundReset() {
   _jokerUsedThisTurn  = false;
   _jokerDoubleActive  = false;
   _jokerSureUzatUsed  = false;
-  [0, 1].forEach(gi => { jokerCount[gi] = calcJokerQuota(gi); });
+  if (!window.rvrFriendMode || (_tbRound - 1) % 5 === 0) {
+    [0, 1].forEach(gi => { jokerCount[gi] = calcJokerQuota(gi); });
+    if (window.rvrFriendMode && _tbRound > 1) _spawnJkDropText('Jokers renewed!', '#FFD700');
+  }
   updateJokerDisplay();
 }
 
@@ -3782,6 +3796,7 @@ function closeSettings() {
 const _TC_LS_KEY = 'tc_settings_v1';
 
 function _saveSettings() {
+  if (window.rvrFriendMode) return;
   try {
     localStorage.setItem(_TC_LS_KEY, JSON.stringify({
       grades:        [...selectedGrades],
@@ -3949,6 +3964,7 @@ function _bgMusicFade(targetVol, durationMs) {
 
 // ── GAME MODE TOGGLE ──────────────────────────────────────
 function setGameMode(mode) {
+  if (window.rvrFriendMode) mode = 'turnbased';
   _gameMode = mode;
   const hpSection = document.getElementById('sc-hp-section');
   if (hpSection) hpSection.style.display = mode === 'turnbased' ? 'none' : '';
@@ -4167,7 +4183,7 @@ function _tbShowReadyButton() {
   if (thisGrid)  { thisGrid.style.transition  = 'none'; thisGrid.style.opacity  = '1'; }
   if (otherGrid) { otherGrid.style.transition = 'none'; otherGrid.style.opacity = '0'; }
   // Round 2+'da, takımın ilk turu ise çark göster
-  if (_tbRound > 1 && !_rbSpunThisRound[gi]) {
+  if (!window.rvrFriendMode && _tbRound > 1 && !_rbSpunThisRound[gi]) {
     _rbShowWheel(gi, () => _tbShowReadyButtonActual(turn, side));
   } else {
     _tbShowReadyButtonActual(turn, side);
@@ -4229,11 +4245,41 @@ function _tbContinueRound() {
 
 function _menuStart() {
   _startBgMusic();
+  if (window.rvrFriendMode) {
+    _selectGameMode('turnbased');
+    return;
+  }
   document.getElementById('main-menu').classList.add('hidden');
   document.getElementById('gm-overlay').classList.remove('hidden');
 }
 
 function _selectGameMode(mode) {
+  if (window.rvrFriendMode) {
+    let profile = {}, session = {};
+    try {
+      profile = JSON.parse(localStorage.getItem('fpStudentProfile') || '{}') || {};
+      session = JSON.parse(sessionStorage.getItem('szWordRivalsFriendV1') || '{}') || {};
+    } catch (e) {}
+    const playerName = String(profile.name || '').replace(/[<>&"]/g, '').trim().slice(0, 20);
+    const friendName = String(session.friendName || '').trim();
+    const avatarIndex = AVATARS.findIndex(avatar => avatar.src === `avatars/AV_Anime_${profile.avatar}.webp`);
+    if (!playerName || avatarIndex < 0 || !/^[\p{L}\p{N} ._'’-]{1,20}$/u.test(friendName)
+      || playerName.toLocaleLowerCase() === friendName.toLocaleLowerCase()) {
+      location.replace('../student-zone/index.html');
+      return;
+    }
+    setGameMode('turnbased');
+    teamNames = [playerName, friendName];
+    teamAvatars = [avatarIndex, (avatarIndex + 1) % AVATARS.length];
+    AVATAR_MODE = 'team';
+    studentInputs = [[playerName], [friendName]];
+    _silentDistributed = false;
+    importedRosterClassroomId = '';
+    document.getElementById('main-menu').classList.add('hidden');
+    document.getElementById('gm-overlay').classList.add('hidden');
+    applyStudentsAndContinue();
+    return;
+  }
   setGameMode(mode);
   document.getElementById('gm-overlay').classList.add('hidden');
   showNameOverlay(names => {
@@ -4311,6 +4357,14 @@ document.addEventListener('contextmenu', e => e.preventDefault());
 
 window.addEventListener('load', () => {
   _loadSettings();
+  if (window.rvrFriendMode) {
+    setGameMode('turnbased');
+    const back = document.createElement('a');
+    back.href = '../student-zone/index.html';
+    back.textContent = 'Back to Student Zone';
+    back.style.cssText = 'position:fixed;bottom:8px;left:50%;transform:translateX(-50%);z-index:100;padding:8px 12px;border-radius:10px;background:#102542;color:white;font:14px sans-serif';
+    document.body.appendChild(back);
+  }
 
   // Ana menü müziğini önceden buffer'a al — play() anında hazır olsun (Chrome fix)
   const audio = document.getElementById('bg-music');

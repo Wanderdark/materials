@@ -13,6 +13,7 @@
   }
 
   function jokerCapacity(studentCount) {
+    if (TC.friendMode) return studentCount > 0 ? 1 : 0;
     if (studentCount < 3) return 0;
     return Math.min(3, Math.floor((studentCount + 1) / 3));
   }
@@ -107,7 +108,7 @@
     state.question = null;
     state.answered = false;
     state.turnJokers = { fiftyFifty: false, doublePoints: false };
-    state.groups.forEach(resetGroupJokers);
+    if (!TC.friendMode || (state.round - 1) % 5 === 0) state.groups.forEach(resetGroupJokers);
   }
 
   Object.assign(TC, { activeTurn, advanceTurn, answerCurrentQuestion, canUseJoker, continueRound, createGameState, jokerCapacity, questionPoints, setWheelValue, useJoker });

@@ -22,7 +22,7 @@
   }
 
   function createQuestionPicker(questions, selection = questions[0]) {
-    const historyKey = `teamChallengersSeenQuestionIdsV1:${selection?.grade}:${selection?.unit}`;
+    const historyKey = `${TC.friendMode ? "studentFriend:" : ""}teamChallengersSeenQuestionIdsV1:${selection?.grade}:${selection?.unit}`;
     const seenIds = new Set();
     const consumedIds = new Set();
     function readHistory() {

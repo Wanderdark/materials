@@ -52,7 +52,8 @@ function createRandomItemPicker(items, options = {}) {
     pick.remove = (id) => { pool = pool.filter((item) => item.id !== id); };
     return pick;
   }
-  const storageKey = "oliviasMovieMemoriesTeacherHistoryV1";
+  const storageKey = window.__oliviasMovieMemoriesFriendMode ? "oliviasMovieMemoriesFriendHistoryV1" : "oliviasMovieMemoriesTeacherHistoryV1";
+  const friendMode = Boolean(window.__oliviasMovieMemoriesFriendMode);
   const selectedGrades = Array.isArray(options.grades) ? new Set(options.grades.map(Number)) : null;
   const playable = getPlayableItems(items).filter((item) => !selectedGrades || (Array.isArray(item.grades) && item.grades.some((grade) => selectedGrades.has(Number(grade)))));
   const priorityItems = playable
@@ -161,19 +162,21 @@ function createRandomItemPicker(items, options = {}) {
   pick.hasPendingPriority = () => { if (correctOptionMode) { if (!ratingSelectionEnabled) return false; refillCorrectOptionPool(); return pool.some((item) => priorityItems.includes(item)); } refillRegularPool(); return priorityPool.length > 0; };
   pick.availableCharacterIds = () => {
     if (correctOptionMode) refillCorrectOptionPool(); else refillRegularPool();
-    return new Set(pool.flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
+    return new Set((friendMode ? [...priorityPool, ...pool] : pool).flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
   };
   pick.pickForCharacter = (characterId) => {
-    if (ratingSelectionEnabled && pick.hasPendingPriority()) return pick();
+    if (!friendMode && ratingSelectionEnabled && pick.hasPendingPriority()) return pick();
     if (correctOptionMode) refillCorrectOptionPool(); else refillRegularPool();
-    const matchingItems = pool.filter((item) => item.characterIds?.includes(characterId));
+    const matchingItems = (friendMode ? [...new Set([...priorityPool, ...pool])] : pool).filter((item) => item.characterIds?.includes(characterId));
+    const characterPriority = friendMode ? priorityItems.find((item) => matchingItems.includes(item)) : null;
     const highestRating = Math.max(...matchingItems.map(getVideoRating));
-    const candidates = ratingSelectionEnabled ? matchingItems.filter((item) => getVideoRating(item) === highestRating) : matchingItems;
+    const candidates = characterPriority ? [characterPriority] : ratingSelectionEnabled ? matchingItems.filter((item) => getVideoRating(item) === highestRating) : matchingItems;
     const item = candidates[Math.floor(Math.random() * candidates.length)] || null;
     if (!item) return null;
     selectedCharacterVideoId = item.id;
     window.LeagueListening.recordCharacterSelection(characterId);
     pool = pool.filter((candidate) => candidate.id !== item.id);
+    if (friendMode) priorityPool = priorityPool.filter((candidate) => candidate.id !== item.id);
     return item;
   };
 
@@ -198,11 +201,12 @@ function createRandomItemPicker(items, options = {}) {
       return takeOmniItem(omniCandidates(type)[0] || null);
     };
     pick.pickForCharacter = (characterId, type) => {
-      if (pick.hasPendingPriority(type)) return pick.pickForQuestionType(type);
+      if (!friendMode && pick.hasPendingPriority(type)) return pick.pickForQuestionType(type);
       const matching = omniCandidates(type).filter((item) => item.characterIds?.includes(characterId));
       if (!matching.length) return null;
+      const characterPriority = friendMode ? priorityItems.find((item) => matching.includes(item)) : null;
       const highestRating = getVideoRating(matching[0]);
-      const candidates = ratingSelectionEnabled ? matching.filter((item) => getVideoRating(item) === highestRating) : matching;
+      const candidates = characterPriority ? [characterPriority] : ratingSelectionEnabled ? matching.filter((item) => getVideoRating(item) === highestRating) : matching;
       const item = candidates[Math.floor(Math.random() * candidates.length)];
       selectedCharacterVideoId = item.id;
       window.LeagueListening.recordCharacterSelection(characterId);

@@ -11,6 +11,11 @@
   <link rel="stylesheet" href="styles.css?v=r2-book-live-1">
   <link rel="stylesheet" href="omni-mode.css">
   <link rel="stylesheet" href="student-landing.css?v=r2-book-mobile-11">
+  <style>
+    .omm-friend-mode .setup-grid{grid-template-columns:minmax(0,640px);justify-content:center}
+    .omm-friend-mode #override-replay-button,.omm-friend-mode #transfer-points-button{display:none!important}
+    .omm-friend-mode .settings-card>a{display:flex;align-items:center;justify-content:center;margin-top:12px;text-decoration:none}
+  </style>
 </head>
 <body>
   <main class="app-shell">
@@ -43,10 +48,13 @@
   <div id="score-dialog" class="modal score-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="score-dialog-title"><div class="modal-backdrop" data-close-score-dialog></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-score-dialog aria-label="Close scores">×</button><p class="eyebrow">Live standings</p><h2 id="score-dialog-title">SCORES</h2><div id="live-scoreboard" class="round-scoreboard" aria-label="Live scores"></div></div></div>
 
   <script src="../modules/balanced-team-distribution.js"></script>
-  <script>const oliviasMovieMemoriesMode = new URLSearchParams(location.search).get("mode"); window.__oliviasMovieMemoriesStudentMode = oliviasMovieMemoriesMode === "student"; if (window.__oliviasMovieMemoriesStudentMode) sessionStorage.setItem("fpStudentMode", "1"); else sessionStorage.removeItem("fpStudentMode");</script>
-  <script src="../func_presenter/names.js"></script>
-  <script src="../func_presenter/teacher-cloud.js"></script>
-  <script src="../func_presenter/teacher-control.js"></script>
+  <script>
+    const oliviasMovieMemoriesMode = new URLSearchParams(location.search).get("mode");
+    window.__oliviasMovieMemoriesFriendMode = oliviasMovieMemoriesMode === "student" && new URLSearchParams(location.search).get("play") === "friend";
+    window.__oliviasMovieMemoriesStudentMode = oliviasMovieMemoriesMode === "student" && !window.__oliviasMovieMemoriesFriendMode;
+    if (oliviasMovieMemoriesMode === "student") sessionStorage.setItem("fpStudentMode", "1"); else sessionStorage.removeItem("fpStudentMode");
+    if (!window.__oliviasMovieMemoriesFriendMode) document.write('<script src="../func_presenter/names.js"><\/script><script src="../func_presenter/teacher-cloud.js"><\/script><script src="../func_presenter/teacher-control.js"><\/script>');
+  </script>
   <script src="../func_presenter/toast.js"></script>
   <script src="../modules/finalscreen.js"></script>
   <script src="scripts.js?v=r2-book-data-3"></script>

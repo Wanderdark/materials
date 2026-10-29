@@ -3018,10 +3018,19 @@
 <script src="../modules/rgbkeyboard.js"></script>
 <script src="../modules/finalscreen.js"></script>
 <script src="questions.js"></script>
-<script>window.__forceTeacherControl = true;</script>
+<script>
+window.wmFriendMode = new URLSearchParams(location.search).get('mode') === 'student'
+  && new URLSearchParams(location.search).get('play') === 'friend';
+window.__forceTeacherControl = !window.wmFriendMode;
+</script>
 <script src="../func_presenter/names.js"></script>
-<script src="../func_presenter/teacher-cloud.js"></script>
-<script src="../func_presenter/teacher-control.js"></script>
+<script>
+if (window.wmFriendMode) {
+  document.write('<script src="../func_presenter/student.js"><\/script>');
+} else {
+  document.write('<script src="../func_presenter/teacher-cloud.js"><\/script><script src="../func_presenter/teacher-control.js"><\/script>');
+}
+</script>
 <script>
 /* ── QUESTIONS.JS POOL ── */
 // Format: [eng_def(0), tr_def(1), answer(2), grade(3), difficulty(4), unit(5), imagePath(6)]
@@ -3063,7 +3072,35 @@ function _triggerCreditShimmer() {
 
 
 function startGame() {
-
+  if(window.wmFriendMode) {
+    let profile = {}, session = {};
+    try {
+      profile = JSON.parse(localStorage.getItem('fpStudentProfile') || '{}') || {};
+      session = JSON.parse(sessionStorage.getItem('szWordMasterFriendV1') || '{}') || {};
+    } catch(e) {}
+    const playerName = String(profile.name || '').replace(/[<>&"]/g, '').trim().slice(0, 20);
+    const friendName = String(session.friendName || '').trim();
+    if(!playerName || !['Blaze','Frost','Grace','Louis','Mara','Nova','Orion','Pixie','Rex','Terra'].includes(profile.avatar)
+      || !/^[\p{L}\p{N} ._'’-]{1,20}$/u.test(friendName)
+      || playerName.toLocaleLowerCase() === friendName.toLocaleLowerCase()) {
+      location.replace('../student-zone/index.html');
+      return;
+    }
+    groupCount = 2;
+    groupNames = [playerName, friendName, ''];
+    studentInputs = [[playerName], [friendName], []];
+    _silentDistributed = false;
+    applyGroupCountUI();
+    document.querySelectorAll('.score-name').forEach((node, index) => { node.textContent = groupNames[index]; });
+    const back = document.createElement('a');
+    back.href = '../student-zone/index.html';
+    back.textContent = 'Back to Student Zone';
+    back.style.cssText = 'position:fixed;bottom:8px;left:50%;transform:translateX(-50%);z-index:100;padding:8px 12px;border-radius:10px;background:#102542;color:white;font:14px sans-serif';
+    document.body.appendChild(back);
+    document.getElementById('winner-transfer-stars').style.display = 'none';
+    const home = document.querySelector('.winner-home:not(#winner-transfer-stars)');
+    if(home) home.onclick = () => { location.href = '../student-zone/index.html'; };
+  }
   _applyLiteMode();
   document.getElementById('main-menu').style.display = 'flex';
   setTimeout(_triggerCreditShimmer, 100);
@@ -3075,6 +3112,10 @@ function menuStart() {
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   applyGroupCountUI();
   document.getElementById('main-menu').style.display = 'none';
+  if(window.wmFriendMode) {
+    applyStudentsAndContinue();
+    return;
+  }
   document.getElementById('name-overlay').style.display = 'flex';
 }
 
@@ -3111,6 +3152,7 @@ function setTypingTimer(sec) {
 }
 
 function setGroupCount(n) {
+  if(window.wmFriendMode) n = 2;
   groupCount = n;
   STD_SLOTS = n === 2 ? 9 : 6;
   _refreshGroupCountBtns();
@@ -3119,7 +3161,10 @@ function setGroupCount(n) {
 function _refreshGroupCountBtns() {
   [2, 3].forEach(n => {
     const btn = document.getElementById('gc-btn-' + n);
-    if(btn) btn.classList.toggle('active', groupCount === n);
+    if(btn) {
+      btn.classList.toggle('active', groupCount === n);
+      btn.disabled = window.wmFriendMode && n !== 2;
+    }
   });
 }
 
@@ -3140,7 +3185,7 @@ const WC_STUDENTS_KEY  = 'word_game_students';
 
 function saveSettings() {
   try {
-    localStorage.setItem(WC_SETTINGS_KEY, JSON.stringify({
+    if(!window.wmFriendMode) localStorage.setItem(WC_SETTINGS_KEY, JSON.stringify({
       selectedGrades:     [...selectedGrades],
       selectedUnits:      [...selectedUnits],
       selectedCategories: [...selectedCategories],
@@ -3154,6 +3199,7 @@ function saveSettings() {
 }
 
 function saveStudentNames() {
+  if(window.wmFriendMode) return;
   try {
     localStorage.setItem(WC_STUDENTS_KEY, JSON.stringify({
       inputs:     studentInputs.map(col => [...col]),
@@ -4649,6 +4695,7 @@ function spawnJokerPopAt(el) {
 
 // ── +1 Joker ödülü: ekrandan jd-{gi} simgesine uçuş animasyonu ──
 function awardBonusJoker(gi) {
+  if(window.wmFriendMode) return;
   jokerCount[gi] = Math.min((jokerCount[gi] || 0) + 1, 9);
   updateJokerDisplay();
   showToast('🃏 +1 Joker kazandı! (hiç harf almadan)');
@@ -4748,6 +4795,13 @@ function playJokerLoseSound() {
 
 function startRoundEndSequence() {
   isLocked = true;
+  if(window.wmFriendMode && (roundNumber - 1) % 5 !== 0) {
+    updateJokerDisplay();
+    showAutoLeaderboard();
+    updateUI();
+    showRoundOverlay(roundNumber);
+    return;
+  }
   const activeGroups = grpIdxs();
   let gi = 0;
 
@@ -4804,6 +4858,8 @@ function showRoundOverlay(num) {
   const bar = document.getElementById('round-bar-fill');
   if(!ov || !txt) return;
   txt.textContent = 'ROUND ' + num;
+  const jokerNote = ov.querySelector('.round-joker-note');
+  if(jokerNote) jokerNote.style.display = window.wmFriendMode && (num - 1) % 5 !== 0 ? 'none' : '';
   // Bar animasyonunu yeniden tetikle
   if(bar) { bar.style.animation = 'none'; bar.offsetWidth; bar.style.animation = ''; }
   ov.classList.remove('hidden');
@@ -6061,6 +6117,7 @@ function grpIdxs() { return Array.from({length: groupCount}, (_, i) => i); }
 // Sayfa yüklenince kaydedilmiş ayarları geri yükle; yoksa default
 (function initSettings() {
   loadPersistedSettings();
+  if(window.wmFriendMode) groupCount = 2;
   applyGroupCountUI();
   // Physical keyboard → typing phase handler
   document.addEventListener('keydown', (e) => {
@@ -6475,6 +6532,7 @@ let _wfAngle           = 0;      // mevcut çark açısı (derece)
 // Tek öğrencili gruplar bu kuraldan muaf (zaten hep o oynuyor).
 function pickLuckyStudents() {
   luckyStudents = {};
+  if(window.wmFriendMode) return;
   grpIdxs().forEach(gi => {
     const n = (groupStudents[gi] && groupStudents[gi].length) || 0;
     if(n <= 0) return;
@@ -6503,6 +6561,10 @@ function updateWheelDebug() {} // kaldırıldı
 
 // ── Turn başında kontrol ──
 function checkWheelTrigger() {
+  if(window.wmFriendMode) {
+    _wheelPending = false;
+    return;
+  }
   const gi = currentGroup;
   const si = studentIndex[gi];
   _wheelPending = (luckyStudents[gi] !== undefined && luckyStudents[gi] === si);

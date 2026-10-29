@@ -20,9 +20,13 @@ window.TeamChallengers = window.TeamChallengers || {};
 
   const teacherCandidates = (fileName) => [`../func_presenter/${fileName}`, `../OYUN_SITESI/func_presenter/${fileName}`];
   TC.dependenciesReady = (async () => {
-    await loadFirst(teacherCandidates("names.js"), "names.js");
-    await loadFirst(teacherCandidates("teacher-cloud.js"), "teacher-cloud.js");
-    await loadFirst(teacherCandidates("teacher-control.js"), "teacher-control.js");
+    if (TC.friendMode) {
+      await loadFirst(teacherCandidates("student.js"), "student.js");
+    } else {
+      await loadFirst(teacherCandidates("names.js"), "names.js");
+      await loadFirst(teacherCandidates("teacher-cloud.js"), "teacher-cloud.js");
+      await loadFirst(teacherCandidates("teacher-control.js"), "teacher-control.js");
+    }
     await loadFirst(["../modules/finalscreen.js", "../OYUN_SITESI/modules/finalscreen.js"], "finalscreen.js");
     return true;
   })();

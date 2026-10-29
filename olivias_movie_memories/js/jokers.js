@@ -3,7 +3,7 @@ window.LeagueListening = window.LeagueListening || {};
 const JOKER_TYPES = Object.freeze(["echo", "timeFreeze", "doubleOrNothing", "slowTime"]);
 
 function createJokerState() {
-  return { remaining: window.LeagueListening.GAME_CONFIG.jokersPerRound, used: [] };
+  return { remaining: window.__oliviasMovieMemoriesFriendMode ? 1 : window.LeagueListening.GAME_CONFIG.jokersPerRound, used: [] };
 }
 
 function activeJokerState(state) { return state?.groups?.[state.groupIndex]?.jokers || null; }
@@ -22,6 +22,7 @@ function consumeJoker(state, type) {
 }
 
 function grantFreeJoker(state, groupIndex = state?.groupIndex) {
+  if (window.__oliviasMovieMemoriesFriendMode) return false;
   const jokers = state?.groups?.[groupIndex]?.jokers;
   if (!jokers) return false;
   jokers.remaining += 1;
@@ -29,6 +30,7 @@ function grantFreeJoker(state, groupIndex = state?.groupIndex) {
 }
 
 function resetRoundJokers(state) {
+  if (window.__oliviasMovieMemoriesFriendMode && (state.round - 1) % 5 !== 0) return;
   state?.groups?.forEach((group) => { group.jokers = createJokerState(); });
 }
 

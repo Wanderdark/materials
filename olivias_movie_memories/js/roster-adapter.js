@@ -45,6 +45,7 @@ function distributeBalanced(classroom, groupCount) {
 }
 
 function getRosterPointAwards(groups, ratio) {
+  if (window.__oliviasMovieMemoriesFriendMode) return [];
   const allStudents = (groups || []).flatMap((group) => group.students || []);
   const winningScore = Math.max(...(groups || []).map((group) => Number(group.score) || 0));
   const overallTopScore = Math.max(...allStudents.map((student) => Number(student.score) || 0));
@@ -63,6 +64,7 @@ function getRosterPointAwards(groups, ratio) {
 }
 
 function transferRosterPoints(groups, classroomId, ratio) {
+  if (window.__oliviasMovieMemoriesFriendMode) return { awarded: [], missing: [] };
   const awards = getRosterPointAwards(groups, ratio);
   return window.TeacherControl?.awardFinalPoints?.(awards, classroomId) || { awarded: [], missing: [] };
 }

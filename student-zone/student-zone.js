@@ -3,11 +3,25 @@ menuToggle.addEventListener("click",()=>{const open=studentLinks.classList.toggl
 const syncStudentProfile=()=>{let profile={};try{profile=JSON.parse(localStorage.getItem("fpStudentProfile")||"{}")||{}}catch(error){}const hasProfile=Boolean(profile.name&&studentHudAvatars.has(profile.avatar));profileControl.classList.toggle("has-profile",hasProfile);profileAvatar.hidden=!hasProfile;if(hasProfile){profileAvatar.src=`../word_overlord/avatars/AV_Anime_${profile.avatar}_head.webp`;profileName.textContent=profile.name;profileControl.setAttribute("aria-label",`Open ${profile.name}'s student profile`)}else{profileAvatar.removeAttribute("src");profileName.textContent="Create character";profileControl.setAttribute("aria-label","Create your character")}};
 syncStudentProfile();window.addEventListener("pageshow",syncStudentProfile);window.addEventListener("studentprofilechange",syncStudentProfile);profileControl.addEventListener("click",()=>document.querySelector(".sg-hud")?.click());
 let gamesReturnTarget=gamesTrigger;
-const openGamesHub=trigger=>{gamesReturnTarget=trigger||gamesTrigger;gamesHub.hidden=false;document.body.style.overflow="hidden";studentLinks.classList.remove("is-open");menuToggle.setAttribute("aria-expanded","false");menuToggle.setAttribute("aria-label","Open navigation menu");gamesHub.querySelector(".games-hub-close").focus()},closeGamesHub=()=>{gamesHub.hidden=true;document.body.style.overflow="";gamesReturnTarget.focus()};
+const gamesMode=document.querySelector("#games-mode"),friendSetup=document.querySelector("#friend-game-setup"),friendError=document.querySelector("#friend-game-error");
+const openGamesHub=trigger=>{gamesReturnTarget=trigger||gamesTrigger;gamesMode.hidden=false;friendSetup.hidden=true;friendError.textContent="";document.body.style.overflow="hidden";studentLinks.classList.remove("is-open");menuToggle.setAttribute("aria-expanded","false");menuToggle.setAttribute("aria-label","Open navigation menu");gamesMode.querySelector(".games-hub-close").focus()},closeGamesHub=()=>{gamesHub.hidden=true;gamesMode.hidden=true;document.body.style.overflow="";gamesReturnTarget.focus()};
+gamesMode.querySelectorAll("[data-games-close]").forEach(control=>control.addEventListener("click",closeGamesHub));
+document.querySelector("#play-yourself").addEventListener("click",()=>{gamesMode.hidden=true;gamesHub.hidden=false;gamesHub.querySelector(".games-hub-close").focus()});
+document.querySelector("#play-with-friend").addEventListener("click",()=>{friendSetup.hidden=false;friendError.textContent="";document.querySelector("#friend-player-name").focus()});
+friendSetup.addEventListener("submit",event=>{
+  event.preventDefault();
+  let profile={};try{profile=JSON.parse(localStorage.getItem("fpStudentProfile")||"{}")||{}}catch(error){}
+  if(!profile.name||!studentHudAvatars.has(profile.avatar)){friendError.textContent="Create your Student HUD character first using your profile button.";return}
+  const friendName=document.querySelector("#friend-player-name").value.trim();
+  if(!/^[\p{L}\p{N} ._'’-]{1,20}$/u.test(friendName)){friendError.textContent="Enter a name using letters, numbers, spaces or hyphens (up to 20 characters).";return}
+  if(friendName.toLocaleLowerCase()===String(profile.name).trim().toLocaleLowerCase()){friendError.textContent="Player 2 needs a different name from Player 1.";return}
+  const games={word_contest:"szWordContestFriendV1",word_rivals:"szWordRivalsFriendV1",word_master:"szWordMasterFriendV1",word_reveal:"szWordRevealFriendV1",team_challengers:"szTeamChallengersFriendV1",olivias_movie_memories:"szLeagueListeningFriendV1"},game=Object.hasOwn(games,event.submitter?.value)?event.submitter.value:"word_contest",sessionKey=games[game];
+  try{sessionStorage.setItem(sessionKey,JSON.stringify({friendName}));location.href=`../${game}/index.html?mode=student&play=friend`}catch(error){friendError.textContent="Allow browser session storage to start this game."}
+});
 gamesTrigger.addEventListener("click",()=>openGamesHub(gamesTrigger));
 gamesNav.addEventListener("click",event=>{event.preventDefault();openGamesHub(gamesNav)});
 gamesHub.querySelectorAll("[data-games-close]").forEach(control=>control.addEventListener("click",closeGamesHub));
-document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!gamesHub.hidden)closeGamesHub()});
+document.addEventListener("keydown",event=>{if(event.key==="Escape"&&(!gamesHub.hidden||!gamesMode.hidden))closeGamesHub()});
 if("IntersectionObserver" in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target)}}),{threshold:.12});document.querySelectorAll(".reveal").forEach(element=>observer.observe(element))}else document.querySelectorAll(".reveal").forEach(element=>element.classList.add("is-visible"));
 const syncFullRankLabel=()=>setTimeout(()=>{const rankName=document.querySelector(".student-rank-card strong")?.textContent,rankStat=[...document.querySelectorAll(".student-achievement-stats .student-mini-stat")].find(stat=>stat.querySelector("span")?.textContent==="Your rank");if(rankName&&rankStat){const value=rankStat.querySelector("b");value.textContent=rankName;value.classList.add("student-rank-value")}},0);
 syncFullRankLabel();window.addEventListener("pageshow",syncFullRankLabel);window.addEventListener("studentprofilechange",syncFullRankLabel);

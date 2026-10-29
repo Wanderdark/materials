@@ -217,7 +217,10 @@
   <div id="toast" role="status" aria-live="polite"></div>
 
   <script src="../modules/balanced-team-distribution.js"></script>
-  <script>window.__forceTeacherControl = true;</script>
+  <script>
+    window.TeamChallengers = { friendMode: new URLSearchParams(location.search).get("mode") === "student" && new URLSearchParams(location.search).get("play") === "friend" };
+    window.__forceTeacherControl = !window.TeamChallengers.friendMode;
+  </script>
   <script src="js/dependencies.js"></script>
   <script src="questions.js"></script>
   <script src="js/config.js"></script>

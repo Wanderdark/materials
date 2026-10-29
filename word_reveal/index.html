@@ -993,9 +993,16 @@ body.game-active #lite-btn{display:flex!important}
 
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="../modules/rgbkeyboard.js"></script>
-<script>window.__forceTeacherControl = true;</script>
-<script src="../func_presenter/teacher-cloud.js"></script>
-<script src="../func_presenter/teacher-control.js"></script>
+<script>
+window.wrFriendMode = new URLSearchParams(location.search).get('mode') === 'student'
+  && new URLSearchParams(location.search).get('play') === 'friend';
+window.__forceTeacherControl = !window.wrFriendMode;
+if (window.wrFriendMode) {
+  document.write('<script src="../func_presenter/student.js"><\/script>');
+} else {
+  document.write('<script src="../func_presenter/teacher-cloud.js"><\/script><script src="../func_presenter/teacher-control.js"><\/script>');
+}
+</script>
 <script src="../word_master/questions.js"></script>
 <script src="words.js"></script>
 <script>
@@ -1407,6 +1414,7 @@ function updateWordCount() {
 }
 
 function setGroupCount(n) {
+  if(window.wrFriendMode) n = 2;
   groupCount = n;
   const isThree = (n === 3);
   const lEl = document.getElementById('gc-pill-left');
@@ -1442,7 +1450,7 @@ function saveSettings() {
     showToast('⚠ En az 1 kategori seçmelisin!', 'warn', 2500);
     return;
   }
-  try { localStorage.setItem(SAVE_KEY_SET, JSON.stringify({
+  try { if(!window.wrFriendMode) localStorage.setItem(SAVE_KEY_SET, JSON.stringify({
     selectedGrade, selectedCategories:[...selectedCategories],
     groupCount, revealTimerSec
   })); } catch(e){}
@@ -1467,6 +1475,10 @@ function menuStart() {
   if(!_bgAudio) playBg();
   applyGroupCountUI();
   document.getElementById('main-menu').style.display='none';
+  if(window.wrFriendMode) {
+    applyStudentsAndStart();
+    return;
+  }
   document.getElementById('name-overlay').style.display='flex';
   buildNameKeyboard();
 }
@@ -1684,6 +1696,10 @@ function wrTransferClassroomId() {
 function updateWrFinalStarsTransferButton() {
   const button = document.getElementById('wr-transfer-stars');
   if (!button) return;
+  if(window.wrFriendMode) {
+    button.hidden = true;
+    return;
+  }
   const canTransfer = !!wrTransferClassroomId() && typeof window.TeacherControl?.awardFinalPoints === 'function';
   const pointsPerStar = roundNumber > 2 ? 2 : 1;
   button.hidden = false;
@@ -1868,6 +1884,7 @@ function fillAllStudents() {
 }
 
 function saveStudentNames() {
+  if(window.wrFriendMode) return;
   try { localStorage.setItem(SAVE_KEY_STU + '_' + groupCount, JSON.stringify(studentInputs.map(c=>[...c]))); } catch(e){}
 }
 
@@ -2166,6 +2183,12 @@ function _updateAllBonusTags() {
   for(let i = 0; i < 3; i++) _updateBonusTag(i);
 }
 
+function wrJokerQuota(gi) {
+  const n = (groupStudents[gi]||[]).length;
+  if(window.wrFriendMode) return n > 0 ? 1 : 0;
+  return n < 3 ? 0 : Math.round(n / 3);
+}
+
 function _initBonusState() {
   _bonusPool        = [0,1,2].map(()=>[...ALL_BONUSES]);
   _roundBonus       = [null,null,null];
@@ -2180,16 +2203,18 @@ function _initBonusState() {
   _isBlurredVisionTurn   = false;
   _flashlightActive      = false;
   _tripCategory          = null;
-  _jokerCounts           = [0,1,2].map(gi => {
-    const n = (groupStudents[gi]||[]).length;
-    return n < 3 ? 0 : Math.round(n / 3);
-  });
+  _jokerCounts           = [0,1,2].map(wrJokerQuota);
   _activeTotalTiles      = TOTAL_TILES;
 }
 
 function startGame() {
   pool = buildPool();
   usedIndices.clear();
+  if(window.wrFriendMode && pool.length===0) {
+    menuSettings();
+    showToast('No words match these settings. Choose another grade or category.', 'warn', 3500);
+    return;
+  }
   if(pool.length===0) { showToast('⚠ Havuzda soru yok! Ayarlara gidin.','warn',3500); document.getElementById('student-overlay').style.display='flex'; return; }
   groupScores      = [0,0,0];
   currentSlotIdx   = [0,0,0];
@@ -2355,7 +2380,7 @@ function beginTurn() {
   if(!gameActive) return;
   const gi = activeGroup;
   // Round bonus wheel: from round 2, once per group per round
-  if(roundNumber >= 2 && !_roundSpun[gi] && _bonusPool[gi].length > 0) {
+  if(!window.wrFriendMode && roundNumber >= 2 && !_roundSpun[gi] && _bonusPool[gi].length > 0) {
     _roundSpun[gi] = true;
     _showWheelOverlay(gi, () => _doBeginTurn());
     return;
@@ -3002,7 +3027,7 @@ function advanceTurn() {
     _clearBlurredVision();
     _updateAllBonusTags();
     // Refresh joker counts for new round
-    _jokerCounts = [0,1,2].map(gi => { const n=(groupStudents[gi]||[]).length; return n<3?0:Math.round(n/3); });
+    if(!window.wrFriendMode || (roundNumber - 1) % 5 === 0) _jokerCounts = [0,1,2].map(wrJokerQuota);
     _updateJokerBtn();
     // Refill exhausted bonus pools so wheel keeps cycling every round
     for(let i=0;i<3;i++){
@@ -3023,7 +3048,7 @@ function advanceTurn() {
 function showRoundOverlay(n, cb) {
   const ov = document.getElementById('round-overlay');
   const num = document.getElementById('round-num-text');
-  if(ov) { ov.classList.remove('hidden'); if(num) num.textContent='ROUND '+n; }
+  if(ov) { ov.classList.remove('hidden'); if(num) num.textContent='ROUND '+n + (window.wrFriendMode && n > 1 && (n - 1) % 5 === 0 ? ' — Jokers renewed!' : ''); }
   const fill = document.querySelector('.round-bar-fill');
   if(fill) {
     fill.getAnimations().forEach(a => a.cancel());
@@ -3620,6 +3645,33 @@ function exitGame() {
 // ── INIT ──
 (function init(){
   loadSettings();
+  if(window.wrFriendMode) {
+    let profile = {}, session = {};
+    try {
+      profile = JSON.parse(localStorage.getItem('fpStudentProfile') || '{}') || {};
+      session = JSON.parse(sessionStorage.getItem('szWordRevealFriendV1') || '{}') || {};
+    } catch(e) {}
+    const playerName = String(profile.name || '').replace(/[<>&"]/g, '').trim().slice(0, 20);
+    const friendName = String(session.friendName || '').trim();
+    if(!playerName || !['Blaze','Frost','Grace','Louis','Mara','Nova','Orion','Pixie','Rex','Terra'].includes(profile.avatar)
+      || !/^[\p{L}\p{N} ._'’-]{1,20}$/u.test(friendName)
+      || playerName.toLocaleLowerCase() === friendName.toLocaleLowerCase()) {
+      location.replace('../student-zone/index.html');
+      return;
+    }
+    setGroupCount(2);
+    groupNames = [playerName, friendName, ''];
+    studentInputs = [[playerName], [friendName], []];
+    const back = document.createElement('a');
+    back.href = '../student-zone/index.html';
+    back.textContent = 'Back to Student Zone';
+    back.style.cssText = 'position:fixed;bottom:8px;left:50%;transform:translateX(-50%);z-index:100;padding:8px 12px;border-radius:10px;background:#102542;color:white;font:14px sans-serif';
+    document.body.appendChild(back);
+    const home = document.querySelector('.winner-home:not(#wr-transfer-stars)');
+    if(home) home.onclick = () => { location.href = '../student-zone/index.html'; };
+    const groupSwitch = document.querySelector('[onclick="setGroupCount(groupCount===2?3:2)"]');
+    if(groupSwitch) groupSwitch.style.display = 'none';
+  }
   const menu = document.getElementById('main-menu');
   if(menu) menu.style.display='flex';
   // Always show top-right-bar for mute/fullscreen (game-specific buttons controlled via CSS)

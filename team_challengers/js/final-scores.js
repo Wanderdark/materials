@@ -6,6 +6,7 @@
   }
 
   function getFinalStarAwards(state) {
+    if (TC.friendMode) return [];
     const currentRoundComplete = state.phase === "roundComplete" || (state.answered && state.turnIndex === state.turnOrder.length - 1);
     const completedRounds = state.round - (currentRoundComplete ? 0 : 1);
     const pointsPerStar = completedRounds >= 2 ? TC.CONFIG.rosterPointsPerStar : 1;
@@ -27,6 +28,7 @@
   }
 
   function showAwardBreakdown(award) {
+    if (TC.friendMode) return;
     const overlay = document.querySelector("#award-breakdown-overlay");
     const title = document.querySelector("#award-breakdown-title");
     const list = document.querySelector("#award-breakdown-list");
@@ -78,7 +80,9 @@
         const name = document.createElement("button"); name.type = "button"; name.className = "sg-sname award-breakdown-trigger"; name.textContent = student.name; name.addEventListener("click", () => showAwardBreakdown(award));
         const hudPoints = document.createElement("div"); hudPoints.className = "sg-hud-points"; hudPoints.textContent = `+${award?.points || 0} Pts`;
         const points = document.createElement("div"); points.className = "sg-spts"; points.textContent = student.score;
-        row.append(place, name, hudPoints, renderStars(award?.stars || 0, rank === 3 ? 3 : 4), points); col.appendChild(row);
+        if (TC.friendMode) row.append(place, name, points);
+        else row.append(place, name, hudPoints, renderStars(award?.stars || 0, rank === 3 ? 3 : 4), points);
+        col.appendChild(row);
       });
       grid.appendChild(col);
     });
