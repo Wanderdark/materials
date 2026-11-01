@@ -84,6 +84,7 @@
   }
 
   function syncSetup() { TC.renderSetup(groupCount, groupNames, setupGroups); }
+  window.TeamNamePicker.attachInputs(TC.els.groupNames, (index, name) => { groupNames[index] = name; syncSetup(); });
 
   function initializeFriendGame() {
     let profile = {}, session = {};

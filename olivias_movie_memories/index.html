@@ -47,6 +47,7 @@
   <div id="reset-video-history-dialog" class="modal history-reset-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="reset-video-history-title"><div class="modal-backdrop" data-close-video-history-reset></div><div class="modal-card"><p class="eyebrow">Teacher mode</p><h2 id="reset-video-history-title">RESET VIDEO HISTORY?</h2><p class="muted">Priority videos and random video history will start again from the beginning on this computer.</p><div class="choice-row"><button id="confirm-video-history-reset" class="primary-button" type="button">YES</button><button class="secondary-button" type="button" data-close-video-history-reset>NO</button></div></div></div>
   <div id="score-dialog" class="modal score-dialog" hidden role="dialog" aria-modal="true" aria-labelledby="score-dialog-title"><div class="modal-backdrop" data-close-score-dialog></div><div class="modal-card"><button class="icon-button modal-close" type="button" data-close-score-dialog aria-label="Close scores">×</button><p class="eyebrow">Live standings</p><h2 id="score-dialog-title">SCORES</h2><div id="live-scoreboard" class="round-scoreboard" aria-label="Live scores"></div></div></div>
 
+  <script src="../modules/team-name-pool.js"></script>
   <script src="../modules/balanced-team-distribution.js"></script>
   <script>
     const oliviasMovieMemoriesMode = new URLSearchParams(location.search).get("mode");

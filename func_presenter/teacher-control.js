@@ -58,13 +58,13 @@
   const AVATAR_UNLOCK_LEVELS = Object.freeze({
     grace: 9,
     louis: 9,
-    rex: 5,
-    pixie: 5,
-    nova: 5,
-    blaze: 3,
-    mara: 3,
-    frost: 4,
-    terra: 4
+    rex: 8,
+    pixie: 8,
+    nova: 8,
+    blaze: 6,
+    mara: 6,
+    frost: 7,
+    terra: 7
   });
   const shouldFlipAvatar = (path = "") => /AV_Anime_(Nova|Terra)_head\.webp$/i.test(path);
 
@@ -2599,7 +2599,7 @@
     try {
       const unit = Number(new URLSearchParams(location.search).get("practiceUnit"));
       const game = location.pathname.split("/").slice(-2).join("/");
-      const trackedGames = ["word_master/index.html", "word_rivals/index.html", "word_crush/gemoria_class.html", "word_contest/index.html", "word_hunt/clash_of_words_v7.HTML", "word_reveal/index.html", "olivias_movie_memories/index.html", "team_challengers/index.html"];
+      const trackedGames = ["word_master/index.html", "word_rivals/index.html", "word_crush/gemoria_class.html", "word_contest/index.html", "word_hunt/clash_of_words_v7.HTML", "word_reveal/index.html", "olivias_movie_memories/index.html", "team_challengers/index.html", "word_tug_of_war/index.html"];
       if (Number.isInteger(unit) && unit >= 1 && unit <= 10 && trackedGames.includes(game)) {
         const key = "adilhocaTeacherGameProgressV1";
         const progress = JSON.parse(localStorage.getItem(key) || "{}") || {};

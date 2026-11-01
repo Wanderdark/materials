@@ -1208,6 +1208,11 @@
   #lite-btn.is-lite { border-color: rgba(248,113,113,0.5); color: #f87171; }
   /* LITE MODE: tüm backdrop-filter blur'ları kapat */
   body.lite-mode * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  body.lite-mode .score-name.active-name,
+  body.lite-mode .score-student.visible,
+  body.lite-mode .sg-top .sg-sname,
+  body.lite-mode .sg-hdr.sg-hdr-leader,
+  body.lite-mode .winner-ann-group { animation: none !important; }
 
   /* ── SCORES POPUP ── */
   #scores-overlay {
@@ -1404,7 +1409,7 @@
     border: 1.5px solid var(--gold);
     border-radius: 28px;
     padding: 32px 36px 28px;
-    width: min(96vw, 780px);
+    width: min(96vw, 1040px);
     text-align: center;
     box-shadow: 0 0 100px rgba(255,215,0,0.15);
   }
@@ -1453,6 +1458,13 @@
     animation: blink .8s step-end infinite;
   }
   .name-display.active .cursor { display: inline-block; }
+  .name-field { min-width: 0; }
+  .name-entry-row { display: grid; grid-template-columns: minmax(0,1fr) 32px; gap: 4px; width: 100%; align-items: center; }
+  .name-entry-row .name-display { min-width: 0; height: 52px; padding: 0 7px; font-size: clamp(16px,2vw,24px); letter-spacing: .03em; }
+  .name-entry-row .name-display>span:first-child { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .name-dice { width: 32px; height: 36px; padding: 0; border: 1px solid rgba(255,215,0,.4); border-radius: 9px; background: rgba(255,215,0,.08); font-size: 21px; cursor: pointer; touch-action: manipulation; }
+  .name-dice:hover { background: rgba(255,215,0,.2); }
+  .name-dice:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
   /* Klavye */
@@ -1697,19 +1709,19 @@
 <div id="name-overlay" style="display:none">
   <div class="name-modal">
     <div class="name-title">TAKIM İSİMLERİ</div>
-    <div class="name-sub">Her takım için isim girin — bir kutuya tıklayıp klavyeyi kullanın</div>
+    <div class="name-sub">Takım adını yazın veya zarla rastgele seçin.</div>
     <div class="name-inputs">
       <div class="name-field">
         <div class="name-label">Grup 1</div>
-        <div class="name-display active" id="nd-0" onclick="selectNameField(0)"><span id="nt-0">GRUP 1</span><span class="cursor"></span></div>
+        <div class="name-entry-row"><div class="name-display active" id="nd-0" onclick="selectNameField(0)"><span id="nt-0">GRUP 1</span><span class="cursor"></span></div><button class="name-dice" type="button" onclick="randomizeGroupName(0)" aria-label="Grup 1 için rastgele isim seç">🎲</button></div>
       </div>
       <div class="name-field">
         <div class="name-label">Grup 2</div>
-        <div class="name-display" id="nd-1" onclick="selectNameField(1)"><span id="nt-1">GRUP 2</span><span class="cursor"></span></div>
+        <div class="name-entry-row"><div class="name-display" id="nd-1" onclick="selectNameField(1)"><span id="nt-1">GRUP 2</span><span class="cursor"></span></div><button class="name-dice" type="button" onclick="randomizeGroupName(1)" aria-label="Grup 2 için rastgele isim seç">🎲</button></div>
       </div>
       <div class="name-field">
         <div class="name-label">Grup 3</div>
-        <div class="name-display" id="nd-2" onclick="selectNameField(2)"><span id="nt-2">GRUP 3</span><span class="cursor"></span></div>
+        <div class="name-entry-row"><div class="name-display" id="nd-2" onclick="selectNameField(2)"><span id="nt-2">GRUP 3</span><span class="cursor"></span></div><button class="name-dice" type="button" onclick="randomizeGroupName(2)" aria-label="Grup 3 için rastgele isim seç">🎲</button></div>
       </div>
     </div>
     <div class="kb-wrap">
@@ -2039,6 +2051,7 @@
 <div id="round-popup"><div id="round-popup-text"></div></div>
 <div id="toast"></div>
 
+  <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="correct-images.js"></script>
 <script src="wrong-images.js"></script>
@@ -2121,6 +2134,7 @@ function menuStart() {
     return;
   }
   document.getElementById('name-overlay').style.display = 'flex';
+  updateNameDisplays();
 }
 
 function menuSettings() {
@@ -3583,6 +3597,22 @@ let groupNames = ['GRUP 1','GRUP 2','GRUP 3'];
 let activeNameField = 0;
 let numMode = false;
 
+const wcTeamNamePool = new window.TeamNamePool(Math.random, 3);
+
+function pickWcTeamName(team, activeNames, random = Math.random) {
+  wcTeamNamePool.random = random;
+  return wcTeamNamePool.next(team, activeNames);
+}
+
+function randomizeGroupName(team) {
+  if(window.wcFriendMode) return;
+  if(document.getElementById('name-overlay').style.display === 'none') return;
+  const name = pickWcTeamName(team, groupNames.slice(0, groupCount));
+  if(!name) return;
+  groupNames[team] = name;
+  selectNameField(team);
+}
+
 function buildKeyboard() {
   KB_ROWS.forEach((row, ri) => {
     const rowEl = document.getElementById('kb-row-' + ri);
@@ -3622,9 +3652,9 @@ function buildNumKeyboard() {
 
 function handleKey(key) {
   if(key === '⌫') {
-    groupNames[activeNameField] = groupNames[activeNameField].slice(0,-1);
+    groupNames[activeNameField] = Array.from(groupNames[activeNameField]).slice(0,-1).join('');
   } else if(key === 'SPACE') {
-    if(groupNames[activeNameField].length < 16) groupNames[activeNameField] += ' ';
+    if(Array.from(groupNames[activeNameField]).length < 48) groupNames[activeNameField] += ' ';
   } else if(key === 'TEMIZLE') {
     groupNames[activeNameField] = '';
   } else if(key === '123') {
@@ -3634,7 +3664,7 @@ function handleKey(key) {
   } else if(key === '→') {
     selectNameField((activeNameField + 1) % groupCount); return;
   } else {
-    if(groupNames[activeNameField].length < 16) groupNames[activeNameField] += key;
+    if(Array.from(groupNames[activeNameField]).length < 48) groupNames[activeNameField] += key;
   }
   updateNameDisplays();
 }
@@ -3651,7 +3681,18 @@ function selectNameField(idx) {
 function updateNameDisplays() {
   [0,1,2].forEach(i => {
     const el = document.getElementById('nt-'+i);
-    if(el) el.textContent = groupNames[i];
+    if(el) {
+      el.textContent = groupNames[i];
+      el.title = groupNames[i];
+      el.style.fontSize = '';
+      if(el.clientWidth) {
+        let size = parseFloat(getComputedStyle(el).fontSize);
+        while(el.scrollWidth > el.clientWidth && size > 12) {
+          size -= .5;
+          el.style.fontSize = size + 'px';
+        }
+      }
+    }
   });
 }
 

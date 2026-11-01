@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Two teams, two words, one rope. An English vocabulary game for the classroom.">
+  <title>TUG OF WORDS | AdilHoca</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.html" aria-label="AdilHoca home"><img class="brand-logo" src="../logo.webp" alt=""><span class="brand-wordmark">Adil<span>Hoca</span></span><span class="brand-sub">CLASSROOM GAMES</span></a>
+    <div class="header-actions"><button id="match-timer" class="secondary" type="button" hidden>TIMER</button><button id="finish" class="secondary" type="button" hidden disabled>FINISH</button><button id="pause" class="secondary" type="button" hidden>Ⅱ Pause</button><button id="lite" class="secondary" type="button" aria-pressed="false" title="Toggle Lite mode">LITE</button><button id="fullscreen" class="secondary" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button></div>
+  </header>
+  <main>
+    <section id="setup-screen" class="screen">
+      <div class="intro"><h1>TUG OF <span>WORDS</span></h1></div>
+      <div class="setup-grid">
+        <article class="panel"><p class="eyebrow">01 / TEAMS</p><h2>Build your teams</h2>
+          <div class="name-fields"><div class="team-name-field"><label for="name-0">BLUE TEAM</label><div class="team-name-row"><input id="name-0" value="TEAM BLUE" maxlength="48"><button class="secondary" type="button" data-random-team-name="0" aria-label="Randomize blue team name" title="Rastgele takım adı">🎲</button></div></div><div class="team-name-field"><label for="name-1">PINK TEAM</label><div class="team-name-row"><input id="name-1" value="TEAM PINK" maxlength="48"><button class="secondary" type="button" data-random-team-name="1" aria-label="Randomize pink team name" title="Rastgele takım adı">🎲</button></div></div></div>
+          <button id="import-roster" class="primary" type="button">Import from Teacher HUD</button>
+          <p id="roster-status" class="muted" role="status">Use your locked classroom, or add students below.</p>
+          <form id="add-form" class="manual-row"><input id="student-name" placeholder="Student name" aria-label="Student name" maxlength="36" required><select id="student-team" aria-label="Team"><option value="0">Blue team</option><option value="1">Pink team</option></select><button class="secondary" type="submit">Add +</button></form>
+        </article>
+        <article class="panel"><p class="eyebrow">02 / PLAYERS</p><div class="panel-heading"><h2>Your line-up</h2><button id="balance" class="quiet" type="button">Balance teams</button></div>
+          <div id="team-lists" class="team-lists"></div>
+          <p class="muted small">Move students with the arrow. Each answer brings in the next player.</p>
+        </article>
+      </div>
+      <footer class="screen-actions"><span id="setup-status" class="muted">Add at least one student to each team.</span><button id="to-selection" class="primary" type="button" disabled>Choose your words →</button></footer>
+    </section>
+
+    <section id="selection-screen" class="screen" hidden>
+      <div class="intro"><h1>CHOOSE YOUR <span>CHALLENGE</span></h1></div>
+      <div class="selection-grid">
+        <article class="panel"><h2>Build your word pool</h2><label>GRADE<select id="grade"></select></label>
+          <fieldset class="unit-picker"><legend>UNITS &amp; REVISION</legend><div class="unit-actions"><button id="all-units" class="quiet" type="button">Select all</button><button id="clear-units" class="quiet" type="button">Clear</button></div><div id="unit-checks" class="unit-checks"></div></fieldset>
+          <details id="category-options" hidden><summary>Extra categories</summary><div id="category-checks" class="category-checks"></div></details>
+          <p id="pool-status" class="muted" role="status"></p>
+        </article>
+        <article class="panel rules"><p class="eyebrow">HOW TO PLAY</p><h2>Every correct answer pulls.</h2><p><strong>Correct?</strong> Pull the rope one step and get a new word.</p><p><strong>Wrong?</strong> Take a short breather, then try a new word.</p><p>Pull the other team completely over the centre line to win.</p><button class="secondary pace-button" type="button">Pace & rope settings</button></article>
+      </div>
+      <footer class="screen-actions"><button id="back-setup" class="quiet" type="button">← Back to teams</button><button id="start" class="primary" type="button">Let's pull →</button></footer>
+    </section>
+
+    <section id="game-screen" class="game-screen" hidden>
+      <div class="arena-strip"><div class="arena-labels"><strong id="arena-name-0" class="blue-text"></strong><span id="rope-status" role="status">EVENLY MATCHED</span><strong id="arena-name-1" class="orange-text"></strong></div><div class="arena-center">
+      <div class="arena" role="img" aria-label="Two teams pulling a rope across the centre line">
+        <svg viewBox="0 0 1000 190" aria-hidden="true">
+          <defs>
+            <pattern id="grass" width="40" height="20" patternUnits="userSpaceOnUse"><path d="M5 19l3-5 3 5m19-8 3-5 3 5" fill="none" stroke="#503320" stroke-width="2"/></pattern>
+            <g id="puller"><path d="M-9 108l-20 30m23-29 23 29" stroke="#8d9bae" stroke-width="10" stroke-linecap="round"/><path d="M-11 77l4 30" stroke="currentColor" stroke-width="23" stroke-linecap="round"/><circle cx="-15" cy="52" r="14" fill="#e8b88b"/><path d="M-28 49q1-22 23-10l4 10" fill="#17121c"/><path d="M-10 79l25 14 18-9" fill="none" stroke="#e8b88b" stroke-width="8" stroke-linecap="round"/><path d="M-31 140h15m22 0h17" stroke="#bdc5d2" stroke-width="7" stroke-linecap="round"/></g>
+          </defs>
+          <rect x="0" y="140" width="1000" height="50" rx="8" fill="#211811"/><rect x="0" y="144" width="1000" height="46" fill="url(#grass)"/>
+          <path d="M500 12v168" stroke="#889780" stroke-width="2" stroke-dasharray="6 6"/><path d="M484 180h32" stroke="#52684c" stroke-width="4"/>
+          <text x="500" y="18" text-anchor="middle" class="centre-label">CENTRE LINE</text>
+          <g id="pull-world">
+            <path d="M-350 85Q500 78 1350 85" stroke="#967044" stroke-width="10" fill="none"/><path d="M-350 83Q500 76 1350 83" stroke="#d5ad76" stroke-width="3" stroke-dasharray="7 4" fill="none"/>
+            <path d="M497 80v35l14-8 13 8V80" fill="#ed6857"/><path d="M499 79h22" stroke="#ad4139" stroke-width="5"/>
+            <g class="blue-crew" color="#4a8af4"></g>
+            <g class="orange-crew" color="#ff5577" transform="translate(1000 0) scale(-1 1)"></g>
+          </g>
+        </svg>
+      </div>
+      </div></div>
+      <div id="play-sides" class="play-sides"></div>
+    </section>
+
+    <section id="result-screen" class="screen result-screen" hidden>
+      <p class="eyebrow">A TEAM EFFORT</p><div class="result-emblem">⚑</div><h1 id="winner-name"></h1><p id="result-copy"></p><div id="result-stats" class="result-stats"></div>
+      <div class="hud-award"><p id="reward-summary"></p><p id="transfer-status" class="muted" role="status"></p><button id="transfer-points" class="primary" type="button" disabled>PUANLARI HUD'A AKTAR</button></div>
+      <div class="result-actions"><button id="rematch" class="secondary" type="button">Pull again ↔</button><button id="new-teams" class="quiet" type="button">Back to teams</button></div>
+    </section>
+  </main>
+
+  <dialog id="pace-dialog"><form method="dialog"><p class="eyebrow">FIND YOUR CLASSROOM'S RHYTHM</p><h2>Pace & rope</h2>
+    <label>Correct answer break <span id="correct-value"></span><input id="correct-delay" type="range" min="400" max="2500" step="100" value="800"></label>
+    <label>Wrong answer break <span id="wrong-value"></span><input id="wrong-delay" type="range" min="800" max="3500" step="100" value="1500"></label>
+    <label>Lead needed to win<select id="rope-limit"><option value="3">3 pulls · Short</option><option value="5" selected>5 pulls · Standard</option><option value="7">7 pulls · Long</option><option value="10">10 pulls · Extra long</option></select></label>
+    <p id="pace-note" class="muted small">The rope distance is chosen before each match.</p><button class="primary">Done</button>
+  </form></dialog>
+  <dialog id="pause-dialog" aria-labelledby="pause-title"><h2 id="pause-title">GAME PAUSED</h2><div class="dialog-actions"><button id="music-volume-toggle" class="secondary" type="button" aria-expanded="false" aria-controls="music-volume-options">CHANGE MUSIC VOLUME</button><div id="music-volume-options" class="music-volume-options" role="group" aria-label="Music volume" hidden><button class="secondary" type="button" data-music-volume="0" aria-pressed="false">0%</button><button class="secondary" type="button" data-music-volume="25" aria-pressed="false">25%</button><button class="secondary" type="button" data-music-volume="50" aria-pressed="false">50%</button><button class="secondary" type="button" data-music-volume="75" aria-pressed="true">75%</button><button class="secondary" type="button" data-music-volume="100" aria-pressed="false">100%</button></div><button id="resume" class="primary" type="button">Keep pulling →</button><button id="leave-match" class="quiet" type="button">Back to teams</button></div></dialog>
+  <dialog id="timer-dialog" aria-labelledby="timer-title"><button id="close-timer" type="button" aria-label="Cancel timer selection">×</button><h2 id="timer-title">Match timer</h2><p>Choose the remaining play time.</p><div class="timer-options"><button type="button" data-minutes="5">5<span>MINUTES</span></button><button type="button" data-minutes="10">10<span>MINUTES</span></button><button type="button" data-minutes="15">15<span>MINUTES</span></button><button type="button" data-minutes="20">20<span>MINUTES</span></button></div></dialog>
+  <dialog id="game-over-dialog" aria-labelledby="game-over-title"><strong id="game-over-title">GAME OVER</strong></dialog>
+  <div id="toast" role="status" hidden></div>
+  <script src="../modules/team-name-pool.js"></script>
+  <script src="../modules/balanced-team-distribution.js"></script>
+  <script src="../word_rivals/words.js"></script>
+  <script src="../func_presenter/names.js"></script>
+  <script src="../func_presenter/teacher-cloud.js"></script>
+  <script src="../func_presenter/teacher-control.js"></script>
+  <script src="../modules/finalscreen.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

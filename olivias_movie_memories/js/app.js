@@ -27,6 +27,7 @@ function selectedVideoGrades() { return [...document.querySelectorAll("[data-vid
 function activeSetupGroups() { return setupGroups.slice(0, groupCount); }
 function isDirectAnswerMode() { return !studentMode && (state?.gameMode === "correct-option" || (state?.gameMode === "omni" && state.omniType !== "translation")); }
 function syncSetup() { renderSetup(activeSetupGroups(), groupNames.slice(0, groupCount)); els.start.disabled = activeSetupGroups().some((group) => !group.length) || (!studentMode && !selectedVideoGrades().length); }
+window.TeamNamePicker.attachInputs(els.groupNameFields, (index, name) => { groupNames[index] = name; syncSetup(); });
 function playableItemsOrWarn() {
   const grades = selectedVideoGrades();
   if (!studentMode && !grades.length) { alert("Choose at least one grade."); return false; }

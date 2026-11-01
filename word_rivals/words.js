@@ -36,7 +36,7 @@ const QUESTIONS = [
   ["DOLPHIN",5,9,"../images/5/9/8.webp"],
   ["CRAB",5,9,"../images/5/9/10.webp"],
   ["SEA TURTLE",5,9,"../images/5/9/11.webp"],
-  ["JELLYFISH",5,9,"../images/5/9/12.png"],
+  ["JELLYFISH",5,9,"../images/5/9/12.webp"],
 
   // ─── GRADE 5 REVISION 1 ─────────────────────────────────────────────────────
   ["ART",5,0,"../images/5/2/53.webp"],
@@ -373,7 +373,7 @@ const QUESTIONS = [
   ["CASUAL CLOTHES",5,3,"CLOTHING","OUTFIT","../images/5/3/49.webp"],
   ["TRY ON",5,3,"../images/5/3/50.webp"],
   ["CREATE",5,3,"../images/5/3/51.webp"],
-  ["THIN",5,3,"THICK","../images/7/1/52.webp"],
+  ["THIN",5,3,"THICK","../images/7/1/11.webp"],
   ["THICK",5,3,"THIN","../images/5/3/53.webp"],
   // Sıradan/Gösterişli — ORDINARY karşıtı FANCY, FANCY+DIFFERENT aynı resim
   ["ORDINARY",5,3,"FANCY","DIFFERENT","../images/5/3/54.webp"],

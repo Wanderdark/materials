@@ -174,12 +174,13 @@ const FinalScreen = (() => {
    * Tüm final ekranı efektlerini başlatır.
    * - Konfeti yağmuru (sürekli)
    * - Yıldız patlaması (her ~2.8s)
+   * - start({ stars: false }) yalnızca konfeti yağmurunu başlatır.
    */
-  function start() {
+  function start({ stars = true } = {}) {
     _injectCSS();
     stop(); // önceki çalışanı temizle
     _startConf();
-    _spawnStars();
+    if (stars) _spawnStars();
   }
 
   /**

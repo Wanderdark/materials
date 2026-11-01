@@ -147,6 +147,11 @@
     ["olivias_movie_memories/index.html?mode=teacher","word_contest/index.html","word_rivals/index.html","word_master/index.html","word_crush/gemoria_class.html","team_challengers/index.html","word_reveal/index.html","word_hunt/clash_of_words_v7.HTML","wordopia/index.html","word_builder/index.html"].forEach(href=>{
       practiceGames.append(practiceGames.querySelector(`a[href="${href}"]`));
     });
+    const tugOfWordsCard=document.createElement("a");
+    tugOfWordsCard.className="flow-game";
+    tugOfWordsCard.href="word_tug_of_war/index.html?mode=teacher";
+    tugOfWordsCard.innerHTML='<img src="images/thumbnails/tug_of_w_thmb.webp" alt="Tug of Words" loading="lazy"><div><h3>Tug of Words</h3><p>Two teams solve their own vocabulary questions and pull the rope with every correct answer. Pull the other team over the centre line to win!</p><div class="flow-tags"><span class="flow-tag">Vocabulary</span><span class="flow-tag mode">Team</span></div></div>';
+    practiceGames.querySelector('a[href="word_rivals/index.html"]').after(tugOfWordsCard);
     const soloGemoriaCard=document.querySelector('#student-practice-flow a[href="word_crush/index.html"]');
     if(soloGemoriaCard){
       soloGemoriaCard.querySelector("img").alt="Word Gemoria";
