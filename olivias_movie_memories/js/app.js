@@ -28,6 +28,7 @@ function activeSetupGroups() { return setupGroups.slice(0, groupCount); }
 function isDirectAnswerMode() { return !studentMode && (state?.gameMode === "correct-option" || (state?.gameMode === "omni" && state.omniType !== "translation")); }
 function syncSetup() { renderSetup(activeSetupGroups(), groupNames.slice(0, groupCount)); els.start.disabled = activeSetupGroups().some((group) => !group.length) || (!studentMode && !selectedVideoGrades().length); }
 window.TeamNamePicker.attachInputs(els.groupNameFields, (index, name) => { groupNames[index] = name; syncSetup(); });
+window.ClassQuickPlay.register({ anchor: $("#open-roster-button"), teamCount: () => groupCount, apply(teams) { setupGroups = teams.concat([[]]).slice(0, 3); classroomId = ""; els.rosterStatus.textContent = "QUICK PLAY CLASS - temporary students, no HUD transfer."; syncSetup(); } });
 function playableItemsOrWarn() {
   const grades = selectedVideoGrades();
   if (!studentMode && !grades.length) { alert("Choose at least one grade."); return false; }
@@ -73,7 +74,7 @@ function prepareStudentMode() {
   }
 }
 
-function openRosterPicker() { const room = getLockedClassroom(); if (!room) { els.rosterStatus.textContent = "Lock a classroom from the Teacher HUD roster first."; return; } const present = getPresentStudents(room).length; if (!present) { els.rosterStatus.textContent = `${room.name || "CLASS"} has no present students today.`; return; } setupGroups = distributeBalanced(room, groupCount).concat([[]]).slice(0, 3); classroomId = room.id; els.rosterStatus.textContent = `${room.name}: ${present} present students balanced across teams.`; syncSetup(); }
+function openRosterPicker() { const room = getLockedClassroom(); if (!room) { els.rosterStatus.textContent = "Lock a classroom from the Teacher HUD roster first."; return; } const present = getPresentStudents(room).length; if (!present) { els.rosterStatus.textContent = `${room.name || "CLASS"} has no present students today.`; return; } setupGroups = distributeBalanced(room, groupCount).concat([[]]).slice(0, 3); classroomId = room.id; window.ClassQuickPlay.clear(); els.rosterStatus.textContent = `${room.name}: ${present} present students balanced across teams.`; syncSetup(); }
 
 function prepareFriendMode() {
   if (!friendMode) return;

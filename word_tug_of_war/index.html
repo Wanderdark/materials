@@ -9,22 +9,20 @@
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="../index.html" aria-label="AdilHoca home"><img class="brand-logo" src="../logo.webp" alt=""><span class="brand-wordmark">Adil<span>Hoca</span></span><span class="brand-sub">CLASSROOM GAMES</span></a>
+    <a class="brand" href="../index.html" aria-label="AdilHoca home"><img class="brand-logo" src="../logo.webp" alt=""><span class="brand-wordmark">Adil<span>Hoca</span></span><span class="brand-sub">TUG OF <span>WORDS</span></span></a>
     <div class="header-actions"><button id="match-timer" class="secondary" type="button" hidden>TIMER</button><button id="finish" class="secondary" type="button" hidden disabled>FINISH</button><button id="pause" class="secondary" type="button" hidden>Ⅱ Pause</button><button id="lite" class="secondary" type="button" aria-pressed="false" title="Toggle Lite mode">LITE</button><button id="fullscreen" class="secondary" type="button" aria-label="Toggle full screen" title="Full screen">⛶</button></div>
   </header>
   <main>
     <section id="setup-screen" class="screen">
-      <div class="intro"><h1>TUG OF <span>WORDS</span></h1></div>
       <div class="setup-grid">
-        <article class="panel"><p class="eyebrow">01 / TEAMS</p><h2>Build your teams</h2>
+        <article class="panel"><h2>Build your teams</h2>
           <div class="name-fields"><div class="team-name-field"><label for="name-0">BLUE TEAM</label><div class="team-name-row"><input id="name-0" value="TEAM BLUE" maxlength="48"><button class="secondary" type="button" data-random-team-name="0" aria-label="Randomize blue team name" title="Rastgele takım adı">🎲</button></div></div><div class="team-name-field"><label for="name-1">PINK TEAM</label><div class="team-name-row"><input id="name-1" value="TEAM PINK" maxlength="48"><button class="secondary" type="button" data-random-team-name="1" aria-label="Randomize pink team name" title="Rastgele takım adı">🎲</button></div></div></div>
           <button id="import-roster" class="primary" type="button">Import from Teacher HUD</button>
           <p id="roster-status" class="muted" role="status">Use your locked classroom, or add students below.</p>
           <form id="add-form" class="manual-row"><input id="student-name" placeholder="Student name" aria-label="Student name" maxlength="36" required><select id="student-team" aria-label="Team"><option value="0">Blue team</option><option value="1">Pink team</option></select><button class="secondary" type="submit">Add +</button></form>
         </article>
-        <article class="panel"><p class="eyebrow">02 / PLAYERS</p><div class="panel-heading"><h2>Your line-up</h2><button id="balance" class="quiet" type="button">Balance teams</button></div>
+        <article class="panel"><div class="panel-heading"><h2>Your line-up</h2><button id="balance" class="quiet" type="button">Balance teams</button></div>
           <div id="team-lists" class="team-lists"></div>
-          <p class="muted small">Move students with the arrow. Each answer brings in the next player.</p>
         </article>
       </div>
       <footer class="screen-actions"><span id="setup-status" class="muted">Add at least one student to each team.</span><button id="to-selection" class="primary" type="button" disabled>Choose your words →</button></footer>
@@ -38,9 +36,9 @@
           <details id="category-options" hidden><summary>Extra categories</summary><div id="category-checks" class="category-checks"></div></details>
           <p id="pool-status" class="muted" role="status"></p>
         </article>
-        <article class="panel rules"><p class="eyebrow">HOW TO PLAY</p><h2>Every correct answer pulls.</h2><p><strong>Correct?</strong> Pull the rope one step and get a new word.</p><p><strong>Wrong?</strong> Take a short breather, then try a new word.</p><p>Pull the other team completely over the centre line to win.</p><button class="secondary pace-button" type="button">Pace & rope settings</button></article>
+        <article class="panel rules"><p class="eyebrow">HOW TO PLAY</p><h2>Every correct answer pulls.</h2><p><strong>Correct?</strong> Pull the rope one step and get a new word.</p><p><strong>Wrong?</strong> Take a short breather, then try a new word.</p><p>Pull the other team completely over the centre line to win.</p><div class="selection-actions"><button class="secondary pace-button" type="button">SETTINGS</button><button id="start" class="primary" type="button">START</button></div></article>
       </div>
-      <footer class="screen-actions"><button id="back-setup" class="quiet" type="button">← Back to teams</button><button id="start" class="primary" type="button">Let's pull →</button></footer>
+      <footer class="screen-actions"><button id="back-setup" class="quiet" type="button">← Back to teams</button></footer>
     </section>
 
     <section id="game-screen" class="game-screen" hidden>
@@ -79,10 +77,11 @@
     <label>Lead needed to win<select id="rope-limit"><option value="3">3 pulls · Short</option><option value="5" selected>5 pulls · Standard</option><option value="7">7 pulls · Long</option><option value="10">10 pulls · Extra long</option></select></label>
     <p id="pace-note" class="muted small">The rope distance is chosen before each match.</p><button class="primary">Done</button>
   </form></dialog>
-  <dialog id="pause-dialog" aria-labelledby="pause-title"><h2 id="pause-title">GAME PAUSED</h2><div class="dialog-actions"><button id="music-volume-toggle" class="secondary" type="button" aria-expanded="false" aria-controls="music-volume-options">CHANGE MUSIC VOLUME</button><div id="music-volume-options" class="music-volume-options" role="group" aria-label="Music volume" hidden><button class="secondary" type="button" data-music-volume="0" aria-pressed="false">0%</button><button class="secondary" type="button" data-music-volume="25" aria-pressed="false">25%</button><button class="secondary" type="button" data-music-volume="50" aria-pressed="false">50%</button><button class="secondary" type="button" data-music-volume="75" aria-pressed="true">75%</button><button class="secondary" type="button" data-music-volume="100" aria-pressed="false">100%</button></div><button id="resume" class="primary" type="button">Keep pulling →</button><button id="leave-match" class="quiet" type="button">Back to teams</button></div></dialog>
+  <dialog id="pause-dialog" aria-labelledby="pause-title"><h2 id="pause-title">GAME PAUSED</h2><div class="dialog-actions"><button id="check-lineup" class="secondary" type="button" aria-expanded="false" aria-controls="pause-lineup">CHECK LINE-UP</button><section id="pause-lineup" aria-label="Team line-up" hidden></section><button id="music-volume-toggle" class="secondary" type="button" aria-expanded="false" aria-controls="music-volume-options">CHANGE MUSIC VOLUME</button><div id="music-volume-options" class="music-volume-options" role="group" aria-label="Music volume" hidden><button class="secondary" type="button" data-music-volume="0" aria-pressed="false">0%</button><button class="secondary" type="button" data-music-volume="25" aria-pressed="false">25%</button><button class="secondary" type="button" data-music-volume="50" aria-pressed="false">50%</button><button class="secondary" type="button" data-music-volume="75" aria-pressed="true">75%</button><button class="secondary" type="button" data-music-volume="100" aria-pressed="false">100%</button></div><button id="resume" class="primary" type="button">Keep pulling →</button><button id="leave-match" class="quiet" type="button">Back to teams</button></div></dialog>
   <dialog id="timer-dialog" aria-labelledby="timer-title"><button id="close-timer" type="button" aria-label="Cancel timer selection">×</button><h2 id="timer-title">Match timer</h2><p>Choose the remaining play time.</p><div class="timer-options"><button type="button" data-minutes="5">5<span>MINUTES</span></button><button type="button" data-minutes="10">10<span>MINUTES</span></button><button type="button" data-minutes="15">15<span>MINUTES</span></button><button type="button" data-minutes="20">20<span>MINUTES</span></button></div></dialog>
   <dialog id="game-over-dialog" aria-labelledby="game-over-title"><strong id="game-over-title">GAME OVER</strong></dialog>
   <div id="toast" role="status" hidden></div>
+  <script src="../modules/class-quick-play.js"></script>
   <script src="../modules/team-name-pool.js"></script>
   <script src="../modules/balanced-team-distribution.js"></script>
   <script src="../word_rivals/words.js"></script>

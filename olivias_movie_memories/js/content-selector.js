@@ -25,22 +25,28 @@ function createRandomItemPicker(items, options = {}) {
       }
       return shuffled;
     };
+    const isPriority = (item) => item.priority != null && String(item.priority).trim() !== "" && Number.isInteger(Number(item.priority)) && Number(item.priority) >= 0;
+    const orderStudentItems = (list) => shuffle(list).sort((left, right) => {
+      const leftPriority = isPriority(left), rightPriority = isPriority(right);
+      if (leftPriority || rightPriority) return leftPriority === rightPriority ? 0 : leftPriority ? -1 : 1;
+      return getVideoRating(right) - getVideoRating(left);
+    });
     let watched = new Set();
     try { watched = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]")); } catch (_) {}
     if (playable.length && playable.every((item) => watched.has(item.id))) {
       watched.clear();
       localStorage.removeItem(storageKey);
     }
-    let pool = shuffle(playable.filter((item) => !watched.has(item.id)));
+    let pool = orderStudentItems(playable.filter((item) => !watched.has(item.id)));
     const pick = () => {
       if (!pool.length) {
         if (playable.length && playable.every((item) => watched.has(item.id))) {
           watched.clear();
           localStorage.removeItem(storageKey);
         }
-        pool = shuffle(playable.filter((item) => !watched.has(item.id)));
+        pool = orderStudentItems(playable.filter((item) => !watched.has(item.id)));
       }
-      const item = pool.pop() || null;
+      const item = pool.shift() || null;
       return item;
     };
     pick.complete = (id) => {

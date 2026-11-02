@@ -562,7 +562,7 @@
   .mm-settings-btn:hover { background: rgba(255,215,0,0.09); border-color: rgba(255,215,0,.65) !important; }
 
   /* ── SETTINGS OVERLAY ── */
-  #settings-overlay {
+  #settings-overlay, #content-selection-overlay {
     position: fixed; inset: 0; z-index: 200;
     background: rgba(2,6,28,0.95);
     display: flex; align-items: center; justify-content: center;
@@ -575,6 +575,7 @@
   .settings-modal .diff-title { font-size: clamp(22px,3.8vw,40px); margin-bottom: 10px; }
   .settings-modal .diff-section { margin-bottom: 8px; }
   .settings-modal .diff-section-label { margin-bottom: 5px; padding-bottom: 3px; }
+  #content-selection-overlay .settings-modal{overflow-y:auto!important}
   .settings-modal .sc-grade-btn { padding: 5px 11px; }
   .settings-modal .sc-unit-btn { padding: 4px 9px; font-size: 12px; }
   .settings-modal .sc-unit-btn small { display: none; }
@@ -1512,8 +1513,14 @@
     font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-align:center;color:#fff;
   }
   .std-sub{font-size:11px;color:rgba(255,255,255,.42);text-align:center;letter-spacing:.05em}
+  .std-team-count{display:flex;justify-content:center;gap:8px}
+  .std-team-count .active{border-color:var(--gold);color:var(--gold)}
+  .std-group-hdr .name-entry-row{margin-bottom:4px}
+  .std-group-hdr .name-display{color:inherit;font-family:'Barlow Condensed',sans-serif;letter-spacing:0}
+  .std-group-hdr input.name-display{text-align:center}
+  .std-group-hdr input.name-display:focus{outline:2px solid var(--gold)}
   .std-cols{display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;column-gap:5px}
-  .std-group-col{display:flex;flex-direction:column;gap:3px;flex:1}
+  .std-group-col{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
   .std-group-hdr{
     font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.14em;
     text-transform:uppercase;font-weight:700;margin-bottom:2px;
@@ -1531,7 +1538,7 @@
   .std-slot.is-empty .stdt{opacity:.28}
   /* Pair (🔗) stili — aynı grupta kalması gereken öğrenciler */
   .std-swap-col{display:flex;flex-direction:column;gap:3px;align-items:center}
-  .std-swap-hdr{min-height:18px;margin-bottom:2px}
+  .std-swap-hdr{min-height:56px;margin-bottom:2px}
   .std-swap-btn{
     width:22px;height:28px;flex-shrink:0;background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.1);border-radius:5px;color:rgba(255,255,255,.32);
@@ -1551,6 +1558,7 @@
   .std-slot.active .std-cursor{display:inline-block}
   #std-warning{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.07em;text-align:center;display:none}
   .std-kb-wrap{display:flex;flex-direction:column;gap:5px}
+  .std-kb-wrap[hidden]{display:none}
   .std-kb-row{display:flex;justify-content:center;gap:5px}
   .std-actions{display:flex;gap:8px;width:100%}
   .std-balance{
@@ -1632,7 +1640,6 @@
     <div class="mm-logo">WORD<br>CONTEST</div>
     <div class="mm-byline">Designed by <strong>Adil Fırat Oktav</strong></div>
     <div class="mm-btns">
-      <button class="mm-btn mm-settings-btn" onclick="menuSettings()">⚙ SETTINGS</button>
       <button class="mm-btn mm-start-btn" onclick="menuStart()">▶ START</button>
     </div>
   </div>
@@ -1644,6 +1651,25 @@
     <div class="diff-title">AYARLAR</div>
 
     <div class="diff-section">
+      <div class="diff-section-label">GRUP SAYISI</div>
+      <div class="sc-group-toggle">
+        <button class="sc-group-btn" id="gc-btn-2" onclick="setGroupCount(2)">2 Grup</button>
+        <button class="sc-group-btn" id="gc-btn-3" onclick="setGroupCount(3)">3 Grup</button>
+      </div>
+    </div>
+
+    <button class="diff-btn diff-short" style="width:100%;justify-content:center;font-size:16px" onclick="saveSettings()">
+      ✓ KAYDET &amp; GERİ DÖN
+    </button>
+  </div>
+</div>
+
+
+<div id="content-selection-overlay" style="display:none">
+  <div class="diff-modal settings-modal">
+    <div class="diff-title">GRADE &amp; UNITS</div>
+    <div id="content-selection-fields">
+    <div class="diff-section">
       <div class="diff-section-label">SINIF</div>
       <div class="sc-grade-grid" id="sc-grade-grid"></div>
     </div>
@@ -1654,31 +1680,27 @@
       <div class="sc-settings-warn" id="sc-unit-warn"></div>
     </div>
 
-    <div class="diff-section">
-      <div class="diff-section-label">GRUP SAYISI</div>
-      <div class="sc-group-toggle">
-        <button class="sc-group-btn" id="gc-btn-2" onclick="setGroupCount(2)">2 Grup</button>
-        <button class="sc-group-btn" id="gc-btn-3" onclick="setGroupCount(3)">3 Grup</button>
-      </div>
-    </div>
-
     <div class="sc-word-count" id="sc-word-count" style="margin-bottom:14px"></div>
 
-    <button class="diff-btn diff-short" style="width:100%;justify-content:center;font-size:16px" onclick="saveSettings()">
-      ✓ KAYDET &amp; GERİ DÖN
-    </button>
+    </div>
+    <div class="sc-settings-warn" id="content-selection-warn" role="alert"></div>
+    <button class="diff-btn diff-short" type="button" style="width:100%;justify-content:center" onclick="confirmWcContentSelection()">CONTINUE</button>
+    <button class="diff-btn diff-medium" type="button" style="width:100%;justify-content:center" onclick="backToWcStudents()">BACK</button>
   </div>
 </div>
-
 
 <!-- Student Selection Overlay (3-group module) -->
 <div id="student-overlay" style="display:none">
   <div class="std-modal">
     <div class="std-title">ÖĞRENCİ DAĞITIMI</div>
+    <div class="std-team-count" aria-label="Number of teams">
+      <button class="sc-group-btn" id="std-gc-btn-2" type="button" onclick="setGroupCount(2)">2 Teams</button>
+      <button class="sc-group-btn" id="std-gc-btn-3" type="button" onclick="setGroupCount(3)">3 Teams</button>
+    </div>
     <div class="std-sub" id="student-overlay-sub">🎲 her slota basarak öğrenciyi grubuna ata · ⚖ hepsini otomatik dengeli dağıt</div>
     <div class="std-cols" id="std-cols"></div>
     <div id="std-warning"></div>
-    <div class="std-kb-wrap">
+    <div class="std-kb-wrap" hidden>
       <div class="std-kb-row" id="std-kb-0"></div>
       <div class="std-kb-row" id="std-kb-1"></div>
       <div class="std-kb-row" id="std-kb-2"></div>
@@ -2051,6 +2073,7 @@
 <div id="round-popup"><div id="round-popup-text"></div></div>
 <div id="toast"></div>
 
+  <script src="../modules/class-quick-play.js" data-class-quick-play="legacy"></script>
   <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="correct-images.js"></script>
@@ -2133,16 +2156,18 @@ function menuStart() {
     updateDiffLongDesc();
     return;
   }
-  document.getElementById('name-overlay').style.display = 'flex';
-  updateNameDisplays();
+  showStudentOverlay();
 }
 
 function menuSettings() {
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   document.getElementById('main-menu').style.display = 'none';
   document.getElementById('settings-overlay').style.display = 'flex';
-  buildScrabbleGradeSelector();
-  buildScrabbleUnitSelector();
+  if(window.wcFriendMode) {
+    document.querySelector('#settings-overlay .diff-title').after(document.getElementById('content-selection-fields'));
+    buildScrabbleGradeSelector();
+    buildScrabbleUnitSelector();
+  }
   _refreshGroupCountBtns();
   updateDiffLongDesc();
 }
@@ -2152,6 +2177,15 @@ function setGroupCount(n) {
   groupCount = n;
   STD_SLOTS = Math.max(n === 2 ? 9 : 6, ...studentInputs.map(col => col.length));
   _refreshGroupCountBtns();
+  if(document.getElementById('student-overlay').style.display !== 'none') {
+    studentInputs.forEach((team, gi) => {
+      while(team.length < STD_SLOTS) team.push('');
+      while(_slotRevealed[gi].length < STD_SLOTS) _slotRevealed[gi].push(false);
+    });
+    applyGroupCountUI();
+    _rebuildStdCols();
+    selectStdField(0, 0);
+  }
 }
 
 function _refreshGroupCountBtns() {
@@ -2160,6 +2194,11 @@ function _refreshGroupCountBtns() {
     if(btn) {
       btn.classList.toggle('active', groupCount === n);
       btn.disabled = window.wcFriendMode && n !== 2;
+    }
+    const setupBtn = document.getElementById('std-gc-btn-' + n);
+    if(setupBtn) {
+      setupBtn.classList.toggle('active', groupCount === n);
+      setupBtn.setAttribute('aria-pressed', String(groupCount === n));
     }
   });
 }
@@ -2178,7 +2217,7 @@ function applyGroupCountUI() {
 
 const WC_SETTINGS_KEY = 'word_contest_settings';
 
-function saveSettings() {
+function persistWcSettings() {
   // localStorage'a kaydet
   try {
     if(!window.wcFriendMode) localStorage.setItem(WC_SETTINGS_KEY, JSON.stringify({
@@ -2188,9 +2227,43 @@ function saveSettings() {
     }));
   } catch(e) { console.warn('[settings] kayıt hatası:', e); }
 
+}
+
+function saveSettings() {
+  persistWcSettings();
   document.getElementById('settings-overlay').style.display = 'none';
   document.getElementById('main-menu').style.display = 'flex';
   updateDiffLongDesc();
+}
+
+let wcContentSelectionConfirmed = false;
+
+function showWcContentSelection() {
+  wcContentSelectionConfirmed = false;
+  document.getElementById('diff-overlay').style.display = 'none';
+  document.getElementById('content-selection-warn').textContent = '';
+  buildScrabbleGradeSelector();
+  buildScrabbleUnitSelector();
+  updateDiffLongDesc();
+  document.getElementById('content-selection-overlay').style.display = 'flex';
+}
+
+function confirmWcContentSelection() {
+  const bank = getActiveWordBank();
+  if(!selectedGrades.size || !selectedUnits.size || !Object.values(bank).some(pool => pool.length)) {
+    document.getElementById('content-selection-warn').textContent = 'Choose a grade and unit with available words.';
+    return;
+  }
+  persistWcSettings();
+  wcContentSelectionConfirmed = true;
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  updateDiffLongDesc();
+  document.getElementById('diff-overlay').style.display = 'flex';
+}
+
+function backToWcStudents() {
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  document.getElementById('student-overlay').style.display = 'flex';
 }
 
 function loadPersistedSettings() {
@@ -2542,6 +2615,7 @@ let modalMode = '';
 
 /* ── DIFFICULTY ── */
 function setDifficulty(d) {
+  if(!window.wcFriendMode && !wcContentSelectionConfirmed) { showWcContentSelection(); return; }
   stopMainMenu();  // Ana menü müziğini kes
   stopDiffMusic();
   _hideDistBadge(); // Gizli dağıtım göstergesini kaldır
@@ -3596,6 +3670,15 @@ const KB_NUMS = ['1','2','3','4','5','6','7','8','9','0','-','⌫'];
 let groupNames = ['GRUP 1','GRUP 2','GRUP 3'];
 let activeNameField = 0;
 let numMode = false;
+const wcTeamNameRows = [0,1,2].map(i => {
+  const field = document.getElementById('nd-' + i);
+  const input = document.createElement('input');
+  input.type = 'text'; input.className = 'name-display'; input.maxLength = 48;
+  input.value = groupNames[i]; input.setAttribute('aria-label', 'Team ' + (i + 1) + ' name');
+  input.oninput = () => { groupNames[i] = input.value; input.title = input.value; };
+  field.replaceWith(input);
+  return input.parentElement;
+});
 
 const wcTeamNamePool = new window.TeamNamePool(Math.random, 3);
 
@@ -3606,11 +3689,11 @@ function pickWcTeamName(team, activeNames, random = Math.random) {
 
 function randomizeGroupName(team) {
   if(window.wcFriendMode) return;
-  if(document.getElementById('name-overlay').style.display === 'none') return;
+  if(document.getElementById('student-overlay').style.display === 'none') return;
   const name = pickWcTeamName(team, groupNames.slice(0, groupCount));
   if(!name) return;
   groupNames[team] = name;
-  selectNameField(team);
+  updateNameDisplays();
 }
 
 function buildKeyboard() {
@@ -3680,6 +3763,8 @@ function selectNameField(idx) {
 
 function updateNameDisplays() {
   [0,1,2].forEach(i => {
+    const input = wcTeamNameRows[i].querySelector('input');
+    input.value = groupNames[i]; input.title = groupNames[i];
     const el = document.getElementById('nt-'+i);
     if(el) {
       el.textContent = groupNames[i];
@@ -3852,12 +3937,11 @@ function transferWcFinalStarsToRoster() {
 /* ── Grup kolonu oluştur ── */
 function buildStdGroupCol(gi) {
   const COLORS  = ['hdr-a','hdr-b','hdr-c'];
-  const EMOJIS  = ['🔵','🟢','🔴'];
   const col = document.createElement('div');
   col.className = 'std-group-col';
   const hdr = document.createElement('div');
   hdr.className = 'std-group-hdr ' + COLORS[gi];
-  hdr.textContent = EMOJIS[gi] + ' ' + (groupNames[gi] || ('GRUP ' + (gi+1)));
+  hdr.appendChild(wcTeamNameRows[gi]);
   col.appendChild(hdr);
   for(let si = 0; si < STD_SLOTS; si++) {
     const revealed  = _slotRevealed[gi][si];
@@ -3865,7 +3949,7 @@ function buildStdGroupCol(gi) {
     const slot = document.createElement('div');
     slot.className = 'std-slot' + (visibleVal.trim() === '' ? ' is-empty' : '') + (_pairNames.has(visibleVal.trim()) ? ' paired-slot' : '');
     slot.id = `std-${gi}-${si}`;
-    slot.onclick = () => selectStdField(gi, si);
+    slot.onclick = () => selectStdField(gi, si, true);
     slot.ondblclick = (e) => { e.stopPropagation(); clearStdSlot(gi, si); };
     const txt = document.createElement('span');
     txt.className = 'stdt';
@@ -3955,7 +4039,8 @@ function showStudentOverlay() {
 }
 
 /* ── Alan seç ── */
-function selectStdField(gi, si) {
+function selectStdField(gi, si, showKeyboard = false) {
+  if(showKeyboard) document.querySelector('#student-overlay .std-kb-wrap').hidden = false;
   activeStdGroup = gi; activeStdSlot = si;
   for(let g = 0; g < groupCount; g++) for(let s = 0; s < STD_SLOTS; s++) {
     const el = document.getElementById(`std-${g}-${s}`);
@@ -4085,6 +4170,12 @@ function buildStdKeyboard() {
     });
   });
 }
+
+document.addEventListener('click', event => {
+  if(!event.target.closest('#std-cols .std-slot,#student-overlay .std-kb-wrap')) {
+    document.querySelector('#student-overlay .std-kb-wrap').hidden = true;
+  }
+});
 
 function handleStdKey(key) {
   const gi = activeStdGroup, si = activeStdSlot;
@@ -4300,7 +4391,10 @@ function publicClearAll() {
 }
 
 function applyStudentsAndContinue() {
-  localStorage.setItem('wc_public_students', JSON.stringify(studentInputs));
+  document.querySelectorAll('.score-name').forEach((el, i) => {
+    el.textContent = groupNames[i].trim() || ('GRUP ' + (i+1));
+  });
+  if(!window.ClassQuickPlay?.isActive()) localStorage.setItem('wc_public_students', JSON.stringify(studentInputs));
   const activeFilter = (n, gi, si) => n.trim() !== '';
   grpIdxs().forEach(gi => {
     groupStudents[gi]   = studentInputs[gi].filter((n, si) => activeFilter(n, gi, si));
@@ -4314,8 +4408,7 @@ function applyStudentsAndContinue() {
     studentIndex[2]    = 0;
   }
   document.getElementById('student-overlay').style.display = 'none';
-  document.getElementById('diff-overlay').style.display = 'flex';
-  updateDiffLongDesc();
+  showWcContentSelection();
 }
 
 function renderScoresPanels(listElId, gridElId) {
@@ -4589,6 +4682,7 @@ function toggleScrabbleUnit(n) {
 }
 
 function updateScrabbleWordCount() {
+  document.getElementById('content-selection-warn').textContent = '';
   const el = document.getElementById('sc-word-count');
   if(!el || typeof WORD_BANK === 'undefined') return;
   const bank = getActiveWordBank();

@@ -2551,6 +2551,7 @@
   }
 
   function awardFinalPoints(pointAwards, classroomId = "") {
+    if (window.ClassQuickPlay?.isActive()) return { awarded: [], missing: [] };
     if (!Array.isArray(pointAwards) || !pointAwards.length) {
       return { awarded: [], missing: [] };
     }

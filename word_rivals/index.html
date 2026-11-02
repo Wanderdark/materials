@@ -552,8 +552,15 @@ body.tb-mode .team-joker-row{display:flex}
 }
 
 /* ── SETTINGS OVERLAY ── */
-#settings-overlay{position:fixed;inset:0;z-index:10001;background:rgba(2,8,30,.97);display:none;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
-#settings-overlay.open{display:flex}
+#settings-overlay,#content-selection-overlay{position:fixed;inset:0;z-index:10001;background:rgba(2,8,30,.97);display:none;align-items:center;justify-content:center;backdrop-filter:blur(14px)}
+#settings-overlay.open,#content-selection-overlay.open{display:flex}
+#rvr-content-fields{display:flex;flex-direction:column;gap:14px}
+.std-group-hdr input[data-group-name]{box-sizing:border-box;width:100%;min-width:0;height:42px;padding:6px 9px;border:1px solid #ff8c0066;border-radius:10px;background:#ffffff0d;color:inherit;font:700 18px Barlow,sans-serif;text-align:center}
+.std-group-hdr input[data-group-name]:focus{outline:2px solid var(--gold)}
+#std-cols .std-group-hdr{min-width:0}
+.std-kb-wrap[hidden]{display:none}
+.std-actions{flex-wrap:wrap}
+.std-actions>.qpc-actions{flex:1 1 100%;margin:0}
 .sc-modal{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,140,0,.25);border-radius:20px;padding:24px 26px;width:min(96vw,520px);max-height:88vh;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
 #cat-preview-overlay{position:fixed;inset:0;z-index:10100;background:rgba(2,8,30,.96);display:none;align-items:center;justify-content:center;backdrop-filter:blur(12px)}
 #cat-preview-overlay.open{display:flex}
@@ -1055,23 +1062,6 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 <div id="settings-overlay">
   <div class="sc-modal">
     <div class="sc-title">⚙ AYARLAR</div>
-    <div class="sc-section" id="sc-class-section">
-      <div style="display:flex;align-items:center">
-        <div class="sc-section-label">SINIF</div>
-        <button class="sc-clear-btn" onclick="_scClearAll()">✕ CLEAR ALL</button>
-      </div>
-      <div class="sc-class-grid" id="sc-class-grid"></div>
-      <div class="sc-warn" id="sc-class-warn"></div>
-    </div>
-    <div class="sc-section">
-      <div class="sc-section-label">ÜNİTE</div>
-      <div class="sc-unit-grid" id="sc-unit-grid"></div>
-      <div class="sc-warn" id="sc-unit-warn"></div>
-    </div>
-    <div class="sc-section" id="sc-cat-section" style="display:none">
-      <div class="sc-section-label">KATEGORİLER <span style="font-size:.75em;opacity:.6;letter-spacing:.05em">(ünite bağımsız)</span></div>
-      <div class="sc-unit-grid" id="sc-cat-grid"></div>
-    </div>
     <div style="display:flex;gap:10px">
       <div class="sc-section" style="flex:1">
         <div class="sc-section-label">KELİME DİNLEME</div>
@@ -1097,8 +1087,36 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
         <button class="sc-mode-btn" id="sc-hp-200" onclick="setInitialHP(200)">200</button>
       </div>
     </div>
-    <div class="sc-word-count" id="sc-word-count"></div>
     <button class="sc-save-btn" onclick="closeSettings()">✓ TAMAM</button>
+  </div>
+</div>
+
+<div id="content-selection-overlay">
+  <div class="sc-modal">
+    <div class="sc-title">GRADE &amp; UNITS</div>
+    <div id="rvr-content-fields">
+    <div class="sc-section" id="sc-class-section">
+      <div style="display:flex;align-items:center">
+        <div class="sc-section-label">SINIF</div>
+        <button class="sc-clear-btn" onclick="_scClearAll()">✕ CLEAR ALL</button>
+      </div>
+      <div class="sc-class-grid" id="sc-class-grid"></div>
+      <div class="sc-warn" id="sc-class-warn"></div>
+    </div>
+    <div class="sc-section">
+      <div class="sc-section-label">ÜNİTE</div>
+      <div class="sc-unit-grid" id="sc-unit-grid"></div>
+      <div class="sc-warn" id="sc-unit-warn"></div>
+    </div>
+    <div class="sc-section" id="sc-cat-section" style="display:none">
+      <div class="sc-section-label">KATEGORİLER <span style="font-size:.75em;opacity:.6;letter-spacing:.05em">(ünite bağımsız)</span></div>
+      <div class="sc-unit-grid" id="sc-cat-grid"></div>
+    </div>
+    <div class="sc-word-count" id="sc-word-count"></div>
+    </div>
+    <div class="sc-warn" id="rvr-content-warn" role="alert"></div>
+    <button class="sc-save-btn" type="button" onclick="confirmRvrContentSelection()">CONTINUE</button>
+    <button class="sc-save-btn" type="button" onclick="backToRvrStudents()">BACK</button>
   </div>
 </div>
 
@@ -1148,7 +1166,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
     <div class="std-title">ÖĞRENCİ İSİMLERİ</div>
     <div class="std-sub">Her takım için isimler girin — boş bırakılanlar dahil edilmez</div>
     <div class="std-cols" id="std-cols"></div>
-    <div class="std-kb-wrap">
+    <div class="std-kb-wrap" hidden>
       <div class="std-kb-row" id="std-kb-0"></div>
       <div class="std-kb-row" id="std-kb-1"></div>
       <div class="std-kb-row" id="std-kb-2"></div>
@@ -1350,6 +1368,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
 </div>
 
 <!-- ── SCRIPTS ── -->
+  <script src="../modules/class-quick-play.js" data-class-quick-play="legacy"></script>
   <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="words.js"></script>
@@ -1672,6 +1691,7 @@ function _handleStdKey(key) {
 document.addEventListener('keydown', e => {
   const ov = document.getElementById('student-overlay');
   if (!ov || ov.classList.contains('hidden')) return;
+  if(e.target.closest('input,textarea') || document.querySelector('#student-overlay .std-kb-wrap').hidden) return;
   if (e.key === 'Enter')     { applyStudentsAndContinue(); return; }
   if (e.key === 'Tab')       { e.preventDefault(); _handleStdKey('→'); return; }
   if (e.key === 'Backspace') { e.preventDefault(); _handleStdKey('⌫'); return; }
@@ -1688,6 +1708,7 @@ function resetStudentState() {
 const _STD_LS_KEY = 'tc_students_v1';
 
 function _saveStudentInputs() {
+  if(window.ClassQuickPlay?.isActive()) return;
   if (window.rvrFriendMode) return;
   try {
     localStorage.setItem(_STD_LS_KEY, JSON.stringify(studentInputs));
@@ -1719,6 +1740,64 @@ function _rebuildRvrStudentColumns() {
   cols.replaceChildren();
   for (let row = 0; row <= STD_SLOTS; row++)
     columns.forEach(col => cols.appendChild(col[row]));
+  _mountRvrTeamNames();
+}
+
+let _rvrContentConfirmed = false;
+
+function _mountRvrTeamNames() {
+  document.querySelectorAll('#std-cols .std-group-hdr').forEach((header, index) => {
+    if(header.querySelector('input[data-group-name]')) return;
+    const input = document.createElement('input');
+    input.type = 'text'; input.dataset.groupName = index; input.maxLength = 48;
+    input.value = teamNames[index]; input.setAttribute('aria-label', 'Team ' + (index + 1) + ' name');
+    input.oninput = () => { teamNames[index] = input.value; _updateTeamNameUI(); };
+    header.replaceChildren(input);
+  });
+}
+
+const _rvrBaseStudentOverlay = showStudentOverlay;
+window.showStudentOverlay = function() {
+  _rvrContentConfirmed = false;
+  _rvrBaseStudentOverlay();
+  _mountRvrTeamNames();
+  document.querySelector('#student-overlay .std-kb-wrap').hidden = true;
+};
+
+window.TeamNamePicker.attachInputs(document.getElementById('std-cols'), (index, name) => {
+  teamNames[index] = name;
+  document.querySelector('#std-cols input[data-group-name="' + index + '"]').value = name;
+  _updateTeamNameUI();
+});
+
+document.addEventListener('click', event => {
+  const keyboard = document.querySelector('#student-overlay .std-kb-wrap');
+  if(event.target.closest('#std-cols .std-slot')) keyboard.hidden = false;
+  else if(!event.target.closest('#student-overlay .std-kb-wrap')) keyboard.hidden = true;
+});
+
+function showRvrContentSelection() {
+  _rvrContentConfirmed = false;
+  document.getElementById('rvr-content-warn').textContent = '';
+  buildSettingsUI();
+  document.getElementById('content-selection-overlay').classList.add('open');
+}
+
+function confirmRvrContentSelection() {
+  if(!_filteredQCount()) {
+    document.getElementById('rvr-content-warn').textContent = 'Choose a grade and unit or category with available questions.';
+    return;
+  }
+  _rvrContentConfirmed = true;
+  usedQIdx.clear();
+  _saveSettings();
+  document.getElementById('content-selection-overlay').classList.remove('open');
+  _startGame();
+}
+
+function backToRvrStudents() {
+  document.getElementById('content-selection-overlay').classList.remove('open');
+  document.getElementById('student-overlay').classList.remove('hidden');
 }
 
 function rvrRosterTodayKey() {
@@ -1838,11 +1917,14 @@ function applyStudentsAndContinue() {
 
   _saveStudentInputs();
   document.getElementById('student-overlay').classList.add('hidden');
-  _startGame();
+  _updateTeamNameUI();
+  if(window.rvrFriendMode) _startGame();
+  else showRvrContentSelection();
 }
 
 // ── GAME INIT ─────────────────────────────────────────────
 function _startGame() {
+  if(!window.rvrFriendMode && !_rvrContentConfirmed) { showRvrContentSelection(); return; }
   _shortRound2 = false;
   // Menü müziğinden oyun müziğine geç (main.mp3 = BG_TRACKS[0])
   _bgTrackIdx = BG_TRACKS.length - 1;  // _switchBgTrack +1%N yapınca 0'a (main.mp3) geçer
@@ -3649,6 +3731,7 @@ function _filteredQCount() {
 }
 
 function _updateWordCount() {
+  document.getElementById('rvr-content-warn').textContent = '';
   const el = document.getElementById('sc-word-count');
   if (!el) return;
   const n = _filteredQCount();
@@ -3778,6 +3861,7 @@ function _closeCatPreview() {
 }
 
 function openSettings()  {
+  if(window.rvrFriendMode) document.querySelector('#settings-overlay .sc-title').after(document.getElementById('rvr-content-fields'));
   buildSettingsUI();
   // Mevcut moda göre HP section görünürlüğünü ayarla
   const hpSection = document.getElementById('sc-hp-section');
@@ -4283,11 +4367,7 @@ function _selectGameMode(mode) {
   }
   setGameMode(mode);
   document.getElementById('gm-overlay').classList.add('hidden');
-  showNameOverlay(names => {
-    teamNames = names;
-    _updateTeamNameUI();
-    showAvatarSelect();
-  });
+  showAvatarSelect();
 }
 
 function _menuFullscreen() {

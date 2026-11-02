@@ -1102,7 +1102,7 @@
   }
 
   /* ── SETTINGS OVERLAY ── */
-  #settings-overlay {
+  #settings-overlay, #content-selection-overlay {
     position: fixed; inset: 0; z-index: 200;
     background: rgba(20,3,0,0.95);
     display: flex; align-items: center; justify-content: center;
@@ -2491,6 +2491,16 @@
   }
   #student-badge strong { color: #7dd3fc; font-size: 15px; }
 
+  #content-selection-overlay .settings-modal{overflow-y:auto!important}
+  .std-team-count{display:flex;justify-content:center;gap:8px}
+  .std-team-count .active{border-color:var(--gold);color:var(--gold)}
+  #student-overlay .std-group-col{min-width:0}
+  #student-overlay .std-group-hdr input[data-group-name]{box-sizing:border-box;width:100%;min-width:0;height:42px;padding:6px 9px;border:1px solid #ffd70066;border-radius:10px;background:#ffffff0d;color:inherit;font:700 18px Barlow,sans-serif;text-align:center}
+  #student-overlay .std-group-hdr input[data-group-name]:focus{outline:2px solid var(--gold)}
+  #student-overlay .std-cols .std-swap-hdr{min-height:42px}
+  #student-overlay .std-kb-wrap[hidden]{display:none}
+  #student-overlay .std-actions{flex-wrap:wrap}
+  #student-overlay .std-actions>.qpc-actions{flex:1 1 100%;margin:0}
 </style>
 </head>
 <body>
@@ -2550,36 +2560,6 @@
   <div class="diff-modal settings-modal">
     <div class="diff-title">AYARLAR</div>
 
-    <div class="diff-section">
-      <div class="diff-section-header">
-        <div class="diff-section-label">SINIF SEVİYESİ</div>
-        <button class="sc-clear-btn" onclick="clearAllSelections()">✕ TEMİZLE</button>
-      </div>
-      <div class="sc-class-grid" id="sc-class-grid"></div>
-      <div class="sc-settings-warn" id="sc-class-warn"></div>
-    </div>
-
-    <div class="diff-section">
-      <div class="diff-section-label">ÜNİTELER</div>
-      <div class="sc-unit-grid" id="sc-unit-grid"></div>
-      <div class="sc-settings-warn" id="sc-unit-warn"></div>
-    </div>
-
-    <div class="diff-section" id="sc-category-section" style="display:none">
-      <div class="diff-section-label">KATEGORİLER</div>
-      <div class="sc-unit-grid" id="sc-category-grid"></div>
-    </div>
-
-    <div class="diff-section">
-      <div class="diff-section-label">GRUP SAYISI</div>
-      <div class="sc-group-toggle">
-        <button class="sc-group-btn" id="gc-btn-2" onclick="setGroupCount(2)">2 Grup</button>
-        <button class="sc-group-btn" id="gc-btn-3" onclick="setGroupCount(3)">3 Grup</button>
-      </div>
-    </div>
-
-    <div class="sc-word-count" id="sc-word-count" style="margin-bottom:14px"></div>
-
     <!-- Soru Timer -->
     <div class="timer-setting">
       <div class="timer-setting-label">⏱ SORU SÜRESİ</div>
@@ -2605,6 +2585,39 @@
   </div>
 </div>
 
+<div id="content-selection-overlay" style="display:none">
+  <div class="diff-modal settings-modal">
+    <div class="diff-title">GRADE &amp; UNITS</div>
+    <div id="wm-content-fields">
+    <div class="diff-section">
+      <div class="diff-section-header">
+        <div class="diff-section-label">SINIF SEVİYESİ</div>
+        <button class="sc-clear-btn" onclick="clearAllSelections()">✕ TEMİZLE</button>
+      </div>
+      <div class="sc-class-grid" id="sc-class-grid"></div>
+      <div class="sc-settings-warn" id="sc-class-warn"></div>
+    </div>
+
+    <div class="diff-section">
+      <div class="diff-section-label">ÜNİTELER</div>
+      <div class="sc-unit-grid" id="sc-unit-grid"></div>
+      <div class="sc-settings-warn" id="sc-unit-warn"></div>
+    </div>
+
+    <div class="diff-section" id="sc-category-section" style="display:none">
+      <div class="diff-section-label">KATEGORİLER</div>
+      <div class="sc-unit-grid" id="sc-category-grid"></div>
+    </div>
+
+    <div class="sc-word-count" id="sc-word-count" style="margin-bottom:14px"></div>
+
+    </div>
+    <div class="sc-settings-warn" id="wm-content-warn" role="alert"></div>
+    <button class="diff-btn diff-short" type="button" style="width:100%;justify-content:center" onclick="confirmWmContentSelection()">CONTINUE</button>
+    <button class="diff-btn diff-medium" type="button" style="width:100%;justify-content:center" onclick="backToWmStudents()">BACK</button>
+  </div>
+</div>
+
 <!-- Attendance Overlay -->
 <div id="attendance-overlay" class="hidden">
   <div class="att-modal">
@@ -2619,10 +2632,14 @@
 <div id="student-overlay" style="display:none">
   <div class="std-modal">
     <div class="std-title">ÖĞRENCİ İSİMLERİ</div>
+    <div class="std-team-count" aria-label="Number of teams">
+      <button class="sc-group-btn" id="std-gc-btn-2" type="button" onclick="setGroupCount(2)">2 Teams</button>
+      <button class="sc-group-btn" id="std-gc-btn-3" type="button" onclick="setGroupCount(3)">3 Teams</button>
+    </div>
     <div class="std-sub">Her takım için isimler girin — boş bırakılanlar dahil edilmez</div>
     <div class="std-cols" id="std-cols"></div>
     <div id="std-warning"></div>
-    <div class="std-kb-wrap">
+    <div class="std-kb-wrap" hidden>
       <div class="std-kb-row" id="std-kb-0"></div>
       <div class="std-kb-row" id="std-kb-1"></div>
       <div class="std-kb-row" id="std-kb-2"></div>
@@ -3014,6 +3031,7 @@
 <div id="wrong-img-overlay" class="img-flash-overlay"><img id="wrong-img" src="" alt=""></div>
 <div id="toast"></div>
 
+  <script src="../modules/class-quick-play.js" data-class-quick-play="legacy"></script>
   <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="../modules/rgbkeyboard.js"></script>
@@ -3117,15 +3135,18 @@ function menuStart() {
     applyStudentsAndContinue();
     return;
   }
-  document.getElementById('name-overlay').style.display = 'flex';
+  showStudentOverlay();
 }
 
 function menuSettings() {
   if(!mainMenuAudio) playMainMenu();
   document.getElementById('main-menu').style.display = 'none';
   document.getElementById('settings-overlay').style.display = 'flex';
-  buildGradeSelector();
-  buildUnitSelector();
+  if(window.wmFriendMode) {
+    document.querySelector('#settings-overlay .diff-title').after(document.getElementById('wm-content-fields'));
+    buildGradeSelector();
+    buildUnitSelector();
+  }
   _refreshGroupCountBtns();
 
   _syncTimerBtns();
@@ -3155,8 +3176,17 @@ function setTypingTimer(sec) {
 function setGroupCount(n) {
   if(window.wmFriendMode) n = 2;
   groupCount = n;
-  STD_SLOTS = n === 2 ? 9 : 6;
+  STD_SLOTS = Math.max(n === 2 ? 9 : 6, ...studentInputs.map(team => team.length));
   _refreshGroupCountBtns();
+  if(document.getElementById('student-overlay').style.display !== 'none') {
+    studentInputs.forEach((team, gi) => {
+      while(team.length < STD_SLOTS) team.push('');
+      while(_slotRevealed[gi].length < STD_SLOTS) _slotRevealed[gi].push(false);
+    });
+    applyGroupCountUI();
+    renderStudentColumns();
+    selectStdField(0, 0);
+  }
 }
 
 function _refreshGroupCountBtns() {
@@ -3166,12 +3196,17 @@ function _refreshGroupCountBtns() {
       btn.classList.toggle('active', groupCount === n);
       btn.disabled = window.wmFriendMode && n !== 2;
     }
+    const setupBtn = document.getElementById('std-gc-btn-' + n);
+    if(setupBtn) {
+      setupBtn.classList.toggle('active', groupCount === n);
+      setupBtn.setAttribute('aria-pressed', String(groupCount === n));
+    }
   });
 }
 
 /** Score kartı, isim overlay ve öğrenci overlay'inde 3. grubu göster/gizle */
 function applyGroupCountUI() {
-  STD_SLOTS = groupCount === 2 ? 9 : 6;
+  STD_SLOTS = Math.max(groupCount === 2 ? 9 : 6, ...studentInputs.map(team => team.length));
   const sb = document.getElementById('scoreboard');
   const no = document.getElementById('name-overlay');
   const so = document.getElementById('student-overlay');
@@ -3184,7 +3219,7 @@ function applyGroupCountUI() {
 const WC_SETTINGS_KEY  = 'word_game_v2_settings';
 const WC_STUDENTS_KEY  = 'word_game_students';
 
-function saveSettings() {
+function persistWmSettings() {
   try {
     if(!window.wmFriendMode) localStorage.setItem(WC_SETTINGS_KEY, JSON.stringify({
       selectedGrades:     [...selectedGrades],
@@ -3193,13 +3228,55 @@ function saveSettings() {
       groupCount:         groupCount,
     }));
   } catch(e) { console.warn('[settings] kayıt hatası:', e); }
+}
+
+function saveSettings() {
+  persistWmSettings();
   document.getElementById('settings-overlay').style.display = 'none';
   document.getElementById('main-menu').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
   _triggerCreditShimmer();
 }
 
+let wmContentSelectionConfirmed = false;
+
+function showWmContentSelection() {
+  wmContentSelectionConfirmed = false;
+  document.getElementById('wm-content-warn').textContent = '';
+  buildGradeSelector();
+  buildUnitSelector();
+  document.getElementById('content-selection-overlay').style.display = 'flex';
+}
+
+function confirmWmContentSelection() {
+  if(!Object.values(buildQuizPool()).some(pool => pool.length)) {
+    document.getElementById('wm-content-warn').textContent = 'Choose a grade and unit or category with available questions.';
+    return;
+  }
+  persistWmSettings();
+  wmContentSelectionConfirmed = true;
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  startGameDirect();
+}
+
+function backToWmStudents() {
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  document.getElementById('student-overlay').style.display = 'flex';
+}
+
+window.TeamNamePicker.attachInputs(document.getElementById('std-cols'), (index, name) => {
+  groupNames[index] = name;
+  document.querySelector('#std-cols input[data-group-name="' + index + '"]').value = name;
+});
+
+document.addEventListener('click', event => {
+  const keyboard = document.querySelector('#student-overlay .std-kb-wrap');
+  if(event.target.closest('#std-cols .std-slot')) keyboard.hidden = false;
+  else if(!event.target.closest('#student-overlay .std-kb-wrap')) keyboard.hidden = true;
+});
+
 function saveStudentNames() {
+  if(window.ClassQuickPlay?.isActive()) return;
   if(window.wmFriendMode) return;
   try {
     localStorage.setItem(WC_STUDENTS_KEY, JSON.stringify({
@@ -3714,6 +3791,7 @@ function _ui() {
 
 /* ── DIFFICULTY ── */
 function startGameDirect() {
+  if(!window.wmFriendMode && !wmContentSelectionConfirmed) { showWmContentSelection(); return; }
   stopMainMenu();
   stopDiffMusic();
   _hideDistBadge();
@@ -5452,12 +5530,15 @@ function getActiveStudentsPool() { return []; }
 /* ── Grup kolonu oluştur ── */
 function buildStdGroupCol(gi) {
   const COLORS  = ['hdr-a','hdr-b','hdr-c'];
-  const EMOJIS  = ['🔵','🟢','🔴'];
   const col = document.createElement('div');
   col.className = 'std-group-col';
   const hdr = document.createElement('div');
   hdr.className = 'std-group-hdr ' + COLORS[gi];
-  hdr.textContent = EMOJIS[gi] + ' ' + (groupNames[gi] || ('GRUP ' + (gi+1)));
+  const input = document.createElement('input');
+  input.type = 'text'; input.dataset.groupName = gi; input.maxLength = 48;
+  input.value = groupNames[gi]; input.setAttribute('aria-label', 'Team ' + (gi + 1) + ' name');
+  input.oninput = () => { groupNames[gi] = input.value; };
+  hdr.appendChild(input);
   col.appendChild(hdr);
   for(let si = 0; si < STD_SLOTS; si++) {
     const revealed  = _slotRevealed[gi][si];
@@ -5525,6 +5606,8 @@ function showStudentOverlay() {
   renderStudentColumns();
 
   document.getElementById('student-overlay').style.display = 'flex';
+  wmContentSelectionConfirmed = false;
+  document.querySelector('#student-overlay .std-kb-wrap').hidden = true;
   buildStdKeyboard();
   selectStdField(0, 0);
 }
@@ -5925,6 +6008,9 @@ function _renderAutoLeaderboard() {
 }
 
 function applyStudentsAndContinue() {
+  document.querySelectorAll('.score-name').forEach((el, i) => {
+    el.textContent = groupNames[i].trim() || ('GRUP ' + (i+1));
+  });
   // Sadece reveal edilmiş (görünür) ve dolu slotları dahil et
   const activeFilter = (n, gi, si) =>
     n.trim() !== '' && (!_silentDistributed || _slotRevealed[gi][si] === true);
@@ -5941,7 +6027,8 @@ function applyStudentsAndContinue() {
   }
   saveStudentNames(); // 💾 isimleri localStorage'a kaydet
   document.getElementById('student-overlay').style.display = 'none';
-  startGameDirect();
+  if(window.wmFriendMode) startGameDirect();
+  else showWmContentSelection();
 }
 
 function renderScoresPanels(listElId, gridElId, singleColStudents) {
@@ -6267,6 +6354,7 @@ function toggleUnit(n) {
 }
 
 function updateUnitCount() {
+  document.getElementById('wm-content-warn').textContent = '';
   const el = document.getElementById('sc-word-count');
   if(!el || typeof QUESTIONS === 'undefined') return;
   const pool = buildQuizPool();

@@ -54,9 +54,9 @@
         </div>
         <span class="tool-credit">Tool Designed by Adil Fırat OKTAV</span>
         <div id="duelScoreboard" class="duel-scoreboard hidden" aria-live="polite">
-          <div class="duel-score-card team-a"><span>TEAM A</span><strong id="teamAScore">0</strong><small id="teamAPlayer">—</small></div>
+          <div class="duel-score-card team-a"><span id="teamAName">TEAM A</span><strong id="teamAScore">0</strong><small id="teamAPlayer">—</small></div>
           <div class="duel-turn"><span>CURRENT PLAYER</span><b id="duelTurnName">DUEL READY</b><small id="duelNextPlayer">NEXT PLAYER: —</small></div>
-          <div class="duel-score-card team-b"><span>TEAM B</span><strong id="teamBScore">0</strong><small id="teamBPlayer">—</small></div>
+          <div class="duel-score-card team-b"><span id="teamBName">TEAM B</span><strong id="teamBScore">0</strong><small id="teamBPlayer">—</small></div>
         </div>
         <button id="liteButton" class="icon-button" title="Low-performance mode: disables climax effects">LITE</button>
         <button id="fullscreenButton" class="icon-button">FULL</button>
@@ -209,6 +209,7 @@
 
   <script src="toast.js"></script>
   <script src="songs.js"></script>
+  <script src="../modules/team-name-pool.js"></script>
   <script src="app.js"></script>
   <script>window.__forceTeacherControl = new URLSearchParams(location.search).get("mode") !== "student";</script>
   <script src="../modules/profanity-filter.js"></script>

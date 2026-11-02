@@ -80,6 +80,9 @@
       this.pausedAt = 0;
       this.winner = null;
       this.pending = [];
+      this.comebackUsed = [false, false];
+      this.comeback = null;
+      this.refreshTeams = [];
       this.activeMs = 0;
       this.timerEndMs = null;
       this.finishReason = '';
@@ -115,16 +118,20 @@
       if (this.phase !== 'playing' || this.paused || !side || side.readyAt ||
           token !== side.token || !Number.isInteger(choice) || !side.choices[choice]) return null;
       this.trackTime(now);
+      this.updateComeback();
       if (this.timerEndMs !== null && this.activeMs >= this.timerEndMs) {
         this.settle();
         this.finish('timer');
         return null;
       }
+      if (!this.canAnswer(team)) return null;
+      const bonus = this.comeback?.team === team;
+      if (bonus) this.comeback.answered = true;
       const correct = side.choices[choice].correct;
       side[correct ? 'correct' : 'wrong']++;
       side.feedback = correct ? 'correct' : 'wrong';
       side.readyAt = now + (correct ? this.correctDelay : this.wrongDelay);
-      if (correct) this.pending.push(team === 0 ? -1 : 1);
+      if (correct) this.pending.push((team === 0 ? -1 : 1) * (bonus ? 2 : 1));
       return { correct, correctIndex: side.choices.findIndex(item => item.correct) };
     }
 
@@ -136,13 +143,43 @@
       this.pending = [];
       if (Math.abs(this.position) >= this.limit) {
         this.finish('rope');
+      } else if (!this.comeback && this.limit > 1 && Math.abs(this.position) === this.limit - 1) {
+        const team = this.position < 0 ? 1 : 0;
+        if (!this.comebackUsed[team]) {
+          this.comebackUsed[team] = true;
+          this.comeback = { team, stage: 'intro', startedMs: this.activeMs,
+            introEndMs: this.activeMs + 3000, endMs: this.activeMs + 8000, answered: false };
+          // Finish an already answered turn before the announcement, so the next player gets the chance.
+          if (this.sides[team].readyAt) {
+            this.sides[team].turn++;
+            this.next(team);
+            this.refreshTeams.push(team);
+          }
+        }
       }
       return true;
     }
 
+    canAnswer(team) {
+      return this.phase === 'playing' && !this.paused && (!this.comeback ||
+        (this.comeback.stage === 'active' && this.comeback.team === team && !this.comeback.answered));
+    }
+
+    updateComeback() {
+      const chance = this.comeback;
+      if (!chance || this.phase !== 'playing' || this.paused) return;
+      if (this.activeMs >= chance.endMs) {
+        const opponent = this.sides[1 - chance.team];
+        // Preserve any feedback cooldown the waiting opponent had before being frozen.
+        if (opponent.readyAt) opponent.readyAt += this.activeMs - chance.startedMs;
+        this.comeback = null;
+      } else if (this.activeMs >= chance.introEndMs) chance.stage = 'active';
+    }
+
     tick(now) {
       if (this.phase !== 'playing' || this.paused) return [];
-      const changed = [];
+      const changed = this.refreshTeams.splice(0);
+      if (this.comeback) return changed;
       this.sides.forEach((side, team) => {
         if (side.readyAt && now >= side.readyAt) {
           side.turn++;
@@ -158,6 +195,7 @@
       this.winner = this.position === 0 ? null : this.position < 0 ? 0 : 1;
       this.finishReason = reason;
       this.phase = 'finished';
+      this.comeback = null;
       this.clockRunning = false;
       return true;
     }
@@ -271,7 +309,7 @@
       .filter(character => !used.has(character));
     teams.flat().forEach(player => {
       const original = crewSprite(player);
-      player.showCrewArrow = !!original && canonicalCharacters.includes(original.character);
+      player.showCrewArrow = !!original;
       if (original) return;
       const character = canonical.shift() || anime.shift();
       if (!character) return;
@@ -402,7 +440,6 @@
     $('match-timer').hidden = screen !== 'game';
     $('finish').hidden = screen !== 'game';
     if (screen !== 'game') finishArmed = false;
-    document.querySelector('.brand-sub').textContent = screen === 'game' ? 'TUG OF WORDS' : 'CLASSROOM GAMES';
     if (screen !== 'game') music?.pause();
     ['setup', 'selection', 'game', 'result'].forEach(name => { $(`${name}-screen`).hidden = name !== screen; });
     window.scrollTo(0, 0);
@@ -479,10 +516,17 @@
         const image = avatar(student);
         if (image) row.append(image);
         row.append(element('span', student.name));
-        const move = element('button', team === 0 ? '→' : '←');
+        const opposite = groups[1 - team][index];
+        const move = element('button', '⇄');
         move.type = 'button';
-        move.setAttribute('aria-label', `Move ${student.name} to ${names[1 - team]}`);
-        move.addEventListener('click', () => { groups[1 - team].push(students.splice(index, 1)[0]); renderTeams(); });
+        move.disabled = !opposite;
+        move.setAttribute('aria-label', opposite ? `Swap ${student.name} with ${opposite.name}` : `No student opposite ${student.name} to swap`);
+        move.title = opposite ? `Swap with ${opposite.name}` : 'No student in the opposite row.';
+        move.addEventListener('click', () => {
+          if (!groups[1 - team][index]) return;
+          [students[index], groups[1 - team][index]] = [groups[1 - team][index], students[index]];
+          renderTeams();
+        });
         const remove = element('button', '×');
         remove.type = 'button';
         remove.setAttribute('aria-label', `Remove ${student.name}`);
@@ -527,6 +571,7 @@
     if (students.length < 2) { toast('At least two present students are needed.'); return; }
     const teams = window.TeamBalance.distribute(students, 2);
     importedClassroomId = room.id;
+    window.ClassQuickPlay.clear();
     groups.forEach((group, index) => group.splice(0, group.length, ...teams[index]));
     $('roster-status').textContent = `${room.name || 'Classroom'} · ${students.length} present students balanced into two teams.`;
     renderTeams();
@@ -586,7 +631,7 @@
     const side = match?.sides[team];
     const card = $(`side-${team}`);
     if (!side || !card) return;
-    const enabled = match.phase === 'playing' && !match.paused && !side.readyAt && media[team]?.ready;
+    const enabled = match.canAnswer(team) && !side.readyAt && media[team]?.ready;
     card.querySelectorAll('.picture-choice').forEach(button => { button.disabled = !enabled; });
   }
 
@@ -649,7 +694,7 @@
           const retry = element('button', 'Picture unavailable · Skip this word', 'quiet');
           retry.type = 'button';
           retry.addEventListener('click', () => {
-            if (match?.phase !== 'playing' || match.paused || side.token !== token) return;
+            if (!match?.canAnswer(team) || side.token !== token) return;
             match.next(team);
             renderSide(team);
           });
@@ -675,6 +720,7 @@
     const previous = $(`side-${team}`);
     if (previous) previous.replaceWith(card); else $('play-sides').append(card);
     renderActiveCrew(team);
+    syncComeback();
   }
 
   function submitAnswer(team, index, token) {
@@ -885,10 +931,37 @@
     if ($('match-timer').textContent !== label) $('match-timer').textContent = label;
   }
 
+  function syncComeback() {
+    const chance = currentScreen === 'game' && match?.phase === 'playing' ? match.comeback : null;
+    [0, 1].forEach(team => {
+      const card = $(`side-${team}`);
+      if (!card) return;
+      const state = !chance ? '' : chance.team !== team ? 'wait' : chance.stage === 'intro' ? 'intro' : chance.answered ? 'used' : 'chance';
+      const seconds = chance?.stage === 'active' ? Math.max(1, Math.ceil((chance.endMs - match.activeMs) / 1000)) : '';
+      const key = `${state}:${seconds}`;
+      if (card.dataset.comebackState === key) return;
+      card.dataset.comebackState = key;
+      card.querySelectorAll('.comeback-message').forEach(message => message.remove());
+      card.classList.toggle('comeback-active', state === 'chance' || state === 'used');
+      if (state) {
+        const message = element('div', undefined, `comeback-message comeback-${state}`);
+        message.setAttribute('role', 'status');
+        if (state === 'wait') {
+          message.append(element('strong', 'WAIT!'));
+          if (seconds !== '') message.append(element('span', String(seconds)));
+        } else message.textContent = state === 'intro' ? 'COMEBACK CHANCE!' : state === 'used' ? 'CHANCE USED' : `DOUBLE PULL · ${seconds}`;
+        card.append(message);
+      }
+      syncInputs(team);
+    });
+  }
+
   function updateMatch(now) {
     match.trackTime(now);
+    match.updateComeback();
     if (match.settle()) renderRope();
     if (match.phase === 'playing' && match.timerEndMs !== null && match.activeMs >= match.timerEndMs) match.finish('timer');
+    syncComeback();
     syncMatchControls();
   }
 
@@ -900,6 +973,7 @@
     [0, 1].forEach(syncInputs);
     syncMatchControls();
     document.body.classList.add('game-over');
+    syncComeback();
     $('game-over-dialog').showModal();
     const completed = match;
     finishTimer = setTimeout(() => { if (match === completed && currentScreen === 'game') showResult(); }, 3000);
@@ -1030,6 +1104,8 @@
     syncMatchControls();
     $('music-volume-options').hidden = true;
     $('music-volume-toggle').setAttribute('aria-expanded', 'false');
+    $('pause-lineup').hidden = true;
+    $('check-lineup').setAttribute('aria-expanded', 'false');
     $('pause-dialog').showModal();
   }
 
@@ -1052,6 +1128,7 @@
     renderTeams();
   }
 
+  window.ClassQuickPlay.register({ anchor: $('import-roster'), teamCount: () => 2, apply(teams) { groups.forEach((group, index) => group.splice(0, group.length, ...teams[index])); importedClassroomId = ''; $('roster-status').textContent = 'QUICK PLAY CLASS - temporary students, no HUD transfer.'; renderTeams(); } });
   $('add-form').addEventListener('submit', addStudent);
   [0, 1].forEach(team => $(`name-${team}`).addEventListener('input', renderTeams));
   document.querySelectorAll('[data-random-team-name]').forEach(button => button.addEventListener('click', () => {
@@ -1096,6 +1173,31 @@
     if (match.startTimer(Number(button.dataset.minutes))) $('timer-dialog').close();
   }));
   $('resume').addEventListener('click', () => $('pause-dialog').close());
+  $('check-lineup').addEventListener('click', () => {
+    if (!match?.paused || match.phase !== 'playing') return;
+    const lineup = $('pause-lineup');
+    const opening = lineup.hidden;
+    if (opening) {
+      lineup.replaceChildren(...match.players.map((players, team) => {
+        const column = element('div', undefined, 'pause-lineup-team');
+        column.append(element('h3', names[team], team === 0 ? 'blue-text' : 'orange-text'));
+        const list = element('ol');
+        players.forEach(player => {
+          const row = element('li');
+          const person = element('div', undefined, 'pause-lineup-person');
+          const image = avatar(player);
+          if (image) person.append(image);
+          person.append(element('span', player.name));
+          row.append(person);
+          list.append(row);
+        });
+        column.append(list);
+        return column;
+      }));
+    }
+    lineup.hidden = !opening;
+    $('check-lineup').setAttribute('aria-expanded', String(opening));
+  });
   $('music-volume-toggle').addEventListener('click', () => {
     const options = $('music-volume-options');
     options.hidden = !options.hidden;
@@ -1138,6 +1240,7 @@
       if (currentScreen === 'game' && match) { renderCrews(); renderRope(); }
     });
   });
+  document.addEventListener('contextmenu', event => event.preventDefault(), { capture: true });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') pauseMatch();
     if (finalMusicPending) playFinalMusic();

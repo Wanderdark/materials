@@ -85,6 +85,7 @@
 
   function syncSetup() { TC.renderSetup(groupCount, groupNames, setupGroups); }
   window.TeamNamePicker.attachInputs(TC.els.groupNames, (index, name) => { groupNames[index] = name; syncSetup(); });
+  window.ClassQuickPlay.register({ anchor: $("#open-roster-button"), teamCount: () => groupCount, apply(teams) { setupGroups = teams.concat([[]]).slice(0, 3); classroomId = ""; TC.els.rosterStatus.textContent = "QUICK PLAY CLASS - temporary students, no HUD transfer."; syncSetup(); } });
 
   function initializeFriendGame() {
     let profile = {}, session = {};
@@ -160,6 +161,7 @@
     if (!presentStudents.length) { TC.showToast("The locked Teacher HUD classroom has no present students."); return; }
     setupGroups = TC.distributeBalanced(room, groupCount).concat([[]]).slice(0, 3);
     classroomId = room.id;
+    window.ClassQuickPlay.clear();
     TC.els.rosterStatus.textContent = `${room.name || "Class"}: ${presentStudents.length} present students balanced across teams.`;
     syncSetup();
   }

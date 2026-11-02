@@ -939,7 +939,7 @@ body.lite .kb-key{animation:none!important}
       <div id="streak-badge" style="display:none"></div>
       <div class="check-player-name row1" id="check-player-name">—</div>
       <div class="check-timer-ring" id="check-timer-ring">
-        <span class="check-timer-num" id="check-timer-num">30</span>
+        <span class="check-timer-num" id="check-timer-num">20</span>
       </div>
     </div>
     <!-- Category block + progress badge on same row -->
@@ -1065,12 +1065,12 @@ body.lite .kb-key{animation:none!important}
       <div class="settings-ticks"><span>3s</span><span>32s</span><span>60s</span><span>90s</span></div>
     </div>
     <div class="settings-row">
-      <div class="settings-label">TYPING TIME <span id="lbl-typing-time">30s</span></div>
+      <div class="settings-label">TYPING TIME <span id="lbl-typing-time">20s</span></div>
       <div class="settings-slider-wrap">
         <input type="range" class="settings-slider" id="slider-typing-time" min="0" max="1" step="1" value="0"
           oninput="onTypingTimeChange(this.value)">
       </div>
-      <div class="settings-ticks"><span>30s</span><span>45s</span></div>
+      <div class="settings-ticks"><span>20s</span><span>45s</span></div>
     </div>
     <button class="settings-close-btn" onclick="closeGameSettings()">KAYDET & KAPAT</button>
   </div>
@@ -1392,7 +1392,7 @@ let _resultLocked  = false;
 let _autoDismissTimer = null;
 let _checkTimerInterval = null;
 let finalStarsTransferred = false;
-let _checkTimeLeft = 30;
+let _checkTimeLeft = 20;
 const _gameFlowTimeouts = new Set();
 
 function _setGameFlowTimeout(fn,delay){
@@ -1416,20 +1416,19 @@ function stopGameFlowTimeouts(){
 // ── SETTINGS ─────────────────────────────────────────────
 const SETTINGS_KEY = 'cow_settings';
 const ROUND_TIME_OPTS  = [3, 32, 60, 90];
-const TYPING_TIME_OPTS = [30, 45];
+const TYPING_TIME_OPTS = [20, 45];
 let _roundTimeSecs  = 32;
-let _typingTimeSecs = 30;
+let _typingTimeSecs = 20;
 
 function loadSettings(){
   try{
     const s=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
     if(ROUND_TIME_OPTS.includes(s.roundTime))  _roundTimeSecs =s.roundTime;
-    if(TYPING_TIME_OPTS.includes(s.typingTime)) _typingTimeSecs=s.typingTime;
   }catch(e){}
   applySettingsToUI();
 }
 function saveSettings(){
-  localStorage.setItem(SETTINGS_KEY,JSON.stringify({roundTime:_roundTimeSecs,typingTime:_typingTimeSecs}));
+  localStorage.setItem(SETTINGS_KEY,JSON.stringify({roundTime:_roundTimeSecs}));
 }
 function applySettingsToUI(){
   const ri=ROUND_TIME_OPTS.indexOf(_roundTimeSecs);
@@ -1448,7 +1447,7 @@ function onRoundTimeChange(idx){
   const l=document.getElementById('lbl-round-time'); if(l) l.textContent=_roundTimeSecs+'s';
 }
 function onTypingTimeChange(idx){
-  _typingTimeSecs=TYPING_TIME_OPTS[+idx]||30;
+  _typingTimeSecs=TYPING_TIME_OPTS[+idx]||20;
   const l=document.getElementById('lbl-typing-time'); if(l) l.textContent=_typingTimeSecs+'s';
 }
 function openGameSettings(){ applySettingsToUI(); show('overlay-game-settings'); }

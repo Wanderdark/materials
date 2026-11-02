@@ -39,8 +39,8 @@ Do not rewrite files through PowerShell.
 
 
 * Always prefer apply\_patch.
-* For a new task, always tell the user which files you will touch and get confirmation before proceeding.
-* During an active batch of related work, treat follow-up corrections as approved within that batch; tell the user which files are being changed, but do not ask for confirmation again unless the change expands the task scope or requires touching unrelated files.
+* Always tell the user which files you will touch for the current task.
+* deneme maksatlı browser açtığında oyunun sesini mute moduna al. kullanıcı deneme kaynaklı müzik sesi duymak istemiyor.
 * Don't take backup yourself.
 * Never rewrite an entire file for a small change.
 * Edit only the minimum required lines.

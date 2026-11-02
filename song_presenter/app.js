@@ -39,7 +39,7 @@
     trainingVideo: $("trainingVideo"), trainingPrompt: $("trainingPrompt"), trainingLine: $("trainingLine"),
     trainingChoices: $("trainingChoices"), trainingRehearButton: $("trainingRehearButton"), trainingVideoToggleButton: $("trainingVideoToggleButton"), trainingReplayPrompt: $("trainingReplayPrompt"), trainingReplayTitle: $("trainingReplayTitle"), trainingReplayMessage: $("trainingReplayMessage"), trainingReplayYesButton: $("trainingReplayYesButton"), trainingReplayFinishButton: $("trainingReplayFinishButton"),
     duelReadyOverlay: $("duelReadyOverlay"), duelCurrentPlayer: $("duelCurrentPlayer"), duelReadyPlayer: $("duelReadyPlayer"), duelCurrentPlayerAvatar: $("duelCurrentPlayerAvatar"), duelReadyPlayerAvatar: $("duelReadyPlayerAvatar"), duelReadyTeams: $("duelReadyTeams"), duelBeginButton: $("duelBeginButton"),
-    duelScoreboard: $("duelScoreboard"), teamAScore: $("teamAScore"), teamBScore: $("teamBScore"),
+    duelScoreboard: $("duelScoreboard"), teamAName: $("teamAName"), teamBName: $("teamBName"), teamAScore: $("teamAScore"), teamBScore: $("teamBScore"),
     teamAPlayer: $("teamAPlayer"), teamBPlayer: $("teamBPlayer"), duelTurnName: $("duelTurnName"), duelNextPlayer: $("duelNextPlayer"),
     duelSetupOverlay: $("duelSetupOverlay"), duelSetupSubtitle: $("duelSetupSubtitle"), duelTeamInputs: $("duelTeamInputs"), duelTempoPicker: $("duelTempoPicker"), duelModePicker: $("duelModePicker"), duelSetupMessage: $("duelSetupMessage"),
     duelRosterButton: $("duelRosterButton"), duelAddAButton: $("duelAddAButton"), duelAddBButton: $("duelAddBButton"), duelSetupStartButton: $("duelSetupStartButton"), duelTempoSlowButton: $("duelTempoSlowButton"), duelTempoNormalButton: $("duelTempoNormalButton"), duelModeNormalButton: $("duelModeNormalButton"), duelModeFastButton: $("duelModeFastButton"),
@@ -97,6 +97,7 @@
   let trainingPauseTimer = null;
   let trainingReplayUnlockTimer = null;
   let duelTeams = [[], []];
+  let duelTeamNames = ["TEAM A", "TEAM B"];
   let duelPlayerIndex = [0, 0];
   let duelScores = [0, 0];
   let duelStudentScores = [[], []];
@@ -344,6 +345,7 @@
      TEAM DUEL · roster, challengers and score
      ════════════════════════════════════════════════════════════════════ */
   function resetDuel() {
+    duelTeamNames = ["TEAM A", "TEAM B"];
     duelTeams = [[""], [""]];
     duelPlayerIndex = [0, 0];
     duelScores = [0, 0];
@@ -376,12 +378,39 @@
 
   function rosterScore(student) { return (Number(student?.points) || 0) + ((Number(student?.stars) || 0) * 10); }
 
+  function duelTeamName(team) { return duelTeamNames[team].trim() || ("TEAM " + (team === 0 ? "A" : "B")); }
+
+  function duelTeamNameHtml(team) {
+    const label = document.createElement("span");
+    label.textContent = duelTeamName(team);
+    return label.innerHTML;
+  }
+
+  window.TeamNamePicker.attachInputs(els.duelTeamInputs, (team, name) => {
+    duelTeamNames[team] = name;
+    els.duelTeamInputs.querySelector('input[data-group-name="' + team + '"]').value = name;
+    updateDuelScoreboard();
+    renderDuelReadyTeams();
+  });
+
   function renderDuelTeamInputs() {
     els.duelTeamInputs.innerHTML = "";
     [0, 1].forEach((team) => {
       const column = document.createElement("section");
       column.className = "duel-team-column team-" + (team === 0 ? "a" : "b");
-      column.innerHTML = `<h3>TEAM ${team === 0 ? "A" : "B"}</h3>`;
+      const heading = document.createElement("h3");
+      const teamName = document.createElement("input");
+      teamName.type = "text"; teamName.className = "duel-student-input";
+      teamName.dataset.groupName = team; teamName.maxLength = 48;
+      teamName.setAttribute("aria-label", "Team " + (team + 1) + " name");
+      teamName.value = duelTeamNames[team];
+      teamName.addEventListener("input", () => {
+        duelTeamNames[team] = teamName.value;
+        updateDuelScoreboard();
+        renderDuelReadyTeams();
+      });
+      heading.appendChild(teamName);
+      column.appendChild(heading);
       duelTeams[team].forEach((name, index) => {
         const input = document.createElement("input");
         input.className = "duel-student-input";
@@ -446,11 +475,13 @@
   }
 
   function updateDuelScoreboard() {
+    els.teamAName.textContent = duelTeamName(0);
+    els.teamBName.textContent = duelTeamName(1);
     els.teamAScore.textContent = duelScores[0];
     els.teamBScore.textContent = duelScores[1];
     els.teamAPlayer.textContent = duelPlayer(0) || "OUT";
     els.teamBPlayer.textContent = duelPlayer(1) || "OUT";
-    const active = duelPlayer(duelTurn) || "TEAM " + (duelTurn === 0 ? "A" : "B");
+    const active = duelPlayer(duelTurn) || duelTeamName(duelTurn);
     const next = duelPlayer(duelTurn === 0 ? 1 : 0) || "—";
     els.duelTurnName.textContent = active.toUpperCase();
     els.duelNextPlayer.textContent = "NEXT PLAYER: " + next.toUpperCase();
@@ -458,7 +489,7 @@
 
   function renderDuelReadyTeams() {
     const nextTeam = duelTurn === 0 ? 1 : 0;
-    els.duelReadyTeams.innerHTML = [0, 1].map((team) => `<section><h4>TEAM ${team === 0 ? "A" : "B"}</h4>${duelTeams[team].map((name, index) => `<span class="${team === duelTurn && index === duelPlayerIndex[team] ? "active" : team === nextTeam && index === duelPlayerIndex[team] ? "next" : ""}"><b>${name}</b><em>${duelStudentScores[team]?.[index] || 0} PTS</em></span>`).join("")}</section>`).join("");
+    els.duelReadyTeams.innerHTML = [0, 1].map((team) => `<section><h4>${duelTeamNameHtml(team)}</h4>${duelTeams[team].map((name, index) => `<span class="${team === duelTurn && index === duelPlayerIndex[team] ? "active" : team === nextTeam && index === duelPlayerIndex[team] ? "next" : ""}"><b>${name}</b><em>${duelStudentScores[team]?.[index] || 0} PTS</em></span>`).join("")}</section>`).join("");
   }
 
   function startDuel() {
@@ -535,19 +566,19 @@
     const awards = getDuelFinalAwards();
     const isDraw = duelScores[0] === duelScores[1];
     const winningTeam = duelScores[0] > duelScores[1] ? 0 : 1;
-    const winner = winningTeam === 0 ? "TEAM A WINS!" : "TEAM B WINS!";
+    const winner = duelTeamName(winningTeam) + " WINS!";
     els.duelFinalResult.textContent = isDraw ? "IT'S A DRAW!" : winner;
     els.duelFinalWinnerPoints.textContent = isDraw ? duelScores[0] : duelScores[winningTeam];
-    els.duelFinalScoreSummary.innerHTML = [0, 1].map((team) => `<p class="${!isDraw && team === winningTeam ? "w-top" : ""}"><span>TEAM ${team === 0 ? "A" : "B"}</span><strong>${duelScores[team]} pts</strong></p>`).join("");
+    els.duelFinalScoreSummary.innerHTML = [0, 1].map((team) => `<p class="${!isDraw && team === winningTeam ? "w-top" : ""}"><span>${duelTeamNameHtml(team)}</span><strong>${duelScores[team]} pts</strong></p>`).join("");
     const rankedAwards = [...awards].sort((a, b) => b.points - a.points || b.stars - a.stars || a.name.localeCompare(b.name));
     els.duelFinalHighScores.innerHTML = rankedAwards.map((award, index) => {
       const medal = index === 0 ? "sp-gold" : index === 1 ? "sp-silver" : index === 2 ? "sp-bronze" : "";
-      return `<div class="sp-row ${medal}"><span class="sp-rk">${index + 1}</span><div class="sp-info"><div class="sp-name">${award.name}</div><div class="sp-grp">TEAM ${award.team === 0 ? "A" : "B"}</div></div><strong class="sp-pts">${award.points}</strong></div>`;
+      return `<div class="sp-row ${medal}"><span class="sp-rk">${index + 1}</span><div class="sp-info"><div class="sp-name">${award.name}</div><div class="sp-grp">${duelTeamNameHtml(award.team)}</div></div><strong class="sp-pts">${award.points}</strong></div>`;
     }).join("");
     els.duelFinalTeamLists.innerHTML = [0, 1].map((team) => {
       const teamAwards = awards.filter((award) => award.team === team).sort((a, b) => b.points - a.points || a.name.localeCompare(b.name));
       const teamTop = Math.max(0, ...teamAwards.map((award) => award.points));
-      return `<section class="sg-col"><div class="sg-hdr">TEAM ${team === 0 ? "A" : "B"}</div><div class="sg-total">${duelScores[team]} POINTS</div>${teamAwards.map((award, index) => `<div class="sg-row ${award.points > 0 && award.points === teamTop ? "sg-top" : ""}"><span class="sg-rank">${index + 1}</span><strong class="sg-sname">${award.name}</strong><span class="sg-stars">${"★".repeat(award.stars)}</span><strong class="sg-spts">${award.points}</strong></div>`).join("")}</section>`;
+      return `<section class="sg-col"><div class="sg-hdr">${duelTeamNameHtml(team)}</div><div class="sg-total">${duelScores[team]} POINTS</div>${teamAwards.map((award, index) => `<div class="sg-row ${award.points > 0 && award.points === teamTop ? "sg-top" : ""}"><span class="sg-rank">${index + 1}</span><strong class="sg-sname">${award.name}</strong><span class="sg-stars">${"★".repeat(award.stars)}</span><strong class="sg-spts">${award.points}</strong></div>`).join("")}</section>`;
     }).join("");
     const canTransfer = !!duelRosterClassroomId && typeof window.TeacherControl?.awardFinalPoints === "function";
     els.duelFinalTransferButton.hidden = !canTransfer;

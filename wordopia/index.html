@@ -2404,6 +2404,7 @@ input[type=range].st-slider::-moz-range-thumb{width:22px;height:22px;border-radi
   </div>
 </div>
 
+  <script src="../modules/class-quick-play.js" data-class-quick-play="legacy"></script>
   <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="names.js" onerror="void 0"></script>
@@ -4494,7 +4495,7 @@ function settingsSave(){
 /* ─────────────────────────────────────────────────────────────────
    TURN BASED — STUDENT SYSTEM
 ───────────────────────────────────────────────────────────────── */
-const STD_SLOTS=9; // her takım için max öğrenci slotu
+let STD_SLOTS=9; // her takım için max öğrenci slotu
 
 function makeDefaultStudents(){
   // Slot 0: GROUP_STARTERS'dan gelir, geri kalanı boş
@@ -4817,7 +4818,7 @@ function applyStudentsAndContinue(){
   });
   // Normal modda isimleri localStorage'a kaydet (teacher mode'da kaydetme)
   if(!_teacherMode){
-    try{ localStorage.setItem('wordopia_students', JSON.stringify(studentInputs)); }catch(e){}
+    try{ if(!window.ClassQuickPlay?.isActive()) localStorage.setItem('wordopia_students', JSON.stringify(studentInputs)); }catch(e){}
   }
   document.getElementById('student-overlay').classList.add('hidden');
   firstTeam=0; // TURN BASED: herkes oynadığı için Team A her zaman başlar

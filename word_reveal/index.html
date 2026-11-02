@@ -36,7 +36,7 @@ html,body{user-select:none;-webkit-user-select:none}
 .mm-settings-btn:hover{background:rgba(40,20,80,1);box-shadow:0 6px 24px rgba(124,58,237,.5),0 0 18px rgba(255,215,0,.2)}
 
 /* ══════════ SETTINGS OVERLAY ══════════ */
-#settings-overlay{position:fixed;inset:0;z-index:200;background:rgba(8,4,24,0.97);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+#settings-overlay,#content-selection-overlay{position:fixed;inset:0;z-index:200;background:rgba(8,4,24,0.97);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
 .settings-modal{background:linear-gradient(145deg,#1e0d4e,#0f0628);border:1.5px solid var(--gold);border-radius:24px;padding:22px 28px;max-width:600px;width:93%;max-height:96vh;overflow-y:auto;text-align:left;box-shadow:0 0 80px rgba(168,85,247,.15)}
 .s-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);color:var(--gold);letter-spacing:.08em;margin-bottom:14px}
 .s-section{margin-bottom:12px}
@@ -595,6 +595,15 @@ body.game-active #lite-btn{display:flex!important}
   .choice-modal{padding:28px 28px 24px}
   .mc-modal{padding:24px 20px}
 }
+.std-team-count{display:flex;justify-content:center;text-align:center}
+.std-team-count .s-label{justify-content:center}
+#student-overlay .std-group-col{min-width:0}
+#student-overlay .std-group-hdr input[data-group-name]{box-sizing:border-box;width:100%;min-width:0;height:42px;padding:6px 9px;border:1px solid #ffd70066;border-radius:10px;background:#ffffff0d;color:inherit;font:700 18px Barlow,sans-serif;text-align:center}
+#student-overlay .std-group-hdr input[data-group-name]:focus{outline:2px solid var(--gold)}
+#student-overlay .std-cols .std-group-hdr,#student-overlay .std-cols .std-swap-hdr{height:42px;min-height:42px;flex-shrink:0}
+#student-overlay .std-kb-wrap[hidden]{display:none}
+#student-overlay .std-actions{flex-wrap:wrap}
+#student-overlay .std-actions>.qpc-actions{flex:1 1 100%;margin:0}
 </style>
 </head>
 <body>
@@ -623,6 +632,34 @@ body.game-active #lite-btn{display:flex!important}
   <div class="settings-modal">
     <div class="s-title">AYARLAR</div>
 
+    <div class="s-section s-row-two">
+      <div class="s-toggle-wrap">
+        <div class="s-label">HINT</div>
+        <div class="s-pill" onclick="setHintLang(_hintLang==='TR'?'EN':'TR')">
+          <span id="hl-pill-left"  class="s-pill-opt">TR</span>
+          <span id="hl-pill-knob" class="s-pill-knob"></span>
+          <span id="hl-pill-right" class="s-pill-opt">EN</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-setting">
+      <div class="timer-setting-label">🖼 AÇILMA SÜRESİ (toplam)</div>
+      <div class="timer-options">
+        <button class="timer-opt"        id="rtimer-20" onclick="setRevealTimer(20)">20 sn</button>
+        <button class="timer-opt active" id="rtimer-30" onclick="setRevealTimer(30)">30 sn</button>
+        <button class="timer-opt"        id="rtimer-45" onclick="setRevealTimer(45)">45 sn</button>
+      </div>
+    </div>
+
+    <button class="s-save-btn" onclick="saveSettings()">✓ KAYDET &amp; GERİ DÖN</button>
+  </div>
+</div>
+
+<div id="content-selection-overlay" style="display:none">
+  <div class="settings-modal">
+    <div class="s-title">GRADE &amp; CATEGORIES</div>
+    <div id="wr-content-fields">
     <div class="s-section">
       <div class="s-label">SINIF SEVİYESİ <span style="font-size:10px;font-weight:400;letter-spacing:.06em;color:rgba(220,200,255,.4)">(seçili sınıf + altı dahil edilir)</span></div>
       <div class="sc-class-grid" id="sc-class-grid"></div>
@@ -635,37 +672,12 @@ body.game-active #lite-btn{display:flex!important}
       <div class="sc-unit-grid" id="sc-cat-grid"></div>
     </div>
 
-    <div class="s-section s-row-two">
-      <div class="s-toggle-wrap">
-        <div class="s-label">GRUP SAYISI</div>
-        <div class="s-pill" onclick="setGroupCount(groupCount===2?3:2)">
-          <span id="gc-pill-left"  class="s-pill-opt">2</span>
-          <span id="gc-pill-knob" class="s-pill-knob"></span>
-          <span id="gc-pill-right" class="s-pill-opt">3</span>
-        </div>
-      </div>
-      <div class="s-toggle-wrap">
-        <div class="s-label">HINT</div>
-        <div class="s-pill" onclick="setHintLang(_hintLang==='TR'?'EN':'TR')">
-          <span id="hl-pill-left"  class="s-pill-opt">TR</span>
-          <span id="hl-pill-knob" class="s-pill-knob"></span>
-          <span id="hl-pill-right" class="s-pill-opt">EN</span>
-        </div>
-      </div>
-    </div>
-
     <div class="sc-word-count" id="sc-word-count" style="margin-bottom:12px"></div>
 
-    <div class="timer-setting">
-      <div class="timer-setting-label">🖼 AÇILMA SÜRESİ (toplam)</div>
-      <div class="timer-options">
-        <button class="timer-opt"        id="rtimer-20" onclick="setRevealTimer(20)">20 sn</button>
-        <button class="timer-opt active" id="rtimer-30" onclick="setRevealTimer(30)">30 sn</button>
-        <button class="timer-opt"        id="rtimer-45" onclick="setRevealTimer(45)">45 sn</button>
-      </div>
     </div>
-
-    <button class="s-save-btn" onclick="saveSettings()">✓ KAYDET &amp; GERİ DÖN</button>
+    <div class="sc-word-count" id="wr-content-warn" role="alert"></div>
+    <button class="s-save-btn" type="button" onclick="confirmWrContentSelection()">CONTINUE</button>
+    <button class="s-save-btn" type="button" onclick="backToWrStudents()">BACK</button>
   </div>
 </div>
 
@@ -702,10 +714,20 @@ body.game-active #lite-btn{display:flex!important}
 <div id="student-overlay" style="display:none">
   <div class="std-modal">
     <div class="std-title">ÖĞRENCİ İSİMLERİ</div>
+    <div class="std-team-count">
+      <div class="s-toggle-wrap">
+        <div class="s-label">GRUP SAYISI</div>
+        <div class="s-pill" onclick="setGroupCount(groupCount===2?3:2)">
+          <span id="gc-pill-left"  class="s-pill-opt">2</span>
+          <span id="gc-pill-knob" class="s-pill-knob"></span>
+          <span id="gc-pill-right" class="s-pill-opt">3</span>
+        </div>
+      </div>
+    </div>
     <div class="std-sub">Her takım için isimler girin</div>
     <div class="std-cols" id="std-cols"></div>
     <div id="std-warning"></div>
-    <div class="std-kb-wrap">
+    <div class="std-kb-wrap" hidden>
       <div class="std-kb-row" id="std-kb-0"></div>
       <div class="std-kb-row" id="std-kb-1"></div>
       <div class="std-kb-row" id="std-kb-2"></div>
@@ -715,7 +737,7 @@ body.game-active #lite-btn{display:flex!important}
       <button class="std-roster-import" type="button" onclick="openWrRosterClassPicker()">👥 ROSTERDEN AKTAR</button>
       <button class="std-clear-all" onclick="clearAllStudents()">✕ CLEAR ALL</button>
       <button class="std-fill-all"  onclick="fillAllStudents()">⚡ FILL ALL</button>
-      <button class="std-start" onclick="applyStudentsAndStart()">✓ Oyuna Başla</button>
+      <button class="std-start" onclick="applyStudentsAndStart()">✓ Tamam, Devam Et</button>
     </div>
   </div>
 </div>
@@ -861,6 +883,7 @@ body.game-active #lite-btn{display:flex!important}
     <div id="type-score-badge"></div>
   </div>
   <div id="typed-display">_</div>
+  <div id="type-timer" role="timer" style="font-size:clamp(24px,3vw,40px);font-weight:700;color:var(--gold)">25s</div>
   <div id="type-kb-wrap"></div>
 </div>
 
@@ -870,6 +893,7 @@ body.game-active #lite-btn{display:flex!important}
     <div class="mc-student" id="mc-student-name"></div>
     <div class="mc-score-row">Puan: <strong id="mc-score-val">100</strong></div>
     <div class="mc-options" id="mc-options"></div>
+    <div id="mc-timer" role="timer" style="font-size:clamp(24px,3vw,40px);font-weight:700;color:var(--gold);text-align:center">10s</div>
   </div>
 </div>
 
@@ -991,6 +1015,7 @@ body.game-active #lite-btn{display:flex!important}
 
 <div id="toast"></div>
 
+  <script src="../modules/class-quick-play.js" data-class-quick-play="legacy"></script>
   <script src="../modules/team-name-pool.js" data-team-name-ui="virtual"></script>
 <script src="../modules/balanced-team-distribution.js"></script>
 <script src="../modules/rgbkeyboard.js"></script>
@@ -1407,6 +1432,7 @@ function clearCategorySelections() {
 }
 
 function updateWordCount() {
+  document.getElementById('wr-content-warn').textContent = '';
   const el = document.getElementById('sc-word-count');
   if(!el) return;
   const cnt = buildPool().length;
@@ -1425,6 +1451,14 @@ function setGroupCount(n) {
   if(rEl) rEl.classList.toggle('active',  isThree);
   if(kEl) { kEl.className = 's-pill-knob ' + (isThree ? 'right' : 'left'); }
   applyGroupCountUI();
+  if(document.getElementById('student-overlay').style.display !== 'none') {
+    STD_SLOTS = Math.max(n===2 ? 9 : 6, ...studentInputs.map(team => team.length));
+    studentInputs.forEach((team, gi) => {
+      while(team.length < STD_SLOTS) team.push('');
+      while(_slotRevealed[gi].length < STD_SLOTS) _slotRevealed[gi].push(false);
+    });
+    buildStudentColumns();
+  }
 }
 
 function setHintLang(lang) {
@@ -1446,18 +1480,59 @@ function setRevealTimer(sec) {
   });
 }
 
-function saveSettings() {
-  if(selectedCategories.size === 0) {
-    showToast('⚠ En az 1 kategori seçmelisin!', 'warn', 2500);
-    return;
-  }
+function persistWrSettings() {
   try { if(!window.wrFriendMode) localStorage.setItem(SAVE_KEY_SET, JSON.stringify({
     selectedGrade, selectedCategories:[...selectedCategories],
     groupCount, revealTimerSec
   })); } catch(e){}
+}
+
+function saveSettings() {
+  if(window.wrFriendMode && selectedCategories.size === 0) {
+    showToast('⚠ En az 1 kategori seçmelisin!', 'warn', 2500);
+    return;
+  }
+  persistWrSettings();
   document.getElementById('settings-overlay').style.display='none';
   document.getElementById('main-menu').style.display='flex';
 }
+
+let wrContentSelectionConfirmed = false;
+
+function showWrContentSelection() {
+  wrContentSelectionConfirmed = false;
+  document.getElementById('wr-content-warn').textContent = '';
+  buildGradeSelector();
+  buildCategorySelector();
+  document.getElementById('content-selection-overlay').style.display = 'flex';
+}
+
+function confirmWrContentSelection() {
+  if(!buildPool().length) {
+    document.getElementById('wr-content-warn').textContent = 'Choose a grade and category with available words.';
+    return;
+  }
+  persistWrSettings();
+  wrContentSelectionConfirmed = true;
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  startGame();
+}
+
+function backToWrStudents() {
+  document.getElementById('content-selection-overlay').style.display = 'none';
+  document.getElementById('student-overlay').style.display = 'flex';
+}
+
+window.TeamNamePicker.attachInputs(document.getElementById('std-cols'), (index, name) => {
+  groupNames[index] = name;
+  document.querySelector('#std-cols input[data-group-name="' + index + '"]').value = name;
+});
+
+document.addEventListener('click', event => {
+  const keyboard = document.querySelector('#student-overlay .std-kb-wrap');
+  if(event.target.closest('#std-cols .std-slot')) keyboard.hidden = false;
+  else if(!event.target.closest('#student-overlay .std-kb-wrap')) keyboard.hidden = true;
+});
 
 function loadSettings() {
   try {
@@ -1480,16 +1555,18 @@ function menuStart() {
     applyStudentsAndStart();
     return;
   }
-  document.getElementById('name-overlay').style.display='flex';
-  buildNameKeyboard();
+  showStudentOverlay();
 }
 
 function menuSettings() {
   if(!_bgAudio) playBg();
   document.getElementById('main-menu').style.display='none';
   document.getElementById('settings-overlay').style.display='flex';
-  buildGradeSelector();
-  buildCategorySelector();
+  if(window.wrFriendMode) {
+    document.querySelector('#settings-overlay .s-title').after(document.getElementById('wr-content-fields'));
+    buildGradeSelector();
+    buildCategorySelector();
+  }
   setGroupCount(groupCount);
   setRevealTimer(revealTimerSec);
   setHintLang(_hintLang);
@@ -1558,7 +1635,7 @@ document.addEventListener('keydown', e => {
     if(e.key.length===1) nameKey(e.key.toUpperCase());
   }
   const std = document.getElementById('student-overlay');
-  if(std && std.style.display!=='none') {
+  if(std && std.style.display!=='none' && !e.target.closest('input,textarea') && !document.querySelector('#student-overlay .std-kb-wrap').hidden) {
     if(e.key==='Backspace') { studentKey('⌫'); return; }
     if(e.key.length===1 && e.key!=='\t') studentKey(e.key.toUpperCase());
   }
@@ -1584,6 +1661,9 @@ let STD_SLOTS = 8;
 let activeStdSlot = { gi:0, si:0 };
 
 function showStudentOverlay() {
+  wrContentSelectionConfirmed = false;
+  document.querySelector('#student-overlay .std-kb-wrap').hidden = true;
+  setGroupCount(groupCount);
   STD_SLOTS = Math.max(groupCount===2 ? 9 : 6, ...studentInputs.map(col => col.length));
   if(studentInputs[0].length < STD_SLOTS) {
     studentInputs = [new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill(''),new Array(STD_SLOTS).fill('')];
@@ -1759,7 +1839,11 @@ function buildStudentColumns() {
     gcol.className = 'std-group-col';
     const hdr = document.createElement('div');
     hdr.className = `std-group-hdr ${hdrs[gi]}`;
-    hdr.textContent = groupNames[gi];
+    const input = document.createElement('input');
+    input.type = 'text'; input.dataset.groupName = gi; input.maxLength = 48;
+    input.value = groupNames[gi]; input.setAttribute('aria-label', 'Team ' + (gi + 1) + ' name');
+    input.oninput = () => { groupNames[gi] = input.value; };
+    hdr.appendChild(input);
     gcol.appendChild(hdr);
     for(let si=0; si<STD_SLOTS; si++) {
       const slot = document.createElement('div');
@@ -1885,6 +1969,7 @@ function fillAllStudents() {
 }
 
 function saveStudentNames() {
+  if(window.ClassQuickPlay?.isActive()) return;
   if(window.wrFriendMode) return;
   try { localStorage.setItem(SAVE_KEY_STU + '_' + groupCount, JSON.stringify(studentInputs.map(c=>[...c]))); } catch(e){}
 }
@@ -1922,9 +2007,14 @@ function applyStudentsAndStart() {
   const warn = document.getElementById('std-warning');
   if(!hasAny) { if(warn) { warn.style.display='block'; warn.textContent='⚠ En az bir öğrenci ekleyin!'; warn.style.color='#f87171'; } return; }
   if(warn) warn.style.display='none';
+  groupNames.forEach((name, gi) => {
+    const label = document.getElementById('gn-' + gi);
+    if(label) label.textContent = name.trim() || ('GRUP ' + (gi + 1));
+  });
   saveStudentNames();
   document.getElementById('student-overlay').style.display='none';
-  startGame();
+  if(window.wrFriendMode) startGame();
+  else showWrContentSelection();
 }
 
 // ── GAME START ──
@@ -2209,6 +2299,7 @@ function _initBonusState() {
 }
 
 function startGame() {
+  if(!window.wrFriendMode && !wrContentSelectionConfirmed) { showWrContentSelection(); return; }
   pool = buildPool();
   usedIndices.clear();
   if(window.wrFriendMode && pool.length===0) {
@@ -2612,8 +2703,17 @@ function chooseMC() {
 // ── TYPE OVERLAY (YAZACAĞIM) ──
 let _typedAnswer = '';
 let _kbSureMode  = false;
+let _typeTimer = null;
+let _typeDeadline = 0;
+
+function stopTypeTimer() {
+  clearInterval(_typeTimer);
+  _typeTimer = null;
+  _typeDeadline = 0;
+}
 
 function showTypeOverlay() {
+  stopTypeTimer();
   const gi = activeGroup;
   const students = groupStudents[gi];
   const name = students.length ? students[currentSlotIdx[gi]%students.length] : groupNames[gi];
@@ -2631,9 +2731,23 @@ function showTypeOverlay() {
     wrap.innerHTML='';
     RGBKeyboard.build('type-kb-wrap', onTypeKey);
   }
+  const timer = document.getElementById('type-timer');
+  timer.textContent = '25s';
+  _typeDeadline = Date.now() + 25000;
+  _typeTimer = setInterval(() => {
+    if(!gameActive || !document.getElementById('type-overlay').classList.contains('open')) {
+      stopTypeTimer();
+      return;
+    }
+    const seconds = Math.max(0, Math.ceil((_typeDeadline - Date.now()) / 1000));
+    timer.textContent = seconds + 's';
+    if(seconds === 0) submitTypedAnswer();
+  }, 100);
 }
 
 function onTypeKey(k) {
+  if(!_typeDeadline) return;
+  if(Date.now() >= _typeDeadline) { submitTypedAnswer(); return; }
   if(k==='SUBMIT') {
     if(!_typedAnswer.trim()) {
       if(!_kbSureMode) { _kbSureMode=true; RGBKeyboard.setSure(true); return; }
@@ -2691,6 +2805,8 @@ function showLevenshteinFeedback(t, c, callback) {
 }
 
 function submitTypedAnswer() {
+  if(!_typeDeadline) return;
+  stopTypeTimer();
   const correct = currentWord[2];
   const alts    = currentWord[6] || [];
   const t = normalise(_typedAnswer);
@@ -2724,7 +2840,17 @@ function submitTypedAnswer() {
 // ── MC OVERLAY (SEÇECEĞİM) ──
 let _mcOptions = []; // tracks shown options — used to avoid duplicates in İKİNCİ ŞANS
 
+let _mcTimer = null;
+let _mcDeadline = 0;
+
+function stopMCTimer() {
+  clearInterval(_mcTimer);
+  _mcTimer = null;
+  _mcDeadline = 0;
+}
+
 function showMCOverlay() {
+  stopMCTimer();
   const gi = activeGroup;
   const students = groupStudents[gi];
   const name = students.length ? students[currentSlotIdx[gi]%students.length] : groupNames[gi];
@@ -2745,12 +2871,27 @@ function showMCOverlay() {
     container.appendChild(btn);
   });
   document.getElementById('mc-overlay').classList.add('open');
+  const timer = document.getElementById('mc-timer');
+  timer.textContent = '10s';
+  _mcDeadline = Date.now() + 10000;
+  _mcTimer = setInterval(() => {
+    if(!gameActive || !document.getElementById('mc-overlay').classList.contains('open')) {
+      stopMCTimer();
+      return;
+    }
+    const seconds = Math.max(0, Math.ceil((_mcDeadline - Date.now()) / 1000));
+    timer.textContent = seconds + 's';
+    if(seconds === 0) onMCAnswer(null, correct, null, container);
+  }, 100);
 }
 
 function onMCAnswer(chosen, correct, btn, container) {
+  if(!_mcDeadline) return;
+  if(Date.now() >= _mcDeadline) { chosen = null; btn = null; }
+  stopMCTimer();
   container.querySelectorAll('.mc-btn').forEach(b => b.disabled=true);
-  const isCorrect = normalise(chosen)===normalise(correct);
-  btn.classList.add(isCorrect?'correct':'wrong');
+  const isCorrect = chosen !== null && normalise(chosen)===normalise(correct);
+  if(btn) btn.classList.add(isCorrect?'correct':'wrong');
 
   // İKİNCİ ŞANS in MC mode: close overlay, resume board, next STOP → MC again
   if(!isCorrect && _roundBonus[activeGroup] === 'IKINCI_SANS' && !_secondChanceUsed) {
@@ -3497,6 +3638,8 @@ function roundEndYes() {
 }
 
 function showWinner() {
+  stopTypeTimer();
+  stopMCTimer();
   stopReveal();
   gameActive=false;
   if(_bgAudio){ _bgAudio.pause(); _bgAudio=null; }
