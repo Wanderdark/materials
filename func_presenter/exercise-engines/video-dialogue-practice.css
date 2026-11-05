@@ -46,3 +46,26 @@
 .example-card.video-dialogue-speaker-classification .video-dialogue-video { justify-self: stretch; }
 .video-dialogue-classification-visual-next { align-self: center; margin-top: clamp(12px, 2vw, 24px); }
 @media (max-width: 820px) { .example-card.video-dialogue-slide { grid-template-columns: 1fr; }.video-dialogue-video { max-height: none; }.video-dialogue-practice { margin-top: 0; } }
+.example-card.video-dialogue-slide:has(.video-dialogue-hub-expanded) { grid-template-columns: minmax(0, 1fr); }
+.example-card.video-dialogue-slide:has(.video-dialogue-hub-expanded) .sentence-panel { display: none; }
+.video-dialogue-hub-replay { width: min(100%, 340px); margin: 0 auto; }
+.video-dialogue-hub-replay[hidden],
+.video-dialogue-visual [hidden],
+.daily-routine-video-visual [hidden] { display: none; }
+[data-hub-video-number]::before {
+  content: attr(data-hub-video-number);
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #07183a;
+  color: #fff;
+  font: 800 13px/1 system-ui, sans-serif;
+  pointer-events: none;
+}

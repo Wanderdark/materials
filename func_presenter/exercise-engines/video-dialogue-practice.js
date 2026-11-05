@@ -14,12 +14,15 @@ function clearVideoDialoguePractice() {
   }
 }
 
-function bindVideoStopAt(video, stopAt, onStop) {
+function bindVideoStopAt(video, stopAt, onStop, repeat = false) {
   const stopAtSeconds = Number(stopAt);
   if (!Number.isFinite(stopAtSeconds) || stopAtSeconds <= 0) return;
   let reachedStopAt = false;
   const stopAtLimit = () => {
-    if (video.currentTime < stopAtSeconds) return;
+    if (video.currentTime < stopAtSeconds) {
+      if (repeat) reachedStopAt = false;
+      return;
+    }
     video.pause();
     if (video.currentTime > stopAtSeconds) video.currentTime = stopAtSeconds;
     if (reachedStopAt) return;
@@ -223,6 +226,58 @@ function getVideoDialoguePortrait(speaker) {
   return characters.has(name) ? `../olivias_movie_memories/assets/portraits/${name}.webp` : "";
 }
 
+function setupVideoHubPlayback(visual, video, speakers, stopAt) {
+  const expand = document.createElement("button");
+  expand.type = "button";
+  expand.className = "video-dialogue-open-practice";
+  const setExpanded = (expanded) => {
+    visual.classList.toggle("video-dialogue-hub-expanded", expanded);
+    expand.textContent = expanded ? "↙" : "↗";
+    expand.setAttribute("aria-label", expanded ? "Minimize video" : "Expand video");
+    expand.setAttribute("aria-expanded", String(expanded));
+  };
+  setExpanded(false);
+  expand.addEventListener("click", () => {
+    setExpanded(!visual.classList.contains("video-dialogue-hub-expanded"));
+  });
+
+  const replay = document.createElement("button");
+  replay.type = "button";
+  replay.className = "simple-present-video-hub-card video-dialogue-hub-replay";
+  replay.setAttribute("aria-label", "Replay video");
+  const portraits = document.createElement("span");
+  portraits.className = "simple-present-video-hub-portraits";
+  [...new Set(speakers)].slice(0, 2).forEach((name) => {
+    const portrait = document.createElement("img");
+    portrait.src = simplePresentVideoHubPortrait(name);
+    portrait.alt = name;
+    portrait.addEventListener("error", () => portrait.remove(), { once: true });
+    portraits.append(portrait);
+  });
+  const play = document.createElement("span");
+  play.className = "simple-present-video-hub-play";
+  play.textContent = "▶";
+  play.setAttribute("aria-hidden", "true");
+  replay.append(portraits, play);
+  replay.hidden = true;
+  const showReplay = () => {
+    setExpanded(false);
+    video.hidden = true;
+    expand.hidden = true;
+    replay.hidden = false;
+  };
+  replay.addEventListener("click", () => {
+    replay.hidden = true;
+    video.hidden = false;
+    expand.hidden = false;
+    video.currentTime = 0;
+    video.play().catch(showReplay);
+  });
+  visual.append(expand, replay);
+  bindVideoStopAt(video, stopAt, showReplay, true);
+  video.addEventListener("ended", showReplay);
+}
+
 function renderVideoDialoguePractice(example) {
   const data = example.videoDialogue;
   if (!data) return;
@@ -423,7 +478,11 @@ function renderVideoDialoguePractice(example) {
   }
   els.presenceView.append(practice);
 
-  if (!speakerClassification) {
+  if (data.hubPlaybackSpeakers && !speakerClassification) {
+    els.exampleCard.classList.add("video-dialogue-practice-open");
+    practice.classList.remove("hidden");
+    setupVideoHubPlayback(visual, video, data.hubPlaybackSpeakers, data.videoStopAt);
+  } else if (!speakerClassification) {
     let practiceOpened = false;
     const openButton = document.createElement("button");
     openButton.type = "button";

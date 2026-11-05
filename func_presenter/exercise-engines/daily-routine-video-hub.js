@@ -1,7 +1,7 @@
 // APP-ANCHOR: Daily-routine video character hub.
 function getDailyRoutineVideoHubState(example) {
   if (!example._dailyRoutineVideoHubState) example._dailyRoutineVideoHubState = { completed: {} };
-  return example._dailyRoutineVideoHubState;
+  return loadVideoHubProgress(example, "daily-routine", example._dailyRoutineVideoHubState);
 }
 
 function clearDailyRoutineVideoHubPractice() {
@@ -34,6 +34,9 @@ function renderDailyRoutineVideoPractice(character, onComplete) {
   const practice = document.createElement("section");
   practice.id = "dailyRoutineVideoPractice";
   practice.className = "daily-routine-video-practice hidden";
+  els.exampleCard.classList.add("daily-routine-video-practice-open");
+  practice.classList.remove("hidden");
+  setupVideoHubPlayback(visual, video, [character.name], character.videoStopAt);
   if (character.orderedActivities) {
     const title = document.createElement("p");
     title.className = "presence-title daily-routine-video-kicker";
@@ -51,18 +54,14 @@ function renderDailyRoutineVideoPractice(character, onComplete) {
     });
     practice.append(title, list);
     els.presenceView.append(practice);
-    video.addEventListener("ended", () => {
-      els.exampleCard.classList.add("daily-routine-video-practice-open");
-      practice.classList.remove("hidden");
-      activateScrambledDialogue(undefined, () => {
-        setTimeout(() => {
-          if (practice.isConnected) onComplete();
-        }, 550);
-      });
-      if ([...list.children].every((row, index) => Number(row.dataset.presenceIndex) === index)) {
-        list.append(list.firstElementChild);
-      }
-    }, { once: true });
+    activateScrambledDialogue(undefined, () => {
+      setTimeout(() => {
+        if (practice.isConnected) onComplete();
+      }, 550);
+    });
+    if ([...list.children].every((row, index) => Number(row.dataset.presenceIndex) === index)) {
+      list.append(list.firstElementChild);
+    }
     return;
   }
   const title = document.createElement("p");
@@ -122,10 +121,6 @@ function renderDailyRoutineVideoPractice(character, onComplete) {
   practice.append(title, questions);
   els.presenceView.append(practice);
 
-  video.addEventListener("ended", () => {
-    els.exampleCard.classList.add("daily-routine-video-practice-open");
-    practice.classList.remove("hidden");
-  }, { once: true });
 }
 
 function renderDailyRoutineVideoHub(example) {
@@ -133,6 +128,7 @@ function renderDailyRoutineVideoHub(example) {
   els.presenceView.querySelectorAll(".presence-row.category-list").forEach((row, index) => {
     const character = example.items?.[index]?.dailyRoutineVideoCharacter;
     if (!character) return;
+    row.dataset.hubVideoNumber = String(index + 1);
     const completed = Boolean(hubState.completed[character.name]);
     row.classList.add("clickable");
     row.tabIndex = completed ? -1 : 0;
@@ -145,6 +141,7 @@ function renderDailyRoutineVideoHub(example) {
       els.exampleCard.classList.add("video-dialogue-slide");
       renderDailyRoutineVideoPractice(character, () => {
         hubState.completed[character.name] = true;
+        saveVideoHubProgress(example, "daily-routine", hubState);
         renderExample();
       });
     };

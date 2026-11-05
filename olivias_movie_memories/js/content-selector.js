@@ -189,10 +189,11 @@ function createRandomItemPicker(items, options = {}) {
   if (options.omni) {
     const omniCandidates = (type) => {
       refillRegularPool();
-      return [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type)).sort((left, right) => {
+      const candidates = [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type));
+      return (window.__oliviasMovieMemoriesFriendMode ? candidates : shuffle(candidates)).sort((left, right) => {
         const leftPriority = priorityItems.includes(left), rightPriority = priorityItems.includes(right);
         if (leftPriority || rightPriority) return leftPriority && rightPriority ? Number(left.priority) - Number(right.priority) : leftPriority ? -1 : 1;
-        return getVideoRating(right) - getVideoRating(left) || playable.indexOf(left) - playable.indexOf(right);
+        return getVideoRating(right) - getVideoRating(left) || (window.__oliviasMovieMemoriesFriendMode ? playable.indexOf(left) - playable.indexOf(right) : 0);
       });
     };
     pick.availableQuestionTypes = () => ["translation", "word", "true-false"].filter((type) => omniCandidates(type).length);

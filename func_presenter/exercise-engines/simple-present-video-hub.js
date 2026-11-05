@@ -9,7 +9,7 @@ function clearSimplePresentVideoHubPractice() {
 
 function getSimplePresentVideoHubState(example) {
   if (!example._simplePresentVideoHubState) example._simplePresentVideoHubState = { completed: {} };
-  return example._simplePresentVideoHubState;
+  return loadVideoHubProgress(example, "simple-present", example._simplePresentVideoHubState);
 }
 
 function simplePresentVideoHubPortrait(name) {
@@ -44,11 +44,12 @@ function renderSimplePresentVideoHub(example) {
   const grid = document.createElement("div");
   grid.className = "simple-present-video-hub-grid";
 
-  data.items.forEach((item) => {
+  data.items.forEach((item, index) => {
     const completed = Boolean(stateForHub.completed[item.id]);
     const portraitSpeakers = simplePresentVideoHubSpeakers(item);
     const card = document.createElement("button");
     card.type = "button";
+    card.dataset.hubVideoNumber = String(index + 1);
     card.className = `simple-present-video-hub-card${completed ? " is-completed" : ""}${portraitSpeakers.length === 1 ? " is-solo" : ""}`;
     card.disabled = completed;
     card.classList.toggle("is-highlighted", Boolean(item.highlighted));
@@ -84,10 +85,12 @@ function renderSimplePresentVideoHub(example) {
         renderVideoDialoguePractice({
           videoDialogue: {
             ...item.videoDialogue,
+            hubPlaybackSpeakers: portraitSpeakers,
             autoplay: true,
             onHubReturn: () => renderExample(),
             onComplete: () => {
               stateForHub.completed[item.id] = true;
+              saveVideoHubProgress(example, "simple-present", stateForHub);
             }
           }
         });

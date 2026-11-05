@@ -219,6 +219,7 @@ body::before {
 .ss-chip.sel-p1 { border-color:var(--p1); background:rgba(96,165,250,.18); color:var(--p1); }
 .ss-chip.sel-p2 { border-color:var(--p2); background:rgba(251,146,60,.18); color:var(--p2); }
 .ss-chip.sel-tournament { border-color:#fbbf24; background:rgba(251,191,36,.16); color:#fbbf24; }
+.ss-chip.sel-tournament-manual { border-color:#c084fc; background:rgba(168,85,247,.2); color:#d8b4fe; }
 .ss-count-row {
   display:flex; align-items:center; justify-content:space-between;
   gap:14px; flex-shrink:0; flex-wrap:wrap;
@@ -1383,6 +1384,7 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
     <div class="ss-heading" id="ss-heading">OYUNCU SEÇİMİ</div>
     <div class="ss-sub" id="ss-sub">İki öğrenciye tıkla — ilk seçilen <span style="color:var(--p1)">P1</span>, ikinci seçilen <span style="color:var(--p2)">P2</span></div>
     <div class="ss-random-row hidden" id="ss-random-row">
+      <button class="ss-random-btn" type="button" onclick="clearTournamentStudentSelection()">CLEAR ALL</button>
       <button class="ss-random-btn" type="button" data-random-count="2" onclick="selectRandomTournamentStudents(2)">2 RANDOM</button>
       <button class="ss-random-btn" type="button" data-random-count="4" onclick="selectRandomTournamentStudents(4)">4 RANDOM</button>
       <button class="ss-random-btn" type="button" data-random-count="8" onclick="selectRandomTournamentStudents(8)">8 RANDOM</button>
@@ -3550,7 +3552,7 @@ function showTournamentSelect() {
     if (_tournamentChampion) showTournamentChampion();
   } else {
     buildStudentPool();
-    _ssSelected = _tournamentSavedSelection.map(s => ({ name: s.name, slot: s.slot }));
+    _ssSelected = _tournamentSavedSelection.map(s => ({ name: s.name, slot: s.slot, random: !!s.random }));
     _ssRefreshColors();
     _updateSSCount();
     document.getElementById('screen-student-select').classList.remove('hidden');
@@ -3614,7 +3616,7 @@ function _saveTournamentState() {
     localStorage.setItem(_TOURNAMENT_KEY, JSON.stringify({
       version: 2,
       selected: _ssMode === 'tournament' && !_tournamentMatches.length
-        ? _ssSelected.map(s => ({ name: s.name, slot: s.slot }))
+        ? _ssSelected.map(s => ({ name: s.name, slot: s.slot, random: !!s.random }))
         : _tournamentSavedSelection,
       matches: _tournamentMatches,
       rounds: _tournamentRounds,
@@ -3790,47 +3792,58 @@ function _ssToggle(s, chip) {
   } else {
     const maxSelected = _ssMode === 'tournament' ? 16 : 2;
     if (_ssSelected.length >= maxSelected) return;
-    _ssSelected.push(s);
+    _ssSelected.push({ ...s, random: false });
     _ssLastChip = chip;
     _ssRefreshColors();
   }
   _updateSSCount();
   if (_ssMode === 'tournament') {
-    _tournamentSavedSelection = _ssSelected.map(x => ({ name: x.name, slot: x.slot }));
+    _tournamentSavedSelection = _ssSelected.map(x => ({ name: x.name, slot: x.slot, random: !!x.random }));
     _saveTournamentState();
   }
+}
+
+function clearTournamentStudentSelection() {
+  if (_ssMode !== 'tournament') return;
+  _ssSelected = [];
+  _ssLastChip = null;
+  _tournamentSavedSelection = [];
+  _ssRefreshColors();
+  _updateSSCount();
+  _saveTournamentState();
 }
 
 function selectRandomTournamentStudents(count) {
   if (_ssMode !== 'tournament') return;
   const chips = Array.from(document.querySelectorAll('#ss-class-pool .ss-chip'));
   if (chips.length < count) return;
-  _ssSelected = shuffle(chips.map((chip, index) => ({
+  const manual = _ssSelected.filter(s => !s.random);
+  if (manual.length >= count) return;
+  const candidates = chips.map((chip, index) => ({
     name: chip.dataset.name,
     slot: chip.dataset.slot ? Number(chip.dataset.slot) : null,
-    _chipIndex: index
-  }))).slice(0, count).map(item => ({
-    name: item.name,
-    slot: item.slot,
-    _chipIndex: item._chipIndex
-  }));
+    _chipIndex: index,
+    random: true
+  })).filter(item => !manual.some(s => s.slot != null ? s.slot === item.slot : s.name === item.name));
+  if (candidates.length < count - manual.length) return;
+  _ssSelected = [...manual, ...shuffle(candidates).slice(0, count - manual.length)];
   _ssLastChip = null;
   _ssRefreshColors();
   _updateSSCount();
-  _tournamentSavedSelection = _ssSelected.map(x => ({ name: x.name, slot: x.slot }));
+  _tournamentSavedSelection = _ssSelected.map(x => ({ name: x.name, slot: x.slot, random: !!x.random }));
   _saveTournamentState();
 }
 
 function _ssRefreshColors() {
   // Tüm chip'leri sıfırla
-  document.querySelectorAll('#ss-class-pool .ss-chip').forEach(c => c.classList.remove('sel-p1', 'sel-p2', 'sel-tournament'));
+  document.querySelectorAll('#ss-class-pool .ss-chip').forEach(c => c.classList.remove('sel-p1', 'sel-p2', 'sel-tournament', 'sel-tournament-manual'));
   _ssSelected.forEach((s, i) => {
     const chip = s._chipIndex !== undefined
       ? document.querySelectorAll('#ss-class-pool .ss-chip')[s._chipIndex]
       : s.slot !== null
       ? document.querySelector(`#ss-class-pool .ss-chip[data-slot="${s.slot}"]`)
       : document.querySelector(`#ss-class-pool .ss-chip[data-name="${s.name}"]`);
-    if (chip) chip.classList.add(_ssMode === 'tournament' ? 'sel-tournament' : (i === 0 ? 'sel-p1' : 'sel-p2'));
+    if (chip) chip.classList.add(_ssMode === 'tournament' ? (s.random ? 'sel-tournament' : 'sel-tournament-manual') : (i === 0 ? 'sel-p1' : 'sel-p2'));
   });
 }
 
@@ -3848,8 +3861,11 @@ function _updateSSCount() {
   if (randomRow) {
     const available = document.querySelectorAll('#ss-class-pool .ss-chip').length;
     randomRow.classList.toggle('hidden', !tournamentMode);
-    randomRow.querySelectorAll('.ss-random-btn').forEach(btn => {
-      btn.disabled = !tournamentMode || available < Number(btn.dataset.randomCount);
+    randomRow.querySelectorAll('.ss-random-btn[data-random-count]').forEach(btn => {
+      const target = Number(btn.dataset.randomCount);
+      const remaining = target - _ssSelected.filter(s => !s.random).length;
+      btn.textContent = Math.max(0, remaining) + ' RANDOM';
+      btn.disabled = !tournamentMode || available < target || remaining <= 0;
     });
   }
   if (tournamentMode) {
@@ -3908,7 +3924,7 @@ function createTournamentDraw() {
   _tournamentMatches = _tournamentRounds[startRound];
   _tournamentActiveMatch = null;
   _tournamentResultSaved = false;
-  _tournamentSavedSelection = _ssSelected.map(s => ({ name: s.name, slot: s.slot }));
+  _tournamentSavedSelection = _ssSelected.map(s => ({ name: s.name, slot: s.slot, random: !!s.random }));
   _saveTournamentState();
   document.getElementById('screen-student-select').classList.add('hidden');
   document.getElementById('screen-tournament').classList.remove('hidden');

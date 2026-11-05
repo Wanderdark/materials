@@ -307,6 +307,8 @@
     .tc-avatar-choice.is-locked img { filter: grayscale(1); opacity: .42; }
     .tc-avatar-choice.is-locked:hover { border-color: rgba(147, 197, 253, .3); box-shadow: none; }
     .tc-avatar-choice .tc-avatar-req { display: block; margin-top: 2px; color: #ffd84d; font-family: var(--font-display, sans-serif); font-size: 8px; font-weight: 900; letter-spacing: .055em; line-height: 1.05; text-align: center; }
+    .tc-avatar-choice { position: relative; }
+    .tc-avatar-choice .tc-avatar-taken { position: absolute; inset: 0; display: grid; place-items: center; color: #ff453a; font: 900 34px "Segoe UI Symbol", sans-serif; text-shadow: 0 1px 5px #000; pointer-events: none; }
     @media (max-width: 520px) { .tc-profile-summary { grid-template-columns: 1fr; justify-items: center; text-align: center; } .tc-profile-avatar { width: 126px; } }
     @media (max-width: 700px) { .tc-hud { bottom: 6px; left: 6px; gap: 4px; padding: 5px; } .tc-hud button { width: 32px; height: 32px; font-size: 15px; } .tc-hud .tc-bank { min-width: 54px; height: 32px; font-size: 14px; } .tc-hud-controls { gap: 4px; } .tc-hud.is-collapsed { width: 20px; } .tc-hud .tc-collapse { width: 18px; flex-basis: 18px; height: 32px; font-size: 19px; } .tc-key { width: 26px; min-width: 26px; height: 30px; font-size: 11px; } .tc-key.is-wide { width: 60px; min-width: 60px; } .tc-key.is-space { width: 126px; min-width: 126px; } .tc-overlay { padding: 12px; } }
   `;
@@ -1722,6 +1724,13 @@
     const student = getStudent(studentId);
     if (!student) return;
     const card = makeOverlay("CLASSROOM", "CHOOSE AVATAR", "Tap an avatar to save it for this student.");
+    const classroomId = state.activeClassroomId;
+    const isAvatarTaken = (avatar) => {
+      if (avatar.noPhoto) return false;
+      const path = resolveAvatarPath(avatar.path);
+      return resolveAvatarPath(student.avatarPath) !== path && state.roster.some(other =>
+        other.id !== student.id && resolveAvatarPath(other.avatarPath) === path);
+    };
     const perPage = 10;
     const avatarOptions = [{ name: "NO PHOTO", path: "", noPhoto: true }, ...AVATAR_OPTIONS];
     const pages = Array.from({ length: Math.ceil(avatarOptions.length / perPage) }, (_, index) => avatarOptions.slice(index * perPage, (index + 1) * perPage));
@@ -1740,7 +1749,9 @@
       const page = el("div", "tc-avatar-page");
       avatars.forEach((avatar) => {
         const requiredLevel = avatar.noPhoto ? 1 : avatarRequiredLevel(avatar.name);
-        const isLocked = requiredLevel > studentLevel(student);
+        const isLevelLocked = requiredLevel > studentLevel(student);
+        const isTaken = isAvatarTaken(avatar);
+        const isLocked = isLevelLocked || isTaken;
         const option = el("button", `tc-avatar-choice${student.avatarPath === avatar.path ? " is-active" : ""}${isLocked ? " is-locked" : ""}`);
         option.type = "button";
         option.disabled = isLocked;
@@ -1755,9 +1766,15 @@
           image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(avatar.path));
           option.append(image, document.createTextNode(avatar.name.toUpperCase()));
         }
-        if (isLocked) option.append(el("span", "tc-avatar-req", `REQ. LEV. : ${requiredLevel}`));
+        if (isLevelLocked) option.append(el("span", "tc-avatar-req", `REQ. LEV. : ${requiredLevel}`));
+        if (isTaken) {
+          const marker = el("span", "tc-avatar-taken", "\u{1F6AB}\uFE0E");
+          marker.title = "Already used in this classroom";
+          marker.setAttribute("aria-label", marker.title);
+          option.append(marker);
+        }
         option.addEventListener("click", () => {
-          if (isLocked) return;
+          if (isLocked || state.activeClassroomId !== classroomId || getStudent(studentId) !== student || isAvatarTaken(avatar)) return;
           student.avatarPath = avatar.path;
           if (guidedTutorial?.step === 11) {
             student.points = 10;

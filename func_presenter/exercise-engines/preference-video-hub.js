@@ -16,7 +16,7 @@ function clearPreferenceVideoHubPractice() {
 
 function getPreferenceVideoHubState(example) {
   if (!example._preferenceVideoHubState) example._preferenceVideoHubState = { completed: {} };
-  return example._preferenceVideoHubState;
+  return loadVideoHubProgress(example, "preference", example._preferenceVideoHubState);
 }
 
 function renderPreferenceVideoHub(example) {
@@ -38,11 +38,12 @@ function renderPreferenceVideoHub(example) {
   const grid = document.createElement("div");
   grid.className = "preference-video-hub-grid";
 
-  data.items.forEach((character) => {
+  data.items.forEach((character, index) => {
     const unavailable = !character.videoDialogue;
     const completed = Boolean(hubState.completed[character.name]);
     const card = document.createElement("button");
     card.type = "button";
+    card.dataset.hubVideoNumber = String(index + 1);
     card.className = `preference-video-hub-card${completed ? " is-completed" : ""}${unavailable ? " is-unavailable" : ""}`;
     card.disabled = completed || unavailable;
     card.setAttribute("aria-label", `${character.name}'s preference video`);
@@ -70,10 +71,12 @@ function renderPreferenceVideoHub(example) {
         renderVideoDialoguePractice({
           videoDialogue: {
             ...character.videoDialogue,
+            hubPlaybackSpeakers: [character.name],
             portraitPath: character.avatarPath,
             portraitAlt: character.name,
             onComplete: () => {
               hubState.completed[character.name] = true;
+              saveVideoHubProgress(example, "preference", hubState);
               preferenceVideoHubReturnTimer = window.setTimeout(() => {
                 preferenceVideoHubReturnTimer = null;
                 renderExample();

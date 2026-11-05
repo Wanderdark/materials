@@ -1,7 +1,7 @@
 // APP-ANCHOR: Physical-appearance video character hubs.
 function getAppearanceVideoHubState(example) {
   if (!example._appearanceVideoHubState) example._appearanceVideoHubState = { completed: {} };
-  return example._appearanceVideoHubState;
+  return loadVideoHubProgress(example, "appearance", example._appearanceVideoHubState);
 }
 
 function renderAppearanceVideoHub(example) {
@@ -10,6 +10,7 @@ function renderAppearanceVideoHub(example) {
   rows.forEach((row, index) => {
     const character = example.items?.[index]?.appearanceVideoCharacter;
     if (!character) return;
+    row.dataset.hubVideoNumber = String(index + 1);
     const completed = Boolean(hubState.completed[character.name]);
     row.classList.add("clickable");
     row.tabIndex = completed ? -1 : 0;
@@ -27,8 +28,10 @@ function renderAppearanceVideoHub(example) {
           videoUrl: character.videoUrl,
           videoStopAt: character.videoStopAt,
           lines: character.lines,
+          hubPlaybackSpeakers: simplePresentVideoHubSpeakers({ speakers: (character.lines || []).map((line) => line.speaker) }),
           onComplete: () => {
             hubState.completed[character.name] = true;
+            saveVideoHubProgress(example, "appearance", hubState);
             setTimeout(renderExample, 550);
           }
         }
