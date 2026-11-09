@@ -50,16 +50,18 @@
 
   const hudPoints = match => Math.min(4, Math.floor(Math.max(0, match.activeMs) / 300000) + 1);
   const studentKey = name => String(name || '').trim().replace(/\s+/g, ' ').toLocaleUpperCase('tr-TR');
-  function winnerAwards(teams, winner, points, classroom) {
+  function winnerAwards(teams, winner, points, classroom, bonusPlayers = []) {
     const awards = [];
     const missing = [];
     const seen = new Set();
-    for (const player of winner === null ? teams.flat() : teams[winner] || []) {
+    const basePlayers = new Set(winner === null ? teams.flat() : teams[winner] || []);
+    for (const player of new Set([...basePlayers, ...bonusPlayers])) {
       const roster = classroom?.roster || [];
       const student = player.id ? roster.find(item => item.id === player.id) : roster.find(item => studentKey(item.name) === studentKey(player.name));
       const key = studentKey(student?.name);
       if (!student || roster.filter(item => studentKey(item.name) === key).length !== 1) { missing.push(player.name); continue; }
-      if (!seen.has(key)) { awards.push({ name: student.name, points }); seen.add(key); }
+      const total = (basePlayers.has(player) ? points : 0) + Number(bonusPlayers.includes(player));
+      if (!seen.has(key)) { awards.push({ name: student.name, points: total }); seen.add(key); }
     }
     return { awards, missing };
   }
@@ -89,7 +91,7 @@
       this.clockAt = null;
       this.clockRunning = false;
       this.sides = [0, 1].map(() => ({ question: null, choices: [], deck: [], readyAt: 0,
-        correct: 0, wrong: 0, turn: 0, feedback: '', token: 0 }));
+        correct: 0, wrong: 0, answers: [], turn: 0, feedback: '', token: 0 }));
       this.next(0);
       this.next(1);
     }
@@ -126,12 +128,20 @@
       }
       if (!this.canAnswer(team)) return null;
       const bonus = this.comeback?.team === team;
-      if (bonus) this.comeback.answered = true;
       const correct = side.choices[choice].correct;
       side[correct ? 'correct' : 'wrong']++;
+      side.answers.push({ turn: side.turn, correct });
       side.feedback = correct ? 'correct' : 'wrong';
       side.readyAt = now + (correct ? this.correctDelay : this.wrongDelay);
       if (correct) this.pending.push((team === 0 ? -1 : 1) * (bonus ? 2 : 1));
+      if (bonus) {
+        this.comeback = null;
+        side.readyAt = now;
+        const opponent = this.sides[1 - team];
+        if (opponent.readyAt) opponent.turn++;
+        this.next(1 - team);
+        this.refreshTeams.push(1 - team);
+      }
       return { correct, correctIndex: side.choices.findIndex(item => item.correct) };
     }
 
@@ -148,7 +158,7 @@
         if (!this.comebackUsed[team]) {
           this.comebackUsed[team] = true;
           this.comeback = { team, stage: 'intro', startedMs: this.activeMs,
-            introEndMs: this.activeMs + 3000, endMs: this.activeMs + 8000, answered: false };
+            introEndMs: this.activeMs + 3000, endMs: this.activeMs + 8000 };
           // Finish an already answered turn before the announcement, so the next player gets the chance.
           if (this.sides[team].readyAt) {
             this.sides[team].turn++;
@@ -161,8 +171,7 @@
     }
 
     canAnswer(team) {
-      return this.phase === 'playing' && !this.paused && (!this.comeback ||
-        (this.comeback.stage === 'active' && this.comeback.team === team && !this.comeback.answered));
+      return this.phase === 'playing' && !this.paused && (!this.comeback || this.comeback.team === team);
     }
 
     updateComeback() {
@@ -198,6 +207,10 @@
       this.comeback = null;
       this.clockRunning = false;
       return true;
+    }
+
+    get nextTurns() {
+      return this.sides.map(side => side.turn + Number(Boolean(side.readyAt)));
     }
 
     startTimer(minutes) {
@@ -340,14 +353,13 @@
   const media = [null, null];
   let match = null;
   let frame = 0;
-  let finishTimer = 0;
   let toastTimer = 0;
   let currentScreen = 'setup';
   let pacePausedMatch = false;
   let finishArmed = false;
   let lastRopePosition = 0;
   let names = ['TEAM BLUE', 'TEAM PINK'];
-  const teamNamePool = new TeamNamePool();
+  const teamNamePool = new TeamNamePool(Math.random, 1);
   let importedClassroomId = '';
   const selectedUnits = new Set([1]);
   const preferenceKey = 'wordTugOfWar:settings:v1';
@@ -357,9 +369,15 @@
   let music = null;
   let musicIndex = -1;
   let musicFailures = 0;
+  let gameOverCheer = null;
   const finalMusicTracks = ['../word_master/sounds/final.mp3'];
   let finalMusic = null;
   let finalMusicPending = false;
+
+  function stopGameOverCheer() {
+    gameOverCheer?.pause();
+    gameOverCheer = null;
+  }
 
   function playFinalMusic() {
     if (currentScreen !== 'result' || !finalMusic) return;
@@ -431,6 +449,9 @@
 
   function showScreen(screen) {
     clearCrewReactions();
+    stopGameOverCheer();
+    const arena = $('game-over-dialog').querySelector('.arena-strip');
+    if (arena) $('game-screen').prepend(arena);
     $('game-over-dialog').close();
     document.body.classList.remove('game-over');
     const enteringResult = screen === 'result' && currentScreen !== 'result';
@@ -539,7 +560,7 @@
     });
     const ready = groups.every(group => group.length);
     $('to-selection').disabled = !ready;
-    $('balance').disabled = groups.flat().length < 2;
+    $('rearrange-teams').disabled = !groups.some(group => group.length);
     $('setup-status').textContent = ready ? `${groups.flat().length} players ready to pull.` : 'Add at least one student to each team.';
   }
 
@@ -936,47 +957,67 @@
     [0, 1].forEach(team => {
       const card = $(`side-${team}`);
       if (!card) return;
-      const state = !chance ? '' : chance.team !== team ? 'wait' : chance.stage === 'intro' ? 'intro' : chance.answered ? 'used' : 'chance';
+      const state = !chance ? '' : chance.team !== team ? 'wait' : chance.stage === 'intro' ? 'intro' : 'chance';
       const seconds = chance?.stage === 'active' ? Math.max(1, Math.ceil((chance.endMs - match.activeMs) / 1000)) : '';
       const key = `${state}:${seconds}`;
       if (card.dataset.comebackState === key) return;
       card.dataset.comebackState = key;
       card.querySelectorAll('.comeback-message').forEach(message => message.remove());
-      card.classList.toggle('comeback-active', state === 'chance' || state === 'used');
+      card.classList.toggle('comeback-active', state === 'chance');
       if (state) {
         const message = element('div', undefined, `comeback-message comeback-${state}`);
         message.setAttribute('role', 'status');
         if (state === 'wait') {
           message.append(element('strong', 'WAIT!'));
           if (seconds !== '') message.append(element('span', String(seconds)));
-        } else message.textContent = state === 'intro' ? 'COMEBACK CHANCE!' : state === 'used' ? 'CHANCE USED' : `DOUBLE PULL · ${seconds}`;
+        } else message.textContent = state === 'intro' ? 'COMEBACK CHANCE!' : `DOUBLE PULL · ${seconds}`;
         card.append(message);
       }
       syncInputs(team);
     });
   }
 
+  function announceComeback(waitingTeam) {
+    const speech = window.speechSynthesis;
+    if (!speech || !window.SpeechSynthesisUtterance || musicVolume === 0 || document.hidden) return;
+    const name = names[waitingTeam];
+    if (/^team\s+(?:blue|pink)$/i.test(name)) return;
+    const spokenName = name.replace(/^[^\p{L}\p{N}]+/u, '').trim() || name;
+    const announcement = new SpeechSynthesisUtterance(`${spokenName} kazanmak üzere!`);
+    announcement.lang = 'tr-TR';
+    announcement.rate = 0.9;
+    const turkishVoice = speech.getVoices().find(voice => /^tr(?:-|$)/i.test(voice.lang));
+    if (turkishVoice) announcement.voice = turkishVoice;
+    speech.speak(announcement);
+  }
+
   function updateMatch(now) {
     match.trackTime(now);
     match.updateComeback();
+    const previousChance = match.comeback;
     if (match.settle()) renderRope();
     if (match.phase === 'playing' && match.timerEndMs !== null && match.activeMs >= match.timerEndMs) match.finish('timer');
     syncComeback();
+    if (match.comeback && match.comeback !== previousChance) announceComeback(1 - match.comeback.team);
     syncMatchControls();
   }
 
   function completeMatch() {
     if (!match || match.phase !== 'finished' || $('game-over-dialog').open) return;
     cancelAnimationFrame(frame);
-    clearTimeout(finishTimer);
-    music?.pause();
+    if (music) music.volume = Math.min(music.volume, 0.1);
     [0, 1].forEach(syncInputs);
     syncMatchControls();
     document.body.classList.add('game-over');
     syncComeback();
-    $('game-over-dialog').showModal();
-    const completed = match;
-    finishTimer = setTimeout(() => { if (match === completed && currentScreen === 'game') showResult(); }, 3000);
+    const winner = $('game-over-winner');
+    winner.textContent = match.winner === null ? 'DRAW' : `${names[match.winner]} WINS!`;
+    winner.className = match.winner === null ? '' : match.winner === 0 ? 'blue-text' : 'orange-text';
+    const dialog = $('game-over-dialog');
+    dialog.insertBefore($('game-screen').querySelector('.arena-strip'), winner);
+    dialog.showModal();
+    gameOverCheer = new Audio('assets/sounds/finalcheer.mp3');
+    gameOverCheer.play()?.catch(() => {});
   }
 
   function finishMatch() {
@@ -1015,18 +1056,22 @@
     frame = requestAnimationFrame(runFrame);
   }
 
-  function startMatch() {
+  function startMatch(previousMatch = null) {
     if (groups.some(group => !group.length)) { toast('Add at least one student to each team.'); return; }
     try { match = new Match(selectedPool(), settings()); }
     catch (error) { toast(error.message); return; }
     const teacher = window.TeacherControl;
-    match.classroomId = importedClassroomId || (teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '');
-    match.players = assignMatchCharacters(groups);
+    match.classroomId = previousMatch ? previousMatch.classroomId :
+      importedClassroomId || (teacher?.isActiveClassroomLocked?.() ? teacher.getActiveClassroomId?.() : '');
+    match.players = previousMatch?.players ?? assignMatchCharacters(groups);
+    if (previousMatch) {
+      previousMatch.nextTurns.forEach((turn, team) => { match.sides[team].turn = turn; });
+      $('rematch-dialog').close();
+    }
     match.hudAwarded = new Set();
     match.hudBusy = false;
     lastRopePosition = 0;
     finishArmed = false;
-    clearTimeout(finishTimer);
     cancelAnimationFrame(frame);
     media.fill(null);
     $('play-sides').replaceChildren();
@@ -1040,6 +1085,40 @@
     frame = requestAnimationFrame(runFrame);
   }
 
+  function studentScores(team) {
+    const players = match.players[team];
+    const answers = match.sides[team].answers;
+    const rounds = Math.floor(answers.length / players.length);
+    const scores = players.map(player => ({ player, correct: 0 }));
+    for (const answer of answers.slice(0, rounds * players.length)) {
+      if (answer.correct) scores[answer.turn % players.length].correct++;
+    }
+    scores.sort((a, b) => b.correct - a.correct);
+    const [first, second] = scores;
+    const leader = first.correct > (second?.correct ?? 0) ? first.player : null;
+    return { rounds, scores, leader };
+  }
+
+  function renderStudentScores(card, team) {
+    const { rounds, scores, leader } = studentScores(team);
+    card.append(element('h2', 'Student scores', 'student-score-title'));
+    if (!rounds) {
+      card.append(element('p', 'No complete rounds yet.', 'muted'));
+      return;
+    }
+    const highest = scores[0].correct;
+    const list = element('ul', undefined, 'student-scores');
+    for (const { player, correct } of scores) {
+      const row = element('li', undefined, correct > 0 && correct === highest ? 'student-score-leader' : '');
+      const image = avatar(player);
+      if (image) row.append(image);
+      row.append(element('span', player === leader ? `${player.name} (+1 HUD)` : player.name),
+        element('span', `${correct} correct`));
+      list.append(row);
+    }
+    card.append(element('p', `${rounds} complete round${rounds === 1 ? '' : 's'} counted`, 'muted'), list);
+  }
+
   function showResult() {
     const draw = match.winner === null;
     const winner = names[match.winner];
@@ -1050,6 +1129,7 @@
       const card = element('div', undefined, 'result-stat');
       card.append(element('strong', names[team], team === 0 ? 'blue-text' : 'orange-text'),
         element('p', `${side.correct} correct · ${side.wrong} wrong`));
+      renderStudentScores(card, team);
       $('result-stats').append(card);
     });
     const seconds = Math.floor(match.activeMs / 1000);
@@ -1061,14 +1141,19 @@
     showScreen('result');
   }
 
+  function hudAwardPlan(classroom) {
+    const bonusPlayers = match.players.map((_, team) => studentScores(team).leader).filter(Boolean);
+    return winnerAwards(match.players, match.winner, hudPoints(match), classroom, bonusPlayers);
+  }
+
   function updateTransferButton(message = '') {
     const classroom = window.TeacherControl?.getClassrooms?.().find(room => room.id === match.classroomId);
-    const plan = winnerAwards(match.players, match.winner, hudPoints(match), classroom);
+    const plan = hudAwardPlan(classroom);
     const pending = plan.awards.filter(award => !match.hudAwarded.has(studentKey(award.name)));
     const done = match.hudAwarded.size > 0 && !pending.length && !plan.missing.length;
     $('transfer-points').disabled = done || match.hudBusy || match.hudUnconfirmed || !classroom || typeof window.TeacherControl?.awardFinalPoints !== 'function';
     $('transfer-points').textContent = done ? '✓ PUANLAR AKTARILDI' : "PUANLARI HUD'A AKTAR";
-    $('transfer-status').textContent = message || (done ? 'Match points have reached the classroom roster.' : !classroom ? 'Import or lock a Teacher HUD classroom before starting a match to transfer points.' : `Target classroom: ${classroom.name || 'Classroom'}. Under 5 min: +1 · 5–10 min: +2 · 10–15 min: +3 · 15+ min: +4.`);
+    $('transfer-status').textContent = message || (done ? 'Match points have reached the classroom roster.' : !classroom ? 'Import or lock a Teacher HUD classroom before starting a match to transfer points.' : '');
   }
 
   function transferPoints() {
@@ -1076,7 +1161,7 @@
     const teacher = window.TeacherControl;
     const classroom = teacher?.getClassrooms?.().find(room => room.id === match.classroomId);
     if (!classroom || typeof teacher?.awardFinalPoints !== 'function') { updateTransferButton(); return; }
-    const plan = winnerAwards(match.players, match.winner, hudPoints(match), classroom);
+    const plan = hudAwardPlan(classroom);
     if (plan.missing.length) { updateTransferButton(`Check these students in the original classroom roster: ${plan.missing.join(', ')}. No new points transferred.`); return; }
     const awards = plan.awards.filter(award => !match.hudAwarded.has(studentKey(award.name)));
     if (!awards.length) { updateTransferButton(); return; }
@@ -1120,7 +1205,6 @@
 
   function leaveMatch() {
     cancelAnimationFrame(frame);
-    clearTimeout(finishTimer);
     match = null;
     media.fill(null);
     $('pause-dialog').close();
@@ -1134,7 +1218,7 @@
   document.querySelectorAll('[data-random-team-name]').forEach(button => button.addEventListener('click', () => {
     if (currentScreen !== 'setup') return;
     const team = Number(button.dataset.randomTeamName);
-    const name = teamNamePool.next(team, names[1 - team], names[team]);
+    const name = teamNamePool.next(0, names);
     if (!name) return;
     const input = $(`name-${team}`);
     input.value = name;
@@ -1149,9 +1233,12 @@
     }
     importRoster();
   });
-  $('balance').addEventListener('click', () => {
-    const teams = window.TeamBalance.distribute(groups.flat(), 2);
-    groups.forEach((group, index) => group.splice(0, group.length, ...teams[index]));
+  $('rearrange-teams').addEventListener('click', () => {
+    const [blue, pink] = groups;
+    const pairedRows = Math.min(14, blue.length, pink.length);
+    for (let index = 1; index < pairedRows; index += 2) {
+      [blue[index], pink[index]] = [pink[index], blue[index]];
+    }
     renderTeams();
   });
   $('to-selection').addEventListener('click', () => { if (groups.every(group => group.length)) showScreen('selection'); });
@@ -1161,10 +1248,11 @@
     $('unit-checks').querySelectorAll('input:not(:disabled)').forEach(input => { input.checked = true; selectedUnits.add(Number(input.value)); }); updatePool();
   });
   $('clear-units').addEventListener('click', () => { selectedUnits.clear(); updateUnits(); });
-  $('start').addEventListener('click', startMatch);
+  $('start').addEventListener('click', () => startMatch());
   $('pause').addEventListener('click', pauseMatch);
   $('finish').addEventListener('click', finishMatch);
   $('game-over-dialog').addEventListener('cancel', event => event.preventDefault());
+  $('game-over-continue').addEventListener('click', showResult);
   $('match-timer').addEventListener('click', openTimer);
   $('close-timer').addEventListener('click', () => $('timer-dialog').close());
   $('timer-dialog').addEventListener('close', resumeMatch);
@@ -1173,28 +1261,32 @@
     if (match.startTimer(Number(button.dataset.minutes))) $('timer-dialog').close();
   }));
   $('resume').addEventListener('click', () => $('pause-dialog').close());
+  function renderLineup(lineup, turns) {
+    lineup.replaceChildren(...match.players.map((players, team) => {
+      const column = element('div', undefined, 'pause-lineup-team');
+      column.append(element('h3', names[team], team === 0 ? 'blue-text' : 'orange-text'));
+      const list = element('ol');
+      const first = turns[team] % players.length;
+      for (let i = 0; i < players.length; i++) {
+        const player = players[(first + i) % players.length];
+        const row = element('li');
+        const person = element('div', undefined, 'pause-lineup-person');
+        const image = avatar(player);
+        if (image) person.append(image);
+        person.append(element('span', player.name));
+        row.append(person);
+        list.append(row);
+      }
+      column.append(list);
+      return column;
+    }));
+  }
+
   $('check-lineup').addEventListener('click', () => {
     if (!match?.paused || match.phase !== 'playing') return;
     const lineup = $('pause-lineup');
     const opening = lineup.hidden;
-    if (opening) {
-      lineup.replaceChildren(...match.players.map((players, team) => {
-        const column = element('div', undefined, 'pause-lineup-team');
-        column.append(element('h3', names[team], team === 0 ? 'blue-text' : 'orange-text'));
-        const list = element('ol');
-        players.forEach(player => {
-          const row = element('li');
-          const person = element('div', undefined, 'pause-lineup-person');
-          const image = avatar(player);
-          if (image) person.append(image);
-          person.append(element('span', player.name));
-          row.append(person);
-          list.append(row);
-        });
-        column.append(list);
-        return column;
-      }));
-    }
+    if (opening) renderLineup(lineup, [0, 0]);
     lineup.hidden = !opening;
     $('check-lineup').setAttribute('aria-expanded', String(opening));
   });
@@ -1209,7 +1301,11 @@
   $('pause-dialog').addEventListener('close', resumeMatch);
   $('leave-match').addEventListener('click', leaveMatch);
   $('new-teams').addEventListener('click', leaveMatch);
-  $('rematch').addEventListener('click', startMatch);
+  $('rematch').addEventListener('click', () => {
+    renderLineup($('rematch-lineup'), match.nextTurns);
+    $('rematch-dialog').showModal();
+  });
+  $('start-rematch').addEventListener('click', () => startMatch(match));
   $('transfer-points').addEventListener('click', transferPoints);
   document.querySelectorAll('.pace-button').forEach(button => button.addEventListener('click', () => {
     if (currentScreen === 'game' && match?.phase !== 'playing') return;
@@ -1249,7 +1345,7 @@
     if (finalMusicPending) playFinalMusic();
     else if (music?.paused) playMusic();
   });
-  window.addEventListener('pagehide', () => { music?.pause(); stopFinalPresentation(); });
+  window.addEventListener('pagehide', () => { music?.pause(); stopGameOverCheer(); stopFinalPresentation(); });
   window.addEventListener('pageshow', () => { if (currentScreen === 'result') startFinalPresentation(); });
   loadSettings();
   updateSettings();
