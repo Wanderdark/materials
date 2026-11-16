@@ -1146,6 +1146,10 @@ body.lite-mode #duel-lite-mode-button { border-color:#f4a940; color:#f4a940; bac
   box-shadow:0 5px 24px rgba(217,119,6,.35); transition:transform .12s,box-shadow .12s;
 }
 .tr-continue:hover { transform:translateY(-2px); box-shadow:0 9px 30px rgba(217,119,6,.55); }
+.tr-exchange { position:absolute; bottom:2px; left:50%; transform:translateX(-50%); padding:1px 8px; border:1px solid #5276bb; border-radius:6px; background:#172950; color:white; cursor:pointer; }
+.tr-exchange-dialog { width:min(360px,90vw); max-height:75vh; margin:auto; padding:18px; border:1px solid #5276bb; border-radius:14px; background:#111c35; color:white; font-family:'Barlow Condensed',sans-serif; }
+.tr-exchange-dialog::backdrop { background:rgba(4,7,20,.8); }
+.tr-exchange-dialog button { display:block; width:100%; margin-top:8px; padding:8px; border:1px solid #5276bb; border-radius:6px; background:#172950; color:white; cursor:pointer; }
 .tr-match {
   display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:5px;
   padding:7px; border:1px solid rgba(255,255,255,.09); border-radius:14px; background:rgba(255,255,255,.035);
@@ -3600,6 +3604,7 @@ let _tournamentChampion = null;
 let _tournamentActiveMatch = null;
 let _tournamentResultSaved = false;
 let _tournamentSavedSelection = [];
+let _tournamentSubstituteNames = [];
 let _tournamentResetConfirm = false;
 
 const _SS_KEY    = 'word_duel_snames';
@@ -3623,16 +3628,19 @@ function _saveTournamentState() {
       round: _tournamentRound,
       champion: _tournamentChampion,
       rosterClassroomId: _wdImportedRosterClassroomId,
+      substituteNames: _tournamentSubstituteNames,
       updatedAt: Date.now()
     }));
   } catch(e) {}
 }
 
 function _loadTournamentState() {
+  _tournamentSubstituteNames = [];
   try {
     const saved = JSON.parse(localStorage.getItem(_TOURNAMENT_KEY));
     if (!saved) return;
     _tournamentSavedSelection = Array.isArray(saved.selected) ? saved.selected : [];
+    _tournamentSubstituteNames = Array.isArray(saved.substituteNames) ? saved.substituteNames : [];
     if (saved.version === 1) {
       _tournamentRounds = { first: Array.isArray(saved.matches) ? saved.matches : [], quarter: [], semi: [], final: [] };
       _tournamentRound = 'first';
@@ -3918,6 +3926,7 @@ function createTournamentDraw() {
     easy: _easyStudents.has(s.name)
   })));
   _tournamentRound = startRound;
+  _tournamentSubstituteNames = [];
   _tournamentChampion = null;
   _tournamentRounds = { first: [], quarter: [], semi: [], final: [] };
   _tournamentRounds[startRound] = _createRoundMatches(entrants, startRound === 'final');
@@ -4029,7 +4038,7 @@ function _applyTournamentAvatar(img, fallback, name) {
 }
 
 function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
-  const card = document.createElement(side === 'opponent' ? 'button' : 'div');
+  const card = document.createElement(hidden ? 'button' : 'div');
   card.className = (side === 'opponent' ? 'tr-opponent ' : 'tr-player ') + stateClass;
   if (hidden) {
     card.classList.add('hidden-opponent');
@@ -4062,6 +4071,60 @@ function _buildTournamentPlayerCard(player, side, stateClass, score, hidden) {
   return card;
 }
 
+function _tournamentExchangeCandidates() {
+  if (!['first', 'quarter'].includes(_tournamentRound)) return [];
+  const classrooms = window.TeacherControl?.getClassrooms?.() || [];
+  const roster = classrooms.find(c => c.id === _wdImportedRosterClassroomId)?.roster || [];
+  const matches = _tournamentRound === 'first' ? _tournamentMatches : Object.values(_tournamentRounds).flat();
+  const used = new Set(matches.flatMap(m => [m.p1, m.p2]).map(_tournamentPlayerDisplayName).map(_wdRosterNameKey));
+  if (_tournamentRound === 'quarter') {
+    [..._tournamentSavedSelection.map(s => s.name), ..._tournamentSubstituteNames]
+      .forEach(name => used.add(_wdRosterNameKey(name)));
+  }
+  return roster.map(s => String(s.name || '').trim()).filter(name => {
+    const key = _wdRosterNameKey(name);
+    if (!key || used.has(key)) return false;
+    used.add(key);
+    return true;
+  });
+}
+
+function _appendTournamentExchange(card, match, side, candidates) {
+  if (!candidates.length || match.winner || match.score != null || (side === 'p2' && !match.revealed)) return;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'tr-exchange';
+  button.textContent = '\u{1F504}';
+  button.setAttribute('aria-label', 'Oyuncuyu değiştir');
+  button.onclick = event => {
+    event.stopPropagation();
+    const dialog = document.createElement('dialog');
+    dialog.className = 'tr-exchange-dialog';
+    dialog.textContent = _tournamentPlayerDisplayName(match[side]) + ' yerine yedek seç';
+    dialog.addEventListener('close', () => dialog.remove(), { once:true });
+    for (const name of [..._tournamentExchangeCandidates(), null]) {
+      const option = document.createElement('button');
+      option.type = 'button';
+      option.textContent = name ?? 'VAZGEÇ';
+      option.onclick = () => {
+        if (name && _tournamentMatches.includes(match) && !match.winner && match.score == null
+          && _tournamentExchangeCandidates().includes(name)) {
+          const easy = _loadEasyStudents().has(name);
+          _tournamentSubstituteNames.push(name, _tournamentPlayerDisplayName(match[side]));
+          match[side] = { name, displayName:easy ? _toTitleCase(name) : name, easy };
+          _saveTournamentState();
+          renderTournamentChart();
+        }
+        dialog.close();
+      };
+      dialog.append(option);
+    }
+    document.body.append(dialog);
+    dialog.showModal();
+  };
+  card.append(button);
+}
+
 function renderTournamentChart() {
   _tournamentResetConfirm = false;
   const resetBtn = document.getElementById('tr-reset-btn');
@@ -4078,6 +4141,7 @@ function renderTournamentChart() {
   root.classList.toggle('semi-layout', _tournamentRound === 'semi');
   root.classList.toggle('final-layout', _tournamentRound === 'final');
   root.innerHTML = '';
+  const exchangeCandidates = _tournamentExchangeCandidates();
   _tournamentMatches.forEach((match, index) => {
     const row = document.createElement('div');
     row.className = 'tr-match' + (match.winner ? ' completed' : '');
@@ -4108,6 +4172,8 @@ function renderTournamentChart() {
     );
     p2.disabled = match.revealed;
     p2.onclick = () => revealTournamentOpponent(index);
+    _appendTournamentExchange(p1, match, 'p1', exchangeCandidates);
+    _appendTournamentExchange(p2, match, 'p2', exchangeCandidates);
 
     const play = document.createElement('button');
     play.className = 'tr-play';
@@ -4214,6 +4280,7 @@ function resetTournament() {
   _tournamentRound = 'first';
   _tournamentChampion = null;
   _tournamentSavedSelection = [];
+  _tournamentSubstituteNames = [];
   _tournamentActiveMatch = null;
   _tournamentResultSaved = false;
   _tournamentResetConfirm = false;

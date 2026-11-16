@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teacher HUD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "HUD Display";
+      src: url("../word_rivals/fonts/bebasneue-400-latin.woff2") format("woff2");
+      font-display: swap;
+    }
+    :root {
+      color-scheme: dark;
+      --font-display: "HUD Display", "Arial Narrow", sans-serif;
+      --font-ui: system-ui, sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      isolation: isolate;
+      background: #081329;
+      color: #f4f7ff;
+      font-family: var(--font-ui);
+    }
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 76vw;
+      height: 74vh;
+      translate: -50% -50%;
+      z-index: -1;
+      pointer-events: none;
+      animation: hud-background-orbit 38s linear infinite;
+    }
+    body::before {
+      background: radial-gradient(ellipse, rgb(80 164 255 / 28%), transparent 68%);
+      transform: translate3d(0, -38vh, 0);
+    }
+    body::after {
+      background: radial-gradient(ellipse, rgb(132 76 226 / 24%), transparent 68%);
+      transform: translate3d(0, 38vh, 0);
+      animation-delay: -19s;
+    }
+    @keyframes hud-background-orbit {
+      0%, 100% { transform: translate3d(0, -38vh, 0); }
+      12.5% { transform: translate3d(28vw, -27vh, 0); }
+      25%   { transform: translate3d(40vw, 0, 0); }
+      37.5% { transform: translate3d(28vw, 27vh, 0); }
+      50%   { transform: translate3d(0, 38vh, 0); }
+      62.5% { transform: translate3d(-28vw, 27vh, 0); }
+      75%   { transform: translate3d(-40vw, 0, 0); }
+      87.5% { transform: translate3d(-28vw, -27vh, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body::before, body::after { animation: none; }
+    }
+    body:has(.tc-radial-lock[data-hud-lite="true"])::before,
+    body:has(.tc-radial-lock[data-hud-lite="true"])::after { display: none; }
+    .hud-header {
+      position: sticky; top: 0; z-index: 20; border-bottom: 1px solid #ffffff1f;
+      background: rgba(8, 21, 38, .86); backdrop-filter: blur(10px);
+    }
+    .hud-header-inner {
+      width: min(1160px, calc(100% - 40px)); min-height: 62px; margin: auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .hud-brand {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px;
+      border: 1px solid #ffffff8c; border-radius: 13px; background: #fffdf9; box-shadow: 0 5px 14px #00000036;
+    }
+    .hud-brand img { display: block; width: auto; height: 37px; max-width: 152px; object-fit: contain; }
+    .hud-wordmark {
+      padding: 3px 6px; border-radius: 7px; color: #fff; background: #10233f;
+      font: 800 1.4rem "Barlow Condensed", sans-serif; letter-spacing: .015em;
+    }
+    .hud-wordmark span, .hud-header-credit { color: #eca54c; }
+    .hud-header-credit { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .hud-class-controls { position: relative; margin-inline-start: auto; }
+    .hud-class-controls .tc-actions { margin: 0; }
+    .hud-class-controls .tc-class-edit-actions {
+      position: absolute; top: calc(100% + 10px); right: 0; width: max-content;
+      max-width: min(340px, calc(100vw - 40px)); padding: 12px; border: 1px solid #2b4084;
+      border-radius: 12px; background: #0d1b39; box-shadow: 0 14px 24px #040c1866;
+    }
+    .hud-header-actions { display: flex; gap: 8px; }
+    .hud-header-actions > * {
+      padding: 8px 14px; border: 1px solid #869bc0; border-radius: 8px;
+      background: #12234e; color: #fff; cursor: pointer; font: 14px/1.2 system-ui, sans-serif; text-decoration: none;
+    }
+    @media (max-width: 560px) {
+      .hud-header-credit { display: none; }
+      .hud-header-inner { flex-wrap: wrap; column-gap: 8px; row-gap: 6px; padding-block: 6px; }
+      .hud-class-controls { order: 1; flex-basis: 100%; margin-inline-start: 0; }
+      .hud-class-controls .tc-class-edit-actions { left: 0; right: auto; }
+    }
+    .hud-page {
+      box-sizing: border-box;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 54px) clamp(14px, 3vw, 42px) 100px;
+    }
+    .hud-page > .tc-kicker,
+    .hud-page > .tc-title,
+    .hud-page > .tc-class-bar:not(:has(.tc-class-tab.is-add)) {
+      display: none;
+    }
+    .hud-page > .tc-student-grid {
+      --roster-gap: 18.2px;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, max(240px, calc((100% - 3 * var(--roster-gap)) / 4))), 1fr));
+      gap: var(--roster-gap);
+    }
+    .hud-page > .tc-student-grid > .tc-student {
+      zoom: 1.3;
+    }
+  </style>
+</head>
+<body>
+  <header id="hud-header" class="hud-header">
+    <div class="hud-header-inner">
+      <div class="hud-brand"><img src="../logo.webp" width="320" height="90" alt=""><span class="hud-wordmark">Adil<span>Hoca</span></span></div>
+      <span class="hud-header-credit">Designed by Adil Fırat OKTAV</span>
+      <div id="hud-class-controls" class="hud-class-controls"></div>
+      <div class="hud-header-actions">
+        <button type="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">⛶</button>
+        <a href="../index.html" aria-label="Close My Class" title="Close My Class">✕</a>
+      </div>
+    </div>
+  </header>
+  <main id="tc-standalone-roster" class="hud-page" aria-label="Teacher HUD roster">
+    <p>Sınıf listesi yükleniyor…</p>
+  </main>
+  <script>
+    window.__forceTeacherControl = true;
+    (() => {
+      const header = document.getElementById("hud-header");
+      const surface = document.documentElement;
+      const embedded = window !== window.parent;
+      const notifyParent = action => window.parent.postMessage(action, location.protocol === "file:" ? "*" : location.origin);
+      header.querySelector(".hud-header-actions button").addEventListener("click", () => {
+        if (embedded) { notifyParent("my-class:toggle-fullscreen"); return; }
+        const active = document.fullscreenElement || document.webkitFullscreenElement;
+        const target = active ? document : surface;
+        const toggle = active
+          ? document.exitFullscreen || document.webkitExitFullscreen
+          : surface.requestFullscreen || surface.webkitRequestFullscreen;
+        if (toggle) {
+          try { Promise.resolve(toggle.call(target)).catch(() => {}); } catch {}
+        }
+      });
+      if (embedded) header.querySelector(".hud-header-actions a").addEventListener("click", event => {
+        event.preventDefault();
+        notifyParent("my-class:close");
+      });
+    })();
+  </script>
+  <script src="../func_presenter/teacher-cloud.js"></script>
+  <script src="../func_presenter/teacher-control.js"></script>
+</body>
+</html>

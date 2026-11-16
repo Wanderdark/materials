@@ -10,15 +10,32 @@
   const mode = params.get("mode");
   const passwordResetRequested = params.get("password-reset") === "1";
   const forceTeacherMode = window.__forceTeacherControl === true;
+  const controlScriptUrl = document.currentScript?.src || location.href;
+  const hudOverlayOpenMs = 300;
+  const hudOverlayCloseMs = 360;
+  const HUD_LITE_KEY = "fpTeacherHudLiteV1";
+  const HUD_LITE_TIP_KEY = "fpTeacherHudLiteTipDismissedV1";
+  let hudLite = false;
+  try { hudLite = sessionStorage.getItem(HUD_LITE_KEY) === "1"; }
+  catch { /* Default to normal mode when session storage is unavailable. */ }
+  if (!document.querySelector("script[data-classroom-radial]")) {
+    const radialScript = document.createElement("script");
+    radialScript.src = new URL("../teacher-hud/radial-menu.js", controlScriptUrl).href;
+    radialScript.setAttribute("data-classroom-radial", "");
+    document.head.appendChild(radialScript);
+  }
   if (mode === "teacher") sessionStorage.setItem("fpTeacherMode", "1");
   if (mode === "student") sessionStorage.removeItem("fpTeacherMode");
   if (!forceTeacherMode && sessionStorage.getItem("fpTeacherMode") !== "1") return;
 
   const STORE_KEY = "fpTeacherClassroomV1";
+  const PICKER_PICTURES_KEY = "fpTeacherPointPickerPicturesV1";
   const CLOUD_STORE_KEY = "fpTeacherCloudClassroomsV1";
   const CLASS_LOCK_KEY = "fpTeacherActiveClassLockV1";
-  const HELP_SEEN_KEY = "fpTeacherControlHelpSeenV1";
-  const controlScriptUrl = document.currentScript?.src || location.href;
+  const TUTORIAL_DISMISSED_KEY = "fpTeacherControlTutorialDismissedV1";
+  const TUTORIAL_PROMPT_SESSION_KEY = "fpTeacherControlTutorialPromptV1";
+  let buttonHelpActive = false;
+  const standaloneRoster = document.getElementById("tc-standalone-roster");
   const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
   const canonicalAvatarPath = (name) => `images/avatars/v2/${name.toLowerCase()}.webp`;
   const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
@@ -72,6 +89,11 @@
     .tc-hud { position: fixed; left: 8px; bottom: 10px; z-index: 11000; display: flex; align-items: center; gap: 5px; width: calc(var(--tc-controls-width, 220px) + 25px); padding: 6px; overflow: visible; border: 1px solid rgba(255, 216, 77, .48); border-radius: 15px; background: rgba(8, 16, 40, .94); box-shadow: 0 14px 34px rgba(0, 0, 0, .42); transition: width .28s ease, padding .28s ease, gap .28s ease, border-radius .28s ease; }
     .tc-hud button { width: 34px; height: 34px; border: 1px solid #2b4084; border-radius: 10px; background: #12234e; color: #f4f7ff; font-size: 16px; cursor: pointer; transition: transform .14s ease, border-color .14s ease, background-color .14s ease; }
     .tc-hud button:hover { transform: translateY(-2px); border-color: rgba(255, 216, 77, .85); background: #18336e; }
+    .tc-hud .tc-radial-lock[data-hud-lite="true"] { position: relative; padding-bottom: 7px; }
+    .tc-hud .tc-radial-lock[data-hud-lite="true"]::after {
+      content: "LITE"; position: absolute; right: 0; bottom: 2px; left: 0;
+      color: #ffd84d; font: 900 7px/1 system-ui, sans-serif; text-align: center; pointer-events: none;
+    }
     .tc-hud .tc-roster.has-chosen-avatar { padding: 2px; overflow: hidden; }
     .tc-roster-avatar { display: block; width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
     .tc-hud .tc-random.is-chosen { border-color: #65e6b8; box-shadow: 0 0 14px rgba(101, 230, 184, .4); }
@@ -97,9 +119,31 @@
     .tc-whistle-progress-bar { width: 0%; height: 34px; border-radius: 10px; background: #31d158; box-shadow: 0 0 18px rgba(49, 209, 88, .56); transition: width .05s linear, background .1s linear; }
     .tc-hud .tc-help-tip { position: absolute; bottom: calc(100% + 8px); left: 0; width: min(260px, calc(100vw - 18px)); padding: 8px 11px; border: 1px solid rgba(255, 216, 77, .74); border-radius: 11px; background: rgba(22, 32, 68, .98); color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 800; letter-spacing: .035em; line-height: 1.35; box-shadow: 0 10px 24px rgba(0, 0, 0, .34); pointer-events: none; }
     .tc-hud .tc-help.is-first-run { border-color: #ffd84d; color: #fff6c8; background: #203d85; box-shadow: 0 0 0 3px rgba(255, 216, 77, .22), 0 0 18px rgba(255, 216, 77, .72), 0 0 34px rgba(255, 216, 77, .4); animation: tcHelpPromptGlow 1.1s ease-in-out infinite; }
-    .tc-hud .tc-help-tip { display: grid; gap: 8px; pointer-events: auto; }
-    .tc-hud .tc-help-tip button { justify-self: end; width: auto; height: 24px; padding: 0 12px; border-color: rgba(255, 216, 77, .86); border-radius: 8px; color: #111833; background: #ffd84d; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .08em; }
+    .tc-tutorial-prompt label { display: flex; align-items: center; gap: 8px; }
+    .tc-tutorial-prompt input[type="checkbox"] {
+      box-sizing: border-box; flex: 0 0 14px; width: 14px; height: 14px; min-height: 0; padding: 0; margin: 0;
+      accent-color: #ffdc58;
+    }
     .tc-hud .tc-help-tip::after { position: absolute; bottom: -6px; left: 112px; width: 10px; height: 10px; border-right: 1px solid rgba(255, 216, 77, .74); border-bottom: 1px solid rgba(255, 216, 77, .74); background: rgba(22, 32, 68, .98); content: ""; transform: rotate(45deg); }
+    :where(body:not(:has(.tc-tutorial-prompt, .tc-guided-coach))) .tc-hud .tc-radial-lock.tc-lite-tip-highlight {
+      outline: 2px solid #ffdc58; outline-offset: 3px; box-shadow: 0 0 16px rgba(255, 216, 77, .6);
+    }
+    .tc-hud .tc-lite-tip {
+      position: fixed; box-sizing: border-box; width: min(320px, calc(100vw - 24px)); padding: 12px;
+      border: 1px solid #d9b94e; border-radius: 12px; background: #162448; color: #f4f7ff;
+      font: 650 13px/1.45 system-ui, sans-serif; box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+    }
+    .tc-hud.is-collapsed .tc-lite-tip { display: none; }
+    body:has(.tc-tutorial-prompt, .tc-guided-coach) .tc-hud .tc-lite-tip { visibility: hidden; }
+    .tc-lite-tip p { margin: 0 0 8px; }
+    .tc-lite-tip label { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 11px; }
+    .tc-hud .tc-lite-tip input[type="checkbox"] {
+      box-sizing: border-box; flex: 0 0 14px; width: 14px; height: 14px; min-height: 0; padding: 0; margin: 0;
+      accent-color: #ffdc58;
+    }
+    .tc-hud .tc-lite-tip button {
+      width: auto; height: 27px; padding: 0 11px; border-radius: 7px; background: #ffdc58; color: #14183a; font: 800 11px system-ui, sans-serif;
+    }
     .tc-hud.is-collapsed .tc-chosen-banner { opacity: 0; pointer-events: none; transform: translateY(6px); }
     .tc-float { position: fixed; z-index: 11010; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 30px; font-weight: 800; letter-spacing: .06em; pointer-events: none; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 18px rgba(101, 230, 184, .48); animation: tcPointFloat 1s ease-out forwards; }
     .tc-float.tc-notice { color: var(--u2-gold, #ffd84d); font-size: 16px; text-shadow: 0 3px 12px rgba(0, 0, 0, .7), 0 0 16px rgba(255, 216, 77, .45); }
@@ -107,9 +151,16 @@
     @keyframes tcPointFloat { from { opacity: 0; transform: translate(-50%, 8px) scale(.8); } 18% { opacity: 1; transform: translate(-50%, 0) scale(1.08); } to { opacity: 0; transform: translate(-50%, -58px) scale(1); } }
     @keyframes tcHelpPromptGlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
     .tc-overlay { position: fixed; inset: 0; z-index: 11005; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(2, 7, 23, .88); }
+    .tc-overlay-fade { animation: tc-overlay-fade-in ${hudOverlayOpenMs}ms ease-out both; }
+    .tc-overlay-fade.tc-overlay-closing { animation: tc-overlay-fade-out ${hudOverlayCloseMs}ms ease-out both; }
+    @keyframes tc-overlay-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes tc-overlay-fade-out { from { opacity: var(--tc-close-opacity, 1); } to { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .tc-overlay-fade { animation: none; } }
     .tc-card { position: relative; width: min(624px, 100%); max-height: 88vh; overflow-y: auto; padding: clamp(19px, 3.2vh, 32px) clamp(16px, 2.4vw, 30px); border: 1px solid rgba(255, 216, 77, .44); border-radius: 22px; background: #0d1b39; box-shadow: 0 30px 80px rgba(0, 0, 0, .5); }
     .tc-kicker { margin: 0 0 6px; color: var(--u2-gold, #ffd84d); font-size: 12px; font-weight: 900; letter-spacing: .2em; }
     .tc-title { margin: 0 0 12px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(26px, 3vw, 38px); font-weight: 800; letter-spacing: .04em; }
+    .tc-roster-card > .tc-title, .tc-profile-card > .tc-title { font-size: clamp(19px, 2.2vw, 26px); }
+    .tc-profile-card > .tc-title { text-shadow: none; filter: none; }
     .tc-copy { margin: 0 0 18px; color: #9db2e3; font-size: 14px; font-weight: 700; line-height: 1.5; }
     .tc-class-bar { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; padding: 8px; overflow-x: auto; border: 1px solid rgba(143, 166, 255, .22); border-radius: 14px; background: rgba(5, 14, 38, .52); }
     .tc-class-tab { flex: 0 0 auto; min-width: 100px; padding: 9px 13px; border: 1px solid #36549d; border-radius: 10px; background: #14295a; color: #dce6ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; letter-spacing: .06em; cursor: pointer; }
@@ -130,6 +181,8 @@
     .tc-guided-coach { position: fixed; z-index: 11100; display: grid; box-sizing: border-box; gap: 5px; width: min(300px, calc(100vw - 24px)); padding: 10px 14px; border: 1px solid rgba(255, 216, 77, .94); border-radius: 13px; background: rgba(12, 25, 58, .98); box-shadow: 0 0 0 1px rgba(255, 216, 77, .18), 0 12px 32px rgba(0, 0, 0, .5); color: #f4f7ff; font-family: var(--font-display, sans-serif); text-align: center; pointer-events: none; }
     .tc-guided-coach small { color: var(--u2-gold, #ffd84d); font-size: 10px; font-weight: 900; letter-spacing: .15em; }
     .tc-guided-coach strong { font-size: 14px; font-weight: 900; line-height: 1.35; }
+    .tc-guided-coach.is-inline { position: static; width: 100%; margin: 0 0 18px; text-align: left; }
+    .tc-copy:has(+ .tc-guided-coach.is-inline) { display: none; }
     .tc-tutorial-exit { position: fixed; top: 14px; right: 14px; z-index: 11110; width: 40px; height: 40px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #d9e4ff; font-size: 24px; cursor: pointer; }
     .tc-guided-coach button { justify-self: center; min-height: 30px; margin-top: 3px; padding: 0 14px; border: 0; border-radius: 9px; background: var(--u2-grad-gold, #ffd84d); color: #14183a; font-family: var(--font-display, sans-serif); font-size: 11px; font-weight: 900; letter-spacing: .08em; cursor: pointer; pointer-events: auto; }
     .tc-tutorial-focus { outline: 3px solid var(--u2-gold, #ffd84d) !important; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255, 216, 77, .2), 0 0 28px 10px rgba(255, 216, 77, .7) !important; animation: tcTutorialPulse .9s ease-in-out infinite alternate; }
@@ -145,12 +198,96 @@
     .tc-student.is-rank-purple strong { font-size: 18px; color: #f4e7ff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
     .tc-student.is-rank-purple-gold { border-color: rgba(255, 216, 77, .98); background: linear-gradient(135deg, rgba(83, 28, 134, .98), rgba(34, 25, 86, .96)); box-shadow: inset 0 0 0 1px rgba(255, 216, 77, .22), 0 0 18px rgba(255, 216, 77, .16); }
     .tc-student.is-rank-purple-gold strong { font-size: 18px; color: #f7eaff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
-    .tc-student.is-rank-gold { border-color: rgba(255, 216, 77, .98); background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 216, 77, .22), 0 0 20px rgba(255, 216, 77, .20); }
-    .tc-student.is-rank-gold strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 12px rgba(255, 216, 77, .78), 0 0 24px rgba(255, 216, 77, .48); animation: tcNamePulse 1.2s ease-in-out infinite; }
-    .tc-student.is-rank-gold-glow { border-color: #ffe584; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 18px rgba(255, 216, 77, .45), 0 0 36px rgba(255, 216, 77, .24); }
-    .tc-student.is-rank-gold-glow strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 12px rgba(255, 216, 77, .88), 0 0 28px rgba(255, 216, 77, .58); animation: tcNamePulse 1.2s ease-in-out infinite; }
+    .tc-student.is-rank-gold { border-color: #ffe584; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 18px rgba(255, 216, 77, .45), 0 0 36px rgba(255, 216, 77, .24); }
+    .tc-student.is-rank-gold strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 3px #a13dff, 0 0 9px #8c26fb, 0 0 17px #811bff, 0 0 27px rgba(67, 0, 134, .88); animation: tcNamePulse 1.2s ease-in-out infinite; }
+    .tc-student.is-rank-gold-glow { border-color: #fff0a6; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
+    .tc-student.is-rank-gold-glow strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 3px #b34dff, 0 0 11px #9225ff, 0 0 20px #861eff, 0 0 31px rgba(67, 0, 134, .94); animation: tcNamePulse 1.2s ease-in-out infinite; }
     .tc-student.is-rank-gold-aura { border-color: #fff0a6; background: linear-gradient(135deg, rgba(154, 104, 8, .99), rgba(70, 46, 8, .97)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
-    .tc-student.is-rank-gold-aura strong { font-size: 20px; color: #fffbe2; text-shadow: 0 0 14px rgba(255, 216, 77, .96), 0 0 32px rgba(255, 216, 77, .68); animation: tcNamePulse 1.1s ease-in-out infinite; }
+    .tc-student.is-rank-gold-aura strong { font-size: 20px; color: #fffbe2; text-shadow: 0 0 3px #c059ff, 0 0 12px #982aff, 0 0 23px #8b22ff, 0 0 36px #430086; animation: tcNamePulse 1.1s ease-in-out infinite; }
+    .tc-rank-edge-light { display: none; }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-purple:not(.is-absent, .tc-game-disqualified) {
+      box-shadow: inset 0 0 0 1px rgba(195, 134, 255, .18), 0 0 14px rgba(195, 134, 255, .12);
+    }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold:not(.is-absent, .tc-game-disqualified) {
+      box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 17px rgba(255, 216, 77, .36), 0 0 30px rgba(255, 216, 77, .18);
+    }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold-glow:not(.is-absent, .tc-game-disqualified) {
+      box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .40), 0 0 18px rgba(255, 216, 77, .52), 0 0 36px rgba(255, 216, 77, .27), 0 0 54px rgba(255, 216, 77, .10);
+    }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold-aura:not(.is-absent, .tc-game-disqualified):not(:has(> .tc-rank-edge-light.is-spectrum)) {
+      box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 19px rgba(255, 216, 77, .66), 0 0 42px rgba(255, 216, 77, .37), 0 0 70px rgba(255, 216, 77, .15);
+    }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified):has(> .tc-rank-edge-light.is-spectrum) {
+      box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .56), 0 0 26px rgba(255, 216, 77, .88), 0 0 58px rgba(255, 216, 77, .55), 0 0 90px rgba(255, 216, 77, .26);
+    }
+    @property --tc-spectrum-ripple {
+      syntax: "<number>"; inherits: false; initial-value: 1;
+    }
+    @supports (mask-composite: exclude) {
+      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-student.is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified) > .tc-rank-edge-light {
+        display: block; position: absolute; inset: -7.5px; pointer-events: none; filter: blur(1.25px);
+      }
+      .tc-rank-edge-light > div {
+        position: absolute; inset: 0; overflow: hidden; padding: 7.5px; border-radius: 23.5px;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+      }
+      .tc-rank-edge-light > div::before {
+        content: ""; position: absolute; top: 50%; left: 50%; width: max(150%, 240px); aspect-ratio: 1;
+        transform: translate(-50%, -50%);
+        background:
+          repeating-conic-gradient(from 18deg, transparent 0deg 5deg, #ffd17172 7deg, transparent 9deg 14deg),
+          conic-gradient(from 20deg, transparent 0deg, #ffb13a22 30deg, #ffe7a2 62deg,
+            #ffb64344 77deg, transparent 115deg, #ffce6c32 156deg, #fff0bb 207deg,
+            #ff9d2444 228deg, transparent 264deg, #ffc46a 310deg, transparent 360deg);
+        animation: tc-rank-edge-spin 12s linear infinite;
+      }
+      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-student.is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified):has(> .tc-rank-edge-light.is-spectrum) {
+        box-shadow: inset 0 0 0 1px #ffefd644, 0 0 18px #7854ff55, 0 0 32px #23f1ff26;
+      }
+      .tc-student.is-rank-gold-aura > .tc-rank-edge-light.is-spectrum { filter: blur(.85px); }
+      .tc-rank-edge-light > div {
+        --tc-spectrum-ripple: 1;
+        animation: tc-spectrum-ripple 2.4s ease-in-out infinite;
+        clip-path: polygon(
+          0 0, 6% 0, 9% calc(2px * var(--tc-spectrum-ripple)), 12% calc(1px * var(--tc-spectrum-ripple)), 16% calc(4px * var(--tc-spectrum-ripple)), 20% calc(2px * var(--tc-spectrum-ripple)), 25% 0, 30% calc(1px * var(--tc-spectrum-ripple)),
+          34% calc(3px * var(--tc-spectrum-ripple)), 39% calc(1px * var(--tc-spectrum-ripple)), 44% calc(2px * var(--tc-spectrum-ripple)), 48% 0, 52% 0, 56% calc(3px * var(--tc-spectrum-ripple)), 60% calc(1px * var(--tc-spectrum-ripple)),
+          65% calc(4px * var(--tc-spectrum-ripple)), 68% calc(2px * var(--tc-spectrum-ripple)), 73% calc(1px * var(--tc-spectrum-ripple)), 77% calc(3px * var(--tc-spectrum-ripple)), 82% 0, 86% calc(1px * var(--tc-spectrum-ripple)), 91% calc(3px * var(--tc-spectrum-ripple)), 95% 0, 100% 0,
+          100% 12%, calc(100% - 3px * var(--tc-spectrum-ripple)) 19%, calc(100% - 1px * var(--tc-spectrum-ripple)) 27%, calc(100% - 4px * var(--tc-spectrum-ripple)) 35%,
+          100% 43%, calc(100% - 2px * var(--tc-spectrum-ripple)) 51%, 100% 56%, calc(100% - 3px * var(--tc-spectrum-ripple)) 64%,
+          calc(100% - 1px * var(--tc-spectrum-ripple)) 72%, calc(100% - 4px * var(--tc-spectrum-ripple)) 80%, 100% 88%, 100% 100%,
+          94% 100%, 90% calc(100% - 2px * var(--tc-spectrum-ripple)), 86% calc(100% - 4px * var(--tc-spectrum-ripple)), 81% 100%,
+          77% calc(100% - 2px * var(--tc-spectrum-ripple)), 73% 100%, 68% calc(100% - 3px * var(--tc-spectrum-ripple)), 64% calc(100% - 1px * var(--tc-spectrum-ripple)),
+          59% calc(100% - 4px * var(--tc-spectrum-ripple)), 55% calc(100% - 2px * var(--tc-spectrum-ripple)), 51% 100%, 47% calc(100% - 1px * var(--tc-spectrum-ripple)),
+          43% calc(100% - 3px * var(--tc-spectrum-ripple)), 39% 100%, 34% calc(100% - 2px * var(--tc-spectrum-ripple)), 29% 100%,
+          25% calc(100% - 3px * var(--tc-spectrum-ripple)), 21% calc(100% - 1px * var(--tc-spectrum-ripple)), 16% calc(100% - 4px * var(--tc-spectrum-ripple)),
+          11% calc(100% - 2px * var(--tc-spectrum-ripple)), 6% 100%, 0 100%, 0 88%, calc(2px * var(--tc-spectrum-ripple)) 81%, 0 73%, calc(4px * var(--tc-spectrum-ripple)) 65%,
+          calc(2px * var(--tc-spectrum-ripple)) 57%, 0 49%, calc(3px * var(--tc-spectrum-ripple)) 41%, calc(1px * var(--tc-spectrum-ripple)) 33%, calc(4px * var(--tc-spectrum-ripple)) 26%, calc(2px * var(--tc-spectrum-ripple)) 19%, 0 12%
+        );
+      }
+      @keyframes tc-spectrum-ripple {
+        0%, 100% { --tc-spectrum-ripple: .55; }
+        50% { --tc-spectrum-ripple: 1.5; }
+      }
+      .tc-rank-edge-light.is-spectrum > div::before {
+        background:
+          conic-gradient(from 18deg, transparent 0deg 43deg, #efffff88 48deg, #fff 51deg,
+            #efffff55 54deg, transparent 62deg 133deg, #efffff88 138deg, #fff 141deg,
+            #efffff55 144deg, transparent 152deg 212deg, #fff2ff55 218deg, #fff 222deg,
+            #fff2ff88 225deg, transparent 233deg 360deg),
+          conic-gradient(from 18deg, #57edff, #7affbd, #f8ff66, #ffad44,
+            #ff479d, #ca53ff, #8e88ff, #57edff);
+        animation-duration: 4.8s;
+      }
+      @keyframes tc-rank-edge-spin {
+        from { transform: translate(-50%, -50%) rotate(0turn); }
+        to { transform: translate(-50%, -50%) rotate(1turn); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tc-rank-edge-light > div { animation: none; }
+        .tc-rank-edge-light > div::before { animation: none; }
+      }
+    }
     .tc-student.is-absent { border-color: rgba(154, 169, 194, .7); background: linear-gradient(135deg, rgba(44, 53, 73, .94), rgba(24, 31, 47, .96)); box-shadow: none; }
     .tc-student.is-absent .tc-student-details,
     .tc-student.is-absent .tc-student-avatar img { filter: grayscale(1); opacity: .7; }
@@ -160,10 +297,23 @@
     .tc-attendance-status.is-absent { border-color: #ffd1ca; background: #bd4c4c; }
     .tc-student strong { display: block; font-size: 15px; font-weight: 900; letter-spacing: .03em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .tc-student span { display: block; margin-top: 7px; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 20px; font-weight: 800; }
+    .tc-student .tc-level-progress { display: block; margin-top: 3px; color: #b8c9ed; font: 700 10px/1.25 system-ui, sans-serif; }
     .tc-student-stars { min-height: 14px; margin-top: 2px; color: #fff0a6; font-size: 11px; letter-spacing: 0; line-height: 1.2; white-space: nowrap; }
     .tc-student em { position: absolute; top: 10px; right: 11px; color: #65e6b8; font-size: 14px; font-style: normal; }
     .tc-student-name-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
     .tc-student-name-row strong { min-width: 0; flex: 1 1 auto; }
+    .tc-student:is(.is-rank-gold, .is-rank-gold-glow, .is-rank-gold-aura) .tc-student-name-row strong {
+      flex-grow: 0; transform-origin: center;
+    }
+    .tc-student-name-row > .tc-level-badge.is-inline { margin-inline-start: auto; }
+    .tc-student:is(.is-rank-purple, .is-rank-purple-gold, .is-rank-gold, .is-rank-gold-glow, .is-rank-gold-aura) .tc-student-name-row strong {
+      overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere;
+    }
+    .tc-roster-grid .tc-student-details { min-width: 0; }
+    .tc-roster-grid .tc-student .tc-student-name-row strong,
+    .tc-roster-grid .tc-student .tc-level-progress {
+      overflow: visible; white-space: nowrap; overflow-wrap: normal; text-overflow: clip;
+    }
     .tc-student.has-avatar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
     .tc-student-avatar { position: relative; display: grid; width: 55px; aspect-ratio: 1; overflow: visible; place-items: center; border: 1px solid rgba(255, 216, 77, .56); border-radius: 10px; background: #09132c; color: #dbe7ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; }
     .tc-student-avatar img { width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
@@ -186,7 +336,11 @@
     @keyframes tcLevelUpCard { from { opacity: 0; transform: scale(.72) translateY(24px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .tc-avatar-flipped { transform: scaleX(-1); }
     @keyframes tcNamePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    body:has(.tc-radial-lock[data-hud-lite="true"]) :is(.is-rank-gold, .is-rank-gold-glow, .is-rank-gold-aura) :is(.tc-student-name-row strong, .tc-profile-meta h3) {
+      animation: none;
+    }
     .tc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .tc-class-edit-actions[hidden] { display: none; }
     .tc-auth-form { display: grid; gap: 10px; margin-top: 18px; }
     .tc-auth-form input { width: 100%; min-height: 46px; box-sizing: border-box; border: 1px solid #2f4d9a; border-radius: 12px; outline: none; background: #0d1a3d; color: #f4f7ff; padding: 0 14px; font: 800 14px/1 var(--font-ui, sans-serif); }
     .tc-auth-form input:focus { border-color: #ffd84d; box-shadow: 0 0 0 3px rgba(255, 216, 77, .16); }
@@ -238,8 +392,13 @@
     .tc-confirm-card { width: min(380px, 100%); padding: 24px; border: 1px solid rgba(255, 128, 102, .58); border-radius: 18px; background: #101d3d; box-shadow: 0 24px 64px rgba(0, 0, 0, .56); }
     .tc-confirm-card h3 { margin: 0 0 9px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 24px; letter-spacing: .04em; }
     .tc-confirm-card p { margin: 0; color: #9db2e3; font-weight: 700; line-height: 1.5; }
-    .tc-award-title-row { display: flex; align-items: center; gap: 10px; margin: 0 0 9px; }
-    .tc-award-title-row .tc-title { margin: 0; }
+    .tc-award-title-row { display: flex; flex-wrap: nowrap; align-items: center; gap: clamp(4px, 1vw, 8px); margin: 0 0 9px; }
+    .tc-award-title-row > .tc-award-customize { flex: 0 0 32px; height: 32px; }
+    .tc-award-title-row > .tc-multiple-select { box-sizing: border-box; height: 32px; min-height: 32px; min-width: 0; padding: 4px 6px; font-size: clamp(9px, 1.7vw, 12px); }
+    .tc-point-picker-grid .tc-student.has-avatar .tc-student-name-row strong {
+      font-size: 14px; letter-spacing: 0; white-space: normal; text-overflow: clip; overflow-wrap: anywhere;
+    }
+    .tc-award-title-row .tc-title { min-width: 0; margin: 0; font-size: clamp(15px, 3vw, 30px); overflow-wrap: anywhere; }
     .tc-award-customize { width: 38px; height: 38px; border: 1px solid rgba(255, 216, 77, .72); border-radius: 10px; background: #172d63; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 18px; font-weight: 900; cursor: pointer; }
     .tc-multiple-select { min-height: 38px; border: 1px solid #5b7dd2; border-radius: 10px; padding: 6px 10px; background: #172d63; color: #f4f7ff; font: 800 12px var(--font-ui, sans-serif); cursor: pointer; }
     .tc-multiple-select[aria-pressed="true"] { border-color: #31d158; color: #31d158; }
@@ -249,7 +408,6 @@
     .tc-student .tc-multi-mark { position: absolute; top: 5px; left: 50%; transform: translateX(-50%); margin: 0; color: #31d158; font: 900 26px "Segoe UI Symbol", sans-serif; pointer-events: none; }
     .tc-student .tc-multi-mark[hidden] { display: none; }
     .tc-student.tc-multi-remove .tc-multi-mark { color: #ff453a; }
-    .tc-award-title-row { flex-wrap: wrap; }
     .tc-numpad-overlay { z-index: 11030; }
     .tc-numpad-card { width: min(330px, 100%); border-color: rgba(255, 216, 77, .62); }
     .tc-numpad-display { min-height: 64px; display: grid; place-items: center; margin: 16px 0 12px; padding: 8px 14px; border: 1px solid #2b4084; border-radius: 12px; background: #09132c; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 38px; font-weight: 900; letter-spacing: .06em; }
@@ -277,8 +435,8 @@
     .tc-profile-summary.is-rank-gold-glow { border-color: #ffe584; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 18px rgba(255, 216, 77, .45), 0 0 36px rgba(255, 216, 77, .24); }
     .tc-profile-summary.is-rank-gold-aura { border-color: #fff0a6; background: linear-gradient(135deg, rgba(154, 104, 8, .99), rgba(70, 46, 8, .97)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
     .tc-profile-summary.is-rank-purple .tc-profile-meta h3, .tc-profile-summary.is-rank-purple-gold .tc-profile-meta h3 { color: #f4e7ff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
-    .tc-profile-summary.is-rank-gold .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-glow .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fff8cf; text-shadow: 0 0 12px rgba(255, 216, 77, .88), 0 0 28px rgba(255, 216, 77, .58); animation: tcNamePulse 1.2s ease-in-out infinite; }
-    .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fffbe2; text-shadow: 0 0 14px rgba(255, 216, 77, .96), 0 0 32px rgba(255, 216, 77, .68); animation-duration: 1.1s; }
+    .tc-profile-summary.is-rank-gold .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-glow .tc-profile-meta h3, .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fff8cf; text-shadow: 0 0 3px #b34dff, 0 0 11px #9225ff, 0 0 20px #861eff, 0 0 31px rgba(67, 0, 134, .94); animation: tcNamePulse 1.2s ease-in-out infinite; }
+    .tc-profile-summary.is-rank-gold-aura .tc-profile-meta h3 { color: #fffbe2; text-shadow: 0 0 3px #c059ff, 0 0 12px #982aff, 0 0 23px #8b22ff, 0 0 36px #430086; animation-duration: 1.1s; }
     .tc-profile-avatar { display: grid; width: 150px; aspect-ratio: 1; padding: 0; overflow: visible; place-items: center; border: 2px solid rgba(255, 216, 77, .78); border-radius: 18px; background: #09132c; color: #dbe7ff; cursor: pointer; box-shadow: 0 0 24px rgba(255, 216, 77, .16); }
     .tc-profile-avatar:hover { border-color: #fff0a6; box-shadow: 0 0 30px rgba(255, 216, 77, .34); }
     .tc-avatar-media { display: block; width: 100%; height: 100%; }
@@ -287,9 +445,28 @@
     .tc-profile-avatar span:not(.tc-level-badge) { padding: 12px; text-align: center; font-family: var(--font-display, sans-serif); font-size: 17px; font-weight: 900; }
     .tc-avatar-choose-copy { display: grid; place-content: center; gap: 2px; }
     .tc-avatar-choose-copy span { display: block; padding: 0; color: #9db2e3; font-size: 15px; letter-spacing: .08em; line-height: 1.05; }
-    .tc-profile-meta h3 { margin: 0; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 4vw, 48px); letter-spacing: .04em; }
+    .tc-profile-meta h3 { margin: 0; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 4vw, 48px); letter-spacing: .04em; text-shadow: 0 0 18px rgba(255, 216, 77, .45), 0 0 34px rgba(255, 216, 77, .24); }
     .tc-profile-meta p { margin: 9px 0 0; color: #9db2e3; font-size: 14px; font-weight: 800; }
     .tc-profile-points { color: var(--u2-gold, #ffd84d) !important; font-family: var(--font-display, sans-serif); font-size: clamp(26px, 3vw, 38px) !important; letter-spacing: .05em; }
+    @media (prefers-reduced-motion: no-preference) {
+      .tc-profile-card { --tc-profile-entry-delay: ${hudOverlayOpenMs}ms; }
+      .tc-profile-card .tc-profile-name-entry { animation: tc-profile-name-in 525ms var(--tc-profile-entry-delay) cubic-bezier(.22, 1, .36, 1) backwards; }
+      .tc-profile-card .tc-profile-points { animation: tc-profile-points-in 575ms var(--tc-profile-entry-delay) cubic-bezier(.22, 1, .36, 1) backwards; transform-origin: left center; }
+      .tc-profile-card .tc-profile-avatar { animation: tc-profile-portrait-in 650ms var(--tc-profile-entry-delay) cubic-bezier(.22, 1, .36, 1) backwards; }
+    }
+    @keyframes tc-profile-name-in {
+      from { opacity: 0; translate: 46px 0; }
+      to { opacity: 1; translate: 0 0; }
+    }
+    @keyframes tc-profile-points-in {
+      from { opacity: 0; scale: 1.5; }
+      to { opacity: 1; scale: 1; }
+    }
+    @keyframes tc-profile-portrait-in {
+      from { opacity: 0; scale: .84; box-shadow: 0 0 0 rgba(255, 216, 77, 0); }
+      65% { opacity: 1; scale: 1.025; box-shadow: 0 0 24px rgba(255, 230, 153, .55); }
+      to { opacity: 1; scale: 1; box-shadow: 0 0 24px rgba(255, 216, 77, .16); }
+    }
     .tc-profile-stars { margin: 8px 0 0 !important; color: #fff0a6 !important; font-size: 20px !important; letter-spacing: 0 !important; }
     .tc-avatar-picker { display: grid; grid-template-columns: 34px minmax(0, 1fr) 34px; align-items: center; gap: 8px; }
     .tc-avatar-viewport { position: relative; z-index: 1; overflow: hidden; touch-action: pan-y; user-select: none; }
@@ -340,6 +517,7 @@
   function createClassroom(name = "MY CLASS", source = {}) {
     const attendanceDate = source.attendanceDate === todayKey() ? todayKey() : todayKey();
     const roster = Array.isArray(source.roster) ? source.roster.map(normalizeStudent).filter((student) => student.name) : [];
+    roster.forEach(student => rememberStudentLevel(student.id, studentLevel(student)));
     const rosterIds = new Set(roster.map((student) => student.id));
     return {
       id: source.id || createId(),
@@ -453,7 +631,7 @@
     hudTimerDisplayButton.classList.toggle("is-alarming", hudTimerAlarmActive);
     hudTimerDisplayButton.title = hudTimerAlarmActive ? "Stop alarm and reset timer" : "Click to open timer; right-click to reset";
     hudTimerPlayButton.textContent = hudTimerInterval ? "⏸" : "▶";
-    hudTimerPlayButton.disabled = hudTimerAlarmActive;
+    hudTimerPlayButton.disabled = hudTimerAlarmActive && !buttonHelpActive;
     hudTimerPlayButton.title = hudTimerInterval ? "Pause timer" : hudTimerAlarmActive ? "Stop the alarm first" : hudTimerPaused ? "Resume timer" : "Start timer";
     if (hudTimerLiveDisplay && !document.contains(hudTimerLiveDisplay)) {
       hudTimerLiveDisplay = null;
@@ -663,7 +841,7 @@
   }
 
   function openWhistlePenaltyConfirm() {
-    const card = makeOverlay("CLASSROOM", "TÜM SINIFA EKSİ VERİLSİN Mİ?", "");
+    const card = makeOverlay("CLASSROOM", "TÜM SINIFA EKSİ VERİLSİN Mİ?", "", whistleButton);
     const actions = el("div", "tc-actions");
     const yes = el("button", "tc-action danger", "EVET");
     const no = el("button", "tc-action", "HAYIR");
@@ -901,13 +1079,29 @@
     cheer.volume = .9;
     cheer.play().catch(() => {});
   };
+  const reachedStudentLevels = new Map();
+  function rememberStudentLevel(studentId, level) {
+    const key = `fpTeacherReachedLevelV1:${studentId}`;
+    const cached = reachedStudentLevels.get(studentId) || 0;
+    let highest = cached;
+    try {
+      highest = Math.max(highest, Number(localStorage.getItem(key)) || 0);
+      if (level > highest) localStorage.setItem(key, String(level));
+    } catch { /* Keep the record in memory if storage is unavailable. */ }
+    reachedStudentLevels.set(studentId, Math.max(highest, level));
+    return highest;
+  }
+
   const notifyLevelUp = (student, previousLevel) => {
     const currentLevel = studentLevel(student);
-    if (currentLevel <= previousLevel) return;
+    const highestLevel = guidedTutorial
+      ? previousLevel
+      : Math.max(previousLevel, rememberStudentLevel(student.id, Math.max(previousLevel, currentLevel)));
+    if (currentLevel <= highestLevel) return;
     showToast(`${student.name} - Level Up: ${currentLevel}!`, "success");
     levelUpQueue.push({ ...student });
     showNextLevelUpOverlay();
-    const unlockedAvatars = avatarUnlocksBetween(previousLevel, currentLevel);
+    const unlockedAvatars = avatarUnlocksBetween(highestLevel, currentLevel);
     if (unlockedAvatars.length) {
       showToast(`${student.name} new avatars available`, "success");
     }
@@ -944,10 +1138,68 @@
   let cancelStudentPointHold = null;
   let studentPointHoldAudioContext = null;
 
-  function closeOverlays() {
+  const hudOverlayMotion = new WeakMap();
+
+  function hudButtonTransform(card, button) {
+    const panel = card.getBoundingClientRect();
+    const target = button?.getBoundingClientRect();
+    if (!panel.width || !panel.height || !target?.width || !target.height) return null;
+    const x = target.left + target.width / 2 - panel.left - panel.width / 2;
+    const y = target.top + target.height / 2 - panel.top - panel.height / 2;
+    const scale = Math.min(.16, target.width / panel.width, target.height / panel.height);
+    return `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+
+  function animateHudOverlayFromButton(overlay, card, button) {
+    if (!button || !card.animate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const motion = { card, button, animation: null };
+    hudOverlayMotion.set(overlay, motion);
+    window.requestAnimationFrame(() => {
+      if (!overlay.isConnected || overlay.inert) return;
+      const start = hudButtonTransform(card, button);
+      if (start) motion.animation = card.animate(
+        [{ transform: start }, { transform: "translate(0, 0) scale(1)" }],
+        { duration: hudOverlayOpenMs, easing: "cubic-bezier(.2, .7, .25, 1)" }
+      );
+    });
+  }
+
+  function dismissHudOverlay(overlay, immediate = false, onClosed) {
+    if (!overlay?.isConnected) return;
+    const finish = () => {
+      if (!overlay.isConnected) return;
+      overlay.remove();
+      onClosed?.();
+    };
+    if (immediate || !overlay.classList.contains("tc-overlay-fade") ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      finish();
+      return;
+    }
+    if (overlay.classList.contains("tc-overlay-closing")) return;
+    overlay.style.setProperty("--tc-close-opacity", getComputedStyle(overlay).opacity);
+    overlay.classList.add("tc-overlay-closing");
+    overlay.inert = true;
+    const motion = hudOverlayMotion.get(overlay);
+    if (motion) {
+      const { card, button, animation } = motion;
+      const start = getComputedStyle(card).transform;
+      animation?.cancel();
+      const end = hudButtonTransform(card, button);
+      if (end) card.animate([{ transform: start }, { transform: end }], {
+        duration: hudOverlayCloseMs, easing: "cubic-bezier(.55, 0, .8, .4)", fill: "forwards"
+      });
+    }
+    overlay.addEventListener("animationend", event => {
+      if (event.target === overlay && event.animationName === "tc-overlay-fade-out") finish();
+    });
+    window.setTimeout(finish, hudOverlayCloseMs + 20);
+  }
+
+  function closeOverlays({ immediate = false } = {}) {
     cancelStudentPointHold?.();
     cancelStudentPointHold = null;
-    document.querySelectorAll(".tc-overlay").forEach((node) => node.remove());
+    document.querySelectorAll(".tc-overlay").forEach(node => dismissHudOverlay(node, immediate));
   }
 
   let guidedTutorial = null;
@@ -958,6 +1210,7 @@
 
   function closeGuidedTutorial() {
     const restoreState = guidedTutorial?.restoreState;
+    const cloudSnapshot = guidedTutorial?.cloudSnapshot;
     clearTutorialFocus();
     document.querySelector(".tc-guided-coach")?.remove();
     document.querySelector(".tc-tutorial-exit")?.remove();
@@ -972,8 +1225,11 @@
       state.selectedStudentId = restoreState.selectedStudentId;
       randomHistory.drawnIds = [...restoreState.randomDrawnIds];
       syncSelectedTrigger();
-      save();
-      updateHud();
+      if (cloudSnapshot) applyCloudState(cloudSnapshot);
+      else {
+        save();
+        updateHud();
+      }
     }
   }
 
@@ -1002,7 +1258,8 @@
     if (step === 3) {
       const inputs = [...document.querySelectorAll(".tc-editor-row input")];
       const readyToSave = inputs.length === 2 && inputs.every((input) => input.value.trim());
-      return readyToSave ? "Click on SAVE ROSTER button." : "Write two students' names.";
+      const saveLabel = document.querySelector(".tc-save-roster")?.textContent || "CREATE ROSTER";
+      return readyToSave ? `Click ${saveLabel}.` : "Write two students' names.";
     }
     if (step === 4) return "Click NEXT to close the roster screen.";
     if (step === 5) return "Correct answers add 1 point to this pool.";
@@ -1017,14 +1274,13 @@
 
   function positionTutorialCoach(target) {
     const coach = document.querySelector(".tc-guided-coach");
-    if (!coach) return;
+    if (!coach || coach.classList.contains("is-inline")) return;
     const rect = target?.getBoundingClientRect();
     const margin = 12;
     const coachWidth = coach.getBoundingClientRect().width;
     const desiredLeft = rect ? rect.left + rect.width / 2 - coachWidth / 2 : (window.innerWidth - coachWidth) / 2;
     const left = Math.min(window.innerWidth - coachWidth - margin, Math.max(margin, desiredLeft));
-    const typingWithKeyboard = guidedTutorial?.step === 3 && target?.matches(".tc-add-student");
-    const top = typingWithKeyboard ? 18 : (rect ? Math.max(12, rect.top - coach.offsetHeight - 16) : Math.max(18, window.innerHeight * .2));
+    const top = rect ? Math.max(12, rect.top - coach.offsetHeight - 16) : Math.max(18, window.innerHeight * .2);
     coach.style.left = `${left}px`;
     coach.style.top = `${top}px`;
   }
@@ -1046,12 +1302,21 @@
       coach = el("div", "tc-guided-coach");
       document.body.append(coach);
     }
+    const editorList = [2, 3].includes(guidedTutorial.step)
+      ? target?.closest(".tc-card")?.querySelector(".tc-editor-list")
+      : null;
+    coach.classList.toggle("is-inline", Boolean(editorList));
+    if (editorList && editorList.previousElementSibling !== coach) editorList.before(coach);
+    else if (!editorList && coach.parentElement !== document.body) document.body.append(coach);
     coach.replaceChildren(el("small", "", `STEP ${guidedTutorial.step} / 12`), el("strong", "", tutorialCopyForStep(guidedTutorial.step)));
     if (guidedTutorial.step === 4 || guidedTutorial.step === 5 || guidedTutorial.step === 12) {
       const next = el("button", "tc-tutorial-next", guidedTutorial.step === 12 ? "FINISH" : "NEXT");
       next.type = "button";
       next.addEventListener("click", () => {
-        if (guidedTutorial?.step === 12) closeGuidedTutorial();
+        if (guidedTutorial?.step === 12) {
+          dismissTutorialPrompt();
+          closeGuidedTutorial();
+        }
         else if (guidedTutorial?.step === 4) { closeOverlays(); setGuidedTutorialStep(5); }
         else setGuidedTutorialStep(6);
       });
@@ -1084,7 +1349,6 @@
     syncSelectedTrigger();
     updateHud();
     guidedTutorial = { step: 1, restoreState };
-    dismissInitialHelpTip();
     renderGuidedTutorial();
   }
 
@@ -1096,6 +1360,7 @@
     if (!guidedTutorial) return;
     const target = event.target instanceof Element ? event.target : null;
     if (!target) return;
+    if (target.closest(".tc-avatar-picker-overlay .tc-close") || target.matches(".tc-avatar-picker-overlay")) return;
     if (target.closest(".tc-tutorial-exit, .tc-overlay .tc-close")) {
       event.preventDefault();
       event.stopImmediatePropagation();
@@ -1124,18 +1389,25 @@
 
   window.addEventListener("resize", () => positionTutorialCoach(tutorialTargetForStep(guidedTutorial?.step)));
 
-  function makeOverlay(kicker, title, copy = "") {
-    closeOverlays();
+  function makeOverlay(kicker, title, copy = "", originButton = null, onBack = null) {
+    if (!onBack) closeOverlays({ immediate: true });
     const overlay = el("div", "tc-overlay");
+    if (["CLASSROOM", "TIMER", "POINT POOL", "POINT CONTROL", "HUD HELP"].includes(kicker) || title === "RANDOM PICK") {
+      overlay.classList.add("tc-overlay-fade");
+    }
     const card = el("div", "tc-card");
     const close = el("button", "tc-close", "×");
     close.type = "button";
-    close.addEventListener("click", closeOverlays);
+    const closeOverlay = onBack ? () => dismissHudOverlay(overlay, false, onBack) : closeOverlays;
+    close.addEventListener("click", closeOverlay);
     card.append(close, el("p", "tc-kicker", kicker), el("h2", "tc-title", title));
     if (copy) card.append(el("p", "tc-copy", copy));
-    overlay.addEventListener("click", (event) => { if (event.target === overlay) closeOverlays(); });
+    overlay.addEventListener("click", (event) => { if (event.target === overlay) closeOverlay(); });
     overlay.append(card);
     document.body.append(overlay);
+    const sourceButton = originButton || (kicker === "CLASSROOM" ? rosterButton :
+      kicker === "TIMER" ? hudTimerDisplayButton : title === "RANDOM PICK" ? randomButton : null);
+    animateHudOverlayFromButton(overlay, card, sourceButton);
     return card;
   }
 
@@ -1149,7 +1421,8 @@
     const chosen = getStudent();
     hud.classList.toggle("no-roster", !hasRoster());
     rosterButton.classList.toggle("has-chosen-avatar", Boolean(chosen?.avatarPath));
-    rosterButton.title = chosen ? `${chosen.name} is chosen — Class roster` : "Class roster";
+    rosterButton.title = (chosen ? `${chosen.name} is chosen — Class roster` : "Class roster") +
+      (standaloneRoster ? "" : " — Right-click for full-page roster");
     if (chosen?.avatarPath) {
       const avatar = document.createElement("img");
       avatar.src = resolveAvatarPath(chosen.avatarPath);
@@ -1174,13 +1447,18 @@
     accountButton?.setAttribute("aria-label", window.TeacherCloud?.isSignedIn?.() ? "Cloud account connected" : "Sign in to cloud backup");
     const canSync = Boolean(window.TeacherCloud?.isSignedIn?.() && hasSyncClassroomLock());
     const syncCoolingDown = Date.now() < syncShortcutCooldownUntil;
-    syncButton.disabled = !canSync || syncCoolingDown;
+    syncButton.disabled = !buttonHelpActive && (!canSync || syncCoolingDown);
     syncButton.title = syncCoolingDown ? "Sync cooldown" : canSync ? "Sync now" : "Choose and lock a classroom from the roster first";
     syncButton.setAttribute("aria-label", syncButton.title);
     updateHudTimer();
+    if (standaloneRoster) renderStandaloneRoster();
   }
 
   function applyCloudState(snapshot) {
+    if (guidedTutorial) {
+      guidedTutorial.cloudSnapshot = snapshot;
+      return;
+    }
     const classroomsToCheck = Array.isArray(snapshot?.classrooms)
       ? snapshot.classrooms
       : [{ roster: snapshot?.roster }];
@@ -1493,7 +1771,34 @@
     });
   }
 
+  let animatedStandaloneClassroom;
+  const stopCardEntrances = new WeakMap();
+
+  function renderStandaloneRoster() {
+    const cloudMode = cloudClassroomsEnabled();
+    stopCardEntrances.get(standaloneRoster)?.();
+    standaloneRoster.replaceChildren(
+      el("p", "tc-kicker", "CLASSROOM"),
+      el("h2", "tc-title", activeClassroom()?.name || "CLASS ROSTER")
+    );
+    populateRoster(standaloneRoster, cloudMode);
+    if (state.activeClassroomId !== animatedStandaloneClassroom &&
+        standaloneRoster.querySelector(".tc-student-grid > .tc-student")) {
+      animatedStandaloneClassroom = state.activeClassroomId;
+      animateRosterRows(standaloneRoster);
+    }
+  }
+
   function openRoster() {
+    if (standaloneRoster) {
+      closeOverlays();
+      renderStandaloneRoster();
+      return;
+    }
+    openRosterOverlay();
+  }
+
+  function openRosterOverlay() {
     if (!hasRoster() && state.classrooms.length === 1) {
       openRosterEditor(true);
       if (guidedTutorial?.step === 1) window.setTimeout(() => setGuidedTutorialStep(2), 0);
@@ -1501,23 +1806,131 @@
     }
     const current = activeClassroom();
     const cloudMode = cloudClassroomsEnabled();
-    const card = makeOverlay("CLASSROOM", cloudMode ? (current?.name || "CLASS ROSTER") : "CLASS ROSTER", cloudMode
-      ? "Choose a student to review the current score."
-      : "Choose a student to review the current score.");
-    if (cloudMode) card.append(classBar());
+    const card = makeOverlay("CLASSROOM", current?.name || "CLASS ROSTER");
+    card.classList.add("tc-roster-card");
+    card.querySelector(".tc-kicker").remove();
+    populateRoster(card, cloudMode);
+    animateRosterRows(card);
+  }
+
+  function animateRosterRows(card) {
+    const isStandalone = card === standaloneRoster;
+    if ((!isStandalone && hudLite) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const scrollTarget = isStandalone ? window : card;
+    const rows = [];
+    let previousTop = -1;
+    for (const item of card.querySelectorAll(".tc-student-grid > .tc-student")) {
+      const top = item.offsetTop;
+      if (top !== previousTop) {
+        previousTop = top;
+        rows.push([]);
+      }
+      rows.at(-1).push(item);
+    }
+    const columns = Math.max(1, ...rows.map(row => row.length));
+    const pendingRows = new Set(rows);
+    const animations = new Set();
+    const animateVisible = (initialDelay) => {
+      const top = isStandalone ? 0 : card.scrollTop;
+      const bottom = top + (isStandalone ? document.documentElement.clientHeight : card.clientHeight);
+      for (const items of pendingRows) {
+        const first = items[0];
+        const bounds = isStandalone ? first.getBoundingClientRect() :
+          { top: first.offsetTop, bottom: first.offsetTop + first.offsetHeight };
+        if (bounds.top >= bottom || bounds.bottom <= top) continue;
+        pendingRows.delete(items);
+        items.forEach((item, column) => {
+          const isLeft = columns > 1 && column === 0;
+          const isRight = columns > 1 && column === columns - 1;
+          const from = isLeft ? "-80px 0" : isRight ? "80px 0" : "0 -28px";
+          const animation = item.animate?.(
+            [{ opacity: 0, translate: from }, { opacity: 1, translate: "0 0" }],
+            { duration: 450, delay: initialDelay, easing: "cubic-bezier(.2, .7, .25, 1)", fill: "backwards" }
+          );
+          if (animation) {
+            animations.add(animation);
+            animation.finished.then(() => animations.delete(animation), () => animations.delete(animation));
+          }
+        });
+      }
+      if (!pendingRows.size) scrollTarget.removeEventListener("scroll", onScroll);
+    };
+    const onScroll = () => animateVisible(0);
+    stopCardEntrances.set(card, () => {
+      scrollTarget.removeEventListener("scroll", onScroll);
+      pendingRows.clear();
+      animations.forEach(animation => animation.cancel());
+      stopCardEntrances.delete(card);
+    });
+    if (pendingRows.size) scrollTarget.addEventListener("scroll", onScroll, { passive: true });
+    animateVisible(155);
+  }
+
+  function fitRosterCardText(root) {
+    const labels = root.querySelectorAll(".tc-roster-grid :is(.tc-student-name-row strong, .tc-level-progress)");
+    labels.forEach(label => label.style.removeProperty("font-size"));
+    const fittedSizes = Array.from(labels, label => {
+      const available = label.clientWidth;
+      const required = label.scrollWidth;
+      if (!available || required <= available) return null;
+      const size = parseFloat(getComputedStyle(label).fontSize);
+      return `${size * Math.max(1, available - 1) / required}px`;
+    });
+    labels.forEach((label, index) => {
+      if (fittedSizes[index]) label.style.fontSize = fittedSizes[index];
+    });
+  }
+
+  const refitRosterCards = () => fitRosterCardText(document);
+  window.addEventListener("resize", refitRosterCards);
+  document.fonts?.addEventListener("loadingdone", refitRosterCards);
+
+  function populateRoster(card, cloudMode) {
+    const headerControls = card === standaloneRoster ? document.getElementById("hud-class-controls") : null;
+    headerControls?.replaceChildren();
     if (cloudMode && !getLockedClassroomId()) {
-      card.append(el("div", "tc-empty", "Choose the classroom for this smart board first."));
+      card.append(classBar(), el("div", "tc-empty", "Choose the classroom for this smart board first."));
       return;
     }
-    const grid = el("div", "tc-student-grid");
+    const grid = el("div", "tc-student-grid tc-roster-grid");
     sortRosterStudents(state.roster).forEach((student) => {
-      const item = studentCard(student, { showChosen: true, ranked: true, showAvatar: true });
-      item.addEventListener("click", () => openStudentProfile(student.id));
+      const item = studentCard(student, { showChosen: true, ranked: true, showAvatar: true, showLevelProgress: true });
+      let suppressProfileClick = false;
+      let profileOrigin = null;
+      if (card === standaloneRoster) {
+        item.dataset.profileStudentId = student.id;
+        const classroomId = state.activeClassroomId;
+        profileOrigin = {
+          standalone: true,
+          getBoundingClientRect: () => state.activeClassroomId === classroomId
+            ? card.querySelector(`[data-profile-student-id="${CSS.escape(student.id)}"]`)?.getBoundingClientRect()
+            : null
+        };
+        bindStudentPointHold(item, student, true, value => { suppressProfileClick = value; }, { standalone: true });
+      }
+      item.addEventListener("click", (event) => {
+        if (suppressProfileClick && event.detail !== 0) return;
+        if (profileOrigin) {
+          openStudentProfile(student.id, profileOrigin);
+        } else {
+          const rect = item.getBoundingClientRect();
+          openStudentProfile(student.id, { getBoundingClientRect: () => rect });
+        }
+      });
       grid.append(item);
     });
     const actions = el("div", "tc-actions");
     if (!state.roster.length) grid.append(el("div", "tc-empty", "This class has no students yet."));
-    const edit = el("button", "tc-action", state.roster.length ? "EDIT ROSTER" : "CREATE ROSTER");
+    const editClass = el("button", "tc-action", "EDIT CLASS");
+    editClass.type = "button";
+    editClass.setAttribute("aria-expanded", "false");
+    const classActions = el("div", "tc-actions tc-class-edit-actions");
+    classActions.hidden = true;
+    editClass.addEventListener("click", () => {
+      classActions.hidden = !classActions.hidden;
+      editClass.setAttribute("aria-expanded", String(!classActions.hidden));
+    });
+    const edit = el("button", "tc-action", "EDIT ROSTER");
     edit.type = "button";
     edit.addEventListener("click", () => openRosterEditor(false));
     const attendance = el("button", "tc-action", "ATTENDANCE");
@@ -1543,23 +1956,26 @@
       });
     });
     resetPoints.disabled = !state.roster.length;
-    actions.append(edit, attendance, resetPoints);
-    if (cloudMode) {
-      const changeClassroom = el("button", "tc-action", "CHANGE CLASSROOM");
-      changeClassroom.type = "button";
-      changeClassroom.addEventListener("click", () => {
-        clearClassroomLock();
-        openRoster();
-      });
-      const rename = el("button", "tc-action", "RENAME CLASS");
-      rename.type = "button";
-      rename.addEventListener("click", () => openClassNameDialog("rename"));
-      const removeClass = el("button", "tc-action danger", "DELETE CLASS");
-      removeClass.type = "button";
-      removeClass.addEventListener("click", deleteActiveClassroom);
-      actions.append(changeClassroom, rename, removeClass);
-    }
-    card.append(grid, actions);
+    const changeClassroom = el("button", "tc-action", "CHANGE CLASSROOM");
+    changeClassroom.type = "button";
+    changeClassroom.disabled = !cloudMode;
+    changeClassroom.addEventListener("click", () => {
+      clearClassroomLock();
+      openRoster();
+    });
+    const rename = el("button", "tc-action", "RENAME CLASS");
+    rename.type = "button";
+    rename.disabled = !cloudMode;
+    rename.addEventListener("click", () => openClassNameDialog("rename"));
+    const removeClass = el("button", "tc-action danger", "DELETE CLASS");
+    removeClass.type = "button";
+    removeClass.disabled = !cloudMode;
+    removeClass.addEventListener("click", deleteActiveClassroom);
+    actions.append(editClass, attendance);
+    classActions.append(edit, changeClassroom, rename, removeClass, resetPoints);
+    card.append(grid);
+    (headerControls || card).append(actions, classActions);
+    requestAnimationFrame(() => fitRosterCardText(card));
     if (guidedTutorial?.step === 3) setGuidedTutorialStep(4);
     if (guidedTutorial?.step === 8) window.setTimeout(() => setGuidedTutorialStep(9), 0);
   }
@@ -1602,36 +2018,111 @@
   }
 
   function openHelp() {
-    startGuidedTutorial();
+    buttonHelpActive = !buttonHelpActive;
+    helpButton.setAttribute("aria-pressed", String(buttonHelpActive));
+    helpButton.classList.toggle("is-first-run", buttonHelpActive);
+    if (buttonHelpActive) {
+      const hint = el("div", "tc-help-tip", "Click a button to see what it does.");
+      hint.setAttribute("role", "status");
+      hud.append(hint);
+    } else {
+      hud.querySelector(".tc-help-tip")?.remove();
+    }
+    updateHud();
+    updateHudTimer();
   }
 
-  function dismissInitialHelpTip() {
-    localStorage.setItem(HELP_SEEN_KEY, "1");
-    helpButton?.classList.remove("is-first-run");
-    document.querySelector(".tc-help-tip")?.remove();
+  function dismissTutorialPrompt() {
+    try { localStorage.setItem(TUTORIAL_DISMISSED_KEY, "1"); }
+    catch { /* Storage may be unavailable. */ }
   }
 
-  function showInitialHelpTip() {
-    if (localStorage.getItem(HELP_SEEN_KEY)) return;
-    helpButton.classList.add("is-first-run");
-    const helpTip = el("div", "tc-help-tip");
-    const message = el("span", "", "You can click here to learn about student management.");
-    const ok = el("button", "", "OK");
-    ok.type = "button";
-    ok.addEventListener("click", dismissInitialHelpTip);
-    helpTip.append(message, ok);
-    hud.append(helpTip);
+  function showTutorialPrompt() {
+    try {
+      if (localStorage.getItem(TUTORIAL_DISMISSED_KEY) || sessionStorage.getItem(TUTORIAL_PROMPT_SESSION_KEY)) return;
+      sessionStorage.setItem(TUTORIAL_PROMPT_SESSION_KEY, "1");
+    } catch { /* Show the invitation when storage is unavailable. */ }
+    const card = makeOverlay("CLASS CREATION TUTORIAL", "Would you like to watch the class creation tutorial?");
+    if (document.fullscreenElement?.contains(hud) && !document.fullscreenElement.contains(card)) {
+      document.fullscreenElement.append(card.closest(".tc-overlay"));
+    }
+    card.classList.add("tc-tutorial-prompt");
+    const label = el("label", "");
+    const checkbox = el("input", "");
+    checkbox.type = "checkbox";
+    label.append(checkbox, document.createTextNode("Don’t show this message again"));
+    const actions = el("div", "tc-actions");
+    const yes = el("button", "tc-action primary", "YES");
+    const no = el("button", "tc-action", "NO");
+    yes.type = no.type = "button";
+    yes.addEventListener("click", startGuidedTutorial);
+    no.addEventListener("click", () => {
+      if (checkbox.checked) dismissTutorialPrompt();
+      closeOverlays();
+    });
+    actions.append(yes, no);
+    card.append(label, actions);
+  }
+
+  function showLiteTip() {
+    try { if (localStorage.getItem(HUD_LITE_TIP_KEY) === "1") return; }
+    catch { /* Keep the tip available when storage is unavailable. */ }
+    const tip = el("aside", "tc-lite-tip");
+    tip.setAttribute("data-radial-ignore", "");
+    const message = el("p", "", "If the app feels slow on an older or less powerful computer, right-click the lock button to enable LITE mode. This turns off some visual effects.");
+    const label = el("label", "");
+    const checkbox = el("input", "");
+    checkbox.type = "checkbox";
+    label.append(checkbox, document.createTextNode("Don’t show this again"));
+    const done = el("button", "", "Got it");
+    done.type = "button";
+    const position = () => {
+      const lock = radialLockButton.getBoundingClientRect();
+      if (!lock.width || !tip.offsetWidth) return;
+      const left = Math.max(12, Math.min(window.innerWidth - tip.offsetWidth - 12, lock.left + lock.width / 2 - tip.offsetWidth / 2));
+      tip.style.left = `${left}px`;
+      tip.style.bottom = `${window.innerHeight - lock.top + 12}px`;
+    };
+    done.addEventListener("click", () => {
+      if (checkbox.checked) {
+        try { localStorage.setItem(HUD_LITE_TIP_KEY, "1"); }
+        catch { /* Dismiss for the current page. */ }
+      }
+      window.removeEventListener("resize", position);
+      collapseButton.removeEventListener("click", position);
+      radialLockButton.classList.remove("tc-lite-tip-highlight");
+      tip.remove();
+    });
+    tip.append(message, label, done);
+    hud.append(tip);
+    radialLockButton.classList.add("tc-lite-tip-highlight");
+    position();
+    window.addEventListener("resize", position);
+    collapseButton.addEventListener("click", position);
   }
 
   function studentCard(student, options = {}) {
     const showAvatar = Boolean(options.showAvatar && student.avatarPath);
     const item = el(options.static ? "div" : "button", `tc-student${student.id === state.selectedStudentId ? " is-selected" : ""}${options.ranked ? studentRankClass(effectiveScore(student)) : ""}${showAvatar ? " has-avatar" : ""}${isAbsent(student) ? " is-absent" : ""}`);
     if (!options.static) item.type = "button";
+    if (item.classList.contains("is-rank-gold-aura")) {
+      const edgeLight = el("div", "tc-rank-edge-light");
+      if (effectiveScore(student) >= 850) edgeLight.classList.add("is-spectrum");
+      edgeLight.setAttribute("aria-hidden", "true");
+      edgeLight.append(el("div", ""));
+      item.append(edgeLight);
+    }
     const details = el("div", "tc-student-details");
     const nameRow = el("div", "tc-student-name-row");
     nameRow.append(el("strong", "", student.name));
     if (!showAvatar) nameRow.append(createLevelBadge(student, true));
     details.append(nameRow, el("span", "", `${student.points} PTS`));
+    if (options.showLevelProgress) {
+      const nextLevel = nextLevelStart(student);
+      const remaining = nextLevel === null ? 0 : Math.ceil(nextLevel - effectiveScore(student));
+      const text = nextLevel === null ? "MAX LEVEL" : `${remaining} ${remaining === 1 ? "point" : "points"} for level up`;
+      details.append(el("small", "tc-level-progress", text));
+    }
     if (student.stars) details.append(el("div", "tc-student-stars", starSummary(student.stars)));
     item.append(details);
     const avatar = showAvatar ? createStudentAvatar(student, "tc-student-avatar") : null;
@@ -1672,18 +2163,33 @@
     return frame;
   }
 
-  function openStudentProfile(studentId) {
+  function openStudentProfile(studentId, profileOrigin = null) {
     const student = getStudent(studentId);
     if (!student) return;
-    const card = makeOverlay("CLASSROOM", "STUDENT PROFILE");
+    const classroomId = state.activeClassroomId;
+    const card = makeOverlay("CLASSROOM", "STUDENT PROFILE", "", profileOrigin);
+    card.classList.add("tc-profile-card");
+    card.querySelector(".tc-kicker").remove();
     const summary = el("div", `tc-profile-summary${studentRankClass(effectiveScore(student))}`);
     const avatarButton = el("button", "tc-profile-avatar");
     avatarButton.type = "button";
     avatarButton.title = "Choose avatar";
     avatarButton.append(createStudentAvatar(student, "", true));
-    avatarButton.addEventListener("click", () => openAvatarPicker(student.id));
+    avatarButton.addEventListener("click", () => {
+      if (state.activeClassroomId !== classroomId || !getStudent(student.id)) return;
+      const rect = avatarButton.getBoundingClientRect();
+      const profileOverlay = card.closest(".tc-overlay");
+      openAvatarPicker(student.id, profileOrigin, { getBoundingClientRect: () => rect }, () => {
+        profileOverlay.inert = false;
+        avatarButton.focus({ preventScroll: true });
+        if (guidedTutorial?.step === 11) setGuidedTutorialStep(10);
+      });
+      profileOverlay.inert = true;
+    });
     const meta = el("div", "tc-profile-meta");
-    meta.append(el("h3", "", student.name), el("p", "", "CLASSROOM SCORE"), el("p", "tc-profile-points", `${student.points} PTS`));
+    const nameEntry = el("div", "tc-profile-name-entry");
+    nameEntry.append(el("h3", "", student.name));
+    meta.append(nameEntry, el("p", "", "CLASSROOM SCORE"), el("p", "tc-profile-points", `${student.points} PTS`));
     if (student.stars) meta.append(el("p", "tc-profile-stars", starSummary(student.stars)));
     summary.append(avatarButton, meta);
     const actions = el("div", "tc-actions");
@@ -1699,31 +2205,53 @@
         else student.points = 0;
         save({ deferPoints: !resetStars });
         updateHud();
-        openStudentProfile(student.id);
+        openStudentProfile(student.id, profileOrigin);
       });
     });
-    const redeem = el("button", "tc-action primary", "REDEEM 10 PTS → ⭐");
-    redeem.type = "button";
-    redeem.disabled = true;
-    redeem.addEventListener("click", () => {
-      if (redeem.disabled || student.points < 10) return;
-      student.points -= 10;
-      student.stars = (student.stars || 0) + 1;
-      save();
-      updateHud();
-      playTeacherFeedback(true);
-      showToast(`${student.name} earned a star!`);
-      openStudentProfile(student.id);
+    actions.append(back, reset);
+    const attendanceButton = el("button", "tc-action", isAbsent(student) ? "REMOVE ABSENT" : "MARK ABSENT");
+    attendanceButton.type = "button";
+    attendanceButton.addEventListener("click", () => {
+      if (state.activeClassroomId !== classroomId || !getStudent(student.id)) return;
+      toggleAttendance(student.id);
+      closeOverlays();
     });
-    actions.append(back, redeem, reset);
+    actions.append(attendanceButton);
+    if (profileOrigin?.standalone) {
+      for (const isAward of [true, false]) {
+        const sign = isAward ? "+" : "−";
+        const button = el("button", `tc-action${isAward ? " primary" : " danger"}`, sign);
+        button.type = "button";
+        const label = isAward ? "Award points" : "Remove points";
+        button.title = label;
+        button.setAttribute("aria-label", label);
+        button.disabled = isAward && isAbsent(student);
+        let suppressClick = false;
+        const apply = (amount) => {
+          applyMultipleStudentPoints([student.id], isAward, amount, classroomId);
+          closeOverlays();
+        };
+        bindStudentPointHold(button, student, isAward, value => { suppressClick = value; }, {
+          confirm: (amount) => {
+            if (amount === 1) apply(amount);
+            else confirmPointsReset(`${sign}${amount} POINTS TO ${student.name}`, "", "CONFIRM", () => apply(amount));
+          }
+        });
+        button.addEventListener("click", (event) => {
+          if (!suppressClick || event.detail === 0) apply(1);
+        });
+        actions.append(button);
+      }
+    }
     card.append(summary, actions);
     if (guidedTutorial?.step === 9) window.setTimeout(() => setGuidedTutorialStep(10), 0);
   }
 
-  function openAvatarPicker(studentId) {
+  function openAvatarPicker(studentId, profileOrigin, avatarOrigin, onBack) {
     const student = getStudent(studentId);
     if (!student) return;
-    const card = makeOverlay("CLASSROOM", "CHOOSE AVATAR", "Tap an avatar to save it for this student.");
+    const card = makeOverlay("CLASSROOM", "CHOOSE AVATAR", "Tap an avatar to save it for this student.", avatarOrigin, onBack);
+    card.closest(".tc-overlay").classList.add("tc-avatar-picker-overlay");
     const classroomId = state.activeClassroomId;
     const isAvatarTaken = (avatar) => {
       if (avatar.noPhoto) return false;
@@ -1781,8 +2309,12 @@
             student.stars = 0;
           }
           save({ changeType: "avatar" });
-          openStudentProfile(student.id);
-          if (guidedTutorial?.step === 11) window.setTimeout(() => setGuidedTutorialStep(12), 0);
+          const tutorial = guidedTutorial;
+          dismissHudOverlay(card.closest(".tc-overlay"), false, () => {
+            if (state.activeClassroomId !== classroomId || !getStudent(studentId) || guidedTutorial !== tutorial) return;
+            openStudentProfile(studentId, profileOrigin);
+            if (guidedTutorial?.step === 11) window.setTimeout(() => setGuidedTutorialStep(12), 0);
+          });
         });
         page.append(option);
       });
@@ -1884,7 +2416,9 @@
       actions.append(cancel, reset);
     }
     confirmOverlay.addEventListener("click", (event) => { if (event.target === confirmOverlay) close(); });
-    confirmCard.append(title, copy, actions);
+    confirmCard.append(title);
+    if (copyText) confirmCard.append(copy);
+    confirmCard.append(actions);
     confirmOverlay.append(confirmCard);
     document.body.append(confirmOverlay);
   }
@@ -2122,11 +2656,13 @@
     };
     showPreview();
     const previewTimer = window.setInterval(showPreview, 80);
+    const tutorialDraw = guidedTutorial;
     card.append(announcement);
     window.setTimeout(() => {
       window.clearInterval(previewTimer);
       isRandomDrawing = false;
       randomButton.disabled = false;
+      if (tutorialDraw && guidedTutorial !== tutorialDraw) return;
       state.selectedStudentId = student.id;
       syncSelectedTrigger();
       save();
@@ -2139,7 +2675,7 @@
       const actions = el("div", "tc-actions");
       const done = el("button", "tc-action primary", "CONTINUE");
       done.type = "button";
-      const closeResult = () => card.closest(".tc-overlay")?.remove();
+      const closeResult = () => dismissHudOverlay(card.closest(".tc-overlay"));
       done.addEventListener("click", closeResult);
       actions.append(done);
       if (card.isConnected) card.append(actions);
@@ -2170,7 +2706,7 @@
     }, 2000);
   }
 
-  function openStudentPicker(action, selectedIds = []) {
+  function openStudentPicker(action, selectedIds = [], initialAwardAmount = 1) {
     if (!hasRoster()) {
       openRosterEditor(true);
       return;
@@ -2182,9 +2718,10 @@
       return;
     }
     const bankAmount = state.pointBank;
-    let awardAmount = Math.max(1, bankAmount);
-    const awardTitle = () => `AWARD +${awardAmount} POINT${awardAmount === 1 ? "" : "S"}`;
-    const card = makeOverlay(isAward ? "POINT POOL" : "POINT CONTROL", isAward ? awardTitle() : "REMOVE 1 POINT", isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.");
+    let awardAmount = Math.max(1, bankAmount || initialAwardAmount);
+    const multipleAmount = () => isAward && !bankAmount ? awardAmount : 1;
+    const awardTitle = (amount = awardAmount) => `AWARD +${amount} POINT${amount === 1 ? "" : "S"}`;
+    const card = makeOverlay(isAward ? "POINT POOL" : "POINT CONTROL", isAward ? awardTitle() : "REMOVE 1 POINT", isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.", isAward ? plusButton : minusButton);
     const classroomId = state.activeClassroomId;
     const selected = new Set(selectedIds);
     let multiple = selected.size > 0, suppressMultipleClick = false;
@@ -2197,7 +2734,6 @@
       customize = el("button", "tc-award-customize", "+?");
       customize.type = "button";
       customize.title = "Choose point amount";
-      titleRow.append(customize);
       customize.addEventListener("click", () => {
         openAwardNumpad(awardAmount, (nextAmount) => {
           awardAmount = nextAmount;
@@ -2211,7 +2747,7 @@
       multi.setAttribute("aria-pressed", String(multiple));
       multi.textContent = multiple ? "👥 GIVE POINTS" : "👥 SELECT MULTIPLE";
       multi.title = multiple ? `${selected.size} students selected` : "Select multiple students";
-      title.textContent = multiple ? (isAward ? "AWARD +1 POINT" : "REMOVE 1 POINT") : (isAward ? awardTitle() : "REMOVE 1 POINT");
+      title.textContent = isAward ? awardTitle(multiple ? multipleAmount() : awardAmount) : "REMOVE 1 POINT";
       const copy = card.querySelector(".tc-copy");
       copy.style.display = isAward || multiple ? "none" : "";
       copy.textContent = multiple
@@ -2224,16 +2760,17 @@
       closeOverlays();
     };
     const confirmMultiple = (amount) => {
+      if (amount === 1) { applyMultiple(amount); return; }
       const ids = [...selected];
       const names = ids.map(id => getStudent(id)?.name || "");
       const recipients = names.length > 1 ? `${names.slice(0, -1).join(", ")} AND ${names[names.length - 1]}` : names[0];
-      const confirmation = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${amount} POINT${amount === 1 ? "" : "S"} TO ${recipients}`);
+      const confirmation = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${amount} POINT${amount === 1 ? "" : "S"} TO ${recipients}`, "", isAward ? plusButton : minusButton);
       const actions = el("div", "tc-actions");
       const yes = el("button", "tc-action primary", "CONFIRM");
       const no = el("button", "tc-action", "CANCEL");
       yes.type = no.type = "button";
       yes.addEventListener("click", () => applyMultiple(amount));
-      no.addEventListener("click", () => { if (state.activeClassroomId === classroomId) openStudentPicker(action, ids); else closeOverlays(); });
+      no.addEventListener("click", () => { if (state.activeClassroomId === classroomId) openStudentPicker(action, ids, awardAmount); else closeOverlays(); });
       actions.append(yes, no);
       confirmation.append(actions);
     };
@@ -2242,14 +2779,25 @@
     multi.addEventListener("click", () => {
       if (suppressMultipleClick) return;
       if (!multiple) { multiple = true; refreshMultiple(); }
-      else if (selected.size) applyMultiple(1);
+      else if (selected.size) applyMultiple(multipleAmount());
       else { multiple = false; refreshMultiple(); }
     });
-    titleRow.append(multi);
+    const pictures = el("button", "tc-multiple-select");
+    pictures.type = "button";
+    let showPictures = true;
+    try { showPictures = localStorage.getItem(PICKER_PICTURES_KEY) !== "0"; }
+    catch { /* Keep pictures visible when local storage is unavailable. */ }
+    const updatePicturesButton = () => {
+      pictures.textContent = showPictures ? "HIDE PICTURES" : "SHOW PICTURES";
+    };
+    updatePicturesButton();
+    if (customize) titleRow.append(customize);
+    titleRow.append(pictures, multi);
     refreshMultiple();
-    const grid = el("div", "tc-student-grid");
-    sortStudentsByScoreAndName(availableStudents).sort((a, b) => Number(isAbsent(a)) - Number(isAbsent(b))).forEach((student) => {
-      const item = studentCard(student, { ranked: true });
+    const grid = el("div", "tc-student-grid tc-point-picker-grid");
+    const students = sortStudentsByScoreAndName(availableStudents).sort((a, b) => Number(isAbsent(a)) - Number(isAbsent(b)));
+    const renderStudent = (student) => {
+      const item = studentCard(student, { ranked: true, showAvatar: showPictures });
       let suppressClick = false;
       bindStudentPointHold(item, student, isAward, (suppressed) => { suppressClick = suppressed; }, {
         enabled: () => multiple ? selected.size > 0 : (!isAward || !bankAmount),
@@ -2278,9 +2826,21 @@
         else removePoint(student.id);
         closeOverlays();
       });
-      grid.append(item);
+      return item;
+    };
+    const renderStudents = () => grid.replaceChildren(...students.map(renderStudent));
+    pictures.addEventListener("click", () => {
+      showPictures = !showPictures;
+      try { localStorage.setItem(PICKER_PICTURES_KEY, showPictures ? "1" : "0"); }
+      catch { /* Apply the choice to this picker even if it cannot be saved. */ }
+      cancelStudentPointHold?.();
+      updatePicturesButton();
+      stopCardEntrances.get(card)?.();
+      renderStudents();
     });
+    renderStudents();
     card.append(grid);
+    animateRosterRows(card);
     if (guidedTutorial?.step === 6) window.setTimeout(refreshGuidedTutorial, 0);
   }
 
@@ -2290,7 +2850,7 @@
       showToast("Classroom or attendance changed. Please try again.");
       return;
     }
-    const points = Math.min(10, Math.max(1, Math.floor(Number(amount) || 1)));
+    const points = Math.min(isAward ? 99 : 10, Math.max(1, Math.floor(Number(amount) || 1)));
     const levels = students.map(studentLevel);
     students.forEach(student => { student.points += isAward ? points : -points; });
     save({ deferPoints: true, changeType: isAward ? "increment" : "decrement" });
@@ -2302,7 +2862,9 @@
     if (isAward) students.forEach((student, index) => notifyLevelUp(student, levels[index]));
   }
 
-  function bindStudentPointHold(item, student, isAward, suppressClick, options = {}) {
+  function bindStudentPointHold(item, student, defaultIsAward, suppressClick, options = {}) {
+    let isAward = defaultIsAward;
+    let holdClassroomId;
     let pending = 0, repeating = 0, limitTimer = 0, amount = 1, pointerId = null, counter = null, tone = null, gain = null;
     const cleanup = () => {
       clearTimeout(pending);
@@ -2321,13 +2883,16 @@
       counter.textContent = `${isAward ? "+" : "−"}${amount}`;
       if (tone) tone.frequency.setTargetAtTime(isAward ? 180 * Math.pow(1600 / 180, (amount - 1) / 9) : 1400 * Math.pow(100 / 1400, (amount - 1) / 9), studentPointHoldAudioContext.currentTime, .08);
     };
-    item.style.touchAction = "none";
+    item.style.touchAction = options.standalone ? "pan-y" : "none";
     item.style.userSelect = "none";
     item.addEventListener("contextmenu", event => event.preventDefault());
     item.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0 || event.isPrimary === false || pointerId !== null || options.enabled?.() === false) return;
+      const rightHold = options.standalone && event.pointerType === "mouse" && event.button === 2;
+      if ((event.button !== 0 && !rightHold) || event.isPrimary === false || pointerId !== null || options.enabled?.() === false) return;
       suppressClick(false);
       cancelStudentPointHold?.();
+      isAward = rightHold ? false : defaultIsAward;
+      holdClassroomId = state.activeClassroomId;
       pointerId = event.pointerId;
       item.setPointerCapture(pointerId);
       cancelStudentPointHold = cleanup;
@@ -2376,20 +2941,36 @@
       event.preventDefault();
       suppressClick(true);
       if (options.confirm) { options.confirm(chosenAmount); return; }
-      const classroomId = state.activeClassroomId;
-      const card = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${chosenAmount} POINT${chosenAmount === 1 ? "" : "S"} TO ${student.name}`);
-      const actions = el("div", "tc-actions");
-      const yes = el("button", "tc-action primary", "CONFIRM");
-      const no = el("button", "tc-action", "CANCEL");
-      yes.type = no.type = "button";
-      yes.addEventListener("click", () => {
-        if (state.activeClassroomId === classroomId && getStudent(student.id) && (!isAward || !isAbsent(getStudent(student.id))) && (!isAward || !state.pointBank)) {
+      const classroomId = options.standalone ? holdClassroomId : state.activeClassroomId;
+      const applyHeldPoints = () => {
+        if (options.standalone) applyMultipleStudentPoints([student.id], isAward, chosenAmount, classroomId);
+        else if (state.activeClassroomId === classroomId && getStudent(student.id) && (!isAward || !isAbsent(getStudent(student.id))) && (!isAward || !state.pointBank)) {
           if (isAward) awardPoints(student.id, chosenAmount);
           else removePoint(student.id, chosenAmount);
         } else showToast("Classroom or point pool changed. Please try again.");
         closeOverlays();
-      });
-      no.addEventListener("click", () => openStudentPicker(isAward ? "award" : "remove"));
+      };
+      if (chosenAmount === 1) {
+        if (options.standalone && !isAward) {
+          const preventReleaseMenu = menuEvent => {
+            if (menuEvent.clientX === event.clientX && menuEvent.clientY === event.clientY) menuEvent.preventDefault();
+          };
+          document.addEventListener("contextmenu", preventReleaseMenu, true);
+          window.setTimeout(() => document.removeEventListener("contextmenu", preventReleaseMenu, true), 100);
+        }
+        applyHeldPoints();
+        return;
+      }
+      const card = makeOverlay("POINT CONTROL", `${isAward ? "+" : "−"}${chosenAmount} POINTS TO ${student.name}`, "", isAward ? plusButton : minusButton);
+      if (options.standalone && !isAward) {
+        card.closest(".tc-overlay").addEventListener("contextmenu", event => event.preventDefault());
+      }
+      const actions = el("div", "tc-actions");
+      const yes = el("button", "tc-action primary", "CONFIRM");
+      const no = el("button", "tc-action", "CANCEL");
+      yes.type = no.type = "button";
+      yes.addEventListener("click", applyHeldPoints);
+      no.addEventListener("click", () => options.standalone ? closeOverlays() : openStudentPicker(isAward ? "award" : "remove"));
       actions.append(yes, no);
       card.append(actions);
     });
@@ -2398,7 +2979,7 @@
   }
 
   function openAwardNumpad(initialAmount, onConfirm) {
-    const overlay = el("div", "tc-confirm-overlay tc-numpad-overlay");
+    const overlay = el("div", "tc-confirm-overlay tc-numpad-overlay tc-overlay-fade");
     const dialog = el("div", "tc-confirm-card tc-numpad-card");
     const title = el("h3", "", "SET AWARD POINTS");
     const copy = el("p", "", "Enter the number of points to give to the selected student.");
@@ -2435,7 +3016,7 @@
     const cancel = el("button", "tc-action", "CANCEL");
     const apply = el("button", "tc-action primary", "APPLY");
     cancel.type = apply.type = "button";
-    const close = () => overlay.remove();
+    const close = () => dismissHudOverlay(overlay);
     cancel.addEventListener("click", close);
     apply.addEventListener("click", () => {
       const amount = Math.min(99, Math.max(1, Number(value) || 1));
@@ -2447,6 +3028,7 @@
     overlay.append(dialog);
     overlay.addEventListener("click", (event) => { if (event.target === overlay) close(); });
     document.body.append(overlay);
+    animateHudOverlayFromButton(overlay, dialog, plusButton);
   }
 
   function awardPoints(studentId, manualAmount) {
@@ -2687,6 +3269,54 @@
   hudTimerDisplayButton = el("button", "tc-timer-display", formatHudTimer(hudTimerRemainingSeconds));
   hudTimerPlayButton = el("button", "tc-timer-play", "▶");
   const whistleButton = el("button", "tc-whistle", "📣");
+  const radialLockButton = el("button", "tc-radial-lock", "🔓");
+  radialLockButton.type = "button";
+  radialLockButton.setAttribute("data-radial-lock", "");
+  radialLockButton.setAttribute("aria-label", "Lock radial menu");
+  radialLockButton.setAttribute("aria-pressed", "false");
+  radialLockButton.title = "Lock radial menu";
+  radialLockButton.dataset.hudLite = String(hudLite);
+  radialLockButton.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    hudLite = !hudLite;
+    radialLockButton.dataset.hudLite = String(hudLite);
+    try { sessionStorage.setItem(HUD_LITE_KEY, hudLite ? "1" : "0"); }
+    catch { /* Keep the current page in the chosen mode. */ }
+    if (hudLite) document.querySelectorAll(".tc-overlay > .tc-card").forEach(card => stopCardEntrances.get(card)?.());
+  });
+  const mainMenuButton = el("button", "tc-main-menu", "🏠");
+  mainMenuButton.type = "button";
+  mainMenuButton.title = "Main Menu";
+  mainMenuButton.setAttribute("aria-label", "Main Menu");
+  mainMenuButton.addEventListener("click", () => {
+    const card = makeOverlay("MAIN MENU", "RETURN TO THE HOME PAGE?");
+    const actions = el("div", "tc-actions");
+    const confirm = el("button", "tc-action primary", "CONFIRM");
+    const cancel = el("button", "tc-action", "CANCEL");
+    confirm.type = cancel.type = "button";
+    cancel.addEventListener("click", closeOverlays);
+    confirm.addEventListener("click", async () => {
+      confirm.disabled = true;
+      const mainMenuUrl = new URL("../index.html", controlScriptUrl).href;
+      const topWindow = window.top || window;
+      try {
+        const fullscreenDocument = topWindow.document;
+        if (fullscreenDocument.fullscreenElement) await fullscreenDocument.exitFullscreen();
+        else if (fullscreenDocument.webkitFullscreenElement) await fullscreenDocument.webkitExitFullscreen();
+      } catch { /* Embedded local pages may be unable to read the parent document. */ }
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else if (document.webkitFullscreenElement) await document.webkitExitFullscreen();
+      } catch { /* Navigating away also ends fullscreen. */ }
+      try { topWindow.location.href = mainMenuUrl; }
+      catch { window.location.href = mainMenuUrl; }
+    });
+    actions.append(confirm, cancel);
+    card.append(actions);
+    if (document.fullscreenElement && !document.fullscreenElement.contains(card)) {
+      document.fullscreenElement.append(card.closest(".tc-overlay"));
+    }
+  });
   let whistleCount = 0;
   const whistleCountBadge = el("span", "tc-whistle-count");
   whistleCountBadge.hidden = true;
@@ -2705,7 +3335,9 @@
   rosterButton.title = "Class roster";
   plusButton.title = "Award the point pool";
   minusButton.title = "Remove one point";
-  helpButton.title = "Student management help";
+  helpButton.title = "Explain HUD buttons";
+  helpButton.setAttribute("aria-label", helpButton.title);
+  helpButton.setAttribute("aria-pressed", "false");
   accountButton.title = "Cloud account";
   syncButton.title = "Sync now";
   syncButton.setAttribute("aria-label", syncButton.title);
@@ -2722,7 +3354,11 @@
   });
   whistleButton.title = "Whistle — press briefly or hold";
   whistleButton.setAttribute("aria-label", whistleButton.title);
-  rosterButton.addEventListener("click", openRoster);
+  rosterButton.addEventListener("click", openRosterOverlay);
+  if (!standaloneRoster) rosterButton.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+    window.open(new URL("../teacher-hud/index.html", controlScriptUrl).href, "_blank", "noopener");
+  });
   randomButton.addEventListener("click", openRandomStudent);
   plusButton.addEventListener("click", awardCurrentPool);
   minusButton.addEventListener("click", () => openStudentPicker("remove"));
@@ -2757,13 +3393,46 @@
   chosenBanner.addEventListener("click", requestChosenReset);
   collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
   timerControl.append(hudTimerDisplayButton, hudTimerPlayButton);
-  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, timerControl, whistleButton, bank);
+  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, timerControl, whistleButton, radialLockButton, mainMenuButton, bank);
   hud.append(chosenBanner, controls, collapseButton);
+  const buttonHelp = new Map([
+    [rosterButton, ["CLASS ROSTER", "Open your class roster to view student scores, profiles, and attendance."]],
+    [randomButton, ["RANDOM STUDENT", "Pick a random student from the students marked present."]],
+    [plusButton, ["AWARD POINTS", "Give the available pool points to a student. When the pool is empty, you can award points manually."]],
+    [minusButton, ["REMOVE POINTS", "Choose a student to subtract points from. Hold a student’s card to choose how many points to remove."]],
+    [accountButton, ["CLOUD ACCOUNT", "Sign in or manage your cloud account to sync classrooms."]],
+    [syncButton, ["SYNC CLASSROOM", "Sync your locked classroom with the cloud when you’re signed in."]],
+    [hudTimerDisplayButton, ["TIMER", "Click the time to open timer settings, or right-click it to reset the countdown."]],
+    [hudTimerPlayButton, ["START OR PAUSE TIMER", "Start, pause, or resume the countdown."]],
+    [whistleButton, ["WHISTLE", "Press to sound the whistle. Hold it to open the countdown, or right-click to reduce the whistle count."]],
+    [radialLockButton, ["RADIAL MENU LOCK", "Click to lock or unlock the radial menu. Right-click to toggle LITE mode and reduce visual effects."]],
+    [mainMenuButton, ["MAIN MENU", "Return to the site’s home page after confirming."]],
+    [bank, ["POINT POOL", "See how many points are available to award. Click to clear the pool after confirming."]],
+    [chosenBanner, ["SELECTED STUDENT", "See who is selected. Click to clear the selection after confirming."]],
+    [collapseButton, ["EXPAND OR COLLAPSE HUD", "Show or hide the HUD controls."]]
+  ]);
+  for (const type of ["pointerdown", "contextmenu", "click"]) {
+    hud.addEventListener(type, (event) => {
+      if (!buttonHelpActive) return;
+      const button = event.target.closest?.("button");
+      const copy = buttonHelp.get(button);
+      if (!copy) return;
+      event.stopImmediatePropagation();
+      if (type === "pointerdown") return;
+      event.preventDefault();
+      const card = makeOverlay("HUD HELP", ...copy, button);
+      if (document.fullscreenElement && !document.fullscreenElement.contains(card)) {
+        document.fullscreenElement.append(card.closest(".tc-overlay"));
+      }
+    }, true);
+  }
   document.body.append(hud);
+  document.dispatchEvent(new Event("classroom-radial-control-ready"));
 
   requestAnimationFrame(() => {
     hud.style.setProperty("--tc-controls-width", `${controls.scrollWidth}px`);
-    showInitialHelpTip();
+    if (!hasPasswordRecovery) showTutorialPrompt();
+    showLiteTip();
   });
 
   window.TeacherControl = {
@@ -2795,11 +3464,20 @@
   const hasPasswordRecovery = passwordResetRequested && window.TeacherCloud?.capturePasswordRecovery?.();
   window.TeacherCloud?.initialize?.({
     getState: () => {
+      if (guidedTutorial) return guidedTutorial.cloudSnapshot || guidedTutorial.restoreState;
       commitActiveClassroom();
       return state;
     },
     applyState: applyCloudState,
     onStatusChange: updateHud
   });
+  if (standaloneRoster) {
+    window.addEventListener("storage", event => {
+      if (event.key !== (cloudClassroomsEnabled() ? CLOUD_STORE_KEY : STORE_KEY) && event.key !== CLASS_LOCK_KEY) return;
+      load();
+      syncSelectedTrigger();
+      updateHud();
+    });
+  }
   if (hasPasswordRecovery) openPasswordReset();
 })();

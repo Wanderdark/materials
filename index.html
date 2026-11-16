@@ -43,10 +43,15 @@
     .tools .tool-card{border-color:rgba(22,41,90,.14);background:linear-gradient(180deg,rgba(255,255,255,.99) 0%,rgba(247,243,235,.99) 100%);box-shadow:0 18px 45px rgba(22,41,90,.085),inset 0 1px 0 rgba(255,255,255,.9)}.tools .tool-content{border-top:1px solid rgba(22,41,90,.1)}.tools .tool-card:hover{border-color:rgba(22,41,90,.18);background:linear-gradient(180deg,rgba(255,255,255,.99) 0%,rgba(247,243,235,.99) 100%);box-shadow:0 26px 58px rgba(22,41,90,.12),inset 0 1px 0 rgba(255,255,255,.94)}@media(min-width:721px){.tools-header>.button{margin-bottom:24px}}.flow-featured-song{min-height:236px;margin-bottom:20px}.flow-song-copy{padding:22px 30px}.flow-song-features{margin-top:12px}.flow-song-action{padding-top:12px}.flow-song-preview{padding:14px 24px}.flow-song-screen{width:min(68%,400px);padding:6px;border-width:6px;transform:rotate(-1deg)}@media(max-width:720px){.flow-featured-song{min-height:0}.flow-song-screen{width:min(100%,400px)}}
     .flow-featured-song{min-height:0;height:215px;box-shadow:0 14px 34px rgba(22,41,90,.075)}.flow-featured-song:hover,.flow-featured-song:focus-visible{box-shadow:0 18px 42px rgba(22,41,90,.1)}.flow-song-copy{padding:16px 30px}.flow-featured-song h3{margin-bottom:6px}.flow-song-features{margin-top:8px}.flow-song-action{padding-top:8px}.flow-song-preview{padding:10px 24px;background:linear-gradient(90deg,#fffefb 0%,#fff8ed 100%)}.flow-song-screen{width:min(73.5%,432px);padding:6px;border-width:6px;transform:translateX(-35px) rotate(-1deg)}.teacher-featured-tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-bottom:20px}.teacher-featured-tools .flow-featured-song{height:236px;margin:0}.teacher-featured-tools .flow-song-copy{padding:18px 22px}.teacher-featured-tools .flow-featured-song h3{font-size:clamp(1.8rem,2.5vw,2.3rem)}.teacher-featured-tools .flow-song-copy>p{font-size:.82rem;line-height:1.42}.teacher-featured-tools .flow-song-features{margin-top:10px}.teacher-featured-tools .flow-song-features span{font-size:.61rem}.teacher-featured-tools .flow-song-action{padding-top:10px}.teacher-featured-tools .flow-song-preview{padding:12px}.teacher-featured-tools .flow-song-screen{width:min(100%,360px);transform:none}.flow-featured-league{background:linear-gradient(135deg,#08172d 0%,#173d67 100%);border-color:#315f87;color:#fff}.flow-featured-league .flow-song-meta,.flow-featured-league .flow-song-action{color:#f4bc69}.flow-featured-league .flow-song-copy>p{color:#d3e1ed}.flow-featured-league .flow-song-features span{border-color:#f4bc6966;color:#ffe0a8;background:#f4bc691a}.flow-featured-league .flow-song-preview{background:linear-gradient(135deg,rgba(77,148,203,.18),rgba(5,13,29,.08))}.flow-featured-league .flow-song-screen{width:100%;height:100%;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}.flow-featured-league .flow-song-screen img{height:100%;object-fit:cover;border-radius:12px}.flow-featured-league:hover,.flow-featured-league:focus-visible{border-color:#f4bc69;box-shadow:0 18px 42px rgba(22,41,90,.18)}@media(max-width:720px){.teacher-featured-tools{grid-template-columns:1fr}.teacher-featured-tools .flow-featured-song{height:auto;min-height:0}.teacher-featured-tools .flow-song-screen{height:auto}.teacher-featured-tools .flow-featured-league .flow-song-screen img{height:auto;aspect-ratio:16/9}.flow-featured-song{height:auto;min-height:0}.flow-song-screen{width:min(100%,400px);transform:none}}
     .flow-featured-league .flow-song-screen{background:#07162d}.flow-featured-league .flow-song-screen img{width:100%;object-fit:contain}
+    .nav-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .nav-actions .nav-cta{white-space:nowrap}
+    @media(max-width:1080px){.nav{gap:12px}.nav-links{gap:14px}.header-credit{display:none}}
+    @media(max-width:720px){.nav-actions .nav-my-class{display:inline-flex;padding-inline:12px}.nav-links{gap:0}}
   </style>
+  <script defer src="teacher-hud/radial-menu.js" data-classroom-radial></script>
 </head>
 <body>
-  <header class="site-header"><nav class="nav container" aria-label="Main navigation"><a class="brand" href="#home" aria-label="AdilHoca home"><img src="logo.webp" width="320" height="90" alt="AdilHoca"><span class="brand-wordmark">Adil<span>Hoca</span></span></a><span class="header-credit">Designed by Adil Fırat OKTAV</span><button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg></button><div id="primary-navigation" class="nav-links"><a href="#home">Home</a><a href="#teacher-tools">Classroom Tools</a><a href="student-zone/index.html">Student Zone</a><a href="#about">About</a></div><a class="nav-cta" href="#teacher-tools">Explore Tools</a></nav></header>
+  <header class="site-header"><nav class="nav container" aria-label="Main navigation"><a class="brand" href="#home" aria-label="AdilHoca home"><img src="logo.webp" width="320" height="90" alt="AdilHoca"><span class="brand-wordmark">Adil<span>Hoca</span></span></a><span class="header-credit">Designed by Adil Fırat OKTAV</span><button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Open navigation menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg></button><div id="primary-navigation" class="nav-links"><a href="#home">Home</a><a href="#teacher-tools">Classroom Tools</a><a href="student-zone/index.html">Student Zone</a><a href="#about">About</a></div><div class="nav-actions"><a class="nav-cta nav-my-class" href="teacher-hud/index.html">MY CLASS</a><a class="nav-cta" href="#teacher-tools">Explore Tools</a></div></nav></header>
   <main>
     <section id="home" class="hero" aria-labelledby="hero-title"><div class="container hero-inner"><div class="hero-copy"><p class="eyebrow">English tools for active classrooms</p><h1 id="hero-title">Interactive English<br>Learning, Built for<br>Real Classrooms</h1><p class="hero-text">Vocabulary, grammar and classroom games designed by a teacher for teachers and students.</p><div class="hero-actions"><a class="button button-primary" href="#teacher-tools">Explore Classroom Tools</a><a class="button button-secondary" href="student-zone/index.html">Enter Student Zone</a></div><p class="trust-line">Designed by Adil Fırat Oktav</p></div></div></section>
     <section class="audience" aria-labelledby="audience-title"><div class="container"><div class="section-heading"><p class="eyebrow">Made for every learner</p><h2 id="audience-title">A clear path for the classroom and beyond it.</h2></div><div class="audience-grid"><article id="teacher-tools" class="audience-card"><div class="audience-image"><img src="images/thumbnails/teacher_thumbnail.webp" width="270" height="420" alt="Teacher classroom tools preview" loading="lazy"></div><div><p class="eyebrow">Classroom tools</p><h3>For Teachers</h3><p>Present new topics, organise team activities and turn vocabulary practice into an engaging classroom experience.</p><ul class="feature-list"><li>Classroom presentations</li><li>Team games</li><li>Vocabulary tournaments</li><li>Grammar tools</li><li>Listening tool</li></ul><button class="button button-outline" type="button" onclick="selectRole('teacher')">Explore Teacher Tools</button></div></article><article id="student-zone" class="audience-card"><div class="audience-image"><img src="images/thumbnails/student_thumbnail.webp" width="270" height="420" alt="Student practice activities preview" loading="lazy"></div><div><p class="eyebrow">Independent practice</p><h3>For Students</h3><p>Practise vocabulary and grammar independently through visual, interactive and game-based activities.</p><ul class="feature-list"><li>Independent practice</li><li>Vocabulary journeys</li><li>Flashcards</li><li>Solo challenges</li></ul><a class="button button-outline" href="student-zone/index.html">Enter Student Zone</a></div></article></div></div></section>
@@ -54,7 +59,7 @@
       <a class="tool-card" href="vocab_presenter/index.html?mode=teacher"><div class="tool-image"><img src="images/thumbnails/word_presenter.webp" width="640" height="360" alt="Word Presenter preview" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Vocabulary</span><span class="badge mode">Classroom</span></div><h3>Word Presenter</h3><p>Present unit vocabulary with visual flashcards and structured classroom practice.</p><span class="tool-link">Open Word Presenter →</span></div></a>
       <a class="tool-card" href="func_presenter/index.html?mode=teacher"><div class="tool-image"><img src="images/thumbnails/func_presenter.webp" width="640" height="360" alt="Grammar Presenter preview" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Grammar</span><span class="badge mode">Classroom</span></div><h3>Grammar Presenter</h3><p>Guide grammar topics with an interactive presentation built for classroom screens.</p><span class="tool-link">Open Grammar Presenter →</span></div></a>
       <a class="tool-card" href="#student-zone" onclick="selectRole('student');showPractice();return false;"><div class="tool-image"><img src="images/thumbnails/games.webp" width="640" height="360" alt="Interactive vocabulary games preview" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Vocabulary</span><span class="badge mode">Solo</span></div><h3>Practice Vocabulary with Interactive Games</h3><p>Build vocabulary through visual challenges and interactive games designed for independent practice.</p><span class="tool-link">Open Student Games →</span></div></a>
-      <a class="tool-card" href="func_presenter/index.html?mode=teacher"><div class="tool-image"><img src="images/thumbnails/teacherhud.webp" width="640" height="360" alt="Teacher HUD classroom management interface" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Classroom Management</span><span class="badge mode">Teacher</span></div><h3>Manage Your Class with Teacher Interface</h3><p>Create your own class roster, add your students, and make them select their profile pictures, motivate them with points and starts. It's a lot of fun!</p><span class="tool-link">Open Teacher HUD →</span></div></a>
+      <a class="tool-card" data-open-my-class href="teacher-hud/index.html"><div class="tool-image"><img src="images/thumbnails/teacherhud.webp" width="640" height="360" alt="Teacher HUD classroom management interface" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Classroom Management</span><span class="badge mode">Teacher</span></div><h3>Manage Your Class with Teacher Interface</h3><p>Create your own class roster, add your students, and make them select their profile pictures, motivate them with points and starts. It's a lot of fun!</p><span class="tool-link">Open Teacher HUD →</span></div></a>
       <a class="tool-card" href="song_presenter/index.html"><div class="tool-image"><img src="images/thumbnails/song_presenter.webp" width="640" height="360" alt="Song Presenter preview" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Listening</span><span class="badge mode">Classroom</span></div><h3>Song Presenter</h3><p>Make your students practice their listening skill in an enjoyable way with our new song listening tool powered by AI songs suitable for teens.</p><span class="tool-link">Open Song Presenter →</span></div></a>
       <a class="tool-card tool-card--tournament" href="word_duel/index.html"><div class="tool-image"><img src="images/thumbnails/word_tournament.webp" width="640" height="360" alt="Word Tournament preview" loading="lazy"></div><div class="tool-content"><div class="badges"><span class="badge">Vocabulary</span><span class="badge mode">Classroom</span></div><h3>FEATURED TEACHER TOOL : Word Tournament</h3><p>Students challenge each other to reinforce learned vocabulary in a fun, teacher-controlled and competitive activity.</p><span class="tool-link">Open Word Tournament →</span></div></a>
     </div></div></section>
@@ -159,5 +164,59 @@
     }
   </script>
   <script src="modules/teacher-game-progress.js"></script>
+  <dialog id="my-class-view" aria-label="My Class" style="margin:0;padding:0;border:0;width:100%;height:100%;max-width:none;max-height:none;background:#081329">
+    <div style="display:flex;flex-direction:column;width:100%;height:100%;background:#081329">
+      <iframe title="Teacher HUD" allow="fullscreen" style="display:block;flex:1;min-height:0;width:100%;border:0"></iframe>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      let opener;
+      const view = document.getElementById('my-class-view');
+      const surface = view.firstElementChild;
+      const frame = view.querySelector('iframe');
+      const isMyClassFullscreen = () => {
+        const current = document.fullscreenElement || document.webkitFullscreenElement;
+        return current === surface || current === frame;
+      };
+      const enterFullscreen = () => {
+        if (isMyClassFullscreen()) return;
+        const request = surface.requestFullscreen || surface.webkitRequestFullscreen;
+        if (request) {
+          try { Promise.resolve(request.call(surface)).catch(() => {}); } catch {}
+        }
+      };
+      const exitFullscreen = () => {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen;
+        if (exit) {
+          try { Promise.resolve(exit.call(document)).catch(() => {}); } catch {}
+        }
+      };
+      const openMyClass = event => {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || !view.showModal) return;
+        event.preventDefault();
+        opener = event.currentTarget;
+        frame.src = opener.href;
+        view.showModal();
+        enterFullscreen();
+      };
+      document.querySelectorAll('.nav-my-class, [data-open-my-class]').forEach(link => link.addEventListener('click', openMyClass));
+      window.addEventListener('message', event => {
+        const sameOrigin = event.origin === location.origin || (location.protocol === 'file:' && event.origin === 'null');
+        if (!view.open || event.source !== frame.contentWindow || !sameOrigin) return;
+        if (event.data === 'my-class:toggle-fullscreen') {
+          if (isMyClassFullscreen()) exitFullscreen();
+          else enterFullscreen();
+        } else if (event.data === 'my-class:close') {
+          view.close();
+        }
+      });
+      view.addEventListener('close', () => {
+        if (isMyClassFullscreen()) exitFullscreen();
+        frame.removeAttribute('src');
+        opener?.focus();
+      });
+    })();
+  </script>
 </body>
 </html>
