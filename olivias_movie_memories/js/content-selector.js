@@ -61,7 +61,7 @@ function createRandomItemPicker(items, options = {}) {
   const storageKey = window.__oliviasMovieMemoriesFriendMode ? "oliviasMovieMemoriesFriendHistoryV1" : "oliviasMovieMemoriesTeacherHistoryV1";
   const friendMode = Boolean(window.__oliviasMovieMemoriesFriendMode);
   const selectedGrades = Array.isArray(options.grades) ? new Set(options.grades.map(Number)) : null;
-  const playable = getPlayableItems(items).filter((item) => !selectedGrades || (Array.isArray(item.grades) && item.grades.some((grade) => selectedGrades.has(Number(grade)))));
+  const playable = getPlayableItems(items).filter((item) => (!selectedGrades || (Array.isArray(item.grades) && item.grades.some((grade) => selectedGrades.has(Number(grade))))) && (!options.correctOrder || Number.isFinite(window.LeagueListening.correctOrderPreference(item))));
   const priorityItems = playable
     .filter((item) => item.priority != null && String(item.priority).trim() !== "" && Number.isInteger(Number(item.priority)) && Number(item.priority) >= 0)
     .sort((left, right) => Number(left.priority) - Number(right.priority));
@@ -129,6 +129,7 @@ function createRandomItemPicker(items, options = {}) {
       }
   };
   const pick = () => {
+    if (options.correctOrder) return pick.pickForQuestionType("correct-order");
     selectedCharacterVideoId = null;
     if (correctOptionMode) {
       refillCorrectOptionPool();
@@ -186,34 +187,47 @@ function createRandomItemPicker(items, options = {}) {
     return item;
   };
 
-  if (options.omni) {
-    const omniCandidates = (type) => {
+  if (options.omni || options.correctOrder) {
+    const isOrderPair = (item) => window.LeagueListening.correctOrderPreference(item) === 3;
+    const orderTier = (item) => (priorityItems.includes(item) || getVideoRating(item) >= 7 ? 0 : 2) + (isOrderPair(item) ? 1 : 0);
+    const compareOrderItems = (left, right) => {
+      const tier = orderTier(left);
+      if (tier >= 2) return window.LeagueListening.correctOrderPreference(left) - window.LeagueListening.correctOrderPreference(right);
+      const leftPriority = priorityItems.includes(left), rightPriority = priorityItems.includes(right);
+      if (leftPriority || rightPriority) return leftPriority && rightPriority ? Number(left.priority) - Number(right.priority) : leftPriority ? -1 : 1;
+      return getVideoRating(right) - getVideoRating(left) || window.LeagueListening.correctOrderPreference(left) - window.LeagueListening.correctOrderPreference(right);
+    };
+    const omniCandidates = (type = options.correctOrder ? "correct-order" : undefined) => {
       refillRegularPool();
       const candidates = [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type));
-      return (window.__oliviasMovieMemoriesFriendMode ? candidates : shuffle(candidates)).sort((left, right) => {
+      const tier = type === "correct-order" ? Math.min(...candidates.map(orderTier)) : null;
+      const available = type === "correct-order" ? candidates.filter((item) => orderTier(item) === tier) : candidates;
+      return (window.__oliviasMovieMemoriesFriendMode ? available : shuffle(available)).sort((left, right) => {
+        if (type === "correct-order") return compareOrderItems(left, right);
         const leftPriority = priorityItems.includes(left), rightPriority = priorityItems.includes(right);
         if (leftPriority || rightPriority) return leftPriority && rightPriority ? Number(left.priority) - Number(right.priority) : leftPriority ? -1 : 1;
-        return getVideoRating(right) - getVideoRating(left) || (window.__oliviasMovieMemoriesFriendMode ? playable.indexOf(left) - playable.indexOf(right) : 0);
+        return getVideoRating(right) - getVideoRating(left) || (type === "correct-order" ? window.LeagueListening.correctOrderPreference(left) - window.LeagueListening.correctOrderPreference(right) : 0) || (window.__oliviasMovieMemoriesFriendMode ? playable.indexOf(left) - playable.indexOf(right) : 0);
       });
     };
-    pick.availableQuestionTypes = () => ["translation", "word", "true-false"].filter((type) => omniCandidates(type).length);
+    pick.availableQuestionTypes = () => ["translation", "word", "true-false", "correct-order"].filter((type) => omniCandidates(type).length);
     const takeOmniItem = (item) => {
       if (item) { pool = pool.filter((candidate) => candidate.id !== item.id); priorityPool = priorityPool.filter((candidate) => candidate.id !== item.id); }
       return item;
     };
-    pick.hasPendingPriority = (type) => omniCandidates(type).some((item) => priorityItems.includes(item));
-    pick.availableCharacterIds = (type) => new Set(omniCandidates(type).flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
+    pick.hasPendingPriority = (type = options.correctOrder ? "correct-order" : undefined) => omniCandidates(type).some((item) => priorityItems.includes(item));
+    pick.availableCharacterIds = (type = options.correctOrder ? "correct-order" : undefined) => new Set(omniCandidates(type).flatMap((item) => Array.isArray(item.characterIds) ? item.characterIds : []));
     pick.pickForQuestionType = (type) => {
       selectedCharacterVideoId = null;
       return takeOmniItem(omniCandidates(type)[0] || null);
     };
-    pick.pickForCharacter = (characterId, type) => {
+    pick.pickForCharacter = (characterId, type = options.correctOrder ? "correct-order" : undefined) => {
       if (!friendMode && pick.hasPendingPriority(type)) return pick.pickForQuestionType(type);
       const matching = omniCandidates(type).filter((item) => item.characterIds?.includes(characterId));
       if (!matching.length) return null;
       const characterPriority = friendMode ? priorityItems.find((item) => matching.includes(item)) : null;
       const highestRating = getVideoRating(matching[0]);
-      const candidates = characterPriority ? [characterPriority] : ratingSelectionEnabled ? matching.filter((item) => getVideoRating(item) === highestRating) : matching;
+      let candidates = characterPriority ? [characterPriority] : ratingSelectionEnabled ? matching.filter((item) => getVideoRating(item) === highestRating) : matching;
+      if (type === "correct-order") candidates = matching.filter((item) => compareOrderItems(item, matching[0]) === 0);
       const item = candidates[Math.floor(Math.random() * candidates.length)];
       selectedCharacterVideoId = item.id;
       window.LeagueListening.recordCharacterSelection(characterId);

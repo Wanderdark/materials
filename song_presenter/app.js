@@ -17,9 +17,12 @@
 
   function resolveDuelAvatarPath(path) {
     const value = String(path || "").trim();
-    const canonical = value.match(/(?:^|\/)func_presenter\/images\/avatars\/(?:v2\/)?([^/?#]+\.webp)(?:[?#].*)?$/i)
-      || value.match(/(?:^|\/)images\/avatars\/(?:v2\/)?([^/?#]+\.webp)(?:[?#].*)?$/i);
-    return canonical ? `../func_presenter/images/avatars/v2/${canonical[1]}` : value;
+    const canonical = value.match(/(?:^|\/)images\/avatars\/(?:v[23]\/)?([^/?#]+\.webp)(?:[?#].*)?$/i);
+    if (!canonical) return value;
+    const fileName = canonical[1];
+    return /^AV_Anime_/i.test(fileName)
+      ? `../func_presenter/images/avatars/v2/${fileName}`
+      : `../func_presenter/images/avatars/v3/${fileName.toLowerCase()}`;
   }
 
   const els = {

@@ -8,6 +8,7 @@
 .omni-type polygon{fill:#101f3b;stroke:var(--omni-color);stroke-width:3}
 .omni-type text{fill:var(--omni-color);font:800 16px "Barlow",sans-serif;text-anchor:middle;dominant-baseline:middle}
 .omni-type .omni-unavailable{display:none;font-size:10px}
+.omni-type.is-mystery text:not(.omni-unavailable),.omni-type.is-played text:not(.omni-unavailable){font-size:44px}
 .omni-type.is-unavailable{opacity:.3}
 .omni-type.is-unavailable .omni-unavailable{display:block}
 .omni-type.is-selected polygon{fill:var(--omni-color);stroke:#fff;stroke-width:5}
@@ -20,3 +21,5 @@
 .omni-center-button.is-stopped{cursor:default;opacity:.65}
 .omni-pointer path{fill:#ffdf45;stroke:#fff5bd;stroke-width:2}
 .omni-selection-result{min-height:1.5em;margin:0 0 8px;color:#ffdf45;font-size:1.1rem;font-weight:800}
+
+.omni-countdown{pointer-events:none}.omni-countdown[hidden]{display:none}.omni-countdown circle{fill:none;stroke-width:5}.omni-countdown-track{stroke:#42618c;opacity:.6}.omni-countdown-progress{stroke:#ffdf45;stroke-linecap:round;stroke-dasharray:100}

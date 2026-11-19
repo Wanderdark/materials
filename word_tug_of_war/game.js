@@ -327,7 +327,7 @@
       const character = canonical.shift() || anime.shift();
       if (!character) return;
       player.avatarPath = canonicalCharacters.includes(character)
-        ? `../func_presenter/images/avatars/v2/${character}.webp`
+        ? `../func_presenter/images/avatars/v3/${character}.webp`
         : `../word_quest/avatars/AV_Anime_${character[0].toUpperCase() + character.slice(1)}_head.webp`;
     });
     return teams;

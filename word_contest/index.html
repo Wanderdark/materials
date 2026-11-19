@@ -1624,6 +1624,7 @@
   #student-badge strong { color: #7dd3fc; font-size: 15px; }
 
 </style>
+<link rel="stylesheet" href="transitions.css">
 </head>
 <body>
 
@@ -2080,6 +2081,7 @@
 <script src="wrong-images.js"></script>
 <script src="words.js"></script>
 <script src="ufo.js"></script>
+<script src="transitions.js"></script>
 <script>
 window.wcFriendMode = new URLSearchParams(location.search).get('mode') === 'student'
   && new URLSearchParams(location.search).get('play') === 'friend';
@@ -2143,16 +2145,16 @@ function startGame() {
     if(homeButton) homeButton.onclick = () => { location.href = '../student-zone/index.html'; };
   }
   updateDiffLongDesc();
-  document.getElementById('main-menu').style.display = 'flex';
+  WcTransitions.show('main-menu');
   // Müzik buton basışında başlar — burada başlatmaya gerek yok
 }
 
 function menuStart() {
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   applyGroupCountUI();
-  document.getElementById('main-menu').style.display = 'none';
+  WcTransitions.hide('main-menu');
   if(window.wcFriendMode) {
-    document.getElementById('diff-overlay').style.display = 'flex';
+    WcTransitions.show('diff-overlay');
     updateDiffLongDesc();
     return;
   }
@@ -2161,8 +2163,8 @@ function menuStart() {
 
 function menuSettings() {
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
-  document.getElementById('main-menu').style.display = 'none';
-  document.getElementById('settings-overlay').style.display = 'flex';
+  WcTransitions.hide('main-menu');
+  WcTransitions.show('settings-overlay');
   if(window.wcFriendMode) {
     document.querySelector('#settings-overlay .diff-title').after(document.getElementById('content-selection-fields'));
     buildScrabbleGradeSelector();
@@ -2231,8 +2233,8 @@ function persistWcSettings() {
 
 function saveSettings() {
   persistWcSettings();
-  document.getElementById('settings-overlay').style.display = 'none';
-  document.getElementById('main-menu').style.display = 'flex';
+  WcTransitions.hide('settings-overlay');
+  WcTransitions.show('main-menu');
   updateDiffLongDesc();
 }
 
@@ -2240,12 +2242,12 @@ let wcContentSelectionConfirmed = false;
 
 function showWcContentSelection() {
   wcContentSelectionConfirmed = false;
-  document.getElementById('diff-overlay').style.display = 'none';
+  WcTransitions.hide('diff-overlay');
   document.getElementById('content-selection-warn').textContent = '';
   buildScrabbleGradeSelector();
   buildScrabbleUnitSelector();
   updateDiffLongDesc();
-  document.getElementById('content-selection-overlay').style.display = 'flex';
+  WcTransitions.show('content-selection-overlay');
 }
 
 function confirmWcContentSelection() {
@@ -2256,14 +2258,14 @@ function confirmWcContentSelection() {
   }
   persistWcSettings();
   wcContentSelectionConfirmed = true;
-  document.getElementById('content-selection-overlay').style.display = 'none';
+  WcTransitions.hide('content-selection-overlay');
   updateDiffLongDesc();
-  document.getElementById('diff-overlay').style.display = 'flex';
+  WcTransitions.show('diff-overlay');
 }
 
 function backToWcStudents() {
-  document.getElementById('content-selection-overlay').style.display = 'none';
-  document.getElementById('student-overlay').style.display = 'flex';
+  WcTransitions.hide('content-selection-overlay');
+  WcTransitions.show('student-overlay');
 }
 
 function loadPersistedSettings() {
@@ -2301,7 +2303,7 @@ function applyNamesAndContinue() {
     studentInputs[2] = new Array(STD_SLOTS).fill('');
     studentScoreMap[2] = [];
   }
-  document.getElementById('name-overlay').style.display = 'none';
+  WcTransitions.hide('name-overlay');
   showStudentOverlay();
 }
 
@@ -2396,19 +2398,19 @@ function openJokerOverlay() {
   const gName = groupNames[currentGroup].trim() || ('GRUP ' + (currentGroup+1));
   document.getElementById('joker-modal-sub').textContent =
     gName + ' — ' + jokerRemaining(currentGroup) + ' joker kaldı';
-  document.getElementById('joker-overlay').classList.add('open');
+  WcTransitions.show('joker-overlay');
 }
 
 function closeJokerOverlay() {
   jokerAudio.pause();
   jokerAudio.currentTime = 0;
-  document.getElementById('joker-overlay').classList.remove('open');
+  WcTransitions.hide('joker-overlay');
   if(diffAudio) diffAudio.play().catch(() => {}); // arka plan müziğini devam ettir
   resumeTimer();
 }
 
 function _askFriendConfirmYes() {
-  document.getElementById('askfriend-confirm').classList.remove('open');
+  WcTransitions.hide('askfriend-confirm');
   // Jokeri harca
   jokerState[currentGroup]['askFriend'] = false;
   jokerUsesLeft[currentGroup]--;
@@ -2432,7 +2434,7 @@ function _askFriendConfirmYes() {
 }
 
 function _askFriendConfirmNo() {
-  document.getElementById('askfriend-confirm').classList.remove('open');
+  WcTransitions.hide('askfriend-confirm');
   // Joker iptal — müzik zaten çalıyor, sadece timer'ı devam ettir
   resumeTimer();
 }
@@ -2441,7 +2443,7 @@ function useJoker(type) {
   // showImage: tekrar kullanılabilir — state flag'i false'a çekilmez
   if(type === 'showImage') {
     jokerAudio.pause(); jokerAudio.currentTime = 0;
-    document.getElementById('joker-overlay').classList.remove('open');
+    WcTransitions.hide('joker-overlay');
     if(diffAudio) diffAudio.play().catch(() => {});
     jokerState[currentGroup].showImage = false;  // 1 kez kullanılabilir
     jokerUsesLeft[currentGroup]--;
@@ -2455,16 +2457,16 @@ function useJoker(type) {
   if(type === 'askFriend') {
     jokerAudio.pause();
     jokerAudio.currentTime = 0;
-    document.getElementById('joker-overlay').classList.remove('open');
+    WcTransitions.hide('joker-overlay');
     // Müziği geri başlat — joker henüz kullanılmadı, sadece onay bekleniyor
     if(diffAudio) diffAudio.play().catch(() => {});
-    document.getElementById('askfriend-confirm').classList.add('open');
+    WcTransitions.show('askfriend-confirm');
     return;
   }
 
   jokerAudio.pause();
   jokerAudio.currentTime = 0;
-  document.getElementById('joker-overlay').classList.remove('open');
+  WcTransitions.hide('joker-overlay');
   if(diffAudio) diffAudio.play().catch(() => {});
   // Joker harcandı
   jokerState[currentGroup][type] = false;
@@ -2527,12 +2529,14 @@ function showMultiChoice(opts, correctAns) {
     btn.onclick = () => handleMultiChoice(opt, correctAns);
     container.appendChild(btn);
   });
-  document.getElementById('multichoice-overlay').classList.add('open');
+  WcTransitions.show('multichoice-overlay');
 }
 
 function closeMultiChoice() {
-  document.getElementById('multichoice-overlay').classList.remove('open');
-  document.getElementById('mc-options').innerHTML = '';
+  const overlay = document.getElementById('multichoice-overlay');
+  WcTransitions.hide(overlay).then(() => {
+    if (!overlay.classList.contains('open')) document.getElementById('mc-options').innerHTML = '';
+  });
 }
 
 function handleMultiChoice(chosen, correct) {
@@ -2585,10 +2589,10 @@ function openImageJoker() {
   el.src = img;
   el.alt = currentQ;
   if(word) word.textContent = currentQ;
-  overlay.classList.add('open');
+  WcTransitions.show(overlay);
 }
 function closeImageJoker() {
-  document.getElementById('img-joker-overlay').classList.remove('open');
+  WcTransitions.hide('img-joker-overlay');
 }
 
 /* ── GAME STATE ── */
@@ -2633,8 +2637,9 @@ function setDifficulty(d) {
     totalQ[pts] = take;
   });
   updateUI();
-  document.getElementById('diff-overlay').style.display = 'none';
+  WcTransitions.hide('diff-overlay');
   document.getElementById('scores-btn').classList.add('visible');
+  WcTransitions.show('app');
   document.getElementById('end-btn').classList.add('visible');
   document.getElementById('override-btn').classList.add('visible');
   playDiffMusic();
@@ -2770,9 +2775,9 @@ function updateLeaderStars() {
 function dismissOverlaysNow() {
   // High score tablosu varsa anında kapat
   const lb = document.getElementById('auto-lb');
-  if(lb) { clearTimeout(autoLbTimer); lb.classList.remove('show'); }
+  if(lb) { clearTimeout(autoLbTimer); WcTransitions.hide(lb); }
   // Correct/wrong resim overlay'leri varsa anında kapat
-  document.querySelectorAll('.img-flash-overlay.show').forEach(el => el.classList.remove('show'));
+  document.querySelectorAll('.img-flash-overlay.show').forEach(el => WcTransitions.hide(el));
 }
 
 function showQuestion(pts) {
@@ -2865,7 +2870,7 @@ function openModal(mode) {
   const ans     = document.getElementById('modal-answer');
   const actions = document.getElementById('modal-actions');
 
-  overlay.classList.add('open');
+  WcTransitions.show(overlay);
   // Double-click koruması: modal içeriği 400ms tıklanamaz
   const modalBox = document.getElementById('modal-box');
   modalBox.style.pointerEvents = 'none';
@@ -2920,8 +2925,8 @@ function showCorrectImage() {
   const img = document.getElementById('correct-img');
   img.src = CORRECT_IMGS[correctImgIndex % CORRECT_IMGS.length];
   correctImgIndex++;
-  overlay.classList.add('show');
-  setTimeout(() => overlay.classList.remove('show'), 5000);
+  WcTransitions.show(overlay);
+  setTimeout(() => WcTransitions.hide(overlay), 5000);
 }
 
 function showWrongImage() {
@@ -2930,8 +2935,8 @@ function showWrongImage() {
   const img = document.getElementById('wrong-img');
   img.src = WRONG_IMGS[wrongImgIndex % WRONG_IMGS.length];
   wrongImgIndex++;
-  overlay.classList.add('show');
-  setTimeout(() => overlay.classList.remove('show'), 5000);
+  WcTransitions.show(overlay);
+  setTimeout(() => WcTransitions.hide(overlay), 5000);
 }
 
 function scoreAndClose(correct) {
@@ -3004,7 +3009,7 @@ function closeModalAndNext() {
     }
   }
   closeMultiChoice();
-  document.getElementById('overlay').classList.remove('open');
+  WcTransitions.hide('overlay');
   document.getElementById('q-word').textContent = '';
   questionShown     = false;
   isLocked          = false;
@@ -3069,7 +3074,7 @@ function announceWinner() {
   renderScoresPanels('winner-scores-list', 'winner-group-grid');
   updateWcFinalStarsTransferButton();
 
-  document.getElementById('winner-overlay').classList.add('open');
+  WcTransitions.show('winner-overlay');
   stopAllMusic();
   finalAudio.currentTime = 0;
   finalAudio.volume = isMuted ? 0 : 1.0;
@@ -3125,9 +3130,9 @@ function showRoundPopup(n) {
   const el  = document.getElementById('round-popup');
   const txt = document.getElementById('round-popup-text');
   txt.textContent = 'ROUND ' + n + ' BEGINS' + (jokersRenewed && n > 1 ? ' — Jokers renewed!' : '');
-  el.classList.add('show');
+  WcTransitions.show(el);
   clearTimeout(roundPopupTimer);
-  roundPopupTimer = setTimeout(() => el.classList.remove('show'), 2000);
+  roundPopupTimer = setTimeout(() => WcTransitions.hide(el), 2000);
 }
 
 /* ── TOAST ── */
@@ -3135,9 +3140,9 @@ let toastTimer;
 function showToast(msg, duration) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
+  WcTransitions.show(t);
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), duration || 3000);
+  toastTimer = setTimeout(() => WcTransitions.hide(t), duration || 3000);
 }
 
 /* ══════════════════════════════
@@ -3288,11 +3293,11 @@ function openOverrideModal() {
   // Puan butonlarını sıfırla
   document.querySelectorAll('.override-pts-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('override-confirm').disabled = true;
-  document.getElementById('override-overlay').classList.add('open');
+  WcTransitions.show('override-overlay');
 }
 
 function closeOverrideModal() {
-  document.getElementById('override-overlay').classList.remove('open');
+  WcTransitions.hide('override-overlay');
 }
 
 function selectOverrideStudent(gi, si) {
@@ -3831,7 +3836,7 @@ function wcRosterEffectiveScore(student) {
 }
 
 function closeWcRosterClassPicker() {
-  document.getElementById('wc-roster-class-overlay')?.classList.add('hidden');
+  WcTransitions.hide('wc-roster-class-overlay');
 }
 
 function openWcRosterClassPicker() {
@@ -4033,7 +4038,7 @@ function showStudentOverlay() {
     } catch(e) {}
   }
 
-  document.getElementById('student-overlay').style.display = 'flex';
+  WcTransitions.show('student-overlay');
   buildStdKeyboard();
   selectStdField(0, 0);
 }
@@ -4274,8 +4279,8 @@ function showAutoLeaderboard() {
   // Görsel flash aktifse transitionend'i bekle — polling yok
   const flashEl = document.querySelector('.img-flash-overlay.show');
   if(flashEl) {
-    flashEl.addEventListener('transitionend', function handler() {
-      flashEl.removeEventListener('transitionend', handler);
+    flashEl.addEventListener('wc-motion-hidden', function handler() {
+      flashEl.removeEventListener('wc-motion-hidden', handler);
       _renderAutoLeaderboard();
     }, { once: true });
     return;
@@ -4342,9 +4347,9 @@ function _renderAutoLeaderboard() {
 
   container.style.height = (top5.length * ALB_SLOT) + 'px';
 
-  overlay.classList.add('show');
+  WcTransitions.show(overlay);
   clearTimeout(autoLbTimer);
-  autoLbTimer = setTimeout(() => overlay.classList.remove('show'), 3000);
+  autoLbTimer = setTimeout(() => WcTransitions.hide(overlay), 3000);
 }
 
 const _PUB_GROUP_LETTERS = ['A','B','C'];
@@ -4407,7 +4412,7 @@ function applyStudentsAndContinue() {
     studentScoreMap[2] = [];
     studentIndex[2]    = 0;
   }
-  document.getElementById('student-overlay').style.display = 'none';
+  WcTransitions.hide('student-overlay');
   showWcContentSelection();
 }
 
@@ -4536,7 +4541,7 @@ function renderScoresPanels(listElId, gridElId) {
 
 function openScoresPopup() {
   renderScoresPanels('scores-list', 'scores-group-grid');
-  document.getElementById('scores-overlay').classList.add('open');
+  WcTransitions.show('scores-overlay');
 }
 
 function openRoundEndScores(nextRound) {
@@ -4547,7 +4552,7 @@ function openRoundEndScores(nextRound) {
   continueBtn.textContent = 'CLICK TO CONTINUE — ROUND ' + nextRound;
   continueBtn.classList.add('visible');
   if(closeBtn) closeBtn.style.display = 'none';
-  document.getElementById('scores-overlay').classList.add('open');
+  WcTransitions.show('scores-overlay');
 }
 
 function continueFromRoundEnd() {
@@ -4556,14 +4561,14 @@ function continueFromRoundEnd() {
   const closeBtn    = document.querySelector('.scores-close');
   continueBtn.classList.remove('visible');
   if(closeBtn) closeBtn.style.display = '';
-  document.getElementById('scores-overlay').classList.remove('open');
+  WcTransitions.hide('scores-overlay');
   // Önce ROUND X BEGINS göster, sonra kilidi aç
   showRoundPopup(currentRound);
   isLocked = false;
 }
 
 function closeScoresPopup() {
-  document.getElementById('scores-overlay').classList.remove('open');
+  WcTransitions.hide('scores-overlay');
 }
 
 /* ── SETTINGS — ünite, grup sayısı ── */
@@ -4723,14 +4728,14 @@ function afterScrabble() {
 
 function toggleEndConfirm() {
   const el = document.getElementById('end-confirm');
-  el.classList.toggle('open');
+  WcTransitions.toggle(el);
 }
 
 function confirmEndGame() {
-  document.getElementById('end-confirm').classList.remove('open');
+  WcTransitions.hide('end-confirm');
   // Aktif soru varsa temizle
   stopTimer(); stopDiffMusic(); stopAnswerAudio();
-  document.getElementById('overlay').classList.remove('open');
+  WcTransitions.hide('overlay');
   questionShown = false; isLocked = false;
   announceWinner();
 }

@@ -205,7 +205,7 @@ const expressingPreferencesGrade8Function = {
         title: "WATCH, THEN COMPLETE AVA'S PREFERENCES",
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_ava_14.mp4",
-        portraitPath: "images/avatars/v2/ava.webp",
+        portraitPath: "images/avatars/v3/ava.webp",
         portraitAlt: "Ava",
         sequentialLines: true,
         lines: [
@@ -243,7 +243,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_benjamin_14.mp4",
-        portraitPath: "images/avatars/v2/benjamin.webp",
+        portraitPath: "images/avatars/v3/benjamin.webp",
         portraitAlt: "Benjamin",
         sequentialLines: true,
         lines: [
@@ -281,7 +281,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_chloe_14.mp4",
-        portraitPath: "images/avatars/v2/chloe.webp",
+        portraitPath: "images/avatars/v3/chloe.webp",
         portraitAlt: "Chloe",
         sequentialLines: true,
         lines: [
@@ -319,7 +319,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_david_14.mp4",
-        portraitPath: "images/avatars/v2/david.webp",
+        portraitPath: "images/avatars/v3/david.webp",
         portraitAlt: "David",
         sequentialLines: true,
         lines: [
@@ -357,7 +357,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_ella_14.mp4",
-        portraitPath: "images/avatars/v2/ella.webp",
+        portraitPath: "images/avatars/v3/ella.webp",
         portraitAlt: "Ella",
         sequentialLines: true,
         lines: [
@@ -393,7 +393,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_emma_14.mp4",
-        portraitPath: "images/avatars/v2/emma.webp",
+        portraitPath: "images/avatars/v3/emma.webp",
         portraitAlt: "Emma",
         sequentialLines: true,
         lines: [
@@ -423,7 +423,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_ethan_14.mp4",
-        portraitPath: "images/avatars/v2/ethan.webp",
+        portraitPath: "images/avatars/v3/ethan.webp",
         portraitAlt: "Ethan",
         sequentialLines: true,
         lines: [
@@ -459,7 +459,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_hannah_14.mp4",
-        portraitPath: "images/avatars/v2/hannah.webp",
+        portraitPath: "images/avatars/v3/hannah.webp",
         portraitAlt: "Hannah",
         sequentialLines: true,
         lines: [
@@ -487,7 +487,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_mia_14.mp4",
-        portraitPath: "images/avatars/v2/mia.webp",
+        portraitPath: "images/avatars/v3/mia.webp",
         portraitAlt: "Mia",
         sequentialLines: true,
         lines: [
@@ -523,7 +523,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_olivia_14.mp4",
-        portraitPath: "images/avatars/v2/olivia.webp",
+        portraitPath: "images/avatars/v3/olivia.webp",
         portraitAlt: "Olivia",
         sequentialLines: true,
         lines: [
@@ -559,7 +559,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_victoria_14.mp4",
-        portraitPath: "images/avatars/v2/victoria.webp",
+        portraitPath: "images/avatars/v3/victoria.webp",
         portraitAlt: "Victoria",
         sequentialLines: true,
         lines: [
@@ -587,7 +587,7 @@ const expressingPreferencesGrade8Function = {
       videoDialogue: {
         hideTitle: true,
         videoUrl: "https://media.adilhoca.com/video/8_preferences_zoe_14.mp4",
-        portraitPath: "images/avatars/v2/zoe.webp",
+        portraitPath: "images/avatars/v3/zoe.webp",
         portraitAlt: "Zoe",
         sequentialLines: true,
         lines: [
@@ -847,7 +847,7 @@ const preferenceVideoItems = expressingPreferencesGrade8Function.sentences
   .filter((item) => item.id?.endsWith("-favourites-video-practice"))
   .map((item) => ({
     name: item.videoDialogue.portraitAlt,
-    avatarPath: `images/avatars/v2/${item.videoDialogue.portraitAlt.toLowerCase()}.webp`,
+    avatarPath: `images/avatars/v3/${item.videoDialogue.portraitAlt.toLowerCase()}.webp`,
     videoDialogue: item.videoDialogue
   }));
 const firstPreferenceVideoIndex = expressingPreferencesGrade8Function.sentences.findIndex(

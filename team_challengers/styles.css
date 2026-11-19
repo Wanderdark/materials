@@ -25,6 +25,50 @@
 .lite-mode-button{height:36px;padding:0 9px;border:1px solid rgba(103,232,249,.45);border-radius:10px;background:rgba(34,211,238,.08);color:#a5f3fc;font:800 10px "Barlow Condensed",sans-serif;letter-spacing:.08em;cursor:pointer}.lite-mode .lite-mode-button{border-color:rgba(250,204,21,.7);background:rgba(250,204,21,.12);color:#fde68a}
 .player-panel .team-chip{display:table;margin:0 auto 18px}
 .active-portrait{position:relative;width:104px;aspect-ratio:1;margin:0 auto 18px;border:3px solid #5276bb;border-radius:22px;background:#09132c;box-shadow:0 0 0 3px rgba(82,118,187,.2);isolation:isolate}.active-portrait[hidden]{display:none!important}.active-portrait .active-avatar{position:relative;z-index:1;display:block;width:100%;height:100%;margin:0;border:0;border-radius:18px;object-fit:cover;background:none;box-shadow:none}.portrait-level-badge{position:absolute;z-index:4;right:-9px;bottom:-9px;min-width:38px;padding:3px 6px;border:2px solid #d8e8ff;border-radius:999px;background:#173671;color:#f5f9ff;box-shadow:0 3px 10px rgba(0,0,0,.42);font:900 .72rem/1 "Barlow Condensed",sans-serif;letter-spacing:.04em}.portrait-level-ring{position:absolute;z-index:2;inset:-8px;border:2px solid transparent;border-radius:28px;pointer-events:none}.level-tier-2{border-color:#79bff5;box-shadow:0 0 0 3px rgba(121,191,245,.3),0 0 12px rgba(77,169,255,.2)}.level-tier-2 .portrait-level-badge{border-color:#bde8ff;background:#15527c}.level-tier-3{border-color:#ffd85c;box-shadow:0 0 0 3px rgba(255,216,92,.24),0 0 13px rgba(244,169,64,.22)}.level-tier-3 .portrait-level-badge,.level-tier-4 .portrait-level-badge,.level-tier-5 .portrait-level-badge,.level-tier-6 .portrait-level-badge,.level-tier-7 .portrait-level-badge{border-color:#fff0a6;background:#8b6312;color:#fff8cf}.level-tier-4{border-color:#ffe27a;box-shadow:0 0 0 4px rgba(255,216,92,.32),0 0 26px rgba(244,169,64,.62)}.level-tier-5{border-color:#ffe27a;box-shadow:0 0 0 4px rgba(255,216,92,.34),0 0 30px rgba(244,169,64,.7)}.level-tier-5 .portrait-level-ring{border-color:#ffe27a;border-top-color:#fff9c8;border-bottom-color:#d99a22;animation:portraitSpinShrink 9s linear infinite}.level-tier-6{border-color:#e2a3ff;box-shadow:0 0 0 4px rgba(226,163,255,.3),0 0 18px rgba(158,92,255,.28)}.level-tier-6 .portrait-level-ring{border-color:#e2a3ff;border-top-color:#ffd85c;border-bottom-color:#ffd85c;animation:portraitSpinShrink 8s linear infinite}.level-tier-7{border-color:#efc4ff;box-shadow:0 0 0 4px rgba(226,163,255,.38),0 0 26px rgba(244,169,64,.5),0 0 38px rgba(158,92,255,.48)}.level-tier-7 .portrait-level-ring{border-color:#e2a3ff;border-top-color:#ffe27a;border-bottom-color:#ffd85c;animation:portraitSpinShrink 6.5s linear infinite}
+.hud-frame-green{border-color:#65e6b8;box-shadow:0 0 0 3px #65e6b833}
+.hud-frame-purple{border-color:#c386ff;box-shadow:0 0 0 3px #c386ff2e,0 0 20px #c386ff33}
+.hud-frame-purple-gold{border-color:#ffd84d;box-shadow:0 0 0 3px #ffd84d38,0 0 18px #ffd84d5c}
+.hud-frame-gold{border-color:#ffe584;box-shadow:0 0 20px #ffd84d9e,0 0 42px #ffd84d57}
+.hud-frame-gold-glow,.hud-frame-gold-aura{border-color:#fff0a6;box-shadow:0 0 24px #ffd84dc7,0 0 52px #ffd84d7a,0 0 86px #ffd84d33}
+.hud-frame-spectrum{border-color:#c386ff;box-shadow:0 0 18px #7854ff55,0 0 32px #23f1ff26}
+:is(.hud-frame-purple-gold,.hud-frame-gold,.hud-frame-gold-glow,.hud-frame-gold-aura,.hud-frame-spectrum) .portrait-level-badge{border-color:#fff0a6;background:#8b6312;color:#fff8cf}
+@property --portrait-frame-ripple{syntax:"<number>";inherits:false;initial-value:1}
+@supports (mask-composite:exclude){
+  .active-portrait:is(.hud-frame-gold-aura,.hud-frame-spectrum) .portrait-level-ring{
+    overflow:hidden;padding:7.5px;border:0;filter:blur(1.25px);
+    mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+    --portrait-frame-ripple:1;animation:portraitFrameRipple 2.4s ease-in-out infinite;
+    clip-path: polygon(
+          0 0, 6% 0, 9% calc(2px * var(--portrait-frame-ripple)), 12% calc(1px * var(--portrait-frame-ripple)), 16% calc(4px * var(--portrait-frame-ripple)), 20% calc(2px * var(--portrait-frame-ripple)), 25% 0, 30% calc(1px * var(--portrait-frame-ripple)),
+          34% calc(3px * var(--portrait-frame-ripple)), 39% calc(1px * var(--portrait-frame-ripple)), 44% calc(2px * var(--portrait-frame-ripple)), 48% 0, 52% 0, 56% calc(3px * var(--portrait-frame-ripple)), 60% calc(1px * var(--portrait-frame-ripple)),
+          65% calc(4px * var(--portrait-frame-ripple)), 68% calc(2px * var(--portrait-frame-ripple)), 73% calc(1px * var(--portrait-frame-ripple)), 77% calc(3px * var(--portrait-frame-ripple)), 82% 0, 86% calc(1px * var(--portrait-frame-ripple)), 91% calc(3px * var(--portrait-frame-ripple)), 95% 0, 100% 0,
+          100% 12%, calc(100% - 3px * var(--portrait-frame-ripple)) 19%, calc(100% - 1px * var(--portrait-frame-ripple)) 27%, calc(100% - 4px * var(--portrait-frame-ripple)) 35%,
+          100% 43%, calc(100% - 2px * var(--portrait-frame-ripple)) 51%, 100% 56%, calc(100% - 3px * var(--portrait-frame-ripple)) 64%,
+          calc(100% - 1px * var(--portrait-frame-ripple)) 72%, calc(100% - 4px * var(--portrait-frame-ripple)) 80%, 100% 88%, 100% 100%,
+          94% 100%, 90% calc(100% - 2px * var(--portrait-frame-ripple)), 86% calc(100% - 4px * var(--portrait-frame-ripple)), 81% 100%,
+          77% calc(100% - 2px * var(--portrait-frame-ripple)), 73% 100%, 68% calc(100% - 3px * var(--portrait-frame-ripple)), 64% calc(100% - 1px * var(--portrait-frame-ripple)),
+          59% calc(100% - 4px * var(--portrait-frame-ripple)), 55% calc(100% - 2px * var(--portrait-frame-ripple)), 51% 100%, 47% calc(100% - 1px * var(--portrait-frame-ripple)),
+          43% calc(100% - 3px * var(--portrait-frame-ripple)), 39% 100%, 34% calc(100% - 2px * var(--portrait-frame-ripple)), 29% 100%,
+          25% calc(100% - 3px * var(--portrait-frame-ripple)), 21% calc(100% - 1px * var(--portrait-frame-ripple)), 16% calc(100% - 4px * var(--portrait-frame-ripple)),
+          11% calc(100% - 2px * var(--portrait-frame-ripple)), 6% 100%, 0 100%, 0 88%, calc(2px * var(--portrait-frame-ripple)) 81%, 0 73%, calc(4px * var(--portrait-frame-ripple)) 65%,
+          calc(2px * var(--portrait-frame-ripple)) 57%, 0 49%, calc(3px * var(--portrait-frame-ripple)) 41%, calc(1px * var(--portrait-frame-ripple)) 33%, calc(4px * var(--portrait-frame-ripple)) 26%, calc(2px * var(--portrait-frame-ripple)) 19%, 0 12%
+        );
+  }
+  .active-portrait:is(.hud-frame-gold-aura,.hud-frame-spectrum) .portrait-level-ring::before{
+    content:"";position:absolute;top:50%;left:50%;width:max(150%,240px);aspect-ratio:1;
+    background:repeating-conic-gradient(from 18deg,transparent 0deg 5deg,#ffd17172 7deg,transparent 9deg 14deg),conic-gradient(from 20deg,transparent 0deg,#ffb13a22 30deg,#ffe7a2 62deg,#ffb64344 77deg,transparent 115deg,#ffce6c32 156deg,#fff0bb 207deg,#ff9d2444 228deg,transparent 264deg,#ffc46a 310deg,transparent 360deg);
+    transform:translate(-50%,-50%);animation:portraitFrameFlow 12s linear infinite;
+  }
+  .active-portrait.hud-frame-spectrum .portrait-level-ring{filter:blur(.85px)}
+  .active-portrait.hud-frame-spectrum .portrait-level-ring::before{
+    background:conic-gradient(from 18deg,transparent 0deg 43deg,#efffff88 48deg,#fff 51deg,#efffff55 54deg,transparent 62deg 133deg,#efffff88 138deg,#fff 141deg,#efffff55 144deg,transparent 152deg 212deg,#fff2ff55 218deg,#fff 222deg,#fff2ff88 225deg,transparent 233deg 360deg),conic-gradient(from 18deg,#57edff,#7affbd,#f8ff66,#ffad44,#ff479d,#ca53ff,#8e88ff,#57edff);
+    animation-duration:4.8s;
+  }
+}
+@keyframes portraitFrameFlow{from{transform:translate(-50%,-50%) rotate(0turn)}to{transform:translate(-50%,-50%) rotate(1turn)}}
+@keyframes portraitFrameRipple{0%,100%{--portrait-frame-ripple:.55}50%{--portrait-frame-ripple:1.5}}
+.lite-mode .active-portrait:is(.hud-frame-gold-aura,.hud-frame-spectrum) .portrait-level-ring{display:none}
+@media(prefers-reduced-motion:reduce){.active-portrait .portrait-level-ring::before{animation:none!important}}
 .portrait-spark{position:absolute;z-index:5;top:50%;left:50%;width:10px;height:10px;border-radius:50%;background:#fff9cf;box-shadow:0 0 12px 3px #ffd85c;transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(-52px);animation:portraitSpark 1s ease-out forwards;pointer-events:none}.portrait-ambient-spark{position:absolute;z-index:5;top:50%;left:50%;color:#fff8ca;font-size:1.35rem;font-weight:900;line-height:1;text-shadow:0 0 5px #fff,0 0 13px #ffd85c,0 0 22px rgba(244,169,64,.85);transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1));animation:portraitAmbientSpark 1.35s ease-in-out forwards;pointer-events:none}@keyframes portraitSpinShrink{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(.9)}100%{transform:rotate(360deg) scale(1)}}@keyframes portraitSpark{to{opacity:0;transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(-88px) scale(.18)}}@keyframes portraitAmbientSpark{0%,100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1)) scale(.45)}35%,62%{opacity:1;transform:translate(-50%,-50%) rotate(var(--spark-angle)) translateY(calc(var(--spark-distance) * -1)) scale(1.15)}}
 body.lite-mode .active-portrait *{animation:none!important}body.lite-mode .portrait-spark,body.lite-mode .portrait-ambient-spark{display:none!important}@media(prefers-reduced-motion:reduce){.active-portrait *{animation:none!important}.portrait-spark,.portrait-ambient-spark{display:none!important}}
 .question-topline{gap:10px}.start-timer-button{min-height:31px;padding:5px 11px;border:1px solid rgba(103,232,249,.48);border-radius:9px;background:rgba(34,211,238,.1);color:#a5f3fc;font:800 11px "Barlow Condensed",sans-serif;letter-spacing:.08em;cursor:pointer;transition:transform .15s,background .15s,border-color .15s}.start-timer-button:hover:not(:disabled){transform:translateY(-1px);border-color:#67e8f9;background:rgba(34,211,238,.2)}.start-timer-button:disabled{cursor:default;opacity:.65}

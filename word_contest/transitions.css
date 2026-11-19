@@ -1,0 +1,69 @@
+.wc-motion-root {
+  transition: none !important;
+}
+
+.wc-motion-panel {
+  transform-origin: 50% 50%;
+}
+
+.wc-motion-panel:is(.modal, .joker-modal, .scores-wrapper, .winner-wrapper, .override-modal, #end-confirm) {
+  animation: none !important;
+}
+
+.wc-motion-root[data-wc-closing] {
+  display: var(--wc-motion-display) !important;
+  pointer-events: none !important;
+}
+
+.wc-motion-root[data-wc-closing] * {
+  pointer-events: none !important;
+}
+
+#multichoice-overlay.wc-motion-root {
+  display: none;
+  transform: none;
+}
+
+#multichoice-overlay.wc-motion-root.open {
+  display: block;
+}
+
+#toast.wc-motion-root {
+  display: none;
+  transform: translateX(-50%);
+}
+
+#toast.wc-motion-root.show {
+  display: block;
+}
+
+/* Native Quick Play dialog keeps its top-layer backdrop until the exit finishes. */
+.qpc-dialog {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 240ms ease, scale 240ms ease, display 240ms allow-discrete, overlay 240ms allow-discrete;
+}
+
+.qpc-dialog[open] {
+  opacity: 1;
+  scale: 1;
+  transition-duration: 300ms;
+}
+
+@starting-style {
+  .qpc-dialog[open] {
+    opacity: 0;
+    scale: .86;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wc-motion-panel {
+    animation: none !important;
+  }
+
+  .qpc-dialog {
+    transition: none;
+  }
+}

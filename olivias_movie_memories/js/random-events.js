@@ -1,29 +1,42 @@
 (() => {
   window.LeagueListening = window.LeagueListening || {};
   const EVENTS = Object.freeze([
-    { id: "complete-silence", name: "COMPLETE SILENCE", description: "The video has NO SOUND" },
-    { id: "slow-time", name: "SLOW TIME", description: "This video plays slower." },
-    { id: "rapid-time", name: "RAPID TIME", description: "This video plays faster." },
-    { id: "hidden-word", name: "HIDDEN WORD", description: "The answer words are hidden! Click to reveal one word. Click it again to answer. Opening another word hides the previous one." },
-    { id: "double-jeopardy", name: "DOUBLE JEOPARDY", description: "CORRECT : YOU and TEAM get DOUBLE points\nWRONG : TEAM LOSES 100 points.\nRefuse to play normally." }
+    { id: "complete-silence", unlockAt: 37, name: "COMPLETE SILENCE", description: "The video has NO SOUND" },
+    { id: "slow-time", unlockAt: 7, name: "SLOW TIME", description: "This video plays slower." },
+    { id: "rapid-time", unlockAt: 11, name: "RAPID TIME", description: "This video plays faster." },
+    { id: "hidden-word", unlockAt: 19, name: "HIDDEN WORD", description: "The answer words are hidden! Click to reveal one word. Click it again to answer. Opening another word hides the previous one." },
+    { id: "double-jeopardy", unlockAt: 27, name: "DOUBLE JEOPARDY", description: "CORRECT : YOU and TEAM get DOUBLE points\nWRONG : TEAM LOSES 100 points.\nRefuse to play normally." }
   ]);
-  function createRandomEventPicker(config) {
+  function createRandomEventProgress(storage = localStorage) {
+    const key = "oliviasMovieMemoriesRandomEventsCompletedV1";
+    let count = 0;
+    function read() {
+      try { const saved = Number(storage.getItem(key)); if (Number.isFinite(saved)) count = Math.max(count, Math.max(0, Math.floor(saved))); } catch (_) {}
+      return count;
+    }
+    return { getCount: read, complete() { read(); count += 1; try { storage.setItem(key, String(count)); } catch (_) {} } };
+  }
+  function createRandomEventPicker(config, getCompleted = () => 0) {
     const bags = new Map();
     return (mode) => {
       if (!config.enabled || mode === "student") return null;
+      const key = mode === "correct-option" || mode === "omni-word" ? "correct-option" : mode === "omni-translation" ? "omni-translation" : "classic";
+      const eligible = EVENTS.filter((event) => getCompleted() >= event.unlockAt && (key === "correct-option" || event.id !== "hidden-word") && (key !== "omni-translation" || event.id !== "complete-silence"));
+      if (!eligible.length) return null;
       const chance = config.testMode ? config.testChance : config.normalChance;
       if (Math.random() >= chance) return null;
-      const key = mode === "correct-option" || mode === "omni-word" ? "correct-option" : mode === "omni-translation" ? "omni-translation" : "classic";
       let bag = bags.get(key);
-      if (!bag?.length) {
-        bag = EVENTS.filter((event) => (key === "correct-option" || event.id !== "hidden-word") && (key !== "omni-translation" || event.id !== "complete-silence"));
-        for (let i = bag.length - 1; i > 0; i -= 1) {
+      if (!bag) { bag = { remaining: [], unlocked: new Set() }; bags.set(key, bag); }
+      const additions = eligible.filter((event) => !bag.unlocked.has(event.id));
+      additions.forEach((event) => { bag.unlocked.add(event.id); bag.remaining.push(event); });
+      if (!bag.remaining.length || additions.length) {
+        if (!bag.remaining.length) bag.remaining = [...eligible];
+        for (let i = bag.remaining.length - 1; i > 0; i -= 1) {
           const swap = Math.floor(Math.random() * (i + 1));
-          [bag[i], bag[swap]] = [bag[swap], bag[i]];
+          [bag.remaining[i], bag.remaining[swap]] = [bag.remaining[swap], bag.remaining[i]];
         }
-        bags.set(key, bag);
       }
-      return bag.shift();
+      return bag.remaining.shift();
     };
   }
   function createRandomEventController(els, config) {
@@ -34,7 +47,9 @@
     const acceptButton = document.querySelector("#random-event-accept");
     const refuseButton = document.querySelector("#random-event-refuse");
     let jeopardyAccepted = false;
-    let pick = createRandomEventPicker(config);
+    const progress = window.__oliviasMovieMemoriesStudentMode || window.__oliviasMovieMemoriesFriendMode ? null : createRandomEventProgress();
+    const getCompleted = () => progress?.getCount() || 0;
+    let pick = createRandomEventPicker(config, getCompleted);
     let current = null;
     let continueTurn = null;
     let blackoutTimer = 0;
@@ -160,9 +175,11 @@
       return false;
     }
     return { startTurn, resetTurn, startPlayback, suspendPlayback, prepareAnswers, acceptAnswerClick, clearAnswerMask, applyMainScore,
-      resetGame() { resetTurn(); pick = createRandomEventPicker(config); },
+      resetGame() { resetTurn(); pick = createRandomEventPicker(config, getCompleted); },
+      recordVideoCompletion() { progress?.complete(); },
+      getCompletedVideoCount: getCompleted,
       getEventId: () => current?.id || "",
       hasSpeedEvent: () => current?.id === "slow-time" || current?.id === "rapid-time" };
   }
-  Object.assign(window.LeagueListening, { createRandomEventPicker, createRandomEventController });
+  Object.assign(window.LeagueListening, { createRandomEventPicker, createRandomEventController, createRandomEventProgress });
 })();

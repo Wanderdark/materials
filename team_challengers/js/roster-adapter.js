@@ -7,7 +7,7 @@
   }
 
   function effectiveScore(student) {
-    return (Number(student?.points) || 0) + ((Number(student?.stars) || 0) * 10);
+    return (Number(student?.points) || 0) + Math.max(0, Math.floor(Number(student?.stars) || 0)) * 10;
   }
 
   function getClassrooms() {
@@ -42,6 +42,7 @@
       name: String(student.name).trim(),
       avatarPath: resolveAvatarPath(student.avatarPath),
       level: getStudentLevel(student),
+      hudScore: effectiveScore(student),
       balanceScore: effectiveScore(student)
     })).sort((a, b) => b.balanceScore - a.balanceScore || a.name.localeCompare(b.name, "tr", { sensitivity: "base" }));
     return window.TeamBalance.distribute(students, groupCount);

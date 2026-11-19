@@ -1,5 +1,5 @@
 (() => {
-const { GAME_CONFIG, createRandomItemPicker, getPlayableItems, distributeBalanced, getLockedClassroom, getPresentStudents, getRosterPointAwards, transferRosterPoints, activePlayer, advanceTurn, answerQuestion, applyListeningStreak, canUseJoker, chooseNoSubtitles, consumeJoker, continueRound, createGameState, getEvidenceLine, hasCompleteEvidence, recordVideoPlay, revealSubtitles, setDifficulty, startQuestion, activateAnswerEvidenceHighlight, activateTranscriptEvidenceHighlight, animateScoreAward, celebrateActivePortrait, concealVideo, els, hideEvidenceView, loadQuestion, playEchoSegment, playEvidenceSegment, renderFinal, renderGame, renderJokers, renderRoundScores, renderSetup, resetQuestionView, restoreQuestionOverlays, setDifficultySelection, setTimer, showAnswers, showDecision, showEvidenceView, showFeedback, showScreen, showTranscript, showVideoPlayback, suspendQuestionOverlays, updateWatchCounter, playAnswerSound, showLeaderboard, duckBackgroundMusic, nextBackgroundTrack, previousBackgroundTrack, restoreBackgroundMusic, startBackgroundMusic, toggleBackgroundMusic } = window.LeagueListening;
+const { GAME_CONFIG, createRandomItemPicker, getPlayableItems, distributeBalanced, getLockedClassroom, getPresentStudents, getRosterPointAwards, transferRosterPoints, activePlayer, advanceTurn, answerQuestion, applyListeningStreak, canUseJoker, chooseNoSubtitles, consumeJoker, continueRound, createGameState, getEvidenceLine, hasCompleteEvidence, recordVideoPlay, revealSubtitles, setDifficulty, startQuestion, activateAnswerEvidenceHighlight, activateTranscriptEvidenceHighlight, animateScoreAward, celebrateActivePortrait, concealVideo, els, hideEvidenceView, loadQuestion, playEchoSegment, playEvidenceSegment, renderFinal, renderGame, renderJokers, renderRoundScores, renderSetup, resetQuestionView, restoreQuestionOverlays, setDifficultySelection, setTimer, showAnswers, showDecision, showEvidenceView, showFeedback: renderFeedback, showScreen, showTranscript, showVideoPlayback, suspendQuestionOverlays, updateWatchCounter, playAnswerSound, showLeaderboard, duckBackgroundMusic, nextBackgroundTrack, previousBackgroundTrack, restoreBackgroundMusic, startBackgroundMusic, toggleBackgroundMusic } = window.LeagueListening;
 
 const $ = (selector) => document.querySelector(selector);
 const studentMode = Boolean(window.__oliviasMovieMemoriesStudentMode);
@@ -23,9 +23,56 @@ const liteModeStorageKey = "oliviasMovieMemoriesLiteModeV1";
 const finalAudio = new Audio("assets/sounds/final.mp3");
 const characterChoices = ["ava", "benjamin", "chloe", "daniel", "david", "ella", "emma", "ethan", "hannah", "jack", "lucas", "mia", "noah", "olivia", "victoria", "zoe"];
 
+const teacherSettingsEnabled = !studentMode && !window.__oliviasMovieMemoriesFriendMode;
+const chaosProgress = teacherSettingsEnabled ? window.LeagueListening.createOmniChaosProgress() : null;
+const teacherPreferenceKeys = { chaos: "oliviasMovieMemoriesChaosEnabledV1", evidence: "oliviasMovieMemoriesEvidenceReplayV1" };
+function prepareTeacherSettings() {
+  $("#teacher-playback-settings").hidden = !teacherSettingsEnabled;
+  if (!teacherSettingsEnabled) return;
+  for (const [name, selector] of [["chaos", "#chaos-enabled"], ["evidence", "#evidence-enabled"]]) {
+    const input = $(selector);
+    try { input.checked = localStorage.getItem(teacherPreferenceKeys[name]) !== "0"; } catch (_) {}
+    const update = () => { input.closest("label").querySelector(".toggle-state").textContent = input.checked ? "ON" : "OFF"; };
+    update();
+    input.addEventListener("change", () => {
+      update();
+      try { localStorage.setItem(teacherPreferenceKeys[name], input.checked ? "1" : "0"); } catch (_) {}
+    });
+  }
+}
+function configureTeacherGame() {
+  state.evidenceReplayEnabled = !teacherSettingsEnabled || $("#evidence-enabled").checked;
+  state.chaosEnabled = teacherSettingsEnabled && $("#chaos-enabled").checked;
+  if (teacherSettingsEnabled && !state.chaosEnabled) chaosProgress.reset();
+}
+function completeVideo() {
+  state.itemPicker.complete?.(state.question.id);
+  recordRandomEventCompletion();
+  if (teacherSettingsEnabled && state.gameMode === "omni" && state.chaosEnabled && !state.chaosTurnCounted) {
+    state.chaosTurnCounted = true;
+    chaosProgress.complete();
+  }
+}
+function recordRandomEventCompletion() {
+  if (!teacherSettingsEnabled || state.randomEventTurnCounted) return;
+  state.randomEventTurnCounted = true;
+  randomEvents.recordVideoCompletion();
+}
+function evidenceReplayAllowed() { return !teacherSettingsEnabled || state?.evidenceReplayEnabled !== false; }
+function showFeedback(item, result, timedOut = false) {
+  renderFeedback(item, result, timedOut);
+  if (evidenceReplayAllowed()) return;
+  window.LeagueListening.revealCorrectOption(item);
+  evidencePlayed = true;
+  els.evidenceReplay.hidden = true;
+  els.next.hidden = false;
+  els.next.disabled = false;
+  els.next.textContent = "CONTINUE →";
+}
+
 function selectedVideoGrades() { return [...document.querySelectorAll("[data-video-grade]:checked")].map((box) => Number(box.value)); }
 function activeSetupGroups() { return setupGroups.slice(0, groupCount); }
-function isDirectAnswerMode() { return !studentMode && (state?.gameMode === "correct-option" || (state?.gameMode === "omni" && state.omniType !== "translation")); }
+function isDirectAnswerMode() { return !studentMode && (state?.gameMode === "correct-option" || state?.gameMode === "correct-order" || (state?.gameMode === "omni" && state.omniType !== "translation")); }
 function syncSetup() { renderSetup(activeSetupGroups(), groupNames.slice(0, groupCount)); els.start.disabled = activeSetupGroups().some((group) => !group.length) || (!studentMode && !selectedVideoGrades().length); }
 window.TeamNamePicker.attachInputs(els.groupNameFields, (index, name) => { groupNames[index] = name; syncSetup(); });
 window.ClassQuickPlay.register({ anchor: $("#open-roster-button"), teamCount: () => groupCount, apply(teams) { setupGroups = teams.concat([[]]).slice(0, 3); classroomId = ""; els.rosterStatus.textContent = "QUICK PLAY CLASS - temporary students, no HUD transfer."; syncSetup(); } });
@@ -33,14 +80,15 @@ function playableItemsOrWarn() {
   const grades = selectedVideoGrades();
   if (!studentMode && !grades.length) { alert("Choose at least one grade."); return false; }
   const items = getPlayableItems(window.LEAGUE_OF_LISTENING_ITEMS).filter((item) => studentMode || (Array.isArray(item.grades) && item.grades.some((grade) => grades.includes(Number(grade)))));
-  if (items.some((item) => studentMode || els.gameMode.value !== "correct-option" || window.LeagueListening.getCorrectOptionQuestions(item).length)) return true;
+  if (items.some((item) => studentMode || (els.gameMode.value === "correct-order" ? Number.isFinite(window.LeagueListening.correctOrderPreference(item)) : els.gameMode.value !== "correct-option" || window.LeagueListening.getCorrectOptionQuestions(item).length))) return true;
   alert(studentMode ? "There are no playable listening items yet. Complete the transcript, options and correct answer in scripts.js." : "No playable videos match the selected grades and game mode.");
   return false;
 }
 function syncOmniSettings() {
   if (studentMode) return;
+  if (window.__oliviasMovieMemoriesFriendMode) els.gameMode.querySelector('option[value="correct-order"]')?.remove();
   const omni = els.gameMode.value === "omni";
-  $(".settings-card > .muted").textContent = omni ? "Translation, True/False and correct option modes mixed." : els.gameMode.value === "correct-option" ? "Watch video and choose the correct option." : "Watch video and choose the correct translation option.";
+  $(".settings-card > .muted").textContent = omni ? "Translation, True/False, correct option and correct order modes mixed." : els.gameMode.value === "correct-option" ? "Watch video and choose the correct option." : els.gameMode.value === "correct-order" ? "Watch video and arrange the dialogue lines in the correct order." : "Watch video and choose the correct translation option.";
 }
 function requestGameFullscreen() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); }
 function setLiteMode(enabled) { document.body.classList.toggle("lite-mode", enabled); $("#lite-mode-button").textContent = enabled ? "LITE ✓" : "LITE"; $("#lite-mode-button").setAttribute("aria-pressed", String(enabled)); localStorage.setItem(liteModeStorageKey, enabled ? "1" : "0"); }
@@ -111,9 +159,9 @@ function prepareFriendMode() {
   $(".settings-card").append(back);
 }
 
-function isCharacterBasedMode() { return !studentMode && !GAME_CONFIG.teacherRatingScriptOrderEnabled && (state?.gameMode === "character" || ((state?.gameMode === "correct-option" || state?.gameMode === "omni") && GAME_CONFIG.characterRatingSelectionEnabled)); }
-function beginGame() { if (studentMode && !window.OliviaMemoryJourney?.begin?.()) return; if (!playableItemsOrWarn()) return; requestGameFullscreen(); const correctOptionMode = !studentMode && els.gameMode.value === "correct-option"; const picker = createRandomItemPicker(window.LEAGUE_OF_LISTENING_ITEMS, { correctOption: correctOptionMode, omni: !studentMode && els.gameMode.value === "omni", grades: studentMode ? undefined : selectedVideoGrades() }); state = createGameState({ groups: activeSetupGroups(), groupNames: groupNames.slice(0, groupCount), itemPicker: picker, roundLimit: Infinity }); state.gameMode = studentMode ? "classic" : els.gameMode.value; randomEvents.resetGame(); showScreen("game"); showAnnouncement(); startBackgroundMusic(); }
-function showCharacterSelection(statusMessage = "") { if (friendMode) renderGame(state, activePlayer(state)); $("#video-rating").hidden = true; const availableCharacters = state.itemPicker.availableCharacterIds?.(state.gameMode === "omni" ? state.omniType : undefined) || new Set(); const player = activePlayer(state).student; els.characterMessage.textContent = statusMessage || `${player.name}, choose a character for this video.`; els.characterGrid.innerHTML = characterChoices.map((id) => `<button class="character-choice" type="button" data-character-id="${id}" ${availableCharacters.has(id) ? "" : 'disabled title="No unused videos remaining"'}><span class="character-avatar-ring"><img src="assets/avatars/v2/${id}.webp" alt="${id}">${window.LeagueListening.renderCharacterPopularityStars(id)}</span><strong>${id.toUpperCase()}</strong></button>`).join(""); els.characterDialog.hidden = false; }
+function isCharacterBasedMode() { return !studentMode && !GAME_CONFIG.teacherRatingScriptOrderEnabled && (state?.gameMode === "character" || ((state?.gameMode === "correct-option" || state?.gameMode === "correct-order" || state?.gameMode === "omni") && GAME_CONFIG.characterRatingSelectionEnabled)); }
+function beginGame() { if (studentMode && !window.OliviaMemoryJourney?.begin?.()) return; if (!playableItemsOrWarn()) return; requestGameFullscreen(); const correctOptionMode = !studentMode && els.gameMode.value === "correct-option"; const picker = createRandomItemPicker(window.LEAGUE_OF_LISTENING_ITEMS, { correctOption: correctOptionMode, correctOrder: !studentMode && els.gameMode.value === "correct-order", omni: !studentMode && els.gameMode.value === "omni", grades: studentMode ? undefined : selectedVideoGrades() }); state = createGameState({ groups: activeSetupGroups(), groupNames: groupNames.slice(0, groupCount), itemPicker: picker, roundLimit: Infinity }); state.gameMode = studentMode ? "classic" : els.gameMode.value; configureTeacherGame(); randomEvents.resetGame(); showScreen("game"); showAnnouncement(); startBackgroundMusic(); }
+function showCharacterSelection(statusMessage = "") { if (friendMode) renderGame(state, activePlayer(state)); $("#video-rating").hidden = true; const availableCharacters = state.itemPicker.availableCharacterIds?.(state.gameMode === "omni" ? state.omniType : undefined) || new Set(); const player = activePlayer(state).student; els.characterMessage.textContent = statusMessage || `${player.name}, choose a character for this video.`; els.characterGrid.innerHTML = characterChoices.map((id) => `<button class="character-choice" type="button" data-character-id="${id}" ${availableCharacters.has(id) ? "" : 'disabled title="No unused videos remaining"'}><span class="character-avatar-ring"><img src="../func_presenter/images/avatars/v3/${id}.webp" alt="${id}">${window.LeagueListening.renderCharacterPopularityStars(id)}</span><strong>${id.toUpperCase()}</strong></button>`).join(""); els.characterDialog.hidden = false; }
 function showAnnouncement(statusMessage = "", eventReady = false) {
   if (!studentMode && state.gameMode === "omni" && !state.omniType) {
     resetQuestionView();
@@ -122,7 +170,7 @@ function showAnnouncement(statusMessage = "", eventReady = false) {
       if (!type) { els.videoStatus.textContent = "No playable videos are available."; return; }
       state.omniType = type;
       showAnnouncement();
-    });
+    }, window.__oliviasMovieMemoriesFriendMode ? null : (state.omniPlayedTypes ||= state.groups.map(() => new Set()))[state.groupIndex], state.chaosEnabled ? chaosProgress.getStage() : 0);
   }
   if (!studentMode && !eventReady && !statusMessage) return randomEvents.startTurn(state.gameMode === "omni" ? "omni-" + state.omniType : state.gameMode, () => showAnnouncement(statusMessage, true));
   if (state.gameMode === "omni") {
@@ -134,7 +182,7 @@ function showAnnouncement(statusMessage = "", eventReady = false) {
   if (isCharacterBasedMode() && (friendMode || !state.itemPicker.hasPendingPriority?.())) return showCharacterSelection(statusMessage);
   loadCurrentQuestion(startQuestion(state), statusMessage);
 }
-function loadCurrentQuestion(item, statusMessage = "") { cancelPendingVideoStart(); if (!studentMode && state.gameMode === "omni" && item) item = startQuestion(state, window.LeagueListening.createOmniQuestion(item, state.omniType)); if (!studentMode && state.gameMode === "correct-option" && item) item = startQuestion(state, window.LeagueListening.createCorrectOptionQuestion(item)); clearTimeout(answerRevealTimer); answerRevealTimer = 0; evidencePlayed = false; evidenceAdvancePending = false; evidenceSkipRequested = false; if (!item) { els.videoStatus.textContent = "No playable videos are available."; $("#video-rating").hidden = true; els.fallback.hidden = false; els.fallback.querySelector("strong").textContent = "No playable videos are available."; els.playVideo.hidden = true; return; } if (!studentMode) { item = { ...item, randomEventId: randomEvents.getEventId() }; state.question = item; } $("#video-grade").hidden = studentMode; if (!studentMode) $("#video-grade").textContent = `GRADE: ${(Array.isArray(item.grades) ? item.grades : []).join(", ") || "—"}`; renderGame(state, activePlayer(state)); els.instruction.textContent = "Listen carefully."; loadQuestion(item); if (studentMode) { setDifficulty(state, "medium"); setDifficultySelection("medium"); els.playVideo.hidden = false; els.playVideo.disabled = false; els.videoStatus.textContent = "Start the first listen."; } updateWatchCounter(0); if (statusMessage) els.videoStatus.textContent = statusMessage; }
+function loadCurrentQuestion(item, statusMessage = "") { cancelPendingVideoStart(); if (!studentMode && state.gameMode === "omni" && item) item = startQuestion(state, window.LeagueListening.createOmniQuestion(item, state.omniType)); if (!studentMode && state.gameMode === "correct-option" && item) item = startQuestion(state, window.LeagueListening.createCorrectOptionQuestion(item)); if (!studentMode && state.gameMode === "correct-order" && item) item = startQuestion(state, window.LeagueListening.createCorrectOrderQuestion(item)); clearTimeout(answerRevealTimer); answerRevealTimer = 0; evidencePlayed = false; evidenceAdvancePending = false; evidenceSkipRequested = false; if (!item) { els.videoStatus.textContent = "No playable videos are available."; $("#video-rating").hidden = true; els.fallback.hidden = false; els.fallback.querySelector("strong").textContent = "No playable videos are available."; els.playVideo.hidden = true; return; } state.chaosTurnCounted = false; state.randomEventTurnCounted = false; if (!studentMode) { item = { ...item, randomEventId: randomEvents.getEventId() }; state.question = item; } $("#video-grade").hidden = studentMode; if (!studentMode) $("#video-grade").textContent = `GRADE: ${(Array.isArray(item.grades) ? item.grades : []).join(", ") || "—"}`; renderGame(state, activePlayer(state)); els.instruction.textContent = "Listen carefully."; loadQuestion(item); if (studentMode) { setDifficulty(state, "medium"); setDifficultySelection("medium"); els.playVideo.hidden = false; els.playVideo.disabled = false; els.videoStatus.textContent = "Start the first listen."; } updateWatchCounter(0); if (statusMessage) els.videoStatus.textContent = statusMessage; }
 function replaceMissingVideo() { const failedId = state?.question?.id; if (!failedId || state.phase !== "video") return; state.itemPicker.remove?.(failedId); showAnnouncement("Video unavailable. Choose another character."); }
 function retryVideoFromR2() { const remoteSrc = els.video.dataset.remoteFallbackSrc; if (location.protocol !== "file:" || !remoteSrc || els.video.dataset.remoteFallbackUsed) return false; els.video.dataset.remoteFallbackUsed = "true"; els.video.src = remoteSrc; els.video.load(); els.videoStatus.textContent = "Local video unavailable. Loading from R2…"; return true; }
 function closeVideoHistoryResetDialog() { $("#reset-video-history-dialog").hidden = true; }
@@ -190,8 +238,8 @@ function beginAnswerPhase(withSubtitles) { if (withSubtitles) { revealSubtitles(
 function announceToast(message, type) { window.ToastManager?.show(message, type, 3600); }
 function announceStreak(group, streakResult) { if (streakResult.bonusPoints) announceToast(`🔥 ${group.name}: 3 LISTENING STREAK · +${streakResult.bonusPoints} BONUS!`); if (streakResult.freeJoker) announceToast(`⚡ ${group.name}: 5 LISTENING STREAK · ONE FREE JOKER!`); }
 function startTimer(reset = true) { clearInterval(state.timerId); if (reset) state.secondsLeft = state.phase === "bonus" ? 10 : GAME_CONFIG.answerSeconds; setTimer(state.secondsLeft); state.timerId = setInterval(() => { state.secondsLeft -= 1; setTimer(state.secondsLeft); if (state.secondsLeft <= 0) { clearInterval(state.timerId); state.timerId = null; if (state.phase === "bonus") return finishBonusAnswer("__timeout__", true); const result = answerQuestion(state, "__timeout__"); randomEvents.applyMainScore(state, result); state.itemPicker.complete?.(state.question.id); const streakResult = applyListeningStreak(state, result); if (studentMode) { window.StudentGame?.onListeningWrong?.(); window.OliviaMemoryJourney?.recordResult?.({ correct: false, subtitlesShown: state.subtitlesShown, points: 0, bonusPoints: 0, streak: activePlayer(state).group.streak }); } playAnswerSound(false); showFeedback(state.question, result, true); renderJokers(state); announceStreak(activePlayer(state).group, streakResult); if (!studentMode) setTimeout(() => showLeaderboard(state), 2000); } }, 1000); renderJokers(state); }
-async function runEvidenceReplay() { const snapshot = suspendQuestionOverlays(); const fullTranscriptEvidence = state.question?.evidenceStart == null && state.question?.evidenceEnd == null && state.question?.evidenceSentence == null; const playbackRate = els.video.playbackRate; els.evidenceReplay.disabled = true; els.next.hidden = true; showEvidenceView(getEvidenceLine(state.question), fullTranscriptEvidence, state.question.correctOptionQuestion?.target); els.videoStatus.textContent = !hasCompleteEvidence(state.question) ? "Full video evidence replay…" : "Evidence replay…"; randomEvents.suspendPlayback(); els.video.playbackRate = 1; await playEvidenceSegment(els.video, state.question); els.video.playbackRate = playbackRate; restoreBackgroundMusic(); hideEvidenceView(); restoreQuestionOverlays(snapshot); activateTranscriptEvidenceHighlight(state.question); activateAnswerEvidenceHighlight(state.question, state.question.correctOptionId); els.evidenceReplay.disabled = false; els.evidenceReplay.textContent = "▶ EVIDENCE REPLAY"; els.next.hidden = false; els.next.disabled = false; els.next.textContent = "CONTINUE →"; els.videoStatus.textContent = "Evidence replay complete."; }
-function selectAnswer(event) { if (state?.phase === "bonus") return finishBonusAnswer(event.currentTarget.dataset.answer, false, event.currentTarget); const optionId = event.currentTarget.dataset.answer; clearInterval(state.timerId); state.timerId = null; const result = answerQuestion(state, optionId); if (result) { result.selectedOptionId = optionId; evidencePlayed = false; evidenceAdvancePending = false; const group = activePlayer(state).group; if (studentMode && result.correct) { const teacherPoints = result.points; result.points = (state.subtitlesShown ? 1 : 2) * (result.doubleOrNothing ? 2 : 1); group.score += result.points - teacherPoints; activePlayer(state).student.score += result.points - teacherPoints; } else if (result.correct) { const timeBonus = Math.max(0, state.secondsLeft); result.points += timeBonus; group.score += timeBonus; activePlayer(state).student.score += timeBonus; } randomEvents.applyMainScore(state, result, result.correct ? Math.max(0, state.secondsLeft) : 0); const streakResult = applyListeningStreak(state, result); if (studentMode) { if (result.correct) window.StudentGame?.onListeningCorrect?.(result.points); else window.StudentGame?.onListeningWrong?.(); if (streakResult.bonusPoints) { group.score -= streakResult.bonusPoints; streakResult.bonusPoints = 1; window.StudentGame?.awardListeningBonus?.(1); } window.OliviaMemoryJourney?.recordResult?.({ correct: result.correct, subtitlesShown: state.subtitlesShown, points: result.points, bonusPoints: streakResult.bonusPoints || 0, streak: group.streak }); } playAnswerSound(result.correct); if (result.correct) { animateScoreAward(event.currentTarget, state.groupIndex, result.points, group.score); celebrateActivePortrait(); } showFeedback(state.question, result); renderJokers(state); announceStreak(group, streakResult); if (!studentMode && state.gameMode === "correct-option" && result.correct) beginBonusPhase(result.points); else state.itemPicker.complete?.(state.question.id); } }
+async function runEvidenceReplay() { if (!evidenceReplayAllowed()) return; const snapshot = suspendQuestionOverlays(); const fullTranscriptEvidence = state.question?.evidenceStart == null && state.question?.evidenceEnd == null && state.question?.evidenceSentence == null; const playbackRate = els.video.playbackRate; els.evidenceReplay.disabled = true; els.next.hidden = true; showEvidenceView(getEvidenceLine(state.question), fullTranscriptEvidence, state.question.correctOptionQuestion?.target); els.videoStatus.textContent = !hasCompleteEvidence(state.question) ? "Full video evidence replay…" : "Evidence replay…"; randomEvents.suspendPlayback(); els.video.playbackRate = 1; await playEvidenceSegment(els.video, state.question); els.video.playbackRate = playbackRate; restoreBackgroundMusic(); hideEvidenceView(); restoreQuestionOverlays(snapshot); activateTranscriptEvidenceHighlight(state.question); activateAnswerEvidenceHighlight(state.question, state.question.correctOptionId); els.evidenceReplay.disabled = false; els.evidenceReplay.textContent = "▶ EVIDENCE REPLAY"; els.next.hidden = false; els.next.disabled = false; els.next.textContent = "CONTINUE →"; els.videoStatus.textContent = "Evidence replay complete."; }
+function selectAnswer(event) { if (state?.phase === "bonus") return finishBonusAnswer(event.currentTarget.dataset.answer, false, event.currentTarget); const optionId = event.currentTarget.dataset.answer; clearInterval(state.timerId); state.timerId = null; const result = answerQuestion(state, optionId); if (result) { result.selectedOptionId = optionId; evidencePlayed = false; evidenceAdvancePending = false; const group = activePlayer(state).group; if (studentMode && result.correct) { const teacherPoints = result.points; result.points = (state.subtitlesShown ? 1 : 2) * (result.doubleOrNothing ? 2 : 1); group.score += result.points - teacherPoints; activePlayer(state).student.score += result.points - teacherPoints; } else if (result.correct) { const timeBonus = Math.max(0, state.secondsLeft); result.points += timeBonus; group.score += timeBonus; activePlayer(state).student.score += timeBonus; } randomEvents.applyMainScore(state, result, result.correct ? Math.max(0, state.secondsLeft) : 0); const streakResult = applyListeningStreak(state, result); if (studentMode) { if (result.correct) window.StudentGame?.onListeningCorrect?.(result.points); else window.StudentGame?.onListeningWrong?.(); if (streakResult.bonusPoints) { group.score -= streakResult.bonusPoints; streakResult.bonusPoints = 1; window.StudentGame?.awardListeningBonus?.(1); } window.OliviaMemoryJourney?.recordResult?.({ correct: result.correct, subtitlesShown: state.subtitlesShown, points: result.points, bonusPoints: streakResult.bonusPoints || 0, streak: group.streak }); } playAnswerSound(result.correct); if (result.correct) { animateScoreAward(event.currentTarget, state.groupIndex, result.points, group.score); celebrateActivePortrait(); } showFeedback(state.question, result); renderJokers(state); announceStreak(group, streakResult); if (!studentMode && state.gameMode === "correct-option" && result.correct) beginBonusPhase(result.points); else completeVideo(); } }
 function beginBonusPhase(normalPoints) {
   const question = window.LeagueListening.createCorrectOptionBonus(state.question);
   if (!question) return;
@@ -225,6 +273,7 @@ function finishBonusAnswer(optionId, timedOut = false, source = null) {
   state.answered = true;
   state.phase = "answered";
   state.itemPicker.complete?.(state.question.id);
+  if (!timedOut) recordRandomEventCompletion();
   const correct = !timedOut && optionId === state.question.correctOptionId;
   const points = correct ? 50 : 0;
   const { group, student } = activePlayer(state);
@@ -235,7 +284,7 @@ function finishBonusAnswer(optionId, timedOut = false, source = null) {
   showFeedback(state.question, { correct, points, correctOptionId: state.question.correctOptionId, doubleOrNothing: false }, timedOut);
   renderJokers(state);
 }
-async function handleEvidenceControl() { if (!state?.answered || evidenceAdvancePending) return; if (window.LeagueListening.revealCorrectOption(state.question)) return; evidenceSkipRequested = false; await runEvidenceReplay(); evidencePlayed = true; if (evidenceSkipRequested) { evidenceSkipRequested = false; handleNextControl(); } }
+async function handleEvidenceControl() { if (!evidenceReplayAllowed()) return; if (!state?.answered || evidenceAdvancePending) return; if (window.LeagueListening.revealCorrectOption(state.question)) return; evidenceSkipRequested = false; await runEvidenceReplay(); evidencePlayed = true; if (evidenceSkipRequested) { evidenceSkipRequested = false; handleNextControl(); } }
 function handleNextControl() { if (!state?.answered || !evidencePlayed) return nextTurn(); if (evidenceAdvancePending) return; evidenceAdvancePending = true; els.evidenceReplay.disabled = true; els.next.disabled = true; els.feedback.hidden = true; if (studentMode) return nextTurn(); showLeaderboard(state, nextTurn); }
 async function useEchoJoker() { if (pendingVideoStart || !canUseJoker(state, "echo") || state.videoPlays < 1 || !["video", "answer"].includes(state.phase)) return; const previousPhase = state.phase; const timerWasRunning = previousPhase === "answer" && Boolean(state.timerId); if (!consumeJoker(state, "echo")) return; if (timerWasRunning) { clearInterval(state.timerId); state.timerId = null; } els.overrideReplay.disabled = true; const snapshot = suspendQuestionOverlays(); state.phase = "jokerEcho"; renderJokers(state); showVideoPlayback(); randomEvents.startPlayback(els.video.playbackRate, state.slowTime); els.videoStatus.textContent = "Echo Joker replay…"; announceToast(`🔊 ${activePlayer(state).group.name}: ECHO JOKER!`); await playEchoSegment(els.video, state.question); restoreBackgroundMusic(); concealVideo(); state.phase = previousPhase; restoreQuestionOverlays(snapshot); if (previousPhase === "video") els.overrideReplay.disabled = false; els.videoStatus.textContent = previousPhase === "answer" ? "Choose your answer." : "Choose how to answer."; if (timerWasRunning) startTimer(false); else renderJokers(state); }
 function useTimeFreezeJoker() { if (state?.phase !== "answer" || !state.timerId || !consumeJoker(state, "timeFreeze")) return; state.secondsLeft += GAME_CONFIG.timeFreezeSeconds; setTimer(state.secondsLeft); renderJokers(state); announceToast(`⏱ ${activePlayer(state).group.name}: TIME FREEZE · +${GAME_CONFIG.timeFreezeSeconds} SECONDS!`); }
@@ -267,6 +316,7 @@ $("#continue-round-button").addEventListener("click", () => { if (continueRound(
 
 prepareStudentMode();
 prepareFriendMode();
+prepareTeacherSettings();
 document.querySelectorAll("[data-video-grade]").forEach((box) => box.addEventListener("change", syncSetup));
 els.gameMode.addEventListener("change", syncOmniSettings);
 syncOmniSettings();

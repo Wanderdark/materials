@@ -3992,11 +3992,13 @@ function _tournamentAvatarPaths(name) {
   if (profile?.avatarPath) {
     const fileName = String(profile.avatarPath).replace(/\\/g, '/').split('/').pop().split(/[?#]/)[0];
     if (/^[a-z0-9_-]+\.webp$/i.test(fileName)) {
-      return ['../func_presenter/images/avatars/v2/' + fileName];
+      const legacy = '../func_presenter/images/avatars/v2/' + fileName;
+      if (/^AV_Anime_/i.test(fileName)) return [legacy];
+      return ['../func_presenter/images/avatars/v3/' + fileName.toLowerCase(), legacy];
     }
   }
   const slug = _tournamentAvatarSlug(name);
-  return slug ? ['../func_presenter/images/avatars/v2/' + slug + '.webp', '../images/avatars/' + slug + '.webp'] : [];
+  return slug ? ['../func_presenter/images/avatars/v3/' + slug + '.webp', '../images/avatars/' + slug + '.webp'] : [];
 }
 
 function _tournamentAvatarPath(name) {

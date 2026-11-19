@@ -16,7 +16,7 @@ function createTurnOrder(groups) {
 function createGameState({ groups, groupNames, itemPicker, roundLimit }) {
   const turnOrder = createTurnOrder(groups);
   return {
-    groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", level: typeof student === "string" ? 1 : Math.max(1, Number(student.level) || 1), score: 0 })) })),
+    groups: groups.map((students, index) => ({ id: index, name: groupNames[index] || `GRUP ${index + 1}`, color: teamColors[index], score: 0, streak: 0, jokers: createJokerState(), students: students.map((student) => ({ name: typeof student === "string" ? student : student.name, avatarPath: typeof student === "string" ? "" : student.avatarPath || "", level: typeof student === "string" ? 1 : Math.max(1, Number(student.level) || 1), hudScore: typeof student === "string" || !Number.isFinite(student.hudScore) ? null : student.hudScore, score: 0 })) })),
     itemPicker, round: 1, roundLimit, turnOrder, groupIndex: turnOrder[0]?.groupIndex || 0, studentIndexes: groups.map(() => 0), turnsInRound: 0,
     question: null, difficulty: null, videoPlays: 0, subtitlesShown: false, answered: false, doubleOrNothing: false, slowTime: false, phase: "announce", timerId: null, secondsLeft: GAME_CONFIG.answerSeconds
   };
@@ -49,7 +49,7 @@ function answerQuestion(state, optionId) {
   const correct = optionId === state.question.correctOptionId;
   const basePoints = state.subtitlesShown ? GAME_CONFIG.score.withSubtitles : GAME_CONFIG.score.withoutSubtitles;
   const correctOptionMode = !window.__oliviasMovieMemoriesStudentMode && state.gameMode === "correct-option";
-  const omniType = !window.__oliviasMovieMemoriesStudentMode && state.gameMode === "omni" ? state.question.omniQuestionType : null;
+  const omniType = !window.__oliviasMovieMemoriesStudentMode && (state.gameMode === "omni" || state.gameMode === "correct-order") ? state.question.omniQuestionType : null;
   const studentPoints = correct ? (omniType ? (omniType === "translation" ? (state.subtitlesShown ? 100 : 125) : state.videoPlays > 1 ? 50 : 75) : correctOptionMode ? (state.videoPlays > 1 ? 50 : 100) : basePoints * (GAME_CONFIG.score.difficultyMultiplier[state.difficulty] || 1)) : 0;
   const points = studentPoints * (state.doubleOrNothing ? 2 : 1);
   if (correct) { const { group, student } = activePlayer(state); group.score += points; student.score += studentPoints; }

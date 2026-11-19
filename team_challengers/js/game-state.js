@@ -29,7 +29,7 @@
       name: groupNames[groupIndex] || TC.CONFIG.groupDefaults[groupIndex],
       color: TC.CONFIG.groupColors[groupIndex],
       score: 0,
-      students: students.map((student, studentIndex) => ({ id: student.id || `${groupIndex}-${studentIndex}`, name: student.name, avatarPath: student.avatarPath || "", level: Math.max(1, Number(student.level) || 1), score: 0 })),
+      students: students.map((student, studentIndex) => ({ id: student.id || `${groupIndex}-${studentIndex}`, name: student.name, avatarPath: student.avatarPath || "", level: Math.max(1, Number(student.level) || 1), hudScore: Number.isFinite(student.hudScore) ? student.hudScore : null, score: 0 })),
       jokers: { capacity: jokerCapacity(students.length), remaining: jokerCapacity(students.length), spinAgainUsed: false }
     }));
     return { groups, gameMode, round: 1, turnIndex: 0, turnOrder: createTurnOrder(groups), phase: "spin", wheelValue: 0, question: null, answered: false, turnJokers: { fiftyFifty: false, doublePoints: false } };

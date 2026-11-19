@@ -9,6 +9,11 @@
   let portraitAmbientKey = "";
 
   function portraitTier(level) { return level >= 13 ? 7 : level >= 11 ? 6 : level >= 9 ? 5 : level >= 7 ? 4 : level >= 5 ? 3 : level >= 3 ? 2 : 1; }
+  function portraitFrameClass(student) {
+    const points = student.hudScore;
+    if (TC.friendMode || !Number.isFinite(points)) return `level-tier-${portraitTier(student.level)}`;
+    return points >= 850 ? "hud-frame-spectrum" : points >= 700 ? "hud-frame-gold-aura" : points >= 601 ? "hud-frame-gold-glow" : points >= 451 ? "hud-frame-gold" : points >= 301 ? "hud-frame-purple-gold" : points >= 201 ? "hud-frame-purple" : points >= 101 ? "hud-frame-green" : "hud-frame-default";
+  }
   function portraitMotionDisabled() { return document.body.classList.contains("lite-mode") || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches; }
   function clearPortraitAmbient() { clearInterval(portraitAmbientTimer); portraitAmbientTimer = null; portraitAmbientKey = ""; els.activePortrait.querySelectorAll(".portrait-ambient-spark").forEach((spark) => spark.remove()); }
   function portraitAmbientSpec(level) { return level >= 13 ? { interval: 900, count: 3 } : level >= 11 ? { interval: 2000, count: 3 } : level >= 9 ? { interval: 3000, count: 3 } : level >= 7 ? { interval: 4000, count: 2 } : level >= 5 ? { interval: 6000, count: 1 } : null; }
@@ -73,7 +78,7 @@
     state.groups.forEach((group) => { const card = document.createElement("div"); card.className = `score-card${group.id === active.group.id ? " is-active" : ""}`; card.dataset.groupId = group.id; card.style.setProperty("--team-color", `var(--${group.color})`); const name = document.createElement("span"); name.textContent = group.name; const score = document.createElement("strong"); score.textContent = group.score; card.append(name, score); els.scoreboard.appendChild(card); });
     const level = Math.max(1, Number(active.student.level) || 1); const playerKey = `${active.groupIndex}:${active.studentIndex}:${active.student.id}:${level}`;
     els.activeTeam.textContent = active.group.name; els.activeTeam.style.setProperty("--team-color", `var(--${active.group.color})`); els.activeName.textContent = active.student.name;
-    els.activePortrait.hidden = !active.student.avatarPath; els.activePortrait.className = `active-portrait level-tier-${portraitTier(level)}`; els.activePortrait.dataset.level = level; els.activePortrait.dataset.playerKey = playerKey; els.activeLevel.textContent = `LV. ${level}`;
+    els.activePortrait.hidden = !active.student.avatarPath; els.activePortrait.className = `active-portrait ${portraitFrameClass(active.student)}`; els.activePortrait.dataset.level = level; els.activePortrait.dataset.playerKey = playerKey; els.activeLevel.textContent = `LV. ${level}`;
     els.activeAvatar.removeAttribute("src");
     els.activeAvatar.alt = "";
     els.activeAvatar.onerror = () => { els.activePortrait.hidden = true; els.activeAvatar.removeAttribute("src"); clearPortraitAmbient(); };

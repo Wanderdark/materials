@@ -7,7 +7,7 @@ function todayKey() {
 }
 
 function effectiveScore(student) {
-  return (Number(student?.points) || 0) + ((Number(student?.stars) || 0) * 10);
+  return (Number(student?.points) || 0) + Math.max(0, Math.floor(Number(student?.stars) || 0)) * 10;
 }
 
 function getClassrooms() {
@@ -39,7 +39,7 @@ function getStudentLevel(student) {
 }
 
 function distributeBalanced(classroom, groupCount) {
-  const students = getPresentStudents(classroom).map((student) => ({ name: student.name.trim(), avatarPath: resolveRosterAvatarPath(student.avatarPath), level: getStudentLevel(student), score: effectiveScore(student) }))
+  const students = getPresentStudents(classroom).map((student) => ({ name: student.name.trim(), avatarPath: resolveRosterAvatarPath(student.avatarPath), level: getStudentLevel(student), hudScore: effectiveScore(student), score: effectiveScore(student) }))
     .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, "tr", { sensitivity: "base" }));
   return window.TeamBalance.distribute(students, groupCount);
 }

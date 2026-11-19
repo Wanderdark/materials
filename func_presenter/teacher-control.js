@@ -14,6 +14,7 @@
   const hudOverlayOpenMs = 300;
   const hudOverlayCloseMs = 360;
   const HUD_LITE_KEY = "fpTeacherHudLiteV1";
+  const HUD_SIZE_KEY = "fpTeacherHudSizeV1";
   const HUD_LITE_TIP_KEY = "fpTeacherHudLiteTipDismissedV1";
   let hudLite = false;
   try { hudLite = sessionStorage.getItem(HUD_LITE_KEY) === "1"; }
@@ -37,16 +38,21 @@
   let buttonHelpActive = false;
   const standaloneRoster = document.getElementById("tc-standalone-roster");
   const teacherToastScriptUrl = new URL("toast.js", controlScriptUrl).href;
-  const canonicalAvatarPath = (name) => `images/avatars/v2/${name.toLowerCase()}.webp`;
+  const baseAvatarNames = ["Ava", "Benjamin", "Chloe", "Daniel", "David", "Ella", "Emma", "Ethan", "Hannah", "Jack", "Lucas", "Mia", "Noah", "Olivia", "Victoria", "Zoe"];
+  const v3AvatarIds = new Set(baseAvatarNames.map(name => name.toLowerCase()));
+  const canonicalAvatarPath = (name) => {
+    const id = name.toLowerCase();
+    return v3AvatarIds.has(id) ? `images/avatars/v3/${id}.webp` : `images/avatars/v2/${name}.webp`;
+  };
   const teacherSoundPath = (name) => new URL(`sounds/${name}.mp3`, controlScriptUrl).href;
   const normalizeAvatarPath = (path = "") => {
     const value = String(path || "");
-    const remoteCanonicalAvatar = value.match(/^https?:\/\/(?:www\.)?adilhoca\.com\/func_presenter\/images\/avatars\/([^/?#]+)\.webp(?:[?#].*)?$/i);
+    const remoteCanonicalAvatar = value.match(/^https?:\/\/(?:www\.)?adilhoca\.com\/func_presenter\/images\/avatars\/(?:v[23]\/)?([^/?#]+)\.webp(?:[?#].*)?$/i);
     if (remoteCanonicalAvatar) return canonicalAvatarPath(remoteCanonicalAvatar[1]);
-    const localCanonicalAvatar = value.match(/^file:\/\/\/.*\/func_presenter\/images\/avatars\/([^/?#]+)\.webp(?:[?#].*)?$/i);
+    const localCanonicalAvatar = value.match(/^file:\/\/\/.*\/func_presenter\/images\/avatars\/(?:v[23]\/)?([^/?#]+)\.webp(?:[?#].*)?$/i);
     if (localCanonicalAvatar) return canonicalAvatarPath(localCanonicalAvatar[1]);
     if (/^(?:\.\.\/func_presenter\/)?images\/avatars\//i.test(value)) {
-      return canonicalAvatarPath(value.split("/").pop().replace(/\.webp$/i, ""));
+      return canonicalAvatarPath(value.split("/").pop().replace(/\.webp(?:[?#].*)?$/i, ""));
     }
     return value;
   };
@@ -69,8 +75,7 @@
     "Blaze", "Frost", "Grace", "Louis", "Mara",
     "Nova", "Orion", "Pixie", "Rex", "Terra"
   ].map((name) => ({ name, path: `../word_quest/avatars/AV_Anime_${name}_head.webp` })).concat(
-    ["Ava", "Benjamin", "Chloe", "Daniel", "David", "Ella", "Emma", "Ethan", "Hannah", "Jack", "Lucas", "Mia", "Noah", "Olivia", "Victoria", "Zoe"]
-      .map((name) => ({ name, path: canonicalAvatarPath(name) }))
+    baseAvatarNames.map((name) => ({ name, path: canonicalAvatarPath(name) }))
   );
   const AVATAR_UNLOCK_LEVELS = Object.freeze({
     grace: 9,
@@ -102,6 +107,9 @@
     .tc-hud .tc-bank.is-resetting { color: #ffab9b; text-shadow: 0 0 12px rgba(255, 128, 102, .42); }
     .tc-hud.no-roster .tc-bank { color: #8fa6d9; }
     .tc-hud-controls { display: flex; align-items: center; gap: 5px; width: var(--tc-controls-width, 220px); flex: 0 0 auto; overflow: visible; opacity: 1; transform: translateX(0); transition: width .28s ease, opacity .16s ease, transform .28s ease; }
+    .tc-hud.is-compact .tc-full-only, .tc-hud.is-compact .tc-chosen-banner { display: none !important; }
+    .tc-hud.is-compact:not(.is-collapsed) { width: calc(var(--tc-controls-width, 220px) + 50px); }
+    .tc-hud .tc-expand[hidden] { display: none; }
     .tc-hud.is-collapsed { width: 22px; gap: 0; padding: 0; border-left: 0; border-radius: 0 10px 10px 0; }
     .tc-hud.is-collapsed .tc-hud-controls { width: 0; overflow: hidden; opacity: 0; transform: translateX(-16px); pointer-events: none; }
     .tc-hud .tc-collapse { width: 20px; flex: 0 0 20px; padding: 0; border: 0; border-radius: 0 9px 9px 0; background: transparent; color: #a9bce9; font-family: Arial, sans-serif; font-size: 21px; font-weight: 400; line-height: 1; }
@@ -160,8 +168,13 @@
     .tc-kicker { margin: 0 0 6px; color: var(--u2-gold, #ffd84d); font-size: 12px; font-weight: 900; letter-spacing: .2em; }
     .tc-title { margin: 0 0 12px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(26px, 3vw, 38px); font-weight: 800; letter-spacing: .04em; }
     .tc-roster-card > .tc-title, .tc-profile-card > .tc-title { font-size: clamp(19px, 2.2vw, 26px); }
+    .tc-roster-card > .tc-title { margin-bottom: calc(12px + .5lh); }
     .tc-profile-card > .tc-title { text-shadow: none; filter: none; }
     .tc-copy { margin: 0 0 18px; color: #9db2e3; font-size: 14px; font-weight: 700; line-height: 1.5; }
+    .tc-attendance-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; padding-right: 42px; }
+    .tc-attendance-heading .tc-title { min-width: 0; margin: 0; font-size: clamp(18px, 3vw, 38px); }
+    .tc-attendance-grid .tc-student-details, .tc-attendance-grid .tc-student-avatar img { transition: filter .26s ease, opacity .26s ease; }
+    @media (prefers-reduced-motion: reduce) { .tc-attendance-grid .tc-student-details, .tc-attendance-grid .tc-student-avatar img { transition: none; } }
     .tc-class-bar { display: flex; align-items: center; gap: 8px; margin: 0 0 16px; padding: 8px; overflow-x: auto; border: 1px solid rgba(143, 166, 255, .22); border-radius: 14px; background: rgba(5, 14, 38, .52); }
     .tc-class-tab { flex: 0 0 auto; min-width: 100px; padding: 9px 13px; border: 1px solid #36549d; border-radius: 10px; background: #14295a; color: #dce6ff; font-family: var(--font-display, sans-serif); font-size: 12px; font-weight: 900; letter-spacing: .06em; cursor: pointer; }
     .tc-class-tab.is-active { border-color: #ffd84d; background: #25376d; color: #ffd84d; box-shadow: 0 0 14px rgba(255, 216, 77, .2); }
@@ -188,28 +201,52 @@
     .tc-tutorial-focus { outline: 3px solid var(--u2-gold, #ffd84d) !important; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(255, 216, 77, .2), 0 0 28px 10px rgba(255, 216, 77, .7) !important; animation: tcTutorialPulse .9s ease-in-out infinite alternate; }
     @keyframes tcTutorialPulse { from { filter: brightness(1); } to { filter: brightness(1.2); } }
     .tc-close { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border: 1px solid #2b4084; border-radius: 12px; background: #12234e; color: #d9e4ff; font-size: 18px; font-weight: 900; cursor: pointer; }
-    .tc-student-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .tc-student-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); grid-auto-rows: 1fr; gap: 10px; }
     .tc-student { position: relative; min-height: 82px; padding: 13px; border: 1px solid rgba(143, 166, 255, .26); border-radius: 16px; background: #0a142f; color: #f4f7ff; cursor: pointer; text-align: left; transition: transform .14s ease, border-color .14s ease, background-color .14s ease; }
     .tc-student:hover { transform: translateY(-2px); border-color: rgba(255, 216, 77, .78); background: #101f47; }
+    .tc-point-award-spotlight { position: fixed; inset: 0; z-index: 11040; display: grid; place-items: center; pointer-events: none; }
+    .tc-point-award-motion { position: relative; }
+    .tc-point-award-amount {
+      position: absolute; top: 50%; left: 50%; z-index: 5; translate: -50% -50%;
+      color: #ffdf64; font: 900 clamp(48px, 9vw, 100px)/1 var(--font-display, Arial, sans-serif);
+      white-space: nowrap; -webkit-text-stroke: 1px #10233f;
+      text-shadow: 0 3px 10px #081028, 0 0 16px rgba(255, 216, 77, .55);
+    }
+    .tc-point-award-motion .tc-student-details > span { width: fit-content; }
+    .tc-point-award-motion > .tc-student {
+      width: min(235px, calc(51vw - 16px)); min-height: 0; aspect-ratio: 2.35; box-sizing: border-box;
+      font-family: var(--font-ui, Arial, sans-serif); cursor: default; zoom: 1.95;
+    }
     .tc-student.is-selected { border-color: #65e6b8; box-shadow: 0 0 14px rgba(101, 230, 184, .22); }
     .tc-student.is-rank-green { border-color: rgba(101, 230, 184, .78); background: linear-gradient(135deg, rgba(12, 94, 66, .95), rgba(12, 48, 76, .95)); }
     .tc-student.is-rank-green strong { font-size: 17px; }
     .tc-student.is-rank-purple { border-color: rgba(195, 134, 255, .98); background: linear-gradient(135deg, rgba(83, 28, 134, .98), rgba(34, 25, 86, .96)); box-shadow: inset 0 0 0 1px rgba(195, 134, 255, .18), 0 0 20px rgba(195, 134, 255, .20); }
     .tc-student.is-rank-purple strong { font-size: 18px; color: #f4e7ff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
-    .tc-student.is-rank-purple-gold { border-color: rgba(255, 216, 77, .98); background: linear-gradient(135deg, rgba(83, 28, 134, .98), rgba(34, 25, 86, .96)); box-shadow: inset 0 0 0 1px rgba(255, 216, 77, .22), 0 0 18px rgba(255, 216, 77, .16); }
+    .tc-student.is-rank-purple-gold { border-color: rgba(255, 216, 77, .98); background: linear-gradient(135deg, rgba(83, 28, 134, .98), rgba(34, 25, 86, .96)); box-shadow: inset 0 0 0 1px rgba(255, 216, 77, .22), 0 0 8px 1px rgba(255, 216, 77, .34), 0 0 18px rgba(255, 216, 77, .36); }
     .tc-student.is-rank-purple-gold strong { font-size: 18px; color: #f7eaff; text-shadow: 0 0 12px rgba(195, 134, 255, .88), 0 0 28px rgba(195, 134, 255, .68), 0 0 46px rgba(195, 134, 255, .34); }
-    .tc-student.is-rank-gold { border-color: #ffe584; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 18px rgba(255, 216, 77, .45), 0 0 36px rgba(255, 216, 77, .24); }
+    .tc-student.is-rank-gold { border-color: #ffe584; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 20px rgba(255, 216, 77, .62), 0 0 42px rgba(255, 216, 77, .34); }
     .tc-student.is-rank-gold strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 3px #a13dff, 0 0 9px #8c26fb, 0 0 17px #811bff, 0 0 27px rgba(67, 0, 134, .88); animation: tcNamePulse 1.2s ease-in-out infinite; }
     .tc-student.is-rank-gold-glow { border-color: #fff0a6; background: linear-gradient(135deg, rgba(139, 94, 8, .98), rgba(63, 42, 10, .96)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
     .tc-student.is-rank-gold-glow strong { font-size: 19px; color: #fff8cf; text-shadow: 0 0 3px #b34dff, 0 0 11px #9225ff, 0 0 20px #861eff, 0 0 31px rgba(67, 0, 134, .94); animation: tcNamePulse 1.2s ease-in-out infinite; }
     .tc-student.is-rank-gold-aura { border-color: #fff0a6; background: linear-gradient(135deg, rgba(154, 104, 8, .99), rgba(70, 46, 8, .97)); box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .78), 0 0 52px rgba(255, 216, 77, .48), 0 0 86px rgba(255, 216, 77, .20); }
     .tc-student.is-rank-gold-aura strong { font-size: 20px; color: #fffbe2; text-shadow: 0 0 3px #c059ff, 0 0 12px #982aff, 0 0 23px #8b22ff, 0 0 36px #430086; animation: tcNamePulse 1.1s ease-in-out infinite; }
     .tc-rank-edge-light { display: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-student.is-rank-gold-glow:not(.is-absent, .tc-game-disqualified) {
+        animation: tc-gold-shadow-pulse 3s ease-in-out infinite;
+      }
+      @keyframes tc-gold-shadow-pulse {
+        50% { box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .46), 0 0 24px rgba(255, 216, 77, .48), 0 0 52px rgba(255, 216, 77, .28), 0 0 86px rgba(255, 216, 77, .10); }
+      }
+    }
     :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-purple:not(.is-absent, .tc-game-disqualified) {
       box-shadow: inset 0 0 0 1px rgba(195, 134, 255, .18), 0 0 14px rgba(195, 134, 255, .12);
     }
+    :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-purple-gold:not(.is-absent, .tc-game-disqualified) {
+      box-shadow: inset 0 0 0 1px rgba(255, 216, 77, .22), 0 0 8px 1px rgba(255, 216, 77, .30), 0 0 24px rgba(255, 216, 77, .36);
+    }
     :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold:not(.is-absent, .tc-game-disqualified) {
-      box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 17px rgba(255, 216, 77, .36), 0 0 30px rgba(255, 216, 77, .18);
+      box-shadow: inset 0 0 0 1px rgba(255, 232, 132, .34), 0 0 17px rgba(255, 216, 77, .49), 0 0 34px rgba(255, 216, 77, .25);
     }
     :where(body:has(.tc-radial-lock[data-hud-lite="true"])) .tc-student.is-rank-gold-glow:not(.is-absent, .tc-game-disqualified) {
       box-shadow: inset 0 0 0 1px rgba(255, 239, 166, .40), 0 0 18px rgba(255, 216, 77, .52), 0 0 36px rgba(255, 216, 77, .27), 0 0 54px rgba(255, 216, 77, .10);
@@ -224,7 +261,7 @@
       syntax: "<number>"; inherits: false; initial-value: 1;
     }
     @supports (mask-composite: exclude) {
-      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-student.is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified) > .tc-rank-edge-light {
+      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) :is(.tc-student, .tc-profile-summary).is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified) > .tc-rank-edge-light {
         display: block; position: absolute; inset: -7.5px; pointer-events: none; filter: blur(1.25px);
       }
       .tc-rank-edge-light > div {
@@ -245,7 +282,8 @@
       :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-student.is-rank-gold-aura:not(.is-absent):not(.tc-game-disqualified):has(> .tc-rank-edge-light.is-spectrum) {
         box-shadow: inset 0 0 0 1px #ffefd644, 0 0 18px #7854ff55, 0 0 32px #23f1ff26;
       }
-      .tc-student.is-rank-gold-aura > .tc-rank-edge-light.is-spectrum { filter: blur(.85px); }
+      .tc-profile-summary > .tc-rank-edge-light > div { border-radius: 27.5px; }
+      :is(.tc-student, .tc-profile-summary).is-rank-gold-aura > .tc-rank-edge-light.is-spectrum { filter: blur(.85px); }
       .tc-rank-edge-light > div {
         --tc-spectrum-ripple: 1;
         animation: tc-spectrum-ripple 2.4s ease-in-out infinite;
@@ -309,9 +347,10 @@
     .tc-student:is(.is-rank-purple, .is-rank-purple-gold, .is-rank-gold, .is-rank-gold-glow, .is-rank-gold-aura) .tc-student-name-row strong {
       overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere;
     }
-    .tc-roster-grid .tc-student-details { min-width: 0; }
-    .tc-roster-grid .tc-student .tc-student-name-row strong,
-    .tc-roster-grid .tc-student .tc-level-progress {
+    .tc-student-grid .tc-student-details { min-width: 0; }
+    .tc-student-grid .tc-student-details > span { white-space: nowrap; }
+    .tc-student-grid .tc-student .tc-student-name-row strong,
+    .tc-student-grid .tc-student .tc-level-progress {
       overflow: visible; white-space: nowrap; overflow-wrap: normal; text-overflow: clip;
     }
     .tc-student.has-avatar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; }
@@ -321,12 +360,87 @@
     .tc-avatar-image-crop { width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
     .tc-level-badge, .tc-student .tc-level-badge { position: absolute; top: -8px; right: -8px; z-index: 4; display: grid; width: 25px; height: 25px; box-sizing: border-box; margin: 0; place-items: center; border: 2px solid #fff0a6; border-radius: 50%; background: #173671; color: #fff8cf; font-family: var(--font-display, sans-serif); font-size: 10px; font-weight: 900; letter-spacing: 0; line-height: 1; box-shadow: 0 2px 9px rgba(0, 0, 0, .46), 0 0 10px rgba(255, 216, 77, .26); }
     .tc-level-badge.is-inline { position: static; display: grid; flex: 0 0 auto; width: 22px; height: 22px; margin: 0; place-items: center; border-width: 1px; color: #fff8cf; font-size: 9px; line-height: 1; }
+    .tc-level-badge, .tc-student .tc-level-badge {
+      border-color: transparent;
+      background: linear-gradient(#173671, #173671) padding-box,
+        conic-gradient(var(--tc-level-arc-color, #fff0a6) 0 var(--tc-level-fill), #526786 var(--tc-level-fill) 100%) border-box;
+    }
+    @property --tc-level-arc-color {
+      syntax: "<color>"; inherits: false; initial-value: #fff0a6;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      :where(body:not(:has(.tc-radial-lock[data-hud-lite="true"]))) .tc-level-badge.is-near-level-up {
+        animation: tc-level-badge-blink 1.2s ease-in-out infinite;
+      }
+      @keyframes tc-level-badge-blink {
+        50% { --tc-level-arc-color: #9a8150; }
+      }
+    }
     .tc-level-up-overlay { position: fixed; inset: 0; z-index: 2147483647; display: grid; place-items: center; padding: 24px; background: rgba(2, 8, 28, .78); backdrop-filter: blur(7px); animation: tcLevelUpBackdrop .25s ease-out; }
     .tc-level-up-card { width: min(430px, 100%); overflow: hidden; border: 2px solid #ffe27a; border-radius: 28px; background: radial-gradient(circle at 50% 0%, #324eaa 0%, #13235c 42%, #08122f 100%); color: #fff; text-align: center; box-shadow: 0 24px 80px rgba(0, 0, 0, .62), 0 0 44px rgba(255, 216, 77, .46); animation: tcLevelUpCard .38s cubic-bezier(.2, 1.35, .4, 1); }
     .tc-level-up-title { margin: 0; padding: 22px 16px 13px; color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 6vw, 48px); font-weight: 900; letter-spacing: .08em; line-height: 1; text-shadow: 0 3px 0 #aa7210, 0 0 18px rgba(255, 228, 99, .8); }
     .tc-level-up-name { margin: 0; color: #fff; font-family: var(--font-display, sans-serif); font-size: clamp(22px, 4vw, 31px); font-weight: 900; letter-spacing: .06em; }
     .tc-level-up-portrait { display: grid; width: 142px; height: 142px; margin: 18px auto; place-items: center; overflow: hidden; border: 5px solid #fff1a7; border-radius: 50%; background: #10255b; color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: 54px; font-weight: 900; box-shadow: 0 0 0 7px rgba(255, 216, 77, .18), 0 0 28px rgba(255, 216, 77, .6); }
     .tc-level-up-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .tc-level-up-portrait:has(> .tc-level-up-avatar-video) { position: relative; }
+    .tc-level-up-avatar-video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      border-radius: inherit; object-fit: cover; pointer-events: none; opacity: 0;
+    }
+    .tc-level-up-avatar-video.is-visible { opacity: 1; }
+    .tc-level-up-celebration { position: relative; width: max-content; margin: 18px auto; }
+    .tc-level-up-celebration > .tc-level-up-portrait { margin: 0; }
+    .tc-level-up-magic { display: none; position: absolute; inset: 0; pointer-events: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      .tc-level-up-celebration > .tc-level-up-portrait {
+        animation: tc-level-up-avatar-pulse 1s 1.5s ease-in-out;
+      }
+      .tc-level-up-magic { display: block; }
+      .tc-level-up-magic::before, .tc-level-up-magic::after {
+        content: ""; position: absolute; inset: 0; border-radius: 50%; opacity: 0; pointer-events: none;
+      }
+      .tc-level-up-magic::before {
+        box-shadow: 0 0 11px 3px rgba(255, 230, 157, .48), 0 0 25px 7px rgba(255, 189, 73, .24);
+        animation: tc-level-up-gold-glow 4s ease-in-out;
+      }
+      .tc-level-up-magic::after {
+        box-sizing: border-box; border: 2px solid #ffe7a0; box-shadow: 0 0 10px rgba(255, 213, 111, .46);
+        animation: tc-level-up-gold-ring 1s 1.5s ease-out;
+      }
+      .tc-level-up-spark {
+        position: absolute; left: var(--spark-left); top: var(--spark-top);
+        width: var(--spark-size); height: var(--spark-size); opacity: 0; pointer-events: none;
+        filter: drop-shadow(0 0 3px var(--spark-color)) drop-shadow(0 0 6px var(--spark-color));
+        animation: tc-level-up-spark-drift 2.15s var(--spark-delay) ease-out 4;
+      }
+      .tc-level-up-spark::before {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(circle, #fffdf6 0%, var(--spark-color) 42%);
+        clip-path: polygon(50% 0, 70% 30%, 100% 50%, 70% 70%, 50% 100%, 30% 70%, 0 50%, 30% 30%);
+      }
+      .tc-level-up-spark:nth-child(3n)::before { clip-path: circle(38%); }
+      .tc-level-up-spark.is-finale { animation-duration: 1.6s; animation-iteration-count: 1; }
+      @keyframes tc-level-up-avatar-pulse {
+        0%, 100% { transform: scale(1); }
+        45% { transform: scale(1.04); }
+      }
+      @keyframes tc-level-up-gold-glow {
+        0%, 100% { opacity: 0; }
+        12.5% { opacity: .55; }
+        47.5% { opacity: .88; }
+        62.5% { opacity: .58; }
+      }
+      @keyframes tc-level-up-gold-ring {
+        from { transform: scale(1); opacity: .68; }
+        to { transform: scale(1.32); opacity: 0; }
+      }
+      @keyframes tc-level-up-spark-drift {
+        0% { transform: translate(-50%, -50%) scale(.75); opacity: 0; }
+        12% { opacity: 1; }
+        68% { opacity: .95; }
+        100% { transform: translate(calc(-50% + var(--spark-x)), calc(-50% + var(--spark-y))) scale(.72); opacity: 0; }
+      }
+    }
     .tc-level-up-message { min-height: 29px; margin: 0 18px 14px; color: #65e6b8; font-family: var(--font-display, sans-serif); font-size: 22px; font-weight: 900; letter-spacing: .05em; }
     .tc-level-up-next { margin: 0; padding: 15px; border-top: 1px solid rgba(255, 241, 167, .24); border-bottom: 1px solid rgba(255, 241, 167, .24); background: rgba(4, 11, 37, .34); color: #dbe7ff; font: 800 16px/1.35 var(--font-ui, sans-serif); }
     .tc-level-up-next strong { color: #fff1a7; font-family: var(--font-display, sans-serif); font-size: 22px; }
@@ -392,13 +506,14 @@
     .tc-confirm-card { width: min(380px, 100%); padding: 24px; border: 1px solid rgba(255, 128, 102, .58); border-radius: 18px; background: #101d3d; box-shadow: 0 24px 64px rgba(0, 0, 0, .56); }
     .tc-confirm-card h3 { margin: 0 0 9px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: 24px; letter-spacing: .04em; }
     .tc-confirm-card p { margin: 0; color: #9db2e3; font-weight: 700; line-height: 1.5; }
-    .tc-award-title-row { display: flex; flex-wrap: nowrap; align-items: center; gap: clamp(4px, 1vw, 8px); margin: 0 0 9px; }
-    .tc-award-title-row > .tc-award-customize { flex: 0 0 32px; height: 32px; }
-    .tc-award-title-row > .tc-multiple-select { box-sizing: border-box; height: 32px; min-height: 32px; min-width: 0; padding: 4px 6px; font-size: clamp(9px, 1.7vw, 12px); }
+    .tc-award-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; }
+    .tc-award-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; max-width: 100%; }
+    .tc-award-controls > .tc-award-customize { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 32px; padding: 0; }
+    .tc-award-controls > .tc-multiple-select { box-sizing: border-box; flex: 0 0 auto; min-height: 32px; padding: 6px 10px; font-size: clamp(9px, 1.7vw, 12px); line-height: 1.2; white-space: nowrap; }
     .tc-point-picker-grid .tc-student.has-avatar .tc-student-name-row strong {
-      font-size: 14px; letter-spacing: 0; white-space: normal; text-overflow: clip; overflow-wrap: anywhere;
+      font-size: 14px; letter-spacing: 0; white-space: nowrap; text-overflow: clip; overflow-wrap: normal;
     }
-    .tc-award-title-row .tc-title { min-width: 0; margin: 0; font-size: clamp(15px, 3vw, 30px); overflow-wrap: anywhere; }
+    .tc-award-title-row .tc-title { flex: 1 0 auto; min-width: 0; max-width: 100%; margin: 0; font-size: clamp(15px, 3vw, 30px); white-space: nowrap; overflow-wrap: normal; }
     .tc-award-customize { width: 38px; height: 38px; border: 1px solid rgba(255, 216, 77, .72); border-radius: 10px; background: #172d63; color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: 18px; font-weight: 900; cursor: pointer; }
     .tc-multiple-select { min-height: 38px; border: 1px solid #5b7dd2; border-radius: 10px; padding: 6px 10px; background: #172d63; color: #f4f7ff; font: 800 12px var(--font-ui, sans-serif); cursor: pointer; }
     .tc-multiple-select[aria-pressed="true"] { border-color: #31d158; color: #31d158; }
@@ -426,7 +541,7 @@
     @keyframes tcRandomFlash { from { opacity: .2; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
     .tc-announcement strong { color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: clamp(42px, 7vw, 76px); font-weight: 800; letter-spacing: .06em; }
     .tc-announcement span { margin-top: 10px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 800; letter-spacing: .04em; }
-    .tc-profile-summary { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: 20px; margin-top: 8px; }
+    .tc-profile-summary { position: relative; display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: 20px; margin-top: 8px; }
     .tc-profile-summary.is-rank-green, .tc-profile-summary.is-rank-purple, .tc-profile-summary.is-rank-purple-gold, .tc-profile-summary.is-rank-gold, .tc-profile-summary.is-rank-gold-glow, .tc-profile-summary.is-rank-gold-aura { padding: 16px; border: 1px solid; border-radius: 20px; }
     .tc-profile-summary.is-rank-green { border-color: rgba(101, 230, 184, .78); background: linear-gradient(135deg, rgba(12, 94, 66, .95), rgba(12, 48, 76, .95)); }
     .tc-profile-summary.is-rank-purple { border-color: rgba(195, 134, 255, .98); background: linear-gradient(135deg, rgba(83, 28, 134, .98), rgba(34, 25, 86, .96)); box-shadow: inset 0 0 0 1px rgba(195, 134, 255, .18), 0 0 20px rgba(195, 134, 255, .20); }
@@ -445,7 +560,7 @@
     .tc-profile-avatar span:not(.tc-level-badge) { padding: 12px; text-align: center; font-family: var(--font-display, sans-serif); font-size: 17px; font-weight: 900; }
     .tc-avatar-choose-copy { display: grid; place-content: center; gap: 2px; }
     .tc-avatar-choose-copy span { display: block; padding: 0; color: #9db2e3; font-size: 15px; letter-spacing: .08em; line-height: 1.05; }
-    .tc-profile-meta h3 { margin: 0; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 4vw, 48px); letter-spacing: .04em; text-shadow: 0 0 18px rgba(255, 216, 77, .45), 0 0 34px rgba(255, 216, 77, .24); }
+    .tc-profile-meta h3 { display: inline-block; max-width: 100%; margin: 0; transform-origin: center; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(30px, 4vw, 48px); letter-spacing: .04em; text-shadow: 0 0 18px rgba(255, 216, 77, .45), 0 0 34px rgba(255, 216, 77, .24); }
     .tc-profile-meta p { margin: 9px 0 0; color: #9db2e3; font-size: 14px; font-weight: 800; }
     .tc-profile-points { color: var(--u2-gold, #ffd84d) !important; font-family: var(--font-display, sans-serif); font-size: clamp(26px, 3vw, 38px) !important; letter-spacing: .05em; }
     @media (prefers-reduced-motion: no-preference) {
@@ -997,45 +1112,27 @@
     return shuffled;
   };
   const effectiveScore = (student) => (Number(student?.points) || 0) + Math.max(0, Math.floor(Number(student?.stars) || 0)) * 10;
+  const levelStarts = [0, 11, 32, 61, 101, 151, 211, 281, 361, 461];
+  for (let start = 571, range = 120; levelStarts.length < 99; start += range, range += 10) {
+    levelStarts.push(start);
+  }
   const studentLevel = (student) => {
     const score = Math.max(0, effectiveScore(student));
-    const earlyLevelStarts = [0, 11, 32, 61, 101, 151, 211, 281, 361, 461];
-    let level = 1;
-    earlyLevelStarts.forEach((start, index) => {
-      if (score >= start) level = index + 1;
-    });
-    if (level < 10 || score < 571) return level;
-
-    let nextStart = 571;
-    let nextRange = 120;
-    for (let nextLevel = 11; nextLevel <= 99; nextLevel += 1) {
-      if (score < nextStart) return nextLevel - 1;
-      level = nextLevel;
-      nextStart += nextRange;
-      nextRange += 10;
-    }
-    return 99;
+    const nextIndex = levelStarts.findIndex(start => score < start);
+    return nextIndex === -1 ? levelStarts.length : nextIndex;
   };
-  const nextLevelStart = (student) => {
-    const score = Math.max(0, effectiveScore(student));
-    const level = studentLevel(student);
-    const earlyLevelStarts = [0, 11, 32, 61, 101, 151, 211, 281, 361, 461];
-    if (level < 10) return earlyLevelStarts[level];
-    if (level >= 99) return null;
-
-    let nextStart = 571;
-    let nextRange = 120;
-    for (let nextLevel = 11; nextLevel <= 99; nextLevel += 1) {
-      if (score < nextStart) return nextStart;
-      nextStart += nextRange;
-      nextRange += 10;
-    }
-    return null;
-  };
+  const nextLevelStart = (student) => levelStarts[studentLevel(student)] ?? null;
   const createLevelBadge = (student, inline = false) => {
-    const badge = el("span", `tc-level-badge${inline ? " is-inline" : ""}`, String(studentLevel(student)));
-    badge.title = `Level ${studentLevel(student)}`;
-    badge.setAttribute("aria-label", `Level ${studentLevel(student)}`);
+    const level = studentLevel(student);
+    const start = levelStarts[level - 1];
+    const next = levelStarts[level];
+    const earned = Math.max(0, effectiveScore(student) - start);
+    const progress = next === undefined ? 100 : 100 * earned / (next - start);
+    const badge = el("span", `tc-level-badge${inline ? " is-inline" : ""}`, String(level));
+    badge.style.setProperty("--tc-level-fill", `${progress}%`);
+    badge.classList.toggle("is-near-level-up", level >= 3 && next !== undefined && progress >= 85);
+    badge.title = next === undefined ? `Level ${level} (maximum)` : `Level ${level} · ${Math.floor(progress)}% to level ${level + 1}`;
+    badge.setAttribute("aria-label", badge.title);
     return badge;
   };
   const avatarRequiredLevel = (avatarName) => AVATAR_UNLOCK_LEVELS[String(avatarName || "").trim().toLowerCase()] || 1;
@@ -1044,9 +1141,10 @@
     .map(([name]) => name.toUpperCase());
   const levelUpMessages = ["GOOD JOB!", "WELL DONE!", "YOU ARE AWESOME!", "EXCELLENT!", "CONGRATULATIONS!"];
   const levelUpQueue = [];
+  let pointAwardSpotlight = null;
   let levelUpOverlayOpen = false;
   const showNextLevelUpOverlay = () => {
-    if (levelUpOverlayOpen || !levelUpQueue.length) return;
+    if (levelUpOverlayOpen || pointAwardSpotlight || !levelUpQueue.length) return;
     levelUpOverlayOpen = true;
     const student = levelUpQueue.shift();
     const nextLevel = nextLevelStart(student);
@@ -1059,8 +1157,32 @@
       const image = document.createElement("img");
       image.alt = `${student.name} portrait`;
       image.classList.toggle("tc-avatar-flipped", shouldFlipAvatar(student.avatarPath));
-      image.addEventListener("load", () => portrait.replaceChildren(image), { once: true });
+      const initial = portrait.firstChild;
+      image.addEventListener("load", () => initial.replaceWith(image), { once: true });
       image.src = resolveAvatarPath(student.avatarPath);
+    }
+    let avatarVideo = null;
+    const avatarFile = (student.avatarPath || "").split(/[?#]/, 1)[0].split("/").pop();
+    const character = avatarFile?.replace(/\.[^.]+$/, "").toLowerCase();
+    if (character && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      avatarVideo = el("video", "tc-level-up-avatar-video");
+      avatarVideo.muted = true;
+      avatarVideo.playsInline = true;
+      avatarVideo.setAttribute("aria-hidden", "true");
+      avatarVideo.addEventListener("playing", () => avatarVideo.classList.add("is-visible"), { once: true });
+      avatarVideo.addEventListener("error", () => avatarVideo.remove(), { once: true });
+      const videoFiles = [`${encodeURIComponent(character)}.mp4`];
+      if (character === "hannah") videoFiles.push("hannah_levelup.mp4");
+      videoFiles.forEach((file, index) => {
+        const source = document.createElement("source");
+        source.src = new URL(`media/${file}`, controlScriptUrl).href;
+        source.type = "video/mp4";
+        if (index === videoFiles.length - 1) {
+          source.addEventListener("error", () => avatarVideo.remove(), { once: true });
+        }
+        avatarVideo.append(source);
+      });
+      portrait.append(avatarVideo);
     }
     const message = el("p", "tc-level-up-message", levelUpMessages[Math.floor(Math.random() * levelUpMessages.length)]);
     const nextCopy = el("p", "tc-level-up-next");
@@ -1068,28 +1190,64 @@
     const close = el("button", "tc-level-up-close", "COOL!");
     close.type = "button";
     close.addEventListener("click", () => {
+      avatarVideo?.pause();
       overlay.remove();
       levelUpOverlayOpen = false;
       showNextLevelUpOverlay();
     });
-    card.append(title, name, portrait, message, nextCopy, close);
+    const celebration = el("div", "tc-level-up-celebration");
+    const magic = el("div", "tc-level-up-magic");
+    magic.setAttribute("aria-hidden", "true");
+    const sparkColors = ["#ffd66e", "#65deff", "#ff91ca", "#bba0ff", "#80f2cc", "#fff4cd"];
+    const sparks = document.createDocumentFragment();
+    for (let index = 0; index < 30; index += 1) {
+      const finale = index >= 24;
+      const spark = el("i", finale ? "tc-level-up-spark is-finale" : "tc-level-up-spark");
+      const direction = finale ? (index - 24) * 4 : index;
+      const angle = (155 + direction * 10 + (index % 3 - 1) * 4) * Math.PI / 180;
+      const x = Math.cos(angle);
+      const y = Math.sin(angle);
+      const delay = finale ? 8.24 + (index - 24) * .047 : .08 + ((index * 7) % 24) * .061;
+      spark.style.setProperty("--spark-left", `${50 + x * 52}%`);
+      spark.style.setProperty("--spark-top", `${50 + y * 52}%`);
+      spark.style.setProperty("--spark-x", `${x * (34 + index % 5 * 6)}px`);
+      spark.style.setProperty("--spark-y", `${y * 22 - 14 - index % 4 * 7}px`);
+      spark.style.setProperty("--spark-size", `${10 + index % 7}px`);
+      spark.style.setProperty("--spark-color", sparkColors[index % sparkColors.length]);
+      spark.style.setProperty("--spark-delay", `${delay.toFixed(3)}s`);
+      sparks.append(spark);
+    }
+    celebration.append(portrait, magic);
+    card.append(title, name, celebration, message, nextCopy, close);
     overlay.append(card);
     document.body.append(overlay);
+    avatarVideo?.play().catch(() => avatarVideo.remove());
     const cheer = new Audio("../func_presenter/sounds/cheer.mp3");
     cheer.volume = .9;
-    cheer.play().catch(() => {});
+    const launchSparks = () => {
+      if (overlay.isConnected) magic.append(sparks);
+    };
+    cheer.play().then(launchSparks, launchSparks);
   };
   const reachedStudentLevels = new Map();
+  const reachedStudentLevelKey = studentId => `fpTeacherReachedLevelV1:${studentId}`;
   function rememberStudentLevel(studentId, level) {
-    const key = `fpTeacherReachedLevelV1:${studentId}`;
+    const key = reachedStudentLevelKey(studentId);
     const cached = reachedStudentLevels.get(studentId) || 0;
     let highest = cached;
     try {
-      highest = Math.max(highest, Number(localStorage.getItem(key)) || 0);
-      if (level > highest) localStorage.setItem(key, String(level));
+      const stored = Number(localStorage.getItem(key)) || 0;
+      if (level > stored) localStorage.setItem(key, String(level));
+      highest = stored;
     } catch { /* Keep the record in memory if storage is unavailable. */ }
     reachedStudentLevels.set(studentId, Math.max(highest, level));
     return highest;
+  }
+
+  function resetReachedStudentLevel(studentId) {
+    reachedStudentLevels.delete(studentId);
+    try { localStorage.removeItem(reachedStudentLevelKey(studentId)); }
+    catch { /* The in-memory record has already been cleared. */ }
   }
 
   const notifyLevelUp = (student, previousLevel) => {
@@ -1140,13 +1298,13 @@
 
   const hudOverlayMotion = new WeakMap();
 
-  function hudButtonTransform(card, button) {
+  function hudButtonTransform(card, button, maximumScale = .16) {
     const panel = card.getBoundingClientRect();
     const target = button?.getBoundingClientRect();
     if (!panel.width || !panel.height || !target?.width || !target.height) return null;
     const x = target.left + target.width / 2 - panel.left - panel.width / 2;
     const y = target.top + target.height / 2 - panel.top - panel.height / 2;
-    const scale = Math.min(.16, target.width / panel.width, target.height / panel.height);
+    const scale = Math.min(maximumScale, target.width / panel.width, target.height / panel.height);
     return `translate(${x}px, ${y}px) scale(${scale})`;
   }
 
@@ -1452,6 +1610,7 @@
     syncButton.setAttribute("aria-label", syncButton.title);
     updateHudTimer();
     if (standaloneRoster) renderStandaloneRoster();
+    requestAnimationFrame(updateHudControlsWidth);
   }
 
   function applyCloudState(snapshot) {
@@ -1867,7 +2026,7 @@
   }
 
   function fitRosterCardText(root) {
-    const labels = root.querySelectorAll(".tc-roster-grid :is(.tc-student-name-row strong, .tc-level-progress)");
+    const labels = root.querySelectorAll(".tc-student-grid :is(.tc-student-name-row strong, .tc-student-details > span, .tc-level-progress)");
     labels.forEach(label => label.style.removeProperty("font-size"));
     const fittedSizes = Array.from(labels, label => {
       const available = label.clientWidth;
@@ -1999,13 +2158,33 @@
       openRosterEditor(true);
       return;
     }
-    const card = makeOverlay("CLASSROOM", "ATTENDANCE", "Tap a student to mark them absent or present for today. Absent students do not appear in random picks or point controls.");
-    const grid = el("div", "tc-student-grid");
+    const presentCount = state.roster.filter((student) => !isAbsent(student)).length;
+    const card = makeOverlay("CLASSROOM", "ATTENDANCE", `Present : ${presentCount} students.`);
+    const copy = card.querySelector(".tc-copy");
+    const grid = el("div", "tc-student-grid tc-attendance-grid");
     sortStudentsByScoreAndName(state.roster).forEach((student) => {
       const item = studentCard(student, { ranked: true, showAvatar: true, showAttendance: true });
+      item.setAttribute("aria-pressed", String(isAbsent(student)));
+      let attendanceAnimation = null;
       item.addEventListener("click", () => {
+        attendanceAnimation?.cancel();
         toggleAttendance(student.id);
-        openAttendance();
+        const absent = isAbsent(student);
+        item.classList.toggle("is-absent", absent);
+        item.classList.toggle("is-selected", student.id === state.selectedStudentId);
+        item.setAttribute("aria-pressed", String(absent));
+        const status = item.querySelector(".tc-attendance-status");
+        status.classList.toggle("is-absent", absent);
+        status.textContent = absent ? "✕" : "✓";
+        status.title = absent ? "Absent" : "Present";
+        copy.textContent = `Present : ${presentStudents().length} students.`;
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && item.animate) {
+          attendanceAnimation = item.animate([
+            { transform: "perspective(800px) rotateY(0turn)", opacity: 1 },
+            { transform: "perspective(800px) rotateY(.5turn)", opacity: .65, offset: .5 },
+            { transform: "perspective(800px) rotateY(1turn)", opacity: 1 }
+          ], { duration: 520, easing: "ease-in-out", direction: absent ? "normal" : "reverse" });
+        }
       });
       grid.append(item);
     });
@@ -2014,7 +2193,14 @@
     done.type = "button";
     done.addEventListener("click", openRoster);
     actions.append(done);
+    const heading = el("div", "tc-attendance-heading");
+    const title = card.querySelector(".tc-title");
+    const topDone = done.cloneNode(true);
+    topDone.addEventListener("click", openRoster);
+    title.replaceWith(heading);
+    heading.append(title, topDone);
     card.append(grid, actions);
+    requestAnimationFrame(() => fitRosterCardText(card));
   }
 
   function openHelp() {
@@ -2101,17 +2287,20 @@
     collapseButton.addEventListener("click", position);
   }
 
+  function appendRankEdgeLight(card, student) {
+    if (!card.classList.contains("is-rank-gold-aura")) return;
+    const edgeLight = el("div", "tc-rank-edge-light");
+    if (effectiveScore(student) >= 850) edgeLight.classList.add("is-spectrum");
+    edgeLight.setAttribute("aria-hidden", "true");
+    edgeLight.append(el("div", ""));
+    card.append(edgeLight);
+  }
+
   function studentCard(student, options = {}) {
     const showAvatar = Boolean(options.showAvatar && student.avatarPath);
     const item = el(options.static ? "div" : "button", `tc-student${student.id === state.selectedStudentId ? " is-selected" : ""}${options.ranked ? studentRankClass(effectiveScore(student)) : ""}${showAvatar ? " has-avatar" : ""}${isAbsent(student) ? " is-absent" : ""}`);
     if (!options.static) item.type = "button";
-    if (item.classList.contains("is-rank-gold-aura")) {
-      const edgeLight = el("div", "tc-rank-edge-light");
-      if (effectiveScore(student) >= 850) edgeLight.classList.add("is-spectrum");
-      edgeLight.setAttribute("aria-hidden", "true");
-      edgeLight.append(el("div", ""));
-      item.append(edgeLight);
-    }
+    appendRankEdgeLight(item, student);
     const details = el("div", "tc-student-details");
     const nameRow = el("div", "tc-student-name-row");
     nameRow.append(el("strong", "", student.name));
@@ -2192,6 +2381,7 @@
     meta.append(nameEntry, el("p", "", "CLASSROOM SCORE"), el("p", "tc-profile-points", `${student.points} PTS`));
     if (student.stars) meta.append(el("p", "tc-profile-stars", starSummary(student.stars)));
     summary.append(avatarButton, meta);
+    if (!isAbsent(student)) appendRankEdgeLight(summary, student);
     const actions = el("div", "tc-actions");
     const back = el("button", "tc-action", "BACK TO ROSTER");
     back.type = "button";
@@ -2202,7 +2392,10 @@
       const resetStars = student.stars > 0;
       confirmPointsReset(resetStars ? "RESET STUDENT STARS?" : "RESET STUDENT POINTS?", `${student.name}'s ${resetStars ? "stars" : "points"} will be reset!`, resetStars ? "RESET STARS" : "RESET POINTS", () => {
         if (resetStars) student.stars = 0;
-        else student.points = 0;
+        else {
+          student.points = 0;
+          resetReachedStudentLevel(student.id);
+        }
         save({ deferPoints: !resetStars });
         updateHud();
         openStudentProfile(student.id, profileOrigin);
@@ -2721,14 +2914,15 @@
     let awardAmount = Math.max(1, bankAmount || initialAwardAmount);
     const multipleAmount = () => isAward && !bankAmount ? awardAmount : 1;
     const awardTitle = (amount = awardAmount) => `AWARD +${amount} POINT${amount === 1 ? "" : "S"}`;
-    const card = makeOverlay(isAward ? "POINT POOL" : "POINT CONTROL", isAward ? awardTitle() : "REMOVE 1 POINT", isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.", isAward ? plusButton : minusButton);
+    const card = makeOverlay(isAward ? "POINT POOL" : "POINT CONTROL", isAward ? awardTitle() : "REMOVE 1 POINT", isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "", isAward ? plusButton : minusButton);
     const classroomId = state.activeClassroomId;
     const selected = new Set(selectedIds);
     let multiple = selected.size > 0, suppressMultipleClick = false;
     const title = card.querySelector(".tc-title");
     const titleRow = el("div", "tc-award-title-row");
+    const controls = el("div", "tc-award-controls");
     title.before(titleRow);
-    titleRow.append(title);
+    titleRow.append(title, controls);
     let customize = null;
     if (isAward && !bankAmount) {
       customize = el("button", "tc-award-customize", "+?");
@@ -2749,10 +2943,10 @@
       multi.title = multiple ? `${selected.size} students selected` : "Select multiple students";
       title.textContent = isAward ? awardTitle(multiple ? multipleAmount() : awardAmount) : "REMOVE 1 POINT";
       const copy = card.querySelector(".tc-copy");
-      copy.style.display = isAward || multiple ? "none" : "";
-      copy.textContent = multiple
-        ? ""
-        : (isAward ? (bankAmount ? "Choose the student who should receive the current point pool." : "The pool is empty. Choose one student to award a manual +1 point.") : "Choose the student who should lose one point.");
+      if (copy) {
+        copy.style.display = "none";
+        copy.textContent = "";
+      }
       if (customize) customize.disabled = multiple;
     };
     const applyMultiple = (amount) => {
@@ -2791,8 +2985,8 @@
       pictures.textContent = showPictures ? "HIDE PICTURES" : "SHOW PICTURES";
     };
     updatePicturesButton();
-    if (customize) titleRow.append(customize);
-    titleRow.append(pictures, multi);
+    if (customize) controls.append(customize);
+    controls.append(pictures, multi);
     refreshMultiple();
     const grid = el("div", "tc-student-grid tc-point-picker-grid");
     const students = sortStudentsByScoreAndName(availableStudents).sort((a, b) => Number(isAbsent(a)) - Number(isAbsent(b)));
@@ -2822,13 +3016,16 @@
           refreshMultiple();
           return;
         }
-        if (isAward) awardPoints(student.id, !bankAmount ? awardAmount : undefined);
+        if (isAward) awardPoints(student.id, !bankAmount ? awardAmount : undefined, item.getBoundingClientRect());
         else removePoint(student.id);
         closeOverlays();
       });
       return item;
     };
-    const renderStudents = () => grid.replaceChildren(...students.map(renderStudent));
+    const renderStudents = () => {
+      grid.replaceChildren(...students.map(renderStudent));
+      requestAnimationFrame(() => fitRosterCardText(card));
+    };
     pictures.addEventListener("click", () => {
       showPictures = !showPictures;
       try { localStorage.setItem(PICKER_PICTURES_KEY, showPictures ? "1" : "0"); }
@@ -2941,11 +3138,12 @@
       event.preventDefault();
       suppressClick(true);
       if (options.confirm) { options.confirm(chosenAmount); return; }
+      const originRect = item.getBoundingClientRect();
       const classroomId = options.standalone ? holdClassroomId : state.activeClassroomId;
       const applyHeldPoints = () => {
         if (options.standalone) applyMultipleStudentPoints([student.id], isAward, chosenAmount, classroomId);
         else if (state.activeClassroomId === classroomId && getStudent(student.id) && (!isAward || !isAbsent(getStudent(student.id))) && (!isAward || !state.pointBank)) {
-          if (isAward) awardPoints(student.id, chosenAmount);
+          if (isAward) awardPoints(student.id, chosenAmount, originRect);
           else removePoint(student.id, chosenAmount);
         } else showToast("Classroom or point pool changed. Please try again.");
         closeOverlays();
@@ -3031,11 +3229,77 @@
     animateHudOverlayFromButton(overlay, dialog, plusButton);
   }
 
-  function awardPoints(studentId, manualAmount) {
+  function showPointAwardSpotlight(student, previousPoints, awarded, originRect) {
+    if (guidedTutorial || levelUpOverlayOpen) return;
+    pointAwardSpotlight?.remove();
+    const overlay = el("div", "tc-point-award-spotlight");
+    overlay.setAttribute("aria-hidden", "true");
+    overlay.inert = true;
+    const motion = el("div", "tc-point-award-motion");
+    const cardOptions = { static: true, ranked: true, showAvatar: true, showLevelProgress: true };
+    const animate = motion.animate && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const updatedCard = studentCard(student, cardOptions);
+    const card = animate ? studentCard({ ...student, points: previousPoints }, cardOptions) : updatedCard;
+    const amount = el("span", "tc-point-award-amount", `+${awarded}`);
+    motion.append(card);
+    motion.append(amount);
+    overlay.append(motion);
+    const fullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+    const container = fullscreen?.contains(plusButton) && document.body.contains(fullscreen)
+      ? fullscreen
+      : document.body;
+    container.append(overlay);
+    pointAwardSpotlight = overlay;
+    const finish = () => {
+      overlay.remove();
+      if (pointAwardSpotlight !== overlay) return;
+      pointAwardSpotlight = null;
+      showNextLevelUpOverlay();
+    };
+    if (!animate) {
+      window.setTimeout(finish, 1000);
+      return;
+    }
+    const pointFlightMs = 680;
+    const scorePulseMs = 230;
+    const holdMs = pointFlightMs + scorePulseMs + 300;
+    const score = card.querySelector(".tc-student-details > span").getBoundingClientRect();
+    const amountRect = amount.getBoundingClientRect();
+    const x = score.left + score.width / 2 - amountRect.left - amountRect.width / 2;
+    const y = score.top + score.height / 2 - amountRect.top - amountRect.height / 2;
+    amount.animate([
+      { opacity: 0, transform: "perspective(280px) rotateY(0turn) scale(.78)", offset: 0 },
+      { opacity: 1, offset: .13 },
+      { opacity: 1, transform: "perspective(280px) rotateY(1turn) scale(1)", offset: .62, easing: "cubic-bezier(.4, 0, .8, .25)" },
+      { opacity: 0, transform: `translate(${x}px, ${y}px) scale(.25)`, offset: 1 }
+    ], { duration: pointFlightMs, delay: hudOverlayOpenMs, fill: "both" }).finished.then(() => {
+      if (!overlay.isConnected) return;
+      amount.remove();
+      card.replaceWith(updatedCard);
+      updatedCard.querySelector(".tc-student-details > span").animate(
+        [{ scale: 1 }, { scale: 1.24, color: "#fff5ad" }, { scale: 1 }], { duration: scorePulseMs, easing: "ease-out" }
+      );
+    }, () => {});
+    const center = "translate(0, 0) scale(1)";
+    const destination = hudButtonTransform(motion, plusButton) || "scale(.16)";
+    const origin = originRect
+      ? hudButtonTransform(motion, { getBoundingClientRect: () => originRect }, .85) || destination
+      : destination;
+    const duration = hudOverlayOpenMs + holdMs + hudOverlayCloseMs;
+    motion.animate([
+      { transform: origin, opacity: .45, offset: 0, easing: "cubic-bezier(.2, .7, .25, 1)" },
+      { transform: center, opacity: 1, offset: hudOverlayOpenMs / duration },
+      { transform: center, opacity: 1, offset: (hudOverlayOpenMs + holdMs) / duration, easing: "cubic-bezier(.55, 0, .8, .4)" },
+      { transform: destination, opacity: 0, offset: 1 }
+    ], { duration, fill: "both" }).finished.then(finish, finish);
+  }
+
+  function awardPoints(studentId, manualAmount, originRect) {
     const student = getStudent(studentId);
     if (!student) return;
     const awarded = state.pointBank > 0 ? state.pointBank : Math.max(1, Number(manualAmount) || 1);
     const previousLevel = studentLevel(student);
+    const previousPoints = student.points;
     student.points += awarded;
     state.pointBank = 0;
     state.selectedStudentId = "";
@@ -3043,7 +3307,7 @@
     save({ deferPoints: true, changeType: "increment" });
     updateHud();
     playTeacherFeedback(true);
-    showToast(`+${awarded} points awarded to ${student.name}.`, "success");
+    showPointAwardSpotlight(student, previousPoints, awarded, originRect);
     notifyLevelUp(student, previousLevel);
     if (guidedTutorial?.step === 6) window.setTimeout(() => setGuidedTutorialStep(7), 0);
   }
@@ -3247,11 +3511,33 @@
     }, 1000);
   }
 
-  function setHudCollapsed(collapsed) {
-    hud.classList.toggle("is-collapsed", collapsed);
-    collapseButton.textContent = collapsed ? ">" : "<";
-    collapseButton.title = collapsed ? "Expand teacher controls" : "Collapse teacher controls";
+  function updateHudControlsWidth() {
+    controls.style.width = "max-content";
+    hud.style.setProperty("--tc-controls-width", `${controls.scrollWidth}px`);
+    controls.style.width = "";
+  }
+
+  const hudSizes = ["full", "compact", "hidden"];
+  let hudSize = 0;
+  try {
+    const savedSize = hudSizes.indexOf(localStorage.getItem(HUD_SIZE_KEY));
+    if (savedSize >= 0) hudSize = savedSize;
+  } catch { /* Use full controls when local storage is unavailable. */ }
+
+  function setHudSize(size) {
+    hudSize = size;
+    hud.classList.toggle("is-compact", hudSize > 0);
+    hud.classList.toggle("is-collapsed", hudSize === 2);
+    controls.inert = hudSize === 2;
+    expandButton.hidden = hudSize !== 1;
+    collapseButton.textContent = hudSize === 2 ? ">" : "<";
+    collapseButton.title = hudSize === 0 ? "Compact teacher controls"
+      : hudSize === 2 ? "Show compact teacher controls" : "Hide teacher controls";
     collapseButton.setAttribute("aria-label", collapseButton.title);
+    collapseButton.setAttribute("aria-expanded", String(hudSize < 2));
+    try { localStorage.setItem(HUD_SIZE_KEY, hudSizes[hudSize]); }
+    catch { /* Keep the current size when local storage is unavailable. */ }
+    updateHudControlsWidth();
   }
 
   load();
@@ -3330,6 +3616,12 @@
   const chosenBanner = el("button", "tc-chosen-banner");
   const controls = el("div", "tc-hud-controls");
   const collapseButton = el("button", "tc-collapse", "<");
+  const expandButton = el("button", "tc-collapse tc-expand", ">");
+  expandButton.type = "button";
+  expandButton.hidden = true;
+  expandButton.title = "Expand teacher controls";
+  expandButton.setAttribute("aria-label", expandButton.title);
+  expandButton.addEventListener("click", () => setHudSize(0));
   rosterButton.type = randomButton.type = plusButton.type = minusButton.type = helpButton.type = accountButton.type = syncButton.type = hudTimerDisplayButton.type = hudTimerPlayButton.type = whistleButton.type = chosenBanner.type = collapseButton.type = "button";
   bank.type = "button";
   rosterButton.title = "Class roster";
@@ -3391,10 +3683,13 @@
   });
   bank.addEventListener("click", requestPoolReset);
   chosenBanner.addEventListener("click", requestChosenReset);
-  collapseButton.addEventListener("click", () => setHudCollapsed(!hud.classList.contains("is-collapsed")));
+  collapseButton.title = "Compact teacher controls";
+  collapseButton.setAttribute("aria-label", collapseButton.title);
+  collapseButton.addEventListener("click", () => setHudSize(hudSize === 2 ? 1 : hudSize + 1));
   timerControl.append(hudTimerDisplayButton, hudTimerPlayButton);
-  controls.append(rosterButton, randomButton, plusButton, minusButton, helpButton, accountButton, syncButton, timerControl, whistleButton, radialLockButton, mainMenuButton, bank);
-  hud.append(chosenBanner, controls, collapseButton);
+  [accountButton, timerControl, radialLockButton, helpButton, mainMenuButton].forEach(control => control.classList.add("tc-full-only"));
+  controls.append(rosterButton, randomButton, plusButton, minusButton, syncButton, whistleButton, accountButton, timerControl, radialLockButton, helpButton, mainMenuButton, bank);
+  hud.append(chosenBanner, controls, collapseButton, expandButton);
   const buttonHelp = new Map([
     [rosterButton, ["CLASS ROSTER", "Open your class roster to view student scores, profiles, and attendance."]],
     [randomButton, ["RANDOM STUDENT", "Pick a random student from the students marked present."]],
@@ -3409,7 +3704,8 @@
     [mainMenuButton, ["MAIN MENU", "Return to the site’s home page after confirming."]],
     [bank, ["POINT POOL", "See how many points are available to award. Click to clear the pool after confirming."]],
     [chosenBanner, ["SELECTED STUDENT", "See who is selected. Click to clear the selection after confirming."]],
-    [collapseButton, ["EXPAND OR COLLAPSE HUD", "Show or hide the HUD controls."]]
+    [expandButton, ["EXPAND HUD", "Return from compact controls to full controls."]],
+    [collapseButton, ["COLLAPSE HUD", "Switch from full controls to compact controls, then hide them. When hidden, click to show compact controls."]]
   ]);
   for (const type of ["pointerdown", "contextmenu", "click"]) {
     hud.addEventListener(type, (event) => {
@@ -3427,10 +3723,13 @@
     }, true);
   }
   document.body.append(hud);
+  setHudSize(hudSize);
   document.dispatchEvent(new Event("classroom-radial-control-ready"));
+  window.addEventListener("resize", updateHudControlsWidth);
+  document.fonts?.addEventListener("loadingdone", updateHudControlsWidth);
 
   requestAnimationFrame(() => {
-    hud.style.setProperty("--tc-controls-width", `${controls.scrollWidth}px`);
+    updateHudControlsWidth();
     if (!hasPasswordRecovery) showTutorialPrompt();
     showLiteTip();
   });
