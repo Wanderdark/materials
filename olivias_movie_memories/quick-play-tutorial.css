@@ -1,0 +1,16 @@
+.qpt-offer,.qpt-coach{background:#172447;color:#f5f6ff;border:2px solid #e4c044;border-radius:22px;padding:24px;font-family:Barlow,sans-serif;box-sizing:border-box}
+.qpt-offer{width:min(540px,calc(100vw - 32px));max-height:90vh;overflow:auto}
+.qpt-offer::backdrop{background:#030817b8}
+.qpt-offer p{font-size:24px;font-weight:700;margin:0 0 24px}
+.qpt-dismiss{display:flex;align-items:center;gap:12px;margin:0 0 24px;font-size:20px;font-weight:700;cursor:pointer}
+.qpt-dismiss input{width:26px;height:26px;margin:0;accent-color:#ffe04e;flex:none}
+.qpt-offer button{margin-right:12px;padding:12px 28px;border:0;border-radius:12px;background:#ffe04e;color:#102040;font:800 20px Barlow,sans-serif;cursor:pointer}
+.qpt-coach{position:fixed;z-index:2147483647;width:min(360px,calc(100vw - 24px));padding:16px 44px 16px 18px;font-size:19px;font-weight:700;line-height:1.35}
+.qpt-coach small{display:block;color:#ffcb59;font-size:13px;margin-bottom:6px}
+.qpt-close{position:absolute;right:10px;top:8px;background:transparent;border:0;color:white;font-size:25px;cursor:pointer}
+.qpt-shield{position:fixed;inset:0;z-index:2147483645;pointer-events:none}
+.qpt-shield>div{position:fixed;background:#030817b8;pointer-events:auto}
+.qpt-focus{outline:4px solid #ffe04e!important;outline-offset:5px;box-shadow:0 0 24px #ffd344!important;animation:qpt-pulse 1.3s ease-in-out infinite}
+.qpc-dialog .qpt-coach{position:relative;inset:auto!important;width:100%;margin:0 0 12px;padding:10px 36px 10px 12px;font-size:16px;border-radius:12px}
+@keyframes qpt-pulse{50%{outline-color:#fff5ae;box-shadow:0 0 36px #ffd344}}
+@media(prefers-reduced-motion:reduce){.qpt-focus{animation:none}}

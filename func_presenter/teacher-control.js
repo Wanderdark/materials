@@ -3730,6 +3730,7 @@
 
   requestAnimationFrame(() => {
     updateHudControlsWidth();
+    if (window.__oliviaQuickPlayTutorialPending === true) return;
     if (!hasPasswordRecovery) showTutorialPrompt();
     showLiteTip();
   });

@@ -24863,6 +24863,35 @@ evidenceEnd: "0:04.736",
   
 },
   {
+  id: "daily_life_chloe_camille",
+  correctOptionQuestions: [{"sentence":"Camille : You can have that if you promise to help me in the ___ .","target":"kitchen","choices":["kitchen","kitten","chicken","garden"],"bonus":{"target":"söz vermek","choices":["söz vermek","pratik yapmak","hazırlamak","korumak"],"word":"promise"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_chloe_camille.mp4",
+  title: "The Shopping Accident",
+  transcript: "Camille : You can have that if you promise to help me in the /kitchen/. Chloe : Sure! Camille : And you get these /as a bonus/! Chloe : You're the /best mom/ ever!",
+  answerOptions: [
+    { id: "a", text: "Camille : /Mutfakta/ bana yardım edeceğine söz verirsen onu alabilirsin. Chloe : Tabii! Camille : Bunları da /bonus olarak/ alıyorsun! Chloe : Sen dünyanın /en iyi annesisin/!" },
+    { id: "b", text: "Camille : Behçede bana yardım edeceğine söz verirsen onu alabilirsin. Chloe : Tabii! Camille : Bunu da ben ısmarlıyorum! Chloe : Sen harika bir annesin!" }
+  ],
+  easyDistractor: "Camille : Akşam yemeği için ne almak istersin? Chloe : Biraz makarna ve domates alalım, evde birlikte yemek yapabiliriz.",
+  correctOptionId: "a",
+  characterIds: ["chloe"],
+  grades: [6,7,8],
+  functions: ["use_of_modal_can_for_permission", "expressing_obligations_or_rules", "accepting", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.901",
+  evidenceEnd: "0:08.651",
+
+  evidenceSentence: "Camille : You can have that if you promise to help me in the /kitchen/. Chloe : Sure! Camille : And you get these /as a bonus/! Chloe : You're the /best mom/ ever!",
+  truefalsequestion: "Chloe's mom wants her to help her in the garden.",
+  truefalseanswer: false,
+
+  
+},
+  {
     id: "5_life_in_the_city_olivia_ella",
     correctOptionQuestions: [{"sentence":"Olivia : There are more than 40,000 ___ in an elephant’s trunk.","target":"muscles","choices":["muscles","mussels","bones","hearts"],"bonus":{"target":"kaslar","choices":["kaslar","midyeler","kemikler","kalpler"]}}],
     status: "",
