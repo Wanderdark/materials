@@ -56,7 +56,19 @@
     if (hit && available.includes(hit.id) && !played.includes(hit.id)) return { type: hit.id, random: false };
     return { type: available[Math.floor(random() * available.length)] || null, random: true };
   }
+  let selectorCount = 0;
   function createOmniSelector() {
+    const palette = {
+      translation: ["#ffd08a", "#f59636", "#d5661c", "#281306", "#ffc979"],
+      word: ["#31588f", "#192f5b", "#081630", "#fff6df", "#80b7ff"],
+      "true-false": ["#fff4a8", "#f4d84c", "#d6a520", "#241b03", "#ffe97d"],
+      "correct-order": ["#8154c5", "#6840ad", "#3b1d72", "#fff6ff", "#c6a1ff"]
+    };
+    const gradientPrefix = "omni-fill-" + (++selectorCount) + "-";
+    const gradients = TYPES.map(type => {
+      const colors = palette[type.id];
+      return '<linearGradient id="' + gradientPrefix + type.id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="' + colors[0] + '"/><stop offset="48%" stop-color="' + colors[1] + '"/><stop offset="100%" stop-color="' + colors[2] + '"/></linearGradient>';
+    }).join("");
     const dialog = document.createElement("div");
     dialog.className = "omni-mode-dialog";
     dialog.hidden = true;
@@ -67,9 +79,9 @@
       const radians = type.angle * Math.PI / 180;
       const x = 300 + Math.sin(radians) * 170, y = 270 - Math.cos(radians) * 170;
       const points = omniRegionPoints(type.angle).map((point) => `${point.x},${point.y}`).join(" ");
-      return `<g class="omni-type" data-omni-type="${type.id}" style="--omni-color:${type.color}"><polygon points="${points}"/><text x="${x}" y="${y + 3}">${type.label}</text><text class="omni-unavailable" x="${x}" y="${y + 24}">NO UNUSED VIDEOS</text></g>`;
+      return `<g class="omni-type" data-omni-type="${type.id}" style="--omni-color:${type.color};--omni-fill:url(#${gradientPrefix}${type.id});--omni-ink:${palette[type.id][3]};--omni-edge:${palette[type.id][4]}"><polygon points="${points}"/><text x="${x}" y="${y + 3}">${type.label}</text><text class="omni-unavailable" x="${x}" y="${y + 24}">NO UNUSED VIDEOS</text></g>`;
     }).join("");
-    dialog.innerHTML = `<section class="omni-selector-card"><p class="eyebrow">CHOOSE YOUR CHALLENGE</p><h2 id="omni-selector-title">OMNI-MODE</h2><p class="omni-selector-help">Press STOP to choose. Land in a gap for a random question type.</p><svg class="omni-selector-diagram" viewBox="0 0 600 530" aria-label="Rotating question type selector">${pentagons}<circle class="omni-orbit" cx="300" cy="270" r="108"/><g class="omni-countdown" aria-hidden="true"><circle class="omni-countdown-track" cx="300" cy="270" r="76"/><circle class="omni-countdown-progress" cx="300" cy="270" r="76" pathLength="100" transform="rotate(-90 300 270)"/></g><g class="omni-center-button" role="button" tabindex="0" aria-label="STOP"><circle class="omni-center" cx="300" cy="270" r="67"/><text class="omni-center-label" x="300" y="276">STOP</text></g><g class="omni-pointer"><path d="M300 154 L284 183 L316 183 Z"/></g></svg><p class="omni-selection-result" aria-live="polite"></p></section>`;
+    dialog.innerHTML = `<section class="omni-selector-card"><h2 id="omni-selector-title">CHOOSE YOUR CHALLENGE</h2><p class="omni-selector-help">Press STOP to choose. Land in a gap for a random question type.</p><svg class="omni-selector-diagram" viewBox="0 0 600 530" aria-label="Rotating question type selector"><defs>${gradients}</defs>${pentagons}<circle class="omni-orbit" cx="300" cy="270" r="108"/><g class="omni-countdown" aria-hidden="true"><circle class="omni-countdown-track" cx="300" cy="270" r="76"/><circle class="omni-countdown-progress" cx="300" cy="270" r="76" pathLength="100" transform="rotate(-90 300 270)"/></g><g class="omni-center-button" role="button" tabindex="0" aria-label="STOP"><circle class="omni-center" cx="300" cy="270" r="67"/><text class="omni-center-label" x="300" y="276">STOP</text></g><g class="omni-pointer"><path d="M300 154 L284 183 L316 183 Z"/></g></svg><p class="omni-selection-result" aria-live="polite"></p></section>`;
     document.body.append(dialog);
     const pointer = dialog.querySelector(".omni-pointer");
     const stopButton = dialog.querySelector(".omni-center-button");
@@ -100,6 +112,7 @@
       frame = requestAnimationFrame(animate);
     }
     function cancel() {
+      dialog.hidden = true;
       cancelAnimationFrame(frame);
       clearTimeout(finishTimer);
       clearTimeout(selectionTimer);
@@ -109,7 +122,8 @@
       onChoose = null;
       waitingToStart = false;
       playedTypes = null;
-      dialog.hidden = true;
+      dialog.querySelector(".omni-selection-zoom")?.remove();
+      dialog.classList.remove("is-launching-selection");
     }
     function finishSelection(chosen, random) {
       if (random) angle = chosen.angle;
@@ -120,7 +134,34 @@
       node.querySelector("text").textContent = chosen.label;
       node.setAttribute("aria-label", chosen.label);
       result.textContent = `${random ? "RANDOM → " : ""}${chosen.label}`;
-      finishTimer = setTimeout(() => { const resume = onChoose; playedTypes?.add(chosen.id); cancel(); resume?.(chosen.id); }, 650);
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reducedMotion) {
+        const rect = node.querySelector("polygon").getBoundingClientRect();
+        const inverse = node.ownerSVGElement.getScreenCTM().inverse();
+        const corner = new DOMPoint(rect.left, rect.top).matrixTransform(inverse);
+        const opposite = new DOMPoint(rect.right, rect.bottom).matrixTransform(inverse);
+        const zoom = document.createElement("div");
+        zoom.className = "omni-selection-zoom";
+        zoom.setAttribute("aria-hidden", "true");
+        const graphic = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        graphic.setAttribute("viewBox", `${corner.x - 5} ${corner.y - 5} ${opposite.x - corner.x + 10} ${opposite.y - corner.y + 10}`);
+        const gradient = dialog.querySelector("#" + gradientPrefix + chosen.id).cloneNode(true);
+        gradient.id += "-zoom";
+        const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+        defs.append(gradient);
+        const enlarged = node.cloneNode(true);
+        enlarged.style.setProperty("--omni-fill", `url(#${gradient.id})`);
+        graphic.append(defs, enlarged);
+        zoom.append(graphic);
+        Object.assign(zoom.style, { left: (rect.left + rect.width / 2) + "px", top: (rect.top + rect.height / 2) + "px", width: rect.width + "px", height: rect.height + "px" });
+        zoom.style.setProperty("--launch-x", (innerWidth / 2 - rect.left - rect.width / 2) + "px");
+        zoom.style.setProperty("--launch-y", (innerHeight / 2 - rect.top - rect.height / 2) + "px");
+        zoom.style.setProperty("--launch-scale", Math.max(3, Math.hypot(innerWidth, innerHeight) / Math.max(1, rect.width) * 1.05));
+        dialog.append(zoom);
+        node.classList.add("is-zoom-origin");
+        dialog.classList.add("is-launching-selection");
+      }
+      finishTimer = setTimeout(() => { const resume = onChoose; playedTypes?.add(chosen.id); cancel(); resume?.(chosen.id); }, reducedMotion ? 650 : 900);
     }
     function start() {
       if (!onChoose || !waitingToStart) return;
@@ -208,7 +249,7 @@
       }
       dialog.querySelectorAll("[data-omni-type]").forEach((node) => {
         node.classList.toggle("is-unavailable", !available.includes(node.dataset.omniType));
-        node.classList.remove("is-selected");
+        node.classList.remove("is-selected", "is-zoom-origin");
         const type = TYPES.find((type) => type.id === node.dataset.omniType);
         const rotation = layout.find((entry) => entry.id === type.id).angle - type.angle;
         node.setAttribute("transform", `rotate(${rotation} 300 270)`);

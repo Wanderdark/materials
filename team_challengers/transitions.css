@@ -1,0 +1,33 @@
+.app-shell { display: grid; grid-template-columns: minmax(0, 1fr); }
+.app-shell > .screen { grid-area: 1 / 1; align-self: start; min-width: 0; }
+.challenge-stage > :is(#wheel-zone, #difficulty-zone, #question-zone) { grid-area: 1 / 1; min-width: 0; }
+.tc-motion-root {
+  --tc-motion-scale: none;
+  --tc-motion-ms: 450ms;
+  --tc-motion-ease: cubic-bezier(.2, .7, .25, 1);
+  opacity: 1;
+  transition: opacity var(--tc-motion-ms) var(--tc-motion-ease),
+    scale var(--tc-motion-ms) var(--tc-motion-ease),
+    display var(--tc-motion-ms) allow-discrete;
+}
+.tc-motion-root[data-tc-motion-state="closed"] {
+  --tc-motion-scale: .86;
+  --tc-motion-ms: 360ms;
+  --tc-motion-ease: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0;
+  pointer-events: none !important;
+}
+[data-tc-motion-panel] { scale: var(--tc-motion-scale, none); transform-origin: center; }
+[data-tc-motion-panel]:not(.tc-motion-root) {
+  transition: scale var(--tc-motion-ms, 450ms) var(--tc-motion-ease, ease-out);
+}
+#winner-overlay > .winner-wrapper { animation: none; }
+#tc-joker-overlay > .tc-joker-modal { animation: none; }
+#auto-lb.tc-motion-root { translate: -50% -50%; transform: none; }
+@starting-style {
+  .tc-motion-root { opacity: 0; }
+  [data-tc-motion-panel] { scale: .86; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tc-motion-root, [data-tc-motion-panel] { transition: none !important; }
+}

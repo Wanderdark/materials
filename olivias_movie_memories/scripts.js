@@ -21682,7 +21682,7 @@ evidenceEnd: null,
   ],
   easyDistractor: "Emma : Hannah, dün neredeydin? Hannah : Parktaydım. Emma : Hava soğuk muydu? Hannah : Evet, çok soğuktu.",
   correctOptionId: "a",
-  characterIds: ["emma", "hannah", "ella"],
+  characterIds: ["emma", "hannah"],
   grades: [5, 6, 7, 8],
   functions: ["simple_past_tense_was_were", "asking_about", "givinginformation", "expressing_feelings"],
   theme: "life_in_the_city",
@@ -22734,6 +22734,36 @@ evidenceEnd: "0:04.736",
   truefalseanswer: true,
 
 },
+  {
+  id: "origins_mia_zoe",
+  correctOptionQuestions: [{"sentence":"Zoe : We can ___, I'm Zoe.","target":"share","choices":["share","shave","shape","shake"],"bonus":{"target":"paylaşmak","choices":["paylaşmak","tıraş olmak","şekillendirmek","sallamak"]}}],
+  status: "published",
+  rating: 9,
+  videoSrc: "assets/video/origins_mia_zoe.mp4",
+  title: "A Colourful Beginning",
+  transcript: "Mia : Oh, sorry, you /can have it/. Zoe : We can /share/, I'm Zoe. Mia : I'm Mia, let's /paint/ together! Zoe : Let's!",
+  answerOptions: [
+    { id: "b", text: "Mia : Pardon, onu /sen alabilirsin/. Zoe : /Paylaşabiliriz/, ben Zoe. Mia : Ben Mia, hadi birlikte /boyayalım/! Zoe : Hadi!" },
+    { id: "a", text: "Mia : Pardon, bunu ben alabilir miyim? Zoe : Paylaşmalıyız, ben Zoe. Mia : Ben Mia, hadi birlikte oynayalım! Zoe : Hadi!" }
+  ],
+  easyDistractor: "Mia : En sevdiğin renk hangisi? Zoe : Mor rengini çok seviyorum, çünkü çok güzel bir renk.",
+  correctOptionId: "b",
+  characterIds: ["mia", "zoe"],
+  grades: [5, 6, 7, 8],
+  functions: ["introductions", "use_of_modal_can_for_capability_and_ability", "makingasuggestion", "accepting", "responding_appropriately", "target_social_language"],
+  theme: "origins",
+  unit: "",
+
+  evidenceStart: "0:01.150",
+  evidenceEnd: "0:08.901",
+
+  evidenceSentence: "Mia : Oh, sorry, you /can have it/. Zoe : We can /share/, I'm Zoe. Mia : I'm Mia, let's /paint/ together! Zoe : Let's!",
+  truefalsequestion: "Mia and Zoe paint the book together.",
+  truefalseanswer: true,
+
+  
+    timeline: "past",
+  },
   {
   id: "6_personal_life_daniel_lucas",
   correctOptionQuestions: [{"sentence":"Daniel : You're ___ than me.","target":"braver","choices":["braver","bravery","bravest","scared"],"bonus":{"target":"daha cesur","choices":["daha cesur","cesaret","en cesur","korkmuş"]}}],
@@ -24892,6 +24922,180 @@ evidenceEnd: "0:04.736",
   
 },
   {
+  id: "daily_life_daniel_lucas",
+  correctOptionQuestions: [{"sentence":"Lucas : Daniel, can you ___ this?","target":"catch","choices":["catch","watch","touch","match"],"bonus":{"target":"atmak","choices":["atmak","yakalamak","dokunmak","eşleştirmek"],"word":"throw"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_daniel_lucas.mp4",
+  title: "The Perfect Catch",
+  transcript: "Lucas : Daniel, can you /catch/ this? Daniel : Of course, /throw/ it! Lucas : /Here it comes/!",
+  answerOptions: [
+    { id: "a", text: "Lucas : Daniel, bunu /yakalayabilir/ misin? Daniel : Tabii ki, /fırlat/! Lucas : /İşte geliyor/!" },
+    { id: "b", text: "Lucas : Daniel, dikkat et geliyor! Daniel : Yolla gelsin Lucas : Yakala!" }
+  ],
+  easyDistractor: "Lucas : Parkta ne yapmak istersin? Daniel : Futbol oynamak istiyorum, topumu evden getirdim.",
+  correctOptionId: "a",
+  characterIds: ["daniel", "lucas"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about", "use_of_modal_can_for_capability_and_ability", "giving_commands", "imperatives", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:05.650",
+
+  evidenceSentence: "Lucas : Daniel, can you /catch/ this? Daniel : Of course, /throw/ it! Lucas : /Here it comes/!",
+  truefalsequestion: "Daniel caught the disc successfully.",
+  truefalseanswer: false,
+
+  
+},
+  {
+  id: "origins_noah_victoria",
+  correctOptionQuestions: [{"sentence":"Victoria : A little, my dad ___ me, I'm Victoria.","target":"taught","choices":["taught","teached","bought","caught"],"bonus":{"target":"öğretti","choices":["öğretti","düşündü","satın aldı","yakaladı"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/origins_noah_victoria.mp4",
+  title: "The First Move",
+  transcript: "Victoria : Can I play with you? Noah : Sure, /do you know how to play/? Victoria : A little, my /dad/ taught me, I'm Victoria. Noah : I'm Noah.",
+  answerOptions: [
+    { id: "a", text: "Victoria : Seninle oynayabilir miyim? Noah : Tabii, /nasıl oynandığını biliyor musun/? Victoria : Biraz, /babam/ bana öğretti, ben Victoria. Noah : Ben Noah." },
+    { id: "b", text: "Victoria :  Seninle oynayabilir miyim? Noah : Tabii, iyi oynayabiliyor musun? Victoria : Biraz, annem bana öğretti, ben Victoria. Noah : Ben Noah." }
+  ],
+  easyDistractor: "Victoria : En sevdiğin ders hangisi? Noah : Matematiği çok seviyorum, çünkü problem çözmek çok eğlenceli.",
+  correctOptionId: "a",
+  characterIds: ["noah", "victoria"],
+  grades: [6,7,8],
+  functions: ["asking_permission", "use_of_modal_can_for_permission", "asking_about", "use_of_simple_present_tense", "simple_past_tense", "introductions", "responding_appropriately", "target_social_language"],
+  theme: "origins",
+  unit: "",
+
+  evidenceStart: "0:02.401",
+  evidenceEnd: "0:08.651",
+
+  evidenceSentence: "Victoria : Can I play with you? Noah : Sure, /do you know how to play/? Victoria : A little, my /dad/ taught me, I'm Victoria. Noah : I'm Noah.",
+  truefalsequestion: "Victoria doesn't know how to play chess.",
+  truefalseanswer: false,
+
+  
+},
+  {
+  id: "daily_life_david_ethan",
+  correctOptionQuestions: [{"sentence":"David : Ethan, you're ___ the ball wrong!","target":"holding","choices":["holding","folding","throwing","carrying"],"bonus":{"target":"yanlış","choices":["yanlış","doğru","acemice","profesyonelce"],"word":"wrong"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_david_ethan.mp4",
+  title: "Watch a Real Pro",
+  transcript: "David : Ethan, you're holding the ball wrong! Ethan : Oh, so you're a /bowling pro/ now? David : No, but I've /watched lots of videos/! Ethan : Then watch a real pro in action!",
+  answerOptions: [
+    { id: "a", text: "David : Ethan, topu yanlış tutuyorsun! Ethan : Demek artık bir /bowling pro'susun/. David : Hayır, ama bir sürü /video izledim/! Ethan : O zaman gerçek bir pro'yu iş başında izle!" },
+    { id: "b", text: "David : Ethan, topu yanlış tutuyorsun! Ethan : Bowling'de çok iyisin sanırım? David : Hayır, ama bayadır oynuyorum! Ethan : O zaman gerçek bir pro'yu iş başında izle!" }
+  ],
+  easyDistractor: "David : Bugün bowling oynamak ister misin? Ethan : Evet, bowling oynamayı çok seviyorum, hadi gidelim.",
+  correctOptionId: "a",
+  characterIds: ["david", "ethan"],
+  grades: [6,7,8],
+  functions: ["correcting_behaviour", "present_progressive", "present_perfect", "imperatives", "giving_commands", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:01.151",
+  evidenceEnd: "0:04.901",
+
+  evidenceSentence: "David : Ethan, you're holding the ball wrong! Ethan : Oh, so you're a /bowling pro/ now? David : No, but I've /watched lots of videos/! Ethan : Then watch a real pro in action!",
+  truefalsequestion: "David is a professional bowling player.",
+  truefalseanswer: false,
+
+  
+},
+  {
+  id: "daily_life_mia",
+  correctOptionQuestions: [{"sentence":"Mia : Hi, I'd like to ___ this book.","target":"return","choices":["return","borrow","renew","reserve"],"bonus":{"target":"iade etmek","choices":["iade etmek","ödünç almak","süresini uzatmak","ayırtmak"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_mia.mp4",
+  title: "Just One Day",
+  transcript: "Mia : Hi, I'd like to /return/ this book. Librarian : Of course. Librarian : You're /a little late/. Mia : Really, /how late/? Librarian : Just one hundred and twenty-seven /days/.",
+  answerOptions: [
+    { id: "a", text: "Mia : Merhaba, bu kitabı /iade etmek/ istiyorum. Kütüphaneci : Elbette. Kütüphaneci : Biraz /gecikmişsin/. Mia : Gerçekten mi, ne kadar /geciktim/? Kütüphaneci : Sadece /yüz yirmi yedi gün/." },
+    { id: "b", text: "Mia : Merhaba, bu kitabı ödünç almak istiyorum. Kütüphaneci : Elbette. Kütüphaneci : Bunun ücreti var yanlız. Mia : Gerçekten mi, ne kadar? Kütüphaneci : Sadece yüz yirmi lira." }
+  ],
+  easyDistractor: "Mia : Bu kitabı ödünç alabilir miyim? Kütüphaneci : Elbette, kitabı iki hafta boyunca okuyabilirsin.",
+  correctOptionId: "a",
+  characterIds: ["mia"],
+  grades: [6,7,8],
+  functions: ["makingrequests", "responding_appropriately", "asking_about", "askinginformationabouttime", "numbers", "use_of_to_be_present", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:10.901",
+
+  evidenceSentence: "Mia : Hi, I'd like to /return/ this book. Librarian : Of course. Librarian : You're /a little late/. Mia : Really, /how late/? Librarian : Just one hundred and twenty-seven /days/.",
+  truefalsequestion: "Mia wants to borrow a book.",
+  truefalseanswer: false,
+
+  
+},
+  {
+  id: "daily_life_ava_daniel",
+  correctOptionQuestions: [{"sentence":"Daniel : No, I want something ___!","target":"louder","choices":["louder","lower","longer","lighter"],"bonus":{"target":"daha yüksek sesli","choices":["daha yüksek sesli","daha alçak","daha uzun","daha hafif"]}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_ava_daniel.mp4",
+  title: "The Perfect Instrument",
+  transcript: "Daniel : I want to learn a musical instrument. Ava : How about the /guitar/? Daniel : No, I want something /louder/! Ava : What about learning /drums like Ethan/? Daniel : /That's a great idea/!",
+  answerOptions: [
+    { id: "a", text: "Daniel : Bir müzik aleti çalmayı öğrenmek istiyorum. Ava : /Gitara/ ne dersin? Daniel : Hayır, daha /yüksek sesli/ bir şey istiyorum! Ava : /Ethan gibi davul/ çalmayı öğrenmeye ne dersin? Daniel : /Harika bir fikir/!" },
+    { id: "b", text: "Daniel : Bir müzik aleti çalmayı öğrenmek istiyorum. Ava : Bateriye ne dersin? Daniel : Hayır, daha havalı bir şey istiyorum! Ava : Ella  gibi gitar çalmayı öğrenmeye ne dersin? Daniel : Olabilir!" }
+  ],
+  easyDistractor: "Daniel : En sevdiğin müzik aleti hangisi? Ava : Gitarı seviyorum, çünkü sesi çok güzel.",
+  correctOptionId: "a",
+  characterIds: ["daniel", "ava"],
+  grades: [6,7,8],
+  functions: ["expressing_needs", "makingasuggestion", "suggesting", "comparatives_of_adjectives", "gerunds_and_infinitives", "expressing_a_preference", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:01.901",
+  evidenceEnd: "0:07.901",
+
+  evidenceSentence: "Daniel : I want to learn a musical instrument. Ava : How about the /guitar/? Daniel : No, I want something /louder/! Ava : What about learning /drums like Ethan/? Daniel : /That's a great idea/!",
+  truefalsequestion: "Daniel wants to learn playing drums.",
+  truefalseanswer: true,
+
+  
+},
+  {
+  id: "daily_life_ella_ethan",
+  correctOptionQuestions: [{"sentence":"Ella : I don't know, let me try one more ___ !","target":"song","choices":["song","long","strong","sound"],"bonus":{"target":"satın almak","choices":["satın almak","satmak","denemek","taşımak"],"word":"buy"}}],
+  status: "published",
+  rating: 8,
+  videoSrc: "assets/video/daily_life_ella_ethan.mp4",
+  title: "Just One More Song!",
+  transcript: "Ella : Wow, /I love the sound/ of this guitar! Ethan : It sounds great, are you going to /buy it/? Ella : I don't know, let me try one more song! Ethan : Ella, you've already played /five/ songs! Ella : Just one more!",
+  answerOptions: [
+    { id: "b", text: "Ella : Vay canına, /bu gitarın sesine bayıldım/! Ethan : Kulağa harika geliyor, onu satın /alacak mısın/? Ella : Bilemedim bir şarkı daha deneyeyim! Ethan : Ella, zaten /beş/ şarkı çaldın! Ella : Sadece bir tane daha!" },
+    { id: "a", text: "Ella : Eh işte, bu gitardan pek emin olamadım! Ethan : Başka bir gitara bak istersen. Ella : Bilemedim, bir şarkı daha deneyeyim! Ethan : Ella, zaten üç şarkı çaldın! Ella : Sadece bir tane daha!" }
+  ],
+  easyDistractor: "Ella : Gitar çalmayı sever misin? Ethan : Evet, ama piyano çalmayı daha çok seviyorum.",
+  correctOptionId: "b",
+  characterIds: ["ella", "ethan"],
+  grades: [6,7,8],
+  functions: ["expressing_likes_and_dislikes", "expressing_feelings", "present_progressive_for_planned_future", "be_going_to_future_tense_for_plans", "present_perfect", "makingrequests", "numbers", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:09.901",
+
+  evidenceSentence: "Ella : Wow, /I love the sound/ of this guitar! Ethan : It sounds great, are you going to /buy it/? Ella : I don't know, let me try one more song! Ethan : Ella, you've already played /five/ songs! Ella : Just one more!",
+  truefalsequestion: "Ella doesn't like the sound of that guitar.",
+  truefalseanswer: false,
+
+  
+},
+  {
     id: "5_life_in_the_city_olivia_ella",
     correctOptionQuestions: [{"sentence":"Olivia : There are more than 40,000 ___ in an elephant’s trunk.","target":"muscles","choices":["muscles","mussels","bones","hearts"],"bonus":{"target":"kaslar","choices":["kaslar","midyeler","kemikler","kalpler"]}}],
     status: "",
@@ -26339,6 +26543,246 @@ evidenceEnd: "0:03.739",
   truefalsequestion: "The apples aren't sweet.",
   truefalseanswer: true,
 
+},
+  
+  {
+  id: "daily_life_ella_olivia",
+  correctOptionQuestions: [{"sentence":"Olivia : It's a ___, don't look!","target":"surprise","choices":["surprise","suppose","support","surface"],"bonus":{"target":"sürpriz","choices":["sürpriz","varsaymak","desteklemek","yüzey"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_ella_olivia.mp4",
+  title: "The Surprise Painting",
+  transcript: "Ella : Olivia, what are you painting? Olivia : /It's a surprise/, don't look! Ella : Come on, just one little look! Olivia : Okay, but /don't laugh/!",
+  answerOptions: [
+    { id: "b", text: "Ella : Olivia, ne boyuyorsun? Olivia : /Bu bir sürpriz/, bakma! Ella : Hadi ama, birazcık bakıyım! Olivia : Tamam, ama /gülme/!" },
+    { id: "a", text: "Ella : Olivia, ne boyuyorsun? Olivia : Pek güzel olmadı, bakma! Ella : Hadi ama, birazcık bakıyım! Olivia : Tamam, ama alay etmek yok!" }
+  ],
+  easyDistractor: "Ella : Bu kupayı hangi renge boyamalıyım? Olivia : Bence maviye boya, mavi benim en sevdiğim renk.",
+  correctOptionId: "b",
+  characterIds: ["ella", "olivia"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about", "present_progressive", "expressing_prohibition", "imperatives", "makingrequests", "accepting", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:01.400",
+  evidenceEnd: "0:07.901",
+
+  evidenceSentence: "Ella : Olivia, what are you painting? Olivia : /It's a surprise/, don't look! Ella : Come on, just one little look! Olivia : Okay, but /don't laugh/!",
+  truefalsequestion: "Olivia painted Ella's face as a surprise.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_emma_hannah2",
+  correctOptionQuestions: [{"sentence":"Emma : Was that too ___?","target":"high","choices":["high","height","higher","heavy"],"bonus":{"target":"yüksek","choices":["yüksek","yükseklik","daha yüksek","ağır"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_emma_hannah2.mp4",
+  title: "Too High!",
+  transcript: "Hannah : /Ready/, Emma? Emma : Yes, let's play! Hannah : Here you go! Emma : Was that too /high/?",
+  answerOptions: [
+    { id: "a", text: "Hannah : /Hazır mısın/ Emma? Emma : Evet, hadi oynayalım! Hannah : İşte geliyor! Emma : Çok mu /yükseğe/ gitti?" },
+    { id: "b", text: "Hannah : Oynayalım mı Emma? Emma : Evet, hadi oynayalım! Hannah : İşte geliyor! Emma : Çok mu uzağa gitti?" }
+  ],
+  easyDistractor: "Hannah : En sevdiğin spor hangisi? Emma : Badminton oynamayı seviyorum, genellikle hafta sonları oynarım.",
+  correctOptionId: "a",
+  characterIds: ["emma", "hannah"],
+  grades: [5, 6, 7, 8],
+  functions: ["asking_about", "makingasuggestion", "responding_appropriately", "simple_past_tense_was_were", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:06.151",
+
+  evidenceSentence: "Hannah : /Ready/, Emma? Emma : Yes, let's play! Hannah : Here you go! Emma : Was that too /high/?",
+  truefalsequestion: "Emma and Hannah are playing badminton.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "origins_benjamin_jack_callum",
+  correctOptionQuestions: [{"sentence":"Callum : I'm Callum, and this is my ___ Jack.","target":"son","choices":["son","sun","some","child"],"bonus":{"target":"oğul","choices":["oğul","güneş","biraz","yakında"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/origins_benjamin_jack_callum.mp4",
+  title: "The Kite Rescue",
+  transcript: "Benjamin : Oh no, my /kite/! Jack : Wait, /we can help you/! Benjamin : Thanks, sir, I'm Benjamin. Callum : I'm Callum, and this is my son Jack.",
+  answerOptions: [
+    { id: "b", text: "Benjamin : Olamaz, /uçurtmam/! Jack : Bekle, /sana yardım edebiliriz/! Benjamin : Teşekkürler efendim, ben Benjamin. Callum : Ben Callum, bu da oğlum Jack." },
+    { id: "a", text: "Benjamin : Olamaz, takıldı Jack : Yardım ister misin? Benjamin : Teşekkürler efendim, ben Benjamin. Callum : Ben Callum, bu da oğlum Jack." }
+  ],
+  easyDistractor: "Benjamin : Bugün hava nasıl? Jack : Hava güneşli ve rüzgârlı, parkta uçurtma uçurabiliriz.",
+  correctOptionId: "b",
+  characterIds: ["benjamin", "jack"],
+  grades: [5,6,7],
+  functions: ["expressing_feelings", "offeringhelp", "use_of_modal_can_for_capability_and_ability", "introductions", "introducing_others", "possessive_adjective", "responding_appropriately", "target_social_language"],
+  theme: "origins",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:05.150",
+
+  evidenceSentence: "Benjamin : Oh no, my /kite/! Jack : Wait, /we can help you/! Benjamin : Thanks, sir, I'm Benjamin. Callum : I'm Callum, and this is my son Jack.",
+  truefalsequestion: "Jack's dad helped Benjamin to save his kite.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_benjamin_jack3",
+  correctOptionQuestions: [{"sentence":"Benjamin : Just be ___!","target":"careful","choices":["careful","careless","colourful","cheerful"],"bonus":{"target":"dikkatli","choices":["dikkatli","dikkatsiz","renkli","neşeli"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_benjamin_jack3.mp4",
+  title: "Just Be Careful",
+  transcript: "Benjamin : Jack, don't hit the ball /too hard/! Jack : Don't worry, I've got this! Benjamin : Just /be careful/.",
+  answerOptions: [
+    { id: "a", text: "Benjamin : Jack, topa çok /sert vurma/! Jack : Endişelenme, ben hallederim! Benjamin : Sadece /dikkatli ol/." },
+    { id: "b", text: "Benjamin : Jack, topa dikkatli vur! Jack : Endişelenme, ben hallederim! Benjamin : Sadece yavaş ol." }
+  ],
+  easyDistractor: "Benjamin : Bilardo oynamayı biliyor musun? Jack : Hayır, ama öğrenmek istiyorum, bana öğretebilir misin?",
+  correctOptionId: "a",
+  characterIds: ["benjamin", "jack"],
+  grades: [5,6,7],
+  functions: ["giving_a_warning", "giving_commands", "imperatives", "expressing_prohibition", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.000",
+  evidenceEnd: "0:04.401",
+
+  evidenceSentence: "Benjamin : Jack, don't hit the ball /too hard/! Jack : Don't worry, I've got this! Benjamin : Just /be careful/.",
+  truefalsequestion: "Benjamin tells Jack to play carefully.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_daniel_olivia_lucas",
+  correctOptionQuestions: [{"sentence":"Daniel : Olivia, move faster ! Olivia : Daniel, stop giving me ___ !","target":"orders","choices":["orders","borders","olders","advices"],"bonus":{"target":"emir","choices":["emir","tavsiye","seçenek","rica"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_daniel_olivia_lucas.mp4",
+  title: "The Team Captain",
+  transcript: "Daniel : Olivia, move /faster/! Olivia : Daniel, /stop giving me orders/! Lucas : Who's the team captain? Olivia : /He thinks he is/!",
+  answerOptions: [
+    { id: "b", text: "Daniel : Olivia, daha /hızlı/ hareket et! Olivia : Daniel, bana /emir vermeyi bırak/! Lucas : Takım kaptanı kim? Olivia : /Kendini kaptan sanıyor/!" },
+    { id: "a", text: "Daniel : Olivia, dikkatli ol! Olivia : Daniel, elimden geleni yapıyorum! Lucas : Takım kaptanı kim? Olivia : Kaptan olmak istiyor!" }
+  ],
+  easyDistractor: "Lucas : Hangi oyunu oynamak istersiniz? Emma : Langırt oynayalım, dört kişi iki takım oluşturabiliriz.",
+  correctOptionId: "b",
+  characterIds: ["daniel", "olivia", "lucas"],
+  grades: [6,7,8],
+  functions: ["giving_commands", "imperatives", "correcting_behaviour", "expressing_prohibition", "askingaboutsomeone", "use_of_wh_questions_who_what", "use_of_simple_present_tense", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:01.150",
+  evidenceEnd: "0:08.401",
+
+  evidenceSentence: "Daniel : Olivia, move /faster/! Olivia : Daniel, /stop giving me orders/! Lucas : Who's the team captain? Olivia : /He thinks he is/!",
+  truefalsequestion: "Olivia and Daniel are in the same team.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_david_ethan2",
+  correctOptionQuestions: [{"sentence":"David : Please tell me that's a ___ part.","target":"spare","choices":["spare","space","special","square"],"bonus":{"target":"yedek","choices":["yedek","uzay","özel","kare"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_david_ethan2.mp4",
+  title: "The Leftover Piece",
+  transcript: "David : Finally, our model plane is /ready/! Ethan : Wait, where does this piece go? David : Please tell me that's a /spare part/.",
+  answerOptions: [
+    { id: "b", text: "David : Sonunda, model uçağımız /hazır/! Ethan : Bekle, bu parça nereye takılıyor? David : Lütfen bunun /yedek/ bir parça olduğunu söyle." },
+    { id: "a", text: "David : Model uçağımız gayet güzel oldu! Ethan : Bekle, bu parça nereye takılıyor? David : Lütfen bunun önemli bir parça olmadığını söyle." }
+  ],
+  easyDistractor: "David : Bugün ne yapmak istersin? Ethan : Birlikte film izleyelim, sonra biraz oyun oynayabiliriz.",
+  correctOptionId: "b",
+  characterIds: ["david", "ethan"],
+  grades: [6,7,8],
+  functions: ["expressing_feelings", "expressingsurprise", "askingaboutlocation", "use_of_wh_questions_who_when_what_where", "makingrequests", "imperatives", "use_of_to_be_present", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:01.400",
+  evidenceEnd: "0:10.650",
+
+  evidenceSentence: "David : Finally, our model plane is /ready/! Ethan : Wait, where does this piece go? David : Please tell me that's a /spare part/.",
+  truefalsequestion: "Benjamin and David are working on a model plane.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_mia_zoe",
+  correctOptionQuestions: [{"sentence":"Mia : Really, it must be very ___!","target":"expensive","choices":["expensive","exciting","excellent","enormous"],"bonus":{"target":"pahalı","choices":["pahalı","heyecan verici","mükemmel","kocaman"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_mia_zoe.mp4",
+  title: "The Old Book",
+  transcript: "Zoe : Wow, this book is over a /hundred years old/! Mia : Really, it must be very /expensive/! Zoe : I think so, let's check the price tag! Mia : It's only /two/ pounds.",
+  answerOptions: [
+    { id: "a", text: "Zoe : Vay canına, bu kitap /yüz yıldan daha eski/! Mia : Gerçekten mi, çok /pahalı/ olmalı! Zoe : Bence de, hadi fiyat etiketine bakalım! Mia : Sadece /iki/ sterlin." },
+    { id: "b", text: "Zoe : Vay canına, bu kitap çok eski görünüyor! Mia : Gerçekten mi, çok ucuz olmalı! Zoe : Bence de, hadi fiyat etiketine bakalım! Mia : Sadece yirmi sterlin." }
+  ],
+  easyDistractor: "Zoe : Ne tür kitaplar okumayı seversin? Mia : Macera kitaplarını seviyorum, çünkü çok heyecan vericiler.",
+  correctOptionId: "a",
+  characterIds: ["zoe", "mia"],
+  grades: [6,7],
+  functions: ["expressingsurprise", "numbers", "use_of_to_be_present", "use_of_modal_must_for_external_obligation", "asking_for_price", "makingasuggestion", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:02.151",
+  evidenceEnd: "0:12.203",
+
+  evidenceSentence: "Zoe : Wow, this book is over a /hundred years old/! Mia : Really, it must be very /expensive/! Zoe : I think so, let's check the price tag! Mia : It's only /two/ pounds.",
+  truefalsequestion: "The price of the book is 2 pounds.",
+  truefalseanswer: true,
+
+  
+},
+  
+  {
+  id: "daily_life_benjamin_lucas",
+  correctOptionQuestions: [{"sentence":"Lucas : Yeah, but I know someone ___.","target":"stronger","choices":["stronger","stranger","smaller","slower"],"bonus":{"target":"daha güçlü","choices":["daha güçlü","yabancı","daha küçük","daha yavaş"]}}],
+  status: "published",
+  rating: 7,
+  videoSrc: "assets/video/daily_life_benjamin_lucas.mp4",
+  title: "The Real Superhero",
+  transcript: "Benjamin : Look at this superhero, he's so /strong/! Lucas : Yeah, but /I know someone stronger/. Benjamin : Really, who? Lucas : My dad.",
+  answerOptions: [
+    { id: "b", text: "Benjamin : Şu süper kahramana bak, çok /güçlü/! Lucas : Evet, ama ben /daha güçlü birini tanıyorum/. Benjamin : Gerçekten mi, kimi? Lucas : Babamı." },
+    { id: "a", text: "Benjamin : Şu çizgi romana bak çok güzel! Lucas : Evet çok sevdiğim biri bana hep onu hediye eder. Benjamin : Gerçekten mi, kim? Lucas : Babam." }
+  ],
+  easyDistractor: "Benjamin : En sevdiğin çizgi roman hangisi? Lucas : Süper kahraman çizgi romanlarını seviyorum, çünkü çok heyecan vericiler.",
+  correctOptionId: "b",
+  characterIds: ["benjamin", "lucas"],
+  grades: [5, 6, 7, 8],
+  functions: ["comparatives_of_adjectives", "comparative_and_superlative_adjectives", "describing_personality", "askingaboutsomeone", "use_of_wh_questions_who_what", "possessive_adjective", "use_of_simple_present_tense", "responding_appropriately", "target_social_language"],
+  theme: "daily_life",
+  unit: "",
+
+  evidenceStart: "0:00.901",
+  evidenceEnd: "0:06.035",
+
+  evidenceSentence: "Benjamin : Look at this superhero, he's so /strong/! Lucas : Yeah, but /I know someone stronger/. Benjamin : Really, who? Lucas : My dad.",
+  truefalsequestion: "Lucas thinks his dad is stronger than a super hero.",
+  truefalseanswer: true,
+
+  
 },
   ];
 

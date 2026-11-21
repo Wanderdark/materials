@@ -2502,6 +2502,7 @@
   #student-overlay .std-actions{flex-wrap:wrap}
   #student-overlay .std-actions>.qpc-actions{flex:1 1 100%;margin:0}
 </style>
+<link rel="stylesheet" href="transitions.css">
 </head>
 <body>
 
@@ -3043,6 +3044,7 @@ window.wmFriendMode = new URLSearchParams(location.search).get('mode') === 'stud
 window.__forceTeacherControl = !window.wmFriendMode;
 </script>
 <script src="../func_presenter/names.js"></script>
+<script src="transitions.js"></script>
 <script>
 if (window.wmFriendMode) {
   document.write('<script src="../func_presenter/student.js"><\/script>');
@@ -3128,6 +3130,7 @@ function startGame() {
 }
 
 function menuStart() {
+  goFullscreen();
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   applyGroupCountUI();
   document.getElementById('main-menu').style.display = 'none';
@@ -3528,7 +3531,7 @@ function applyJokerDegistir() {
 
   // Hex + tanım + sayaç yenile (q-overlay açık kalsın)
   const qWord = document.getElementById('q-word');
-  if(qWord) { qWord.innerHTML = ''; qWord.classList.remove('pulsing'); }
+  if(qWord) { WmTransitions.leaveWords(qWord); qWord.innerHTML = ''; qWord.classList.remove('pulsing'); }
   flashWord(currentQ);
   buildHexRow(answers[currentQ] || '');
   applyJokerFlood();
@@ -3598,8 +3601,8 @@ function skipQuestion() {
 
   // q-overlay içini sıfırla (overlay açık kalsın — closeQOverlay çağırma)
   const qWord = document.getElementById('q-word');
-  if(qWord) { qWord.innerHTML = ''; qWord.classList.remove('pulsing'); }
-  const hr = document.getElementById('hex-row'); if(hr) hr.innerHTML = '';
+  if(qWord) { WmTransitions.leaveWords(qWord); qWord.innerHTML = ''; qWord.classList.remove('pulsing'); }
+  const hr = document.getElementById('hex-row'); if(hr) { WmTransitions.leaveWords(hr); hr.innerHTML = ''; }
   const ar = document.getElementById('answer-row'); if(ar) ar.classList.remove('visible');
   const qkb = document.getElementById('q-kb-wrap'); if(qkb) { qkb.style.display=''; qkb.innerHTML=''; }
   const rab = document.getElementById('reveal-answer-btn'); if(rab) rab.classList.remove('visible');
@@ -4028,11 +4031,13 @@ function showQuestion(pts) {
 /* ── DEFINITION DISPLAY ── */
 function flashWord(definition) {
   const el = document.getElementById('q-word');
+  WmTransitions.leaveWords(el);
   el.innerHTML = '';
   const defDiv = document.createElement('div');
   defDiv.className = 'q-def';
   defDiv.textContent = definition;
   el.appendChild(defDiv);
+  WmTransitions.enterWords(defDiv);
   el.classList.add('pulsing');
 }
 
@@ -4058,6 +4063,7 @@ function playRapidBeep(vol) {
 function buildHexRow(answer, animate) {
   const row = document.getElementById('hex-row');
   if(!row) return;
+  WmTransitions.leaveWords(row);
   row.innerHTML = '';
   row.classList.remove('hex-sm');
   fitHexRowToScreen(answer, row);
@@ -4089,6 +4095,7 @@ function buildHexRow(answer, animate) {
     row.appendChild(box);
     hexOrder++;
   }
+  WmTransitions.enterWords(row);
 }
 
 function fitHexRowToScreen(answer, row) {
@@ -4585,6 +4592,7 @@ function openModal(mode) {
   } else {
     title.textContent = 'ANSWER?';
     ans.classList.remove('hidden');
+    WmTransitions.enterWords(ans);
     const correctBtn = document.createElement('button');
     correctBtn.className = 'btn-correct';
     correctBtn.textContent = '✓ Correct';
@@ -4600,6 +4608,7 @@ function openModal(mode) {
 
 function revealAnswer() {
   document.getElementById('modal-answer').classList.remove('hidden');
+  WmTransitions.enterWords(document.getElementById('modal-answer'));
   const actions = document.getElementById('modal-actions');
   actions.innerHTML = '';
   const exitBtn = document.createElement('button');
@@ -5000,7 +5009,7 @@ function dismissGoForIt() {
   ov.style.transform = 'translateX(-50%) translateY(14px)';
   ov.style.pointerEvents = 'none';
   ov.onclick = null;
-  setTimeout(() => { ov.style.display = 'none'; }, 320);
+  ov.style.display = 'none';
 }
 
 function nextTurn() { advanceTurn(); }
@@ -6397,6 +6406,8 @@ function openQOverlay() {
 }
 
 function closeQOverlay() {
+  WmTransitions.leaveWords(document.getElementById('q-word'));
+  WmTransitions.leaveWords(document.getElementById('hex-row'));
   const ov = document.getElementById('q-overlay');
   if(ov) ov.classList.remove('open');
   document.body.classList.remove('q-open');
@@ -6799,6 +6810,7 @@ function showWheelOverlay() {
 }
 
 function closeWheelOverlay() {
+  WmTransitions.leaveWords(document.getElementById('wwc-word'));
   const ov = document.getElementById('wheel-overlay');
   if(ov) ov.style.display = 'none';
   const autoOpenPts = _wheelPendingPts;  // wheel kapanınca otomatik soruya geç
@@ -7116,6 +7128,7 @@ function handleWfWordChallenge(type) {
   document.getElementById('wwc-type-label').textContent =
     type === 'syn' ? '🔤 EŞ ANLAMLISINI BUL' : '🔁 ZIT ANLAMLISINI BUL';
   document.getElementById('wwc-word').textContent = qWord;
+  WmTransitions.enterWords(document.getElementById('wwc-word'));
 
   const optEl = document.getElementById('wwc-options');
   optEl.innerHTML = '';

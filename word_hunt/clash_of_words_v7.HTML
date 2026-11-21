@@ -1634,6 +1634,9 @@ function startMenuEffects(){
 }
 
 function onMenuPlay(){
+  if(!document.fullscreenElement){
+    document.documentElement.requestFullscreen?.().catch(()=>{});
+  }
   stopMenuEffects();
   if(_teacherMode && CLASSES.length>0){
     openSettings();

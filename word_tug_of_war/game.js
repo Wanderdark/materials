@@ -73,8 +73,8 @@
       // Distractors stay in the selected curriculum, including questions not used as targets.
       this.choicePool = pool;
       this.limit = Math.max(1, Number(options.limit) || 5);
-      this.correctDelay = Math.max(0, Number(options.correctDelay) || 800);
-      this.wrongDelay = Math.max(0, Number(options.wrongDelay) || 1500);
+      this.correctDelay = Math.max(0, Number(options.correctDelay) || 1500);
+      this.wrongDelay = Math.max(0, Number(options.wrongDelay) || 2500);
       this.random = random;
       this.position = 0;
       this.phase = 'playing';
@@ -462,7 +462,7 @@
     $('finish').hidden = screen !== 'game';
     if (screen !== 'game') finishArmed = false;
     if (screen !== 'game') music?.pause();
-    ['setup', 'selection', 'game', 'result'].forEach(name => { $(`${name}-screen`).hidden = name !== screen; });
+    TugTransitions.showScreen(screen);
     window.scrollTo(0, 0);
     if (enteringResult) startFinalPresentation();
   }
@@ -479,7 +479,7 @@
       match.correctDelay = settings().correctDelay;
       match.wrongDelay = settings().wrongDelay;
     }
-    try { localStorage.setItem(preferenceKey, JSON.stringify(settings())); } catch {}
+    try { localStorage.setItem(preferenceKey, JSON.stringify({ ...settings(), timingVersion: 2 })); } catch {}
   }
 
   function setLiteMode(enabled) {
@@ -510,8 +510,13 @@
       setMusicVolume(localStorage.getItem(musicVolumePreferenceKey) ?? 75, false);
       const saved = JSON.parse(localStorage.getItem(preferenceKey) || 'null');
       if (!saved) return;
-      if (saved.correctDelay >= 400 && saved.correctDelay <= 2500) $('correct-delay').value = saved.correctDelay;
-      if (saved.wrongDelay >= 800 && saved.wrongDelay <= 3500) $('wrong-delay').value = saved.wrongDelay;
+      if (saved.timingVersion === 2) {
+        if (saved.correctDelay >= 400 && saved.correctDelay <= 2500) $('correct-delay').value = saved.correctDelay;
+        if (saved.wrongDelay >= 800 && saved.wrongDelay <= 3500) $('wrong-delay').value = saved.wrongDelay;
+      } else {
+        $('correct-delay').value = 1500;
+        $('wrong-delay').value = 2500;
+      }
       if ([3, 5, 7, 10].includes(saved.limit)) $('rope-limit').value = saved.limit;
     } catch {}
   }
@@ -665,7 +670,7 @@
     const token = side.token;
     const roundMedia = { ready: false, count: 0, failed: false };
     media[team] = roundMedia;
-    const card = element('article', undefined, 'play-side');
+    const card = element('article', undefined, 'play-side tug-question-loading');
     card.id = `side-${team}`;
     card.dataset.team = team;
     card.dataset.mode = mode;
@@ -704,6 +709,7 @@
           roundMedia.count++;
           if (roundMedia.count === (wordMode ? 1 : 4) && !roundMedia.failed) {
             roundMedia.ready = true;
+            TugTransitions.revealQuestion(card);
             feedback.textContent = '';
             syncInputs(team);
           }
@@ -769,6 +775,7 @@
     });
     buttons[index].classList.add(result.correct ? 'correct' : 'wrong');
     if (!result.correct) buttons[result.correctIndex].classList.add('correct');
+    if (result.correct) TugTransitions.moveAnswerWord(panel);
     const feedback = $(`feedback-${team}`);
     feedback.dataset.kind = result.correct ? 'correct' : 'wrong';
     feedback.textContent = result.correct ? 'Correct! Pull together.' : 'Have a look. Next word coming up…';
@@ -962,7 +969,17 @@
       const key = `${state}:${seconds}`;
       if (card.dataset.comebackState === key) return;
       card.dataset.comebackState = key;
-      card.querySelectorAll('.comeback-message').forEach(message => message.remove());
+      const existing = card.querySelector('.comeback-message:not([data-leaving])');
+      if (existing && state && existing.classList.contains(`comeback-${state}`)) {
+        const counter = existing.querySelector('span');
+        if (state === 'wait' && seconds !== '') {
+          if (counter) counter.textContent = String(seconds);
+          else existing.append(element('span', String(seconds)));
+        }
+        else if (state === 'chance') existing.textContent = `DOUBLE PULL · ${seconds}`;
+        return;
+      }
+      card.querySelectorAll('.comeback-message').forEach(TugTransitions.removeOverlay);
       card.classList.toggle('comeback-active', state === 'chance');
       if (state) {
         const message = element('div', undefined, `comeback-message comeback-${state}`);
@@ -972,6 +989,7 @@
           if (seconds !== '') message.append(element('span', String(seconds)));
         } else message.textContent = state === 'intro' ? 'COMEBACK CHANCE!' : `DOUBLE PULL · ${seconds}`;
         card.append(message);
+        TugTransitions.enterOverlay(message);
       }
       syncInputs(team);
     });
@@ -1051,6 +1069,9 @@
         completeMatch();
         return;
       }
+      match.sides.forEach((side, team) => {
+        if (!match.comeback && side.readyAt && side.readyAt - now <= 360) TugTransitions.dismissQuestion($(`side-${team}`));
+      });
       match.tick(now).forEach(renderSide);
     }
     frame = requestAnimationFrame(runFrame);

@@ -559,7 +559,7 @@
     });
 
     const roster = document.getElementById("tc-standalone-roster");
-    const delay = roster ? 480 : 1000;
+    const delay = roster ? 480 : 700;
     document.addEventListener("selectstart", event => {
       if (hold || launcher?.open) event.preventDefault();
     }, true);

@@ -136,7 +136,19 @@
     text-align: center;
     letter-spacing: 0.06em; line-height: 1;
     min-height: 1.2em;
-    text-shadow: 0 0 20px rgba(255,215,0,0.7), 0 0 50px rgba(255,215,0,0.35), 0 0 90px rgba(255,215,0,0.15);
+    text-shadow: 0 0 14px rgba(255,215,0,0.28);
+  }
+  #q-word { max-width: 100%; overflow-wrap: anywhere; }
+  .q-panel {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    width: min(84%, 960px);
+  }
+  .q-panel:has(#q-word:not(:empty)) {
+    padding: clamp(8px, 1.5vh, 16px) clamp(12px, 3vw, 44px);
+    background: linear-gradient(155deg, #131d45, #050a1f);
+    border: 1px solid rgba(255,215,0,.43);
+    border-radius: 22px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.28);
   }
   body.lite-mode #q-word { text-shadow: none; }
 
@@ -181,11 +193,15 @@
   .cat-hard:hover:not(:disabled) { border-color: rgba(248,113,113,0.6) !important; background: rgba(248,113,113,0.08) !important; }
 
   /* answer-row: answer-now + joker-btn birlikte */
-  #answer-row { display: none; gap: 10px; align-items: stretch; }
-  #answer-row.visible { display: flex; }
+  #answer-row {
+    position: absolute; z-index: 4; inset-inline: 0; bottom: 76px;
+    display: none; grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    gap: 10px;
+  }
+  #answer-row.visible { display: grid; }
 
   #answer-now {
-    flex: 3; padding: 28px 16px;
+    padding: 14px 12px;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: clamp(18px,2.5vw,26px); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     background: linear-gradient(135deg, #ff6600, #ff9500);
@@ -199,7 +215,6 @@
 
   /* Joker butonu */
   #joker-btn {
-    flex: 1;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: clamp(13px,1.6vw,18px); font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
     background: linear-gradient(135deg, #5b21b6, #8b5cf6);
@@ -525,23 +540,29 @@
   #main-menu {
     position: fixed; inset: 0; z-index: 100;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(2,6,28,0.97);
-    backdrop-filter: blur(10px);
+    padding: 68px clamp(18px, 5vw, 88px);
+    overflow: auto;
+    background: linear-gradient(90deg, rgba(3,7,23,.98), rgba(3,7,23,.76) 49%, rgba(10,13,43,.24)),
+      url("background.webp") center / cover no-repeat #060b22;
   }
-  .mm-wrap { text-align: center; }
+  .mm-wrap {
+    width: min(100%, 1240px); margin: auto;
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center; gap: clamp(24px, 5vw, 80px);
+  }
   .mm-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(88px, 16vw, 168px);
-    color: var(--gold); line-height: .88; letter-spacing: .04em;
-    text-shadow: 0 0 60px rgba(255,215,0,.5), 0 0 140px rgba(255,215,0,.2);
-    margin-bottom: 20px;
+    font-size: clamp(64px, 12vw, 174px); font-weight: 400;
+    color: #fff6dc; line-height: .82; letter-spacing: .015em;
+    margin: 0 0 24px;
   }
+  .mm-logo span { display: block; color: #ffd66b; }
   .mm-byline {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(12px, 1.8vw, 19px); letter-spacing: .22em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 64px;
+    font-size: clamp(12px, 1.5vw, 17px); letter-spacing: .13em; text-transform: uppercase;
+    color: #c2cbe3; margin: 22px 0 0;
   }
-  .mm-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+  .mm-btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .mm-btn {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: clamp(17px, 2.4vw, 23px); font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
@@ -551,8 +572,45 @@
   .mm-btn:hover  { transform: translateY(-4px); }
   .mm-btn:active { transform: scale(.95); }
   .mm-start-btn {
-    background: linear-gradient(135deg, #1DB954, #15803d);
-    color: #fff; box-shadow: 0 6px 30px rgba(29,185,84,.45);
+    display: inline-flex; align-items: center; gap: 28px;
+    padding: 14px 26px; border-radius: 12px;
+    background: linear-gradient(135deg, #fff2bd, #ffc650);
+    color: #211729; box-shadow: 0 8px 26px rgba(255,191,75,.24), inset 0 1px #fff8dd;
+  }
+  .mm-start-btn:focus-visible { outline: 2px solid white; outline-offset: 5px; }
+  .mm-art {
+    position: relative; isolation: isolate; aspect-ratio: 1; width: min(100%, 64vh);
+    justify-self: center; display: grid; place-items: center;
+    background: radial-gradient(ellipse, rgba(148,104,255,.42), rgba(65,82,209,.17) 49%, transparent 72%);
+  }
+  .mm-art::before, .mm-art::after {
+    content: ''; position: absolute; inset: 16% 2%;
+    border: 1px solid rgba(196,186,255,.38); border-radius: 50%;
+    transform: rotate(-28deg) scaleY(.62); z-index: -1;
+  }
+  .mm-art::after { inset: 6%; transform: rotate(28deg) scaleY(.68); border-color: rgba(255,215,129,.34); }
+  .mm-tiles {
+    width: 64%; display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 7%; perspective: 800px; transform: rotate(-10deg);
+  }
+  .mm-tiles span {
+    aspect-ratio: 1; display: grid; place-items: center; border-radius: 18%;
+    font: 400 clamp(36px, 7vw, 96px)/1 'Bebas Neue', sans-serif;
+    background: linear-gradient(145deg, #fff6d9, #e7bc62); color: #292044;
+    border: 1px solid #fff4d3; transform: rotateX(14deg);
+    box-shadow: 0 7px #947041, 0 18px 24px rgba(0,0,0,.48);
+  }
+  .mm-tiles span:nth-child(2), .mm-tiles span:nth-child(3) {
+    background: linear-gradient(145deg, #554aac, #25204f); color: #f4eeff;
+    border-color: #958bea; box-shadow: 0 7px #171332, 0 18px 24px rgba(0,0,0,.48);
+  }
+  @media (max-width: 700px) {
+    .mm-wrap { grid-template-columns: 1fr; gap: 16px; text-align: center; }
+    .mm-logo { font-size: clamp(56px, 14vw, 98px); margin-bottom: 18px; }
+    .mm-btns { justify-content: center; }
+    .mm-byline { margin-top: 14px; }
+    .mm-art { grid-row: 1; width: min(48vw, 28vh, 210px); }
+    .mm-tiles span { font-size: clamp(24px, 7vw, 55px); }
   }
   .mm-settings-btn {
     background: rgba(255,255,255,0.06); color: var(--gold);
@@ -1638,10 +1696,15 @@
 <!-- ═══════════ MAIN MENU ═══════════ -->
 <div id="main-menu">
   <div class="mm-wrap">
-    <div class="mm-logo">WORD<br>CONTEST</div>
-    <div class="mm-byline">Designed by <strong>Adil Fırat Oktav</strong></div>
-    <div class="mm-btns">
-      <button class="mm-btn mm-start-btn" onclick="menuStart()">▶ START</button>
+    <div>
+      <h1 class="mm-logo">WORD <span>CONTEST</span></h1>
+      <div class="mm-btns">
+        <button class="mm-btn mm-start-btn" type="button" onclick="menuStart()">START <span aria-hidden="true">→</span></button>
+      </div>
+      <div class="mm-byline">Designed by <strong>Adil Fırat Oktav</strong></div>
+    </div>
+    <div class="mm-art" aria-hidden="true">
+      <div class="mm-tiles"><span>W</span><span>O</span><span>R</span><span>D</span></div>
     </div>
   </div>
 </div>
@@ -1840,14 +1903,16 @@
   </div>
 
   <div id="q-stage">
-    <div id="timer-ring">
-      <svg width="80" height="80" style="display:none" id="timer-svg">
-        <circle class="track" cx="40" cy="40" r="35"/>
-        <circle class="bar" id="timer-bar" cx="40" cy="40" r="35"/>
-      </svg>
-      <div id="timer-num" style="display:none"></div>
+    <div class="q-panel">
+      <div id="timer-ring">
+        <svg width="80" height="80" style="display:none" id="timer-svg">
+          <circle class="track" cx="40" cy="40" r="35"/>
+          <circle class="bar" id="timer-bar" cx="40" cy="40" r="35"/>
+        </svg>
+        <div id="timer-num" style="display:none"></div>
+      </div>
+      <div id="q-word"></div>
     </div>
-    <div id="q-word"></div>
   </div>
 
   <div id="cat-grid">
@@ -2150,6 +2215,7 @@ function startGame() {
 }
 
 function menuStart() {
+  goFullscreen();
   if(!mainMenuAudio) playMainMenu(); // zaten çalıyorsa yeniden başlatma
   applyGroupCountUI();
   WcTransitions.hide('main-menu');
@@ -4206,8 +4272,10 @@ function handleStdKey(key) {
 function goFullscreen() {
   const el = document.documentElement;
   const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-  if(req && !document.fullscreenElement && !document.webkitFullscreenElement)
-    req.call(el).catch(() => {});
+  if(!req || document.fullscreenElement || document.webkitFullscreenElement) return;
+  try {
+    req.call(el)?.catch?.(() => {});
+  } catch {}
 }
 
 // Ana menü müziğini sayfadaki ilk tıklamada başlat (browser autoplay policy)

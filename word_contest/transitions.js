@@ -89,7 +89,7 @@
     }
 
     const timing = {
-      duration: visible ? 300 : 240,
+      duration: visible ? 450 : 360,
       easing: visible ? 'cubic-bezier(.2, .7, .25, 1)' : 'cubic-bezier(.55, 0, .8, .4)',
       fill: 'both'
     };

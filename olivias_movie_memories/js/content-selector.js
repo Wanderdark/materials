@@ -199,7 +199,11 @@ function createRandomItemPicker(items, options = {}) {
     };
     const omniCandidates = (type = options.correctOrder ? "correct-order" : undefined) => {
       refillRegularPool();
-      const candidates = [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type));
+      let candidates = [...priorityPool, ...pool].filter((item) => window.LeagueListening.canUseOmniType(item, type));
+      if (options.omni && !window.__oliviasMovieMemoriesFriendMode && type !== "correct-order") {
+        const shorterItems = candidates.filter((item) => ![4, 5].includes(window.LeagueListening.getCorrectOrderLines(item).length));
+        if (shorterItems.length) candidates = shorterItems;
+      }
       const tier = type === "correct-order" ? Math.min(...candidates.map(orderTier)) : null;
       const available = type === "correct-order" ? candidates.filter((item) => orderTier(item) === tier) : candidates;
       return (window.__oliviasMovieMemoriesFriendMode ? available : shuffle(available)).sort((left, right) => {

@@ -1,0 +1,45 @@
+.app-shell { display: grid; grid-template-columns: minmax(0, 1fr); }
+.app-shell > .screen { grid-area: 1 / 1; align-self: start; min-width: 0; }
+.ll-motion-root {
+  --ll-motion-scale: none;
+  --ll-motion-ms: 450ms;
+  --ll-motion-ease: cubic-bezier(.2, .7, .25, 1);
+  opacity: 1;
+  transition: opacity var(--ll-motion-ms) var(--ll-motion-ease),
+    scale var(--ll-motion-ms) var(--ll-motion-ease),
+    display var(--ll-motion-ms) allow-discrete;
+}
+.ll-motion-root[hidden] {
+  --ll-motion-scale: .86;
+  --ll-motion-ms: 360ms;
+  --ll-motion-ease: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0;
+  pointer-events: none;
+}
+[data-ll-motion-panel] {
+  scale: var(--ll-motion-scale, none);
+  transform-origin: center;
+  transition: scale var(--ll-motion-ms, 450ms) var(--ll-motion-ease, ease-out);
+}
+.ll-motion-root > .modal-card,
+.ll-motion-root > .omni-selector-card { animation: none; }
+@starting-style {
+  .ll-motion-root { opacity: 0; }
+  [data-ll-motion-panel] { scale: .86; }
+}
+:is(.qpc-dialog, .qpt-offer) {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4),
+    display 360ms allow-discrete, overlay 360ms allow-discrete;
+}
+:is(.qpc-dialog, .qpt-offer)[open] {
+  opacity: 1;
+  scale: none;
+  transition-duration: 450ms;
+}
+@starting-style { :is(.qpc-dialog, .qpt-offer)[open] { opacity: 0; scale: .86; } }
+@media (prefers-reduced-motion: reduce) {
+  .ll-motion-root, [data-ll-motion-panel], .qpc-dialog, .qpt-offer { transition: none; }
+}

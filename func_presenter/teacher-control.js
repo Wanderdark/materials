@@ -107,7 +107,7 @@
     .tc-hud .tc-bank.is-resetting { color: #ffab9b; text-shadow: 0 0 12px rgba(255, 128, 102, .42); }
     .tc-hud.no-roster .tc-bank { color: #8fa6d9; }
     .tc-hud-controls { display: flex; align-items: center; gap: 5px; width: var(--tc-controls-width, 220px); flex: 0 0 auto; overflow: visible; opacity: 1; transform: translateX(0); transition: width .28s ease, opacity .16s ease, transform .28s ease; }
-    .tc-hud.is-compact .tc-full-only, .tc-hud.is-compact .tc-chosen-banner { display: none !important; }
+    .tc-hud.is-compact .tc-full-only { display: none !important; }
     .tc-hud.is-compact:not(.is-collapsed) { width: calc(var(--tc-controls-width, 220px) + 50px); }
     .tc-hud .tc-expand[hidden] { display: none; }
     .tc-hud.is-collapsed { width: 22px; gap: 0; padding: 0; border-left: 0; border-radius: 0 10px 10px 0; }
@@ -539,6 +539,18 @@
     .tc-random-preview { display: grid; place-items: center; gap: 10px; min-height: 220px; animation: tcRandomFlash .08s ease-out; }
     .tc-random-preview strong { color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: clamp(38px, 6vw, 64px); font-weight: 800; letter-spacing: .06em; }
     @keyframes tcRandomFlash { from { opacity: .2; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+    .tc-card.tc-random-card { box-sizing: border-box; width: min(900px, 96vw); max-width: 100%; }
+    .tc-random-card .tc-announcement { width: 100%; gap: 12px; }
+    .tc-roulette { --roulette-width: clamp(110px, 21vw, 190px); position: relative; width: 100%; height: clamp(230px, 43vh, 330px); overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent); }
+    .tc-roulette-track { position: absolute; left: 50%; top: 50%; display: flex; gap: 16px; will-change: transform; }
+    .tc-roulette-card { position: relative; flex: 0 0 var(--roulette-width); width: var(--roulette-width); padding: 12px; border: 2px solid #486297; border-radius: 22px; background: linear-gradient(145deg, #203d72, #09132c); opacity: 0; overflow: hidden; }
+    .tc-roulette-card .tc-announcement-avatar { width: 100%; border-radius: 15px; font-size: 60px; color: #ffd84d; }
+    .tc-random-card .tc-roulette-card strong { display: block; margin-top: 12px; color: #f4f7ff; font-size: clamp(17px, 2.6vw, 28px); line-height: 1.15; letter-spacing: .03em; white-space: nowrap; overflow: hidden; }
+    .tc-roulette.is-revealed .tc-roulette-card { transition: transform 360ms ease-out, opacity 300ms ease-out; }
+    .tc-roulette-card.is-winner { border-color: #ffd84d; box-shadow: 0 0 24px rgba(255, 216, 77, .32); }
+    .tc-roulette:not(.is-lite) .is-winner::after { content: ''; position: absolute; inset: -20%; pointer-events: none; background: linear-gradient(110deg, transparent 35%, rgba(255, 241, 180, .65) 50%, transparent 65%); animation: tcRouletteShine 650ms ease-out both; }
+    .tc-roulette.is-lite .tc-roulette-card { box-shadow: none; transition: none; }
+    @keyframes tcRouletteShine { from { transform: translateX(-110%); } to { transform: translateX(110%); } }
     .tc-announcement strong { color: var(--u2-gold, #ffd84d); font-family: var(--font-display, sans-serif); font-size: clamp(42px, 7vw, 76px); font-weight: 800; letter-spacing: .06em; }
     .tc-announcement span { margin-top: 10px; color: #f4f7ff; font-family: var(--font-display, sans-serif); font-size: clamp(24px, 3vw, 36px); font-weight: 800; letter-spacing: .04em; }
     .tc-profile-summary { position: relative; display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: center; gap: 20px; margin-top: 8px; }
@@ -711,6 +723,7 @@
 
   let teacherFeedbackAudio = null;
   let randomBeepContext = null;
+  let randomSelectedAudio = null;
   let whistleAudio = null;
   let whistleStartedAt = 0;
   let whistleStopTimer = 0;
@@ -2813,6 +2826,85 @@
     refreshGuidedTutorial();
   }
 
+  function animateRandomPick(card, announcement, availableStudents, student, onComplete) {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const simple = hudLite || reduced || availableStudents.length === 1;
+    const finalIndex = reduced || availableStudents.length === 1 ? 2 : simple ? 5 : 18;
+    const duration = reduced || availableStudents.length === 1 ? 0 : simple ? 650 : 2100;
+    const queue = shuffleStudents(availableStudents);
+    const entries = Array.from({ length: finalIndex + 3 }, (_, index) => queue[index % queue.length]);
+    entries[finalIndex] = student;
+    for (let index = finalIndex - 1; index >= 0; index -= 1) {
+      if (entries[index].id === entries[index + 1].id) entries[index] = queue.find(entry => entry.id !== entries[index + 1].id) || entries[index];
+    }
+    for (let index = finalIndex + 1; index < entries.length; index += 1) {
+      if (entries[index].id === entries[index - 1].id) entries[index] = queue.find(entry => entry.id !== entries[index - 1].id) || entries[index];
+    }
+    const viewport = el("div", "tc-roulette" + (simple ? " is-lite" : ""));
+    const track = el("div", "tc-roulette-track");
+    const tiles = [];
+    for (let index = 0; index < finalIndex + 3; index += 1) {
+      const entry = entries[index];
+      const tile = el("div", "tc-roulette-card");
+      const avatarStudent = entry.avatarPath ? entry : { ...entry, avatarPath: new URL("../images/avatar_outline.webp?v=2", controlScriptUrl).href };
+      const avatar = createStudentAvatar(avatarStudent, "tc-announcement-avatar", false, false);
+      tile.append(avatar, el("strong", "", entry.name));
+      track.append(tile);
+      tiles.push(tile);
+    }
+    track.setAttribute("aria-hidden", "true");
+    viewport.append(track);
+    announcement.append(viewport);
+    const fitNames = () => tiles.forEach(tile => {
+      const name = tile.querySelector("strong");
+      name.style.fontSize = "";
+      if (name.scrollWidth > name.clientWidth && name.clientWidth > 0) {
+        const size = parseFloat(getComputedStyle(name).fontSize);
+        name.style.fontSize = `${size * name.clientWidth / name.scrollWidth * .98}px`;
+      }
+    });
+    document.fonts?.ready.then(() => { if (card.isConnected) fitNames(); });
+    const overlay = card.closest(".tc-overlay");
+    const started = performance.now();
+    let lastIndex = -1;
+    let lastWidth = 0;
+    function frame(now) {
+      if (!card.isConnected || overlay.classList.contains("tc-overlay-closing")) {
+        isRandomDrawing = false;
+        randomButton.disabled = false;
+        randomHistory.drawnIds = randomHistory.drawnIds.filter(id => id !== student.id);
+        return;
+      }
+      const progress = duration ? Math.min(1, (now - started) / duration) : 1;
+      const position = 2 + (finalIndex - 2) * (1 - Math.pow(1 - progress, 3));
+      const center = simple ? Math.round(position) : position;
+      const nearest = Math.round(center);
+      if (!simple || nearest !== lastIndex) {
+        const width = tiles[0].offsetWidth;
+        if (width !== lastWidth) { fitNames(); lastWidth = width; }
+        track.style.transform = `translate(${-(center * (width + 16) + width / 2)}px, -50%)`;
+        tiles.forEach((tile, index) => {
+          const distance = Math.abs(index - center);
+          tile.style.opacity = String(simple ? Number(index === nearest) : Math.max(0, 1 - distance * .38));
+          tile.style.transform = `scale(${simple ? 1 : Math.max(.72, 1 - distance * .13)})`;
+        });
+        if (nearest !== lastIndex && !reduced && duration) playRandomBeep(nearest);
+        lastIndex = nearest;
+      }
+      if (progress < 1) { window.requestAnimationFrame(frame); return; }
+      viewport.classList.add("is-revealed");
+      tiles.forEach((tile, index) => {
+        tile.style.opacity = index === finalIndex ? "1" : "0";
+        tile.style.transform = index === finalIndex ? (simple ? "scale(1)" : "scale(1.08)") : "scale(.72)";
+      });
+      tiles[finalIndex].classList.add("is-winner");
+      announcement.setAttribute("aria-label", `Chosen student: ${student.name}`);
+      announcement.setAttribute("role", "status");
+      onComplete();
+    }
+    window.requestAnimationFrame(frame);
+  }
+
   function openRandomStudent() {
     if (!hasRoster()) {
       openRosterEditor(true);
@@ -2826,6 +2918,10 @@
     }
     const student = drawRandomStudent();
     if (!student) return;
+    if (!randomSelectedAudio) {
+      randomSelectedAudio = new Audio(new URL("../sounds/randomselected.wav", controlScriptUrl).href);
+      randomSelectedAudio.preload = "auto";
+    }
     if (state.pointBank > 0) {
       state.pointBank = 0;
       save();
@@ -2836,23 +2932,10 @@
     const card = makeOverlay("", "RANDOM PICK");
     card.classList.add("tc-random-card");
     const announcement = el("div", "tc-announcement");
-    const previewQueue = shuffleStudents(availableStudents);
-    let previewIndex = 0;
-    const showPreview = () => {
-      const previewStudent = previewQueue[previewIndex % previewQueue.length];
-      previewIndex += 1;
-      playRandomBeep(previewIndex);
-      const preview = el("div", "tc-random-preview");
-      if (previewStudent.avatarPath) preview.append(createStudentAvatar(previewStudent, "tc-announcement-avatar", false, false));
-      preview.append(el("strong", "", previewStudent.name));
-      announcement.replaceChildren(preview);
-    };
-    showPreview();
-    const previewTimer = window.setInterval(showPreview, 80);
     const tutorialDraw = guidedTutorial;
     card.append(announcement);
-    window.setTimeout(() => {
-      window.clearInterval(previewTimer);
+    const closeResult = () => dismissHudOverlay(card.closest(".tc-overlay"));
+    animateRandomPick(card, announcement, availableStudents, student, () => {
       isRandomDrawing = false;
       randomButton.disabled = false;
       if (tutorialDraw && guidedTutorial !== tutorialDraw) return;
@@ -2861,19 +2944,10 @@
       save();
       updateHud();
       if (guidedTutorial?.step === 7) setGuidedTutorialStep(8);
-      announcement.replaceChildren();
-      announcement.append(el("p", "tc-announcement-label", "THE CHOSEN STUDENT"));
-      if (student.avatarPath) announcement.append(createStudentAvatar(student, "tc-announcement-avatar", false, false));
-      announcement.append(el("strong", "", student.name), el("span", "", "You are the chosen!"));
-      const actions = el("div", "tc-actions");
-      const done = el("button", "tc-action primary", "CONTINUE");
-      done.type = "button";
-      const closeResult = () => dismissHudOverlay(card.closest(".tc-overlay"));
-      done.addEventListener("click", closeResult);
-      actions.append(done);
-      if (card.isConnected) card.append(actions);
-      window.setTimeout(closeResult, 2000);
-    }, 1000);
+      randomSelectedAudio.currentTime = 0;
+      randomSelectedAudio.play().catch(() => {});
+      window.setTimeout(closeResult, 1000);
+    });
   }
 
   let chosenResetTimer = null;

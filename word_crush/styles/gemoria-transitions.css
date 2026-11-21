@@ -1,0 +1,40 @@
+/* Loaded only by the classroom Gemoria entry point. */
+.gm-motion-root {
+  --gm-motion-scale: 1;
+  --gm-motion-ms: 450ms;
+  --gm-motion-ease: cubic-bezier(.2, .7, .25, 1);
+  opacity: 1 !important;
+  transition: opacity var(--gm-motion-ms) var(--gm-motion-ease),
+    scale var(--gm-motion-ms) var(--gm-motion-ease),
+    display var(--gm-motion-ms) allow-discrete !important;
+}
+.gm-motion-root:not(.gm-motion-visible) {
+  --gm-motion-scale: .86;
+  --gm-motion-ms: 360ms;
+  --gm-motion-ease: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+[data-gm-motion-panel] {
+  scale: var(--gm-motion-scale, 1);
+  transform-origin: center;
+  transition: scale var(--gm-motion-ms, 450ms) var(--gm-motion-ease, ease-out);
+  animation: none !important;
+}
+@starting-style {
+  .gm-motion-root { opacity: 0 !important; }
+  [data-gm-motion-panel] { scale: .86; }
+}
+.qpc-dialog {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4),
+    display 360ms allow-discrete, overlay 360ms allow-discrete;
+}
+.qpc-dialog[open] { opacity: 1; scale: 1; transition-duration: 450ms; }
+@starting-style { .qpc-dialog[open] { opacity: 0; scale: .86; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-motion-root, [data-gm-motion-panel], .qpc-dialog { transition: none !important; }
+}

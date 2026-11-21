@@ -1,0 +1,89 @@
+/* Local screen/dialog motion; Lite only disables question motion. */
+.game-screen .side-word.word-answer-moving {
+  position: relative;
+  z-index: 2;
+  animation: none;
+  transform: none;
+}
+body.tug-lite .side-word.word-answer-moving {
+  transform: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .side-word.word-answer-moving { transform: none !important; }
+}
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+main > section {
+  grid-area: 1 / 1;
+  align-self: start;
+  min-width: 0;
+  opacity: 1;
+  scale: 1;
+  transform-origin: center;
+  transition: opacity 450ms cubic-bezier(.2, .7, .25, 1),
+    scale 450ms cubic-bezier(.2, .7, .25, 1), display 450ms allow-discrete;
+}
+main > section[hidden] {
+  opacity: 0;
+  scale: .86;
+  pointer-events: none;
+  transition-duration: 360ms;
+  transition-timing-function: cubic-bezier(.55, 0, .8, .4);
+}
+:is(#pace-dialog, #pause-dialog, #timer-dialog, #game-over-dialog, #rematch-dialog, .qpc-dialog) {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4),
+    display 360ms allow-discrete, overlay 360ms allow-discrete;
+}
+:is(#pace-dialog, #pause-dialog, #timer-dialog, #game-over-dialog, #rematch-dialog, .qpc-dialog)[open] {
+  opacity: 1;
+  scale: 1;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(.2, .7, .25, 1);
+}
+:is(#pause-lineup, #music-volume-options) {
+  opacity: 1;
+  scale: 1;
+  transform-origin: center;
+  transition: opacity 450ms ease-out, scale 450ms ease-out, display 450ms allow-discrete;
+}
+:is(#pause-lineup, #music-volume-options)[hidden] {
+  opacity: 0;
+  scale: .86;
+  transition-duration: 360ms;
+}
+@starting-style {
+  main > section,
+  :is(#pace-dialog, #pause-dialog, #timer-dialog, #game-over-dialog, #rematch-dialog, .qpc-dialog)[open],
+  :is(#pause-lineup, #music-volume-options):not([hidden]) {
+    opacity: 0;
+    scale: .86;
+  }
+}
+.play-side.tug-question-loading :is(.side-word, .word-prompt, .picture-choice) {
+  opacity: 0;
+}
+.picture-grid .picture-choice.answer-hidden {
+  opacity: 0;
+  scale: .7;
+  pointer-events: none;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4),
+    visibility 360ms, display 360ms allow-discrete;
+}
+body.tug-lite .picture-grid .picture-choice.answer-hidden {
+  scale: 1;
+  transition: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  main > section,
+  :is(#pace-dialog, #pause-dialog, #timer-dialog, #game-over-dialog, #rematch-dialog, .qpc-dialog),
+  :is(#pause-lineup, #music-volume-options),
+  .picture-grid .picture-choice.answer-hidden {
+    transition: none;
+  }
+  .picture-grid .picture-choice.answer-hidden { scale: 1; }
+}

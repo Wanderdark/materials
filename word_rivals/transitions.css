@@ -1,0 +1,154 @@
+.rvr-motion-root {
+  --rvr-view-scale: 1;
+  --rvr-view-duration: 450ms;
+  --rvr-view-easing: cubic-bezier(.2, .7, .25, 1);
+  transition: opacity var(--rvr-view-duration) var(--rvr-view-easing),
+    scale var(--rvr-view-duration) var(--rvr-view-easing),
+    display var(--rvr-view-duration) allow-discrete !important;
+}
+
+.rvr-motion-root:is(
+  .rvr-hidden-view.hidden,
+  .rvr-open-view:not(.open),
+  .rvr-show-view:not(.show),
+  .rvr-wheel-view:not(.rb-show),
+  .rvr-last-view:not(.rb-lc-show)
+) {
+  --rvr-view-scale: .86;
+  --rvr-view-duration: 360ms;
+  --rvr-view-easing: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+[data-rvr-motion-panel] {
+  scale: var(--rvr-view-scale, 1);
+  transform-origin: center;
+  transition: scale var(--rvr-view-duration, 450ms) var(--rvr-view-easing, ease-out);
+}
+
+[data-rvr-motion-panel]:not([data-rvr-keep-animation]) {
+  animation: none !important;
+}
+
+.rvr-motion-content {
+  display: flex;
+  flex-direction: inherit;
+  align-items: inherit;
+  justify-content: inherit;
+  gap: inherit;
+  max-width: 100%;
+}
+
+@starting-style {
+  .rvr-motion-root {
+    opacity: 0;
+  }
+  [data-rvr-motion-panel] {
+    scale: .86;
+  }
+}
+
+/* Keep the native Quick Play dialog in the top layer through its exit. */
+.qpc-dialog {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 360ms ease, scale 360ms ease, display 360ms allow-discrete, overlay 360ms allow-discrete;
+}
+
+.qpc-dialog[open] {
+  opacity: 1;
+  scale: 1;
+  transition-duration: 450ms;
+}
+
+@starting-style {
+  .qpc-dialog[open] {
+    opacity: 0;
+    scale: .86;
+  }
+}
+
+.img-cell img:is([src=""], :not([src])) {
+  visibility: hidden;
+}
+
+.img-cell.rvr-answer-exit img {
+  scale: .7;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4), filter .2s;
+}
+
+body.lite .img-cell.rvr-answer-exit img {
+  scale: 1;
+  transition: none;
+}
+
+.dro-card {
+  position: relative;
+  border: 3px solid #ff3b4d;
+  background: rgba(255, 59, 77, .22);
+  box-shadow: inset 0 0 18px rgba(255, 59, 77, .12), 0 0 16px rgba(255, 59, 77, .3);
+}
+
+.dro-card:is(.dro-winner-a, .dro-winner-b) {
+  border-color: #26ef7a;
+  background: rgba(38, 239, 122, .22);
+  box-shadow: inset 0 0 18px rgba(38, 239, 122, .18), 0 0 18px rgba(255, 157, 36, .3);
+}
+
+@supports (mask-composite: exclude) {
+  .dro-winner-edge {
+    position: absolute;
+    inset: -7.5px;
+    pointer-events: none;
+    filter: blur(1.25px);
+  }
+  .dro-winner-edge > span {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    padding: 6px;
+    border-radius: 22.5px;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+  }
+  .dro-winner-edge > span::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(300%, 600px);
+    aspect-ratio: 1;
+    background:
+      repeating-conic-gradient(from 18deg, transparent 0deg 5deg, #ffd17172 7deg, transparent 9deg 14deg),
+      conic-gradient(from 20deg, transparent 0deg, #ffb13a22 30deg, #ffe7a2 62deg,
+        #ffb64344 77deg, transparent 115deg, #ffce6c32 156deg, #fff0bb 207deg,
+        #ff9d2444 228deg, transparent 264deg, #ffc46a 310deg, transparent 360deg);
+    animation: rvr-winner-edge-spin 12s linear infinite;
+  }
+}
+
+@keyframes rvr-winner-edge-spin {
+  from { transform: translate(-50%, -50%) rotate(0turn); }
+  to { transform: translate(-50%, -50%) rotate(1turn); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .img-cell.rvr-answer-exit img {
+    scale: 1;
+    transition: none;
+  }
+  .dro-winner-edge > span::before {
+    animation: none;
+    transform: translate(-50%, -50%);
+  }
+  .rvr-motion-root,
+  [data-rvr-motion-panel],
+  .qpc-dialog {
+    transition: none !important;
+  }
+  [data-rvr-motion-panel] {
+    animation: none !important;
+  }
+}

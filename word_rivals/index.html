@@ -811,6 +811,7 @@ body.tb-mode .hp-outer{opacity:0;pointer-events:none}
   100%{opacity:0;transform:translateX(-50%) translateY(-60px)}
 }
 </style>
+<link rel="stylesheet" href="transitions.css">
 </head>
 <body>
 <div id="bg-layer"></div>
@@ -1395,6 +1396,7 @@ if (window.rvrFriendMode) {
 <script src="../modules/finalscreen.js"></script>
 <script src="../modules/taunt.js"></script>
 <script src="taunt.js"></script>
+<script src="transitions.js"></script>
 
 <script>
 // ══════════════════════════════════════════════════════════
@@ -1960,6 +1962,7 @@ function _startGame() {
   setScoresBtn(true);
   resetScoreboardState();
   document.body.classList.add('game-active');
+  RvrTransitions.revealGame();
   // Joker kotasını başlat (TB modunda kullanılacak)
   [0, 1].forEach(gi => { jokerCount[gi] = calcJokerQuota(gi); });
   updateJokerDisplay();
@@ -2246,7 +2249,7 @@ function _startRound() {
       }
       if (img) {
         img.style.opacity = '';
-        img.src = gridImages[pos].src;
+        RvrTransitions.revealImage(img, gridImages[pos].src);
         img.onerror = () => {
           img.onerror = null;
           img.style.opacity = '0';
@@ -2333,7 +2336,7 @@ function _handleCorrect(winnerGi, pos) {
         if (!cell) continue;
         cell.classList.add('locked');
         if (isWinner && p === pos) cell.classList.add('correct-flash');
-        else                        cell.classList.add('dim-wrong');
+        else                        cell.classList.add('dim-wrong', 'rvr-answer-exit');
       }
     });
   });
@@ -3377,6 +3380,7 @@ function _showDuelResult(data, cb) {
     card.className = 'dro-card dro-card-' + side + (d.isWinner ? ' dro-winner-' + side : '');
 
     let html = `
+      ${d.isWinner ? '<span class="dro-winner-edge" aria-hidden="true"><span></span></span>' : ''}
       <div class="dro-team-lbl">${d.teamName}</div>
       <div class="dro-student-name">${d.isWinner ? '👑 ' : '💀 '}${d.name}</div>
       <div class="dro-divider-thin"></div>
@@ -4329,6 +4333,9 @@ function _tbContinueRound() {
 // ── MAIN MENU ─────────────────────────────────────────────
 
 function _menuStart() {
+  if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(()=>{});
+  }
   _startBgMusic();
   if (window.rvrFriendMode) {
     _selectGameMode('turnbased');

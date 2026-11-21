@@ -6,6 +6,7 @@
   <meta name="description" content="Two teams, two words, one rope. An English vocabulary game for the classroom.">
   <title>TUG OF WORDS | AdilHoca</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="transitions.css">
 </head>
 <body>
   <header class="topbar">
@@ -75,8 +76,8 @@
   </main>
 
   <dialog id="pace-dialog"><form method="dialog"><p class="eyebrow">FIND YOUR CLASSROOM'S RHYTHM</p><h2>Pace & rope</h2>
-    <label>Correct answer break <span id="correct-value"></span><input id="correct-delay" type="range" min="400" max="2500" step="100" value="800"></label>
-    <label>Wrong answer break <span id="wrong-value"></span><input id="wrong-delay" type="range" min="800" max="3500" step="100" value="1500"></label>
+    <label>Correct answer break <span id="correct-value"></span><input id="correct-delay" type="range" min="400" max="2500" step="100" value="1500"></label>
+    <label>Wrong answer break <span id="wrong-value"></span><input id="wrong-delay" type="range" min="800" max="3500" step="100" value="2500"></label>
     <label>Lead needed to win<select id="rope-limit"><option value="3">3 pulls · Short</option><option value="5" selected>5 pulls · Standard</option><option value="7">7 pulls · Long</option><option value="10">10 pulls · Extra long</option></select></label>
     <p id="pace-note" class="muted small">The rope distance is chosen before each match.</p><button class="primary">Done</button>
   </form></dialog>
@@ -100,6 +101,7 @@
   <script src="../func_presenter/teacher-cloud.js"></script>
   <script src="../func_presenter/teacher-control.js"></script>
   <script src="../modules/finalscreen.js"></script>
+  <script src="transitions.js"></script>
   <script src="game.js"></script>
 </body>
 </html>

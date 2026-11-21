@@ -1,0 +1,85 @@
+.app-shell { display: grid; grid-template-columns: minmax(0, 1fr); }
+.app-shell > :is(.library-screen, .activity-screen, .complete-screen) {
+  grid-area: 1 / 1;
+  align-self: start;
+  min-width: 0;
+}
+.sp-motion-root {
+  --sp-motion-scale: none;
+  --sp-motion-ms: 450ms;
+  --sp-motion-ease: cubic-bezier(.2, .7, .25, 1);
+  opacity: 1;
+  transition: opacity var(--sp-motion-ms) var(--sp-motion-ease),
+    scale var(--sp-motion-ms) var(--sp-motion-ease),
+    display var(--sp-motion-ms) allow-discrete;
+}
+.sp-motion-root.hidden,
+.sp-motion-root[hidden] {
+  --sp-motion-scale: .86;
+  --sp-motion-ms: 360ms;
+  --sp-motion-ease: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0;
+  pointer-events: none !important;
+}
+[data-sp-motion-panel] {
+  scale: var(--sp-motion-scale, none);
+  transform-origin: center;
+}
+[data-sp-motion-panel]:not(.sp-motion-root) {
+  transition: scale var(--sp-motion-ms, 450ms) var(--sp-motion-ease, ease-out);
+}
+.sp-motion-root > .winner-wrapper { animation: none; }
+#songGrid { transform-origin: center; }
+.sp-word-source { visibility: hidden; }
+.pre-slot.sp-word-arriving { color: transparent; }
+.word-chip.sp-word-flight {
+  position: fixed;
+  margin: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  z-index: 1000;
+  pointer-events: none;
+  transform-origin: top left;
+  border-color: var(--mint);
+  color: #e4fff5;
+  background: #135342;
+  animation: sp-word-flight 520ms cubic-bezier(.2, .7, .25, 1) both;
+}
+@keyframes sp-word-flight {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(var(--word-x), var(--word-y)) scale(var(--word-sx), var(--word-sy)); }
+}
+.sp-song-departing > .song-card:not(.sp-song-selected) { animation: sp-song-depart 360ms cubic-bezier(.55, 0, .8, .4) both; }
+.sp-song-departing > .sp-song-selected { visibility: hidden; }
+@keyframes sp-song-depart {
+  to { transform: scale(.12); opacity: 0; }
+}
+.sp-song-launch-layer { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 1000; }
+.sp-song-launch-layer .sp-song-launch {
+  position: absolute;
+  margin: 0;
+  transform-origin: center;
+  pointer-events: none;
+  animation: sp-song-launch 900ms cubic-bezier(.3, .15, .25, 1) both;
+}
+@keyframes sp-song-launch {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: translate(var(--launch-x), var(--launch-y)) scale(var(--launch-scale)); opacity: 0; }
+}
+.sp-library-exit { animation: sp-library-out 360ms cubic-bezier(.55, 0, .8, .4) both; }
+.sp-library-enter { animation: sp-library-in 450ms cubic-bezier(.2, .7, .25, 1) both; }
+@keyframes sp-library-out {
+  to { transform: scale(.86); opacity: 0; }
+}
+@keyframes sp-library-in {
+  from { transform: scale(.86); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@starting-style {
+  .sp-motion-root { opacity: 0; }
+  [data-sp-motion-panel] { scale: .86; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sp-library-exit, .sp-library-enter, .sp-song-departing > .song-card { animation: none; }
+  .sp-motion-root, [data-sp-motion-panel] { transition: none; }
+}

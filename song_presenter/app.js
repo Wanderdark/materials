@@ -763,7 +763,7 @@
       </div>`;
     card.addEventListener("click", () => {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
-      startSong(s);
+      window.SongPresenterTransitions.launchSong(card, () => startSong(s));
     });
     els.songGrid.appendChild(card);
   }
@@ -814,6 +814,10 @@
   }
 
   function renderLibrary() {
+    window.SongPresenterTransitions.changeLibrary(renderLibraryContents);
+  }
+
+  function renderLibraryContents() {
     els.songGrid.innerHTML = "";
     const songs = getLibrarySongs();
     els.filterBar.classList.toggle("hidden", !artistFilter);
@@ -916,7 +920,9 @@
   }
 
   function tryPlacePre(chip, slot) {
+    if (chip.classList.contains("placed") || slot.classList.contains("filled")) return;
     if (slot.dataset.word === chip.dataset.word) {
+      window.SongPresenterTransitions.flyWord(chip, slot);
       slot.textContent = chip.dataset.word;
       slot.classList.add("filled");
       slot.closest(".pre-item").classList.add("done");

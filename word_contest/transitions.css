@@ -42,13 +42,13 @@
   opacity: 0;
   scale: .86;
   transform-origin: center;
-  transition: opacity 240ms ease, scale 240ms ease, display 240ms allow-discrete, overlay 240ms allow-discrete;
+  transition: opacity 360ms ease, scale 360ms ease, display 360ms allow-discrete, overlay 360ms allow-discrete;
 }
 
 .qpc-dialog[open] {
   opacity: 1;
   scale: 1;
-  transition-duration: 300ms;
+  transition-duration: 450ms;
 }
 
 @starting-style {

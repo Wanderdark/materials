@@ -17,15 +17,15 @@
     function enterFullscreen() {
       if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
     }
-    offer.querySelector("[data-qpt-yes]").onclick = () => { enterFullscreen(); offer.close(); offer.remove(); startTutorial(); };
+    offer.querySelector("[data-qpt-yes]").onclick = () => { enterFullscreen(); window.LeagueListeningTransitions.closeNative(offer); startTutorial(); };
     offer.querySelector("[data-qpt-no]").onclick = () => {
       enterFullscreen();
       if (offer.querySelector("input").checked) {
         try { localStorage.setItem(dismissedKey, "1"); } catch (_) {}
       }
-      offer.close(); offer.remove();
+      window.LeagueListeningTransitions.closeNative(offer);
     };
-    offer.addEventListener("cancel", () => { offer.close(); offer.remove(); });
+    offer.addEventListener("cancel", () => { window.LeagueListeningTransitions.closeNative(offer); });
     offer.showModal();
   }
 

@@ -67,6 +67,9 @@
     } else {
       state.activeWords = drawWords(State.BOARD_SIZE, new Set());
     }
+    if (state.runType === "quick" && !state.endlessWords) {
+      state.totalWordTarget = state.activeWords.length + (state.quickRefillQueue?.length || 0);
+    }
     if (state.runType === 'adventure') {
       state.activeWords.forEach(word => state.advUsedIds.add(word.id));
     }
@@ -154,7 +157,7 @@
       available = state.advWordPool.filter(w => !activeIds.has(w.id) && !conflictsWith(w, activeTerms));
     }
     if (!available.length) {
-      available = state.advWordPool.filter(w => !activeIds.has(w.id));
+      available = state.advWordPool.filter(w => !activeIds.has(w.id) && !translationConflictsWith(w, activeTerms));
     }
     if (!available.length) return null;
     const word = available[Math.floor(Math.random() * available.length)];
@@ -343,19 +346,23 @@
         state.turkishCards[state.turkishCards.length - 1].isNew = false;
       }
     } else if (state.runType === "quick" && state.quickRefillQueue?.length > 0) {
-      const newWord = state.quickRefillQueue.shift();
-      state.turkishCards.push({ word: newWord, isNew: true });
-      refillEnglishFromTurkishCards();
-      render();
-      state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      const newWord = drawQueuedWord(state.quickRefillQueue);
+      if (newWord) {
+        state.turkishCards.push({ word: newWord, isNew: true });
+        refillEnglishFromTurkishCards();
+        render();
+        state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      }
     }
 
     if (state.runType === 'campaign' && state.campaignRefillQueue?.length > 0) {
-      const newWord = state.campaignRefillQueue.shift();
-      state.turkishCards.push({ word: newWord, isNew: true });
-      refillEnglishFromTurkishCards();
-      render();
-      state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      const newWord = drawQueuedWord(state.campaignRefillQueue);
+      if (newWord) {
+        state.turkishCards.push({ word: newWord, isNew: true });
+        refillEnglishFromTurkishCards();
+        render();
+        state.turkishCards[state.turkishCards.length - 1].isNew = false;
+      }
     }
 
     if (!state.turkishCards.length) {
@@ -902,6 +909,12 @@
     return 1;
   }
 
+  function drawQueuedWord(queue) {
+    const activeTerms = activeConflictTerms();
+    const index = queue.findIndex(word => !translationConflictsWith(word, activeTerms));
+    return index < 0 ? null : queue.splice(index, 1)[0];
+  }
+
   function drawWords(count, excludedIds) {
     const words = [];
     const used = new Set(excludedIds);
@@ -909,6 +922,7 @@
 
     while (words.length < count) {
       const word = drawOneWord(used, usedConflictTerms);
+      if (!word) break;
       used.add(word.id);
       getConflictTerms(word).forEach((term) => usedConflictTerms.add(term));
       words.push(word);
@@ -928,14 +942,15 @@
     }
 
     if (!available.length) {
-      available = state.wordBank.filter((word) => !excludedIds.has(word.id));
+      available = state.wordBank.filter((word) => !excludedIds.has(word.id) && !translationConflictsWith(word, excludedTerms));
     }
 
     if (!available.length) {
       available = normalizeSourceWords(window.WordCrushAdapter?.buildWordPool?.() || window.WORD_CRUSH_WORDS || [])
-        .filter((word) => !excludedIds.has(word.id));
+        .filter((word) => !excludedIds.has(word.id) && !translationConflictsWith(word, excludedTerms));
     }
 
+    if (!available.length) return null;
     const word = randomItem(available);
     state.wordBank = state.wordBank.filter((item) => item.id !== word.id);
     return word;
@@ -959,12 +974,12 @@
     }
 
     if (!available.length) {
-      available = state.wordBank.filter((word) => !activeIds.has(word.id));
+      available = state.wordBank.filter((word) => !activeIds.has(word.id) && !translationConflictsWith(word, activeTerms));
     }
 
     if (!available.length && !state.endlessTime) {
       state.wordBank = shuffle([...state.sourceWords]);
-      available = state.wordBank.filter((word) => !activeIds.has(word.id));
+      available = state.wordBank.filter((word) => !activeIds.has(word.id) && !translationConflictsWith(word, activeTerms));
     }
 
     if (!available.length) return null;
@@ -1145,7 +1160,17 @@
   function getConflictTerms(word) {
     const terms = Array.isArray(word.conflictTerms) ? word.conflictTerms : [];
     const own = normalizeTerm(word.en);
-    return unique([own, ...terms.map(normalizeTerm)].filter(Boolean));
+    return unique([own, translationTerm(word), ...terms.map(normalizeTerm)].filter(Boolean));
+  }
+
+  function translationTerm(word) {
+    const text = String(word.tr || "").normalize("NFKC").trim().toLocaleUpperCase("tr-TR").replace(/\s+/g, " ");
+    return text ? `TR:${text}` : "";
+  }
+
+  function translationConflictsWith(word, excludedTerms) {
+    const term = translationTerm(word);
+    return Boolean(term && excludedTerms.has(term));
   }
 
   function normalizeTerm(value) {

@@ -5,14 +5,23 @@
 .omni-selector-card h2{margin:4px 0;font:700 clamp(1.8rem,4vw,3rem)/1.1 "Barlow Condensed",sans-serif;color:#fff}
 .omni-selector-help{margin:6px 0;color:#b4c7e6;font-size:.95rem}
 .omni-selector-diagram{display:block;width:100%;max-height:58dvh;margin:0 auto}
-.omni-type polygon{fill:#101f3b;stroke:var(--omni-color);stroke-width:3}
-.omni-type text{fill:var(--omni-color);font:800 16px "Barlow",sans-serif;text-anchor:middle;dominant-baseline:middle}
+.omni-type polygon{fill:var(--omni-fill);stroke:var(--omni-edge);stroke-width:3}
+.omni-type text{fill:var(--omni-ink);font:800 16px "Barlow",sans-serif;text-anchor:middle;dominant-baseline:middle}
 .omni-type .omni-unavailable{display:none;font-size:10px}
 .omni-type.is-mystery text:not(.omni-unavailable),.omni-type.is-played text:not(.omni-unavailable){font-size:44px}
-.omni-type.is-unavailable{opacity:.3}
+.omni-type.is-unavailable{opacity:.75}
 .omni-type.is-unavailable .omni-unavailable{display:block}
-.omni-type.is-selected polygon{fill:var(--omni-color);stroke:#fff;stroke-width:5}
-.omni-type.is-selected text{fill:#071126}
+.omni-type.is-selected polygon{fill:var(--omni-fill);stroke:#fff;stroke-width:5}
+.omni-type.is-selected text{fill:var(--omni-ink)}
+.omni-selection-zoom{position:fixed;z-index:1;pointer-events:none;overflow:visible;transform-origin:center;animation:omni-selection-launch 900ms cubic-bezier(.3,.15,.25,1) both}
+.omni-selection-zoom .omni-type text{font-size:16px}
+.omni-selection-zoom>svg{display:block;width:100%;height:100%;overflow:visible}
+@keyframes omni-selection-launch{from{transform:translate(-50%,-50%) scale(1.2);opacity:1}to{transform:translate(calc(-50% + var(--launch-x)),calc(-50% + var(--launch-y))) scale(calc(var(--launch-scale)*1.2));opacity:0}}
+.omni-mode-dialog.is-launching-selection{animation:omni-launch-backdrop 900ms ease-out both}
+.is-launching-selection .omni-selector-card{animation:omni-launch-dismiss 900ms ease-out both}
+.omni-selector-diagram .omni-type.is-zoom-origin{visibility:hidden}
+@keyframes omni-launch-dismiss{from{opacity:1}to{opacity:0}}
+@keyframes omni-launch-backdrop{from{background:rgba(2,7,18,.92)}to{background:transparent}}
 .omni-orbit{fill:none;stroke:#3c557c;stroke-width:2;stroke-dasharray:6 8}
 .omni-center{fill:#0b1730;stroke:#a5c6fa;stroke-width:3}
 .omni-center-label{fill:#ffdf45;font:800 28px "Barlow Condensed",sans-serif;text-anchor:middle;pointer-events:none}

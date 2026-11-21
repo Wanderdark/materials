@@ -1,0 +1,53 @@
+.wm-motion-root {
+  --wm-motion-scale: 1;
+  --wm-motion-ms: 450ms;
+  --wm-motion-ease: cubic-bezier(.2, .7, .25, 1);
+  opacity: 1 !important;
+  transition: opacity var(--wm-motion-ms) var(--wm-motion-ease),
+    scale var(--wm-motion-ms) var(--wm-motion-ease),
+    display var(--wm-motion-ms) allow-discrete !important;
+}
+.wm-motion-root:not(.wm-motion-visible) {
+  --wm-motion-scale: .86;
+  --wm-motion-ms: 360ms;
+  --wm-motion-ease: cubic-bezier(.55, 0, .8, .4);
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+[data-wm-motion-panel] {
+  scale: var(--wm-motion-scale, 1);
+  transform-origin: center;
+  transition: scale var(--wm-motion-ms, 450ms) var(--wm-motion-ease, ease-out);
+  animation: none !important;
+}
+#goforit-overlay.wm-motion-root { transform: translateX(-50%) !important; }
+@starting-style {
+  .wm-motion-root { opacity: 0 !important; }
+  [data-wm-motion-panel] { scale: .86; }
+}
+.qpc-dialog {
+  opacity: 0;
+  scale: .86;
+  transform-origin: center;
+  transition: opacity 360ms ease-in, scale 360ms cubic-bezier(.55, 0, .8, .4),
+    display 360ms allow-discrete, overlay 360ms allow-discrete;
+}
+.qpc-dialog[open] {
+  opacity: 1;
+  scale: 1;
+  transition-duration: 450ms;
+}
+@starting-style {
+  .qpc-dialog[open] { opacity: 0; scale: .86; }
+}
+.wm-word-exit {
+  position: fixed;
+  z-index: 9600;
+  pointer-events: none !important;
+  margin: 0;
+  transform-origin: center;
+}
+.wm-word-exit * { pointer-events: none !important; animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .wm-motion-root, [data-wm-motion-panel], .qpc-dialog { transition: none !important; }
+}
